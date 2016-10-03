@@ -1,0 +1,14 @@
+# Development related
+/nbproject/
+/.idea/
+*.iml
+jsconfig.json
+
+# Build related
+/node_modules/
+npm-debug.log
+/client-config/config-override.json
+build.properties
+
+# Distribution related
+/dist/
