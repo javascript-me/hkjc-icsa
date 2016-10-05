@@ -1,7 +1,7 @@
 {
-  "name": "hkjc-icsa",
+  "name": "hkjc-ics-client",
   "version": "1.0.0",
-  "description": "Integrated Console System",
+  "description": "Integrated Console System Client",
   "main": "index.js",
   "config": {},
   "scripts": {
@@ -19,9 +19,11 @@
     "html:version": "node build/html-version.js",
     "css": "lessc --strict-imports --clean-css=\"\" --autoprefix=\"IE >= 11,last 2 Edge versions,last 5 Chrome versions\" --source-map --source-map-less-inline --source-map-rootpath=client-app client-app/index.less dist/thin/index.min.css",
     "js": "browserify client-app/index.js --debug -p [minifyify --map index.min.js.map --output dist/thin/index.min.js.map --uglify [--compress --mangle] ] > dist/thin/index.min.js",
-    "resources": "shx cp -r \"client-resources/.\" dist/thin/",
+    "resources": "shx cp -r client-resources/. dist/thin/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "run-s clean init lint && run-p html css js resources",
+    "build": "run-s clean init lint && run-p build:thin build:thick",
+    "build:thin": "run-p html css js resources",
+    "build:thick": "shx cp -r client-thick/. node_modules/nw/nwjs/. dist/thick",
     "dev": "run-s clean init dev:server dev:watch",
     "dev:once": "run-s clean init dev:build dev:server",
     "dev:server": "run-s dev:server:stop dev:server:start",
@@ -64,7 +66,7 @@
     "minifyify": "7.3.3",
     "moment": "2.15.1",
     "npm-run-all": "3.1.0",
-    "nw": "0.17.5",
+    "nw": "0.17.5-sdk",
     "pm2": "2.0.18",
     "shelljs": "0.7.4",
     "shx": "0.1.4",
@@ -117,16 +119,26 @@
       ],
       "no-tabs": "off",
       "prefer-arrow-callback": "error",
-      "react/jsx-indent": [2, "tab"],
-      "react/jsx-indent-props": [2, "tab"]
+      "react/jsx-indent": [
+        2,
+        "tab"
+      ],
+      "react/jsx-indent-props": [
+        2,
+        "tab"
+      ]
     },
-    "globals": {}
+    "globals": {
+      "nw": false
+    }
   },
   "browserify": {
-    "transform": ["browserify-shim", "babelify"]
+    "transform": [
+      "browserify-shim",
+      "babelify"
+    ]
   },
-  "browserify-shim": {
-  },
+  "browserify-shim": {},
   "babel": {
     "presets": [
       "es2015",
