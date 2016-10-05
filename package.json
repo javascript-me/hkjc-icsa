@@ -7,7 +7,7 @@
   "scripts": {
     "clear": "shx rm -rf ./node_modules/",
     "clean": "shx rm -rf ./dist/",
-    "init": "run-p init:dist init:config init:version",
+    "init": "run-s init:dist init:config init:version",
     "init:dist": "shx mkdir -p dist/thin dist/thick",
     "init:config": "shx touch client-config/config-override.json",
     "init:version": "node build/init-version.js",
@@ -17,13 +17,19 @@
     "html": "run-s html:index html:version",
     "html:index": "shx cp client-app/index.html dist/thin/",
     "html:version": "node build/html-version.js",
-    "css": "lessc --strict-imports --clean-css=\"\" --autoprefix=\"IE >= 11,last 2 Edge versions,last 5 Chrome versions\" --source-map --source-map-less-inline client-app/index.less dist/thin/index.min.css",
-    "js": "browserify client-app/index.js --debug -t babelify -p [minifyify --map index.min.js.map --output dist/thin/index.min.js.map --uglify [--compress --mangle] ] > dist/thin/index.min.js",
-    "resources": "shx cp -r client-resources/* client-resources/.* dist/thin/",
+    "css": "lessc --strict-imports --clean-css=\"\" --autoprefix=\"IE >= 11,last 2 Edge versions,last 5 Chrome versions\" --source-map --source-map-less-inline --source-map-rootpath=client-app client-app/index.less dist/thin/index.min.css",
+    "js": "browserify client-app/index.js --debug -p [minifyify --map index.min.js.map --output dist/thin/index.min.js.map --uglify [--compress --mangle] ] > dist/thin/index.min.js",
+    "resources": "shx cp -r \"client-resources/.\" dist/thin/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "run-s clean init lint && run-p html css js resources",
-    "dev": "exit 1",
-    "dist": "exit 1"
+    "dev": "run-s clean init dev:server dev:watch",
+    "dev:once": "run-s clean init dev:build dev:server",
+    "dev:server": "run-s dev:server:stop dev:server:start",
+    "dev:server:stop": "pm2 stop hkjc-ics-client || true",
+    "dev:server:start": "pm2 start node_modules/http-server/bin/http-server --name=hkjc-ics-client -- -c-1 dist/thin",
+    "dev:watch": "watch \"npm run dev:build\" --wait=1 --ignoreUnreadable --ignoreDotFiles --ignoreDirectoryPattern=\"/node_modules|dist/\"",
+    "dev:build": "run-p lint html css js resources || true",
+    "dist": "echo \"Error: no distributions specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -38,7 +44,9 @@
     "babel-preset-es2017": "6.16.0",
     "babel-preset-react": "6.16.0",
     "babelify": "7.3.0",
+    "bootstrap": "3.3.7",
     "browserify": "13.1.0",
+    "browserify-shim": "3.8.12",
     "eslint": "3.7.0",
     "eslint-config-standard": "6.2.0",
     "eslint-config-standard-jsx": "3.2.0",
@@ -48,6 +56,8 @@
     "eslint-plugin-promise": "2.0.1",
     "eslint-plugin-react": "6.3.0",
     "eslint-plugin-standard": "2.0.1",
+    "http-server": "0.9.0",
+    "jquery": "2.2.4",
     "less": "2.7.1",
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
@@ -55,10 +65,12 @@
     "moment": "2.15.1",
     "npm-run-all": "3.1.0",
     "nw": "0.17.5",
+    "pm2": "2.0.18",
     "shelljs": "0.7.4",
     "shx": "0.1.4",
     "stylelint": "7.3.1",
-    "stylelint-config-standard": "13.0.2"
+    "stylelint-config-standard": "13.0.2",
+    "watch": "0.19.2"
   },
   "stylelint": {
     "extends": "stylelint-config-standard",
@@ -104,9 +116,16 @@
         "tab"
       ],
       "no-tabs": "off",
-      "prefer-arrow-callback": "error"
+      "prefer-arrow-callback": "error",
+      "react/jsx-indent": [2, "tab"],
+      "react/jsx-indent-props": [2, "tab"]
     },
     "globals": {}
+  },
+  "browserify": {
+    "transform": ["browserify-shim", "babelify"]
+  },
+  "browserify-shim": {
   },
   "babel": {
     "presets": [

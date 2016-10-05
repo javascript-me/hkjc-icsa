@@ -10,8 +10,10 @@
 
 ## TODO
 
-- ES and LESS Lint
-- React component
-- Thin client distrib
-- Dev and watch builds
 - Thick client
+- Bootstrap
+- React login component
+- Service layer, I/O
+- Tests
+- Dist builds
+- NODE_ENV=production

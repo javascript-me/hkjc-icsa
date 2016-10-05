@@ -1,14 +1,19 @@
 import 'babel-polyfill'
+// window.$ = window.jQuery = require('jquery')
+// import 'bootstrap/dist/js/bootstrap.min.js'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Router, Route, hashHistory } from 'react-router'
 
-var Hello = React.createClass({
-	render: () => {
-		return React.createElement('div', null, 'Hello World')
-	}
-})
+import Login from './login/login.js'
+import Dashboard from './dashboard/dashboard.js'
 
-ReactDOM.render(
-	React.createElement(Hello),
-	document.getElementById('root')
-)
+const root = document.getElementById('root')
+
+ReactDOM.render((
+	<Router history={hashHistory}>
+		<Route path='/' component={Login} />
+		<Route path='/dashboard' component={Dashboard} />
+	</Router>
+	), root)
