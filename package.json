@@ -68,6 +68,9 @@
     "npm-run-all": "3.1.0",
     "nw": "0.17.5-sdk",
     "pm2": "2.0.18",
+    "react": "15.3.2",
+    "react-dom": "15.3.2",
+    "react-router": "2.8.1",
     "shelljs": "0.7.4",
     "shx": "0.1.4",
     "stylelint": "7.3.1",
@@ -85,11 +88,10 @@
   "eslintConfig": {
     "plugins": [
       "json",
+      "promise",
+      "jsx",
       "react"
     ],
-    "settings": {
-      "react": {}
-    },
     "parserOptions": {
       "ecmaVersion": 2017,
       "sourceType": "module",
