@@ -1,0 +1,19 @@
+{
+	"allgood": {
+		"password": "^ofcourse$",
+		"status": 200,
+		"profile": {
+			"username": "allgood",
+			"fullname": "All Good",
+			"authorizations": ["login", "foobar"]
+		}
+	},
+	"goodbut": {
+		"password": "^maybe$",
+		"status": 423
+	},
+	"nogood": {
+		"password": ".*",
+		"status": 500
+	}
+}

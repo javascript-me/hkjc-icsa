@@ -10,11 +10,11 @@
 
 ## TODO
 
-- Start documentation above and SDD
-- Thick client needed or cache app?
 - Bootstrap
 - React login component
 - Service layer, REST and WS I/O
+
+- Start documentation above and SDD
 - Tests
 - Dist builds
 - NODE_ENV=production

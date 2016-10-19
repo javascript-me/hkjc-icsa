@@ -1,8 +1,0 @@
-{
-	"name": "hkjc-ics-client-thick",
-	"main": "index.html",
-	"window": {
-		"show": true,
-		"fullscreen": false
-	}
-}

@@ -8,7 +8,7 @@
     "clear": "shx rm -rf ./node_modules/",
     "clean": "shx rm -rf ./dist/",
     "init": "run-s init:dist init:config init:version",
-    "init:dist": "shx mkdir -p dist/thin dist/thick",
+    "init:dist": "shx mkdir -p dist/thin dist/simulator dist/cache dist/apidoc",
     "init:config": "shx touch client-config/config-override.json",
     "init:version": "node build/init-version.js",
     "lint": "run-p lint:less lint:js",
@@ -21,16 +21,16 @@
     "js": "browserify client-app/index.js --debug -p [minifyify --map index.min.js.map --output dist/thin/index.min.js.map --uglify [--compress --mangle] ] > dist/thin/index.min.js",
     "resources": "shx cp -r client-resources/. dist/thin/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "run-s clean init lint && run-p build:thin build:thick",
-    "build:thin": "run-p html css js resources",
-    "build:thick": "shx cp -r client-thick/. node_modules/nw/nwjs/. dist/thick",
-    "dev": "run-s clean init dev:server dev:watch",
-    "dev:once": "run-s clean init dev:build dev:server",
-    "dev:server": "run-s dev:server:stop dev:server:start",
-    "dev:server:stop": "pm2 stop hkjc-ics-client || true",
-    "dev:server:start": "pm2 start node_modules/http-server/bin/http-server --name=hkjc-ics-client -- -c-1 dist/thin",
-    "dev:watch": "watch \"npm run dev:build\" --wait=1 --ignoreUnreadable --ignoreDotFiles --ignoreDirectoryPattern=\"/node_modules|dist/\"",
-    "dev:build": "run-p lint html css js resources || true",
+    "build": "run-s clean init lint && run-p build:client build:server",
+    "build:client": "run-p html css js resources",
+    "build:server": "run-p build:apidoc build:cache build:simulator",
+    "build:apidoc": "apidoc -i server-simulator -i server-cache -o dist/apidoc/",
+    "build:cache": "browserify server-cache/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/cache/index.min.js.map --uglify [--compress --mangle] ] > dist/cache/index.min.js",
+    "build:simulator": "browserify server-simulator/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/simulator/index.min.js.map --uglify [--compress --mangle] ] > dist/simulator/index.min.js",
+    "dev": "run-s dev:server:stop init dev:build dev:server:start",
+    "dev:server:stop": "pm2 stop hkjc-ics-server || true",
+    "dev:server:start": "pm2 start dist/simulator/index.min.js --name=hkjc-ics-server",
+    "dev:build": "run-p lint build:server html css js resources",
     "dist": "echo \"Error: no distributions specified\" && exit 1"
   },
   "repository": {
@@ -40,12 +40,14 @@
   "author": "Gábor Czigola <gabor_czigola@epam.com>",
   "private": true,
   "dependencies": {
+    "apidoc": "0.16.1",
     "babel-polyfill": "6.16.0",
     "babel-preset-es2015": "6.16.0",
     "babel-preset-es2016": "6.16.0",
     "babel-preset-es2017": "6.16.0",
     "babel-preset-react": "6.16.0",
     "babelify": "7.3.0",
+    "body-parser": "1.15.2",
     "bootstrap": "3.3.7",
     "browserify": "13.1.0",
     "browserify-shim": "3.8.12",
@@ -58,13 +60,14 @@
     "eslint-plugin-promise": "2.0.1",
     "eslint-plugin-react": "6.3.0",
     "eslint-plugin-standard": "2.0.1",
-    "http-server": "0.9.0",
+    "express": "4.14.0",
     "jquery": "2.2.4",
     "less": "2.7.1",
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
     "minifyify": "7.3.3",
     "moment": "2.15.1",
+    "morgan": "1.7.0",
     "npm-run-all": "3.1.0",
     "nw": "0.17.5-sdk",
     "pm2": "2.0.18",
@@ -73,9 +76,9 @@
     "react-router": "2.8.1",
     "shelljs": "0.7.4",
     "shx": "0.1.4",
+    "source-map-support": "0.4.5",
     "stylelint": "7.3.1",
-    "stylelint-config-standard": "13.0.2",
-    "watch": "0.19.2"
+    "stylelint-config-standard": "13.0.2"
   },
   "stylelint": {
     "extends": "stylelint-config-standard",
@@ -103,9 +106,7 @@
     "env": {
       "browser": true,
       "node": true,
-      "worker": true,
-      "jquery": true,
-      "serviceworker": true
+      "jquery": true
     },
     "extends": [
       "eslint:recommended",
@@ -130,9 +131,7 @@
         "tab"
       ]
     },
-    "globals": {
-      "nw": false
-    }
+    "globals": {}
   },
   "browserify": {
     "transform": [
