@@ -1,7 +1,11 @@
 import 'babel-polyfill'
-// window.$ = window.jQuery = require('jquery')
-// import 'bootstrap/dist/js/bootstrap.min.js'
-
+import 'isomorphic-fetch'
+// Fix for jQuery and Bootstrap shim
+// https://github.com/twbs/bootstrap/issues/17201
+window.$ = window.jQuery = require('jquery')
+var Bootstrap = require('bootstrap')
+Bootstrap.$ = $
+// End of fix
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, hashHistory } from 'react-router'

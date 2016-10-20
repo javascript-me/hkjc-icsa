@@ -4,7 +4,7 @@ const router = express.Router()
 const users = require('./json/users.json')
 
 /**
- * @api {POST} /users/login Login
+ * @api {POST} /api/users/login Login
  * @apiName Login
  * @apiGroup Users
 
@@ -42,7 +42,7 @@ const users = require('./json/users.json')
  *		{
  *		}
  */
-router.post('/', (req, res) => {
+router.post('/login', (req, res) => {
 	const username = req.body.username
 	const password = req.body.password || ''
 	let status = 403
