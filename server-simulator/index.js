@@ -18,9 +18,10 @@ app.use(
 	})
 	)
 app.use('/', express.static('./dist/thin'))
-app.use('/apidoc/', express.static('./dist/apidoc'))
-app.use('/api/', server)
+cache.use('/apidoc/', express.static('./dist/cache/apidoc'))
 app.use('/cache/', cache)
+server.use('/apidoc/', express.static('./dist/simulator/apidoc'))
+app.use('/api/', server)
 
 const port = 8282
 app.listen(port, () => {

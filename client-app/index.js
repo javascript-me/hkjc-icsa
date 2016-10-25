@@ -11,13 +11,23 @@ import ReactDOM from 'react-dom'
 import { Router, Route, hashHistory } from 'react-router'
 
 import Login from './login/login.js'
+import LoginService from './login/login-service.js'
 import Dashboard from './dashboard/dashboard.js'
+
+const hasAuth = (nextState, replace) => {
+	if (!LoginService.hasProfile()) {
+		replace('/')
+	}
+}
 
 const root = document.getElementById('root')
 
 ReactDOM.render((
-	<Router history={hashHistory}>
-		<Route path='/' component={Login} />
-		<Route path='/dashboard' component={Dashboard} />
-	</Router>
+	<div className='pages'>
+		<div className='navigation'>Menu</div>
+		<Router history={hashHistory}>
+			<Route path='/' component={Login} />
+			<Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
+		</Router>
+	</div>
 	), root)

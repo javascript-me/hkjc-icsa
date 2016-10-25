@@ -4,7 +4,7 @@ const router = express.Router()
 const users = require('./json/users.json')
 
 /**
- * @api {POST} /api/users/login Login
+ * @api {POST} /users/login Login
  * @apiName Login
  * @apiGroup Users
 

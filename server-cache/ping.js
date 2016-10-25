@@ -2,9 +2,9 @@ import express from 'express'
 const router = express.Router()
 
 /**
- * @api {GET} /cache/ping Ping
+ * @api {GET} /ping/ Ping
  * @apiName Ping
- * @apiGroup Cache
+ * @apiGroup Maintenance
 
  * @apiDescription Ping the cache
  *
