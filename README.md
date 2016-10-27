@@ -10,11 +10,9 @@
 
 ## TODO
 
-- Bootstrap
-- React login component
-- Service layer, REST and WS I/O
 - Unit test for login component and coverage report
-
-- Config use case
-- Cache use case
+- Authorizations API (e.g. thick, fields)
+- Config use case (static, url dependent, api/cache url)
+- Cache use case (generate data)
 - Start documentation above and SDD
+- Field level autorizations?

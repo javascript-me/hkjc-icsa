@@ -5,14 +5,14 @@ import LoginService from './login-service'
 
 export default React.createClass({
 	displayName: 'Login',
-	submit: async function () {
+	async submit () {
 		const $dialog = $(this.refs.dialog)
 		const profile = await LoginService.doLogin($dialog.find('#login-username').val(), $dialog.find('#login-password').val())
 		if (profile) {
 			hashHistory.push('/dashboard')
 		}
 	},
-	render: function () {
+	render () {
 		return (
 			<div className='page login container-fluid'>
 				<div className='row row-1' />

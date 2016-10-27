@@ -18,7 +18,7 @@
     "html:index": "shx cp client-app/index.html dist/thin/",
     "html:version": "node build/html-version.js",
     "css": "lessc --strict-imports --clean-css=\"\" --autoprefix=\"IE >= 11,last 2 Edge versions,last 5 Chrome versions\" --source-map --source-map-less-inline --source-map-rootpath=client-app client-app/index.less dist/thin/index.min.css",
-    "js": "browserify client-app/index.js --debug -p [minifyify --map index.min.js.map --output dist/thin/index.min.js.map --uglify [--compress --mangle] ] > dist/thin/index.min.js",
+    "js": "browserify client-app/index.js --debug -p [minifyify --map index.min.js.map --output dist/thin/index.min.js.map --uglify [--compress] ] > dist/thin/index.min.js",
     "resources": "shx cp -r client-resources/. dist/thin/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "run-s init lint && run-p build:client build:server",
@@ -27,7 +27,7 @@
     "build:apidoc": "run-p build:apidoc:cache build:apidoc:simulator",
     "build:apidoc:cache": "apidoc -i server-cache -o dist/cache/apidoc/",
     "build:apidoc:simulator": "apidoc -i server-simulator -o dist/simulator/apidoc/",
-    "build:cache": "browserify server-cache/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/cache/index.min.js.map --uglify [--compress --mangle] ] > dist/cache/index.min.js",
+    "build:cache": "browserify server-cache/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/cache/index.min.js.map --uglify [--compress] ] > dist/cache/index.min.js",
     "build:simulator": "browserify server-simulator/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/simulator/index.min.js.map --uglify [--compress --mangle] ] > dist/simulator/index.min.js",
     "dev": "run-s build dev:server",
     "dev:server": "run-s dev:server:stop dev:server:start",
@@ -54,6 +54,7 @@
     "bootstrap": "3.3.7",
     "browserify": "13.1.0",
     "browserify-shim": "3.8.12",
+    "classnames": "2.2.5",
     "cross-env": "3.1.3",
     "d3": "4.2.7",
     "eslint": "3.7.0",
@@ -76,7 +77,7 @@
     "morgan": "1.7.0",
     "npm-run-all": "3.1.0",
     "pm2": "2.0.18",
-    "pubsubjs": "0.3.9",
+    "pubsub-js": "1.5.4",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "react-router": "2.8.1",
@@ -139,7 +140,12 @@
         2,
         "tab"
       ],
-      "no-empty": ["error", { "allowEmptyCatch": true }]
+      "no-empty": [
+        "error",
+        {
+          "allowEmptyCatch": true
+        }
+      ]
     },
     "globals": {}
   },

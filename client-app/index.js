@@ -13,6 +13,7 @@ import { Router, Route, hashHistory } from 'react-router'
 import Login from './login/login.js'
 import LoginService from './login/login-service.js'
 import Dashboard from './dashboard/dashboard.js'
+import Navigation from './navigation/navigation.js'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -24,7 +25,7 @@ const root = document.getElementById('root')
 
 ReactDOM.render((
 	<div className='pages'>
-		<div className='navigation'>Menu</div>
+		<Navigation />
 		<Router history={hashHistory}>
 			<Route path='/' component={Login} />
 			<Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
