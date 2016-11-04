@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import Login from './login'
 
-describe('<Login/>', () => {
+describe('<Login />', () => {
 	it('renders a submittable form', () => {
 		const login = shallow(<Login />)
 		expect(login.find('button[type="submit"]')).to.have.length(1)

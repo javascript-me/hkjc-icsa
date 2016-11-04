@@ -3,9 +3,9 @@ import render from './client-app'
 describe('entry point', () => {
 	it('gives render function', (done) => {
 		expect(render).to.be.a.function
-		try{
+		try {
 			render()
-		} catch(e) {
+		} catch (e) {
 			expect(e.toString()).to.have.string('not a DOM element')
 			done()
 		}

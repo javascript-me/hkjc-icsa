@@ -36,7 +36,7 @@ export default {
 	access (feature, level) {
 		const result = false
 		for (let auth of (profile && profile.authorizations && profile.authorizations.legnth ? profile.authorizations : [])) {
-
+			if (!auth) break // TODO
 		}
 		return result
 	}

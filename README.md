@@ -17,6 +17,12 @@ For full build (includes lint, test, coverage):
 After building you can start (http://localhost:8282):
 - npm run dev:server
 
+Clean up dist:
+- npm run clean
+
+Clean up node_modules:
+- npm run clear
+
 ## Development
 
 Build and run:
@@ -29,7 +35,7 @@ Debug all unit tests:
 - npm run dev:debug
 
 One single unit test:
-- npm run dev:test:one -- /path/to/test.spec.js
+- npm run dev:test:one -- /client-app/path/to/test.spec.js
 
 Test and code coverage:
 - npm run test

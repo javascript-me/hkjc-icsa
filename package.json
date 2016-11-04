@@ -34,7 +34,7 @@
     "dev:server": "run-s dev:server:stop dev:server:start",
     "dev:server:stop": "pm2 stop hkjc-ics-server || true",
     "dev:server:start": "pm2 start dist/simulator/index.min.js --name=hkjc-ics-server",
-    "dist": "npm install && cross-env NODE_ENV=production run-s lint test build",
+    "dist": "npm install && run-s lint test && cross-env NODE_ENV=production run-s build",
     "lint": "run-p lint:less lint:js",
     "lint:less": "stylelint \"client-app/**/*.less\" --syntax less",
     "lint:js": "eslint --fix --ignore-pattern=\"dist/*\" **/*.js **/*.json",
