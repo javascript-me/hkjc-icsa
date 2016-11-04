@@ -20,11 +20,11 @@ export default React.createClass({
 					<div ref='dialog' className='login-dialog col-xs-offset-1 col-md-offset-3 col-lg-offset-5 col-xs-10 col-md-6 col-lg-2'>
 						<div className='form-group form-group-lg'>
 							<label htmlFor='usernamer'>Username</label>
-							<input type='text' className='form-control' id='login-username' placeholder='Username' />
+							<input ref='username' type='text' className='form-control' id='login-username' placeholder='Username' />
 						</div>
 						<div className='form-group form-group-lg'>
 							<label htmlFor='password'>Password</label>
-							<input type='password' className='form-control' id='login-password' placeholder='Password' />
+							<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' />
 						</div>
 						<button type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Submit</button>
 					</div>

@@ -5,7 +5,11 @@
 		"profile": {
 			"username": "allgood",
 			"fullname": "All Good",
-			"authorizations": ["login", "foobar"]
+			"authorizations": {
+				"login.*": "*", 
+				"dashboard.form1.*": "read",
+				"dashboard.form2.fieldX": "read|write|audit"
+			}
 		}
 	},
 	"goodbut": {

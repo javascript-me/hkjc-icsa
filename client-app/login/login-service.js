@@ -3,6 +3,14 @@ import PubSub from '../pubsub'
 
 let profile = null
 
+const postLogin = (data) => {
+	return $.post('api/users/login', data)
+}
+
+const getProfile = () => {
+	return _.clone(profile)
+}
+
 export default {
 	hasProfile () {
 		return !!profile
@@ -10,18 +18,26 @@ export default {
 	async doLogin (username, password) {
 		let result = null
 		try {
-			profile = await $.post('api/users/login', {username, password})
-			result = this.getProfile()
+			profile = await postLogin({username, password})
+			result = getProfile()
 			PubSub.publish(PubSub.LOGIN_CHANGE)
 		} catch (failure) {
+			// returns null on failure
 		}
 		return result
 	},
 	getProfile () {
-		return _.clone(profile)
+		return getProfile()
 	},
 	logout () {
 		profile = null
 		PubSub.publish(PubSub.LOGIN_CHANGE)
+	},
+	access (feature, level) {
+		const result = false
+		for (let auth of (profile && profile.authorizations && profile.authorizations.legnth ? profile.authorizations : [])) {
+
+		}
+		return result
 	}
 }

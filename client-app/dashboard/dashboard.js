@@ -1,5 +1,5 @@
 import React from 'react'
-import ProgressArc from '../tmp/progressArc'
+import ProgressArc from '../progressArc/progressArc.d3'
 
 export default React.createClass({
 	displayName: 'Dashboard',

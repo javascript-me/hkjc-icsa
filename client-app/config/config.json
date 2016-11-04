@@ -1,0 +1,11 @@
+{
+	"default": {
+		"url": "",
+		"DASHBOARD_EXTRA": false
+	},
+	"override": {
+		"localhost|127.0.0.1": {
+			"DASHBOARD_EXTRA": true
+		}
+	}
+}
