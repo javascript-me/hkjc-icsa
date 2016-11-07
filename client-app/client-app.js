@@ -15,7 +15,7 @@ const hasAuth = (nextState, replace) => {
 
 export default (target) => {
 	ReactDOM.render((
-		<div className='pages'>
+		<div className='container-fluid'>
 			<Navigation />
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />

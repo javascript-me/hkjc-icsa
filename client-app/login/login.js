@@ -3,31 +3,31 @@ import { hashHistory } from 'react-router'
 
 import LoginService from './login-service'
 
+const doSubmit = async (username, password) => {
+	const profile = await LoginService.doLogin(username, password)
+	if (profile) {
+		hashHistory.push('/dashboard')
+	}
+}
+
 export default React.createClass({
 	displayName: 'Login',
-	async submit () {
-		const $dialog = $(this.refs.dialog)
-		const profile = await LoginService.doLogin($dialog.find('#login-username').val(), $dialog.find('#login-password').val())
-		if (profile) {
-			hashHistory.push('/dashboard')
-		}
+	submit () {
+		doSubmit(this.refs.username.value, this.refs.password.value)
 	},
 	render () {
 		return (
-			<div className='page login container-fluid'>
-				<div className='row row-1' />
-				<div className='row row-2'>
-					<div ref='dialog' className='login-dialog col-xs-offset-1 col-md-offset-3 col-lg-offset-5 col-xs-10 col-md-6 col-lg-2'>
-						<div className='form-group form-group-lg'>
-							<label htmlFor='usernamer'>Username</label>
-							<input ref='username' type='text' className='form-control' id='login-username' placeholder='Username' />
-						</div>
-						<div className='form-group form-group-lg'>
-							<label htmlFor='password'>Password</label>
-							<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' />
-						</div>
-						<button type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Submit</button>
+			<div className='row row-login'>
+				<div className='login-dialog col-xs-offset-5 col-xs-2'>
+					<div className='form-group form-group-lg'>
+						<label htmlFor='usernamer'>Username</label>
+						<input ref='username' type='text' className='form-control' id='login-username' placeholder='Username' />
 					</div>
+					<div className='form-group form-group-lg'>
+						<label htmlFor='password'>Password</label>
+						<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' />
+					</div>
+					<button type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Submit</button>
 				</div>
 			</div>
 			)

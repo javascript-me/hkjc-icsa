@@ -3,29 +3,30 @@ import LoginService from '../login/login-service'
 import classNames from 'classnames'
 import PubSub from '../pubsub'
 
+let token = null
+
 export default React.createClass({
 	getCurrentState () {
 		return {
 			show: LoginService.hasProfile()
 		}
 	},
-	token: undefined,
 	getInitialState () {
 		return this.getCurrentState()
 	},
 	componentDidMount () {
-		this.token = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
+		token = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
 			this.setState(this.getCurrentState())
 		})
 	},
 	componentWillUnmount () {
-		PubSub.unsubscribe(this.token)
+		PubSub.unsubscribe(token)
 	},
 	render () {
-		const classes = classNames('navigation', {hidden: !this.state.show})
+		const classes = classNames('row row-navigation', {hidden: !this.state.show})
 		return (
 			<div className={classes}>
-				<span><a href='#/' className='pull-right' onClick={LoginService.logout}>Logout</a></span>
+				<div className='col-lg-2'><a href='#/' className='pullRight' onClick={LoginService.logout}>Logout</a></div>
 			</div>
 			)
 	}
