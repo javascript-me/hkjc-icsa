@@ -7,7 +7,7 @@ const Bootstrap = require('bootstrap')
 Bootstrap.$ = $
 // End of fix
 
-import render from './client-app'
+import init from './client-app'
 
 const root = document.getElementById('root')
-render(root)
+init(root)
