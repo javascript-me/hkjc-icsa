@@ -26,13 +26,13 @@
     "build:cache": "browserify server-cache/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/cache/index.min.js.map --uglify [--compress] ] > dist/cache/index.min.js",
     "build:simulator": "browserify server-simulator/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/simulator/index.min.js.map --uglify [--compress --mangle] ] > dist/simulator/index.min.js",
     "dev": "run-s build dev:server",
-    "dev:test": "mocha client-app/**/*.spec.js && npm run lint || true",
+    "dev:test": "mocha client-app/**/*.spec.js && npm run lint || exit 0",
     "dev:test:one": "mocha",
     "dev:debug": "run-p dev:test:inspector dev:test:debug",
     "dev:test:inspector": "node-inspector",
     "dev:test:debug": "mocha client-app/**/*.spec.js --debug-brk",
     "dev:server": "run-s dev:server:stop dev:server:start",
-    "dev:server:stop": "pm2 stop hkjc-ics-server || true",
+    "dev:server:stop": "pm2 stop hkjc-ics-server || exit 0",
     "dev:server:start": "pm2 start dist/simulator/index.min.js --name=hkjc-ics-server",
     "dist": "npm install && run-s lint test && cross-env NODE_ENV=production run-s build",
     "lint": "run-p lint:less lint:js",
@@ -102,7 +102,8 @@
     "source-map-support": "0.4.5",
     "stylelint": "7.3.1",
     "stylelint-config-standard": "13.0.2",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "rc-calendar": "7.4.3"
   },
   "stylelint": {
     "extends": "stylelint-config-standard",

@@ -5,6 +5,7 @@ import { Router, Route, hashHistory } from 'react-router'
 import Login from './login/login.js'
 import LoginService from './login/login-service.js'
 import Dashboard from './dashboard/dashboard.js'
+import Audit from './auditlogContainer/auditlogContainer.js'
 import Navigation from './navigation/navigation.js'
 
 const hasAuth = (nextState, replace) => {
@@ -19,7 +20,8 @@ export default (target) => {
 			<Navigation />
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
-				<Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
+                <Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
+                <Route path='/audit' component={Audit} onEnter={hasAuth} />
 			</Router>
 		</div>
 		), target)
