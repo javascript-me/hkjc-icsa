@@ -3,7 +3,6 @@ const router = express.Router()
 
 /**
  * @api {GET} /ping/ Ping
- * @apiName Ping
  * @apiGroup Maintenance
 
  * @apiDescription Ping the cache

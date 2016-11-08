@@ -6,9 +6,21 @@ describe('entry point', () => {
 		try {
 			render()
 		} catch (e) {
-			expect(e.toString()).to.have.string('not a DOM element')
 			done()
 		}
+	})
+
+	describe('-configOverride()', () => {
+		it('does nothing if hasProfile', () => {
+			const override = sinon.spy()
+			rewire(render.__set__('config', {override}))
+
+			const configOverride = render.__get__('configOverride')
+			configOverride()
+
+			rewire()
+			expect(override.calledOnce).to.be.true
+		})
 	})
 
 	describe('-hasAuth()', () => {

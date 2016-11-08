@@ -2,16 +2,23 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, hashHistory } from 'react-router'
 
-import Login from './login/login.js'
-import LoginService from './login/login-service.js'
-import Dashboard from './dashboard/dashboard.js'
-import Audit from './auditlogContainer/auditlogContainer.js'
-import Navigation from './navigation/navigation.js'
+
+import Login from './login/login'
+import LoginService from './login/login-service'
+import Dashboard from './dashboard/dashboard'
+import Audit from './auditlogContainer/auditlogContainer'
+import Navigation from './navigation/navigation'
+import config from './config'
+
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
 		replace('/')
 	}
+}
+
+const configOverride = (overrides) => {
+	config.override(overrides)
 }
 
 export default (target) => {
@@ -25,4 +32,6 @@ export default (target) => {
 			</Router>
 		</div>
 		), target)
+
+	$.get(config.url('/api/config')).then(configOverride)
 }

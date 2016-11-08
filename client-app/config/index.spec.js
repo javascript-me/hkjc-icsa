@@ -173,4 +173,37 @@ describe('config', () => {
 			expect(result).to.be.string('../lol/hoo/bar')
 		})
 	})
+
+	describe('+override', () => {
+		it('merges overrides into config', () => {
+			const configJson = {
+				a: 1,
+				aa: 9,
+				b: {
+					aa: 2,
+					cc: 7
+				}
+			}
+			rewire(config.__set__('config', configJson))
+
+			const result = config.override({
+				a: 2,
+				b: {
+					aa: 3,
+					bb: 5
+				}
+			})
+
+			rewire()
+			expect(result).to.be.deep.equal({
+				a: 2,
+				aa: 9,
+				b: {
+					aa: 3,
+					bb: 5,
+					cc: 7
+				}
+			})
+		})
+	})
 })

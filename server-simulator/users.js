@@ -5,7 +5,6 @@ const users = require('./json/users.json')
 
 /**
  * @api {POST} /users/login Login
- * @apiName Login
  * @apiGroup Users
 
  * @apiDescription Users' password authentication.
