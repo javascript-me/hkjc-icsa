@@ -1,5 +1,5 @@
 import LoginService from './login-service'
-import PubSub from '../PubSub'
+import PubSub from '../pubsub'
 
 const user = {
 	name: 'NAME',
