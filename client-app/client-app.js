@@ -9,6 +9,7 @@ import Dashboard from './dashboard/dashboard'
 import Audit from './auditlogContainer/auditlogContainer'
 import Navigation from './navigation/navigation'
 import config from './config'
+import SearchEnquiryPanel from './searchEnquiryPanel/searchEnquiryPanel'
 
 
 const hasAuth = (nextState, replace) => {
@@ -26,7 +27,7 @@ export default (target) => {
 		<div className='container-fluid'>
 			<Navigation />
 			<Router history={hashHistory}>
-				<Route path='/' component={Login} />
+				<Route path='/' component={SearchEnquiryPanel} />
                 <Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
                 <Route path='/audit' component={Audit} onEnter={hasAuth} />
 			</Router>
