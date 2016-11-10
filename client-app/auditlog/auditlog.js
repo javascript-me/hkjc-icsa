@@ -6,16 +6,17 @@ export default React.createClass({
     displayName: 'Audit',
     render() {
         return (
-            <div className='auditlog container'>
-                <div className='row'>
-                    <div className="col-md-6">
-                       <Calendar />
-                    </div>
-                    <div className="col-md-6">
-
-                    </div>
+            <div className="contianer auditlog">
+                <div className="row page-header">
+                    <p className="hkjc-breadcrumb">
+                        Home \ Tool & Adminstration \ Audit
+                    </p>
+                    <h1>Audit Trail</h1>
                 </div>
-                <div className='row'>
+                <div className='row page-content'>
+                    <div className="col-md-6">
+                        <Calendar className="hidden"/>
+                    </div>
                     <div className="col-xs-12">
                         <table className="table table-striped auditlog-table">
                           <thead className="table-header">
@@ -163,9 +164,6 @@ export default React.createClass({
                             </tr>
                           </tbody>
                         </table>
-                    </div>
-                    <div className="col-md-6">
-
                     </div>
                 </div>
             </div>
