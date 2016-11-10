@@ -26,6 +26,7 @@
     "build:cache": "browserify server-cache/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/cache/index.min.js.map --uglify [--compress] ] > dist/cache/index.min.js",
     "build:simulator": "browserify server-simulator/index.js --debug --node -p [minifyify --map index.min.js.map --output dist/simulator/index.min.js.map --uglify [--compress] ] > dist/simulator/index.min.js",
     "dev": "run-s build dev:server",
+    "dev:client": "run-s css js",
     "dev:test": "mocha client-app/**/*.spec.js && npm run lint || exit 0",
     "dev:test:one": "mocha",
     "dev:debug": "run-p dev:test:inspector dev:test:debug",

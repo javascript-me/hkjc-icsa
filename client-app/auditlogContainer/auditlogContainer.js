@@ -6,10 +6,17 @@ export default React.createClass({
     displayName: 'Audit',
     render() {
         return (
-            <div className='container'>
-                <div className='row'>
+            <div className="contianer auditlog">
+                <div className="row page-header">
+                    <p className="hkjc-breadcrumb">
+                        Home \ Tool & Adminstration \ Audit
+                    </p>
+                    <h1>Audit Trail</h1>
+                </div>
+                <div className='row page-content'>
                     <div className="col-md-6">
-                        <Calendar />
+                        <span>Welcome to Audit log</span>
+                        // <Calendar className="hidden"/>
                     </div>
                     <div className="col-md-6">
 
