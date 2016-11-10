@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, hashHistory } from 'react-router'
 
+import config from './config'
 import Login from './login/login.js'
 import LoginService from './login/login-service.js'
 import Dashboard from './dashboard/dashboard.js'
@@ -14,6 +15,10 @@ const hasAuth = (nextState, replace) => {
 	}
 }
 
+const configOverride = (overrides) => {
+	config.override(overrides)
+}
+
 export default (target) => {
 	ReactDOM.render((
 		<div className='container-fluid'>
@@ -24,4 +29,6 @@ export default (target) => {
 			</Router>
 		</div>
 		), target)
+
+	$.get(config.url('/api/config')).then(configOverride)
 }

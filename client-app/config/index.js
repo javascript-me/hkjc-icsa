@@ -45,5 +45,9 @@ export default {
 			url = url.substring(1)
 		}
 		return base + url
+	},
+	override (overrides) {
+		_.merge(config, overrides)
+		return get('')
 	}
 }
