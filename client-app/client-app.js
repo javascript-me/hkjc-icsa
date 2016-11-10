@@ -5,6 +5,7 @@ import { Router, Route, hashHistory } from 'react-router'
 import config from './config'
 import Login from './login/login'
 import LoginService from './login/login-service'
+import Systembar from './systembar/systembar.js'
 import Dashboard from './dashboard/dashboard'
 import Navigation from './navigation/navigation'
 
@@ -21,6 +22,7 @@ const configOverride = (overrides) => {
 export default (target) => {
 	ReactDOM.render((
 		<div className='container-fluid'>
+			<Systembar />
 			<Navigation />
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
