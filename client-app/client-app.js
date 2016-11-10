@@ -27,7 +27,7 @@ export default (target) => {
 		<div className='container-fluid'>
 			<Navigation />
 			<Router history={hashHistory}>
-				<Route path='/' component={SearchEnquiryPanel} />
+				<Route path='/' component={Login} />
                 <Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
                 <Route path='/audit' component={Audit} onEnter={hasAuth} />
 			</Router>
