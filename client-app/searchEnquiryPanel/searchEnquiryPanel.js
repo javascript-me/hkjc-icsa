@@ -1,4 +1,5 @@
 import React from 'react'
+import DateTime from '../dateTime/dateTime'
 
 export default class SearchEnquiryPanel extends React.Component{
   constructor(props) {
@@ -32,15 +33,15 @@ export default class SearchEnquiryPanel extends React.Component{
 
   render () {
     return <div className="component-searchEnquiryPanel" style={{'margin': '50px'}}>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-3">
-            <DateTime inputFor="dateTimeFrom" inputText="Date Time From" isMandatory="true" />
+      <div className="container-fluid pd-w10">
+        <div className="row mg-w010">
+          <div className="col-sm-3 pd-w10">
+            <DateTimeBlock inputFor="dateTimeFrom" inputText="Date Time From" isMandatory="true" />
           </div>
-          <div className="col-sm-3">
-            <DateTime inputFor="dateTimeTo" inputText="Date Time To" isMandatory="true" />
+          <div className="col-sm-3 pd-w10">
+            <DateTimeBlock inputFor="dateTimeTo" inputText="Date Time To" isMandatory="true" />
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Type</label>
               <select className="form-control">
@@ -51,50 +52,50 @@ export default class SearchEnquiryPanel extends React.Component{
               </select>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Back End ID</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-3">
+        <div className="row mg-w010">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Front End ID</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Event Lv1</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Home</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Away</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-3">
-            <DateTime inputFor="dateTimeGameStart" inputText="K.O Time/Game Start Game" isMandatory="false" />
+        <div className="row mg-w010">
+          <div className="col-sm-3 pd-w10">
+            <DateTimeBlock inputFor="dateTimeGameStart" inputText="K.O Time/Game Start Game" isMandatory="false" />
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>User ID</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>User Role</label>
               <select className="form-control">
@@ -105,7 +106,7 @@ export default class SearchEnquiryPanel extends React.Component{
               </select>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>System Function</label>
               <select className="form-control">
@@ -117,8 +118,8 @@ export default class SearchEnquiryPanel extends React.Component{
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-3">
+        <div className="row mg-w010">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Bet Type/Feature</label>
               <select className="form-control">
@@ -129,7 +130,7 @@ export default class SearchEnquiryPanel extends React.Component{
               </select>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Device</label>
               <select className="form-control">
@@ -140,13 +141,13 @@ export default class SearchEnquiryPanel extends React.Component{
               </select>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>IP Address</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 pd-w10">
             <div className="form-group">
               <label>Error Code</label>
               <input type="text" className="form-control" placeholder="Type in keyword" />
@@ -166,12 +167,11 @@ export default class SearchEnquiryPanel extends React.Component{
 }
 
 
-class DateTime extends React.Component {
+class DateTimeBlock extends React.Component {
   render () {
-    return <div className="form-group has-feedback">
+    return <div className="form-group">
       <label>{this.props.inputText} {this.props.isMandatory === "true" ? <span>*</span> : ''}</label>
-      <input type="text" htmlFor={this.props.inputFor} className="form-control" placeholder="Select Time" />
-      <span className="icon icon-date form-control-feedback"></span>
+      <DateTime inputFor={this.props.inputFor} />
     </div>;
   }
 }
