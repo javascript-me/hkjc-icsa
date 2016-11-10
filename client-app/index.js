@@ -6,6 +6,7 @@ window.$ = window.jQuery = require('jquery')
 const Bootstrap = require('bootstrap')
 Bootstrap.$ = $
 // End of fix
+require('multiple-select')
 
 import init from './client-app'
 

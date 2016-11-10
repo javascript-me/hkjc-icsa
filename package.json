@@ -5,7 +5,7 @@
   "main": "index.js",
   "config": {},
   "scripts": {
-    "postinstall": "run-s clean init",
+		"postinstall": "run-s clean init",
     "clear": "shx rm -rf ./node_modules/",
     "clean": "shx rm -rf ./dist/",
     "init": "run-s init:dist init:version",
@@ -87,6 +87,7 @@
     "mocha": "3.1.2",
     "moment": "2.15.1",
     "morgan": "1.7.0",
+    "multiple-select": "1.2.0",
     "node-inspector": "0.12.8",
     "npm-run-all": "3.1.0",
     "pm2": "2.0.18",

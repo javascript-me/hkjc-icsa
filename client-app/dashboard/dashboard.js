@@ -1,5 +1,6 @@
 import React from 'react'
 import ProgressArc from '../progressArc/progressArc.d3'
+import EventDirectory from '../eventdirectory/eventdirectory'
 
 export default React.createClass({
 	displayName: 'Dashboard',
@@ -21,6 +22,7 @@ export default React.createClass({
 		return (
 			<div className='row row-dashboard'>
 				<div className='col-xs-12'>
+					<EventDirectory />
 					<h1>Hello Dashboard World!</h1>
 					<ProgressArc
 						height={300}
