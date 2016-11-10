@@ -1,0 +1,36 @@
+a {
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.row-systembar {
+	height: 35px;
+	background: -ms-linear-gradient(to bottom, #EDEDED 100%, #E0E0E0 100%);
+	background: linear-gradient(to bottom, #EDEDED 100%, #E0E0E0 100%);
+
+	.logo {
+		font-weight: 500;
+		margin-right: 12px;
+		font-size: 14px;
+		color: @hkjcGreyLighter;
+
+		img {
+			width: 19px;
+			height: 24px;
+			display: inline-block;
+			margin: 0 6px 0 20px;
+		}
+
+		span {
+			margin-top: 8px;
+			display: inline-block;
+		}
+	}
+
+	> span {
+		color: @hkjcBlue;
+	}
+}
