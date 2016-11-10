@@ -6,6 +6,7 @@ import Login from './login/login.js'
 import LoginService from './login/login-service.js'
 import Dashboard from './dashboard/dashboard.js'
 import Navigation from './navigation/navigation.js'
+import MenuBar from './menu-bar'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -16,10 +17,10 @@ const hasAuth = (nextState, replace) => {
 export default (target) => {
 	ReactDOM.render((
 		<div className='container-fluid'>
-			<Navigation />
+			
 			<Router history={hashHistory}>
-				<Route path='/' component={Login} />
-				<Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
+				<Route path='/' component={MenuBar} />
+				<Route path='/dashboard' component={MenuBar} onEnter={hasAuth} />
 			</Router>
 		</div>
 		), target)
