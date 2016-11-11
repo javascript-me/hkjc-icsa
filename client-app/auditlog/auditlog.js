@@ -1,10 +1,60 @@
 ﻿import React from 'react'
 import Calendar from 'rc-calendar'
 import { hashHistory } from 'react-router'
+import ClassNames from 'classnames';
+import BetType from './betType';
+import PubSub from '../pubsub'
 
-export default React.createClass({
-    displayName: 'Audit',
+let token = null
+
+export default class Audit extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+          betTypes: ['football', 'basketball', 'horse-racing'],
+          betType: 'football'
+        }
+    }
+
+    componentDidMount () {
+      token = PubSub.subscribe(PubSub.BET_TYPE_CHANGE, ((topic, betType) => {
+        this.setState({
+          betType: betType
+        });
+      }).bind(this));
+    }
+
+    componentWillUnmount () {
+      PubSub.unsubscribe(token)
+    }
+
+
+    getBetTypeIconClassName(betType) {
+      return ClassNames(
+        'bet-type',
+        'icon-' + betType,
+        {
+          'active': this.state.betType === betType
+        });
+    }
+
+    changeBetType(betType) {
+      console.log('changing', betType);
+
+      this.setState({
+        betType: betType
+      });
+    }
+
     render() {
+      let me = this;
+      let betTypes = this.state.betTypes.map(function(betType, index) {
+          return <BetType 
+            key={index} 
+            selectedBetType={me.state.betType} 
+            betType={betType} />
+      });
+
         return (
             <div className="contianer auditlog">
                 <div className="row page-header">
@@ -21,9 +71,7 @@ export default React.createClass({
                     <div className="col-md-12">
                       <div className="search-criteria-container">
                         <div className="bet-types">
-                          <i className="bet-type icon-football active"></i>
-                          <i className="bet-type icon-basketball"></i>
-                          <i className="bet-type icon-horse-racing"></i>
+                          {betTypes}
                         </div>
                         <div className="keyword-container">
                           <input type="text" placeholder="Search with keywords & filters" />
@@ -181,6 +229,6 @@ export default React.createClass({
                     </div>
                 </div>
             </div>
-        )
+        );
     }
-})
+}
