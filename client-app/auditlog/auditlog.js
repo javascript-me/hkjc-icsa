@@ -17,6 +17,20 @@ export default React.createClass({
                     <div className="col-md-6">
                         <Calendar className="hidden"/>
                     </div>
+                    {/* Search Critiria Row */}
+                    <div className="col-md-12">
+                      <div className="search-criteria-container">
+                        <div className="bet-types">
+                          <i className="bet-type icon-football active"></i>
+                          <i className="bet-type icon-basketball"></i>
+                          <i className="bet-type icon-horse-racing"></i>
+                        </div>
+                        <div className="keyword-container">
+                          <input type="text" placeholder="Search with keywords & filters" />
+                        </div>
+                      </div>
+                    </div>
+                    {/* Search Result */}
                     <div className="col-xs-12">
                         <table className="table table-striped auditlog-table">
                           <thead className="table-header">
