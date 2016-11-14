@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
+import LoginService from '../login/login-service'
+import PubSub from '../pubsub'
 import menuBarData from './menuBarData.js'
 
+let token = null
 class MenuBar extends Component {
 	constructor (props) {
 		super(props)
+		this.displayName = 'Menu-Bar'
 		this.state = {
-			slimMode: false
+			slimMode: false,
+			menuBarShouldShow: LoginService.hasProfile()
 		}
 	}
 	render () {
 		return (
-			<div className='menu-bar-wrap row'>
-				<div style={{ lineHeight: '35px', backgroundColor: '#f3f3f3' }}>systemBar</div>
+			<div className='menu-bar-wrap row' style={{display: this.state.menuBarShouldShow ? 'block' : 'none'}}>
 				<div className={classnames('menu-container', {slimMode: this.state.slimMode})}>
 					<div className='events'>EVENTS</div>
 					<div className='menu-box'>
@@ -42,6 +46,14 @@ class MenuBar extends Component {
 	}
 	modeChange () {
 		this.setState({slimMode: !this.state.slimMode})
+	}
+	componentDidMount () {
+		token = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
+			this.setState({menuBarShouldShow: LoginService.hasProfile()})
+		})
+	}
+	componentWillUnmount () {
+		PubSub.unsubscribe(token)
 	}
 
 }
