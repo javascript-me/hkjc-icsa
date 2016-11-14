@@ -5,41 +5,67 @@ export default class SearchEnquiryPanel extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      verify : '1'
+      dateTimeFrom : "",
+      dateTimeTo : ""
     }
   }
 
-  handleSubmit () {
-    let fieldTFromLength = $('input[for=dateTimeFrom]').val().replace(/^[\s]*$/, "").length;
-    let fieldTToLength = $('input[for=dateTimeTo]').val().replace(/^[\s]*$/, "").length;
-    const { verify } = this.state.verify;
-    if (fieldTFromLength === 0 || fieldTToLength === 0){
-      this.setState({
-        verify : '2'
-      });
-    } else {
-      console.log('true');
-    }
+  componentDidMount () {
   }
 
-  tipsTextRender () {
-    const verify = this.state.verify;
-    if (verify === '1') {
-      return <span className="color-blue">* These fields are mandatory</span>;
-    } else if (verify === '2') {
+  renderTipsText () {
+    let dateTimeFrom = this.state.dateTimeFrom;
+    let dateTimeTo = this.state.dateTimeTo;
+    if (dateTimeFrom.replace(/^[\s]*$/, "").length === 0 || dateTimeTo.replace(/^[\s]*$/, "").length === 0) {
       return <span className="color-red">* Invalid fields are highlighted in red</span>;
+    } else if (dateTimeTo < dateTimeFrom) {
+      return <span className="color-red">* Invalid fields are highlighted in red</span>;
+    } else {
+      return <span className="color-blue">* These fields are mandatory</span>;
     }
+  }
+
+  changeDateTimeFrom (event) {
+    this.setState({
+      dateTimeFrom: event.target.value
+    });
+  }
+
+  changeDateTimeTo (event) {
+    this.setState({
+      dateTimeTo: event.target.value
+    });
   }
 
   render () {
-    return <div className="component-searchEnquiryPanel" style={{'margin': '50px'}}>
+    let dateTimeFrom = this.state.dateTimeFrom;
+    let dateTimeTo = this.state.dateTimeTo;
+    let fromClass = "form-group";
+    let toClass = "form-group";
+    if (dateTimeFrom.replace(/^[\s]*$/, "").length === 0) {
+      fromClass = "form-group has-error";
+    }
+    if (dateTimeTo.replace(/^[\s]*$/, "").length === 0) {
+      toClass = "form-group has-error";
+    }
+    if (dateTimeTo < dateTimeFrom) {
+      fromClass = "form-group has-error";
+      toClass = "form-group has-error";
+    }
+    return <div className="component-search-enquiry-panel">
       <div className="container-fluid pd-w10">
         <div className="row mg-w010">
           <div className="col-sm-3 pd-w10">
-            <DateTimeBlock inputFor="dateTimeFrom" inputText="Date Time From" isMandatory="true" />
+            <div className={fromClass}>
+              <label>Date Time From <span>*</span></label>
+              <DateTime inputFor="dateTimeFrom" dateTime={dateTimeFrom} handleVal={this.changeDateTimeFrom.bind(this)} />
+            </div>
           </div>
           <div className="col-sm-3 pd-w10">
-            <DateTimeBlock inputFor="dateTimeTo" inputText="Date Time To" isMandatory="true" />
+            <div className={toClass}>
+              <label>Date Time To <span>*</span></label>
+              <DateTime inputFor="dateTimeTo" dateTime={dateTimeTo} handleVal={this.changeDateTimeTo.bind(this)} />
+            </div>
           </div>
           <div className="col-sm-3 pd-w10">
             <div className="form-group">
@@ -87,7 +113,10 @@ export default class SearchEnquiryPanel extends React.Component{
         </div>
         <div className="row mg-w010">
           <div className="col-sm-3 pd-w10">
-            <DateTimeBlock inputFor="dateTimeGameStart" inputText="K.O Time/Game Start Game" isMandatory="false" />
+            <div className="form-group">
+              <label>K.O Time/Game Start Game</label>
+              <DateTime inputFor="dateTimeGameStart" />
+            </div>
           </div>
           <div className="col-sm-3 pd-w10">
             <div className="form-group">
@@ -155,23 +184,13 @@ export default class SearchEnquiryPanel extends React.Component{
           </div>
         </div>
         <div className="pannel-footer">
-          <div className="item-text">{this.tipsTextRender()}</div>
+          <div className="item-text">{this.renderTipsText()}</div>
           <div className="item-after">
             <button type="button" className="btn btn-link">Reset</button>
-            <button type="button" className="btn btn-primary" onClick={this.handleSubmit.bind(this)}>Search</button>
+            <button type="button" className="btn btn-primary">Search</button>
           </div>
         </div>
       </div>
-    </div>;
-  }
-}
-
-
-class DateTimeBlock extends React.Component {
-  render () {
-    return <div className="form-group">
-      <label>{this.props.inputText} {this.props.isMandatory === "true" ? <span>*</span> : ''}</label>
-      <DateTime inputFor={this.props.inputFor} />
     </div>;
   }
 }
