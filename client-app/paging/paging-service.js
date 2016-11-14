@@ -19,7 +19,7 @@ export default {
     setRightHandSideSymbol (selectedPageNumber, pages) {
         if (selectedPageNumber < this.totalPages - 4) {
             pages.push({label: "...", selected: false, hasHandCursor: false, greyOut: false})
-            pages.push({label: this.totalPages, selected: false, hasHandCursor: false, greyOut: false})
+            pages.push({label: this.totalPages, selected: false, hasHandCursor: true, greyOut: false})
         }
     },
 
@@ -65,7 +65,7 @@ export default {
 
         this.setRightHandSideSymbol(selectedPageNumber, pages);
 
-        pages.push({label:">", selected:false, hasHandCursor:(selectedPageNumber == this.totalPages) ? false : true, greyOut:(selectedPageNumber == this.totalPages) ? true : false})
+        pages.push({label:">", selected:false, hasHandCursor:(selectedPageNumber == this.totalPages) ? false : false, greyOut:(selectedPageNumber == this.totalPages) ? true : false})
 
         return {
             pages: pages,
