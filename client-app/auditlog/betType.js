@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 import ClassNames from 'classnames';
-import PubSub from '../pubsub'
+import PubSub from '../pubsub';
 
 export default class BetType extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-        }
+        };
     }
 
     getBetTypeIconClassName(betType) {
@@ -19,9 +19,11 @@ export default class BetType extends React.Component{
     }
 
     getChangeBetTypeHandler(betType) {
+        let me = this;
+        
     	return () => {
-    		if(this.props.selectedBetType !== betType) {
-    			PubSub.publish(PubSub.BET_TYPE_CHANGE, betType);
+    		if(me.props.selectedBetType !== betType) {
+    			PubSub.publish(PubSub[me.props.changeEventTopic], betType);
     		}    		
     	};
     }

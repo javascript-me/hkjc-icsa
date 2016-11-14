@@ -17,6 +17,10 @@
 
 	.search-criteria-container {
 		display: flex;
+		flex-wrap: wrap;
+		height: 40px;
+		margin-bottom: 20px;
+		overflow-y: visible;
 
 		.bet-types {
 			display: flex;
@@ -93,6 +97,44 @@
 				font-size: 16px;
 				height: 30px;
 				line-height: 30;
+			}
+		}
+
+		.filter-block-container {
+			align-items: center;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: flex-start;
+			margin-left: 16px;
+			width: calc(~"100% - 480px");
+
+			.filter-block {
+				background-color: rgba(124, 140, 175, 1);
+				background-position: right center;
+				background-size: 9px 9px;
+				color: rgba(255, 255, 255, 1);
+				flex: 0 0 auto;
+				font-family: Roboto-Medium;
+				font-size: 14px;
+				height: 30px;
+				margin-right: 10px;
+				padding: 6px 25px 6px 10px;
+				position: relative;
+
+				&::after {
+					background-image: url(common/cross.svg);
+					background-position: center center;
+					background-repeat: no-repeat;
+					background-size: 9px 9px;
+					content: "";
+					cursor: pointer;
+					height: 100px;
+					position: absolute;
+					right: 9px;
+					top: 0;
+					width: 9px;
+				}
 			}
 		}
 	}

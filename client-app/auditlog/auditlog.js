@@ -1,31 +1,54 @@
-﻿import React from 'react'
-import Calendar from 'rc-calendar'
-import { hashHistory } from 'react-router'
+﻿import React from 'react';
+import Calendar from 'rc-calendar';
+import { hashHistory } from 'react-router';
 import ClassNames from 'classnames';
+import PubSub from '../pubsub';
 import BetType from './betType';
-import PubSub from '../pubsub'
-
-let token = null
+import FilterBlock from './filterBlock';
 
 export default class Audit extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+          tokens: {
+            AUDITLOG_BET_TYPE_CHANGE: null,
+            AUDITLOG_REMOVE_FILTER: null
+          },
           betTypes: ['football', 'basketball', 'horse-racing'],
-          betType: 'football'
+          betType: 'football',
+          selectedFilters: [{
+            'name': 'Type',
+            'value': 'Some Type'
+          }, {
+            'name': 'Date To',
+            'value': 'Some day'
+          }]
         }
     }
 
     componentDidMount () {
-      token = PubSub.subscribe(PubSub.BET_TYPE_CHANGE, ((topic, betType) => {
+      this.state.tokens.AUDITLOG_BET_TYPE_CHANGE = PubSub.subscribe(PubSub.AUDITLOG_BET_TYPE_CHANGE, ((topic, betType) => {
         this.setState({
           betType: betType
         });
       }).bind(this));
+
+      this.state.tokens.AUDITLOG_REMOVE_FILTER = PubSub.subscribe(PubSub.AUDITLOG_REMOVE_FILTER, ((topic, filter) => {
+        let selectedFilters = this.state.selectedFilters,
+          filterIndex = selectedFilters.indexOf(filter);
+
+        selectedFilters.splice(filterIndex, 1);
+        this.setState({
+          selectedFilters: selectedFilters
+        });
+      }).bind(this));
+
+
     }
 
     componentWillUnmount () {
-      PubSub.unsubscribe(token)
+      PubSub.unsubscribe(this.state.tokens.AUDITLOG_BET_TYPE_CHANGE);
+      PubSub.unsubscribe(this.state.tokens.AUDITLOG_REMOVE_FILTER);
     }
 
 
@@ -39,8 +62,6 @@ export default class Audit extends React.Component{
     }
 
     changeBetType(betType) {
-      console.log('changing', betType);
-
       this.setState({
         betType: betType
       });
@@ -48,11 +69,19 @@ export default class Audit extends React.Component{
 
     render() {
       let me = this;
-      let betTypes = this.state.betTypes.map(function(betType, index) {
+      let betTypes = this.state.betTypes.map((betType, index) => {
           return <BetType 
             key={index} 
             selectedBetType={me.state.betType} 
-            betType={betType} />
+            betType={betType}
+            changeEventTopic={me.state.tokens.AUDITLOG_BET_TYPE_CHANGE} />;
+      });
+
+      let filterBlockes = this.state.selectedFilters.map((f, index)=>{
+          return <FilterBlock 
+            key={index}
+            filter={f} 
+            removeEventTopic={me.state.tokens.AUDITLOG_REMOVE_FILTER}/>;
       });
 
         return (
@@ -75,6 +104,9 @@ export default class Audit extends React.Component{
                         </div>
                         <div className="keyword-container">
                           <input type="text" placeholder="Search with keywords & filters" />
+                        </div>
+                        <div className="filter-block-container">
+                          {filterBlockes}
                         </div>
                       </div>
                     </div>
