@@ -69,11 +69,6 @@ export default class Audit extends React.Component{
       });
     }
 
-
-    showPageData() {
-        console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-    },
-
     render() {
       let me = this;
       let betTypes = this.state.betTypes.map((betType, index) => {
@@ -267,7 +262,6 @@ export default class Audit extends React.Component{
                         </table>
                     </div>
 
-                    <button onClick={this.showPageData}>forDebug</button>
                     <Paging />
                 </div>
             </div>
