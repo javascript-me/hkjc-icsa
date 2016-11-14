@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes } from 'react'
 
 import SearchFilter from './searchfilter'
 import SearchResult from './searchresult'
@@ -14,7 +14,7 @@ export const EDTYPES = {
 export default React.createClass({
 	displayName: 'TabContent',
 	propTypes: {
-		type: PropTypes.number
+		type: PropTypes.number.isRequired
 	},
 	getInitialState () {
 		return {
@@ -24,15 +24,18 @@ export default React.createClass({
 	},
 	componentDidMount () {
 		this.getFilter()
-		this.getResult()
 	},
-	componentWillUnmount: function () {
+	componentWillUnmount () {
+	},
+	onSearch (searchParam) {
+		searchParam.type = this.props.type
+		this.getResult(searchParam)
 	},
 	render () {
 		return (
-			<div ref='root'>
-				<SearchFilter data={this.state.filter} />
-				<SearchResult data={this.state.result} />
+			<div ref='root' className='ed-tabcontent'>
+				<SearchFilter filter={this.state.filter} onSearch={this.onSearch} />
+				<SearchResult result={this.state.result} />
 			</div>
 			)
 	},
@@ -42,10 +45,10 @@ export default React.createClass({
 			this.setState({filter})
 		}
 	},
-	async getResult () {
-		const result = await EventDirectoryService.getEventDirectoryResult()
+	async getResult (searchParam) {
+		const result = await EventDirectoryService.getEventDirectoryResult(searchParam)
 		if (result) {
-			this.setState({result})
+			this.setState({result: result.result})
 		}
 	}
 })

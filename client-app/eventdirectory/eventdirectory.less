@@ -1,6 +1,7 @@
 .row-eventdirectory {
 	background: @hkjcWhite;
 	width: 240px;
+	text-align: left;
 
 	.nav-tabs {
 		height: 78px;
@@ -71,7 +72,35 @@
 			}
 		}
 	}
+
+	.tooltip.top {
+		.tooltip-arrow {
+			left: 80%;
+			width: 10px;
+			height: 10px;
+			background-color: @hkjcWhite;
+			border: 1px solid #ACB8D1;
+			border-top-color: transparent;
+			border-left-color: transparent;
+			transform: rotate(45deg);
+		}
+	}
+
+	.tooltip-arrow {
+		left: 80%;
+	}
+
+	.tooltip-inner {
+		background-color: @hkjcWhite;
+		border: 1px solid #ACB8D1;
+		border-radius: 2px;
+		font-size: 14px;
+		color: #305091;
+		line-height: 30px;
+	}
 }
 
+@import "tabcontent.less";
 @import "searchfilter.less";
 @import "searchresult.less";
+@import "searchresultitem.less";

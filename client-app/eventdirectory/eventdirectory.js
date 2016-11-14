@@ -12,10 +12,9 @@ export default React.createClass({
 	},
 	componentDidMount () {
 		$('.nav-tabs li a', this.refs.root).click(this.handleTabClick)
+		$('.nav-tabs li a', this.refs.root).tooltip({trigger: 'hover'})
 	},
-	componentWillUnmount: function () {
-	},
-	handleTabClick: function (e) {
+	handleTabClick (e) {
 		let showContent = false
 		let parent = $(e.target).parent()
 
@@ -37,9 +36,9 @@ export default React.createClass({
 		return (
 			<div ref='root' className='row-eventdirectory'>
 				<ul className='nav nav-tabs' role='tablist'>
-					<li role='presentation'><a href='#ed-football' role='tab' data-toggle='tab' /></li>
-					<li role='presentation'><a href='#ed-basketball' role='tab' data-toggle='tab' /></li>
-					<li role='presentation'><a href='#ed-horseracing' role='tab' data-toggle='tab' /></li>
+					<li role='presentation'><a href='#ed-football' role='tab' data-toggle='tab' title='Football' /></li>
+					<li role='presentation'><a href='#ed-basketball' role='tab' data-toggle='tab' title='Basketball' /></li>
+					<li role='presentation'><a href='#ed-horseracing' role='tab' data-toggle='tab' title='Horse Racing' /></li>
 				</ul>
 
 				<div className={contentClasses}>

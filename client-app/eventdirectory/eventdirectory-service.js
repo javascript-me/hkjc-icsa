@@ -1,6 +1,10 @@
 // import _ from 'underscore'
 // import PubSub from '../pubsub'
 
+const postSearch = (data) => {
+	return $.post('api/eventdirectory', data)
+}
+
 export default {
 	async getEventDirectoryFilter () {
 		let result = {
@@ -16,11 +20,13 @@ export default {
 
 		return result
 	},
-	async getEventDirectoryResult () {
-		let result = {
-			test: 'result'
+	async getEventDirectoryResult (searchParam) {
+		let result = null
+		try {
+			result = await postSearch(searchParam)
+		} catch (failure) {
+			// returns null on failure
 		}
-
 		return result
 	}
 }

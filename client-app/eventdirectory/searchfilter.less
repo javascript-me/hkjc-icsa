@@ -1,6 +1,33 @@
 .ed-filter {
-	margin: 20px 20px 40px;
-	text-align: left;
+	padding: 20px 20px 40px;
+	background: #F3F3F3;
+
+	#ed-search {
+		input {
+			background: #FFFFFF;
+			height: 40px;
+			border: 1px solid #305091;
+			border-radius: 0;
+			text-indent: 21px;
+			background-image: url(eventdirectory/search.svg);
+			background-repeat: no-repeat;
+			background-position: 14px center;
+		}
+	}
+
+	#ed-advanced {
+		label {
+			font-size: 13px;
+			color: #0C2963;
+			line-height: 22px;
+
+			.caret {
+				margin-left: 7px;
+				border-top: 6px dashed;
+				color: #7C8DAF;
+			}
+		}
+	}
 
 	label {
 		font-size: 14px;
@@ -8,16 +35,7 @@
 		line-height: 22px;
 	}
 
-	#sf-advanced {
-		label {
-			font-size: 13px;
-			color: #0C2963;
-			line-height: 22px;
-		}
-	}
-
-	select,
-	input {
+	select {
 		font-size: 14px;
 		color: #305091;
 		letter-spacing: 0;

@@ -3,26 +3,33 @@ import React, { PropTypes } from 'react'
 export default React.createClass({
 	displayName: 'SearchFilter',
 	propTypes: {
-		data: PropTypes.object
+		onSearch: PropTypes.func.isRequired,
+		filter: PropTypes.object
 	},
-	componentDidMount () {
-		// $("#eventtype-select").multipleSelect();
+	handlerKeyUp (event) {
+		if (event.keyCode === 13) {
+			this.props.onSearch({
+				keyword: this.refs.search.value,
+				scenario: this.refs.scenario.value,
+				competition: this.refs.competition.value
+			})
+		}
 	},
 	render () {
 		return (
-			<form className='ed-filter' role='form'>
-				<div className='form-group'>
-					<input type='text' className='form-control' placeholder='Search' />
+			<div rel='root' className='ed-filter'>
+				<div id='ed-search' className='form-group'>
+					<input ref='search' type='text' className='form-control' onKeyUp={this.handlerKeyUp} placeholder='Search' />
 				</div>
 
-				<div id='sf-advanced' className='form-group'>
-					<label>Advanced Filters</label>
+				<div id='ed-advanced' className='form-group'>
+					<label>Advanced Filters<span className='caret' /></label>
 				</div>
 
 				<div className='form-group'>
 					<label>Event Type</label>
-					<select id='eventtype-select' className='form-control'>
-						{this.props.data && this.props.data.scenario.options.map((item, index) =>
+					<select ref='scenario' id='eventtype-select' className='form-control'>
+						{this.props.filter && this.props.filter.scenario.options.map((item, index) =>
 							<option key={item} value={item}>{item}</option>
 						)}
 					</select>
@@ -30,13 +37,13 @@ export default React.createClass({
 
 				<div className='form-group'>
 					<label>Competition</label>
-					<select className='form-control'>
-						{this.props.data && this.props.data.competition.options.map((item, index) =>
+					<select ref='competition' className='form-control'>
+						{this.props.filter && this.props.filter.competition.options.map((item, index) =>
 							<option key={item} value={item}>{item}</option>
 						)}
 					</select>
 				</div>
-			</form>
-			)
+			</div>
+		)
 	}
 })
