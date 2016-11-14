@@ -8,14 +8,15 @@ const options = { format: 'Letter', orientation: "landscape", header: { "height"
 const data = require('../json/auditlogs.json')
 
 
-router.post('/filterAuditlogs', (req, res) => {
-    const searchText = ""; // Write parameter according
+router.get('/filterAuditlogs', (req, res) => {
     const filtersArray = ""; // Write filters array accordingly
     const pageNumber = ""; // Write accordingly
     let status = 403
-    let result = { error: "Sorry we could not find auditlog with this search criteria", data: [searchText, filtersArray, pageNumber] }
+    let result = { error: "Sorry we could not find auditlog with this search criteria", data: [filtersArray, pageNumber] }
 
     /*Search and Filter code will go here*/
+    result = data;
+    res.send(result);
 })
 
 router.get('/search', (req, res) => {

@@ -14,14 +14,15 @@ const auditlogs = require('./json/auditlogs.json')
  * @apiParam {String} filter2.
  *
  */
-router.post('/filterAuditlogs', (req, res) => {
-	const searchText = ""; // Write parameter according
+router.get('/filterAuditlogs', (req, res) => {
 	const filtersArray = ""; // Write filters array accordingly
 	const pageNumber = ""; // Write accordingly
 	let status = 403
-	let result = { error: "Sorry we could not find auditlog with this search criteria", data: [searchText, filtersArray, pageNumber] }
+	let result = { error: "Sorry we could not find auditlog with this search criteria", data: [filtersArray, pageNumber] }
 
 	/*Search and Filter code will go here*/
+	result = auditlogs;
+	res.send(result);
 })
 
 export default router

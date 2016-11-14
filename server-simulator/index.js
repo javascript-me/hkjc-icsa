@@ -9,10 +9,12 @@ import auditlog from './API/auditlog'
 import APIconfig from './API/config'
 import config from './config'
 
+
 const server = express.Router()
 server.use('/users/', users)
 server.use('/auditlog/', auditlog)
 server.use('/config/', APIconfig)
+
 
 const app = express()
 app.use(
