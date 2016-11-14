@@ -7,6 +7,8 @@ export default class BetType extends React.Component{
         super(props);
         this.state = {
         };
+
+        this.changeBetTypeHandler = this.changeBetTypeHandler.bind(this);
     }
 
     getBetTypeIconClassName(betType) {
@@ -18,20 +20,16 @@ export default class BetType extends React.Component{
         });
     }
 
-    getChangeBetTypeHandler(betType) {
-        let me = this;
-        
-    	return () => {
-    		if(me.props.selectedBetType !== betType) {
-    			PubSub.publish(PubSub[me.props.changeEventTopic], betType);
-    		}    		
-    	};
+    changeBetTypeHandler() {       
+		if(this.props.selectedBetType !== this.props.betType) {
+			this.props.changeBetTypeEvent(this.props.betType);
+		}
     }
 
     render() {
         return (
               <i className={this.getBetTypeIconClassName(this.props.betType)} 
-              	onClick={this.getChangeBetTypeHandler(this.props.betType)}></i>
+              	onClick={this.changeBetTypeHandler}></i>
         );
     }
 }

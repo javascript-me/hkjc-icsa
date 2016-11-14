@@ -8,14 +8,18 @@ import FilterBlock from './filterBlock';
 import Paging from '../paging/paging'
 import AuditlogStore from './auditlog-store';
 
+let tokens = {
+  AUDITLOG_BET_TYPE_CHANGE: null,
+  AUDITLOG_REMOVE_FILTER: null
+};
+
+let AUDITLOG_BET_TYPE_CHANGE = null;
+let AUDITLOG_REMOVE_FILTER = null;
+
 export default class Audit extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-          tokens: {
-            AUDITLOG_BET_TYPE_CHANGE: null,
-            AUDITLOG_REMOVE_FILTER: null
-          },
           betTypes: ['football', 'basketball', 'horse-racing'],
           betType: 'football',
           selectedFilters: [{
@@ -26,31 +30,22 @@ export default class Audit extends React.Component{
             'value': 'Some day'
           }]
         }
+
+        this.changeBetType = this.changeBetType.bind(this);
+        this.removeSearchCriteriaFilter = this.removeSearchCriteriaFilter.bind(this);
+
     }
 
     componentDidMount () {
-      this.state.tokens.AUDITLOG_BET_TYPE_CHANGE = PubSub.subscribe(PubSub.AUDITLOG_BET_TYPE_CHANGE, ((topic, betType) => {
+      AUDITLOG_BET_TYPE_CHANGE = PubSub.subscribe(PubSub.AUDITLOG_BET_TYPE_CHANGE, ((topic, betType) => {
         this.setState({
           betType: betType
         });
       }).bind(this));
-
-      this.state.tokens.AUDITLOG_REMOVE_FILTER = PubSub.subscribe(PubSub.AUDITLOG_REMOVE_FILTER, ((topic, filter) => {
-        let selectedFilters = this.state.selectedFilters,
-          filterIndex = selectedFilters.indexOf(filter);
-
-        selectedFilters.splice(filterIndex, 1);
-        this.setState({
-          selectedFilters: selectedFilters
-        });
-      }).bind(this));
-
-
     }
 
     componentWillUnmount () {
-      PubSub.unsubscribe(this.state.tokens.AUDITLOG_BET_TYPE_CHANGE);
-      PubSub.unsubscribe(this.state.tokens.AUDITLOG_REMOVE_FILTER);
+      PubSub.unsubscribe(AUDITLOG_BET_TYPE_CHANGE);
     }
 
 
@@ -65,14 +60,23 @@ export default class Audit extends React.Component{
 
     changeBetType(betType) {
       this.setState({
-        betType: betType
+          betType: betType
       });
     }
 
+    removeSearchCriteriaFilter(filter) {
+        let selectedFilters = this.state.selectedFilters,
+          filterIndex = selectedFilters.indexOf(filter);
+
+        selectedFilters.splice(filterIndex, 1);
+        this.setState({
+          selectedFilters: selectedFilters
+        });
+    }
 
     showPageData() {
         console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-    },
+    }
 
     render() {
       let me = this;
@@ -81,14 +85,16 @@ export default class Audit extends React.Component{
             key={index} 
             selectedBetType={me.state.betType} 
             betType={betType}
-            changeEventTopic={me.state.tokens.AUDITLOG_BET_TYPE_CHANGE} />;
+            changeBetTypeEvent={me.changeBetType}
+            changeEventTopic="AUDITLOG_BET_TYPE_CHANGE" />;
       });
 
       let filterBlockes = this.state.selectedFilters.map((f, index)=>{
           return <FilterBlock 
             key={index}
             filter={f} 
-            removeEventTopic={me.state.tokens.AUDITLOG_REMOVE_FILTER}/>;
+            removeEvent={me.removeSearchCriteriaFilter}
+            removeEventTopic={tokens.AUDITLOG_REMOVE_FILTER}/>;
       });
 
         return (

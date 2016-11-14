@@ -7,17 +7,17 @@ export default class FilterBlock extends React.Component{
         super(props);
         this.state = {
         };
+
+        this.removeHandler = this.removeHandler.bind(this);
     }
 
-    removeFilterHandler() {
-    	let me = this;
-    	
-    	PubSub.publish(PubSub[me.props.removeEventTopic], me.props.filter);
+    removeHandler() {
+    	this.props.removeEvent(this.props.filter);
     }
 
     render() {
         return (
-              <span className="filter-block" onClick={this.removeFilterHandler}>
+              <span className="filter-block" onClick={this.removeHandler}>
               	{this.props.filter.value}
               </span>
         );
