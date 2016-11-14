@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-clock</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="❏-B1-Global-Navigation" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="System_bar_clock" transform="translate(-12.000000, -11.000000)" fill="#768FC2">
+            <g id="Component---Clock-/-Top_Title">
+                <g id="icon-clock" transform="translate(12.000000, 11.000000)">
+                    <g id="Group">
+                        <polygon id="Fill-4" points="9.44467905 4.49744595 8.09546959 4.49744595 8.09546959 9.89440541 12.8177939 12.7278243 13.4924291 11.6214324 9.44467905 9.21977027"></polygon>
+                        <path d="M8.99493446,16.1908601 C5.01918446,16.1908601 1.79900878,12.9706845 1.79900878,8.99493446 C1.79900878,5.01912365 5.01918446,1.79894797 8.99493446,1.79894797 C12.9706845,1.79894797 16.1908601,5.01912365 16.1908601,8.99493446 C16.1908601,12.9706845 12.9706845,16.1908601 8.99493446,16.1908601 M8.98593446,-1.82432432e-05 C4.02073176,-1.82432432e-05 -1.82432432e-05,4.02973176 -1.82432432e-05,8.99493446 C-1.82432432e-05,13.9601372 4.02073176,17.9898264 8.98593446,17.9898264 C13.9601372,17.9898264 17.9898872,13.9601372 17.9898872,8.99493446 C17.9898872,4.02973176 13.9601372,-1.82432432e-05 8.98593446,-1.82432432e-05" id="Fill-1"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
