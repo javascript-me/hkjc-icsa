@@ -1,6 +1,7 @@
 ﻿import React from 'react'
 import Calendar from 'rc-calendar'
 import { hashHistory } from 'react-router'
+import Paging from '../paging/paging'
 
 export default React.createClass({
     displayName: 'Audit',
@@ -179,6 +180,8 @@ export default React.createClass({
                           </tbody>
                         </table>
                     </div>
+
+                    <Paging />
                 </div>
             </div>
         )
