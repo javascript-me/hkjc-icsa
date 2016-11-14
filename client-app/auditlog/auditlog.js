@@ -1,39 +1,39 @@
-﻿import React from 'react'
+import React from 'react'
 import Calendar from 'rc-calendar'
 import { hashHistory } from 'react-router'
 
 export default React.createClass({
-    displayName: 'Audit',
-    render() {
-        return (
-            <div className="contianer auditlog">
-                <div className="row page-header">
-                    <p className="hkjc-breadcrumb">
+	displayName: 'Audit',
+	render () {
+		return (
+            <div className='contianer auditlog'>
+                <div className='row page-header'>
+                    <p className='hkjc-breadcrumb'>
                         Home \ Tool & Adminstration \ Audit
                     </p>
                     <h1>Audit Trail</h1>
                 </div>
                 <div className='row page-content'>
-                    <div className="col-md-6">
-                        <Calendar className="hidden"/>
+                    <div className='col-md-6'>
+                        <Calendar className='hidden' />
                     </div>
                     {/* Search Critiria Row */}
-                    <div className="col-md-12">
-                      <div className="search-criteria-container">
-                        <div className="bet-types">
-                          <i className="bet-type icon-football active"></i>
-                          <i className="bet-type icon-basketball"></i>
-                          <i className="bet-type icon-horse-racing"></i>
+                    <div className='col-md-12'>
+                      <div className='search-criteria-container'>
+                        <div className='bet-types'>
+                          <i className='bet-type icon-football active' />
+                          <i className='bet-type icon-basketball' />
+                          <i className='bet-type icon-horse-racing' />
                         </div>
-                        <div className="keyword-container">
-                          <input type="text" placeholder="Search with keywords & filters" />
+                        <div className='keyword-container'>
+                          <input type='text' placeholder='Search with keywords & filters' />
                         </div>
                       </div>
                     </div>
                     {/* Search Result */}
-                    <div className="col-xs-12">
-                        <table className="table table-striped auditlog-table">
-                          <thead className="table-header">
+                    <div className='col-xs-12'>
+                        <table className='table table-striped auditlog-table'>
+                          <thead className='table-header'>
                             <tr>
                               <th>Date/Time</th>
                               <th>User ID</th>
@@ -182,5 +182,5 @@ export default React.createClass({
                 </div>
             </div>
         )
-    }
+	}
 })

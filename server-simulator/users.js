@@ -45,11 +45,11 @@ router.post('/login', (req, res) => {
 	const username = req.body.username
 	const password = req.body.password || ''
 	let status = 403
-	let result = { error: "Sorry we could not find your credentials for this user", data: [username, password] }
+	let result = { error: 'Sorry we could not find your credentials for this user', data: [username, password] }
 
 	var user = users[username]
 
-	if (user && password == user.password) {
+	if (user && password === user.password) {
 		status = user.status
 		if (status === 200) {
 			result = user.profile

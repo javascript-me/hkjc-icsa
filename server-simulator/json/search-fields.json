@@ -1,0 +1,21 @@
+{
+  "dateTimeFrom" : "",
+  "dateTimeTo" : "",
+  "typeValue" : [
+    "test01",
+    "test02"
+  ],
+  "backEndID" : "",
+  "frontEndID" : "",
+  "eventLv1" : "",
+  "homeValue" : "",
+  "awayValue" : "",
+  "dateTimeGameStart" : "",
+  "userId" : "",
+  "userRole" : [],
+  "systemFunc" : [],
+  "betType" : [],
+  "device" : [],
+  "ipAddress" : "",
+  "errorCode" : ""
+}
