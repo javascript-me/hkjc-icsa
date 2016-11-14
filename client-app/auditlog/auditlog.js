@@ -5,6 +5,8 @@ import ClassNames from 'classnames';
 import PubSub from '../pubsub';
 import BetType from './betType';
 import FilterBlock from './filterBlock';
+import Paging from '../paging/paging'
+import AuditlogStore from './auditlog-store';
 
 export default class Audit extends React.Component{
     constructor(props) {
@@ -66,6 +68,11 @@ export default class Audit extends React.Component{
         betType: betType
       });
     }
+
+
+    showPageData() {
+        console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
+    },
 
     render() {
       let me = this;
@@ -259,6 +266,9 @@ export default class Audit extends React.Component{
                           </tbody>
                         </table>
                     </div>
+
+                    <button onClick={this.showPageData}>forDebug</button>
+                    <Paging />
                 </div>
             </div>
         );
