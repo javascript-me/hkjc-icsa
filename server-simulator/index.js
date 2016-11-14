@@ -6,10 +6,12 @@ import bodyParser from 'body-parser'
 import cache from '../server-cache'
 import users from './users'
 import config from './config'
+import auditlogs from './auditlogs'
 
 const server = express.Router()
 server.use('/users/', users)
 server.use('/config/', config)
+server.use('/auditlogs/', auditlogs)
 
 const app = express()
 app.use(

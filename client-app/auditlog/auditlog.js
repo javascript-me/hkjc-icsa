@@ -1,14 +1,95 @@
-import React from 'react'
-import Calendar from 'rc-calendar'
-import { hashHistory } from 'react-router'
+﻿import React from 'react';
+import Calendar from 'rc-calendar';
+import { hashHistory } from 'react-router';
+import ClassNames from 'classnames';
+import PubSub from '../pubsub';
+import BetType from './betType';
+import FilterBlock from './filterBlock';
+import Paging from '../paging/paging'
+import AuditlogStore from './auditlog-store';
 
-export default React.createClass({
-	displayName: 'Audit',
-	render () {
-		return (
-            <div className='contianer auditlog'>
-                <div className='row page-header'>
-                    <p className='hkjc-breadcrumb'>
+export default class Audit extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+          tokens: {
+            AUDITLOG_BET_TYPE_CHANGE: null,
+            AUDITLOG_REMOVE_FILTER: null
+          },
+          betTypes: ['football', 'basketball', 'horse-racing'],
+          betType: 'football',
+          selectedFilters: [{
+            'name': 'Type',
+            'value': 'Some Type'
+          }, {
+            'name': 'Date To',
+            'value': 'Some day'
+          }]
+        }
+    }
+
+    componentDidMount () {
+      this.state.tokens.AUDITLOG_BET_TYPE_CHANGE = PubSub.subscribe(PubSub.AUDITLOG_BET_TYPE_CHANGE, ((topic, betType) => {
+        this.setState({
+          betType: betType
+        });
+      }).bind(this));
+
+      this.state.tokens.AUDITLOG_REMOVE_FILTER = PubSub.subscribe(PubSub.AUDITLOG_REMOVE_FILTER, ((topic, filter) => {
+        let selectedFilters = this.state.selectedFilters,
+          filterIndex = selectedFilters.indexOf(filter);
+
+        selectedFilters.splice(filterIndex, 1);
+        this.setState({
+          selectedFilters: selectedFilters
+        });
+      }).bind(this));
+
+
+    }
+
+    componentWillUnmount () {
+      PubSub.unsubscribe(this.state.tokens.AUDITLOG_BET_TYPE_CHANGE);
+      PubSub.unsubscribe(this.state.tokens.AUDITLOG_REMOVE_FILTER);
+    }
+
+
+    getBetTypeIconClassName(betType) {
+      return ClassNames(
+        'bet-type',
+        'icon-' + betType,
+        {
+          'active': this.state.betType === betType
+        });
+    }
+
+    changeBetType(betType) {
+      this.setState({
+        betType: betType
+      });
+    }
+
+    render() {
+      let me = this;
+      let betTypes = this.state.betTypes.map((betType, index) => {
+          return <BetType
+            key={index}
+            selectedBetType={me.state.betType}
+            betType={betType}
+            changeEventTopic={me.state.tokens.AUDITLOG_BET_TYPE_CHANGE} />;
+      });
+
+      let filterBlockes = this.state.selectedFilters.map((f, index)=>{
+          return <FilterBlock
+            key={index}
+            filter={f}
+            removeEventTopic={me.state.tokens.AUDITLOG_REMOVE_FILTER}/>;
+      });
+
+        return (
+            <div className="contianer auditlog">
+                <div className="row page-header">
+                    <p className="hkjc-breadcrumb">
                         Home \ Tool & Adminstration \ Audit
                     </p>
                     <h1>Audit Trail</h1>
@@ -18,15 +99,16 @@ export default React.createClass({
                         <Calendar className='hidden' />
                     </div>
                     {/* Search Critiria Row */}
-                    <div className='col-md-12'>
-                      <div className='search-criteria-container'>
-                        <div className='bet-types'>
-                          <i className='bet-type icon-football active' />
-                          <i className='bet-type icon-basketball' />
-                          <i className='bet-type icon-horse-racing' />
+                    <div className="col-md-12">
+                      <div className="search-criteria-container">
+                        <div className="bet-types">
+                          {betTypes}
                         </div>
                         <div className='keyword-container'>
                           <input type='text' placeholder='Search with keywords & filters' />
+                        </div>
+                        <div className="filter-block-container">
+                          {filterBlockes}
                         </div>
                       </div>
                     </div>
@@ -179,8 +261,10 @@ export default React.createClass({
                           </tbody>
                         </table>
                     </div>
+
+                    <Paging />
                 </div>
             </div>
-        )
-	}
-})
+        );
+    }
+}
