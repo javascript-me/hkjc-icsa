@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-const users = require('./json/users.json')
+const users = require('../json/users.json')
 
 /**
  * @api {POST} /users/login Login
@@ -49,7 +49,7 @@ router.post('/login', (req, res) => {
 
 	var user = users[username]
 
-	if (user && password == user.password) {
+	if (user && password === user.password) {
 		status = user.status
 		if (status === 200) {
 			result = user.profile

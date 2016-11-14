@@ -4,7 +4,7 @@ import PubSub from '../pubsub'
 let auditlogsResponse = null
 
 const postSearchCriteria = (data) => {
-	return $.post('api/auditlogs/filterAuditlogs', data)
+	return $.post('api/auditlog/filterAuditlogs', data)
 }
 
 export default {
