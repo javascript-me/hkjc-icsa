@@ -1,12 +1,24 @@
 import React from 'react'
-import PagingService from './paging-service'
+import AuditlogStore from '../auditlog/auditlog-store';
 
 export default React.createClass({
 
     currentSelectedPageNumber: 1,
 
     getInitialState () {
-        return PagingService.getDataByPageNumber(1)
+        return AuditlogStore.pageData
+    },
+
+    componentDidMount() {
+        AuditlogStore.addChangeListener(this._onChange.bind(this));
+    },
+
+    componentWillUnmount() {
+        AuditlogStore.removeChangeListener(this._onChange.bind(this));
+    },
+
+    _onChange() {
+        this.setState(AuditlogStore.pageData);
     },
 
     getUserSelectedPageNumber (currentSelectedPageNumber, innerText, totalPages) {
@@ -39,8 +51,8 @@ export default React.createClass({
             this.state.totalPages
         )
 
-        var data = PagingService.getDataByPageNumber(this.currentSelectedPageNumber)
-        this.setState(data)
+        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber)
+
     },
 
     getClassName (page) {
