@@ -2,9 +2,15 @@
 import Calendar from 'rc-calendar'
 import { hashHistory } from 'react-router'
 import Paging from '../paging/paging'
+import AuditlogStore from './auditlog-store';
 
 export default React.createClass({
     displayName: 'Audit',
+
+    showPageData() {
+        console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
+    },
+
     render() {
         return (
             <div className="contianer auditlog">
@@ -181,6 +187,7 @@ export default React.createClass({
                         </table>
                     </div>
 
+                    <button onClick={this.showPageData}>forDebug</button>
                     <Paging />
                 </div>
             </div>
