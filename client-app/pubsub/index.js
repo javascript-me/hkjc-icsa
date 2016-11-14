@@ -1,7 +1,8 @@
 import PubSub from 'pubsub-js'
 
 const tokens = [
-	'LOGIN_CHANGE'
+	'LOGIN_CHANGE',
+	'AUDIT_FILTERS_CHANGE'
 ]
 
 for (const token of tokens) {

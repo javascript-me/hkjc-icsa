@@ -2,15 +2,45 @@
 import Calendar from 'rc-calendar'
 import { hashHistory } from 'react-router'
 import Paging from '../paging/paging'
+import Popup from '../popup'
+
 import AuditlogStore from './auditlog-store';
+import ExportService from './export-service'
+
+let token = null
+
+const doExport = async (format) => {
+    const file = ExportService.getFileURL(format, [])
+    if (file) {
+        window.open(file, "_blank");
+    }
+}
+
 
 export default React.createClass({
     displayName: 'Audit',
-
+    getInitialState () {
+      return {
+        data: [],
+        filters: [],
+        hasData: false
+      };
+    },
+    componentDidMount () {
+      token = PubSub.subscribe(PubSub.AUDIT_FILTERS_CHANGE, () => {
+        //we should handle the change of filters here
+      })
+    },
+    componentWillUnmount () {
+      PubSub.unsubscribe(token)
+    },
     showPageData() {
         console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
     },
-
+    //function to mock the event of loading data from the table
+    mockLoadData(){
+      this.setState({hasData: true})
+    },
     render() {
         return (
             <div className="contianer auditlog">
@@ -186,9 +216,28 @@ export default React.createClass({
                           </tbody>
                         </table>
                     </div>
-
-                    <button onClick={this.showPageData}>forDebug</button>
                     <Paging />
+                    {/* START FOOTER EXPORT */}
+                    <div className="col-md-12">
+                        <div className="pull-right">
+                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={() => this.state.hasData ? this.refs.exportPopup.show() : null }>Export</button>
+                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
+                            <Popup hideOnOverlayClicked ref="exportPopup" title="Export as ...">
+                                <div className="export-content">
+                                <div className="row">
+                                    <div className="col-md-4 col-md-offset-2">
+                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('PDF'); this.refs.exportPopup.hide() } }>PDF</button>
+                                   </div>
+                                    <div className="col-md-4">
+                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('CSV'); this.refs.exportPopup.hide() } }>CSV</button>
+                                    </div>
+                                </div></div>
+                            </Popup>
+                        </div>
+                    </div>
+                    {/* END FOOTER EXPORT */}
+                    <button onClick={this.showPageData}>forDebug</button>
+                    
                 </div>
             </div>
         )
