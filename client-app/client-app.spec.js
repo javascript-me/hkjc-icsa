@@ -11,7 +11,7 @@ describe('entry point', () => {
 	})
 
 	describe('-configOverride()', () => {
-		it('does nothing if hasProfile', () => {
+		it('calls config.override', () => {
 			const override = sinon.spy()
 			rewire(render.__set__('config', {override}))
 

@@ -9,6 +9,7 @@ import Dashboard from './dashboard/dashboard'
 import Audit from './auditlog/auditlog'
 import Navigation from './navigation/navigation'
 import config from './config'
+import SearchEnquiryPanel from './searchEnquiryPanel/searchEnquiryPanel'
 
 
 const hasAuth = (nextState, replace) => {
