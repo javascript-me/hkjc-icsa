@@ -80,4 +80,12 @@ describe('PagingService', () => {
 		assert.equal(PagingService.totalPages, PagingService.fixInvalidSelectedPageNumber(200))
 	})
 
+	it('hasHandCursor should be correct', () => {
+		assert.isNotOk(PagingService.getDataByPageNumber(1).pages[0].hasHandCursor)
+		assert.ok(PagingService.getDataByPageNumber(2).pages[0].hasHandCursor)
+
+		assert.isNotOk(PagingService.getDataByPageNumber(PagingService.totalPages).pages[9].hasHandCursor)
+		assert.ok(PagingService.getDataByPageNumber(99).pages[9].hasHandCursor)
+	})
+
 })

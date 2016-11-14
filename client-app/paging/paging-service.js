@@ -47,7 +47,7 @@ export default {
 
         var pages = []
 
-        pages.push({label:"<", selected:false, hasHandCursor:false, greyOut:(selectedPageNumber == 1) ? true : false})
+        pages.push({label:"<", selected:false, hasHandCursor:(selectedPageNumber == 1) ? false : true, greyOut:(selectedPageNumber == 1) ? true : false})
 
         this.setLeftHandSideSymbol(selectedPageNumber, pages);
 
@@ -65,7 +65,7 @@ export default {
 
         this.setRightHandSideSymbol(selectedPageNumber, pages);
 
-        pages.push({label:">", selected:false, hasHandCursor:true, greyOut:(selectedPageNumber == this.totalPages) ? true : false})
+        pages.push({label:">", selected:false, hasHandCursor:(selectedPageNumber == this.totalPages) ? false : true, greyOut:(selectedPageNumber == this.totalPages) ? true : false})
 
         return {
             pages: pages,
