@@ -15,9 +15,9 @@ const auditlogs = require('./json/auditlogs.json')
  *
  */
 router.post('/filterAuditlogs', (req, res) => {
-	const searchText = // Write parameter according
-	const filtersArray = // Write filters array accordingly
-	const pageNumber = // Write accordingly
+	const searchText = ""; // Write parameter according
+	const filtersArray = ""; // Write filters array accordingly
+	const pageNumber = ""; // Write accordingly
 	let status = 403
 	let result = { error: "Sorry we could not find auditlog with this search criteria", data: [searchText, filtersArray, pageNumber] }
 
