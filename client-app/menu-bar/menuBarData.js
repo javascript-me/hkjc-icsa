@@ -344,8 +344,8 @@ const menuList1 = [
 	{
 		iconSrc: 'Icon - Compile Monitoring.svg',
 		iconSrc_A: 'Icon - Compile MonitoringW.svg',
-		textL1: 'Compile',
-		textL2: 'Monitoring',
+		textL1: 'Odds',
+		textL2: 'Complitation',
 		subMenu: [
 			{
 				text: 'Data & Feed Configuration',
@@ -872,15 +872,8 @@ const menuList1 = [
 	{
 		iconSrc: 'Icon - In-Play Monitoring.svg',
 		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
-		textL1: 'Resualt&',
+		textL1: 'Result&',
 		textL2: 'Settlement'
-
-	},
-	{
-		iconSrc: 'Icon - Account Management.svg',
-		iconSrc_A: 'Icon - Account ManagementW.svg',
-		textL1: 'Account&',
-		textL2: 'Management'
 
 	},
 	{
@@ -888,6 +881,13 @@ const menuList1 = [
 		iconSrc_A: 'Icon - Data ManagementW.svg',
 		textL1: 'Data&',
 		textL2: 'Management'
+
+	},
+	{
+		iconSrc: 'Icon - Post Analysis.svg',
+		iconSrc_A: 'Icon - Post AnalysisW.svg',
+		textL1: 'Post Analysis',
+		textL2: '& Reporting'
 
 	},
 	{
@@ -904,13 +904,7 @@ const menuList1 = [
 		textL2: 'Administration'
 
 	},
-	{
-		iconSrc: 'Icon - Post Analysis.svg',
-		iconSrc_A: 'Icon - Post AnalysisW.svg',
-		textL1: 'Post',
-		textL2: 'Analysis'
-
-	}
+	
 
 ]
 
