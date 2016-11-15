@@ -1,12 +1,6 @@
 import _ from 'underscore'
 import PubSub from '../pubsub'
 
-let auditlogsResponse = null
-
-const postSearchCriteria = (data) => {
-	return $.post('api/auditlogs/filterAuditlogs', data)
-}
-
 export default {
 	 async doFilter (searchtext, filters, pagenumber) {
 		try {

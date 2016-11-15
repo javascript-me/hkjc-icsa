@@ -4,25 +4,35 @@ import Calendar from 'rc-calendar';
 import { hashHistory } from 'react-router';
 import ClassNames from 'classnames';
 import PubSub from '../pubsub';
-import AuditlogService from './auditlog-service';
 import BetType from './betType';
 import FilterBlock from './filterBlock';
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel';
 import Paging from '../paging/paging'
+import Popup from '../popup'
+
 import AuditlogStore from './auditlog-store';
+import ExportService from './export-service';
+import AuditlogService from './auditlog-service';
 
-let tokens = {
-  AUDITLOG_BET_TYPE_CHANGE: null,
-  AUDITLOG_REMOVE_FILTER: null
-};
+const doExport = async (format) => {
+    const file = ExportService.getFileURL(format, [])
+    if (file) {
+        window.open(file, "_blank");
+    }
+}
 
-let AUDITLOG_BET_TYPE_CHANGE = null;
-let AUDITLOG_REMOVE_FILTER = null;
-
-export default class Audit extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
+export default React.createClass({
+    displayName: 'Audit',
+    getInitialState () {
+      return {
+        data: [],
+        filters: [],
+        hasData: false,
+        tokens: {
+            AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
+            AUDITLOG_BET_TYPE_CHANGE: 'AUDITLOG_BET_TYPE_CHANGE',
+            AUDITLOG_REMOVE_FILTER: 'AUDITLOG_REMOVE_FILTER'
+          },
           betTypes: ['football', 'basketball', 'horse-racing'],
           betType: 'football',
           selectedFilters: [{
@@ -34,37 +44,19 @@ export default class Audit extends React.Component{
           }],
           showMoreFilter: false,
           isClickInMoreFilters: false
-        }
-
-        this.changeBetType = this.changeBetType.bind(this);
-        this.removeSearchCriteriaFilter = this.removeSearchCriteriaFilter.bind(this);
-        // this.toggleMoreFilter = this.toggleMoreFilter.bind(this);
-        this.clickInMoreFilters = this.clickInMoreFilters.bind(this);
-        this.showMoreFilter = this.showMoreFilter.bind(this);
-        this.pageClick = this.pageClick.bind(this);
-        this.setFilters = this.setFilters(this);
-
-    }
-
-    componentWillMount() {
+      };
+    },
+    componentDidMount: function () {
         document.addEventListener('click', this.pageClick, false);
-    }
+    },
 
-    componentDidMount () {
-      AUDITLOG_BET_TYPE_CHANGE = PubSub.subscribe(PubSub.AUDITLOG_BET_TYPE_CHANGE, ((topic, betType) => {
-        this.setState({
-          betType: betType
-        });
-      }).bind(this));
-    }
+    componentWillUnmount: function () {
+        PubSub.unsubscribe(AUDITLOG_BET_TYPE_CHANGE);
 
-    componentWillUnmount () {
-      PubSub.unsubscribe(AUDITLOG_BET_TYPE_CHANGE);
+        document.removeEventListener('click', this.pageClick, false);
+    },
 
-      document.removeEventListener('click', this.pageClick, false);
-    }
-
-    pageClick(event) {
+    pageClick: function(event) {
         let keywordTag = this.refs.keyword,
             keywordElement = ReactDOM.findDOMNode(keywordTag), 
             isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
@@ -76,25 +68,25 @@ export default class Audit extends React.Component{
         }
 
         this.hideMoreFilter();
-    }
+    },
 
-    getBetTypeIconClassName(betType) {
+    getBetTypeIconClassName: function(betType) {
       return ClassNames(
         'bet-type',
         'icon-' + betType,
         {
           'active': this.state.betType === betType
         });
-    }
+    },
 
-    changeBetType(betType) {
+    changeBetType: function(betType) {
       this.setState({
           betType: betType,
           showMoreFilter: false
       });
-    }
+    },
 
-    removeSearchCriteriaFilter(filter) {
+    removeSearchCriteriaFilter: function(filter) {
         let selectedFilters = this.state.selectedFilters,
           filterIndex = selectedFilters.indexOf(filter);
 
@@ -103,74 +95,79 @@ export default class Audit extends React.Component{
           selectedFilters: selectedFilters,
           showMoreFilter: false
         });
-    }
+    },
 
-    setFilters(filters) {
+    setFilters: function(filters) {
         this.setState({
           selectedFilters: filters
         });
-    }
+    },
 
-    resetFilters() {
+    resetFilters: function() {
         this.setState({
           selectedFilters: []
         });
-    }
+    },
 
-    async searchAuditlog(filters) {
+    searchAuditlog: async function(filters) {
         this.setFilters(filters);
         this.hideMoreFilter();
         await AuditlogService.postSearchCriteria();
-    }
+    },
 
-    clickInMoreFilters() {
+    clickInMoreFilters: function() {
         this.setState({
           isClickInMoreFilters: true
         });
-    }
+    },
 
-    showMoreFilter(event) {
+    showMoreFilter: function(event) {
         event.stopPropagation()
 
         this.setState({
             showMoreFilter: true
         });
-    }
+    },
 
-    hideMoreFilter() {
+    hideMoreFilter: function() {
         this.setState({
             showMoreFilter: false
         });
-    }
+    },
 
-    setFilters(filters, hidePopup) {
+    setFilters: function(filters, hidePopup) {
         if(hidePopup) {
             this.hideMoreFilter();
         }
 
-    }
+    },
 
-    showPageData() {
+    showPageData: function() {
         console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-    }
-
-    render() {
+        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
+        
+    },
+    //function to mock the event of loading data from the table
+    mockLoadData: function() {
+      this.setState({hasData: true})
+    },
+    render: function() {
       let me = this,
         betTypes = this.state.betTypes.map((betType, index) => {
-          return <BetType 
-            key={index} 
-            selectedBetType={me.state.betType} 
+          return <BetType
+            key={index}
+            selectedBetType={me.state.betType}
             betType={betType}
             changeBetTypeEvent={me.changeBetType}
-            changeEventTopic="AUDITLOG_BET_TYPE_CHANGE" />;
+            changeEventTopic={me.state.tokens.AUDITLOG_SEARCH} />;
         }),
 
         filterBlockes = this.state.selectedFilters.map((f, index)=>{
-          return <FilterBlock 
+          return <FilterBlock
             key={index}
-            filter={f} 
+            filter={f}
             removeEvent={me.removeSearchCriteriaFilter}
-            removeEventTopic={tokens.AUDITLOG_REMOVE_FILTER}/>;
+            removeEventTopic={me.state.tokens.AUDITLOG_SEARCH}/>;
         }),
 
         keywordContainerClassName = ClassNames(
@@ -191,8 +188,8 @@ export default class Audit extends React.Component{
                     <h1>Audit Trail</h1>
                 </div>
                 <div className='row page-content'>
-                    <div className="col-md-6">
-                        <Calendar className="hidden"/>
+                    <div className='col-md-6'>
+                        <Calendar className='hidden' />
                     </div>
                     {/* Search Critiria Row */}
                     <div className="col-md-12">
@@ -212,9 +209,9 @@ export default class Audit extends React.Component{
                       </div>
                     </div>
                     {/* Search Result */}
-                    <div className="col-xs-12">
-                        <table className="table table-striped auditlog-table">
-                          <thead className="table-header">
+                    <div className='col-xs-12'>
+                        <table className='table table-striped auditlog-table'>
+                          <thead className='table-header'>
                             <tr>
                               <th>Date/Time</th>
                               <th>User ID</th>
@@ -360,11 +357,29 @@ export default class Audit extends React.Component{
                           </tbody>
                         </table>
                     </div>
-
-                    <button onClick={this.showPageData}>forDebug</button>
                     <Paging />
+                    {/* START FOOTER EXPORT */}
+                    <div className="col-md-12">
+                        <div className="pull-right">
+                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={() => this.state.hasData ? this.refs.exportPopup.show() : null }>Export</button>
+                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
+                            <Popup hideOnOverlayClicked ref="exportPopup" title="Export as ...">
+                                <div className="export-content">
+                                <div className="row">
+                                    <div className="col-md-4 col-md-offset-2">
+                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('PDF'); this.refs.exportPopup.hide() } }>PDF</button>
+                                   </div>
+                                    <div className="col-md-4">
+                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('CSV'); this.refs.exportPopup.hide() } }>CSV</button>
+                                    </div>
+                                </div></div>
+                            </Popup>
+                        </div>
+                    </div>
+                    {/* END FOOTER EXPORT */}
+                    <button onClick={this.showPageData}>forDebug</button>                    
                 </div>
             </div>
         );
     }
-}
+});
