@@ -5,6 +5,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 
     pageData: null,
     auditlogs: null,
+    forDebug: null,
 
     getDataByPageNumber (selectedPageNumber, sortingObject) {
         var self = this
@@ -22,6 +23,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
             success: function (data) {
                 self.pageData = data.pageData
                 self.auditlogs = data.auditlogs
+                self.forDebug = data.forDebug
                 self.emitChange()
             },
             error: function (xhr, status, error) {
