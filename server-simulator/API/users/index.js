@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-const users = require('./json/users.json')
+const users = require('../json/users.json')
 
 /**
  * @api {POST} /users/login Login
