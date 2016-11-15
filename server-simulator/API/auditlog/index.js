@@ -1,14 +1,14 @@
 ﻿import express from 'express'
 import helper from './export_helper'
-import fs from 'fs'
 import pdf from 'html-pdf'
+import PagingService from '../../../client-app/paging/paging-service'
 
 const router = express.Router()
 const options = { format: 'Letter', orientation: "landscape", header: { "height": "15mm"} }
 const data = require('../json/auditlogs.json')
 
 
-router.get('/filterAuditlogs', (req, res) => {
+router.post('/filterAuditlogs', (req, res) => {
     const filtersArray = ""; // Write filters array accordingly
     const pageNumber = ""; // Write accordingly
     let status = 403
@@ -16,6 +16,9 @@ router.get('/filterAuditlogs', (req, res) => {
 
     /*Search and Filter code will go here*/
     result = data;
+    // result.pageData = PagingService.getDataByPageNumber(Number(req.body.pagenumber))
+    result.pageData = PagingService.getDataByPageNumber(Number(req.body.pagenumber))
+
     res.send(result);
 })
 

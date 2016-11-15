@@ -1,6 +1,6 @@
 export default {
 
-    totalPages: 100,
+    totalPages: 150,
 
     createPageListByRange (pages, selectedPageNumber, range) {
         for (var i = range.startIndex ; i <= range.endIndex ; i++) {
