@@ -37,6 +37,14 @@ export default class SearchEnquiryPanel extends React.Component{
     });
   }
 
+  searchHandler() {
+
+  }
+
+  resetHandler() {
+
+  }
+
   render () {
     let dateTimeFrom = this.state.dateTimeFrom;
     let dateTimeTo = this.state.dateTimeTo;
@@ -186,8 +194,8 @@ export default class SearchEnquiryPanel extends React.Component{
         <div className="pannel-footer">
           <div className="item-text">{this.renderTipsText()}</div>
           <div className="item-after">
-            <button type="button" className="btn btn-link">Reset</button>
-            <button type="button" className="btn btn-primary">Search</button>
+            <button type="button" className="btn btn-link" onClick="this.resetHandler">Reset</button>
+            <button type="button" className="btn btn-primary" onClick="this.searchHandler">Search</button>
           </div>
         </div>
       </div>

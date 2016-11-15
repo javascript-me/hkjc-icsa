@@ -1,10 +1,13 @@
 ﻿import React from 'react';
+import ReactDOM from 'react-dom';
 import Calendar from 'rc-calendar';
 import { hashHistory } from 'react-router';
 import ClassNames from 'classnames';
 import PubSub from '../pubsub';
+import AuditlogService from './auditlog-service';
 import BetType from './betType';
 import FilterBlock from './filterBlock';
+import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel';
 import Paging from '../paging/paging'
 import AuditlogStore from './auditlog-store';
 
@@ -28,12 +31,23 @@ export default class Audit extends React.Component{
           }, {
             'name': 'Date To',
             'value': 'Some day'
-          }]
+          }],
+          showMoreFilter: false,
+          isClickInMoreFilters: false
         }
 
         this.changeBetType = this.changeBetType.bind(this);
         this.removeSearchCriteriaFilter = this.removeSearchCriteriaFilter.bind(this);
+        // this.toggleMoreFilter = this.toggleMoreFilter.bind(this);
+        this.clickInMoreFilters = this.clickInMoreFilters.bind(this);
+        this.showMoreFilter = this.showMoreFilter.bind(this);
+        this.pageClick = this.pageClick.bind(this);
+        this.setFilters = this.setFilters(this);
 
+    }
+
+    componentWillMount() {
+        document.addEventListener('click', this.pageClick, false);
     }
 
     componentDidMount () {
@@ -46,8 +60,23 @@ export default class Audit extends React.Component{
 
     componentWillUnmount () {
       PubSub.unsubscribe(AUDITLOG_BET_TYPE_CHANGE);
+
+      document.removeEventListener('click', this.pageClick, false);
     }
 
+    pageClick(event) {
+        let keywordTag = this.refs.keyword,
+            keywordElement = ReactDOM.findDOMNode(keywordTag), 
+            isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
+            isInside = isInsideKeywordElement || this.state.isClickInMoreFilters;
+
+        if(!this.state.showMoreFilter || isInside) {
+            this.setState({isClickInMoreFilters:false});
+            return;
+        }
+
+        this.hideMoreFilter();
+    }
 
     getBetTypeIconClassName(betType) {
       return ClassNames(
@@ -60,7 +89,8 @@ export default class Audit extends React.Component{
 
     changeBetType(betType) {
       this.setState({
-          betType: betType
+          betType: betType,
+          showMoreFilter: false
       });
     }
 
@@ -70,8 +100,54 @@ export default class Audit extends React.Component{
 
         selectedFilters.splice(filterIndex, 1);
         this.setState({
-          selectedFilters: selectedFilters
+          selectedFilters: selectedFilters,
+          showMoreFilter: false
         });
+    }
+
+    setFilters(filters) {
+        this.setState({
+          selectedFilters: filters
+        });
+    }
+
+    resetFilters() {
+        this.setState({
+          selectedFilters: []
+        });
+    }
+
+    async searchAuditlog(filters) {
+        this.setFilters(filters);
+        this.hideMoreFilter();
+        await AuditlogService.postSearchCriteria();
+    }
+
+    clickInMoreFilters() {
+        this.setState({
+          isClickInMoreFilters: true
+        });
+    }
+
+    showMoreFilter(event) {
+        event.stopPropagation()
+
+        this.setState({
+            showMoreFilter: true
+        });
+    }
+
+    hideMoreFilter() {
+        this.setState({
+            showMoreFilter: false
+        });
+    }
+
+    setFilters(filters, hidePopup) {
+        if(hidePopup) {
+            this.hideMoreFilter();
+        }
+
     }
 
     showPageData() {
@@ -79,23 +155,32 @@ export default class Audit extends React.Component{
     }
 
     render() {
-      let me = this;
-      let betTypes = this.state.betTypes.map((betType, index) => {
+      let me = this,
+        betTypes = this.state.betTypes.map((betType, index) => {
           return <BetType 
             key={index} 
             selectedBetType={me.state.betType} 
             betType={betType}
             changeBetTypeEvent={me.changeBetType}
             changeEventTopic="AUDITLOG_BET_TYPE_CHANGE" />;
-      });
+        }),
 
-      let filterBlockes = this.state.selectedFilters.map((f, index)=>{
+        filterBlockes = this.state.selectedFilters.map((f, index)=>{
           return <FilterBlock 
             key={index}
             filter={f} 
             removeEvent={me.removeSearchCriteriaFilter}
             removeEventTopic={tokens.AUDITLOG_REMOVE_FILTER}/>;
-      });
+        }),
+
+        keywordContainerClassName = ClassNames(
+        'keyword-container', {
+            'active': this.state.showMoreFilter
+        }),
+
+        moreFilterContianerClassName = ClassNames('more-filter-popup', {
+            'active': this.state.showMoreFilter
+        });
 
         return (
             <div className="contianer auditlog">
@@ -115,11 +200,14 @@ export default class Audit extends React.Component{
                         <div className="bet-types">
                           {betTypes}
                         </div>
-                        <div className="keyword-container">
-                          <input type="text" placeholder="Search with keywords & filters" />
+                        <div className={keywordContainerClassName}>
+                          <input type="text" placeholder="Search with keywords & filters" onClick={this.showMoreFilter} ref="keyword" />
                         </div>
                         <div className="filter-block-container">
                           {filterBlockes}
+                        </div> 
+                        <div className={moreFilterContianerClassName} onClick={this.clickInMoreFilters}>
+                          <SearchEnquiryPanel setFilterEvent={this.setFilters}/>
                         </div>
                       </div>
                     </div>
