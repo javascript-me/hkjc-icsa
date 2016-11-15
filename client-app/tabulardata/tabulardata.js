@@ -74,7 +74,7 @@ export default React.createClass({
             </tr>
         });
 
-        return  <table className="table table-striped auditlog-table">
+        return  <table className="table-striped table auditlog-table">
             <thead className="table-header">
             <tr>
                 <th>Date/Time</th>
@@ -97,7 +97,9 @@ export default React.createClass({
                 <th>Device</th>
             </tr>
             </thead>
-            {rows}
+            <tbody>
+                {rows}
+            </tbody>
         </table>
 
     }
