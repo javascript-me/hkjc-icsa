@@ -1,26 +1,16 @@
 import React from 'react'
+import SearchEnquiryDataService from './searchEnquiryPanel-service'
 import DateTime from '../dateTime/dateTime'
+import SelectCom from '../select/select'
+
+const datas = SearchEnquiryDataService.getData();
 
 export default class SearchEnquiryPanel extends React.Component {
+
 	constructor (props) {
 		super(props)
 		this.state = {
-			dateTimeFrom: '',
-			dateTimeTo: '',
-			typeValue: '',
-			backEndID: '',
-			frontEndID: '',
-			eventLv1: '',
-			homeValue: '',
-			awayValue: '',
-			dateTimeGameStart: '',
-			userId: '',
-			userRole: '',
-			systemFunc: '',
-			betType: '',
-			device: '',
-			ipAddress: '',
-			errorCode: '',
+			datas: datas,
 			tipsFlag: 1,
 			errorDateTimeFrom: 0,
 			errorDateTimeTo: 0,
@@ -29,8 +19,8 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	renderTipsText () {
-		let { dateTimeTo, dateTimeFrom, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state
-		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorIPAddress === 0 || dateTimeTo < dateTimeFrom)) {
+		let { datas, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state;
+		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorIPAddress === 0 || datas.dateTimeTo < datas.dateTimeFrom)) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
 			return <span className='color-blue'>* These fields are mandatory</span>
@@ -88,7 +78,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	render () {
-		let { errorDateTimeFrom, errorDateTimeTo, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
+		let { datas, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state
 		let fromClass = 'form-group'
 		let toClass = 'form-group'
 		let ipClass = 'form-group'
@@ -101,7 +91,7 @@ export default class SearchEnquiryPanel extends React.Component {
 		if (tipsFlag === 0 && errorIPAddress === 0) {
 			ipClass = 'form-group has-error'
 		}
-		if (tipsFlag === 0 && dateTimeTo < dateTimeFrom) {
+		if (tipsFlag === 0 && datas.dateTimeTo < datas.dateTimeFrom) {
 			fromClass = 'form-group has-error'
 			toClass = 'form-group has-error'
 		}
@@ -111,27 +101,19 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={fromClass}>
 							<label>Date Time From <span>*</span></label>
-							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom} handleVal={this.handleChange.bind(this, 'dateTimeFrom')} />
+							<DateTime inputFor='dateTimeFrom' dateTime={datas.dateTimeFrom} handleVal={this.handleChange.bind(this, 'dateTimeFrom')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className={toClass}>
 							<label>Date Time To <span>*</span></label>
-							<DateTime inputFor='dateTimeTo' dateTime={dateTimeTo} handleVal={this.handleChange.bind(this, 'dateTimeTo')} />
+							<DateTime inputFor='dateTimeTo' dateTime={datas.dateTimeTo} handleVal={this.handleChange.bind(this, 'dateTimeTo')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Type</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'typeValue')}>
-								<option>All</option>
-								<option>Event</option>
-								<option>Bet Type and Feature</option>
-								<option>Odds</option>
-								<option>Risk Limit</option>
-								<option>Selling Control</option>
-								<option>Result</option>
-							</select>
+							<SelectCom datas={datas.typeValue} handleVal={this.handleChange.bind(this, 'typeValue')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
