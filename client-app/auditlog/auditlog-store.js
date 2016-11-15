@@ -4,16 +4,21 @@ import {EventEmitter} from 'events'
 const AuditlogStore = assign({}, EventEmitter.prototype, {
 
     pageData: null,
+    auditlogs: null,
 
     getDataByPageNumber (selectedPageNumber) {
         var self = this
 
         $.ajax({
+
             url: 'api/auditlog/filterAuditlogs',
             data: {pagenumber:selectedPageNumber},
             type: 'POST',
+
             success: function (data) {
                 self.pageData = data.pageData
+                self.auditlogs = data.auditlogs
+
                 self.emitChange()
             },
             error: function (xhr, status, error) {

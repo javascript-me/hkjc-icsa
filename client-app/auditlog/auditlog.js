@@ -84,11 +84,6 @@ export default React.createClass({
         betType: betType
       });
     },
-    showPageData() {
-        console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
-        
-    },
     //function to mock the event of loading data from the table
     mockLoadData(){
       this.setState({hasData: true})
@@ -160,8 +155,6 @@ export default React.createClass({
                         </div>
                     </div>
                     {/* END FOOTER EXPORT */}
-                    <button onClick={this.showPageData}>forDebug</button>
-                    
                 </div>
             </div>
         );

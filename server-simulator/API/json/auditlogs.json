@@ -1,4 +1,4 @@
-{"auditlogs":[
+
   {"auditlogs":[
                 {"date_time":"23 October 2016 10:30:30", "user_id":"Jerry.Li", "user_name":"Jerry Li", "Type":"Result", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Result", "user_role":"System Administrator", "ip_address":"200.3.45.33" },
                 {"date_time":"23 October 2016 10:30:30", "user_id":"Jerry.Li", "user_name":"Jerry Li", "Type":"Result", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Result", "user_role":"System Administrator", "ip_address":"200.3.45.33" },
@@ -99,7 +99,5 @@
                 {"date_time":"23 October 2016 09:30:30", "user_id":"Karthik.Blay", "user_name":"Karthik Blay", "Type":"Odds", "function_module":"Auto Stop-Sell by Pre-defined Rules", "function_event_detail":"BUpdate Odds", "user_role":"Director of Group Treasury", "ip_address":"199.34.2.192" },
                 {"date_time":"23 October 2016 09:30:30", "user_id":"Karthik.Blay", "user_name":"Karthik Blay", "Type":"Odds", "function_module":"Auto Stop-Sell by Pre-defined Rules", "function_event_detail":"YUpdate Odds", "user_role":"Director of Group Treasury", "ip_address":"199.34.2.192" },
                 {"date_time":"23 October 2016 09:30:30", "user_id":"Karthik.Blay", "user_name":"Karthik Blay", "Type":"Odds", "function_module":"Auto Stop-Sell by Pre-defined Rules", "function_event_detail":"ZUpdate Odds", "user_role":"Director of Group Treasury", "ip_address":"199.34.2.192" }
-
-]}
 
 ]}
