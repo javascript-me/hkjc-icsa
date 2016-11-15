@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import LoginService from '../login/login-service'
 import PubSub from '../pubsub'
 import menuData from './menuBarData.js'
+import EventDirectory from '../eventdirectory/eventdirectory'
 
 let token = null
 class MenuBar extends Component {
@@ -21,7 +22,7 @@ class MenuBar extends Component {
 		return (
 			<div className='menu-bar-wrap row' style={{display: this.state.menuBarShouldShow ? 'block' : 'none'}}>
 				<div className={classnames('menu-container', {slimMode: this.state.slimMode})}>
-					<div className='events'>EVENTS</div>
+					<EventDirectory />
 					<div className='menu-box'>
 						{menuBarData.length > 0 && menuBarData.map((item, idx) => (
 							<div className='menu-unit' key={idx}>

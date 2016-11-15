@@ -1,0 +1,166 @@
+@footballLevel1: #70AD27;
+@basketballLevel1: #FC7300;
+@horseracingLevel1: #B49462;
+@footballLevel2: #97C363;
+@basketballLevel2: #FF963E;
+@horseracingLevel2: #FFC000;
+
+.row-eventdirectory {
+	background: @hkjcWhite;
+	width: 240px;
+	text-align: left;
+
+	.nav-tabs {
+		border: 0;
+
+		li {
+			margin: 0;
+
+			a {
+				width: 80px;
+				height: 68px;
+				border: 0;
+				padding: 0;
+				margin: 0;
+				border-radius: 0;
+				background-color: #25417A;
+				background-repeat: no-repeat;
+				background-position: center center;
+			}
+
+			&.active {
+				a#football-tab {
+					background-color: @footballLevel1;
+				}
+
+				a#basketball-tab {
+					background-color: @basketballLevel1;
+				}
+
+				a#horseracing-tab {
+					background-color: @horseracingLevel1;
+				}
+			}
+		}
+
+		li:nth-child(1) {
+			&:not(.active) {
+				a {
+					background-image: url(eventdirectory/football-inactive.svg);
+				}
+			}
+
+			&.active {
+				a {
+					background-image: url(eventdirectory/football-active.svg);
+				}
+			}
+		}
+
+		li:nth-child(2) {
+			&:not(.active) {
+				a {
+					background-image: url(eventdirectory/basketball-inactive.svg);
+				}
+			}
+
+			&.active {
+				a {
+					background-image: url(eventdirectory/basketball-active.svg);
+				}
+			}
+		}
+
+		li:nth-child(3) {
+			&:not(.active) {
+				a {
+					background-image: url(eventdirectory/horseracing-inactive.svg);
+				}
+			}
+
+			&.active {
+				a {
+					background-image: url(eventdirectory/horseracing-active.svg);
+				}
+			}
+		}
+	}
+
+	.tab-content {
+		position: absolute;
+		z-index: 99;
+		width: 240px;
+
+		.line {
+			width: 100%;
+			height: 10px;
+		}
+
+		#football-panel {
+			.line,
+			.level1,
+			.badge {
+				background-color: @footballLevel1;
+			}
+
+			.level2 {
+				background-color: @footballLevel2;
+			}
+		}
+
+		#basketball-panel {
+			.line,
+			.level1,
+			.badge {
+				background-color: @basketballLevel1;
+			}
+
+			.level2 {
+				background-color: @basketballLevel2;
+			}
+		}
+
+		#horseracing-panel {
+			.line,
+			.level1,
+			.badge {
+				background-color: @horseracingLevel1;
+			}
+
+			.level2 {
+				background-color: @horseracingLevel2;
+			}
+		}
+	}
+
+	.tooltip.top {
+		.tooltip-arrow {
+			left: 80%;
+			width: 10px;
+			height: 10px;
+			background-color: @hkjcWhite;
+			border: 1px solid #ACB8D1;
+			border-top-color: transparent;
+			border-left-color: transparent;
+			transform: rotate(45deg);
+		}
+	}
+
+	.tooltip-arrow {
+		left: 80%;
+	}
+
+	.tooltip-inner {
+		background-color: @hkjcWhite;
+		border: 1px solid #ACB8D1;
+		border-radius: 2px;
+		font-size: 14px;
+		color: #305091;
+		line-height: 30px;
+	}
+}
+
+@import "tabcontent.less";
+@import "searchfilter.less";
+@import "searchresult.less";
+@import "searchresultitem.less";
