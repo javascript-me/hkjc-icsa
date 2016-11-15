@@ -11,24 +11,25 @@ export default React.createClass({
 		return { format: formats.PDF }
 	},
 	onFormatChange (e) {
-		this.setState({
-			format: e.currentTarget.value
-		})
+		
+	},
+	changeFormat(e){
+		this.setState({ format: e.currentTarget.attributes["value"].nodeValue }) 
 
 		if (this.props.onChange) {
-			this.props.onChange(e.currentTarget.value)
+			this.props.onChange(e.currentTarget.attributes["value"].nodeValue)
 		}
 	},
 	render () {
 		return (
 			<div className='form-group export-content'>
 				<span className='format-label'>Formats:</span>
-				<span className='radio-inline' onClick={() => this.setState({ format: formats.PDF })}>
-					<input id='pdf' name='format' type='radio' value={formats.PDF} checked={this.state.format === formats.PDF} onChange={this.onFormatChange} />
+				<span className='radio-inline' onClick={this.changeFormat} value={formats.PDF}>
+					<input id='pdf' name='format' type='radio' value={formats.PDF} checked={this.state.format === formats.PDF}  />
 					PDF File
 				</span>
-				<span className='radio-inline' onClick={() => this.setState({ format: formats.CSV })}>
-					<input id='csv' name='format' type='radio' value={formats.CSV} checked={this.state.format === formats.CSV} onChange={this.onFormatChange} />
+				<span className='radio-inline' onClick={this.changeFormat} value={formats.CSV}>
+					<input id='csv' name='format' type='radio' value={formats.CSV} checked={this.state.format === formats.CSV} />
 					CSV File
 				</span>
 			</div>
