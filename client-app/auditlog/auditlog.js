@@ -7,10 +7,13 @@ import BetType from './betType';
 import FilterBlock from './filterBlock';
 import Paging from '../paging/paging'
 import AuditlogStore from './auditlog-store';
+import AuditlogService from './auditlog-service';
 
 export default class Audit extends React.Component{
     constructor(props) {
         super(props);
+        console.log(JSON.stringify(AuditlogService.doFilter([],"")));
+         console.log("HELLO");
         this.state = {
           tokens: {
             AUDITLOG_BET_TYPE_CHANGE: null,
