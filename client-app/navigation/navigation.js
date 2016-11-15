@@ -22,17 +22,18 @@ export default React.createClass({
 	},
 	componentWillUnmount () {
 		PubSub.unsubscribe(token)
-    },
-    goToPage(page) {
-        hashHistory.push(page)
-    },
+	},
+	goToPage (page) {
+		hashHistory.push(page)
+	},
 	render () {
 		const classes = classNames('row row-navigation', {hidden: !this.state.show})
 		return (
 			<div className={classes}>
-                <div className='col-lg-2'><a href='#/dashboard' className='pullRight' onClick={this.goToPage("/dashboard") }>Dashboard</a></div>
-                <div className='col-lg-2'><a href='#/audit' className='pullRight' onClick={this.goToPage("/audit") }>Audit</a></div>
-                <div className='col-lg-2'><a href='#/' className='pullLeft' onClick={LoginService.logout}>Logout</a></div>
+				<div className='col-lg-2'><a href='#/dashboard' className='pullRight' onClick={this.goToPage('/dashboard')}>Dashboard</a></div>
+				<div className='col-lg-2'><a href='#/audit' className='pullRight' onClick={this.goToPage('/audit')}>Audit</a></div>
+				<div className='col-lg-2'><a href='#/searchpanel' className='pullRight' onClick={this.goToPage('/searchpanel')}>searchpanel</a></div>
+				<div className='col-lg-2'><a href='#/' className='pullLeft' onClick={LoginService.logout}>Logout</a></div>
 			</div>
 			)
 	}
