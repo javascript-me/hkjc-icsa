@@ -9,7 +9,8 @@ import Paging from '../paging/paging'
 import Popup from '../popup'
 
 import AuditlogStore from './auditlog-store';
-import ExportService from './export-service'
+import ExportService from './export-service';
+import AuditlogService from './auditlog-service';
 
 let token = null
 
@@ -84,6 +85,8 @@ export default React.createClass({
     },
     showPageData() {
         console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
+        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
+        
     },
     //function to mock the event of loading data from the table
     mockLoadData(){
