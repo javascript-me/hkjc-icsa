@@ -22,7 +22,7 @@ class MenuBar extends Component {
 		return (
 			<div className='menu-bar-wrap row' style={{display: this.state.menuBarShouldShow ? 'block' : 'none'}}>
 				<div className={classnames('menu-container', {slimMode: this.state.slimMode})}>
-					<EventDirectory />
+					<EventDirectory slimMode={this.state.slimMode} />
 					<div className='menu-box'>
 						{menuBarData.length > 0 && menuBarData.map((item, idx) => (
 							<div className='menu-unit' key={idx}>
@@ -37,7 +37,6 @@ class MenuBar extends Component {
 									</div>
 
 								</Link>
-
 								<SecondLevelMenu dataList={item.subMenu} />
 							</div>
 						))}
