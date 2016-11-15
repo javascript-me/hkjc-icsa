@@ -3,15 +3,17 @@ import { shallow } from 'enzyme'
 import { assert } from 'chai'
 import Paging from './paging'
 import PagingService from './paging-service'
+import AuditlogStore from '../auditlog/auditlog-store';
 
 describe('<Paging />', () => {
 	it('renders a paging div', () => {
+		AuditlogStore.getDataByPageNumber = function (selectedPageNumber) {}
 		const paging = shallow(<Paging />)
 		expect(paging.find('div.paging')).to.have.length(1)
 		expect(paging.find('ul')).to.have.length(1)
 
 		var items = paging.find('li')
-		expect(items).to.have.length(10)
+		expect(items).to.have.length(0)
 	})
 
 	it('should return correct selected page number', () => {

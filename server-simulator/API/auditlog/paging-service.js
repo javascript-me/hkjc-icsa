@@ -1,6 +1,6 @@
 export default {
 
-    totalPages: 100,
+    totalPages: 150,
 
     createPageListByRange (pages, selectedPageNumber, range) {
         for (var i = range.startIndex ; i <= range.endIndex ; i++) {
@@ -64,13 +64,11 @@ export default {
         }
 
         this.setRightHandSideSymbol(selectedPageNumber, pages);
-
-        pages.push({label:">", selected:false, hasHandCursor:(selectedPageNumber == this.totalPages) ? false : false, greyOut:(selectedPageNumber == this.totalPages) ? true : false})
+        pages.push({label:">", selected:false, hasHandCursor:(selectedPageNumber == this.totalPages) ? false : true, greyOut:(selectedPageNumber == this.totalPages) ? true : false})
 
         return {
             pages: pages,
             totalPages: this.totalPages
         }
     }
-
 }
