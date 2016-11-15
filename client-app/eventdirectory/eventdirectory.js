@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
 import TabContent, {EDTYPES} from './tabcontent'
 
 export default React.createClass({
 	displayName: 'EventDirectory',
+	propTypes: {
+		slimMode: PropTypes.bool
+	},
 	getInitialState () {
 		return {
 			showContent: false
@@ -34,7 +37,7 @@ export default React.createClass({
 	render () {
 		const contentClasses = classNames('tab-content', {hidden: !this.state.showContent})
 		return (
-			<div ref='root' className={classNames('row-eventdirectory',{slim:this.props.slimMode})}>
+			<div ref='root' className={classNames('row-eventdirectory', {slim:this.props.slimMode})}>
 				<ul className='nav nav-tabs' role='tablist'>
 					<li role='presentation'><a id='football-tab' href='#football-panel' role='tab' data-toggle='tab' title='Football' /></li>
 					<li role='presentation'><a id='basketball-tab' href='#basketball-panel' role='tab' data-toggle='tab' title='Basketball' /></li>
