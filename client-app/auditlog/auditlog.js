@@ -7,6 +7,7 @@ import BetType from './betType';
 import FilterBlock from './filterBlock';
 import Paging from '../paging/paging'
 import Popup from '../popup'
+import TabularData from '../tabulardata/tabulardata'
 
 import AuditlogStore from './auditlog-store';
 import ExportService from './export-service';
@@ -25,7 +26,7 @@ export default React.createClass({
     displayName: 'Audit',
     getInitialState () {
       return {
-        data: [],
+        data:  [],
         filters: [],
         hasData: false,
         tokens: {
@@ -83,9 +84,9 @@ export default React.createClass({
         betType: betType
       });
     },
-    showPageData() {
+    async showPageData() {
         console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
+        console.log(await AuditlogService.doFilter([], ""))
         
     },
     //function to mock the event of loading data from the table
@@ -136,154 +137,10 @@ export default React.createClass({
                       </div>
                     </div>
                     {/* Search Result */}
-                    <div className="col-xs-12">
-                        <table className="table table-striped auditlog-table">
-                          <thead className="table-header">
-                            <tr>
-                              <th>Date/Time</th>
-                              <th>User ID</th>
-                              <th>User Name</th>
-                              <th>Type</th>
-                               <th>Function/Module</th>
-                              <th>Function Event Detail</th>
-                              <th>User Role</th>
-                              <th>IP Address</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    <div className="col-xs-12">{this.state.data}
+                       
                     </div>
+                     <TabularData/>
                     <Paging />
                     {/* START FOOTER EXPORT */}
                     <div className="col-md-12">
