@@ -6,10 +6,17 @@ a {
 	}
 }
 
+div,
+button,
+img {
+	outline: none;
+}
+
 .row-systembar {
 	height: 35px;
 	background: -ms-linear-gradient(to bottom, #EDEDED 100%, #E0E0E0 100%);
 	background: linear-gradient(to bottom, #EDEDED 100%, #E0E0E0 100%);
+	position: relative;
 
 	.logo {
 		font-weight: 500;
@@ -32,5 +39,10 @@ a {
 
 	> span {
 		color: @hkjcBlue;
+	}
+
+	strong {
+		font-weight: normal;
+		font-family: 'Roboto-bold';
 	}
 }

@@ -7,11 +7,13 @@ import cache from '../server-cache'
 import eventdirectory from './eventdirectory'
 import users from './users'
 import config from './config'
+import clock from './clock'
 
 const server = express.Router()
 server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
 server.use('/config/', config)
+server.use('/clock/', clock)
 
 const app = express()
 app.use(
