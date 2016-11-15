@@ -95,8 +95,7 @@ const Popup = React.createClass({
 							</div>
 							<div className='modal-body'>
 								<p>{Moment(Date(time)).format('ddd, D MMM, YYYY')}</p>
-								<p className='time'>{Moment(Date(time)).format('hh:mm:ss')}</p>
-
+								<p className='time'>{Moment(Date(time)).format('HH:mm:ss')}</p>
 							</div>
 						</div>
 					</div>
