@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-const config = require('./json/config.json')
+const config = require('../../config')
 
 /**
  * @api {GET} /config/ Config Overrides
@@ -17,7 +17,7 @@ const config = require('./json/config.json')
  *
  */
 router.get('/', (req, res) => {
-	res.send(config)
+	res.send(config.client)
 })
 
 export default router
