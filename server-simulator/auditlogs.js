@@ -15,14 +15,14 @@ const auditlogs = require('./json/auditlogs.json')
  *
  */
 router.get('/filterAuditlogs', (req, res) => {
-	const filtersArray = ""; // Write filters array accordingly
-	const pageNumber = ""; // Write accordingly
+	const filtersArray = '' // Write filters array accordingly
+	const pageNumber = '' // Write accordingly
 	let status = 403
-	let result = { error: "Sorry we could not find auditlog with this search criteria", data: [filtersArray, pageNumber] }
+	let result = { error: 'Sorry we could not find auditlog with this search criteria', data: [filtersArray, pageNumber] }
 
-	/*Search and Filter code will go here*/
-	result = auditlogs;
-	res.send(result);
+	/* Search and Filter code will go here */
+	result = auditlogs
+	res.send(result)
 })
 
 export default router

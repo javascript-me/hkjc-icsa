@@ -1,82 +1,74 @@
-﻿import csv from 'json2csv'
+import csv from 'json2csv'
 import _ from 'underscore'
 import fs from 'fs'
 
-let helper = {};
+let helper = {}
 
 helper.toCSV = data => {
+	let fields = []
 
-    let fields = [];
-    
-    Object.keys(data[0]).forEach((k) => fields.push(k)) 
-    return csv({ data: data, fields: fields });
+	Object.keys(data[0]).forEach((k) => fields.push(k))
+	return csv({ data: data, fields: fields })
 }
 
 helper.toHTML = (data, date) => {
-    const rowsNum = data.length
-        
-    let temp = data
-    let html = "", headers = ""
-    let counter = 1
-    
-    
-    const columns = Object.keys(temp[0])
-    const tableHeader = getTableHeader(columns)
-    const source = fs.readFileSync("./server-simulator/API/auditlog/template.html","utf-8")
-    let template = _.template(source)
+	const rowsNum = data.length
 
+	let temp = data
+	let html = '', headers = ''
+	let counter = 1
 
-    while (temp.length > 0) {
-        const rows = temp.length > 25 ? 25 : temp.length
-        const table = temp.slice(0, rows)
-        html += getPage(table, tableHeader, counter, date)
-        headers += getHeader(counter++, date)
-        temp.splice(0, 25)
-    }
+	const columns = Object.keys(temp[0])
+	const tableHeader = getTableHeader(columns)
+	const source = fs.readFileSync('./server-simulator/API/auditlog/template.html', 'utf-8')
+	let template = _.template(source)
 
-    headers += getFooter()
-    
-    template = template({ html: html, pageHeaders: headers })
+	while (temp.length > 0) {
+		const rows = temp.length > 25 ? 25 : temp.length
+		const table = temp.slice(0, rows)
+		html += getPage(table, tableHeader, counter, date)
+		headers += getHeader(counter++, date)
+		temp.splice(0, 25)
+	}
 
-    return template
-    
+	headers += getFooter()
+
+	template = template({ html: html, pageHeaders: headers })
+
+	return template
 }
 
-function getTableHeader(columns) {
-    let html = "<tr>"
-    columns.forEach(key => {
-        html += "<th>" + key + "</th>"
-    })
+function getTableHeader (columns) {
+	let html = '<tr>'
+	columns.forEach(key => {
+		html += '<th>' + key + '</th>'
+	})
 
-    return html
+	return html
 }
 
-function getPage(data, tableHeader, counter) {
-    
-    const sourceTable = fs.readFileSync('./server-simulator/API/auditlog/table-template.html', 'utf-8')
-    let table = _.template(sourceTable)
+function getPage (data, tableHeader, counter) {
+	const sourceTable = fs.readFileSync('./server-simulator/API/auditlog/table-template.html', 'utf-8')
+	let table = _.template(sourceTable)
 
-    let html = ""
-    data.forEach(function (row) {
-        html += "<tr>"
-        Object.keys(row).forEach(function (key) {
-            html += "<td>" + row[key] + "</td>"
-        })
-        html += "</tr>"
-    })
+	let html = ''
+	data.forEach((row) => {
+		html += '<tr>'
+		Object.keys(row).forEach((key) => {
+			html += '<td>' + row[key] + '</td>'
+		})
+		html += '</tr>'
+	})
 
-    return table({ body: html, head: tableHeader })
-    
+	return table({ body: html, head: tableHeader })
 }
 
-//15-AUG-2007 01:27
-function getHeader(counter, date) {
+// 15-AUG-2007 01:27
+function getHeader (counter, date) {
+	const number = counter === 1 ? 'first' : counter
+	const page = counter < 10 ? `00${counter}` : counter < 100 ? `0${counter}` : counter
 
-    const number = counter === 1 ? "first" : counter
-    const page = counter < 10 ? `00${counter}` : counter < 100 ? `0${counter}` :  counter
-
-
-    return `<div id="pageHeader-${number}" class="row">
+	return `<div id="pageHeader-${number}" class="row">
 		        <div class="col-md-4">
 			        AUD901c SBC
 		        </div>
@@ -89,13 +81,12 @@ function getHeader(counter, date) {
 	        </div>`
 }
 
-function getFooter() {
-    return `<div id="pageFooter-last" class="row">
+function getFooter () {
+	return `<div id="pageFooter-last" class="row">
 		<div class="col-md-12 center">
 			*** AUD901c SBC: End of Report ***
 		</div>
 	</div>`
 }
-
 
 export default helper

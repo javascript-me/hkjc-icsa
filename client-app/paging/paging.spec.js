@@ -19,11 +19,11 @@ describe('<Paging />', () => {
 
 		assert.equal(11, instance.getUserSelectedPageNumber(10, 11, PagingService.totalPages))
 
-		assert.equal(9, instance.getUserSelectedPageNumber(10, "<", PagingService.totalPages))
-		assert.equal(11, instance.getUserSelectedPageNumber(10, ">", PagingService.totalPages))
-		assert.equal(1, instance.getUserSelectedPageNumber(1, "<", PagingService.totalPages))
-		assert.equal(PagingService.totalPages, instance.getUserSelectedPageNumber(PagingService.totalPages, ">", PagingService.totalPages))
+		assert.equal(9, instance.getUserSelectedPageNumber(10, '<', PagingService.totalPages))
+		assert.equal(11, instance.getUserSelectedPageNumber(10, '>', PagingService.totalPages))
+		assert.equal(1, instance.getUserSelectedPageNumber(1, '<', PagingService.totalPages))
+		assert.equal(PagingService.totalPages, instance.getUserSelectedPageNumber(PagingService.totalPages, '>', PagingService.totalPages))
 
-		assert.equal(50, instance.getUserSelectedPageNumber(50, "...", PagingService.totalPages))
+		assert.equal(50, instance.getUserSelectedPageNumber(50, '...', PagingService.totalPages))
 	})
 })

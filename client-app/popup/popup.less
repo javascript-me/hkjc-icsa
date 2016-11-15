@@ -1,73 +1,71 @@
 ﻿.popup-wrapper {
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 99;
-        background-color: rgba(0, 0, 0, 0.29);
-        display: block;
+	.popup-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 99;
+		background-color: rgba(0, 0, 0, 0.29);
+		display: block;
+	}
 
-    }
+	.popup-dialog {
+		min-width: 470px;
+		position: fixed;
+		top: 20%;
+		left: 35%;
+		z-index: 100;
+		background: #F8F8F8;
+		border: 1px solid #ACB8D1;
+		box-shadow: 0 23px 27px 0 rgba(0, 0, 0, 0.04);
+		border-radius: 4px;
 
-    .popup-dialog {
-        min-width: 470px;
-        position: fixed;
-        top: 20%;
-        left: 35%;
-        z-index: 100;
-        background: #F8F8F8;
-        border: 1px solid #ACB8D1;
-        box-shadow: 0px 23px 27px 0px rgba(0,0,0,0.04);
-        border-radius: 4px;
+		.panel-heading {
+			font-family: Roboto-Medium;
+			font-size: 20px;
+			color: #FFFFFF;
+			background: #305091;
+		}
 
-        .panel-heading {
-            font-family: Roboto-Medium;
-            font-size: 20px;
-            color: #FFFFFF;
-            background: #305091;
-        }
+		.panel-body {
+			padding: 15px 30px 30px;
+		}
 
-        .panel-body {
-            padding: 15px 30px 30px 30px;
-        }
+		.panel-footer {
+			padding: 30px 13px 13px 30px;
+		}
 
-        .panel-footer {
-            padding: 30px 13px 13px 30px;
-        }
+		.popup-content {
+			margin-bottom: 30px;
+		}
+	}
 
-        .popup-content {
-            margin-bottom: 30px;
-        }
-    }
+	.popup-button {
+		cursor: pointer;
+		font-family: Roboto-Regular;
+		font-size: 16px;
+		margin-left: 10px;
+		margin-right: 10px;
+		min-width: 120px;
+	}
 
-    .popup-button {
-        cursor: pointer;
-        font-family: Roboto-Regular;
-        font-size: 16px;
-        margin-left: 10px;
-        margin-right: 10px;
-        min-width: 120px;
-    }
+	.cancel {
+		background: #FFFFFF;
+		color: #305091;
+		border: 1px solid #ACB8D1;
+	}
 
-    .cancel {
-        background: #FFFFFF;
-        color: #305091;
-        border: 1px solid #acb8d1;
-    }
+	.confirm {
+		background: #305091;
+		color: #FFFFFF;
+	}
 
-    .confirm {
-        background: #305091;
-        color: #FFFFFF;
-    }
-
-    .title {
-        margin: 5px 10px 5px 15px;
-        font-family: Roboto-Medium;
-        font-size: 20px;
-        font-weight: 700;
-        padding-right: 10px;
-    }
+	.title {
+		margin: 5px 10px 5px 15px;
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		font-weight: 700;
+		padding-right: 10px;
+	}
 }
-
