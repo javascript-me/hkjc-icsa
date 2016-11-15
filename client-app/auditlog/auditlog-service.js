@@ -8,16 +8,14 @@ const postSearchCriteria = (data) => {
 }
 
 export default {
-	 async doFilter (filters, pagenumber) {
+	 async doFilter (searchtext, filters, pagenumber) {
 		try {
-			auditlogsResponse = await postSearchCriteria({filters, pagenumber})
+			auditlogsResponse = await postSearchCriteria({searchtext, filters, pagenumber})
 			/*We can publish Event
 			PubSub.publish(PubSub.AUDITLOGEARCH_CHANGE)*/
 		} catch (failure) {
 			// returns null on failure
 		}
-		 console.log(auditlogsResponse)
 		return auditlogsResponse
-	},
-
+	}
 }
