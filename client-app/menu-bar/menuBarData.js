@@ -903,8 +903,7 @@ const menuList1 = [
 		textL1: 'Tools&',
 		textL2: 'Administration'
 
-	},
-	
+	}
 
 ]
 

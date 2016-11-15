@@ -36,17 +36,24 @@ export default React.createClass({
 		return (
 			<div ref='root' className='row-eventdirectory'>
 				<ul className='nav nav-tabs' role='tablist'>
-					<li role='presentation'><a href='#ed-football' role='tab' data-toggle='tab' title='Football' /></li>
-					<li role='presentation'><a href='#ed-basketball' role='tab' data-toggle='tab' title='Basketball' /></li>
-					<li role='presentation'><a href='#ed-horseracing' role='tab' data-toggle='tab' title='Horse Racing' /></li>
+					<li role='presentation'><a id='football-tab' href='#football-panel' role='tab' data-toggle='tab' title='Football' /></li>
+					<li role='presentation'><a id='basketball-tab' href='#basketball-panel' role='tab' data-toggle='tab' title='Basketball' /></li>
+					<li role='presentation'><a id='horseracing-tab' href='#horseracing-panel' role='tab' data-toggle='tab' title='Horse Racing' /></li>
 				</ul>
 
 				<div className={contentClasses}>
-					<div role='tabpanel' className='tab-pane' id='ed-football'>
+					<div role='tabpanel' className='tab-pane' id='football-panel'>
+						<div className='line' />
 						<TabContent type={EDTYPES.FOOTBAL} />
 					</div>
-					<div role='tabpanel' className='tab-pane' id='ed-basketball' />
-					<div role='tabpanel' className='tab-pane' id='ed-horseracing' />
+					<div role='tabpanel' className='tab-pane' id='basketball-panel'>
+						<div className='line' />
+						<TabContent type={EDTYPES.BASEKETBALL} />
+					</div>
+					<div role='tabpanel' className='tab-pane' id='horseracing-panel'>
+						<div className='line' />
+						<TabContent type={EDTYPES.HORSERACING} />
+					</div>
 				</div>
 			</div>
 			)
