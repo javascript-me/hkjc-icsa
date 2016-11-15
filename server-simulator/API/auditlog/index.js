@@ -16,11 +16,11 @@ router.post('/filterAuditlogs', (req, res) => {
 
     /*Search and Filter code will go here*/
     result = {};
-    result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.pagenumber))
+    result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.selectedPageNumber))
 
     PagingService.totalPages = PagingUtil.getTotalPages(data.auditlogs.length)
 
-    result.pageData = PagingService.getDataByPageNumber(Number(req.body.pagenumber))
+    result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
     res.send(result);
 })

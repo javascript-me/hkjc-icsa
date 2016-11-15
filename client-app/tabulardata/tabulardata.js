@@ -1,5 +1,4 @@
 import React from 'react'
-import TableService from '../tabulardata/tabulardata-service';
 import AuditlogStore from '../auditlog/auditlog-store';
 
 export default React.createClass({
@@ -45,8 +44,11 @@ export default React.createClass({
     },
 
     _onChange() {
-        console.log("===>" + JSON.stringify(AuditlogStore.auditlogs, null,4))
         this.setState({data:AuditlogStore.auditlogs});
+    },
+
+    onItemClick (event) {
+        console.log("Click up button")
     },
 
 
@@ -77,24 +79,24 @@ export default React.createClass({
         return  <table className="table-striped table auditlog-table">
             <thead className="table-header">
             <tr>
-                <th>Date/Time</th>
-                <th>User ID</th>
-                <th>User Name</th>
-                <th>Type</th>
-                <th>Function/Module</th>
-                <th>Function Event Detail</th>
-                <th>User Role</th>
-                <th>IP Address</th>
-                <th>Back End ID</th>
-                <th>Front End ID</th>
-                <th>Home</th>
-                <th>Away</th>
-                <th>K.O. Time/ Game Start Time</th>
-                <th>Bet Type</th>
-                <th>Event Name</th>
-                <th>Error Code</th>
-                <th>Error Message Content</th>
-                <th>Device</th>
+                <th><button onClick={this.onItemClick}>Up</button><button>Down</button>Date/Time</th>
+                <th><button>Up</button><button>Down</button>User ID</th>
+                <th><button>Up</button><button>Down</button>User Name</th>
+                <th><button>Up</button><button>Down</button>Type</th>
+                <th><button>Up</button><button>Down</button>Function/Module</th>
+                <th><button>Up</button><button>Down</button>Function Event Detail</th>
+                <th><button>Up</button><button>Down</button>User Role</th>
+                <th><button>Up</button><button>Down</button>IP Address</th>
+                <th><button>Up</button><button>Down</button>Back End ID</th>
+                <th><button>Up</button><button>Down</button>Front End ID</th>
+                <th><button>Up</button><button>Down</button>Home</th>
+                <th><button>Up</button><button>Down</button>Away</th>
+                <th><button>Up</button><button>Down</button>K.O. Time/ Game Start Time</th>
+                <th><button>Up</button><button>Down</button>Bet Type</th>
+                <th><button>Up</button><button>Down</button>Event Name</th>
+                <th><button>Up</button><button>Down</button>Error Code</th>
+                <th><button>Up</button><button>Down</button>Error Message Content</th>
+                <th><button>Up</button><button>Down</button>Device</th>
             </tr>
             </thead>
             <tbody>

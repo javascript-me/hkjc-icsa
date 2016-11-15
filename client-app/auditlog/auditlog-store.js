@@ -12,7 +12,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
         $.ajax({
 
             url: 'api/auditlog/filterAuditlogs',
-            data: {pagenumber:selectedPageNumber},
+            data: {selectedPageNumber:selectedPageNumber},
             type: 'POST',
 
             success: function (data) {
