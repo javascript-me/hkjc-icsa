@@ -3,10 +3,17 @@ import AuditlogStore from '../auditlog/auditlog-store';
 
 export default React.createClass({
 
-    currentSelectedPageNumber: 1,
+    currentSelectedPageNumber: -1,
 
     getInitialState () {
-        return AuditlogStore.pageData
+        var defaultSelectedPageNumber = 1
+        this.currentSelectedPageNumber = defaultSelectedPageNumber
+        AuditlogStore.getDataByPageNumber(defaultSelectedPageNumber)
+
+        return {
+            pages: [],
+            totalPages: 0
+        }
     },
 
     componentDidMount() {
@@ -50,9 +57,7 @@ export default React.createClass({
             event.target.innerText,
             this.state.totalPages
         )
-
         AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber)
-
     },
 
     getClassName (page) {
