@@ -4,8 +4,8 @@ import TableService from '../tabulardata/tabulardata-service';
 export default React.createClass({
   render: function(){
             var data =  [
-                {"date_time":"23 September 2016", "user_id":"candy.crush", "user_name":"Candy Crush", "type":"Odds", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Odds", "user_role":"Role1, Role2", "ip_address":"182.34.2.192" },
-                {"date_time":"23 September 2016", "user_id":"candy.crush", "user_name":"Candy Crush", "type":"Odds", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Odds", "user_role":"Role1, Role2", "ip_address":"182.34.2.192" }   
+                {"date_time":"23 September 2016", "user_id":"candy.crush", "user_name":"Candy Crush", "Type":"Odds", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Odds", "user_role":"Role1, Role2", "ip_address":"182.34.2.192" },
+                {"date_time":"23 September 2016", "user_id":"candy.crush", "user_name":"Candy Crush", "Type":"Odds", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Odds", "user_role":"Role1, Role2", "ip_address":"182.34.2.192" }   
             ];
 
             var rows = data.map(function(row){
@@ -13,7 +13,7 @@ export default React.createClass({
                      <td>{row.date_time}</td>
                      <td>{row.user_id}</td>
                      <td>{row.user_name}</td>
-                     <td>{row.type}</td>
+                     <td>{row.Type}</td>
                      <td>{row.function_module}</td>
                      <td>{row.function_event_detail}</td>
                      <td>{row.user_role}</td>
