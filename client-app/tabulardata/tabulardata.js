@@ -66,7 +66,16 @@ export default React.createClass({
                 <td>{row.function_event_detail}</td>
                 <td>{row.user_role}</td>
                 <td>{row.ip_address}</td>
-
+                <td>{row.backend_id}</td>
+                <td>{row.frontend_id}</td>
+                <td>{row.home}</td>
+                <td>{row.away}</td>
+                <td>{row.ko_time_game_start_game}</td>
+                <td>{row.bet_type}</td>
+                <td>{row.event_name}</td>
+                <td>{row.error_code}</td>
+                <td>{row.error_message_content}</td>
+                <td>{row.device}</td>
             </tr>
         });
 
@@ -81,6 +90,16 @@ export default React.createClass({
                 <th>Function Event Detail</th>
                 <th>User Role</th>
                 <th>IP Address</th>
+                <th>Back End ID</th>
+                <th>Front End ID</th>
+                <th>Home</th>
+                <th>Away</th>
+                <th>K.O. Time/ Game Start Time</th>
+                <th>Bet Type</th>
+                <th>Event Name</th>
+                <th>Error Code</th>
+                <th>Error Message Content</th>
+                <th>Device</th>
             </tr>
             </thead>
             {rows}
