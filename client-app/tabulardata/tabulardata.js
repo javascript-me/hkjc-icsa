@@ -5,7 +5,8 @@ export default React.createClass({
 
     getInitialState () {
 
-        AuditlogStore.getDataByPageNumber(1)
+        var sortingObject = {fieldName: "date_time", order: "ASCEND"}
+        AuditlogStore.getDataByPageNumber(1, sortingObject)
 
         var data = {
             data: [
@@ -31,7 +32,6 @@ export default React.createClass({
                 }
             ]
         }
-
         return data
     },
 
@@ -48,9 +48,9 @@ export default React.createClass({
     },
 
     onItemClick (event) {
-        console.log("Click up button")
+        var sortingObject = {fieldName: "date_time", order: "ASCEND"} // or DESCEND
+        AuditlogStore.getDataByPageNumber(10, sortingObject)
     },
-
 
     render(){
         var rows = this.state.data.map(function(row){
