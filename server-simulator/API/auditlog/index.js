@@ -1,12 +1,12 @@
 ﻿import express from 'express'
 import helper from './export_helper'
+import PagingUtil from './paging-util'
 import pdf from 'html-pdf'
 import PagingService from '../../../client-app/paging/paging-service'
 
 const router = express.Router()
 const options = { format: 'Letter', orientation: "landscape", header: { "height": "15mm"} }
 const data = require('../json/auditlogs.json')
-
 
 router.post('/filterAuditlogs', (req, res) => {
     const filtersArray = ""; // Write filters array accordingly
@@ -15,8 +15,11 @@ router.post('/filterAuditlogs', (req, res) => {
     let result = { error: "Sorry we could not find auditlog with this search criteria", data: [filtersArray, pageNumber] }
 
     /*Search and Filter code will go here*/
-    result = data;
-    // result.pageData = PagingService.getDataByPageNumber(Number(req.body.pagenumber))
+    result = {};
+    result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.pagenumber))
+
+    PagingService.totalPages = PagingUtil.getTotalPages(data.auditlogs.length)
+
     result.pageData = PagingService.getDataByPageNumber(Number(req.body.pagenumber))
 
     res.send(result);
