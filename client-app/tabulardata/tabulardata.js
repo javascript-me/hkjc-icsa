@@ -51,11 +51,6 @@ export default React.createClass({
 
 
     render(){
-        // var data =  [
-        //     {"date_time":"23 September 2016", "user_id":"candy.crush", "user_name":"Candy Crush", "Type":"Odds", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Odds", "user_role":"Role1, Role2", "ip_address":"182.34.2.192" },
-        //     {"date_time":"23 September 2016", "user_id":"candy.crush", "user_name":"Candy Crush", "Type":"Odds", "function_module":"Master Risk Limit Log", "function_event_detail":"Update Odds", "user_role":"Role1, Role2", "ip_address":"182.34.2.192" }
-        // ];
-
         var rows = this.state.data.map(function(row){
             return <tr>
                 <td>{row.date_time}</td>
@@ -84,21 +79,21 @@ export default React.createClass({
             <tr>
                 <th>Date/Time</th>
                 <th>User ID</th>
-                <th>User Name</th>
+                <th className="td-user-name">User Name</th>
                 <th>Type</th>
                 <th>Function/Module</th>
-                <th>Function Event Detail</th>
+                <th  className="td-user-name">Function Event Detail</th>
                 <th>User Role</th>
                 <th>IP Address</th>
-                <th>Back End ID</th>
-                <th>Front End ID</th>
+                <th  className="td-user-name">Back End ID</th>
+                <th  className="td-user-name">Front End ID</th>
                 <th>Home</th>
                 <th>Away</th>
-                <th>K.O. Time/ Game Start Time</th>
-                <th>Bet Type</th>
-                <th>Event Name</th>
-                <th>Error Code</th>
-                <th>Error Message Content</th>
+                <th  className="td-user-name">K.O. Time/ Game Start Time</th>
+                <th  className="td-user-name">Bet Type</th>
+                <th  className="td-user-name">Event Name</th>
+                <th  className="td-user-name">Error Code</th>
+                <th  className="td-user-name">Error Message Content</th>
                 <th>Device</th>
             </tr>
             </thead>
