@@ -1,6 +1,6 @@
 {
 	"allgood": {
-		"password": "^ofcourse$",
+		"password": "allgood",
 		"status": 200,
 		"profile": {
 			"username": "allgood",
@@ -13,7 +13,7 @@
 		}
 	},
 	"somegood": {
-		"password": "^ofcourse$",
+		"password": "somegood",
 		"status": 200,
 		"profile": {
 			"username": "somegood",

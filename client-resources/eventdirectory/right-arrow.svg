@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="8px" height="13px" viewBox="0 0 8 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
+    <title>right arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Event-Directory" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Event-Directory_new-flow" transform="translate(-2352.000000, -2196.000000)" fill="#FFFFFF">
+            <g id="Calendar_Date&amp;time-Picker" transform="translate(2134.000000, 2182.000000)">
+                <g id="Group-6">
+                    <polygon id="right-arrow" transform="translate(219.636039, 20.363961) scale(-1, 1) rotate(45.000000) translate(-219.636039, -20.363961) " points="217.136039 22.863961 217.136039 15.863961 215.136039 15.863961 215.136039 23.863961 215.136039 24.863961 224.136039 24.863961 224.136039 22.863961"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
