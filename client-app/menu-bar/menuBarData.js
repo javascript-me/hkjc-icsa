@@ -1273,4 +1273,4 @@ const menuList2 = [
 	}
 ]
 
-export default {menuList1, menuList2}
+export default { menuList1, menuList2 }
