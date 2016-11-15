@@ -79,21 +79,21 @@ export default React.createClass({
             <tr>
                 <th>Date/Time</th>
                 <th>User ID</th>
-                <th className="td-user-name">User Name</th>
+                <th>User Name</th>
                 <th>Type</th>
                 <th>Function/Module</th>
-                <th  className="td-user-name">Function Event Detail</th>
+                <th>Function Event Detail</th>
                 <th>User Role</th>
                 <th>IP Address</th>
-                <th  className="td-user-name">Back End ID</th>
-                <th  className="td-user-name">Front End ID</th>
+                <th>Back End ID</th>
+                <th>Front End ID</th>
                 <th>Home</th>
                 <th>Away</th>
-                <th  className="td-user-name">K.O. Time/ Game Start Time</th>
-                <th  className="td-user-name">Bet Type</th>
-                <th  className="td-user-name">Event Name</th>
-                <th  className="td-user-name">Error Code</th>
-                <th  className="td-user-name">Error Message Content</th>
+                <th>K.O. Time/ Game Start Time</th>
+                <th>Bet Type</th>
+                <th>Event Name</th>
+                <th>Error Code</th>
+                <th>Error Message Content</th>
                 <th>Device</th>
             </tr>
             </thead>
