@@ -4,16 +4,21 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 
 import cache from '../server-cache'
-import eventdirectory from './eventdirectory'
-import users from './users'
+import eventdirectory from './API/eventdirectory'
+import users from './API/users'
+import auditlog from './API/auditlog'
+import APIconfig from './API/config'
 import config from './config'
-import clock from './clock'
+import clock from './API/clock'
+
 
 const server = express.Router()
 server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
-server.use('/config/', config)
 server.use('/clock/', clock)
+server.use('/auditlog/', auditlog)
+server.use('/config/', APIconfig)
+
 
 const app = express()
 app.use(
@@ -22,7 +27,26 @@ app.use(
 	bodyParser.urlencoded({
 		extended: true
 	})
-	)
+)
+// Add headers
+app.use(function (req, res, next) {
+
+    // Client URL
+    res.setHeader('Access-Control-Allow-Origin', config.CLIENT_URL);
+
+    // Request methods to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+})
+
 app.use('/', express.static('./dist/thin'))
 cache.use('/apidoc/', express.static('./dist/cache/apidoc'))
 app.use('/cache/', cache)

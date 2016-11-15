@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-const eventdirectory = require('./json/eventdirectory.json')
+const eventdirectory = require('../json/eventdirectory.json')
 
 /**
  * @api {POST} /eventdirectory/ Eventdirectory search result
