@@ -7,11 +7,11 @@ import BetType from './betType';
 import FilterBlock from './filterBlock';
 import Paging from '../paging/paging'
 import Popup from '../popup'
-import TabularData from '../tabulardata/tabulardata'
 
 import AuditlogStore from './auditlog-store';
 import ExportService from './export-service';
 import AuditlogService from './auditlog-service';
+import TabularData from '../tabulardata/tabulardata';
 
 let token = null
 
@@ -26,7 +26,7 @@ export default React.createClass({
     displayName: 'Audit',
     getInitialState () {
       return {
-        data:  [],
+        data: [],
         filters: [],
         hasData: false,
         tokens: {
@@ -84,9 +84,9 @@ export default React.createClass({
         betType: betType
       });
     },
-    async showPageData() {
+    showPageData() {
         console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-        console.log(await AuditlogService.doFilter([], ""))
+        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
         
     },
     //function to mock the event of loading data from the table
@@ -96,17 +96,17 @@ export default React.createClass({
     render() {
       let me = this;
       let betTypes = this.state.betTypes.map((betType, index) => {
-          return <BetType 
-            key={index} 
-            selectedBetType={me.state.betType} 
+          return <BetType
+            key={index}
+            selectedBetType={me.state.betType}
             betType={betType}
             changeEventTopic={me.state.tokens.AUDITLOG_BET_TYPE_CHANGE} />;
       });
 
       let filterBlockes = this.state.selectedFilters.map((f, index)=>{
-          return <FilterBlock 
+          return <FilterBlock
             key={index}
-            filter={f} 
+            filter={f}
             removeEventTopic={me.state.tokens.AUDITLOG_REMOVE_FILTER}/>;
       });
 
@@ -119,8 +119,8 @@ export default React.createClass({
                     <h1>Audit Trail</h1>
                 </div>
                 <div className='row page-content'>
-                    <div className="col-md-6">
-                        <Calendar className="hidden"/>
+                    <div className='col-md-6'>
+                        <Calendar className='hidden' />
                     </div>
                     {/* Search Critiria Row */}
                     <div className="col-md-12">
@@ -128,8 +128,8 @@ export default React.createClass({
                         <div className="bet-types">
                           {betTypes}
                         </div>
-                        <div className="keyword-container">
-                          <input type="text" placeholder="Search with keywords & filters" />
+                        <div className='keyword-container'>
+                          <input type='text' placeholder='Search with keywords & filters' />
                         </div>
                         <div className="filter-block-container">
                           {filterBlockes}
@@ -137,10 +137,9 @@ export default React.createClass({
                       </div>
                     </div>
                     {/* Search Result */}
-                    <div className="col-xs-12">{this.state.data}
-                       
+                    <div className='col-xs-12'>
+                      <TabularData/>
                     </div>
-                     <TabularData/>
                     <Paging />
                     {/* START FOOTER EXPORT */}
                     <div className="col-md-12">
