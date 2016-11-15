@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import classnames from 'classnames'
 import LoginService from '../login/login-service'
 import PubSub from '../pubsub'
-import menuBarData from './menuBarData.js'
+import menuData from './menuBarData.js'
 
 let token = null
 class MenuBar extends Component {
@@ -12,10 +12,12 @@ class MenuBar extends Component {
 		this.displayName = 'Menu-Bar'
 		this.state = {
 			slimMode: false,
-			menuBarShouldShow: LoginService.hasProfile()
+			menuBarShouldShow: LoginService.hasProfile(),
+			userProfile: LoginService.getProfile()
 		}
 	}
 	render () {
+		let menuBarData = (this.state.userProfile && this.state.userProfile.username === 'allgood') ? menuData.menuList1 : menuData.menuList2
 		return (
 			<div className='menu-bar-wrap row' style={{display: this.state.menuBarShouldShow ? 'block' : 'none'}}>
 				<div className={classnames('menu-container', {slimMode: this.state.slimMode})}>
@@ -49,7 +51,7 @@ class MenuBar extends Component {
 	}
 	componentDidMount () {
 		token = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
-			this.setState({menuBarShouldShow: LoginService.hasProfile()})
+			this.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: LoginService.getProfile()})
 		})
 	}
 	componentWillUnmount () {
