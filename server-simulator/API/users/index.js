@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-const users = require('./json/users.json')
+const users = require('../json/users.json')
 
 /**
  * @api {POST} /users/login Login
@@ -45,11 +45,11 @@ router.post('/login', (req, res) => {
 	const username = req.body.username
 	const password = req.body.password || ''
 	let status = 403
-	let result = {}
+	let result = { error: "Sorry we could not find your credentials for this user", data: [username, password] }
 
 	var user = users[username]
 
-	if (user && password.match(new RegExp(user.password))) {
+	if (user && password === user.password) {
 		status = user.status
 		if (status === 200) {
 			result = user.profile

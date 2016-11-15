@@ -1,0 +1,161 @@
+.auditlog {
+	margin: auto -15px;
+
+	.hkjc-breadcrumb {
+		background-color: transparent;
+		color: rgba(255, 255, 255, 1);
+		font-family: Roboto-Regular;
+		font-size: 14px;
+	}
+
+	h1 {
+		color: rgba(255, 255, 255, 1);
+		font-family: Roboto-Medium;
+		font-size: 24px;
+		margin-top: 6px;
+	}
+
+	.search-criteria-container {
+		display: flex;
+		flex-wrap: wrap;
+		height: 40px;
+		margin-bottom: 20px;
+		overflow-y: visible;
+
+		.bet-types {
+			display: flex;
+			height: 40px;
+			margin-bottom: 20px;
+			width: 50px;
+			overflow: hidden;
+			transition: width 0.5s;
+
+			&:hover {
+				width: 150px;
+			}
+
+			.bet-type {
+				background-color: rgba(124, 140, 175, 1);
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: 24px 24px;
+				cursor: pointer;
+				flex: 0 0 50px;
+				height: 40px;
+				order: 5;
+				width: 50px;
+				z-index: 1;
+
+				&.active {
+					order: 1;
+					z-index: 10;
+				}
+
+				&.icon-football {
+					background-image: url(auditlog/football.svg);
+
+					&.active {
+						background-color: rgba(112, 173, 39, 1);
+					}
+				}
+
+				&.icon-basketball {
+					background-image: url(auditlog/basketball.svg);
+
+					&.active {
+						background-color: rgba(252, 115, 0, 1);
+					}
+				}
+
+				&.icon-horse-racing {
+					background-image: url(auditlog/horse-racing.svg);
+					background-size: 19px 24px;
+
+					&.active {
+						background-color: rgba(180, 148, 98, 1);
+					}
+				}
+			}
+		}
+
+		.keyword-container {
+			background-color: #FFFFFF;
+			background-image: url(common/search.svg);
+			background-position: 14px center;
+			background-repeat: no-repeat;
+			background-size: 12px 12px;
+			border: 1px solid rgba(48, 80, 145, 1);
+			border-left: none;
+			box-sizing: border-box;
+			height: 40px;
+			padding: 5px 20px 5px 40px;
+			width: 300px;
+
+			input[type=text] {
+				border: none;
+				font-family: Roboto-Regular;
+				font-size: 16px;
+				height: 30px;
+				line-height: 30;
+			}
+		}
+
+		.filter-block-container {
+			align-items: center;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: flex-start;
+			margin-left: 16px;
+			width: calc(~"100% - 480px");
+
+			.filter-block {
+				background-color: rgba(124, 140, 175, 1);
+				background-position: right center;
+				background-size: 9px 9px;
+				color: rgba(255, 255, 255, 1);
+				flex: 0 0 auto;
+				font-family: Roboto-Medium;
+				font-size: 14px;
+				height: 30px;
+				margin-right: 10px;
+				padding: 6px 25px 6px 10px;
+				position: relative;
+
+				&::after {
+					background-image: url(common/cross.svg);
+					background-position: center center;
+					background-repeat: no-repeat;
+					background-size: 9px 9px;
+					content: "";
+					cursor: pointer;
+					height: 100px;
+					position: absolute;
+					right: 9px;
+					top: 0;
+					width: 9px;
+				}
+			}
+		}
+	}
+
+	.auditlog-table {
+		/*font-family: Roboto-Regular;*/
+		font-size: 14px;
+		color: #305091;
+		line-height: 40px;
+		border: 1px solid #305091;
+
+		th {
+			vertical-align: bottom;
+			background: #305091;
+			color: white;
+			font-weight: normal;
+			font-size: 14px;
+		}
+
+		td {
+			border: 1px solid #EEEEEE;
+		}
+	}
+}
