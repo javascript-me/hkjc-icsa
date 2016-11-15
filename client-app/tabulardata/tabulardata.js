@@ -78,22 +78,22 @@ export default React.createClass({
             <thead className="table-header">
             <tr>
                 <th>Date/Time</th>
-                <th>User ID</th>
-                <th>User Name</th>
+                <th className="td-user-id">User ID</th>
+                <th className="td-user-name">User Name</th>
                 <th>Type</th>
                 <th>Function/Module</th>
-                <th>Function Event Detail</th>
+                <th className="td-function-event-detail">Function Event Detail</th>
                 <th>User Role</th>
                 <th>IP Address</th>
-                <th>Back End ID</th>
-                <th>Front End ID</th>
+                <th className="td-backend-frontend-id">Back End ID</th> 
+                <th className="td-backend-frontend-id">Front End ID</th>
                 <th>Home</th>
                 <th>Away</th>
-                <th>K.O. Time/ Game Start Time</th>
-                <th>Bet Type</th>
-                <th>Event Name</th>
-                <th>Error Code</th>
-                <th>Error Message Content</th>
+                <th className="td-ko-game-start-time">K.O. Time/ Game Start Time</th> 
+                <th className="td-bet-type">Bet Type</th> 
+                <th  className="td-event-name">Event Name</th>
+                <th  className="td-error-code">Error Code</th>
+                <th  className="td-error-message">Error Message Content</th>
                 <th>Device</th>
             </tr>
             </thead>
