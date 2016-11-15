@@ -50,7 +50,7 @@ describe('PagingService', () => {
 	it('should return last page data', () => {
 		var dataOfPage100 = PagingService.getDataByPageNumber(PagingService.totalPages)
 		assert.equal("...", dataOfPage100.pages[2].label)
-		assert.equal(95, dataOfPage100.pages[3].label)
+		assert.equal(PagingService.totalPages - 5, dataOfPage100.pages[3].label)
 		assert.equal(PagingService.totalPages, dataOfPage100.pages[8].label)
 		assert.ok(dataOfPage100.pages[8].selected)
 	})
