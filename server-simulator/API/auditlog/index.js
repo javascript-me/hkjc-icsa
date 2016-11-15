@@ -1,7 +1,9 @@
 ﻿import express from 'express'
 import helper from './export_helper'
-import fs from 'fs'
-import pdf from 'html-pdf'
+import * as pdf from 'html-pdf'
+import * as fs from 'fs'
+import moment from 'moment'
+
 
 const router = express.Router()
 const options = { format: 'Letter', orientation: "landscape", header: { "height": "15mm"} }
@@ -28,36 +30,48 @@ router.get('/search', (req, res) => {
     res.send(result)
 })
 
+router.get('/download/:file', (req, res) => {
+
+    console.log(req.params)
+    res.writeHead(200, {
+    "Content-Type": "application/octet-stream",
+    "Content-Disposition" : "attachment; filename=audit.pdf"});
+
+    fs.createReadStream("./"+req.params.file).pipe(res)
+
+})
+
 router.get('/export', (req, res) => {
 
     
     const type = req.params.type || req.query.type
-    let result = {...data.auditlogs}
+    let result = Array.from(data.auditlogs)
     let status = 200
 
     switch (type.toLowerCase()) {
         case "pdf":
-            
-            result = helper.toHTML(result);
-            res.set('Content-Type', 'application/pdf');
-            res.set('Content-disposition', 'attachment; filename=auditlog.pdf'); 
+
+            let dateReport = moment(new Date()).format("DD-MMM-YYYY HH:mm")
+            let dateFilename = moment(new Date()).format("DDMMYYHHmmSS")
+            result = helper.toHTML(result)
+            res.writeHead(200, {
+            "Content-Type": "application/octet-stream",
+            "Content-Disposition" : "attachment; filename=AuditLogReport_"+dateFilename+".pdf"});
             
             pdf.create(result, options).toStream(function (err, file) {
                 if (err) {
                     console.log(err)
                     status = 500
-                    result = err  
+                    res.status(status)
+                    res.end()
                 } 
                 else
-                    file.pipe(res)
-                
-                res.status(status)
-                res.send(result)
+                    fs.createReadStream("./temp.pdf").pipe(res)
             });
         
             break;
         case "csv":
-            result = helper.toCSV(result.auditlogs);
+            result = helper.toCSV(result);
             res.set('Content-Type', 'text/csv');
             res.set('Content-disposition', 'attachment; filename=auditlog.csv'); 
             res.status(status)

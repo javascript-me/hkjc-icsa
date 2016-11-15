@@ -1,6 +1,5 @@
 ﻿import csv from 'json2csv'
 import _ from 'underscore'
-import moment from 'moment'
 import fs from 'fs'
 
 let helper = {};
@@ -13,10 +12,9 @@ helper.toCSV = data => {
     return csv({ data: data, fields: fields });
 }
 
-helper.toHTML = data => {
+helper.toHTML = (data, date) => {
     const rowsNum = data.length
-    
-    let dateReport = moment(new Date()).format("DD-MMM-YYYY HH:mm")
+        
     let temp = data
     let html = "", headers = ""
     let counter = 1
@@ -31,8 +29,8 @@ helper.toHTML = data => {
     while (temp.length > 0) {
         const rows = temp.length > 25 ? 25 : temp.length
         const table = temp.slice(0, rows)
-        html += getPage(table, tableHeader, counter, dateReport)
-        headers += getHeader(counter++, dateReport)
+        html += getPage(table, tableHeader, counter, date)
+        headers += getHeader(counter++, date)
         temp.splice(0, 25)
     }
 

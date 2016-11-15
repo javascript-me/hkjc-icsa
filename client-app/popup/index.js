@@ -49,32 +49,54 @@ export default class Popup extends React.Component {
         }
     }
 
-    onCloseClicked() {
+    onConfirm() {
         this.hide();
    
-        if (this.props.onCloseClicked) {
-            this.props.onCloseClicked();
+        if (this.props.onConfirm) {
+            this.props.onConfirm();
+        }
+    }
+
+    onCancel() {
+        this.hide();
+   
+        if (this.props.onCancel) {
+            this.props.onCancel();
         }
     }
 
   render() {
     
-    let overlay;
+    let overlay, footer;
     if (this.props.showOverlay) {
       overlay = (
         <div className="popup-overlay" onClick={() => this.onOverlayClicked()} />
       );
     }
+    if (this.props.showFooter) {
+      footer = (
+        <div className="panel-footer"></div>
+      );
+    }
+    
 
     return this.state.isVisible ? (
         <section className="popup-wrapper">
             {overlay}
-            <div className="popup-dialog">
-              <a role="button" className="popup-close-button" onClick={() => this.onCloseClicked()}>
-                &times;
-               </a>
-              <h2 className="title">{this.props.title}</h2>
-              {this.props.children}
+            <div className="popup-dialog panel">
+              <div className="panel-heading">
+                <h1 className="title">{this.props.title}</h1>  
+              </div>
+              <div className="panel-body">
+                <div className="row">
+                  <div className="popup-content">{this.props.children}</div>
+                  <div className="popup-actions">
+                    <a role="button" className="pull-right btn popup-button confirm" onClick={() => this.onConfirm()}> Confirm </a>
+                    <a role="button" className="pull-right btn popup-button cancel" onClick={() => this.onCancel()}> Cancel </a>
+                  </div>
+                </div>
+              </div>
+              {footer}
             </div>
         </section>
     ) : <div />;
@@ -84,7 +106,8 @@ export default class Popup extends React.Component {
 Popup.displayName = 'Popup';
 
 Popup.sharedPropTypes = {
-  onCloseClicked: React.PropTypes.func,
+  onCancel: React.PropTypes.func,
+  onConfirm: React.PropTypes.func,
   onOverlayClicked: React.PropTypes.func,
   showOverlay: React.PropTypes.bool,
   title: React.PropTypes.string,

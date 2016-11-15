@@ -1,3 +1,10 @@
+@path-fonts:    './fonts';
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('@{path-fonts}/Roboto-Medium.ttf') format('truetype');
+}
+
 @import (inline) "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import (inline) "../node_modules/bootstrap/dist/css/bootstrap-theme.min.css";
 @import "style/style.less";
@@ -9,3 +16,4 @@
 @import "dateTime/dateTime.less";
 @import "auditlog/auditlog.less";
 @import "popup/popup.less";
+@import "exportPopup/exportPopup.less";
