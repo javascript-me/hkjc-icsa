@@ -13,6 +13,7 @@ export default class FilterBlock extends React.Component{
 
     removeHandler() {
     	this.props.removeEvent(this.props.filter);
+    	PubSub.publish(PubSub[this.props.changeEventTopic]);
     }
 
     render() {

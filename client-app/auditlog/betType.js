@@ -23,6 +23,8 @@ export default class BetType extends React.Component{
     changeBetTypeHandler() {       
 		if(this.props.selectedBetType !== this.props.betType) {
 			this.props.changeBetTypeEvent(this.props.betType);
+
+            PubSub.publish(PubSub[this.props.changeEventTopic]);
 		}
     }
 
