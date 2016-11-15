@@ -4,14 +4,15 @@ import PubSub from '../pubsub'
 let auditlogsResponse = null
 
 const postSearchCriteria = (data) => {
-	return $.get('api/auditlogs/filterAuditlogs', data)
+	return $.post('api/auditlog/filterAuditlogs', data)
 }
 
 export default {
-	 async doFilter (filters, pagenumber) {
+	 doFilter (searchtext, filters[], pagenumber) {
 		try {
-			auditlogsResponse = await postSearchCriteria({filters, pagenumber})
-			
+			auditlogsResponse = await postSearchCriteria({searchtext, filters[], pagenumber})
+			/*We can publish Event
+			PubSub.publish(PubSub.AUDITLOGEARCH_CHANGE)*/
 		} catch (failure) {
 			// returns null on failure
 		}

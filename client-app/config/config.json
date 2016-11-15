@@ -1,7 +1,10 @@
 {
 	"default": {
 		"url": "",
-		"DASHBOARD_EXTRA": false
+		"DASHBOARD_EXTRA": false,
+		"API_BASE_URI": "http://localhost",
+	    "API_BASE_PORT": 8282,
+	    "API_URL": "http://localhost:8282"
 	},
 	"override": {
 		"localhost|127.0.0.1": {
