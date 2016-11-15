@@ -2,7 +2,7 @@
 import helper from './export_helper'
 import PagingUtil from './paging-util'
 import pdf from 'html-pdf'
-import PagingService from '../../../client-app/paging/paging-service'
+import PagingService from './paging-service'
 
 const router = express.Router()
 const options = { format: 'Letter', orientation: "landscape", header: { "height": "15mm"} }
