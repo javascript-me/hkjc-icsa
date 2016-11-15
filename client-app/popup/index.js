@@ -1,5 +1,4 @@
 import React from 'react'
-import classNames from 'classnames'
 
 const isOpening = (s1, s2) => !s1.isVisible && s2.isVisible
 const isClosing = (s1, s2) => s1.isVisible && !s2.isVisible
@@ -68,10 +67,10 @@ export default class Popup extends React.Component {
 	render () {
 		let overlay, footer
 		if (this.props.showOverlay) {
-			overlay = ( <div className='popup-overlay' onClick={() => this.onOverlayClicked()} /> )
+			overlay = (<div className='popup-overlay' onClick={() => this.onOverlayClicked()} />)
 		}
 		if (this.props.showFooter) {
-			footer = ( <div className='panel-footer' /> )
+			footer = (<div className='panel-footer' />)
 		}
 
 		return this.state.isVisible ? (

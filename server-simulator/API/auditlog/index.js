@@ -46,7 +46,7 @@ router.get('/export', (req, res) => {
 
 		let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
 		let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-		result = helper.toHTML(result)
+		result = helper.toHTML(result, dateReport)
 		res.writeHead(200, {
 			'Content-Type': 'application/octet-stream',
 			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
@@ -65,8 +65,9 @@ router.get('/export', (req, res) => {
 		break
 	case 'csv':
 		result = helper.toCSV(result)
-		res.set('Content-Type', 'text/csv')
-		res.set('Content-disposition', 'attachment; filename=auditlog.csv')
+		res.writeHead(200, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
 		res.status(status)
 		res.send(result)
 		break
