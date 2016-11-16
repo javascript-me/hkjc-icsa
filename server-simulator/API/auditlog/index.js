@@ -10,6 +10,7 @@ const data = require('../json/auditlogs.json')
 
 router.post('/filterAuditlogs', (req, res) => {
     var result = {};
+    
 
     result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.selectedPageNumber))
 
@@ -26,10 +27,31 @@ router.post('/filterAuditlogs', (req, res) => {
     res.send(result);
 })
 
-router.get('/search', (req, res) => {
+router.post('/search', (req, res) => {
     let result = data
     let status = 200
+     const key_word = req.body.key_word  
+     if(key_word === "World Cup" || key_word === "EPC" || key_word === "VCL"|| key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
+       result = data.auditlogs.filter(function (al) {
+     return (al.event_name === key_word  ) 
+     });  
+     }
+        
+if(key_word === "Candy Date" || key_word === "Jagger Smith" || key_word === "Jerry Li"|| key_word === "Karthik Blay") {
+   result = data.auditlogs.filter(function (al) {
+     return (al.user_name === key_word ) 
+     });  
+}
 
+if(key_word === "BOCC Supervisor" || key_word === "Trading Manager" || key_word === "Trading Support Analyst" || key_word === "Finance Controller" 
+    || key_word === "Content & Planning Manager" 
+    || key_word === "Customer Care Representative"
+    || key_word === "Director of Group Treasury"
+    || key_word === "System Administrator") {
+   result = data.auditlogs.filter(function (al) {
+     return (al.user_role === key_word ) 
+     });  
+}
     res.status(status)
     res.send(result)
 })
