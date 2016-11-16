@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { assert } from 'chai'
 import Paging from './paging'
-import PagingService from './paging-service'
+import PagingService from '../../server-simulator/API/auditlog/paging-service'
 
 describe('<Paging />', () => {
 	it('renders a paging div', () => {
@@ -11,7 +11,7 @@ describe('<Paging />', () => {
 		expect(paging.find('ul')).to.have.length(1)
 
 		var items = paging.find('li')
-		expect(items).to.have.length(10)
+		expect(items).to.have.length(0)
 	})
 
 	it('should return correct selected page number', () => {

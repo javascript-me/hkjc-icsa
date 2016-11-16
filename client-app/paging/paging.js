@@ -5,10 +5,12 @@ export default React.createClass({
 
 	currentSelectedPageNumber: 1,
 
-	getInitialState () {
-		return AuditlogStore.pageData
-	},
-
+    getInitialState () {
+        return {
+            pages: [],
+            totalPages: 0
+        }
+    },
 	componentDidMount () {
 		AuditlogStore.addChangeListener(this._onChange.bind(this))
 	},
@@ -42,7 +44,6 @@ export default React.createClass({
 
 		return currentSelectedPageNumber
 	},
-
 	onItemClick (event) {
 		this.currentSelectedPageNumber = this.getUserSelectedPageNumber(
             this.currentSelectedPageNumber,
@@ -50,9 +51,9 @@ export default React.createClass({
             this.state.totalPages
         )
 
-		AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber)
-	},
-
+        var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
+        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, sortingObject)
+    },
 	getClassName (page) {
 		var result = []
 		if (page.selected) result.push('selected')
@@ -60,17 +61,14 @@ export default React.createClass({
 		if (page.greyOut) result.push('grey-out')
 		return result.join(' ')
 	},
-
 	render () {
 		return (
             <div className='paging'>
                 <ul>
                     {
-                        this.state.pages.map(
-                            (page, i) => {
-	return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
-}
-                        )
+                        this.state.pages.map( (page, i) => {
+							return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
+						})
                     }
                 </ul>
             </div>

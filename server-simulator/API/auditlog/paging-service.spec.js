@@ -48,8 +48,8 @@ describe('PagingService', () => {
 
 	it('should return last page data', () => {
 		var dataOfPage100 = PagingService.getDataByPageNumber(PagingService.totalPages)
-		assert.equal('...', dataOfPage100.pages[2].label)
-		assert.equal(95, dataOfPage100.pages[3].label)
+		assert.equal("...", dataOfPage100.pages[2].label)
+		assert.equal(PagingService.totalPages - 5, dataOfPage100.pages[3].label)
 		assert.equal(PagingService.totalPages, dataOfPage100.pages[8].label)
 		assert.ok(dataOfPage100.pages[8].selected)
 	})
@@ -85,4 +85,13 @@ describe('PagingService', () => {
 		assert.isNotOk(PagingService.getDataByPageNumber(PagingService.totalPages).pages[9].hasHandCursor)
 		assert.ok(PagingService.getDataByPageNumber(99).pages[9].hasHandCursor)
 	})
+<<<<<<< HEAD:client-app/paging/paging-service.spec.js
+=======
+
+	it("10 pages case should be working fine. ", () => {
+		PagingService.totalPages = 10
+		assert.ok(PagingService.getDataByPageNumber(1).pages[9].hasHandCursor)
+	})
+
+>>>>>>> 57407f9a5da7edd399faed632a9a3c3ffc7f7cb4:server-simulator/API/auditlog/paging-service.spec.js
 })

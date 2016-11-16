@@ -28,8 +28,9 @@ export default (target) => {
 			<Navigation />
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
-                <Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
-                <Route path='/audit' component={Audit} onEnter={hasAuth} />
+				<Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
+				<Route path='/audit' component={Audit} onEnter={hasAuth} />
+				<Route path='/searchpanel' component={SearchEnquiryPanel} onEnter={hasAuth} />
 			</Router>
 		</div>
 		), target)

@@ -4,19 +4,31 @@ import * as pdf from 'html-pdf'
 import * as fs from 'fs'
 import moment from 'moment'
 
+import PagingUtil from './paging-util'
+import pdf from 'html-pdf'
+import PagingService from './paging-service'
+
+
 const router = express.Router()
 const options = { format: 'Letter', orientation: 'landscape', header: { 'height': '15mm'} }
 const data = require('../json/auditlogs.json')
 
-router.get('/filterAuditlogs', (req, res) => {
-	const filtersArray = '' // Write filters array accordingly
-	const pageNumber = '' // Write accordingly
-	let status = 403
-	let result = { error: 'Sorry we could not find auditlog with this search criteria', data: [filtersArray, pageNumber] }
+router.post('/filterAuditlogs', (req, res) => {
+    var result = {};
 
-    /* Search and Filter code will go here */
-	result = data
-	res.send(result)
+    result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.selectedPageNumber))
+
+    PagingService.totalPages = PagingUtil.getTotalPages(data.auditlogs.length)
+    result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
+
+    result.forDebug = {
+        sortingObjectFieldName: req.body.sortingObjectFieldName,
+        sortingObjectOrder: req.body.sortingObjectOrder
+    }
+
+    //TODO: check how to send JSON POST request data.
+
+    res.send(result);
 })
 
 router.get('/search', (req, res) => {
