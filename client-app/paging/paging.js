@@ -52,8 +52,7 @@ export default React.createClass({
             this.state.totalPages
         )
 
-        var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
-        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, sortingObject, {keyword:""})
+        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, null, null)
     },
 	getClassName (page) {
 		var result = []

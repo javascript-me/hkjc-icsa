@@ -3,27 +3,38 @@ import {EventEmitter} from 'events'
 
 const AuditlogStore = assign({}, EventEmitter.prototype, {
 
+    _criteriaOption: null,
+    _sortingObject: null,
+
     pageData: null,
     auditlogs: null,
     forDebug: null,
 
     getDataByPageNumber (selectedPageNumber, sortingObject, criteriaOption) {
+
+        if (criteriaOption) {
+            this._criteriaOption = criteriaOption
+        }
+
+        if (sortingObject) {
+            this._sortingObject = sortingObject
+        }
+
         let self = this,
             requestData = {
                 selectedPageNumber:selectedPageNumber,
-                sortingObjectFieldName:sortingObject.fieldName,
-                sortingObjectOrder:sortingObject.order,
-                betType: criteriaOption ? criteriaOption.betType : '',
-                keyword: criteriaOption ? criteriaOption.keyword : ''
+                sortingObjectFieldName:this._sortingObject.fieldName,
+                sortingObjectOrder:this._sortingObject.order,
+                betType: this._criteriaOption ? this._criteriaOption.betType : '',
+                keyword: this._criteriaOption ? this._criteriaOption.keyword : ''
             },
-            filters = (criteriaOption && criteriaOption.filters) ? criteriaOption.filters : [],
+            filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : [],
             filterName, filterVal;
 
         // Fill the filters into reuqest data
         for(let i in filters) {
             filterName = filters[i].name;
             filterVal = filters[i].value;
-
             requestData[filterName] = filterVal;
         }
 
@@ -43,17 +54,17 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
             },
         });
     },
-	emitChange () {
-		this.emit('change')
-	},
+    emitChange () {
+        this.emit('change')
+    },
 
-	addChangeListener (callback) {
-		this.on('change', callback)
-	},
+    addChangeListener (callback) {
+        this.on('change', callback)
+    },
 
-	removeChangeListener (callback) {
-		this.removeListener('change', callback)
-	}
+    removeChangeListener (callback) {
+        this.removeListener('change', callback)
+    }
 
 })
 
