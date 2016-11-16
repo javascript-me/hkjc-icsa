@@ -2,12 +2,10 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { assert } from 'chai'
 import Paging from './paging'
-import PagingService from './paging-service'
-import AuditlogStore from '../auditlog/auditlog-store';
+import PagingService from '../../server-simulator/API/auditlog/paging-service'
 
 describe('<Paging />', () => {
 	it('renders a paging div', () => {
-		AuditlogStore.getDataByPageNumber = function (selectedPageNumber) {}
 		const paging = shallow(<Paging />)
 		expect(paging.find('div.paging')).to.have.length(1)
 		expect(paging.find('ul')).to.have.length(1)

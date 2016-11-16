@@ -5,11 +5,29 @@ export default React.createClass({
 
     getInitialState () {
 
-        var sortingObject = {fieldName: "date_time", order: "ASCEND"}
-        AuditlogStore.getDataByPageNumber(1, sortingObject)
+        var headers = [
+            {label:"Date/Time", fieldName:"date_time", sortingClass:"no-arrow"},
+            {label:"User ID", fieldName:"user_id", sortingClass:"no-arrow"},
+            {label:"User Name", fieldName:"user_name", sortingClass:"no-arrow"},
+            {label:"Type", fieldName:"Type", sortingClass:"no-arrow"},
+            {label:"Function/Module", fieldName:"function_module", sortingClass:"no-arrow"},
+            {label:"Function Event Detail", fieldName:"function_event_detail", sortingClass:"no-arrow"},
+            {label:"User Role", fieldName:"user_role", sortingClass:"no-arrow"},
+            {label:"IP Address", fieldName:"ip_address", sortingClass:"no-arrow"},
+            {label:"Back End ID", fieldName:"backend_id", sortingClass:"no-arrow"},
+            {label:"Front End ID", fieldName:"frontend_id", sortingClass:"no-arrow"},
+            {label:"Home", fieldName:"home", sortingClass:"no-arrow"},
+            {label:"Away", fieldName:"away", sortingClass:"no-arrow"},
+            {label:"K.O. Time/ Game Start Time", fieldName:"ko_time_game_start_game", sortingClass:"no-arrow"},
+            {label:"Bet Type", fieldName:"bet_type", sortingClass:"no-arrow"},
+            {label:"Event Name", fieldName:"event_name", sortingClass:"no-arrow"},
+            {label:"Error Code", fieldName:"error_code", sortingClass:"no-arrow"},
+            {label:"Error Message Content", fieldName:"error_message_content", sortingClass:"no-arrow"},
+            {label:"Device", fieldName:"device", sortingClass:"no-arrow"}
+        ]
 
-        var data = {
-            data: [
+        return {
+            auditlogs: [
                 {
                     "date_time": "23 September 2016",
                     "user_id": "candy.crush",
@@ -30,9 +48,9 @@ export default React.createClass({
                     "user_role": "Role1, Role2",
                     "ip_address": "182.34.2.192"
                 }
-            ]
+            ],
+            headers: headers
         }
-        return data
     },
 
     componentDidMount() {
@@ -44,16 +62,86 @@ export default React.createClass({
     },
 
     _onChange() {
-        this.setState({data:AuditlogStore.auditlogs});
+
+        console.log("after sorting: " + JSON.stringify(AuditlogStore.forDebug, null, 4))
+
+        this.setState({
+            auditlogs:AuditlogStore.auditlogs,
+        })
+    },
+
+    setToNoArrow(headers) {
+
+        for (var i = 0 ; i < headers.length ; i++) {
+            headers[i].sortingClass = "no-arrow"
+        }
+
+        return headers
+    },
+
+    updateColumnSortingArrow(headers, fieldName) {
+
+        var element = this.findHeader(headers, fieldName)
+
+        var oldSortingClass = element.sortingClass
+
+        headers = this.setToNoArrow(headers)
+
+        element.sortingClass = this.transformSortingClass(oldSortingClass)
+
+        return headers
+    },
+
+    transformSortingClass(value) {
+        if (value == "no-arrow") return "down-arrow"
+        if (value == "down-arrow") return "up-arrow"
+        if (value == "up-arrow") return "down-arrow"
+        return ""
+    },
+
+    findHeader(headers, fieldName) {
+        for (var i = 0 ; i < headers.length ; i++) {
+            var element = headers[i]
+
+            if (element.fieldName == fieldName) {
+                return element
+            }
+        }
+
+        return null
+    },
+
+    parseToOrder(value) {
+        //TODO: these names should be extract somewhere.
+
+        if (value == "no-arrow") return "NO_ORDER"
+        if (value == "up-arrow") return "ASCEND"
+        if (value == "down-arrow") return "DESCEND"
+        return ""
     },
 
     onItemClick (event) {
-        var sortingObject = {fieldName: "date_time", order: "ASCEND"} // or DESCEND
-        AuditlogStore.getDataByPageNumber(10, sortingObject)
+
+        var fieldName = event.target.id
+
+        this.setState({
+            headers: this.updateColumnSortingArrow(this.state.headers, fieldName)
+        })
+
+        var header = this.findHeader(this.state.headers, fieldName)
+
+        var order = this.parseToOrder(header.sortingClass)
+
+        var sortingObject = {fieldName:fieldName, order:order}
+
+        AuditlogStore.getDataByPageNumber(1, sortingObject)
     },
 
+
+    //TODO: below long HTML should be extracted to a method.
+    //TODO: fieldName like date_time is appeared in 2 places. Need to combine.
     render(){
-        var rows = this.state.data.map(function(row){
+        var rows = this.state.auditlogs.map(function(row){
             return <tr>
                 <td>{row.date_time}</td>
                 <td>{row.user_id}</td>
@@ -79,24 +167,14 @@ export default React.createClass({
         return  <table className="table-striped table auditlog-table">
             <thead className="table-header">
             <tr>
-                <th><button onClick={this.onItemClick}>Up</button><button>Down</button>Date/Time</th>
-                <th className="td-user-id"><button>Up</button><button>Down</button>User ID</th>
-                <th className="td-user-name"><button>Up</button><button>Down</button>User Name</th>
-                <th><button>Up</button><button>Down</button>Type</th>
-                <th><button>Up</button><button>Down</button>Function/Module</th>
-                <th className="td-function-event-detail"><button>Up</button><button>Down</button>Function Event Detail</th>
-                <th><button>Up</button><button>Down</button>User Role</th>
-                <th><button>Up</button><button>Down</button>IP Address</th>
-                <th className="td-backend-frontend-id"><button>Up</button><button>Down</button>Back End ID</th>
-                <th className="td-backend-frontend-id"><button>Up</button><button>Down</button>Front End ID</th>
-                <th><button>Up</button><button>Down</button>Home</th>
-                <th><button>Up</button><button>Down</button>Away</th>
-                <th className="td-ko-game-start-time"><button>Up</button><button>Down</button>K.O. Time/ Game Start Time</th>
-                <th className="td-bet-type"><button>Up</button><button>Down</button>Bet Type</th>
-                <th className="td-event-name"><button>Up</button><button>Down</button>Event Name</th>
-                <th className="td-error-code"><button>Up</button><button>Down</button>Error Code</th>
-                <th className="td-error-message"><button>Up</button><button>Down</button>Error Message Content</th>
-                <th><button>Up</button><button>Down</button>Device</th>
+                {
+                    this.state.headers.map(
+                        function(header, i) {
+                            return <th><span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}></span>{header.label}</th>
+                        }.bind(this)
+                    )
+                }
+
             </tr>
             </thead>
             <tbody>

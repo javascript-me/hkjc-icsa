@@ -21,6 +21,8 @@ router.post('/filterAuditlogs', (req, res) => {
         sortingObjectOrder: req.body.sortingObjectOrder
     }
 
+    //TODO: check how to send JSON POST request data.
+
     res.send(result);
 })
 
