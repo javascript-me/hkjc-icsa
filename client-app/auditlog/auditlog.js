@@ -44,7 +44,7 @@ export default React.createClass({
           betType: DEFAULT_BET_TYPE,
           keyword: '',
           selectedFilters: [],
-          showMoreFilter: false,
+          isShowingMoreFilter: false,
           isClickInMoreFilters: false
       };
     },
@@ -76,7 +76,7 @@ export default React.createClass({
             isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
             isInside = isInsideKeywordElement || this.state.isClickInMoreFilters;
 
-        if(!this.state.showMoreFilter || isInside) {
+        if(!this.state.isShowingMoreFilter || isInside) {
             this.setState({isClickInMoreFilters:false});
             return;
         }
@@ -106,7 +106,7 @@ export default React.createClass({
           betType: betType,
           keyword: '',
           selectedFilters: [],
-          showMoreFilter: false
+          isShowingMoreFilter: false
       });
     },
 
@@ -131,7 +131,7 @@ export default React.createClass({
         selectedFilters.splice(filterIndex, 1);
         this.setState({
           selectedFilters: selectedFilters,
-          showMoreFilter: false
+          isShowingMoreFilter: false
         });
     },
 
@@ -147,13 +147,13 @@ export default React.createClass({
 
     showMoreFilter: function(event) {
         this.setState({
-            showMoreFilter: true
+            isShowingMoreFilter: true
         });
     },
 
     hideMoreFilter: function() {
         this.setState({
-            showMoreFilter: false
+            isShowingMoreFilter: false
         });
     },
 
@@ -191,14 +191,16 @@ export default React.createClass({
       this.setState({ exportFormat: format })
     },
     render: function() {
-        let me = this,
+        let betTypesContainerClassName = ClassNames('bet-types', {
+                'hover-enabled': !this.state.isShowingMoreFilter
+            }),
             betTypes = this.state.betTypes.map((betType, index) => {
               return <BetType
                   key={index}
-                  selectedBetType={me.state.betType}
+                  selectedBetType={this.state.betType}
                   betType={betType}
-                  changeBetTypeEvent={me.changeBetType}
-                  changeEventTopic={me.state.tokens.AUDITLOG_SEARCH} />;
+                  changeBetTypeEvent={this.changeBetType}
+                  changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />;
             }),
 
             filterBlockes = this.state.selectedFilters.filter((f) => {
@@ -207,12 +209,12 @@ export default React.createClass({
                 return <FilterBlock
                     key={index}
                     filter={f}
-                    removeEvent={me.removeSearchCriteriaFilter}
-                    removeEventTopic={me.state.tokens.AUDITLOG_SEARCH}/>;
+                    removeEvent={this.removeSearchCriteriaFilter}
+                    removeEventTopic={this.state.tokens.AUDITLOG_SEARCH}/>;
             }),
 
             moreFilterContianerClassName = ClassNames('more-filter-popup', {
-                'active': this.state.showMoreFilter
+                'active': this.state.isShowingMoreFilter
             });
 
             return (
@@ -230,7 +232,7 @@ export default React.createClass({
                         {/* Search Critiria Row */}
                         <div className="col-md-12">
                           <div className="search-criteria-container">
-                            <div className="bet-types">
+                            <div className={betTypesContainerClassName}>
                               {betTypes}
                             </div>
                             <div className="keyword-container">
