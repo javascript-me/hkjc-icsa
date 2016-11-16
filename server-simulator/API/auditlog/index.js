@@ -15,7 +15,9 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	var cloneAuditlogs = jsonObject.auditlogs.slice(0)
 
-	var sortedAuditlogs = PagingUtil.doSorting(cloneAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs, req.body.keyword)
+
+	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
     result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
@@ -24,7 +26,8 @@ router.post('/filterAuditlogs', (req, res) => {
 
     result.forDebug = {
         sortingObjectFieldName: req.body.sortingObjectFieldName,
-        sortingObjectOrder: req.body.sortingObjectOrder
+        sortingObjectOrder: req.body.sortingObjectOrder,
+		keyword:req.body.keyword
     }
 
     //TODO: check how to send JSON POST request data.
@@ -32,31 +35,13 @@ router.post('/filterAuditlogs', (req, res) => {
     res.send(result);
 })
 
-router.get('/search', (req, res) => {
-	let result = jsonObject
-	let status = 200
-    const key_word = req.body.key_word  
-     if(key_word === "World Cup" || key_word === "EPC" || key_word === "VCL"|| key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
-       result = data.auditlogs.filter(function (al) {
-     return (al.event_name === key_word  ) 
-     });  
-     }
-        
-    if(key_word === "Candy Date" || key_word === "Jagger Smith" || key_word === "Jerry Li"|| key_word === "Karthik Blay") {
-       result = data.auditlogs.filter(function (al) {
-         return (al.user_name === key_word ) 
-         });  
-    }
 
-    if(key_word === "BOCC Supervisor" || key_word === "Trading Manager" || key_word === "Trading Support Analyst" || key_word === "Finance Controller" 
-        || key_word === "Content & Planning Manager" 
-        || key_word === "Customer Care Representative"
-        || key_word === "Director of Group Treasury"
-        || key_word === "System Administrator") {
-       result = data.auditlogs.filter(function (al) {
-         return (al.user_role === key_word ) 
-         });  
-    }
+
+router.get('/search', (req, res) => {
+	let status = 200
+
+	var result = PagingUtil.doFilter(jsonObject, req.body.key_word);
+
 	res.status(status)
 	res.send(result)
 })

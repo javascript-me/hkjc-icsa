@@ -1,5 +1,4 @@
-
-﻿import React from 'react';
+﻿﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import Moment from 'moment';
 import Calendar from 'rc-calendar';
@@ -58,7 +57,7 @@ export default React.createClass({
         AuditlogStore.getDataByPageNumber(1, sortingObject, criteriaOption);
 
         token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
-            this.searchAuditlog(this.state.betType, this.state.keyword, this.state.selectedFilters);
+            this.searchAuditlog();
         });
 
         document.addEventListener('click', this.pageClick, false);
@@ -135,8 +134,12 @@ export default React.createClass({
         });
     },
 
-    searchAuditlog: async function(betType, keyword, filters, pagination, sorting) {
-        AuditlogService.doFilter();
+    searchAuditlog: async function() {
+        let sortingObject = {fieldName: "date_time", order: "NO_ORDER"};
+        let criteriaOption = this.getSearchCriterias();
+
+        // Get Table Data
+        AuditlogStore.getDataByPageNumber(1, sortingObject, criteriaOption);
     },
 
     clickInMoreFilters: function() {
@@ -205,7 +208,6 @@ export default React.createClass({
             }),
 
             filterBlockes = this.state.selectedFilters.filter((f) => {
-                console.log(f.name, f.value, this.state.originDateRange[f.name]);
                 if((f.name === 'dateTimeFrom' || f.name ==='dateTimeTo') 
                   && Moment(f.value).isSame(this.state.originDateRange[f.name])) {
                     return false;

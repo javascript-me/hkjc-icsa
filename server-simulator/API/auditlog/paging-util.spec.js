@@ -120,3 +120,15 @@ it("Simple test", function () {
     assert.ok("23 October 2016 10:30:32" > "23 October 2016 10:30:30")
 
 })
+
+it("doFilter() should return less data", function () {
+
+    const jsonObject = require('../json/auditlogs.json')
+
+    assert.equal(99, jsonObject.auditlogs.length)
+
+    assert.equal(54, PagingUtil.doFilter(jsonObject.auditlogs, "World Cup").length)
+    assert.equal(11, PagingUtil.doFilter(jsonObject.auditlogs, "EPC").length)
+
+    assert.equal(99, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
+})
