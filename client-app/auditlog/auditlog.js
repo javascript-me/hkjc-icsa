@@ -50,7 +50,7 @@ export default React.createClass({
       };
     },
     componentDidMount: function () {
-        let sortingObject = {fieldName: "date_time", order: "NO_ORDER"};
+        let sortingObject = {fieldName: "date_time", order: "DESCEND"};
         let criteriaOption = this.getSearchCriterias();
 
         // Get Table Data
@@ -135,7 +135,7 @@ export default React.createClass({
     },
 
     searchAuditlog: async function() {
-        let sortingObject = {fieldName: "date_time", order: "NO_ORDER"};
+        let sortingObject = {fieldName: "date_time", order: "DESCEND"};
         let criteriaOption = this.getSearchCriterias();
 
         // Get Table Data

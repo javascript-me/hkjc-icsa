@@ -4,9 +4,8 @@ import AuditlogStore from '../auditlog/auditlog-store';
 export default React.createClass({
 
     getInitialState () {
-
         var headers = [
-            {label:"Date/Time", fieldName:"date_time", sortingClass:"no-arrow"},
+            {label:"Date/Time", fieldName:"date_time", sortingClass:"down-arrow"},
             {label:"User ID", fieldName:"user_id", sortingClass:"no-arrow"},
             {label:"User Name", fieldName:"user_name", sortingClass:"no-arrow"},
             {label:"Type", fieldName:"Type", sortingClass:"no-arrow"},
@@ -134,9 +133,8 @@ export default React.createClass({
 
         var sortingObject = {fieldName:fieldName, order:order}
 
-        AuditlogStore.getDataByPageNumber(1, sortingObject, {keyword:""})
+        AuditlogStore.getDataByPageNumber(1, sortingObject, null)
     },
-
 
     //TODO: below long HTML should be extracted to a method.
     //TODO: fieldName like date_time is appeared in 2 places. Need to combine.
