@@ -25,13 +25,11 @@ const doExport = async (format, filters) => {
 }
 
 let token = null;
+let DEFAULT_BET_TYPE = 'football';
 
 export default React.createClass({
     displayName: 'Audit',
     getInitialState () {
-
-      var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
-      AuditlogStore.getDataByPageNumber(1, sortingObject)
 
       return {
           data: [],
@@ -43,7 +41,7 @@ export default React.createClass({
             AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
           },
           betTypes: ['football', 'basketball', 'horse-racing'],
-          betType: 'football',
+          betType: DEFAULT_BET_TYPE,
           keyword: '',
           selectedFilters: [],
           showMoreFilter: false,
@@ -51,6 +49,13 @@ export default React.createClass({
       };
     },
     componentDidMount: function () {
+        let sortingObject = {fieldName: "date_time", order: "NO_ORDER"};
+        let criteriaOption = this.getSearchCriterias();
+
+        // Get Table Data
+        AuditlogStore.getDataByPageNumber(1, sortingObject, criteriaOption);
+
+
         token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
             console.log('AUDITLOG_SEARCH');
             this.searchAuditlog(this.state.betType, this.state.keyword, this.state.selectedFilters);
@@ -77,6 +82,14 @@ export default React.createClass({
         }
 
         this.hideMoreFilter();
+    },
+
+    getSearchCriterias: function() {
+        return {
+            betType: this.state.betType,
+            keyword: this.state.keyword,
+            filter: this.state.selectedFilters
+        }
     },
 
     getBetTypeIconClassName: function(betType) {

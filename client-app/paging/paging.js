@@ -1,6 +1,7 @@
 import React from 'react'
 import AuditlogStore from '../auditlog/auditlog-store'
 
+
 export default React.createClass({
 
 	currentSelectedPageNumber: 1,
@@ -12,14 +13,14 @@ export default React.createClass({
         }
     },
 	componentDidMount () {
-		AuditlogStore.addChangeListener(this._onChange.bind(this))
+		AuditlogStore.addChangeListener(this.onChange.bind(this))
 	},
 
 	componentWillUnmount () {
-		AuditlogStore.removeChangeListener(this._onChange.bind(this))
+		AuditlogStore.removeChangeListener(this.onChange.bind(this))
 	},
 
-	_onChange () {
+	onChange () {
 		this.setState(AuditlogStore.pageData)
 	},
 
@@ -66,7 +67,7 @@ export default React.createClass({
             <div className='paging'>
                 <ul>
                     {
-                        this.state.pages.map( (page, i) => {
+                        this.state.pages.map((page, i) => {
 							return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
 						})
                     }
