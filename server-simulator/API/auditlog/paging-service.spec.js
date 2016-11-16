@@ -1,11 +1,10 @@
 import PagingService from './paging-service'
-import { assert } from 'chai';
+import { assert } from 'chai'
 import _ from 'underscore'
 
 describe('PagingService', () => {
-
 	it('should return NaN when parsing a non-number symbol', () => {
-		assert.ok(isNaN(Number("<")))
+		assert.ok(isNaN(Number('<')))
 	})
 
 	it('should return page 1 data', () => {
@@ -39,11 +38,11 @@ describe('PagingService', () => {
 
 	it('should return page 6 data', () => {
 		var dataOfPage6 = PagingService.getDataByPageNumber(6)
-		assert.equal("...", dataOfPage6.pages[2].label)
+		assert.equal('...', dataOfPage6.pages[2].label)
 		assert.equal(6, dataOfPage6.pages[5].label)
 		assert.ok(dataOfPage6.pages[5].selected)
 
-		assert.equal("...", dataOfPage6.pages[8].label)
+		assert.equal('...', dataOfPage6.pages[8].label)
 		assert.equal(PagingService.totalPages, dataOfPage6.pages[9].label)
 	})
 
@@ -72,7 +71,6 @@ describe('PagingService', () => {
 		assert.equal(20, pages[2].label)
 		assert.equal(21, pages[3].label)
 		assert.equal(22, pages[4].label)
-
 	})
 
 	it('fixInvalidSelectedPageNumber() should return a valid selectedPageNumber', () => {
@@ -92,5 +90,4 @@ describe('PagingService', () => {
 		PagingService.totalPages = 10
 		assert.ok(PagingService.getDataByPageNumber(1).pages[9].hasHandCursor)
 	})
-
 })

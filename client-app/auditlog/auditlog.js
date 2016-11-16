@@ -1,3 +1,4 @@
+
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from 'rc-calendar';
@@ -9,54 +10,62 @@ import FilterBlock from './filterBlock';
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel';
 import Paging from '../paging/paging'
 import Popup from '../popup'
-
+import ExportPopup from '../exportPopup'
+import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store';
 import ExportService from './export-service';
 import AuditlogService from './auditlog-service';
-import TabularData from '../tabulardata/tabulardata';
+
 
 const doExport = async (format) => {
-    const file = ExportService.getFileURL(format, [])
-    if (file) {
-        window.open(file, "_blank");
-    }
+	const file = ExportService.getFileURL(format, [])
+	if (file) {
+		window.open(file, '_blank')
+	}
 }
+
+let token = null;
+let DEFAULT_BET_TYPE = 'football';
 
 export default React.createClass({
     displayName: 'Audit',
     getInitialState () {
 
-      var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
-      AuditlogStore.getDataByPageNumber(1, sortingObject)
-
       return {
-        data: [],
-        filters: [],
-        hasData: false,
-        tokens: {
+          data: [],
+          filters: [],
+          hasData: false,
+          exportFormat: 'pdf',
+          tokens: {
             AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
-            AUDITLOG_BET_TYPE_CHANGE: 'AUDITLOG_BET_TYPE_CHANGE',
-            AUDITLOG_REMOVE_FILTER: 'AUDITLOG_REMOVE_FILTER'
+            AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
           },
           betTypes: ['football', 'basketball', 'horse-racing'],
-          betType: 'football',
-          selectedFilters: [{
-            'name': 'Type',
-            'value': 'Some Type'
-          }, {
-            'name': 'Date To',
-            'value': 'Some day'
-          }],
+          betType: DEFAULT_BET_TYPE,
+          keyword: '',
+          selectedFilters: [],
           showMoreFilter: false,
           isClickInMoreFilters: false
       };
     },
     componentDidMount: function () {
+        let sortingObject = {fieldName: "date_time", order: "NO_ORDER"};
+        let criteriaOption = this.getSearchCriterias();
+
+        // Get Table Data
+        AuditlogStore.getDataByPageNumber(1, sortingObject, criteriaOption);
+
+
+        token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
+            console.log('AUDITLOG_SEARCH');
+            this.searchAuditlog(this.state.betType, this.state.keyword, this.state.selectedFilters);
+        });
+
         document.addEventListener('click', this.pageClick, false);
     },
 
     componentWillUnmount: function () {
-        PubSub.unsubscribe(AUDITLOG_BET_TYPE_CHANGE);
+        PubSub.unsubscribe(token);
 
         document.removeEventListener('click', this.pageClick, false);
     },
@@ -75,6 +84,14 @@ export default React.createClass({
         this.hideMoreFilter();
     },
 
+    getSearchCriterias: function() {
+        return {
+            betType: this.state.betType,
+            keyword: this.state.keyword,
+            filter: this.state.selectedFilters
+        }
+    },
+
     getBetTypeIconClassName: function(betType) {
       return ClassNames(
         'bet-type',
@@ -87,8 +104,24 @@ export default React.createClass({
     changeBetType: function(betType) {
       this.setState({
           betType: betType,
+          keyword: '',
+          selectedFilters: [],
           showMoreFilter: false
       });
+    },
+
+    handleKeywordChange: function (event) {
+        var newKeyword = event.target.value;
+
+        this.setState({
+            keyword: newKeyword
+        });
+    },
+
+    handleKeywordPress: function(event) {
+        if (event.key === 'Enter') {
+            PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS]);
+        }
     },
 
     removeSearchCriteriaFilter: function(filter) {
@@ -102,22 +135,8 @@ export default React.createClass({
         });
     },
 
-    setFilters: function(filters) {
-        this.setState({
-          selectedFilters: filters
-        });
-    },
-
-    resetFilters: function() {
-        this.setState({
-          selectedFilters: []
-        });
-    },
-
-    searchAuditlog: async function(filters) {
-        this.setFilters(filters);
-        this.hideMoreFilter();
-        await AuditlogService.postSearchCriteria();
+    searchAuditlog: async function(betType, keyword, filters, pagination, sorting) {
+        AuditlogService.doFilter();
     },
 
     clickInMoreFilters: function() {
@@ -127,8 +146,6 @@ export default React.createClass({
     },
 
     showMoreFilter: function(event) {
-        event.stopPropagation()
-
         this.setState({
             showMoreFilter: true
         });
@@ -140,73 +157,98 @@ export default React.createClass({
         });
     },
 
-    setFilters: function(filters, hidePopup) {
-        if(hidePopup) {
-            this.hideMoreFilter();
+    setFilters: function(filters) {
+        this.hideMoreFilter();
+
+        let newFilters = [];
+
+        for(let attr in filters) {
+            newFilters.push({
+                'name': attr,
+                'value': filters[attr]
+            });
         }
 
+        this.setState({
+            selectedFilters: newFilters
+        }, () => {
+            PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH]);
+        });
     },
 
     //function to mock the event of loading data from the table
     mockLoadData: function() {
       this.setState({hasData: true})
     },
+    openPopup () {
+      this.setState({ exportFormat: 'pdf' })// reset the format value
+      this.state.hasData ? this.refs.exportPopup.show() : null
+    },
+    export () {
+      doExport(this.state.exportFormat)
+    },
+    onChangeFormat (format) {
+      this.setState({ exportFormat: format })
+    },
     render: function() {
-      let me = this,
-        betTypes = this.state.betTypes.map((betType, index) => {
-          return <BetType
-            key={index}
-            selectedBetType={me.state.betType}
-            betType={betType}
-            changeBetTypeEvent={me.changeBetType}
-            changeEventTopic={me.state.tokens.AUDITLOG_SEARCH} />;
-        }),
+        let me = this,
+            betTypes = this.state.betTypes.map((betType, index) => {
+              return <BetType
+                  key={index}
+                  selectedBetType={me.state.betType}
+                  betType={betType}
+                  changeBetTypeEvent={me.changeBetType}
+                  changeEventTopic={me.state.tokens.AUDITLOG_SEARCH} />;
+            }),
 
-        filterBlockes = this.state.selectedFilters.map((f, index)=>{
-          return <FilterBlock
-            key={index}
-            filter={f}
-            removeEvent={me.removeSearchCriteriaFilter}
-            removeEventTopic={me.state.tokens.AUDITLOG_SEARCH}/>;
-        }),
+            filterBlockes = this.state.selectedFilters.filter((f) => {
+                return f.name !== 'dateTimeFrom' && f.name !=='dateTimeTo'
+            }).map((f, index) => {
+                return <FilterBlock
+                    key={index}
+                    filter={f}
+                    removeEvent={me.removeSearchCriteriaFilter}
+                    removeEventTopic={me.state.tokens.AUDITLOG_SEARCH}/>;
+            }),
 
-        keywordContainerClassName = ClassNames(
-        'keyword-container', {
-            'active': this.state.showMoreFilter
-        }),
+            moreFilterContianerClassName = ClassNames('more-filter-popup', {
+                'active': this.state.showMoreFilter
+            });
 
-        moreFilterContianerClassName = ClassNames('more-filter-popup', {
-            'active': this.state.showMoreFilter
-        });
-
-        return (
-            <div className="contianer auditlog">
-                <div className="row page-header">
-                    <p className="hkjc-breadcrumb">
-                        Home \ Tool & Adminstration \ Audit
-                    </p>
-                    <h1>Audit Trail</h1>
-                </div>
-                <div className='row page-content'>
-                    <div className='col-md-6'>
-                        <Calendar className='hidden' />
+            return (
+              <div className="auditlog">
+                    <div className="row page-header">
+                        <p className="hkjc-breadcrumb">
+                            Home \ Tool & Adminstration \ Audit
+                        </p>
+                        <h1>Audit Trail</h1>
                     </div>
-                    {/* Search Critiria Row */}
-                    <div className="col-md-12">
-                      <div className="search-criteria-container">
-                        <div className="bet-types">
-                          {betTypes}
+                    <div className='row page-content'>
+                        <div className='col-md-6'>
+                            <Calendar className='hidden' />
                         </div>
-                        <div className={keywordContainerClassName}>
-                          <input type="text" placeholder="Search with keywords & filters" onClick={this.showMoreFilter} ref="keyword" />
+                        {/* Search Critiria Row */}
+                        <div className="col-md-12">
+                          <div className="search-criteria-container">
+                            <div className="bet-types">
+                              {betTypes}
+                            </div>
+                            <div className="keyword-container">
+                              <input type="text" placeholder="Search with keywords & filters" 
+                                value={this.state.keyword} 
+                                onClick={this.showMoreFilter} 
+                                onChange={this.handleKeywordChange}
+                                onKeyPress={this.handleKeywordPress}
+                                ref="keyword" />
+                            </div>
+                            <div className="filter-block-container">
+                              {filterBlockes}
+                            </div> 
+                            <div className={moreFilterContianerClassName} onClick={this.clickInMoreFilters}>
+                              <SearchEnquiryPanel setFilterEvent={this.setFilters}/>
+                            </div>
+                          </div>
                         </div>
-                        <div className="filter-block-container">
-                          {filterBlockes}
-                        </div> 
-                        <div className={moreFilterContianerClassName} onClick={this.clickInMoreFilters}>
-                          <SearchEnquiryPanel setFilterEvent={this.setFilters}/>
-                        </div>
-                      </div>
                     </div>
                     {/* Search Result */}
                     <div className='table-container col-xs-12'>
@@ -214,26 +256,18 @@ export default React.createClass({
                     </div>
                     <Paging />
                     {/* START FOOTER EXPORT */}
-                    <div className="col-md-12">
-                        <div className="pull-right">
-                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={() => this.state.hasData ? this.refs.exportPopup.show() : null }>Export</button>
+                    <div className='col-md-12'>
+                        <div className='pull-right'>
+                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
                             <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
-                            <Popup hideOnOverlayClicked ref="exportPopup" title="Export as ...">
-                                <div className="export-content">
-                                <div className="row">
-                                    <div className="col-md-4 col-md-offset-2">
-                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('PDF'); this.refs.exportPopup.hide() } }>PDF</button>
-                                   </div>
-                                    <div className="col-md-4">
-                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('CSV'); this.refs.exportPopup.hide() } }>CSV</button>
-                                    </div>
-                                </div></div>
+                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+                                <ExportPopup onChange={this.onChangeFormat} />
                             </Popup>
                         </div>
                     </div>
                     {/* END FOOTER EXPORT */}
-                </div>
-            </div>
-        );
+              </div>
+            );
     }
 });
+
