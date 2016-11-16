@@ -54,14 +54,14 @@ export default React.createClass({
     },
 
     componentDidMount() {
-        AuditlogStore.addChangeListener(this._onChange.bind(this));
+        AuditlogStore.addChangeListener(this.onChange.bind(this));
     },
 
     componentWillUnmount() {
-        AuditlogStore.removeChangeListener(this._onChange.bind(this));
+        AuditlogStore.removeChangeListener(this.onChange.bind(this));
     },
 
-    _onChange() {
+    onChange() {
 
         console.log("after sorting: " + JSON.stringify(AuditlogStore.forDebug, null, 4))
 

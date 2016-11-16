@@ -1,6 +1,6 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import PubSub from '../pubsub';
+import React from 'react'
+import ClassNames from 'classnames'
+import PubSub from '../pubsub'
 
 export default class FilterBlock extends React.Component{
     constructor(props) {
@@ -13,6 +13,7 @@ export default class FilterBlock extends React.Component{
 
     removeHandler() {
     	this.props.removeEvent(this.props.filter);
+    	PubSub.publish(PubSub[this.props.changeEventTopic]);
     }
 
     render() {
@@ -20,6 +21,6 @@ export default class FilterBlock extends React.Component{
               <span className="filter-block" onClick={this.removeHandler}>
               	{this.props.filter.value}
               </span>
-        );
-    }
+        )
+	}
 }
