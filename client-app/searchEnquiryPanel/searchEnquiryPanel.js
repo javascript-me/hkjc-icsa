@@ -182,6 +182,7 @@ export default class SearchEnquiryPanel extends React.Component {
   }
 
 	render () {
+
 		let { errorDateTimeFrom, errorDateTimeTo, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
 		let fromClass = 'form-group'
 		let toClass = 'form-group'

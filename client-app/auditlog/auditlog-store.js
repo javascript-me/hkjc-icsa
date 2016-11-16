@@ -31,19 +31,18 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
             },
         });
     },
+	emitChange () {
+		this.emit('change')
+	},
 
-    emitChange() {
-        this.emit('change');
-    },
+	addChangeListener (callback) {
+		this.on('change', callback)
+	},
 
-    addChangeListener(callback) {
-        this.on('change', callback);
-    },
-
-    removeChangeListener(callback) {
-        this.removeListener('change', callback);
-    }
+	removeChangeListener (callback) {
+		this.removeListener('change', callback)
+	}
 
 })
 
-export default AuditlogStore;
+export default AuditlogStore
