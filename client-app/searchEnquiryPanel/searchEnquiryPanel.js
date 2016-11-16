@@ -165,23 +165,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User Role</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'userRole')}>
-								<option>All</option>
-								<option>Test01</option>
-								<option>Test02</option>
-								<option>Test03</option>
-							</select>
+							<SelectCom datas={datas.userRole} handleVal={this.handleChange.bind(this, 'userRole')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>System Function</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'systemFunc')}>
-								<option>All</option>
-								<option>Test01</option>
-								<option>Test02</option>
-								<option>Test03</option>
-							</select>
+							<SelectCom datas={datas.systemFunc} handleVal={this.handleChange.bind(this, 'systemFunc')} />
 						</div>
 					</div>
 				</div>
@@ -189,23 +179,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Bet Type/Feature</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'betType')}>
-								<option>All</option>
-								<option>Test01</option>
-								<option>Test02</option>
-								<option>Test03</option>
-							</select>
+							<SelectCom datas={datas.betType} handleVal={this.handleChange.bind(this, 'betType')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Device</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'device')}>
-								<option>All</option>
-								<option>Test01</option>
-								<option>Test02</option>
-								<option>Test03</option>
-							</select>
+							<SelectCom datas={datas.device} handleVal={this.handleChange.bind(this, 'device')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
