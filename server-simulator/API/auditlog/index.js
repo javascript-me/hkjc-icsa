@@ -57,7 +57,7 @@ router.get('/download/:file', (req, res) => {
 
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
-	let result = Array.from(data.auditlogs)
+	let result = Array.from(jsonObject.auditlogs)
 	let status = 200
 
 	switch (type.toLowerCase()) {
