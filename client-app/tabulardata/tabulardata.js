@@ -134,7 +134,7 @@ export default React.createClass({
 
         var sortingObject = {fieldName:fieldName, order:order}
 
-        AuditlogStore.getDataByPageNumber(1, sortingObject)
+        AuditlogStore.getDataByPageNumber(1, sortingObject, {keyword:""})
     },
 
 

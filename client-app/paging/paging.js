@@ -53,7 +53,7 @@ export default React.createClass({
         )
 
         var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
-        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, sortingObject)
+        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, sortingObject, {keyword:""})
     },
 	getClassName (page) {
 		var result = []
