@@ -47,7 +47,7 @@ const originState = {
     userId: '',
     userRole: '',
     systemFunc: '',
-    betType: '',
+    betTypeFeature: '',
     device: '',
     ipAddress: '',
     errorCode: '',
@@ -184,7 +184,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					'userId',
 					'userRole',
 					'systemFunc',
-					'betType',
+					'betTypeFeature',
 					'device',
 					'ipAddress',
 					'errorCode'],
@@ -308,7 +308,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Bet Type/Feature</label>
-							<SelectCom datas={selectdata.betType} selectedVal={this.state.betType} handleVal={this.handleChange.bind(this, 'betType')} />
+							<SelectCom datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={this.handleChange.bind(this, 'betTypeFeature')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
