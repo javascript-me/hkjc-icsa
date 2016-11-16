@@ -9,6 +9,7 @@ import FilterBlock from './filterBlock';
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel';
 import Paging from '../paging/paging'
 import Popup from '../popup'
+import TabularData from '../tabulardata/tabulardata'
 
 import AuditlogStore from './auditlog-store';
 import ExportService from './export-service';
@@ -26,6 +27,10 @@ let token = null;
 export default React.createClass({
     displayName: 'Audit',
     getInitialState () {
+
+      var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
+      AuditlogStore.getDataByPageNumber(1, sortingObject)
+
       return {
           data: [],
           filters: [],
@@ -155,11 +160,6 @@ export default React.createClass({
         });
     },
 
-    showPageData: function() {
-        console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
-        
-    },
     //function to mock the event of loading data from the table
     mockLoadData: function() {
       this.setState({hasData: true})
@@ -372,28 +372,33 @@ export default React.createClass({
                               </tbody>
                             </table>
                         </div>
-                        <Paging />
-                        {/* START FOOTER EXPORT */}
-                        <div className="col-md-12">
-                            <div className="pull-right">
-                                <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={() => this.state.hasData ? this.refs.exportPopup.show() : null }>Export</button>
-                                <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
-                                <Popup hideOnOverlayClicked ref="exportPopup" title="Export as ...">
-                                    <div className="export-content">
-                                    <div className="row">
-                                        <div className="col-md-4 col-md-offset-2">
-                                            <button className="btn btn-primary btn-block" onClick={() =>{ doExport('PDF'); this.refs.exportPopup.hide() } }>PDF</button>
-                                       </div>
-                                        <div className="col-md-4">
-                                            <button className="btn btn-primary btn-block" onClick={() =>{ doExport('CSV'); this.refs.exportPopup.hide() } }>CSV</button>
-                                        </div>
-                                    </div></div>
-                                </Popup>
-                            </div>
+                    </div>
+                    {/* Search Result */}
+                    <div className='table-container col-xs-12'>
+                      <TabularData/>
+                    </div>
+                    <Paging />
+                    {/* START FOOTER EXPORT */}
+                    <div className="col-md-12">
+                        <div className="pull-right">
+                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={() => this.state.hasData ? this.refs.exportPopup.show() : null }>Export</button>
+                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
+                            <Popup hideOnOverlayClicked ref="exportPopup" title="Export as ...">
+                                <div className="export-content">
+                                <div className="row">
+                                    <div className="col-md-4 col-md-offset-2">
+                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('PDF'); this.refs.exportPopup.hide() } }>PDF</button>
+                                   </div>
+                                    <div className="col-md-4">
+                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('CSV'); this.refs.exportPopup.hide() } }>CSV</button>
+                                    </div>
+                                </div></div>
+                            </Popup>
                         </div>
                         {/* END FOOTER EXPORT */}
                         <button onClick={this.showPageData}>forDebug</button>                    
                     </div>
+                    {/* END FOOTER EXPORT */}
                 </div>
             );
     }

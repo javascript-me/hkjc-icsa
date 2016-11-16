@@ -88,4 +88,9 @@ describe('PagingService', () => {
 		assert.ok(PagingService.getDataByPageNumber(99).pages[9].hasHandCursor)
 	})
 
+	it("10 pages case should be working fine. ", () => {
+		PagingService.totalPages = 10
+		assert.ok(PagingService.getDataByPageNumber(1).pages[9].hasHandCursor)
+	})
+
 })
