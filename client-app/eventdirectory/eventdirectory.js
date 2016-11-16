@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
-import TabContent, {EDTYPES} from './tabcontent'
+import SearchContainer, {EDTYPES} from './searchcontainer'
 
 export default React.createClass({
 	displayName: 'EventDirectory',
+	propTypes: {
+		slimMode: PropTypes.bool
+	},
 	getInitialState () {
 		return {
 			showContent: false
@@ -12,7 +15,7 @@ export default React.createClass({
 	},
 	componentDidMount () {
 		$('.nav-tabs li a', this.refs.root).click(this.handleTabClick)
-		$('.nav-tabs li a', this.refs.root).tooltip({trigger: 'hover'})
+		$('.nav-tabs li a', this.refs.root).tooltip({trigger: 'hover', placement: 'bottom'})
 	},
 	handleTabClick (e) {
 		let showContent = false
@@ -34,7 +37,7 @@ export default React.createClass({
 	render () {
 		const contentClasses = classNames('tab-content', {hidden: !this.state.showContent})
 		return (
-			<div ref='root' className={classNames('row-eventdirectory',{slim:this.props.slimMode})}>
+			<div ref='root' className={classNames('row-eventdirectory', {slim:this.props.slimMode})}>
 				<ul className='nav nav-tabs' role='tablist'>
 					<li role='presentation'><a id='football-tab' href='#football-panel' role='tab' data-toggle='tab' title='Football' /></li>
 					<li role='presentation'><a id='basketball-tab' href='#basketball-panel' role='tab' data-toggle='tab' title='Basketball' /></li>
@@ -44,15 +47,15 @@ export default React.createClass({
 				<div className={contentClasses}>
 					<div role='tabpanel' className='tab-pane' id='football-panel'>
 						<div className='line' />
-						<TabContent type={EDTYPES.FOOTBAL} />
+						<SearchContainer type={EDTYPES.FOOTBAL} />
 					</div>
 					<div role='tabpanel' className='tab-pane' id='basketball-panel'>
 						<div className='line' />
-						<TabContent type={EDTYPES.BASEKETBALL} />
+						<SearchContainer type={EDTYPES.BASEKETBALL} />
 					</div>
 					<div role='tabpanel' className='tab-pane' id='horseracing-panel'>
 						<div className='line' />
-						<TabContent type={EDTYPES.HORSERACING} />
+						<SearchContainer type={EDTYPES.HORSERACING} />
 					</div>
 				</div>
 			</div>

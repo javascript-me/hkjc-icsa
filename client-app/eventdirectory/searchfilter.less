@@ -12,6 +12,10 @@
 			background-image: url(eventdirectory/search.svg);
 			background-repeat: no-repeat;
 			background-position: 14px center;
+
+			font-size: 14px;
+			color: #305091;
+			line-height: 30px;
 		}
 	}
 
@@ -24,9 +28,17 @@
 			color: #0C2963;
 			line-height: 22px;
 
-			.caret {
+			.caret-down {
 				margin-left: 7px;
 				border-top: 6px dashed;
+				color: #7C8DAF;
+			}
+
+			.caret-up {
+				margin-left: 7px;
+				margin-top: -2px;
+				border-top: none;
+				border-bottom: 6px dashed;
 				color: #7C8DAF;
 			}
 		}
@@ -46,6 +58,10 @@
 
 	select {
 		margin: 7px 0 14px;
+		height: 30px;
+		background: #FFFFFF;
+		border: 1px solid #ACB8D1;
+		border-radius: 2px;
 		padding: 5px 10px;
 		font-size: 14px;
 		color: #305091;

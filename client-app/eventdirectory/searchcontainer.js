@@ -1,7 +1,7 @@
-import React, {PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
 import SearchFilter from './searchfilter'
-import SearchResult from './searchresult'
+import SearchTree from './searchtree'
 
 import EventDirectoryService from './eventdirectory-service'
 
@@ -12,7 +12,7 @@ export const EDTYPES = {
 }
 
 export default React.createClass({
-	displayName: 'TabContent',
+	displayName: 'SearchContainer',
 	propTypes: {
 		type: PropTypes.number.isRequired
 	},
@@ -33,9 +33,9 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<div ref='root' className='ed-tabcontent'>
+			<div ref='root' className='ed-container'>
 				<SearchFilter filter={this.state.filter} onSearch={this.onSearch} />
-				<SearchResult result={this.state.result} />
+				<SearchTree result={this.state.result} />
 			</div>
 			)
 	},
@@ -48,6 +48,7 @@ export default React.createClass({
 	async getResult (searchParam) {
 		const result = await EventDirectoryService.getEventDirectoryResult(searchParam)
 		if (result) {
+			console.log(result)
 			this.setState({result: result.result})
 		}
 	}

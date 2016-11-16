@@ -46,6 +46,7 @@ export default React.createClass({
 	},
 	componentWillUnmount () {
 		PubSub.unsubscribe(token)
+		this.interval = clearInterval(this.interval)
 	},
 	showClock () {
 		this.setState((preState) => {

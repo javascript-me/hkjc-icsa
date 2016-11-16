@@ -22,8 +22,10 @@ router.post('/', (req, res) => {
 	const keyword = req.body.keyword
 	let result = {result: []}
 
-	if (keyword === 'ARS') {
-		result = eventdirectory
+	if (keyword === '') {
+		result.result = eventdirectory.ALL
+	} else 	if (keyword === 'ARS') {
+		result.result = eventdirectory.ARS
 	}
 
 	res.send(result)
