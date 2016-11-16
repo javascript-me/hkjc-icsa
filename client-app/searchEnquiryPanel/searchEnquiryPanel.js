@@ -7,37 +7,37 @@ import PubSub from '../pubsub';
 
 const selectdata = SearchEnquiryDataService.getData();
 
-const getOrginDateFrom = function() {
-    let dateFrom = new Date();
-		let dateFromObj = {};
-    dateFrom.setDate(dateFrom.getDate() - 60);
-    dateFrom.setHours(0);
-    dateFrom.setMinutes(0);
-    dateFrom.setSeconds(0);
-    dateFrom.setMilliseconds(0);
-		dateFromObj.value = Date.parse(dateFrom);
-		dateFromObj.datetime = Moment(dateFrom).format('DD MMM YYYY HH:mm');
-    return dateFromObj;
+const getOrginDateTimeFrom = function() {
+    let dateTimeFrom = new Date(),
+		dateTimeFromObj = {};
+
+    dateTimeFrom.setDate(dateTimeFrom.getDate() - 60);
+    dateTimeFrom.setHours(0);
+    dateTimeFrom.setMinutes(0);
+    dateTimeFrom.setSeconds(0);
+    dateTimeFrom.setMilliseconds(0);
+	dateTimeFromObj.timestamp = Date.parse(dateTimeFrom);
+	dateTimeFromObj.datetime = Moment(dateTimeFrom).format('DD MMM YYYY HH:mm');
+    return dateTimeFromObj;
 }
 
-const getOrginDateTo = function() {
-    let dateTo = new Date();
-		let dateToObj = {};
-    dateTo.setHours(23);
-    dateTo.setMinutes(59);
-    dateTo.setSeconds(59);
-    dateTo.setMilliseconds(0);
-		console.log("To");
-		console.log(Date.parse(dateTo));
-		dateToObj.value = Date.parse(dateTo);
-    dateToObj.datetime = Moment(dateTo).format('DD MMM YYYY HH:mm');
-		return dateToObj;
+const getOrginDateTimeTo = function() {
+    let dateTimeTo = new Date(),
+		dateTimeToObj = {};
+
+    dateTimeTo.setHours(23);
+    dateTimeTo.setMinutes(59);
+    dateTimeTo.setSeconds(59);
+    dateTimeTo.setMilliseconds(0);
+	dateTimeToObj.timestamp = Date.parse(dateTimeTo);
+    dateTimeToObj.datetime = Moment(dateTimeTo).format('DD MMM YYYY HH:mm');
+	return dateTimeToObj;
 }
 
 const originState = {
-    dateTimeFrom: getOrginDateFrom(),
-    dateTimeTo: getOrginDateTo(),
-		selectdata: selectdata,
+    dateTimeFrom: getOrginDateTimeFrom(),
+    dateTimeTo: getOrginDateTimeTo(),
+	selectdata: selectdata,
     backEndID: '',
     frontEndID: '',
     eventLv1: '',
@@ -84,7 +84,7 @@ export default class SearchEnquiryPanel extends React.Component {
 
 	renderTipsText () {
 		let { dateTimeFrom, dateTimeTo, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state;
-		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorIPAddress === 0 || dateTimeTo.value < dateTimeFrom.value)) {
+		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorIPAddress === 0 || dateTimeTo.timestamp < dateTimeFrom.timestamp)) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
 			return <span className='color-blue'>* These fields are mandatory</span>
@@ -94,7 +94,15 @@ export default class SearchEnquiryPanel extends React.Component {
 	handleChange (name, event) {
 		let newState = {};
 
-		newState[name] = event.target.value
+		if (name === 'dateTimeFrom' || name === 'dateTimeTo') {
+			newState[name] = {
+				timestamp: Date.parse(event.target.value),
+				datetime: event.target.value
+			};
+		} else {
+			newState[name] = event.target.value
+		}
+
 		this.setState(newState)
 
 		if (name === 'dateTimeFrom') {
@@ -131,16 +139,20 @@ export default class SearchEnquiryPanel extends React.Component {
 		}
 	}
 
-  isEnquiryValid() {
-    return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorIPAddress);
-  }
+	isEnquiryValid() {
+		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorIPAddress);
+	}
 
 	handleSubmit () {
   		this.setState({ tipsFlag: 0 }, function() {
           if(this.isEnquiryValid()) {
-              let enquiries = this.getEnquiries(this.state);
+              let enquiries = this.getEnquiries(this.state),
+              	originDateRange = {
+              		dateTimeFrom: originState.dateTimeFrom.datetime,
+              		dateTimeTo: originState.dateTimeTo.datetime
+              	};
 
-              this.props.setFilterEvent(enquiries, true);
+              this.props.setFilterEvent(enquiries, originDateRange);
               this.setState({
                 tipsFlag: 1
               })
@@ -177,7 +189,10 @@ export default class SearchEnquiryPanel extends React.Component {
 
       for(let i in needReturnEnquiries) {
           currentAttrName = needReturnEnquiries[i];
-          currentAttrVal = src[currentAttrName];
+          currentAttrVal = (currentAttrName === 'dateTimeFrom' || currentAttrName === 'dateTimeTo' )
+	          ? src[currentAttrName].datetime
+	          : src[currentAttrName];
+
 
           if(currentAttrVal) {
               result[currentAttrName] = currentAttrVal;
@@ -201,7 +216,7 @@ export default class SearchEnquiryPanel extends React.Component {
 		if (tipsFlag === 0 && errorIPAddress === 0) {
 			ipClass = 'form-group has-error'
 		}
-		if (tipsFlag === 0 && dateTimeTo.value < dateTimeFrom.value) {
+		if (tipsFlag === 0 && dateTimeTo.timestamp < dateTimeFrom.timestamp) {
 			fromClass = 'form-group has-error'
 			toClass = 'form-group has-error'
 		}

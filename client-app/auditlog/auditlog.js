@@ -1,5 +1,6 @@
 ﻿﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import Moment from 'moment';
 import Calendar from 'rc-calendar';
 import { hashHistory } from 'react-router';
 import ClassNames from 'classnames';
@@ -42,8 +43,9 @@ export default React.createClass({
           betTypes: ['football', 'basketball', 'horse-racing'],
           betType: DEFAULT_BET_TYPE,
           keyword: '',
+          originDateRange: {},
           selectedFilters: [],
-          showMoreFilter: false,
+          isShowingMoreFilter: false,
           isClickInMoreFilters: false
       };
     },
@@ -54,9 +56,7 @@ export default React.createClass({
         // Get Table Data
         AuditlogStore.getDataByPageNumber(1, sortingObject, criteriaOption);
 
-
         token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
-            console.log('AUDITLOG_SEARCH');
             this.searchAuditlog();
         });
 
@@ -75,7 +75,7 @@ export default React.createClass({
             isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
             isInside = isInsideKeywordElement || this.state.isClickInMoreFilters;
 
-        if(!this.state.showMoreFilter || isInside) {
+        if(!this.state.isShowingMoreFilter || isInside) {
             this.setState({isClickInMoreFilters:false});
             return;
         }
@@ -87,7 +87,7 @@ export default React.createClass({
         return {
             betType: this.state.betType,
             keyword: this.state.keyword,
-            filter: this.state.selectedFilters
+            filters: this.state.selectedFilters
         }
     },
 
@@ -105,7 +105,7 @@ export default React.createClass({
           betType: betType,
           keyword: '',
           selectedFilters: [],
-          showMoreFilter: false
+          isShowingMoreFilter: false
       });
     },
 
@@ -130,7 +130,7 @@ export default React.createClass({
         selectedFilters.splice(filterIndex, 1);
         this.setState({
           selectedFilters: selectedFilters,
-          showMoreFilter: false
+          isShowingMoreFilter: false
         });
     },
 
@@ -150,17 +150,17 @@ export default React.createClass({
 
     showMoreFilter: function(event) {
         this.setState({
-            showMoreFilter: true
+            isShowingMoreFilter: true
         });
     },
 
     hideMoreFilter: function() {
         this.setState({
-            showMoreFilter: false
+            isShowingMoreFilter: false
         });
     },
 
-    setFilters: function(filters) {
+    setFilters: function(filters, originDateRange) {
         this.hideMoreFilter();
 
         let newFilters = [];
@@ -173,7 +173,8 @@ export default React.createClass({
         }
 
         this.setState({
-            selectedFilters: newFilters
+            selectedFilters: newFilters,
+            originDateRange: originDateRange
         }, () => {
             PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH]);
         });
@@ -194,28 +195,34 @@ export default React.createClass({
       this.setState({ exportFormat: format })
     },
     render: function() {
-        let me = this,
+        let betTypesContainerClassName = ClassNames('bet-types', {
+                'hover-enabled': !this.state.isShowingMoreFilter
+            }),
             betTypes = this.state.betTypes.map((betType, index) => {
               return <BetType
                   key={index}
-                  selectedBetType={me.state.betType}
+                  selectedBetType={this.state.betType}
                   betType={betType}
-                  changeBetTypeEvent={me.changeBetType}
-                  changeEventTopic={me.state.tokens.AUDITLOG_SEARCH} />;
+                  changeBetTypeEvent={this.changeBetType}
+                  changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />;
             }),
 
             filterBlockes = this.state.selectedFilters.filter((f) => {
-                return f.name !== 'dateTimeFrom' && f.name !=='dateTimeTo'
+                if((f.name === 'dateTimeFrom' || f.name ==='dateTimeTo') 
+                  && Moment(f.value).isSame(this.state.originDateRange[f.name])) {
+                    return false;
+                } 
+                return true;
             }).map((f, index) => {
                 return <FilterBlock
                     key={index}
                     filter={f}
-                    removeEvent={me.removeSearchCriteriaFilter}
-                    removeEventTopic={me.state.tokens.AUDITLOG_SEARCH}/>;
+                    removeEvent={this.removeSearchCriteriaFilter}
+                    removeEventTopic={this.state.tokens.AUDITLOG_SEARCH}/>;
             }),
 
             moreFilterContianerClassName = ClassNames('more-filter-popup', {
-                'active': this.state.showMoreFilter
+                'active': this.state.isShowingMoreFilter
             });
 
             return (
@@ -233,7 +240,7 @@ export default React.createClass({
                         {/* Search Critiria Row */}
                         <div className="col-md-12">
                           <div className="search-criteria-container">
-                            <div className="bet-types">
+                            <div className={betTypesContainerClassName}>
                               {betTypes}
                             </div>
                             <div className="keyword-container">
