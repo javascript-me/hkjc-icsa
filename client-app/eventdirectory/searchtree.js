@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import Collapse, { Panel } from 'rc-collapse'
-import ResultItem from './searchresultitem'
+import SearchRecord from './searchrecord'
 
 export default React.createClass({
-	displayName: 'SearchResult',
+	displayName: 'SearchTree',
 	propTypes: {
 		result: PropTypes.any
 	},
@@ -18,25 +18,25 @@ export default React.createClass({
 	render () {
 		if (this.props.result === null) {
 			return (
-				<div className='ed-no-result' />
+				<div className='ed-tree' />
 			)
 		}
 
 		if (this.props.result.length === 0) {
 			return (
-				<div className='ed-no-result'>No Events Found</div>
+				<div className='ed-tree ed-no-result'>No Events Found</div>
 			)
 		}
 
 		return (
-			<div rel='root' className='ed-result'>
+			<div rel='root' className='ed-tree'>
 				<Collapse accordion={false} defaultActiveKey={'0'} className='level1'>
 					{this.props.result.map((level1, index) => (
 						<Panel key={index} header={level1.name}>
 							<Collapse accordion={false} defaultActiveKey={'0'} className='level2'>
 								{level1.children.map((level2, index) => (
 									<Panel key={index} header={this.renderLevel2Header(level2)}>
-										{level2.competitions.map((competition, index) => (<ResultItem key={index} record={competition} />))}
+										{level2.competitions.map((competition, index) => (<SearchRecord key={index} record={competition} />))}
 									</Panel>
 								))}
 							</Collapse>
