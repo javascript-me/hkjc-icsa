@@ -40,15 +40,16 @@ router.post('/filterAuditlogs', (req, res) => {
 router.post('/search', (req, res) => {
 	let status = 200
     let result = ""
-    const filter1  = req.body.filter1
-    const filter2  = req.body.filter2
-    const filter3  = req.body.filter3
-    const filter4  = req.body.filter4
-    const filter5  = req.body.filter5
+    
+    const typeValue = req.body.typeValue;
+    const userRole = req.body.userRole;
+    const systemFunc = req.body.systemFunc;
+    const betType = req.body.betType;
+    const device = req.body.device;   
 
     console.log("==="+req.body.filter1)
         result =  jsonObject.auditlogs.filter(function (al) {
-            return (al.Type == filter1 && al.user_role == filter2 && al.function_module == filter3 && al.bet_type == filter4 && al.device == filter5 )
+            return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betType && al.device == device )
         });
 	res.status(status)
 	res.send(result)
