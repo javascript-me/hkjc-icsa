@@ -37,11 +37,17 @@ router.post('/filterAuditlogs', (req, res) => {
 
 
 
-router.get('/search', (req, res) => {
+router.post('/search', (req, res) => {
 	let status = 200
+    let result = ""
+    const filter1  = req.body.filter1
+    console.log("==="+req.body.filter1)
 
-	var result = PagingUtil.doFilter(jsonObject, req.body.key_word);
-
+    if (filter1 === "Event" || filter1 === "Bet Type and Feature" || filter1 === "Odds" || filter1 === "Risk Limit" || filter1 === "Selling Control" || filter1 === "Result") {
+        result =  jsonObject.auditlogs.filter(function (al) {
+            return (al.Type === filter1)
+        });
+    }
 	res.status(status)
 	res.send(result)
 })
@@ -57,7 +63,7 @@ router.get('/download/:file', (req, res) => {
 
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
-	let result = Array.from(data.auditlogs)
+	let result = Array.from(jsonObject.auditlogs)
 	let status = 200
 
 	switch (type.toLowerCase()) {
