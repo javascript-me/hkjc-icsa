@@ -45,7 +45,7 @@ router.post('/search', (req, res) => {
 
     if (filter1 === "Event" || filter1 === "Bet Type and Feature" || filter1 === "Odds" || filter1 === "Risk Limit" || filter1 === "Selling Control" || filter1 === "Result") {
         result =  jsonObject.auditlogs.filter(function (al) {
-            return (al.Type === filter1 )
+            return (al.Type === filter1)
         });
     }
 	res.status(status)
