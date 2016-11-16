@@ -60,7 +60,7 @@ class MenuBar extends Component {
 
 }
 
-const ThirdLevelMenu = (props) => {
+export const ThirdLevelMenu = (props) => {
 	let { data } = props
 	let thirdLevelOnly = true
 	if (data) {
@@ -73,12 +73,12 @@ const ThirdLevelMenu = (props) => {
 			<div className='third-level'>
 				<div className='third-level-container'>
 					{data && data.map((item, idx) => (
-						<div className='third-level-item' key={idx}>
+						<div className='third-level-item' key={item.text}>
 							<Link to={item.link} className='text'>{item.text}</Link>
 							<div className='underline'>c</div>
 							<div className='forth-level-container'>
 								{item.subMenu && item.subMenu.map((item, idx) => (
-									<Link key={idx} to={item.link} className='forth-level-item'>{item.text}</Link>))}
+									<Link key={item.text} to={item.link} className='forth-level-item'>{item.text}</Link>))}
 							</div>
 						</div>))}
 				</div>
@@ -92,7 +92,7 @@ ThirdLevelMenu.propTypes = {
 	data: React.PropTypes.array
 }
 
-const ThirdLevelOnly = (props) => {
+export const ThirdLevelOnly = (props) => {
 	let thirdLevelOnly = true
 	if (props.data) {
 		for (let child of props.data) {
