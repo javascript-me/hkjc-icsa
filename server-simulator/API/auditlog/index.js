@@ -3,9 +3,7 @@ import helper from './export_helper'
 import * as pdf from 'html-pdf'
 import * as fs from 'fs'
 import moment from 'moment'
-
 import PagingUtil from './paging-util'
-import pdf from 'html-pdf'
 import PagingService from './paging-service'
 
 

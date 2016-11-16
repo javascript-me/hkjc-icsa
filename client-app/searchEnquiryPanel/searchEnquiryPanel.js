@@ -1,32 +1,79 @@
 import React from 'react'
+import Moment from 'moment'
 import DateTime from '../dateTime/dateTime'
+import PubSub from '../pubsub';
+
+const getOrginDateFrom = function() {
+    let dateFrom = new Date();
+    dateFrom.setDate(dateFrom.getDate() - 60);
+    dateFrom.setHours(0);
+    dateFrom.setMinutes(0);
+    dateFrom.setSeconds(0);
+    dateFrom.setMilliseconds(0);
+
+    return Moment(dateFrom).format('DD MMM YYYY HH:mm');
+}
+
+const getOrginDateTo = function() {
+    let dateTo = new Date();
+    dateTo.setHours(23);
+    dateTo.setMinutes(59);
+    dateTo.setSeconds(59);
+    dateTo.setMilliseconds(0);
+
+    return Moment(dateTo).format('DD MMM YYYY HH:mm');
+}
+
+const originState = {
+    dateTimeFrom: getOrginDateFrom(),
+    dateTimeTo: getOrginDateTo(),
+    typeValue: '',
+    backEndID: '',
+    frontEndID: '',
+    eventLv1: '',
+    homeValue: '',
+    awayValue: '',
+    dateTimeGameStart: '',
+    userId: '',
+    userRole: '',
+    systemFunc: '',
+    betType: '',
+    device: '',
+    ipAddress: '',
+    errorCode: '',
+    tipsFlag: 1,
+    errorDateTimeFrom: 1,
+    errorDateTimeTo: 1,
+    errorIPAddress: 1
+};
+
+let token = null;
 
 export default class SearchEnquiryPanel extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = {
-			dateTimeFrom: '',
-			dateTimeTo: '',
-			typeValue: '',
-			backEndID: '',
-			frontEndID: '',
-			eventLv1: '',
-			homeValue: '',
-			awayValue: '',
-			dateTimeGameStart: '',
-			userId: '',
-			userRole: '',
-			systemFunc: '',
-			betType: '',
-			device: '',
-			ipAddress: '',
-			errorCode: '',
-			tipsFlag: 1,
-			errorDateTimeFrom: 0,
-			errorDateTimeTo: 0,
-			errorIPAddress: 0
-		}
+		this.state = Object.assign({
+        tokens: {
+            AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
+        }
+    }, originState);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
 	}
+
+  componentDidMount() {
+      token = PubSub.subscribe(PubSub['AUDITLOG_SEARCH_BY_KEY_PRESS'], () => {
+          this.handleSubmit();
+      });
+
+      document.addEventListener('click', this.pageClick, false);
+  }
+
+  componentWillUnmount() {
+      PubSub.unsubscribe(token);
+
+      document.removeEventListener('click', this.pageClick, false);
+  }
 
 	renderTipsText () {
 		let { dateTimeTo, dateTimeFrom, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state
@@ -38,9 +85,11 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	handleChange (name, event) {
-		let newState = {}
+		let newState = {};
+
 		newState[name] = event.target.value
 		this.setState(newState)
+
 		if (name === 'dateTimeFrom') {
 			if (event.target.value.replace(/^[\s]*$/, '').length > 0) {
 				this.setState({
@@ -63,7 +112,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			}
 		} else if (name === 'ipAddress') {
 			let reg = /((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}/
-			if (reg.test(event.target.value)) {
+			if (!event.target.value || reg.test(event.target.value)) {
 				this.setState({
 					errorIPAddress: 1
 				})
@@ -75,17 +124,62 @@ export default class SearchEnquiryPanel extends React.Component {
 		}
 	}
 
+  isEnquiryValid() {
+    return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorIPAddress);
+  }
+
 	handleSubmit () {
-		this.setState({
-			tipsFlag: 0
-		})
+  		this.setState({ tipsFlag: 0 }, function() {
+          if(this.isEnquiryValid()) {
+              let enquiries = this.getEnquiries(this.state);
+
+              this.props.setFilterEvent(enquiries, true);
+              this.setState({
+                tipsFlag: 1
+              })
+          }    
+      });   
 	}
 
 	handleReset () {
-		this.setState({
-			tipsFlag: 1
-		})
+    let newState = Object.assign({}, originState);
+
+		this.setState(newState);    
 	}
+
+  getEnquiries(src) {
+      let result = {},
+          needReturnEnquiries = [
+              'dateTimeFrom',
+              'dateTimeTo',
+              'typeValue',
+              'backEndID',
+              'frontEndID',
+              'eventLv1',
+              'homeValue',
+              'awayValue',
+              'dateTimeGameStart',
+              'userId',
+              'userRole',
+              'systemFunc',
+              'betType',
+              'device',
+              'ipAddress',
+              'errorCode'],
+          currentAttrName,
+          currentAttrVal;
+
+      for(let i in needReturnEnquiries) {
+          currentAttrName = needReturnEnquiries[i];
+          currentAttrVal = src[currentAttrName];
+
+          if(currentAttrVal) {
+              result[currentAttrName] = currentAttrVal;  
+          }          
+      }
+
+      return result;
+  }
 
 	render () {
 
@@ -124,7 +218,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Type</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'typeValue')}>
+							<select className='form-control' value={this.state.typeValue} onChange={this.handleChange.bind(this, 'typeValue')}>
 								<option>All</option>
 								<option>Event</option>
 								<option>Bet Type and Feature</option>
@@ -138,7 +232,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Back End ID</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'backEndID')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.backEndID} onChange={this.handleChange.bind(this, 'backEndID')} />
 						</div>
 					</div>
 				</div>
@@ -146,25 +240,25 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Front End ID</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'frontEndID')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.frontEndID} onChange={this.handleChange.bind(this, 'frontEndID')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Event Lv1</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'eventLv1')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.eventLv1} onChange={this.handleChange.bind(this, 'eventLv1')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Home</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'homeValue')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.homeValue} onChange={this.handleChange.bind(this, 'homeValue')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Away</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'awayValue')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.awayValue} onChange={this.handleChange.bind(this, 'awayValue')} />
 						</div>
 					</div>
 				</div>
@@ -178,13 +272,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User ID</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'userId')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.userId} onChange={this.handleChange.bind(this, 'userId')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User Role</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'userRole')}>
+							<select className='form-control' value={this.state.userRole} onChange={this.handleChange.bind(this, 'userRole')}>
 								<option>All</option>
 								<option>Test01</option>
 								<option>Test02</option>
@@ -195,7 +289,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>System Function</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'systemFunc')}>
+							<select className='form-control' value={this.state.systemFunc} onChange={this.handleChange.bind(this, 'systemFunc')}>
 								<option>All</option>
 								<option>Test01</option>
 								<option>Test02</option>
@@ -208,7 +302,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Bet Type/Feature</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'betType')}>
+							<select className='form-control' value={this.state.betType} onChange={this.handleChange.bind(this, 'betType')}>
 								<option>All</option>
 								<option>Test01</option>
 								<option>Test02</option>
@@ -219,7 +313,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Device</label>
-							<select className='form-control' onChange={this.handleChange.bind(this, 'device')}>
+							<select className='form-control' value={this.state.device} onChange={this.handleChange.bind(this, 'device')}>
 								<option>All</option>
 								<option>Test01</option>
 								<option>Test02</option>
@@ -230,13 +324,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={ipClass}>
 							<label>IP Address</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'ipAddress')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.ipAddress} onChange={this.handleChange.bind(this, 'ipAddress')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Error Code</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' onChange={this.handleChange.bind(this, 'errorCode')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.errorCode} onChange={this.handleChange.bind(this, 'errorCode')} />
 						</div>
 					</div>
 				</div>
