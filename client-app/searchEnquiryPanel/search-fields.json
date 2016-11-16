@@ -1,6 +1,4 @@
 {
-  "dateTimeFrom" : "111",
-  "dateTimeTo" : "222",
   "typeValue" : [
     {"id": 1, "value": "Event"},
     {"id": 2, "value": "Bet Type and Feature"},
@@ -18,13 +16,6 @@
     {"id": 14, "value": "Live Betting Algorithm Comprehensive Detail"},
     {"id": 15, "value": "Auto Odds Change Trigger"}
   ],
-  "backEndID" : "",
-  "frontEndID" : "",
-  "eventLv1" : "",
-  "homeValue" : "",
-  "awayValue" : "",
-  "dateTimeGameStart" : "",
-  "userId" : "",
   "userRole" : [
     {"id": 1, "value": "BOCC Supervisor"},
     {"id": 2, "value": "Trading Manager"},
@@ -71,7 +62,5 @@
     {"id": 1, "value": "Computer"},
     {"id": 2, "value": "Tablet"},
     {"id": 3, "value": "phone"}
-  ],
-  "ipAddress" : "",
-  "errorCode" : ""
+  ]
 }
