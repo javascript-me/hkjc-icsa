@@ -17,8 +17,8 @@ import ExportService from './export-service';
 import AuditlogService from './auditlog-service';
 
 
-const doExport = async (format) => {
-	const file = ExportService.getFileURL(format, [])
+const doExport = async (format, filters) => {
+	const file = ExportService.getFileURL(format, filters)
 	if (file) {
 		window.open(file, '_blank')
 	}
@@ -172,10 +172,14 @@ export default React.createClass({
       this.state.hasData ? this.refs.exportPopup.show() : null
     },
     export () {
-      doExport(this.state.exportFormat)
+      const filters = { betType: this.state.betType, keyword: this.state.keyword, filters: this.state.selectedFilters }
+      doExport(this.state.exportFormat, filters)
     },
     onChangeFormat (format) {
       this.setState({ exportFormat: format })
+    },
+    tableLoaded(data) {
+      this.setState({ hasData: true })
     },
     render: function() {
         let me = this,
@@ -239,14 +243,13 @@ export default React.createClass({
                     </div>
                     {/* Search Result */}
                     <div className='table-container col-xs-12'>
-                      <TabularData/>
+                      <TabularData onChange={this.tableLoaded}/>
                     </div>
                     <Paging />
                     {/* START FOOTER EXPORT */}
                     <div className='col-md-12'>
                         <div className='pull-right'>
                             <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
-                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
                             <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
                                 <ExportPopup onChange={this.onChangeFormat} />
                             </Popup>

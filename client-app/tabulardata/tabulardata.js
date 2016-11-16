@@ -63,11 +63,13 @@ export default React.createClass({
 
     _onChange() {
 
-        console.log("after sorting: " + JSON.stringify(AuditlogStore.forDebug, null, 4))
-
         this.setState({
             auditlogs:AuditlogStore.auditlogs,
         })
+
+        if (this.props.onChange) {
+            this.props.onChange(AuditlogStore.auditlogs)
+        }
     },
 
     setToNoArrow(headers) {
