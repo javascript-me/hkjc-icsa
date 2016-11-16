@@ -17,7 +17,8 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
                 selectedPageNumber:selectedPageNumber,
                 sortingObjectFieldName:sortingObject.fieldName,
                 sortingObjectOrder:sortingObject.order,
-                keyword:criteriaOption.keyword
+                keyword:criteriaOption.keyword,
+                
             },
             type: 'POST',
 
