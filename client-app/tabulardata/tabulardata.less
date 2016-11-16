@@ -26,13 +26,83 @@
       color: white;
       font-weight: normal;
       font-size: 14px;
-      padding-left:10px;
       border: 1px solid #EEE;
+      max-width: 480px;
     }
 
     td {
       border: 1px solid #EEE;
       padding-left:10px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      line-height: 40px;
+    }
+    .date_time {
+      min-width: 190px;
+    }
+    .user_id {
+      min-width: 75px;
+    }
+    .user_name {
+      min-width: 100px;
+    }
+    .function_module {
+      min-width: 160px;
+    }
+    .function_event_detail {
+      min-width: 155px;
+    }
+    .user_role {
+      min-width: 160px;
+    }
+    .frontend_id {
+      min-width: 100px;
+    }
+    .backend_id {
+      min-width: 100px;
+    }
+    .ko_time_game_start_game {
+      min-width: 200px;
+    }
+    .bet_type {
+      min-width: 80px;
+    }
+    .event_name {
+      min-width: 100px;
+    }
+    .error_code {
+      min-width: 100px;
+    }
+    .error_message_content {
+      min-width: 170px;
     }
   }
+}
+
+span.up-arrow {
+  padding-left: 15px;
+
+  background-image: url(common/cross.svg);
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+span.down-arrow {
+  padding-left: 15px;
+
+  background-color: #FFF;
+  background-image: url(common/search.svg);
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+span.no-arrow {
+ /* padding-left: 15px;*/
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }

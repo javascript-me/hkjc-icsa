@@ -25,6 +25,10 @@ const doExport = async (format) => {
 export default React.createClass({
     displayName: 'Audit',
     getInitialState () {
+
+      var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
+      AuditlogStore.getDataByPageNumber(1, sortingObject)
+
       return {
         data: [],
         filters: [],
@@ -143,11 +147,6 @@ export default React.createClass({
 
     },
 
-    showPageData: function() {
-        console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
-        
-    },
     //function to mock the event of loading data from the table
     mockLoadData: function() {
       this.setState({hasData: true})
@@ -210,7 +209,7 @@ export default React.createClass({
                       </div>
                     </div>
                     {/* Search Result */}
-                    <div className='col-xs-12'>
+                    <div className='table-container col-xs-12'>
                       <TabularData/>
                     </div>
                     <Paging />
@@ -233,7 +232,6 @@ export default React.createClass({
                         </div>
                     </div>
                     {/* END FOOTER EXPORT */}
-                    <button onClick={this.showPageData}>forDebug</button>                    
                 </div>
             </div>
         );
