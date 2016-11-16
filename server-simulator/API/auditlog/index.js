@@ -6,17 +6,20 @@ import moment from 'moment'
 import PagingUtil from './paging-util'
 import PagingService from './paging-service'
 
-
 const router = express.Router()
 const options = { format: 'Letter', orientation: 'landscape', header: { 'height': '15mm'} }
-const data = require('../json/auditlogs.json')
+const jsonObject = require('../json/auditlogs.json')
 
 router.post('/filterAuditlogs', (req, res) => {
     var result = {};
 
-    result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.selectedPageNumber))
+	var cloneAuditlogs = jsonObject.auditlogs.slice(0)
 
-    PagingService.totalPages = PagingUtil.getTotalPages(data.auditlogs.length)
+	var sortedAuditlogs = PagingUtil.doSorting(cloneAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+
+    result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+
+    PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
     result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
     result.forDebug = {
@@ -30,7 +33,7 @@ router.post('/filterAuditlogs', (req, res) => {
 })
 
 router.get('/search', (req, res) => {
-	let result = data
+	let result = jsonObject
 	let status = 200
     const key_word = req.body.key_word  
      if(key_word === "World Cup" || key_word === "EPC" || key_word === "VCL"|| key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
