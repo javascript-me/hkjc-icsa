@@ -23,12 +23,12 @@ export default React.createClass({
 				</div>
 
 				<div id='ed-advanced' className='form-group'>
-					<label>Advanced Filters<span className='caret' /></label>
+					<label>Advanced Filters<span className='caret caret-up' /></label>
 				</div>
 
 				<div className='form-group'>
 					<label>Event Type</label>
-					<select ref='scenario' id='eventtype-select' className='form-control'>
+					<select ref='scenario' id='eventtype-select' className='form-control' defaultValue='Assigned'>
 						{this.props.filter && this.props.filter.scenario.options.map((item, index) =>
 							<option key={item} value={item}>{item}</option>
 						)}

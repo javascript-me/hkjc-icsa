@@ -1,5 +1,5 @@
 {
-	"result": [
+	"ALL": [
 		{
 			"name": "England",
 			"children": [
@@ -7,12 +7,59 @@
 					"name": "Premier",
 					"competitions": [
 						{
-							"active": 1,
+							"status": "available",
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
+							"status": "in-progress",
 							"alert0": true,
+							"t1": "BIR",
+							"t2": "BLA"
+						},
+						{
+							"status": "pending",
+							"t1": "BOL",
+							"t2": "CHA"
+						},
+						{
+							"status": "available",
+
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "in-progress",
+							"alert0": true,
+							"t1": "MNC",
+							"t2": "MNU"
+						},
+						{
+							"status": "available",
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "available",
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "stopped",
+							"alert0": true,
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				},
+				{
+					"name": "FACup",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
 							"t1": "BIR",
 							"t2": "BLA"
 						},
@@ -21,26 +68,327 @@
 							"t2": "CHA"
 						},
 						{
+							"t1": "ARS",
+							"t2": "ASV"
+						}
+					]
+				},
+				{
+					"name": "LeagueCup",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "BIR",
+							"t2": "BLA"
+						},
+						{
+							"t1": "BOL",
+							"t2": "CHA"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						}
+					]
+				},
+				{
+					"name": "Championship",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "BIR",
+							"t2": "BLA"
+						},
+						{
+							"t1": "BOL",
+							"t2": "CHA"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						}
+					]
+				},
+				{
+					"name": "League1",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "BIR",
+							"t2": "BLA"
+						},
+						{
+							"t1": "BOL",
+							"t2": "CHA"
+						}
+					]
+				},
+				{
+					"name": "League2",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "BIR",
+							"t2": "BLA"
+						},
+						{
+							"t1": "BOL",
+							"t2": "CHA"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Spain",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Germany",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Italy",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "France",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Portugal",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Netherlands",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Finland",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "MID",
+							"t2": "NEW"
+						}
+					]
+				}
+			]
+		}
+	],
+
+	"ARS": [
+		{
+			"name": "England",
+			"children": [
+				{
+					"name": "Premier",
+					"competitions": [
+						{
+							"status": "available",
 							"active": 1,
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
+							"status": "in-progress",
+							"alert0": true,
+							"t1": "BIR",
+							"t2": "BLA"
+						},
+						{
+							"status": "pending",
+							"t1": "BOL",
+							"t2": "CHA"
+						},
+						{
+							"status": "available",
+							"active": 1,
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "in-progress",
 							"alert0": true,
 							"t1": "MNC",
 							"t2": "MNU"
 						},
 						{
+							"status": "available",
 							"active": 1,
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
+							"status": "available",
 							"active": 1,
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
+							"status": "stopped",
 							"alert0": true,
 							"t1": "MID",
 							"t2": "NEW"
