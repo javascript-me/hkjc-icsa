@@ -8,17 +8,28 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
     forDebug: null,
 
     getDataByPageNumber (selectedPageNumber, sortingObject, criteriaOption) {
-        var self = this
-
-        $.ajax({
-
-            url: 'api/auditlog/filterAuditlogs',
-            data: {
+        let self = this,
+            requestData = {
                 selectedPageNumber:selectedPageNumber,
                 sortingObjectFieldName:sortingObject.fieldName,
                 sortingObjectOrder:sortingObject.order,
-                keyword:criteriaOption.keyword
+                betType: criteriaOption ? criteriaOption.betType : '',
+                keyword: criteriaOption ? criteriaOption.keyword : ''
             },
+            filters = (criteriaOption && criteriaOption.filters) ? criteriaOption.filters : [],
+            filterName, filterVal;
+
+        // Fill the filters into reuqest data
+        for(let i in filters) {
+            filterName = filters[i].name;
+            filterVal = filters[i].value;
+
+            requestData[filterName] = filterVal;
+        }
+
+        $.ajax({
+            url: 'api/auditlog/filterAuditlogs',
+            data: requestData,
             type: 'POST',
 
             success: function (data) {

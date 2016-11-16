@@ -87,7 +87,7 @@ export default React.createClass({
         return {
             betType: this.state.betType,
             keyword: this.state.keyword,
-            filter: this.state.selectedFilters
+            filters: this.state.selectedFilters
         }
     },
 
