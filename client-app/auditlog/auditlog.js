@@ -251,8 +251,6 @@ export default React.createClass({
                                 <ExportPopup onChange={this.onChangeFormat} />
                             </Popup>
                         </div>
-                        {/* END FOOTER EXPORT */}
-                        <button onClick={this.showPageData}>forDebug</button>                    
                     </div>
                     {/* END FOOTER EXPORT */}
               </div>

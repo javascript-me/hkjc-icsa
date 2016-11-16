@@ -64,8 +64,6 @@ router.get('/export', (req, res) => {
 		pdf.create(result, options).toStream((err, file) => {
 			if (err) {
 				console.log(err)
-				status = 500
-				res.status(status)
 				res.end()
 			}
 			else
@@ -78,8 +76,7 @@ router.get('/export', (req, res) => {
 		res.writeHead(200, {
 			'Content-Type': 'application/octet-stream',
 			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
-		res.status(status)
-		res.send(result)
+		res.end(result)
 		break
 	default:
 		break
