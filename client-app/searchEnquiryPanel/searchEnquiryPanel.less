@@ -1,3 +1,7 @@
+:-ms-input-placeholder {
+	color: #9B9B9B;
+}
+
 .component-search-enquiry-panel {
 	width: 900px;
 	background-color: #F6F6F6;
@@ -29,7 +33,7 @@
 			height: 30px;
 			line-height: 30px;
 			color: #305091;
-			padding: 6px 10px;
+			padding: 0 10px;
 		}
 
 		&.has-error {
@@ -75,5 +79,11 @@
 				line-height: 30px;
 			}
 		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.component-search-enquiry-panel{
+		width: 100%;
 	}
 }

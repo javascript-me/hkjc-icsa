@@ -1,5 +1,4 @@
-
-﻿import React from 'react';
+﻿﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from 'rc-calendar';
 import { hashHistory } from 'react-router';
@@ -58,7 +57,7 @@ export default React.createClass({
 
         token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
             console.log('AUDITLOG_SEARCH');
-            this.searchAuditlog(this.state.betType, this.state.keyword, this.state.selectedFilters);
+            this.searchAuditlog();
         });
 
         document.addEventListener('click', this.pageClick, false);
@@ -135,8 +134,12 @@ export default React.createClass({
         });
     },
 
-    searchAuditlog: async function(betType, keyword, filters, pagination, sorting) {
-        AuditlogService.doFilter();
+    searchAuditlog: async function() {
+        let sortingObject = {fieldName: "date_time", order: "NO_ORDER"};
+        let criteriaOption = this.getSearchCriterias();
+
+        // Get Table Data
+        AuditlogStore.getDataByPageNumber(1, sortingObject, criteriaOption);
     },
 
     clickInMoreFilters: function() {
