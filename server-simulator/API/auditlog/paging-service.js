@@ -34,6 +34,79 @@ export default {
         return selectedPageNumber;
     },
 
+    handleTotalPageIsEightOrMore: function (selectedPageNumber) {
+        var pages = []
+
+        pages.push({
+            label: "<",
+            selected: false,
+            hasHandCursor: (selectedPageNumber == 1) ? false : true,
+            greyOut: (selectedPageNumber == 1) ? true : false
+        })
+
+        this.setLeftHandSideSymbol(selectedPageNumber, pages);
+
+        if (1 <= selectedPageNumber && selectedPageNumber <= 5) {
+            this.createPageListByRange(
+                pages,
+                selectedPageNumber,
+                {startIndex: 1, endIndex: 6}
+            )
+        }
+
+        if (5 < selectedPageNumber && selectedPageNumber < this.totalPages - 4) {
+            this.createPageListByRange(
+                pages,
+                selectedPageNumber,
+                {startIndex: selectedPageNumber - 2, endIndex: selectedPageNumber + 2}
+            )
+        }
+
+        if (this.totalPages - 4 <= selectedPageNumber && selectedPageNumber <= this.totalPages) {
+            this.createPageListByRange(
+                pages,
+                selectedPageNumber,
+                {startIndex: this.totalPages - 5, endIndex: this.totalPages}
+            )
+        }
+
+        this.setRightHandSideSymbol(selectedPageNumber, pages);
+        pages.push({
+            label: ">",
+            selected: false,
+            hasHandCursor: (selectedPageNumber == this.totalPages) ? false : true,
+            greyOut: (selectedPageNumber == this.totalPages) ? true : false
+        })
+        return pages;
+    },
+
+    handleTotalPageIsLessThanEight (selectedPageNumber) {
+
+        var pages = []
+
+        pages.push({
+            label: "<",
+            selected: false,
+            hasHandCursor: (selectedPageNumber == 1) ? false : true,
+            greyOut: (selectedPageNumber == 1) ? true : false
+        })
+
+        this.createPageListByRange(
+            pages,
+            selectedPageNumber,
+            {startIndex: 1, endIndex: this.totalPages}
+        )
+
+        pages.push({
+            label: ">",
+            selected: false,
+            hasHandCursor: (selectedPageNumber == this.totalPages) ? false : true,
+            greyOut: (selectedPageNumber == this.totalPages) ? true : false
+        })
+
+        return pages
+    },
+
     getDataByPageNumber (selectedPageNumber) {
 
         if (isNaN(selectedPageNumber)) {
@@ -45,26 +118,14 @@ export default {
 
         selectedPageNumber = this.fixInvalidSelectedPageNumber(selectedPageNumber);
 
-        var pages = []
+        var pages
 
-        pages.push({label:"<", selected:false, hasHandCursor:(selectedPageNumber == 1) ? false : true, greyOut:(selectedPageNumber == 1) ? true : false})
-
-        this.setLeftHandSideSymbol(selectedPageNumber, pages);
-
-        if (1 <= selectedPageNumber && selectedPageNumber <= 5) {
-            this.createPageListByRange(pages, selectedPageNumber, {startIndex: 1, endIndex: 6})
+        if (this.totalPages >= 8)
+        {
+            pages = this.handleTotalPageIsEightOrMore(selectedPageNumber)
+        } else {
+            pages = this.handleTotalPageIsLessThanEight(selectedPageNumber)
         }
-
-        if (5 < selectedPageNumber && selectedPageNumber < this.totalPages - 4) {
-            this.createPageListByRange(pages, selectedPageNumber, {startIndex: selectedPageNumber - 2, endIndex: selectedPageNumber + 2})
-        }
-
-        if (this.totalPages - 4 <= selectedPageNumber && selectedPageNumber <= this.totalPages) {
-            this.createPageListByRange(pages, selectedPageNumber, {startIndex: this.totalPages - 5, endIndex: this.totalPages})
-        }
-
-        this.setRightHandSideSymbol(selectedPageNumber, pages);
-        pages.push({label:">", selected:false, hasHandCursor:(selectedPageNumber == this.totalPages) ? false : true, greyOut:(selectedPageNumber == this.totalPages) ? true : false})
 
         return {
             pages: pages,
