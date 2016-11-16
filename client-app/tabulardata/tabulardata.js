@@ -61,8 +61,6 @@ export default React.createClass({
 	},
 
 	onChange () {
-		console.log('after sorting: ' + JSON.stringify(AuditlogStore.forDebug, null, 4))
-
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs
 		})
@@ -129,7 +127,7 @@ export default React.createClass({
 
 		var sortingObject = {fieldName: fieldName, order: order}
 
-		AuditlogStore.getDataByPageNumber(1, sortingObject, null)
+		AuditlogStore.searchAuditlogs(1, sortingObject, null)
 	},
 
     // TODO: below long HTML should be extracted to a method.
