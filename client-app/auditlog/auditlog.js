@@ -254,7 +254,7 @@ export default React.createClass({
                         </div>
                     </div>
                     {/* Search Result */}
-                    <div className='table-container col-xs-12'>
+                    <div className='table-container'>
                       <TabularData/>
                     </div>
                     <Paging />
