@@ -170,7 +170,7 @@ export default React.createClass({
                 {
                     this.state.headers.map(
                         function(header, i) {
-                            return <th><span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}></span>{header.label}</th>
+                            return <th className={header.fieldName} ><span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}></span>{header.label}</th>
                         }.bind(this)
                     )
                 }

@@ -19,7 +19,6 @@
     font-size: 14px;
     color: #305091;
     border: 1px solid #305091;
-    width:1577px;
 
     th {
       vertical-align: top;
@@ -27,7 +26,6 @@
       color: white;
       font-weight: normal;
       font-size: 14px;
-      padding-left:10px;
       border: 1px solid #EEE;
       max-width: 480px;
     }
@@ -35,32 +33,46 @@
     td {
       border: 1px solid #EEE;
       padding-left:10px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
-    .td-user-id {
+    .date_time {
+      min-width: 190px;
+    }
+    .user_id {
       min-width: 75px;
     }
-    .td-user-name {
+    .user_name {
       min-width: 100px;
     }
-    .td-function-event-detail {
+    .function_module {
+      min-width: 160px;
+    }
+    .function_event_detail {
       min-width: 155px;
     }
-    .td-backend-frontend-id {
+    .user_role {
+      min-width: 160px;
+    }
+    .frontend_id {
       min-width: 100px;
     }
-    .td-ko-game-start-time {
+    .backend_id {
+      min-width: 100px;
+    }
+    .ko_time_game_start_game {
       min-width: 200px;
     }
-    .td-bet-type {
+    .bet_type {
       min-width: 80px;
     }
-    .td-event-name {
+    .event_name {
       min-width: 100px;
     }
-    .td-error-code {
+    .error_code {
       min-width: 100px;
     }
-    .td-error-message {
+    .error_message_content {
       min-width: 170px;
     }
   }
@@ -88,7 +100,7 @@ span.down-arrow {
 }
 
 span.no-arrow {
-  padding-left: 15px;
+ /* padding-left: 15px;*/
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
