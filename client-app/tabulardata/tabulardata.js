@@ -140,9 +140,21 @@ export default React.createClass({
 
     //TODO: below long HTML should be extracted to a method.
     //TODO: fieldName like date_time is appeared in 2 places. Need to combine.
-    render(){
-        var rows = this.state.auditlogs.map(function(row){
-            return <tr>
+
+	renderRows () {
+		if (this.state.auditlogs.length <= 0) {
+			let rowArr = [<div className="nodata">NO Results</div>];
+			let tdDom = [];
+			for (let j = 0; j < 18; j++) {
+				tdDom.push(<td></td>);
+			}
+			for (let i = 0; i < 10; i++) {
+				rowArr.push(<tr className="nodata-tr">{tdDom}</tr>);
+			}
+			return rowArr;
+		}
+		return this.state.auditlogs.map((row) => {
+			return <tr>
                 <td>{row.date_time}</td>
                 <td>{row.user_id}</td>
                 <td>{row.user_name}</td>
@@ -162,8 +174,10 @@ export default React.createClass({
                 <td>{row.error_message_content}</td>
                 <td>{row.device}</td>
             </tr>
-        });
+		});
+	},
 
+    render(){
         return  <table className="table-striped table auditlog-table">
             <thead className="table-header">
             <tr>
@@ -178,10 +192,9 @@ export default React.createClass({
             </tr>
             </thead>
             <tbody>
-                {rows}
+                {this.renderRows()}
             </tbody>
         </table>
 
     }
 });
-

@@ -9,35 +9,33 @@ const selectdata = SearchEnquiryDataService.getData();
 
 const getOrginDateFrom = function() {
     let dateFrom = new Date();
-		let dateFromObj = {};
+	let dateFromObj = {};
     dateFrom.setDate(dateFrom.getDate() - 60);
     dateFrom.setHours(0);
     dateFrom.setMinutes(0);
     dateFrom.setSeconds(0);
     dateFrom.setMilliseconds(0);
-		dateFromObj.value = Date.parse(dateFrom);
-		dateFromObj.datetime = Moment(dateFrom).format('DD MMM YYYY HH:mm');
+	dateFromObj.value = Date.parse(dateFrom);
+	dateFromObj.datetime = Moment(dateFrom).format('DD MMM YYYY HH:mm');
     return dateFromObj;
 }
 
 const getOrginDateTo = function() {
     let dateTo = new Date();
-		let dateToObj = {};
+	let dateToObj = {};
     dateTo.setHours(23);
     dateTo.setMinutes(59);
     dateTo.setSeconds(59);
     dateTo.setMilliseconds(0);
-		console.log("To");
-		console.log(Date.parse(dateTo));
-		dateToObj.value = Date.parse(dateTo);
+	dateToObj.value = Date.parse(dateTo);
     dateToObj.datetime = Moment(dateTo).format('DD MMM YYYY HH:mm');
-		return dateToObj;
+	return dateToObj;
 }
 
 const originState = {
     dateTimeFrom: getOrginDateFrom(),
     dateTimeTo: getOrginDateTo(),
-		selectdata: selectdata,
+	selectdata: selectdata,
     backEndID: '',
     frontEndID: '',
     eventLv1: '',
@@ -155,23 +153,23 @@ export default class SearchEnquiryPanel extends React.Component {
 
   getEnquiries(src) {
       let result = {},
-			needReturnEnquiries = [
-					'dateTimeFrom',
-					'dateTimeTo',
-					'typeValue',
-					'backEndID',
-					'frontEndID',
-					'eventLv1',
-					'homeValue',
-					'awayValue',
-					'dateTimeGameStart',
-					'userId',
-					'userRole',
-					'systemFunc',
-					'betType',
-					'device',
-					'ipAddress',
-					'errorCode'],
+		needReturnEnquiries = [
+			'dateTimeFrom',
+			'dateTimeTo',
+			'typeValue',
+			'backEndID',
+			'frontEndID',
+			'eventLv1',
+			'homeValue',
+			'awayValue',
+			'dateTimeGameStart',
+			'userId',
+			'userRole',
+			'systemFunc',
+			'betType',
+			'device',
+			'ipAddress',
+			'errorCode'],
           currentAttrName,
           currentAttrVal;
 

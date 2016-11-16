@@ -71,7 +71,7 @@ export default React.createClass({
 
     pageClick: function(event) {
         let keywordTag = this.refs.keyword,
-            keywordElement = ReactDOM.findDOMNode(keywordTag), 
+            keywordElement = ReactDOM.findDOMNode(keywordTag),
             isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
             isInside = isInsideKeywordElement || this.state.isClickInMoreFilters;
 
@@ -217,7 +217,6 @@ export default React.createClass({
             moreFilterContianerClassName = ClassNames('more-filter-popup', {
                 'active': this.state.showMoreFilter
             });
-
             return (
               <div className="auditlog">
                     <div className="row page-header">
@@ -237,16 +236,16 @@ export default React.createClass({
                               {betTypes}
                             </div>
                             <div className="keyword-container">
-                              <input type="text" placeholder="Search with keywords & filters" 
-                                value={this.state.keyword} 
-                                onClick={this.showMoreFilter} 
+                              <input type="text" placeholder="Search with keywords & filters"
+                                value={this.state.keyword}
+                                onClick={this.showMoreFilter}
                                 onChange={this.handleKeywordChange}
                                 onKeyPress={this.handleKeywordPress}
                                 ref="keyword" />
                             </div>
                             <div className="filter-block-container">
                               {filterBlockes}
-                            </div> 
+                            </div>
                             <div className={moreFilterContianerClassName} onClick={this.clickInMoreFilters}>
                               <SearchEnquiryPanel setFilterEvent={this.setFilters}/>
                             </div>
@@ -255,7 +254,7 @@ export default React.createClass({
                     </div>
                     {/* Search Result */}
                     <div className='table-container col-xs-12'>
-                      <TabularData/>
+                      {this.state.betType === 'football' ? <TabularData/> : <div className="nodata">Coming Soon</div>}
                     </div>
                     <Paging />
                     {/* START FOOTER EXPORT */}
@@ -273,4 +272,3 @@ export default React.createClass({
             );
     }
 });
-
