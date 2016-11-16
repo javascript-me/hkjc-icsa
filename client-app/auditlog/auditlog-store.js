@@ -3,20 +3,20 @@ import {EventEmitter} from 'events'
 
 const AuditlogStore = assign({}, EventEmitter.prototype, {
 
-	_criteriaOption: null,
 	_sortingObject: null,
+	_criteriaOption: null,
 
 	pageData: null,
 	auditlogs: null,
 	forDebug: null,
 
-	getDataByPageNumber (selectedPageNumber, sortingObject, criteriaOption) {
-		if (criteriaOption) {
-			this._criteriaOption = criteriaOption
-		}
-
+    searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 		if (sortingObject) {
 			this._sortingObject = sortingObject
+		}
+
+		if (criteriaOption) {
+			this._criteriaOption = criteriaOption
 		}
 
 		let self = this,

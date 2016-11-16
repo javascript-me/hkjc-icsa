@@ -1,4 +1,4 @@
-
+﻿
 import { assert } from 'chai'
 import PagingUtil from './paging-util'
 
@@ -113,9 +113,29 @@ it('doSorting() should return list with correct order', () => {
 	assert.equal('23 October 2016 10:30:31', noOrderResult[2]['date_time'])
 })
 
-it('Simple test', () => {
-	assert.ok('b' > 'a')
-	assert.ok('23 October 2016 10:30:32' > '23 October 2016 10:30:30')
+it("compareDate() to date_time should return correct order", () => {
+
+    assert.equal(0, PagingUtil.compareDate("23 October 2016 10:30:30", "23 October 2016 10:30:30"))
+    assert.equal(1, PagingUtil.compareDate("23 October 2016 10:30:31", "23 October 2016 10:30:30"))
+    assert.equal(-1, PagingUtil.compareDate("23 October 2016 10:30:30", "23 October 2016 10:30:31"))
+
+})
+
+it("parseToDate() should return a date based on input string", () => {
+
+    var date0 = PagingUtil.parseToDate("23 October 2016 10:30:32")
+    assert.equal("10/23/2016, 10:30:32 AM", date0.toLocaleString())
+    assert.equal(1477189832000, date0.getTime())
+
+    var date1 = PagingUtil.parseToDate("23 October 2016 10:30:33")
+    assert.equal("10/23/2016, 10:30:33 AM", date1.toLocaleString())
+    assert.equal(1477189833000, date1.getTime())
+
+})
+
+it("Simple test", function () {
+    assert.ok("b" > "a")
+    assert.ok("23 October 2016 10:30:32" > "23 October 2016 10:30:30")
 })
 
 it('doFilter() should return less data', () => {
@@ -126,5 +146,9 @@ it('doFilter() should return less data', () => {
 	assert.equal(54, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
 	assert.equal(11, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-	assert.equal(99, PagingUtil.doFilter(jsonObject.auditlogs, '').length)
+    assert.equal(54, PagingUtil.doFilter(jsonObject.auditlogs, "World Cup").length)
+    assert.equal(11, PagingUtil.doFilter(jsonObject.auditlogs, "EPC").length)
+
+    assert.equal(99, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
 })
+

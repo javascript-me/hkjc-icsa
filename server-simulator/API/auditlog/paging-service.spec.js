@@ -95,4 +95,12 @@ describe('PagingService', () => {
 		PagingService.totalPages = 2
 		assert.equal(4, PagingService.getDataByPageNumber(1).pages.length)
 	})
+
+	it("0 page case should return no number label paging ui", () => {
+		PagingService.totalPages = 0
+		var pages = PagingService.getDataByPageNumber(1).pages
+		assert.equal(0, pages.length)
+
+
+	})
 })

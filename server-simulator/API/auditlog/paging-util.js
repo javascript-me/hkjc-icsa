@@ -46,46 +46,111 @@ function descendSort (key) {
 	}
 }
 
-function doSorting (auditlogs, fieldName, order) {
-	if (order == 'DESCEND') auditlogs.sort(descendSort(fieldName))
-	if (order == 'ASCEND') auditlogs.sort(ascendSort(fieldName))
-
-	return auditlogs
+function parseToMonthIndex(monthName) {
+    if (monthName == "January") return 0
+    if (monthName == "February") return 1
+    if (monthName == "March") return 2
+    if (monthName == "April") return 3
+    if (monthName == "May") return 4
+    if (monthName == "June") return 5
+    if (monthName == "July") return 6
+    if (monthName == "August") return 7
+    if (monthName == "September") return 8
+    if (monthName == "October") return 9
+    if (monthName == "November") return 10
+    if (monthName == "December") return 11
+    return -1
 }
 
-function doFilter (auditlogs, key_word) {
-    // const key_word = req.body.key_word
+function parseToDate(value) {
+    var parts = value.split(" ")
 
-	if (key_word == '') return auditlogs
+    var date = parts[0]
 
-	if (key_word === 'World Cup' || key_word === 'EPC' || key_word === 'VCL' || key_word === 'SFL' || key_word === 'PFL' || key_word === 'EPI') {
-		return auditlogs.filter((al) => {
-			return (al.event_name === key_word)
-		})
-	}
+    var monthName = parts[1]
+    var monthIndex = parseToMonthIndex(monthName)
 
-	if (key_word === 'Candy Date' || key_word === 'Jagger Smith' || key_word === 'Jerry Li' || key_word === 'Karthik Blay') {
-		return auditlogs.filter((al) => {
-			return (al.user_name === key_word)
-		})
-	}
+    var year = parts[2]
 
-	if (key_word === 'BOCC Supervisor' || key_word === 'Trading Manager' || key_word === 'Trading Support Analyst' || key_word === 'Finance Controller'
-        || key_word === 'Content & Planning Manager'
-        || key_word === 'Customer Care Representative'
-        || key_word === 'Director of Group Treasury'
-        || key_word === 'System Administrator') {
-		return auditlogs.filter((al) => {
-			return (al.user_role === key_word)
-		})
-	}
+    var time = parts[3]
+    var items = time.split(":")
 
-	return []
+    var hour = items[0]
+    var minute = items[1]
+    var second = items[2]
+
+    return new Date(year, monthIndex, date, hour, minute, second)
+}
+
+function compareDate(value0, value1) {
+    var time0 = parseToDate(value0).getTime()
+    var time1 = parseToDate(value1).getTime()
+
+    if (time0 > time1) return 1
+    if (time0 < time1) return -1
+    return 0
+}
+
+function ascendDateSort(a, b) {
+    return compareDate(a["date_time"], b["date_time"])
+}
+
+function descendDateSort(a, b) {
+    return compareDate(b["date_time"], a["date_time"])
+}
+
+function doSorting(auditlogs, fieldName, order) {
+
+    var descendSortFunction;
+    var ascendSortFunction;
+
+    if (fieldName == "date_time") {
+        descendSortFunction = descendDateSort
+        ascendSortFunction = ascendDateSort
+    } else {
+        descendSortFunction = descendSort(fieldName)
+        ascendSortFunction = ascendSort(fieldName)
+    }
+
+    if (order == "DESCEND") auditlogs.sort(descendSortFunction)
+    if (order == "ASCEND") auditlogs.sort(ascendSortFunction)
+
+    return auditlogs
+}
+
+function doFilter(auditlogs, key_word) {
+    if (key_word == "") return auditlogs
+
+    if (key_word === "World Cup" || key_word === "EPC" || key_word === "VCL" || key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
+        return auditlogs.filter(function (al) {
+            return (al.event_name === key_word  )
+        });
+    }
+
+    if (key_word === "Candy Date" || key_word === "Jagger Smith" || key_word === "Jerry Li" || key_word === "Karthik Blay") {
+        return auditlogs.filter(function (al) {
+            return (al.user_name === key_word )
+        });
+    }
+
+    if (key_word === "BOCC Supervisor" || key_word === "Trading Manager" || key_word === "Trading Support Analyst" || key_word === "Finance Controller"
+        || key_word === "Content & Planning Manager"
+        || key_word === "Customer Care Representative"
+        || key_word === "Director of Group Treasury"
+        || key_word === "System Administrator") {
+        return auditlogs.filter(function (al) {
+            return (al.user_role === key_word )
+        });
+    }
+
+    return [];
 }
 
 export default {
-	getAuditlogsFragmentByPageNumber: getAuditlogsByPageNumber,
-	getTotalPages: getTotalPages,
-	doSorting: doSorting,
-	doFilter: doFilter
+    getAuditlogsFragmentByPageNumber: getAuditlogsByPageNumber,
+    getTotalPages: getTotalPages,
+    doSorting: doSorting,
+    doFilter: doFilter,
+    compareDate: compareDate,
+    parseToDate: parseToDate
 }
