@@ -1,6 +1,7 @@
 
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import Moment from 'moment';
 import Calendar from 'rc-calendar';
 import { hashHistory } from 'react-router';
 import ClassNames from 'classnames';
@@ -43,6 +44,7 @@ export default React.createClass({
           betTypes: ['football', 'basketball', 'horse-racing'],
           betType: DEFAULT_BET_TYPE,
           keyword: '',
+          originDateRange: {},
           selectedFilters: [],
           isShowingMoreFilter: false,
           isClickInMoreFilters: false
@@ -55,9 +57,7 @@ export default React.createClass({
         // Get Table Data
         AuditlogStore.getDataByPageNumber(1, sortingObject, criteriaOption);
 
-
         token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
-            console.log('AUDITLOG_SEARCH');
             this.searchAuditlog(this.state.betType, this.state.keyword, this.state.selectedFilters);
         });
 
@@ -157,7 +157,7 @@ export default React.createClass({
         });
     },
 
-    setFilters: function(filters) {
+    setFilters: function(filters, originDateRange) {
         this.hideMoreFilter();
 
         let newFilters = [];
@@ -170,7 +170,8 @@ export default React.createClass({
         }
 
         this.setState({
-            selectedFilters: newFilters
+            selectedFilters: newFilters,
+            originDateRange: originDateRange
         }, () => {
             PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH]);
         });
@@ -204,7 +205,12 @@ export default React.createClass({
             }),
 
             filterBlockes = this.state.selectedFilters.filter((f) => {
-                return f.name !== 'dateTimeFrom' && f.name !=='dateTimeTo'
+                console.log(f.name, f.value, this.state.originDateRange[f.name]);
+                if((f.name === 'dateTimeFrom' || f.name ==='dateTimeTo') 
+                  && Moment(f.value).isSame(this.state.originDateRange[f.name])) {
+                    return false;
+                } 
+                return true;
             }).map((f, index) => {
                 return <FilterBlock
                     key={index}

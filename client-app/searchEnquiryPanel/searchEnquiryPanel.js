@@ -3,30 +3,30 @@ import Moment from 'moment'
 import DateTime from '../dateTime/dateTime'
 import PubSub from '../pubsub';
 
-const getOrginDateFrom = function() {
-    let dateFrom = new Date();
-    dateFrom.setDate(dateFrom.getDate() - 60);
-    dateFrom.setHours(0);
-    dateFrom.setMinutes(0);
-    dateFrom.setSeconds(0);
-    dateFrom.setMilliseconds(0);
+const getOrginDateTimeFrom = function() {
+    let dateTimeFrom = new Date();
+    dateTimeFrom.setDate(dateTimeFrom.getDate() - 60);
+    dateTimeFrom.setHours(0);
+    dateTimeFrom.setMinutes(0);
+    dateTimeFrom.setSeconds(0);
+    dateTimeFrom.setMilliseconds(0);
 
-    return Moment(dateFrom).format('DD MMM YYYY HH:mm');
+    return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm');
 }
 
-const getOrginDateTo = function() {
-    let dateTo = new Date();
-    dateTo.setHours(23);
-    dateTo.setMinutes(59);
-    dateTo.setSeconds(59);
-    dateTo.setMilliseconds(0);
+const getOrginDateTimeTo = function() {
+    let dateTimeTo = new Date();
+    dateTimeTo.setHours(23);
+    dateTimeTo.setMinutes(59);
+    dateTimeTo.setSeconds(59);
+    dateTimeTo.setMilliseconds(0);
 
-    return Moment(dateTo).format('DD MMM YYYY HH:mm');
+    return Moment(dateTimeTo).format('DD MMM YYYY HH:mm');
 }
 
 const originState = {
-    dateTimeFrom: getOrginDateFrom(),
-    dateTimeTo: getOrginDateTo(),
+    dateTimeFrom: getOrginDateTimeFrom(),
+    dateTimeTo: getOrginDateTimeTo(),
     typeValue: '',
     backEndID: '',
     frontEndID: '',
@@ -131,9 +131,13 @@ export default class SearchEnquiryPanel extends React.Component {
 	handleSubmit () {
   		this.setState({ tipsFlag: 0 }, function() {
           if(this.isEnquiryValid()) {
-              let enquiries = this.getEnquiries(this.state);
+              let enquiries = this.getEnquiries(this.state),
+              	originDateRange = {
+              		dateTimeFrom: originState.dateTimeFrom,
+              		dateTimeTo: originState.dateTimeTo
+              	};
 
-              this.props.setFilterEvent(enquiries, true);
+              this.props.setFilterEvent(enquiries, originDateRange);
               this.setState({
                 tipsFlag: 1
               })
@@ -174,7 +178,7 @@ export default class SearchEnquiryPanel extends React.Component {
           currentAttrVal = src[currentAttrName];
 
           if(currentAttrVal) {
-              result[currentAttrName] = currentAttrVal;  
+              result[currentAttrName] = currentAttrVal;
           }          
       }
 
