@@ -36,17 +36,12 @@ const configOverride = (overrides) => {
 export default (target) => {
 	ReactDOM.render((
 		<div className='container-fluid'>
-
-			<Systembar />
-			
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
 				<Route path='/page' component={PageBase} onEnter={hasAuth}>
 					<IndexRoute component={Dashboard} />
-					<Route path='audit' component={Audit} onEnter={hasAuth} />
+					<Route path='audit' component={Audit} />
 				</Route>
-                <Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
-                <Route path='/audit' component={Audit} onEnter={hasAuth} />
 			</Router>
 		</div>
 		), target)

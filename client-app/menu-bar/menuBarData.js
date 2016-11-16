@@ -712,14 +712,58 @@ const menuList1 = [
 		iconSrc: 'Icon - Data Management.svg',
 		iconSrc_A: 'Icon - Data ManagementW.svg',
 		textL1: 'Data&',
-		textL2: 'Management'
+		textL2: 'Management',
+		subMenu: [
+			{
+				text: 'Data Attribute Mapping'
+			},
+			{
+				text: 'Name Management',
+				subMenu: [
+					{
+						text: 'Complitation'
+					},
+					{
+						text: 'Team'
+					},
+					{
+						text: 'Player'
+					},
+					{
+						text: 'Venue'
+					}
+				]
+			},
+			{
+				text: 'Data Feed Alignment Summary',
+				subMenu: [
+					{
+						text: 'Complitation'
+					},
+					{
+						text: 'Math'
+					}
+				]
+			},
+			{
+				text: 'Data Feed Log'
+			}
+		]
 
 	},
 	{
 		iconSrc: 'Icon - Post Analysis.svg',
 		iconSrc_A: 'Icon - Post AnalysisW.svg',
 		textL1: 'Post Analysis',
-		textL2: '& Reporting'
+		textL2: '& Reporting',
+		subMenu: [
+			{
+				text: 'Post-event Reports'
+			},
+			{
+				text: 'Advance Analysis'
+			}
+		]
 
 	},
 	{
@@ -729,12 +773,19 @@ const menuList1 = [
 		textL2: 'Administration',
 		subMenu: [
 			{
-				text: 'Audit',
+				text: 'Audit Trail',
 				link: '/page/audit'
 			},
 			{
-				text: 'Bash',
-				link: '/page/audit'
+				text: 'User',
+				subMenu: [
+					{
+						text: 'User Account Profile'
+					},
+					{
+						text: 'User Role & Permission'
+					}
+				]
 			},{
 				text: 'other',
 				link: '/page/audit'
@@ -1096,10 +1147,10 @@ const menuList2 = [
 
 	},
 	{
-		iconSrc: 'Icon - Compile Monitoring.svg',
-		iconSrc_A: 'Icon - Compile MonitoringW.svg',
-		textL1: 'Odds',
-		textL2: 'Complitation',
+		iconSrc: 'Icon - Pre-Event Monitoring.svg',
+		iconSrc_A: 'Icon - Pre-Event MonitoringW.svg',
+		textL1: 'Pre-Event',
+		textL2: 'Monitoring',
 		subMenu: [
 			{
 				text: 'Data & Feed Configuration',
@@ -1270,7 +1321,64 @@ const menuList2 = [
 
 		]
 
-	}
+	},
+	{
+		iconSrc: 'Icon - In-Play Monitoring.svg',
+		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
+		textL1: 'Result&',
+		textL2: 'Settlement'
+
+	},
+	{
+		iconSrc: 'Icon - Data Management.svg',
+		iconSrc_A: 'Icon - Data ManagementW.svg',
+		textL1: 'Data&',
+		textL2: 'Management',
+		subMenu: [
+			{
+				text: 'Data Feed Alignment Summary',
+				subMenu: [
+					{
+						text: 'Complitation'
+					},
+					{
+						text: 'Math'
+					}
+				]
+			},
+			{
+				text: 'Data Feed Log'
+			}
+		]
+
+	},
+	{
+		iconSrc: 'Icon - Tools & Administration.svg',
+		iconSrc_A: 'Icon - Tools & AdministrationW.svg',
+		textL1: 'Global Tools&',
+		textL2: 'Administration',
+		subMenu: [
+			{
+				text: 'Audit Trail',
+				link: '/page/audit'
+			},
+			{
+				text: 'User',
+				subMenu: [
+					{
+						text: 'User Account Profile'
+					},
+					{
+						text: 'User Role & Permission'
+					}
+				]
+			},{
+				text: 'other',
+				link: '/page/audit'
+			},
+		]
+
+	},
 ]
 
 export default { menuList1, menuList2 }
