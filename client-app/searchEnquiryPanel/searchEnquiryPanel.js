@@ -3,87 +3,87 @@ import SearchEnquiryDataService from './searchEnquiryPanel-service'
 import Moment from 'moment'
 import DateTime from '../dateTime/dateTime'
 import SelectCom from '../select/select'
-import PubSub from '../pubsub';
+import PubSub from '../pubsub'
 
-const selectdata = SearchEnquiryDataService.getData();
+const selectdata = SearchEnquiryDataService.getData()
 
-const getOrginDateTimeFrom = function() {
-    let dateTimeFrom = new Date(),
-		dateTimeFromObj = {};
+const getOrginDateTimeFrom = function () {
+	let dateTimeFrom = new Date(),
+		dateTimeFromObj = {}
 
-    dateTimeFrom.setDate(dateTimeFrom.getDate() - 60);
-    dateTimeFrom.setHours(0);
-    dateTimeFrom.setMinutes(0);
-    dateTimeFrom.setSeconds(0);
-    dateTimeFrom.setMilliseconds(0);
-	dateTimeFromObj.timestamp = Date.parse(dateTimeFrom);
-	dateTimeFromObj.datetime = Moment(dateTimeFrom).format('DD MMM YYYY HH:mm');
-    return dateTimeFromObj;
+	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
+	dateTimeFrom.setHours(0)
+	dateTimeFrom.setMinutes(0)
+	dateTimeFrom.setSeconds(0)
+	dateTimeFrom.setMilliseconds(0)
+	dateTimeFromObj.timestamp = Date.parse(dateTimeFrom)
+	dateTimeFromObj.datetime = Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+	return dateTimeFromObj
 }
 
-const getOrginDateTimeTo = function() {
-    let dateTimeTo = new Date(),
-		dateTimeToObj = {};
+const getOrginDateTimeTo = function () {
+	let dateTimeTo = new Date(),
+		dateTimeToObj = {}
 
-    dateTimeTo.setHours(23);
-    dateTimeTo.setMinutes(59);
-    dateTimeTo.setSeconds(59);
-    dateTimeTo.setMilliseconds(0);
-	dateTimeToObj.timestamp = Date.parse(dateTimeTo);
-    dateTimeToObj.datetime = Moment(dateTimeTo).format('DD MMM YYYY HH:mm');
-	return dateTimeToObj;
+	dateTimeTo.setHours(23)
+	dateTimeTo.setMinutes(59)
+	dateTimeTo.setSeconds(59)
+	dateTimeTo.setMilliseconds(0)
+	dateTimeToObj.timestamp = Date.parse(dateTimeTo)
+	dateTimeToObj.datetime = Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+	return dateTimeToObj
 }
 
 const originState = {
-    dateTimeFrom: getOrginDateTimeFrom(),
-    dateTimeTo: getOrginDateTimeTo(),
+	dateTimeFrom: getOrginDateTimeFrom(),
+	dateTimeTo: getOrginDateTimeTo(),
 	selectdata: selectdata,
-    backEndID: '',
-    frontEndID: '',
-    eventLv1: '',
-    homeValue: '',
-    awayValue: '',
-    dateTimeGameStart: '',
-    userId: '',
-    ipAddress: '',
-    errorCode: '',
-    tipsFlag: 1,
-    errorDateTimeFrom: 1,
-    errorDateTimeTo: 1,
-    errorIPAddress: 1
-};
+	backEndID: '',
+	frontEndID: '',
+	eventLv1: '',
+	homeValue: '',
+	awayValue: '',
+	dateTimeGameStart: '',
+	userId: '',
+	ipAddress: '',
+	errorCode: '',
+	tipsFlag: 1,
+	errorDateTimeFrom: 1,
+	errorDateTimeTo: 1,
+	errorIPAddress: 1
+}
 
-let token = null;
+let token = null
 
 export default class SearchEnquiryPanel extends React.Component {
 
 	constructor (props) {
 		super(props)
 		this.state = Object.assign({
-        tokens: {
-            AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
-        }
-    }, originState);
+			tokens: {
+				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
+			}
+		}, originState)
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-  componentDidMount() {
-      token = PubSub.subscribe(PubSub['AUDITLOG_SEARCH_BY_KEY_PRESS'], () => {
-          this.handleSubmit();
-      });
+	componentDidMount () {
+		token = PubSub.subscribe(PubSub['AUDITLOG_SEARCH_BY_KEY_PRESS'], () => {
+			this.handleSubmit()
+		})
 
-      document.addEventListener('click', this.pageClick, false);
-  }
+		document.addEventListener('click', this.pageClick, false)
+	}
 
-  componentWillUnmount() {
-      PubSub.unsubscribe(token);
+	componentWillUnmount () {
+		PubSub.unsubscribe(token)
 
-      document.removeEventListener('click', this.pageClick, false);
-  }
+		document.removeEventListener('click', this.pageClick, false)
+	}
 
 	renderTipsText () {
-		let { dateTimeFrom, dateTimeTo, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state;
+		let { dateTimeFrom, dateTimeTo, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state
 		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorIPAddress === 0 || dateTimeTo.timestamp < dateTimeFrom.timestamp)) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
@@ -92,13 +92,13 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	handleChange (name, event) {
-		let newState = {};
+		let newState = {}
 
 		if (name === 'dateTimeFrom' || name === 'dateTimeTo') {
 			newState[name] = {
 				timestamp: Date.parse(event.target.value),
 				datetime: event.target.value
-			};
+			}
 		} else {
 			newState[name] = event.target.value
 		}
@@ -139,68 +139,67 @@ export default class SearchEnquiryPanel extends React.Component {
 		}
 	}
 
-	isEnquiryValid() {
-		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorIPAddress);
+	isEnquiryValid () {
+		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorIPAddress)
 	}
 
 	handleSubmit () {
-  		this.setState({ tipsFlag: 0 }, function() {
-          if(this.isEnquiryValid()) {
-              let enquiries = this.getEnquiries(this.state),
+  		this.setState({ tipsFlag: 0 }, function () {
+			if (this.isEnquiryValid()) {
+				let enquiries = this.getEnquiries(this.state),
               	originDateRange = {
               		dateTimeFrom: originState.dateTimeFrom.datetime,
               		dateTimeTo: originState.dateTimeTo.datetime
-              	};
+              	}
 
-              this.props.setFilterEvent(enquiries, originDateRange);
-              this.setState({
-                tipsFlag: 1
-              })
-          }
-      });
+				this.props.setFilterEvent(enquiries, originDateRange)
+				this.setState({
+					tipsFlag: 1
+				})
+			}
+		})
 	}
 
 	handleReset () {
-    let newState = Object.assign({}, originState);
-		this.setState(newState);
+		let newState = Object.assign({}, originState)
+		this.setState(newState)
 	}
 
-  getEnquiries(src) {
-      let result = {},
+	getEnquiries (src) {
+		let result = {},
 			needReturnEnquiries = [
-					'dateTimeFrom',
-					'dateTimeTo',
-					'typeValue',
-					'backEndID',
-					'frontEndID',
-					'eventLv1',
-					'homeValue',
-					'awayValue',
-					'dateTimeGameStart',
-					'userId',
-					'userRole',
-					'systemFunc',
-					'betType',
-					'device',
-					'ipAddress',
-					'errorCode'],
-          currentAttrName,
-          currentAttrVal;
+				'dateTimeFrom',
+				'dateTimeTo',
+				'typeValue',
+				'backEndID',
+				'frontEndID',
+				'eventLv1',
+				'homeValue',
+				'awayValue',
+				'dateTimeGameStart',
+				'userId',
+				'userRole',
+				'systemFunc',
+				'betType',
+				'device',
+				'ipAddress',
+				'errorCode'],
+			currentAttrName,
+			currentAttrVal
 
-      for(let i in needReturnEnquiries) {
-          currentAttrName = needReturnEnquiries[i];
-          currentAttrVal = (currentAttrName === 'dateTimeFrom' || currentAttrName === 'dateTimeTo' )
+		for (let i in needReturnEnquiries) {
+			currentAttrName = needReturnEnquiries[i]
+			currentAttrVal = (currentAttrName === 'dateTimeFrom' || currentAttrName === 'dateTimeTo')
 	          ? src[currentAttrName].datetime
-	          : src[currentAttrName];
+	          : src[currentAttrName]
 
+			if (currentAttrVal) {
+				result[currentAttrName] = currentAttrVal
+			}
+		}
 
-          if(currentAttrVal) {
-              result[currentAttrName] = currentAttrVal;
-          }
-      }
-
-      return result;
-  }
+		return result
+	}
 
 	render () {
 		let { selectdata, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
