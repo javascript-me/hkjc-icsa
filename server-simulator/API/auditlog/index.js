@@ -44,10 +44,10 @@ router.post('/search', (req, res) => {
     const typeValue = req.body.typeValue;
     const userRole = req.body.userRole;
     const systemFunc = req.body.systemFunc;
-    const betType = req.body.betType;
+    const betTypeFeature = req.body.betTypeFeature;
     const device = req.body.device;   
         result =  jsonObject.auditlogs.filter(function (al) {
-            return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betType && al.device == device )
+            return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betTypeFeature && al.device == device )
         });
 	res.status(status)
 	res.send(result)
