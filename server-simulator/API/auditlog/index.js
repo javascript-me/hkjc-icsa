@@ -46,8 +46,6 @@ router.post('/search', (req, res) => {
     const systemFunc = req.body.systemFunc;
     const betType = req.body.betType;
     const device = req.body.device;   
-
-    console.log("==="+req.body.filter1)
         result =  jsonObject.auditlogs.filter(function (al) {
             return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betType && al.device == device )
         });
