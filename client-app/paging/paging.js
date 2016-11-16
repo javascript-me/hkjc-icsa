@@ -1,17 +1,16 @@
 import React from 'react'
 import AuditlogStore from '../auditlog/auditlog-store'
 
-
 export default React.createClass({
 
 	currentSelectedPageNumber: 1,
 
-    getInitialState () {
-        return {
-            pages: [],
-            totalPages: 0
-        }
-    },
+	getInitialState () {
+		return {
+			pages: [],
+			totalPages: 0
+		}
+	},
 	componentDidMount () {
 		AuditlogStore.addChangeListener(this.onChange.bind(this))
 	},
@@ -52,8 +51,8 @@ export default React.createClass({
             this.state.totalPages
         )
 
-        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, null, null)
-    },
+		AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, null, null)
+	},
 	getClassName (page) {
 		var result = []
 		if (page.selected) result.push('selected')
@@ -67,8 +66,8 @@ export default React.createClass({
                 <ul>
                     {
                         this.state.pages.map((page, i) => {
-							return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
-						})
+	return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
+})
                     }
                 </ul>
             </div>
