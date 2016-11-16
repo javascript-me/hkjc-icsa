@@ -2,31 +2,29 @@
 import helper from './export_helper'
 import PagingUtil from './paging-util'
 import pdf from 'html-pdf'
-import PagingService from '../../../client-app/paging/paging-service'
+import PagingService from './paging-service'
 
 const router = express.Router()
 const options = { format: 'Letter', orientation: "landscape", header: { "height": "15mm"} }
 const data = require('../json/auditlogs.json')
 
 router.post('/filterAuditlogs', (req, res) => {
-    const filtersArray = ""; // Write filters array accordingly
-    const pageNumber = ""; // Write accordingly
-    let status = 403
-    let result = { error: "Sorry we could not find auditlog with this search criteria", data: [filtersArray, pageNumber] }
+    var result = {};
 
-    /*Search and Filter code will go here*/
-    result = {};
-    result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.pagenumber))
+    result.auditlogs = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, Number(req.body.selectedPageNumber))
 
     PagingService.totalPages = PagingUtil.getTotalPages(data.auditlogs.length)
+    result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
-    result.pageData = PagingService.getDataByPageNumber(Number(req.body.pagenumber))
+    result.forDebug = {
+        sortingObjectFieldName: req.body.sortingObjectFieldName,
+        sortingObjectOrder: req.body.sortingObjectOrder
+    }
 
     res.send(result);
 })
 
 router.get('/search', (req, res) => {
-    
     let result = data
     let status = 200
 

@@ -1,12 +1,12 @@
 import React from 'react'
-import TableService from '../tabulardata/tabulardata-service';
 import AuditlogStore from '../auditlog/auditlog-store';
 
 export default React.createClass({
 
     getInitialState () {
 
-        AuditlogStore.getDataByPageNumber(1)
+        var sortingObject = {fieldName: "date_time", order: "ASCEND"}
+        AuditlogStore.getDataByPageNumber(1, sortingObject)
 
         var data = {
             data: [
@@ -32,7 +32,6 @@ export default React.createClass({
                 }
             ]
         }
-
         return data
     },
 
@@ -45,10 +44,13 @@ export default React.createClass({
     },
 
     _onChange() {
-        console.log("===>" + JSON.stringify(AuditlogStore.auditlogs, null,4))
         this.setState({data:AuditlogStore.auditlogs});
     },
 
+    onItemClick (event) {
+        var sortingObject = {fieldName: "date_time", order: "ASCEND"} // or DESCEND
+        AuditlogStore.getDataByPageNumber(10, sortingObject)
+    },
 
     render(){
         var rows = this.state.data.map(function(row){
@@ -77,24 +79,24 @@ export default React.createClass({
         return  <table className="table-striped table auditlog-table">
             <thead className="table-header">
             <tr>
-                <th>Date/Time</th>
-                <th className="td-user-id">User ID</th>
-                <th className="td-user-name">User Name</th>
-                <th>Type</th>
-                <th>Function/Module</th>
-                <th className="td-function-event-detail">Function Event Detail</th>
-                <th>User Role</th>
-                <th>IP Address</th>
-                <th className="td-backend-frontend-id">Back End ID</th> 
-                <th className="td-backend-frontend-id">Front End ID</th>
-                <th>Home</th>
-                <th>Away</th>
-                <th className="td-ko-game-start-time">K.O. Time/ Game Start Time</th> 
-                <th className="td-bet-type">Bet Type</th> 
-                <th  className="td-event-name">Event Name</th>
-                <th  className="td-error-code">Error Code</th>
-                <th  className="td-error-message">Error Message Content</th>
-                <th>Device</th>
+                <th><button onClick={this.onItemClick}>Up</button><button>Down</button>Date/Time</th>
+                <th className="td-user-id"><button>Up</button><button>Down</button>User ID</th>
+                <th className="td-user-name"><button>Up</button><button>Down</button>User Name</th>
+                <th><button>Up</button><button>Down</button>Type</th>
+                <th><button>Up</button><button>Down</button>Function/Module</th>
+                <th className="td-function-event-detail"><button>Up</button><button>Down</button>Function Event Detail</th>
+                <th><button>Up</button><button>Down</button>User Role</th>
+                <th><button>Up</button><button>Down</button>IP Address</th>
+                <th className="td-backend-frontend-id"><button>Up</button><button>Down</button>Back End ID</th>
+                <th className="td-backend-frontend-id"><button>Up</button><button>Down</button>Front End ID</th>
+                <th><button>Up</button><button>Down</button>Home</th>
+                <th><button>Up</button><button>Down</button>Away</th>
+                <th className="td-ko-game-start-time"><button>Up</button><button>Down</button>K.O. Time/ Game Start Time</th>
+                <th className="td-bet-type"><button>Up</button><button>Down</button>Bet Type</th>
+                <th className="td-event-name"><button>Up</button><button>Down</button>Event Name</th>
+                <th className="td-error-code"><button>Up</button><button>Down</button>Error Code</th>
+                <th className="td-error-message"><button>Up</button><button>Down</button>Error Message Content</th>
+                <th><button>Up</button><button>Down</button>Device</th>
             </tr>
             </thead>
             <tbody>

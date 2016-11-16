@@ -1,8 +1,8 @@
 ﻿const pageSize = 10
 
-function getAuditlogsByPageNumber (auditlogs, pagenumber) {
+function getAuditlogsByPageNumber (auditlogs, selectedPageNumber) {
 
-    var startIndex = (pagenumber - 1) * pageSize
+    var startIndex = (selectedPageNumber - 1) * pageSize
 
     var result = []
 

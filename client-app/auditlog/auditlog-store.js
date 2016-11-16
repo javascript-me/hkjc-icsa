@@ -6,19 +6,22 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
     pageData: null,
     auditlogs: null,
 
-    getDataByPageNumber (selectedPageNumber) {
+    getDataByPageNumber (selectedPageNumber, sortingObject) {
         var self = this
 
         $.ajax({
 
             url: 'api/auditlog/filterAuditlogs',
-            data: {pagenumber:selectedPageNumber},
+            data: {
+                selectedPageNumber:selectedPageNumber,
+                sortingObjectFieldName:sortingObject.fieldName,
+                sortingObjectOrder:sortingObject.order
+            },
             type: 'POST',
 
             success: function (data) {
                 self.pageData = data.pageData
                 self.auditlogs = data.auditlogs
-
                 self.emitChange()
             },
             error: function (xhr, status, error) {

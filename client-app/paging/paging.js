@@ -8,7 +8,9 @@ export default React.createClass({
     getInitialState () {
         var defaultSelectedPageNumber = 1
         this.currentSelectedPageNumber = defaultSelectedPageNumber
-        AuditlogStore.getDataByPageNumber(defaultSelectedPageNumber)
+
+        var sortingObject = {fieldName: "date_time", order: "ASCEND"}
+        AuditlogStore.getDataByPageNumber(defaultSelectedPageNumber, sortingObject)
 
         return {
             pages: [],
@@ -57,7 +59,9 @@ export default React.createClass({
             event.target.innerText,
             this.state.totalPages
         )
-        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber)
+
+        var sortingObject = {fieldName: "date_time", order: "ASCEND"}
+        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, sortingObject)
     },
 
     getClassName (page) {

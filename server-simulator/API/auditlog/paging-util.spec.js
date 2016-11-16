@@ -13,12 +13,10 @@ it('getAuditlogsByPageNumber() should return a small amount of data', function (
     assert.equal(JSON.stringify(result[0]), JSON.stringify(data.auditlogs[0]))
     assert.equal(JSON.stringify(result[9]), JSON.stringify(data.auditlogs[9]))
 
-
     var resultOfPage5 = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, 5)
     assert.equal(10, resultOfPage5.length)
 
     var resultOfPage10 = PagingUtil.getAuditlogsByPageNumber(data.auditlogs, 10)
-
     assert.equal(9, resultOfPage10.length)
 })
 
