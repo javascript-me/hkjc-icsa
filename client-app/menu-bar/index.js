@@ -114,7 +114,7 @@ ThirdLevelOnly.propTypes = {
 	data: React.PropTypes.array
 }
 
-export const SecondLevelMenu = (props) => {
+const SecondLevelMenu = (props) => {
 	let { dataList } = props
 	return (
 		<div className='second-level'>
