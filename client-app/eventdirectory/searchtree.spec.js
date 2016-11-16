@@ -5,7 +5,8 @@ import SearchTree from './searchtree'
 
 describe('<SearchTree />', () => {
 	it('renders a SearchTree div', () => {
-		const searchTree = shallow(<SearchTree />)
+		const result = []
+		const searchTree = shallow(<SearchTree result={result} />)
 		expect(searchTree.find('div.ed-tree')).to.have.length(1)
 	})
 })
