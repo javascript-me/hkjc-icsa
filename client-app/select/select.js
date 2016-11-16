@@ -7,6 +7,9 @@ export default class SelectCom extends React.Component {
 		})
 	}
 	render () {
-		return <select className='form-control' onChange={this.props.handelVal}>{this.renderOptions()}</select>
+		return <select className='form-control' value={this.props.selectedVal} onChange={this.props.handleVal}>
+			<option value="">All</option>
+			{this.renderOptions()}
+		</select>;
 	}
 }
