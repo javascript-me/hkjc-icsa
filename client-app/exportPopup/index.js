@@ -11,13 +11,13 @@ export default React.createClass({
 		return { format: formats.PDF }
 	},
 	onFormatChange (e) {
-		
+
 	},
-	changeFormat(e){
-		this.setState({ format: e.currentTarget.attributes["value"].nodeValue }) 
+	changeFormat (e) {
+		this.setState({ format: e.currentTarget.attributes['value'].nodeValue })
 
 		if (this.props.onChange) {
-			this.props.onChange(e.currentTarget.attributes["value"].nodeValue)
+			this.props.onChange(e.currentTarget.attributes['value'].nodeValue)
 		}
 	},
 	render () {
@@ -25,7 +25,7 @@ export default React.createClass({
 			<div className='form-group export-content'>
 				<span className='format-label'>Formats:</span>
 				<span className='radio-inline' onClick={this.changeFormat} value={formats.PDF}>
-					<input id='pdf' name='format' type='radio' value={formats.PDF} checked={this.state.format === formats.PDF}  />
+					<input id='pdf' name='format' type='radio' value={formats.PDF} checked={this.state.format === formats.PDF} />
 					PDF File
 				</span>
 				<span className='radio-inline' onClick={this.changeFormat} value={formats.CSV}>

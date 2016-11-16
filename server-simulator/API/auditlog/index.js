@@ -11,7 +11,7 @@ const options = { format: 'Letter', orientation: 'landscape', header: { 'height'
 const jsonObject = require('../json/auditlogs.json')
 
 router.post('/filterAuditlogs', (req, res) => {
-    var result = {};
+	var result = {}
 
 	var cloneAuditlogs = jsonObject.auditlogs.slice(0)
 
@@ -19,23 +19,21 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
-    result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+	result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
-    PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
-    result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
+	PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
+	result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
-    result.forDebug = {
-        sortingObjectFieldName: req.body.sortingObjectFieldName,
-        sortingObjectOrder: req.body.sortingObjectOrder,
-		keyword:req.body.keyword
-    }
+	result.forDebug = {
+		sortingObjectFieldName: req.body.sortingObjectFieldName,
+		sortingObjectOrder: req.body.sortingObjectOrder,
+		keyword: req.body.keyword
+	}
 
-    //TODO: check how to send JSON POST request data.
+    // TODO: check how to send JSON POST request data.
 
-    res.send(result);
+	res.send(result)
 })
-
-
 
 router.post('/search', (req, res) => {
 	let status = 200
