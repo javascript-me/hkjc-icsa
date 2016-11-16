@@ -7,7 +7,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
     auditlogs: null,
     forDebug: null,
 
-    getDataByPageNumber (selectedPageNumber, sortingObject) {
+    getDataByPageNumber (selectedPageNumber, sortingObject, criteriaOption) {
         var self = this
 
         $.ajax({
