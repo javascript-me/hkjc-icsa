@@ -36,7 +36,32 @@ function getTotalPages(length) {
 
 }
 
+function ascendSort(key) {
+    return function(a,b){
+        if (a[key] > b[key]) return 1;
+        if (a[key] < b[key]) return -1;
+        return 0;
+    }
+}
+
+function descendSort(key) {
+    return function(a,b){
+        if (a[key] > b[key]) return -1;
+        if (a[key] < b[key]) return 1;
+        return 0;
+    }
+}
+
+function doSorting(auditlogs, fieldName, order) {
+
+    if (order == "DESCEND") auditlogs.sort(descendSort(fieldName))
+    if (order == "ASCEND") auditlogs.sort(ascendSort(fieldName))
+
+    return auditlogs
+}
+
 export default {
-    getAuditlogsByPageNumber: getAuditlogsByPageNumber,
-    getTotalPages: getTotalPages
+    getAuditlogsFragmentByPageNumber: getAuditlogsByPageNumber,
+    getTotalPages: getTotalPages,
+    doSorting: doSorting
 }
