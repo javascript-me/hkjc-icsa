@@ -79,8 +79,8 @@ router.get('/export', (req, res) => {
 	const systemFunc = filters.filters.find(i =>{ return i.name === "systemFunc" })
 	const betTypeFeature = filters.filters.find(i =>{ return i.name === "betTypeFeature" })
 	const device = filters.filters.find(i =>{ return i.name === "device" })
-
-	let result =	PagingUtil.doFilter(jsonObject.auditlogs,
+	const data = Array.from(jsonObject.auditlogs)
+	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
 						!!typeValue ? typeValue.value : null,
 						!!userRole ? userRole.value : null,
