@@ -274,7 +274,7 @@ export default React.createClass({
 		                    </div>
 		}
 		else{
-			activeContent = <div style={{'height': '400px', 'position': 'relative'}}><div className='nodata'>Coming Soon</div></div>
+			activeContent = <div className="temporary-layout"><div className='nodata'>Coming Soon</div></div>
 		}
 
 		return (
