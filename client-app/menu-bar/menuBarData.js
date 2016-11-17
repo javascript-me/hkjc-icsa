@@ -195,8 +195,8 @@ const menuList1 = [
 
 	},
 	{
-		iconSrc: 'Icon - In-Play Monitoring.svg',
-		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
+		iconSrc: 'Icon - Result & Settlement.svg',
+		iconSrc_A: 'Icon - Result & SettlementW.svg',
 		textL1: 'Result&',
 		textL2: 'Settlement'
 
@@ -581,8 +581,8 @@ const menuList2 = [
 		textL2: 'Monitoring',
 	},
 	{
-		iconSrc: 'Icon - In-Play Monitoring.svg',
-		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
+		iconSrc: 'Icon - Result & Settlement.svg',
+		iconSrc_A: 'Icon - Result & SettlementW.svg',
 		textL1: 'Result&',
 		textL2: 'Settlement'
 
