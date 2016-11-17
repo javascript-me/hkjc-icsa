@@ -14,8 +14,11 @@ export default React.createClass({
 		}
 	},
 	componentDidMount () {
-		$('.nav-tabs li a', this.refs.root).click(this.handleTabClick)
-		$('.nav-tabs li a', this.refs.root).tooltip({trigger: 'hover', placement: 'bottom'})
+		const dom = $('.nav-tabs li a', this.refs.root);
+		dom.click(this.handleTabClick)
+		if (dom.tooltip) {
+			dom.tooltip({trigger: 'hover', placement: 'bottom'})
+		}
 	},
 	handleTabClick (e) {
 		let showContent = false
