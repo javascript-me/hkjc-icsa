@@ -48,7 +48,7 @@ describe('PagingService', () => {
 
 	it('should return last page data', () => {
 		var dataOfPage100 = PagingService.getDataByPageNumber(PagingService.totalPages)
-		assert.equal("...", dataOfPage100.pages[2].label)
+		assert.equal('...', dataOfPage100.pages[2].label)
 		assert.equal(PagingService.totalPages - 5, dataOfPage100.pages[3].label)
 		assert.equal(PagingService.totalPages, dataOfPage100.pages[8].label)
 		assert.ok(dataOfPage100.pages[8].selected)
@@ -86,8 +86,21 @@ describe('PagingService', () => {
 		assert.ok(PagingService.getDataByPageNumber(99).pages[9].hasHandCursor)
 	})
 
-	it("10 pages case should be working fine. ", () => {
+	it('10 pages case should be working fine', () => {
 		PagingService.totalPages = 10
 		assert.ok(PagingService.getDataByPageNumber(1).pages[9].hasHandCursor)
+	})
+
+	it('2 pages case should be working fine', () => {
+		PagingService.totalPages = 2
+		assert.equal(4, PagingService.getDataByPageNumber(1).pages.length)
+	})
+
+	it("0 page case should return no number label paging ui", () => {
+		PagingService.totalPages = 0
+		var pages = PagingService.getDataByPageNumber(1).pages
+		assert.equal(0, pages.length)
+
+
 	})
 })

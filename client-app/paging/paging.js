@@ -1,7 +1,6 @@
 import React from 'react'
 import AuditlogStore from '../auditlog/auditlog-store'
 
-
 export default React.createClass({
 
 	currentSelectedPageNumber: 1,
@@ -12,6 +11,7 @@ export default React.createClass({
             totalPages: 0
         }
     },
+
 	componentDidMount () {
 		AuditlogStore.addChangeListener(this.onChange.bind(this))
 	},
@@ -45,16 +45,22 @@ export default React.createClass({
 
 		return currentSelectedPageNumber
 	},
-	onItemClick (event) {
-		this.currentSelectedPageNumber = this.getUserSelectedPageNumber(
-            this.currentSelectedPageNumber,
-            event.target.innerText,
-            this.state.totalPages
-        )
 
-        var sortingObject = {fieldName: "date_time", order: "NO_ORDER"}
-        AuditlogStore.getDataByPageNumber(this.currentSelectedPageNumber, sortingObject)
+	isValid(currentSelectedPageNumber, innerText, totalPages) {
+		if (currentSelectedPageNumber == 1 && innerText == "<") return false
+		if (currentSelectedPageNumber == totalPages && innerText == ">") return false
+
+		return true
+	},
+
+	onItemClick (event) {
+		if (!this.isValid(this.currentSelectedPageNumber, event.target.innerText, this.state.totalPages)) return
+
+		this.currentSelectedPageNumber = this.getUserSelectedPageNumber(this.currentSelectedPageNumber, event.target.innerText, this.state.totalPages)
+
+        AuditlogStore.searchAuditlogs(this.currentSelectedPageNumber, null, null)
     },
+
 	getClassName (page) {
 		var result = []
 		if (page.selected) result.push('selected')
@@ -62,14 +68,15 @@ export default React.createClass({
 		if (page.greyOut) result.push('grey-out')
 		return result.join(' ')
 	},
+
 	render () {
 		return (
             <div className='paging'>
                 <ul>
                     {
                         this.state.pages.map((page, i) => {
-							return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
-						})
+	return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
+})
                     }
                 </ul>
             </div>

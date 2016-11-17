@@ -1,0 +1,66 @@
+{
+  "typeValue" : [
+    {"id": 1, "value": "Event"},
+    {"id": 2, "value": "Bet Type and Feature"},
+    {"id": 3, "value": "Odds"},
+    {"id": 4, "value": "Risk Limit"},
+    {"id": 5, "value": "Selling Control"},
+    {"id": 6, "value": "Result"},
+    {"id": 7, "value": "Settlement (Transaction)"},
+    {"id": 8, "value": "Result Rectification / Adjustment"},
+    {"id": 9, "value": "Customer"},
+    {"id": 10, "value": "Parameters and Configurations"},
+    {"id": 11, "value": "Data Dissemination"},
+    {"id": 12, "value": "Inbound Data"},
+    {"id": 13, "value": "Pre-match Pricing Algorithm Comprehensive Detail"},
+    {"id": 14, "value": "Live Betting Algorithm Comprehensive Detail"},
+    {"id": 15, "value": "Auto Odds Change Trigger"}
+  ],
+  "userRole" : [
+    {"id": 1, "value": "BOCC Supervisor"},
+    {"id": 2, "value": "Trading Manager"},
+    {"id": 3, "value": "Trading Support Analyst"},
+    {"id": 4, "value": "Finance Controller"},
+    {"id": 5, "value": "Content & Planning Manager"},
+    {"id": 6, "value": "Customer Care Representative"},
+    {"id": 7, "value": "Director of Group Treasury"},
+    {"id": 8, "value": "System Administrator"}
+  ],
+  "systemFunc" : [
+    {"id": 1, "value": "In-Play Trading Control"},
+    {"id": 2, "value": "In-Play Trading Risk Monitor"},
+    {"id": 3, "value": "Bet Ticker Window"},
+    {"id": 4, "value": "In-Play Trading Clock Management"},
+    {"id": 5, "value": "Setup Overview"},
+    {"id": 6, "value": "Bet Ticker Window Configuration"},
+    {"id": 7, "value": "Bet Validation Management"},
+    {"id": 8, "value": "In-play Bet Checking"},
+    {"id": 9, "value": "Variation with Pre-event Trading"},
+    {"id": 10, "value": "In-play Player Market"},
+    {"id": 11, "value": "Mini Position Matrix"},
+    {"id": 12, "value": "Components and Display Overview"},
+    {"id": 13, "value": "Start Sell Management"},
+    {"id": 14, "value": "Stop Sell Management"},
+    {"id": 15, "value": "Close Sell Management"},
+    {"id": 16, "value": "In-Play Stop Sell Handling"},
+    {"id": 17, "value": "Auto Stop-Sell by Live Feeds"},
+    {"id": 18, "value": "Manual Stop-Sell"},
+    {"id": 19, "value": "Auto Stop-Sell by Pre-defined Rules"},
+    {"id": 20, "value": "Manual Re-start Sell"}
+  ],
+  "betTypeFeature" : [
+    {"id": 1, "value": "Pre-event"},
+    {"id": 2, "value": "1st Half"},
+    {"id": 3, "value": "HT"},
+    {"id": 4, "value": "2nd Half"},
+    {"id": 5, "value": "AFT"},
+    {"id": 6, "value": "ET"},
+    {"id": 7, "value": "PKSO"},
+    {"id": 8, "value": "End of Match"}
+  ],
+  "device" : [
+    {"id": 1, "value": "Computer"},
+    {"id": 2, "value": "Tablet"},
+    {"id": 3, "value": "phone"}
+  ]
+}

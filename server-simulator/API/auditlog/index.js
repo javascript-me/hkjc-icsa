@@ -14,70 +14,63 @@ function search(filters = []){
 
 	//Case 3 for betType, Case 1 for Keyword, Case 2 for Filters
 	const option = !!filters.keyword ? 1 : !!filters.filters && filters.filters.length > 0 ? 2 :  !!filters.betType ? 3 : 4;
+	const typeNode = filters.filters.find(function(i){ return i.name === "typeValue" })
+	const type = !!filters.filters && !!typeNode ? typeNode.value : { value: "Event" }
+	console.log(type)
 
 	switch(option){
 		case 2:
-			return data.auditlogs.filter( i =>{ return i.Type === "Event" })
+			return jsonObject.auditlogs.filter( i =>{ return i.Type === type })
 		break;
 		case 1:
-			return data.auditlogs.filter( i =>{ return i.function_module === filters.keyword })
+			return jsonObject.auditlogs.filter( i =>{ return i.function_module === filters.keyword })
 		break;
 		case 3:
-			return data.auditlogs.filter(function(i){ return i.bet_type === filters.betType })
+			return jsonObject.auditlogs.filter(function(i){ return i.bet_type === filters.betType })
 		break;
 		default:
-			return {...data.auditlogs}
+			return {...jsonObject.auditlogs}
 		break;
 	}
 }
 
 router.post('/filterAuditlogs', (req, res) => {
-    var result = {};
+	var result = {}
 
 	var cloneAuditlogs = jsonObject.auditlogs.slice(0)
 
-	var sortedAuditlogs = PagingUtil.doSorting(cloneAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs, req.body.keyword)
 
-    result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
-    PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
-    result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
+	result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
-    result.forDebug = {
-        sortingObjectFieldName: req.body.sortingObjectFieldName,
-        sortingObjectOrder: req.body.sortingObjectOrder
-    }
+	PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
+	result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
-    //TODO: check how to send JSON POST request data.
+	result.forDebug = {
+		sortingObjectFieldName: req.body.sortingObjectFieldName,
+		sortingObjectOrder: req.body.sortingObjectOrder,
+		keyword: req.body.keyword
+	}
 
-    res.send(result);
+    // TODO: check how to send JSON POST request data.
+
+	res.send(result)
 })
 
-router.get('/search', (req, res) => {
-	let result = jsonObject
+router.post('/search', (req, res) => {
 	let status = 200
-    const key_word = req.body.key_word  
-     if(key_word === "World Cup" || key_word === "EPC" || key_word === "VCL"|| key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
-       result = data.auditlogs.filter(function (al) {
-     return (al.event_name === key_word  ) 
-     });  
-     }
-        
-    if(key_word === "Candy Date" || key_word === "Jagger Smith" || key_word === "Jerry Li"|| key_word === "Karthik Blay") {
-       result = data.auditlogs.filter(function (al) {
-         return (al.user_name === key_word ) 
-         });  
-    }
-
-    if(key_word === "BOCC Supervisor" || key_word === "Trading Manager" || key_word === "Trading Support Analyst" || key_word === "Finance Controller" 
-        || key_word === "Content & Planning Manager" 
-        || key_word === "Customer Care Representative"
-        || key_word === "Director of Group Treasury"
-        || key_word === "System Administrator") {
-       result = data.auditlogs.filter(function (al) {
-         return (al.user_role === key_word ) 
-         });  
-    }
+    let result = ""
+    
+    const typeValue = req.body.typeValue;
+    const userRole = req.body.userRole;
+    const systemFunc = req.body.systemFunc;
+    const betTypeFeature = req.body.betTypeFeature;
+    const device = req.body.device;   
+        result =  jsonObject.auditlogs.filter(function (al) {
+            return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betTypeFeature && al.device == device )
+        });
 	res.status(status)
 	res.send(result)
 })
