@@ -122,14 +122,17 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
-		let selectedFilters = this.state.selectedFilters,
-			filterIndex = selectedFilters.indexOf(filter)
+  		let selectedFilters = this.state.selectedFilters,
+  			 filterIndex = selectedFilters.indexOf(filter)
 
-		selectedFilters.splice(filterIndex, 1)
-		this.setState({
-			selectedFilters: selectedFilters,
-			isShowingMoreFilter: false
-		})
+  		selectedFilters.splice(filterIndex, 1)
+
+  		this.setState({
+    			selectedFilters: selectedFilters,
+    			isShowingMoreFilter: false
+  		}, ()=> {
+          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+      })
 	},
 
 	searchAuditlog: async function () {
@@ -178,6 +181,22 @@ export default React.createClass({
 		})
 	},
 
+  checkIsDateRangeChanged: function () {
+      let filters = this.state.selectedFilters,
+          originDateRange = this.state.originDateRange,
+          dateTimeFrom, dateTimeTo;
+
+      for(var i in filters) {
+          if(filters[i].name === 'dateTimeFrom') {
+              dateTimeFrom = filters[i].value;
+          } else if(filters[i].name === 'dateTimeTo') {
+              dateTimeTo = filters[i].value;
+          }
+      }
+
+      return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo;
+  },
+
     // function to mock the event of loading data from the table
 	mockLoadData: function () {
 		this.setState({hasData: true})
@@ -204,10 +223,10 @@ export default React.createClass({
 					changeBetTypeEvent={this.changeBetType}
 					changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 			}),
+      isDateRangeChanged = this.checkIsDateRangeChanged(),
 
 			filterBlockes = this.state.selectedFilters.filter((f) => {
-				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo')
-                  && Moment(f.value).isSame(this.state.originDateRange[f.name])) {
+				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
 					return false
 				}
 				return true
@@ -242,11 +261,11 @@ export default React.createClass({
                             </div>
                             <div className='keyword-container'>
                               <input type='text' placeholder='Search with keywords & filters'
-	value={this.state.keyword}
-	onClick={this.showMoreFilter}
-	onChange={this.handleKeywordChange}
-	onKeyPress={this.handleKeywordPress}
-	ref='keyword' />
+                              	value={this.state.keyword}
+                              	onClick={this.showMoreFilter}
+                              	onChange={this.handleKeywordChange}
+                              	onKeyPress={this.handleKeywordPress}
+                              	ref='keyword' />
                             </div>
                             <div className='filter-block-container'>
                               {filterBlockes}
