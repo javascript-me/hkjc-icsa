@@ -147,7 +147,7 @@ export default class SearchEnquiryPanel extends React.Component {
 				})
 			}
 		} else if (name === 'dateTimeGameStart') {
-			if (this.isValidDateTime(event.target.value)) {
+			if (event.target.value.replace(/^[\s]*$/, '').length === 0 || this.isValidDateTime(event.target.value)) {
 				this.setState({
 					errorDateTimeGameStart: 1
 				})
