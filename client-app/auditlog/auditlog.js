@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Moment from 'moment'
 import Calendar from 'rc-calendar'
-import { hashHistory } from 'react-router'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
@@ -14,7 +12,6 @@ import ExportPopup from '../exportPopup'
 import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
-import AuditlogService from './auditlog-service'
 
 const doExport = async (format, filters) => {
 	const file = ExportService.getFileURL(format, filters)
