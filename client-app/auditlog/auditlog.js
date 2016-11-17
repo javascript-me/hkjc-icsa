@@ -36,7 +36,8 @@ export default React.createClass({
 			exportFormat: 'pdf',
 			tokens: {
 				AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
-				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
+				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
+        AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
 			},
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
@@ -131,6 +132,7 @@ export default React.createClass({
     			selectedFilters: selectedFilters,
     			isShowingMoreFilter: false
   		}, ()=> {
+          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
           PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
       })
 	},

@@ -58,7 +58,8 @@ const originState = {
     errorIPAddress: 1
 };
 
-let token = null
+let tokenKeyPress = null
+let tokenRemoveFilter = null
 
 export default class SearchEnquiryPanel extends React.Component {
 
@@ -66,23 +67,34 @@ export default class SearchEnquiryPanel extends React.Component {
 		super(props)
 		this.state = Object.assign({
 			tokens: {
-				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
+				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
+				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
 			}
 		}, originState)
+
+		this.setState(this.props.selectedFilters);
 
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	componentDidMount () {
-		token = PubSub.subscribe(PubSub['AUDITLOG_SEARCH_BY_KEY_PRESS'], () => {
+		tokenKeyPress = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS], () => {
 			this.handleSubmit()
+		})
+
+		tokenRemoveFilter = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], (topic, filter) => {
+			let newState = {};
+
+			newState[filter.name] = originState[filter.name];
+			this.setState(newState)
 		})
 
 		document.addEventListener('click', this.pageClick, false)
 	}
 
 	componentWillUnmount () {
-		PubSub.unsubscribe(token)
+		PubSub.unsubscribe(tokenKeyPress)
+		PubSub.unsubscribe(tokenRemoveFilter)
 
 		document.removeEventListener('click', this.pageClick, false)
 	}
