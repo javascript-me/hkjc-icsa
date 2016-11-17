@@ -178,7 +178,7 @@ export default React.createClass({
 		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
-		AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption)
+		AuditlogStore.searchAuditlogs(1, null, criteriaOption)
 	},
 
 	clickInMoreFilters: function () {
