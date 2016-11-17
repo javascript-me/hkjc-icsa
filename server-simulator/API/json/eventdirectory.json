@@ -53,7 +53,7 @@
 					]
 				},
 				{
-					"name": "FACup",
+					"name": "FA Cup",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -74,7 +74,7 @@
 					]
 				},
 				{
-					"name": "LeagueCup",
+					"name": "League Cup",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -120,7 +120,7 @@
 					]
 				},
 				{
-					"name": "League1",
+					"name": "League 1",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -137,7 +137,7 @@
 					]
 				},
 				{
-					"name": "League2",
+					"name": "League 2",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -396,7 +396,7 @@
 					]
 				},
 				{
-					"name": "FACup",
+					"name": "FA Cup",
 					"competitions": [
 						{
 							"active": 1,
@@ -419,7 +419,7 @@
 					]
 				},
 				{
-					"name": "LeagueCup",
+					"name": "League Cup",
 					"competitions": [
 						{
 							"active": 1,
@@ -470,7 +470,7 @@
 					]
 				},
 				{
-					"name": "League1",
+					"name": "League 1",
 					"competitions": [
 						{
 							"active": 1,
@@ -488,7 +488,7 @@
 					]
 				},
 				{
-					"name": "League2",
+					"name": "League 2",
 					"competitions": [
 						{
 							"active": 1,
