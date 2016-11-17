@@ -13,10 +13,6 @@
 	text-align: left;
 	
 	&.slim {
-		.ed-tabcontent {
-			height: calc(~'100vh - 35px - 46px - 10px');
-		}
-
 		.nav-tabs li a {
 			height: 46px;
 			background-size: 24px 24px;
@@ -120,6 +116,18 @@
 			.level2 {
 				background-color: @footballLevel2;
 			}
+
+			.rc-collapse-item {
+				.arrow {
+					background-image: url(eventdirectory/football-plus.svg);
+				}
+			}
+
+			.rc-collapse-item-active {
+				.arrow {
+					background-image: url(eventdirectory/football-minus.svg);
+				}
+			}
 		}
 
 		#basketball-panel {
@@ -131,6 +139,18 @@
 
 			.level2 {
 				background-color: @basketballLevel2;
+			}
+
+			.rc-collapse-item {
+				.arrow {
+					background-image: url(eventdirectory/basketball-plus.svg);
+				}
+			}
+
+			.rc-collapse-item-active {
+				.arrow {
+					background-image: url(eventdirectory/basketball-minus.svg);
+				}
 			}
 		}
 
@@ -144,37 +164,57 @@
 			.level2 {
 				background-color: @horseracingLevel2;
 			}
+
+			.rc-collapse-item {
+				.arrow {
+					background-image: url(eventdirectory/horseracing-plus.svg);
+				}
+			}
+
+			.rc-collapse-item-active {
+				.arrow {
+					background-image: url(eventdirectory/horseracing-minus.svg);
+				}
+			}
 		}
 	}
 
-	.tooltip.top {
+	.tooltip {
+		&.top {
+			.tooltip-arrow {
+				border-top-color: transparent;
+				border-left-color: transparent;
+			}
+		}
+
+		&.bottom {
+			.tooltip-arrow {
+				border-bottom-color: transparent;
+				border-right-color: transparent;
+			}
+		}
+
 		.tooltip-arrow {
 			left: 80%;
 			width: 10px;
 			height: 10px;
 			background-color: @hkjcWhite;
 			border: 1px solid #ACB8D1;
-			border-top-color: transparent;
-			border-left-color: transparent;
 			transform: rotate(45deg);
 		}
-	}
 
-	.tooltip-arrow {
-		left: 80%;
-	}
-
-	.tooltip-inner {
-		background-color: @hkjcWhite;
-		border: 1px solid #ACB8D1;
-		border-radius: 2px;
-		font-size: 14px;
-		color: #305091;
-		line-height: 30px;
+		.tooltip-inner {
+			background-color: @hkjcWhite;
+			border: 1px solid #ACB8D1;
+			border-radius: 2px;
+			font-size: 14px;
+			color: #305091;
+			line-height: 30px;
+		}
 	}
 }
 
-@import "tabcontent.less";
+@import "searchcontainer.less";
 @import "searchfilter.less";
-@import "searchresult.less";
-@import "searchresultitem.less";
+@import "searchtree.less";
+@import "searchrecord.less";
