@@ -1,5 +1,6 @@
 import assign from 'object-assign'
 import {EventEmitter} from 'events'
+import LoginService from '../login/login-service'
 
 const AuditlogStore = assign({}, EventEmitter.prototype, {
 
@@ -11,6 +12,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 	forDebug: null,
 
     searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
+
 		if (sortingObject) {
 			this._sortingObject = sortingObject
 		}
@@ -21,6 +23,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 
 		let self = this,
 			requestData = {
+				username: LoginService.getProfile().username,
 				selectedPageNumber: selectedPageNumber,
 				sortingObjectFieldName: this._sortingObject.fieldName,
 				sortingObjectOrder: this._sortingObject.order,

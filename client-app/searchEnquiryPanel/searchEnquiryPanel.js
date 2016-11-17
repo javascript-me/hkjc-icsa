@@ -171,7 +171,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	isEnquiryValid () {
-		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorDateTimeGameStart && this.state.errorIPAddress)
+		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorDateTimeGameStart && this.state.errorIPAddress && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
 	}
 
 	handleSubmit () {

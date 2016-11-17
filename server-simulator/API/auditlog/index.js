@@ -9,11 +9,18 @@ import PagingService from './paging-service'
 const router = express.Router()
 const options = { format: 'Letter', orientation: 'landscape', header: { 'height': '15mm'} }
 const jsonObject = require('../json/auditlogs.json')
+const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
 router.post('/filterAuditlogs', (req, res) => {
 	var result = {}
 
-	var cloneAuditlogs = jsonObject.auditlogs.slice(0)
+	var cloneAuditlogs
+
+	if (req.body.username == "allgood") {
+		cloneAuditlogs = jsonObject.auditlogs.slice(0)
+	} else {
+		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
+	}
 
 	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs,
 		req.body.keyword,
@@ -34,7 +41,8 @@ router.post('/filterAuditlogs', (req, res) => {
 	result.forDebug = {
 		sortingObjectFieldName: req.body.sortingObjectFieldName,
 		sortingObjectOrder: req.body.sortingObjectOrder,
-		keyword: req.body.keyword
+		keyword: req.body.keyword,
+		username: req.body.username
 	}
 
     // TODO: check how to send JSON POST request data.
