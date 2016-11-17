@@ -208,7 +208,11 @@ export default React.createClass({
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 	export () {
-		doExport(this.state.exportFormat, this.getSearchCriterias())
+		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		let criteriaOption = this.getSearchCriterias()
+		const filters = AuditlogStore.buildRequest(1, sortingObject, criteriaOption)
+
+		doExport(this.state.exportFormat, filters)
 	},
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
@@ -274,7 +278,7 @@ export default React.createClass({
 		                    </div>
 		}
 		else{
-			activeContent = <div className="temporary-layout"><div className='nodata'>Coming Soon</div></div>
+			activeContent = <div className='nopage'>Coming Soon</div>
 		}
 
 		return (

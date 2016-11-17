@@ -13,32 +13,8 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 
     searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 
-		if (sortingObject) {
-			this._sortingObject = sortingObject
-		}
-
-		if (criteriaOption) {
-			this._criteriaOption = criteriaOption
-		}
-
-		let self = this,
-			requestData = {
-				username: LoginService.getProfile().username,
-				selectedPageNumber: selectedPageNumber,
-				sortingObjectFieldName: this._sortingObject.fieldName,
-				sortingObjectOrder: this._sortingObject.order,
-				betType: this._criteriaOption ? this._criteriaOption.betType : '',
-				keyword: this._criteriaOption ? this._criteriaOption.keyword : ''
-			},
-			filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : [],
-			filterName, filterVal
-
-        // Fill the filters into reuqest data
-		for (let i in filters) {
-			filterName = filters[i].name
-			filterVal = filters[i].value
-			requestData[filterName] = filterVal
-		}
+		const requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
+		let self = this
 
 		$.ajax({
 			url: 'api/auditlog/filterAuditlogs',
@@ -55,6 +31,37 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 				console.log('Error: ' + error.message)
 			}
 		})
+	},
+	buildRequest(selectedPageNumber, sortingObject, criteriaOption) {
+		if (sortingObject) {
+			this._sortingObject = sortingObject
+		}
+
+		if (criteriaOption) {
+			this._criteriaOption = criteriaOption
+		}
+		
+		let requestData = {
+			username: LoginService.getProfile().username,
+			selectedPageNumber: selectedPageNumber,
+			sortingObjectFieldName: this._sortingObject.fieldName,
+			sortingObjectOrder: this._sortingObject.order,
+			betType: this._criteriaOption ? this._criteriaOption.betType : '',
+			keyword: this._criteriaOption ? this._criteriaOption.keyword : ''
+		}
+
+		let filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : []
+		let filterName = ""
+		let filterVal = ""
+
+        // Fill the filters into reuqest data
+		for (let i in filters) {
+			filterName = filters[i].name
+			filterVal = filters[i].value
+			requestData[filterName] = filterVal
+		}
+
+		return requestData
 	},
 	emitChange () {
 		this.emit('change')
