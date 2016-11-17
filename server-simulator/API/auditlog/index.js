@@ -71,38 +71,54 @@ router.get('/download/:file', (req, res) => {
 
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
-	let result = Array.from(jsonObject.auditlogs)
+	const json = req.params.json || req.query.json
+	const filters = !!json ? JSON.parse(json) : {}
+
+	const typeValue = filters.filters.find(i =>{ return i.name === "typeValue" })
+	const userRole = filters.filters.find(i =>{ return i.name === "userRole" })
+	const systemFunc = filters.filters.find(i =>{ return i.name === "systemFunc" })
+	const betTypeFeature = filters.filters.find(i =>{ return i.name === "betTypeFeature" })
+	const device = filters.filters.find(i =>{ return i.name === "device" })
+
+	let result =	PagingUtil.doFilter(jsonObject.auditlogs,
+						filters.keyword,
+						!!typeValue ? typeValue.value : null,
+						!!userRole ? userRole.value : null,
+						!!systemFunc ? systemFunc.value : null,
+						!!userRole ? betTypeFeature.value : null,
+						!!device ? device.value : null,
+					)
 	let status = 200
 
 	switch (type.toLowerCase()) {
-	case 'pdf':
+		case 'pdf':
 
-		let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
-		let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-		result = helper.toHTML(result, dateReport)
-		res.writeHead(200, {
-			'Content-Type': 'application/octet-stream',
-			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+			let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
+			let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+			result = helper.toHTML(result, dateReport)
+			res.writeHead(200, {
+				'Content-Type': 'application/octet-stream',
+				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
 
-		pdf.create(result, options).toStream((err, file) => {
-			if (err) {
-				console.log(err)
-				res.end()
-			}
-			else
-                file.pipe(res)
-		})
+			pdf.create(result, options).toStream((err, file) => {
+				if (err) {
+					console.log(err)
+					res.end()
+				}
+				else
+	                file.pipe(res)
+			})
 
-		break
-	case 'csv':
-		result = helper.toCSV(result)
-		res.writeHead(200, {
-			'Content-Type': 'application/octet-stream',
-			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
-		res.end(result)
-		break
-	default:
-		break
+			break
+		case 'csv':
+			result = helper.toCSV(result)
+			res.writeHead(200, {
+				'Content-Type': 'application/octet-stream',
+				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
+			res.end(result)
+			break
+		default:
+			break
 	}
 })
 

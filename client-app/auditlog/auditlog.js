@@ -16,8 +16,8 @@ import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
 import AuditlogService from './auditlog-service'
 
-const doExport = async (format) => {
-	const file = ExportService.getFileURL(format, [])
+const doExport = async (format, filters) => {
+	const file = ExportService.getFileURL(format, filters)
 	if (file) {
 		window.open(file, '_blank')
 	}
@@ -55,7 +55,7 @@ export default React.createClass({
 
         // Get Table Data
         AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
-		AuditlogStore.addChangeListener(this.onChange.bind(this));
+		AuditlogStore.addChangeListener(this.onChange);
 
 		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
 			this.searchAuditlog()
@@ -211,16 +211,18 @@ export default React.createClass({
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 	export () {
-		doExport(this.state.exportFormat)
+		doExport(this.state.exportFormat, this.getSearchCriterias())
 	},
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
 	},
-	onChange () {
+    onChange () {
+		const hasData = AuditlogStore.auditlogs.length > 0
 		this.setState({
-			auditlogs: AuditlogStore.auditlogs
+			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
 	},
+
 
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
@@ -251,7 +253,31 @@ export default React.createClass({
 
 			moreFilterContianerClassName = ClassNames('more-filter-popup', {
 				'active': this.state.isShowingMoreFilter
-			})
+			}),
+			activeContent;
+
+		if(this.state.betType === 'football'){
+			activeContent = <div>
+		                    	<div className='table-container '>
+			                      <TabularData />
+			                    </div>
+			                    <Paging />
+			                    {/* START FOOTER EXPORT */}
+			                    <div className='col-md-12'>
+			                        <div className='pull-right'>
+			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
+			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+			                                <ExportPopup onChange={this.onChangeFormat} />
+			                            </Popup>
+			                        </div>
+			                    </div>
+			                    {/* END FOOTER EXPORT */}
+		                    </div>
+		}	
+		else{
+			activeContent = <div className='nodata'>Coming Soon</div>
+		}		
+
 		return (
               <div className='auditlog'>
                     <div className='row page-header'>
@@ -287,30 +313,9 @@ export default React.createClass({
                           </div>
                         </div>
                     </div>
-                    {/* Search Result */}
-					{this.state.betType === 'football' ?
-						<div>
-		                    <div className='table-container '>
-		                      <TabularData />
-		                    </div>
-		                    <Paging />
-		                    {/* START FOOTER EXPORT */}
-							{this.state.auditlogs.length === 0 ?
-								'' :
-			                    <div className='col-md-12'>
-			                        <div className='pull-right'>
-			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
-			                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
-			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
-			                                <ExportPopup onChange={this.onChangeFormat} />
-			                            </Popup>
-			                        </div>
-			                    </div>
-							}
-						</div> :
-						<div className='nodata'>Coming Soon</div>
-					}
-                    {/* END FOOTER EXPORT */}
+                    {/* Active Content */}
+                    	{ activeContent }
+                	{/* End Active Content */}
               </div>
             )
 	}

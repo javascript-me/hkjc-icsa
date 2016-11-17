@@ -120,36 +120,26 @@ function doSorting(auditlogs, fieldName, order) {
 
 function doFilter(auditlogs, key_word, typeValue, userRole, systemFunc, betTypeFeature, device) {
 
-    typeValue = (typeValue == undefined || typeValue == "") ? "All" : typeValue
-    userRole = (userRole == undefined || userRole == "") ? "All" : userRole
-    systemFunc = (systemFunc == undefined || systemFunc == "") ? "All" : systemFunc
-    betTypeFeature = (betTypeFeature == undefined || betTypeFeature == "") ? "All" : betTypeFeature
-    device = (device == undefined || device == "") ? "All" : device
+    console.log(key_word)
+    typeValue = !!typeValue ?  typeValue : "All" 
+    userRole = !!userRole ?  userRole : "All" 
+    systemFunc = !!systemFunc ? systemFunc : "All" 
+    betTypeFeature = !!betTypeFeature ? betTypeFeature : "All" 
+    device = !!device ? device : "All" 
+    key_word = !!key_word ? key_word : ""
 
-    var result = auditlogs
+    let result = auditlogs
 
-    if (key_word === "World Cup" || key_word === "EPC" || key_word === "VCL" || key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
-        result = auditlogs.filter(function (al) {
-            return (al.event_name === key_word  )
-        });
-    }
+    result = !!key_word ? auditlogs.filter(function (al) {
+        const eventName = !!al.event_name ? al.event_name.toLowerCase() : ""
+        const userName = !!al.user_name ? al.user_name.toLowerCase() : ""
+        const userRole = !!al.user_role ? al.user_role.toLowerCase() : ""
 
-    if (key_word === "Candy Date" || key_word === "Jagger Smith" || key_word === "Jerry Li" || key_word === "Karthik Blay") {
-        result = auditlogs.filter(function (al) {
-            return (al.user_name === key_word )
-        });
-    }
-
-    if (key_word === "BOCC Supervisor" || key_word === "Trading Manager" || key_word === "Trading Support Analyst" || key_word === "Finance Controller"
-        || key_word === "Content & Planning Manager"
-        || key_word === "Customer Care Representative"
-        || key_word === "Director of Group Treasury"
-        || key_word === "System Administrator") {
-        result = auditlogs.filter(function (al) {
-            return (al.user_role === key_word )
-        });
-    }
-
+        return  eventName === key_word.toLowerCase() || 
+                userName === key_word.toLowerCase() ||
+                userRole === key_word.toLowerCase() 
+    }) : result;
+    
     if (typeValue != "All") {
         result =  result.filter(function (al) {
             return (al.Type == typeValue)
@@ -179,7 +169,7 @@ function doFilter(auditlogs, key_word, typeValue, userRole, systemFunc, betTypeF
             return (al.device == device )
         });
     }
-
+    
     return result;
 }
 

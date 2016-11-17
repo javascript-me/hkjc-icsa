@@ -15,7 +15,8 @@ const getExportURL = (query) => {
 export default {
 
 	getFileURL (format, filters = []) {
-		const query = (filters.length > 0 ? '?' + filters + '&' : '?') + 'type=' + format
+		const json = !!filters ? JSON.stringify(filters) : ""
+		const query = (json.length > 0 ? '?json=' + json + '&' : '?') + 'type=' + format
 		return getExportURL(query)
 	}
 }
