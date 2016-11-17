@@ -61,6 +61,6 @@
   "device" : [
     {"id": 1, "value": "Computer"},
     {"id": 2, "value": "Tablet"},
-    {"id": 3, "value": "phone"}
+    {"id": 3, "value": "Phone"}
   ]
 }

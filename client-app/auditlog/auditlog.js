@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Moment from 'moment'
 import Calendar from 'rc-calendar'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
@@ -12,6 +13,29 @@ import ExportPopup from '../exportPopup'
 import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
+
+const getOrginDateTimeFrom = function () {
+    let dateTimeFrom = new Date(),
+        dateTimeFromObj = {}
+
+    dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
+    dateTimeFrom.setHours(0)
+    dateTimeFrom.setMinutes(0)
+    dateTimeFrom.setSeconds(0)
+    dateTimeFrom.setMilliseconds(0)
+    return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+}
+
+const getOrginDateTimeTo = function () {
+    let dateTimeTo = new Date(),
+        dateTimeToObj = {}
+
+    dateTimeTo.setHours(23)
+    dateTimeTo.setMinutes(59)
+    dateTimeTo.setSeconds(59)
+    dateTimeTo.setMilliseconds(0)
+    return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+}
 
 const doExport = async (format, filters) => {
 	const file = ExportService.getFileURL(format, filters)
@@ -26,6 +50,9 @@ let DEFAULT_BET_TYPE = 'football'
 export default React.createClass({
 	displayName: 'Audit',
 	getInitialState () {
+    let originDateTimeFrom = getOrginDateTimeFrom(),
+        originDateTimeTo = getOrginDateTimeTo();
+
 		return {
 			data: [],
 			filters: [],
@@ -39,26 +66,35 @@ export default React.createClass({
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
 			keyword: '',
-			originDateRange: {},
-			selectedFilters: [],
+			originDateRange: {
+          dateTimeFrom: originDateTimeFrom,
+          dateTimeTo: originDateTimeTo
+      },
+			selectedFilters: [{
+          name: 'dateTimeFrom',
+          value: originDateTimeFrom
+      }, {
+          name: 'dateTimeTo',
+          value: originDateTimeTo
+      }],
 			isShowingMoreFilter: false,
 			isClickInMoreFilters: false,
 			auditlogs: []
 		}
 	},
 	componentDidMount: function () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
-		let criteriaOption = this.getSearchCriterias()
+  		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+  		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
-        AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
-		AuditlogStore.addChangeListener(this.onChange);
+      AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
+  		AuditlogStore.addChangeListener(this.onChange);
 
-		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
-			this.searchAuditlog()
-		})
+  		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
+  			this.searchAuditlog()
+  		})
 
-		document.addEventListener('click', this.pageClick, false)
+  		document.addEventListener('click', this.pageClick, false)
 	},
 
 	componentWillUnmount: function () {
@@ -70,9 +106,9 @@ export default React.createClass({
 
 	pageClick: function (event) {
 		let keywordTag = this.refs.keyword,
-			keywordElement = ReactDOM.findDOMNode(keywordTag),
-			isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
-			isInside = isInsideKeywordElement || this.state.isClickInMoreFilters
+  			keywordElement = ReactDOM.findDOMNode(keywordTag),
+  			isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
+  			isInside = isInsideKeywordElement || this.state.isClickInMoreFilters
 
 		if (!this.state.isShowingMoreFilter || isInside) {
 			this.setState({isClickInMoreFilters: false})
@@ -163,7 +199,7 @@ export default React.createClass({
 		})
 	},
 
-	setFilters: function (filters, originDateRange) {
+	setFilters: function (filters) {
 		this.hideMoreFilter()
 
 		let newFilters = []
@@ -176,8 +212,7 @@ export default React.createClass({
 		}
 
 		this.setState({
-			selectedFilters: newFilters,
-			originDateRange: originDateRange
+			selectedFilters: newFilters
 		}, () => {
 			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
 		})
@@ -195,7 +230,6 @@ export default React.createClass({
               dateTimeTo = filters[i].value;
           }
       }
-
       return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo;
   },
 

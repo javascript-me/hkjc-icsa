@@ -177,13 +177,9 @@ export default class SearchEnquiryPanel extends React.Component {
 	handleSubmit () {
   		this.setState({ tipsFlag: 0 }, function () {
 			if (this.isEnquiryValid()) {
-				let enquiries = this.getEnquiries(this.state),
-              	originDateRange = {
-              		dateTimeFrom: originState.dateTimeFrom.datetime,
-              		dateTimeTo: originState.dateTimeTo.datetime
-              	}
+				let enquiries = this.getEnquiries(this.state)
 
-				this.props.setFilterEvent(enquiries, originDateRange)
+				this.props.setFilterEvent(enquiries)
 				this.setState({
 					tipsFlag: 1
 				})
