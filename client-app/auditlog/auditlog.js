@@ -261,16 +261,18 @@ export default React.createClass({
 		                    	<div className='table-container '>
 			                      <TabularData />
 			                    </div>
-			                    <Paging />
+                            <div className='col-md-12 vertical-gap'>
+			                      <Paging />
 			                    {/* START FOOTER EXPORT */}
-			                    <div className='col-md-12'>
+			                    <div className='col-md-4'>
 			                        <div className='pull-right'>
-			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
+			                            <button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
 			                                <ExportPopup onChange={this.onChangeFormat} />
 			                            </Popup>
 			                        </div>
 			                    </div>
+                            </div>
 			                    {/* END FOOTER EXPORT */}
 		                    </div>
 		}	
