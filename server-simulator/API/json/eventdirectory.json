@@ -14,58 +14,58 @@
 						{
 							"status": "in-progress",
 							"alert0": true,
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
 							"status": "pending",
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"status": "available",
 
-							"t1": "ARS",
+							"t1": "EVE",
 							"t2": "ASV"
 						},
 						{
 							"status": "in-progress",
 							"alert0": true,
-							"t1": "MNC",
-							"t2": "MNU"
+							"t1": "MUN",
+							"t2": "CRY"
 						},
 						{
 							"status": "available",
 							"t1": "ARS",
-							"t2": "ASV"
+							"t2": "SOU"
 						},
 						{
 							"status": "available",
 							"t1": "ARS",
-							"t2": "ASV"
+							"t2": "LIV"
 						},
 						{
 							"status": "stopped",
 							"alert0": true,
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				},
 				{
-					"name": "FACup",
+					"name": "FA Cup",
 					"competitions": [
 						{
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"t1": "ARS",
@@ -74,19 +74,19 @@
 					]
 				},
 				{
-					"name": "LeagueCup",
+					"name": "League Cup",
 					"competitions": [
 						{
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"t1": "ARS",
@@ -106,12 +106,12 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"t1": "ARS",
@@ -120,36 +120,36 @@
 					]
 				},
 				{
-					"name": "League1",
+					"name": "League 1",
 					"competitions": [
 						{
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						}
 					]
 				},
 				{
-					"name": "League2",
+					"name": "League 2",
 					"competitions": [
 						{
 							"t1": "ARS",
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						}
 					]
 				}
@@ -174,8 +174,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -200,8 +200,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -226,8 +226,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -252,8 +252,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -278,8 +278,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -304,8 +304,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -330,8 +330,255 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		}
+	],
+
+	"Premier": [
+		{
+			"name": "England",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"status": "available",
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "in-progress",
+							"alert0": true,
+							"t1": "MUN",
+							"t2": "EVE"
+						},
+						{
+							"status": "pending",
+							"t1": "CRY",
+							"t2": "CHE"
+						},
+						{
+							"status": "available",
+
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "in-progress",
+							"alert0": true,
+							"t1": "MUN",
+							"t2": "CRY"
+						},
+						{
+							"status": "available",
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "available",
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"status": "stopped",
+							"alert0": true,
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Spain",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Germany",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Italy",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "France",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Portugal",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Netherlands",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "SOU",
+							"t2": "LIV"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Finland",
+			"children": [
+				{
+					"name": "Premier",
+					"active": true,
+					"competitions": [
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "ARS",
+							"t2": "ASV"
+						},
+						{
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -355,13 +602,13 @@
 						{
 							"status": "in-progress",
 							"alert0": true,
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
 							"status": "pending",
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"status": "available",
@@ -372,8 +619,8 @@
 						{
 							"status": "in-progress",
 							"alert0": true,
-							"t1": "MNC",
-							"t2": "MNU"
+							"t1": "MUN",
+							"t2": "CRY"
 						},
 						{
 							"status": "available",
@@ -390,13 +637,13 @@
 						{
 							"status": "stopped",
 							"alert0": true,
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				},
 				{
-					"name": "FACup",
+					"name": "FA Cup",
 					"competitions": [
 						{
 							"active": 1,
@@ -404,12 +651,12 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"active": 1,
@@ -419,7 +666,7 @@
 					]
 				},
 				{
-					"name": "LeagueCup",
+					"name": "League Cup",
 					"competitions": [
 						{
 							"active": 1,
@@ -427,12 +674,12 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"active": 1,
@@ -455,12 +702,12 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						},
 						{
 							"active": 1,
@@ -470,7 +717,7 @@
 					]
 				},
 				{
-					"name": "League1",
+					"name": "League 1",
 					"competitions": [
 						{
 							"active": 1,
@@ -478,17 +725,17 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						}
 					]
 				},
 				{
-					"name": "League2",
+					"name": "League 2",
 					"competitions": [
 						{
 							"active": 1,
@@ -496,12 +743,12 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "BIR",
-							"t2": "BLA"
+							"t1": "MUN",
+							"t2": "EVE"
 						},
 						{
-							"t1": "BOL",
-							"t2": "CHA"
+							"t1": "CRY",
+							"t2": "CHE"
 						}
 					]
 				}
@@ -529,8 +776,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -558,8 +805,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -587,8 +834,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -616,8 +863,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -645,8 +892,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -674,8 +921,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}
@@ -703,8 +950,8 @@
 							"t2": "ASV"
 						},
 						{
-							"t1": "MID",
-							"t2": "NEW"
+							"t1": "SOU",
+							"t2": "LIV"
 						}
 					]
 				}

@@ -67,7 +67,7 @@ export default React.createClass({
 		return (
 			<div className={classes}>
 				<span className='logo'><img src='HKJC_Logo.svg' /> <span><strong className=''>HKJC</strong> SPORTS BETTING</span></span>
-				<a onClick={this.showClock}><strong>{Moment(Date(this.state.date)).format('hh:mm a')},</strong> {Moment(Date(this.state.date)).format('D MMM, YYYY')}</a>
+				<a onClick={this.showClock}><strong>{Moment(Date(this.state.date)).format('hh:mma')},</strong> {Moment(Date(this.state.date)).format('D MMM, YYYY')}</a>
 				{ this.state.showPopup ? <Popup date={this.state.date} hideClock={this.hideClock} /> : null }
 			</div>
 			)

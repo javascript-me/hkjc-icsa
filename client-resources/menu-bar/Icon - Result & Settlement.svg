@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon - Result &amp; Settlement</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon---Result-&amp;-Settlement">
+            <g id="Shape">
+                <path d="M27.3333333,2.66666667 L27.3333333,27.3333333 L2.66666667,27.3333333 L2.66666667,2.66666667 L27.3333333,2.66666667 L27.3333333,2.66666667 Z M27.3333333,0 L2.66666667,0 C1.19390733,0 2.96059473e-16,1.19390733 0,2.66666667 L0,27.3333333 C2.96059473e-16,28.8060927 1.19390733,30 2.66666667,30 L27.3333333,30 C28.8060927,30 30,28.8060927 30,27.3333333 L30,2.66666667 C30,1.19390733 28.8060927,0 27.3333333,0 L27.3333333,0 Z" fill="#516B9F"></path>
+                <polygon fill="#000000" points="23.3333333 11.0033333 13.01 21.3233333 6.66666667 14.98 8.97333333 12.6733333 13.01 16.71 21.0266667 8.69666667"></polygon>
+                <polygon fill="#516B9F" points="23.3333333 11.0033333 13.01 21.3233333 6.66666667 14.98 8.97333333 12.6733333 13.01 16.71 21.0266667 8.69666667"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
