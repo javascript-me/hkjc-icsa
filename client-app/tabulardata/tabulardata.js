@@ -53,17 +53,21 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		AuditlogStore.addChangeListener(this.onChange.bind(this))
+		AuditlogStore.addChangeListener(this.onChange)
 	},
 
 	componentWillUnmount () {
-		AuditlogStore.removeChangeListener(this.onChange.bind(this))
+		AuditlogStore.removeChangeListener(this.onChange)
 	},
 
 	onChange () {
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs
 		})
+
+        if (this.props.onChange) {
+            this.props.onChange(AuditlogStore.auditlogs)
+        }
 	},
 
 	setToNoArrow (headers) {
@@ -147,25 +151,25 @@ export default React.createClass({
 		}
 		return this.state.auditlogs.map((row) => {
 			return <tr>
-                <td>{row.date_time}</td>
-                <td>{row.user_id}</td>
-                <td>{row.user_name}</td>
-                <td>{row.Type}</td>
-                <td>{row.function_module}</td>
-                <td>{row.function_event_detail}</td>
-                <td>{row.user_role}</td>
-                <td>{row.ip_address}</td>
-                <td>{row.backend_id}</td>
-                <td>{row.frontend_id}</td>
-                <td>{row.home}</td>
-                <td>{row.away}</td>
-                <td>{row.ko_time_game_start_game}</td>
-                <td>{row.bet_type}</td>
-                <td>{row.event_name}</td>
-                <td>{row.error_code}</td>
-                <td>{row.error_message_content}</td>
-                <td>{row.device}</td>
-            </tr>
+                    <td>{row.date_time}</td>
+                    <td>{row.user_id}</td>
+                    <td>{row.user_name}</td>
+                    <td>{row.Type}</td>
+                    <td>{row.function_module}</td>
+                    <td>{row.function_event_detail}</td>
+                    <td>{row.user_role}</td>
+                    <td>{row.ip_address}</td>
+                    <td>{row.backend_id}</td>
+                    <td>{row.frontend_id}</td>
+                    <td>{row.home}</td>
+                    <td>{row.away}</td>
+                    <td>{row.ko_time_game_start_game}</td>
+                    <td>{row.bet_type}</td>
+                    <td>{row.event_name}</td>
+                    <td>{row.error_code}</td>
+                    <td>{row.error_message_content}</td>
+                    <td>{row.device}</td>
+                </tr>
 		})
 	},
 
