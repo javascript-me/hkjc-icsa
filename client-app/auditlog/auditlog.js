@@ -1,313 +1,301 @@
-﻿import React from 'react';
-import Calendar from 'rc-calendar';
-import { hashHistory } from 'react-router';
-import ClassNames from 'classnames';
-import PubSub from '../pubsub';
-import BetType from './betType';
-import FilterBlock from './filterBlock';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Moment from 'moment'
+import Calendar from 'rc-calendar'
+import { hashHistory } from 'react-router'
+import ClassNames from 'classnames'
+import PubSub from '../pubsub'
+import BetType from './betType'
+import FilterBlock from './filterBlock'
+import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Paging from '../paging/paging'
 import Popup from '../popup'
+import ExportPopup from '../exportPopup'
+import TabularData from '../tabulardata/tabulardata'
+import AuditlogStore from './auditlog-store'
+import ExportService from './export-service'
+import AuditlogService from './auditlog-service'
 
-import AuditlogStore from './auditlog-store';
-import ExportService from './export-service';
-import AuditlogService from './auditlog-service';
-
-let token = null
-
-const doExport = async (format) => {
-    const file = ExportService.getFileURL(format, [])
-    if (file) {
-        window.open(file, "_blank");
-    }
+const doExport = async (format, filters) => {
+	const file = ExportService.getFileURL(format, filters)
+	if (file) {
+		window.open(file, '_blank')
+	}
 }
 
+let token = null
+let DEFAULT_BET_TYPE = 'football'
+
 export default React.createClass({
-    displayName: 'Audit',
-    getInitialState () {
-      return {
-        data: [],
-        filters: [],
-        hasData: false,
-        tokens: {
-            AUDITLOG_BET_TYPE_CHANGE: null,
-            AUDITLOG_REMOVE_FILTER: null
-          },
-          betTypes: ['football', 'basketball', 'horse-racing'],
-          betType: 'football',
-          selectedFilters: [{
-            'name': 'Type',
-            'value': 'Some Type'
-          }, {
-            'name': 'Date To',
-            'value': 'Some day'
-          }]
-      };
-    },
-    componentDidMount () {
-      token = PubSub.subscribe(PubSub.AUDIT_FILTERS_CHANGE, () => {
-        //we should handle the change of filters here
-      })
+	displayName: 'Audit',
+	getInitialState () {
+		return {
+			data: [],
+			filters: [],
+			hasData: false,
+			exportFormat: 'pdf',
+			tokens: {
+				AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
+				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
+			},
+			betTypes: ['football', 'basketball', 'horse-racing'],
+			betType: DEFAULT_BET_TYPE,
+			keyword: '',
+			originDateRange: {},
+			selectedFilters: [],
+			isShowingMoreFilter: false,
+			isClickInMoreFilters: false,
+			auditlogs: []
+		}
+	},
+	componentDidMount: function () {
+		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		let criteriaOption = this.getSearchCriterias()
 
-      this.state.tokens.AUDITLOG_BET_TYPE_CHANGE = PubSub.subscribe(PubSub.AUDITLOG_BET_TYPE_CHANGE, ((topic, betType) => {
-        this.setState({
-          betType: betType
-        });
-      }));
+        // Get Table Data
+        AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
+		AuditlogStore.addChangeListener(this.onChange);
 
-      this.state.tokens.AUDITLOG_REMOVE_FILTER = PubSub.subscribe(PubSub.AUDITLOG_REMOVE_FILTER, ((topic, filter) => {
-        let selectedFilters = this.state.selectedFilters,
-          filterIndex = selectedFilters.indexOf(filter);
+		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
+			this.searchAuditlog()
+		})
 
-        selectedFilters.splice(filterIndex, 1);
-        this.setState({
-          selectedFilters: selectedFilters
-        });
-      }));
+		document.addEventListener('click', this.pageClick, false)
+	},
 
-    },
-    componentWillUnmount () {
-      PubSub.unsubscribe(token)
-      PubSub.unsubscribe(this.state.tokens.AUDITLOG_BET_TYPE_CHANGE);
-      PubSub.unsubscribe(this.state.tokens.AUDITLOG_REMOVE_FILTER);
-    },
-    getBetTypeIconClassName(betType) {
-      return ClassNames(
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(token)
+
+		AuditlogStore.removeChangeListener(this.onChange.bind(this));
+		document.removeEventListener('click', this.pageClick, false)
+	},
+
+	pageClick: function (event) {
+		let keywordTag = this.refs.keyword,
+			keywordElement = ReactDOM.findDOMNode(keywordTag),
+			isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
+			isInside = isInsideKeywordElement || this.state.isClickInMoreFilters
+
+		if (!this.state.isShowingMoreFilter || isInside) {
+			this.setState({isClickInMoreFilters: false})
+			return
+		}
+
+		this.hideMoreFilter()
+	},
+
+	getSearchCriterias: function () {
+		return {
+			betType: this.state.betType,
+			keyword: this.state.keyword,
+			filters: this.state.selectedFilters
+		}
+	},
+
+	getBetTypeIconClassName: function (betType) {
+		return ClassNames(
         'bet-type',
         'icon-' + betType,
-        {
-          'active': this.state.betType === betType
-        });
-    },
-    changeBetType(betType) {
-      this.setState({
-        betType: betType
-      });
-    },
-    showPageData() {
-        console.log(JSON.stringify(AuditlogStore.pageData, null, 4))
-        console.log(JSON.stringify(AuditlogService.doFilter([], "")))
-        
-    },
-    //function to mock the event of loading data from the table
-    mockLoadData(){
-      this.setState({hasData: true})
-    },
-    render() {
-      let me = this;
-      let betTypes = this.state.betTypes.map((betType, index) => {
-          return <BetType 
-            key={index} 
-            selectedBetType={me.state.betType} 
-            betType={betType}
-            changeEventTopic={me.state.tokens.AUDITLOG_BET_TYPE_CHANGE} />;
-      });
+			{
+				'active': this.state.betType === betType
+			})
+	},
 
-      let filterBlockes = this.state.selectedFilters.map((f, index)=>{
-          return <FilterBlock 
-            key={index}
-            filter={f} 
-            removeEventTopic={me.state.tokens.AUDITLOG_REMOVE_FILTER}/>;
-      });
+	changeBetType: function (betType) {
+		this.setState({
+			betType: betType,
+			keyword: '',
+			selectedFilters: [],
+			isShowingMoreFilter: false
+		})
+	},
 
-        return (
-            <div className="contianer auditlog">
-                <div className="row page-header">
-                    <p className="hkjc-breadcrumb">
-                        Home \ Tool & Adminstration \ Audit
-                    </p>
-                    <h1>Audit Trail</h1>
-                </div>
-                <div className='row page-content'>
-                    <div className="col-md-6">
-                        <Calendar className="hidden"/>
+	handleKeywordChange: function (event) {
+		var newKeyword = event.target.value
+
+		this.setState({
+			keyword: newKeyword
+		})
+	},
+
+	handleKeywordPress: function (event) {
+		if (event.key === 'Enter') {
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS])
+		}
+	},
+
+	removeSearchCriteriaFilter: function (filter) {
+		let selectedFilters = this.state.selectedFilters,
+			filterIndex = selectedFilters.indexOf(filter)
+
+		selectedFilters.splice(filterIndex, 1)
+		this.setState({
+			selectedFilters: selectedFilters,
+			isShowingMoreFilter: false
+		})
+	},
+
+	searchAuditlog: async function () {
+		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		let criteriaOption = this.getSearchCriterias()
+
+        // Get Table Data
+		AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption)
+	},
+
+	clickInMoreFilters: function () {
+		this.setState({
+			isClickInMoreFilters: true
+		})
+	},
+
+	showMoreFilter: function (event) {
+		this.setState({
+			isShowingMoreFilter: true
+		})
+	},
+
+	hideMoreFilter: function () {
+		this.setState({
+			isShowingMoreFilter: false
+		})
+	},
+
+	setFilters: function (filters, originDateRange) {
+		this.hideMoreFilter()
+
+		let newFilters = []
+
+		for (let attr in filters) {
+			newFilters.push({
+				'name': attr,
+				'value': filters[attr]
+			})
+		}
+
+		this.setState({
+			selectedFilters: newFilters,
+			originDateRange: originDateRange
+		}, () => {
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+		})
+	},
+
+    // function to mock the event of loading data from the table
+	mockLoadData: function () {
+		this.setState({hasData: true})
+	},
+	openPopup () {
+		this.setState({ exportFormat: 'pdf' })// reset the format value
+		this.state.hasData ? this.refs.exportPopup.show() : null
+	},
+	export () {
+		doExport(this.state.exportFormat, this.getSearchCriterias())
+	},
+	onChangeFormat (format) {
+		this.setState({ exportFormat: format })
+	},
+    onChange () {
+		const hasData = AuditlogStore.auditlogs.length > 0
+		this.setState({
+			auditlogs: AuditlogStore.auditlogs, hasData: hasData
+		})
+	},
+
+
+	render: function () {
+		let betTypesContainerClassName = ClassNames('bet-types', {
+				'hover-enabled': !this.state.isShowingMoreFilter
+			}),
+			betTypes = this.state.betTypes.map((betType, index) => {
+				return <BetType
+					key={index}
+					selectedBetType={this.state.betType}
+					betType={betType}
+					changeBetTypeEvent={this.changeBetType}
+					changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
+			}),
+
+			filterBlockes = this.state.selectedFilters.filter((f) => {
+				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo')
+                  && Moment(f.value).isSame(this.state.originDateRange[f.name])) {
+					return false
+				}
+				return true
+			}).map((f, index) => {
+				return <FilterBlock
+					key={index}
+					filter={f}
+					removeEvent={this.removeSearchCriteriaFilter}
+					removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
+			}),
+
+			moreFilterContianerClassName = ClassNames('more-filter-popup', {
+				'active': this.state.isShowingMoreFilter
+			}),
+			activeContent;
+
+		if(this.state.betType === 'football'){
+			activeContent = <div>
+		                    	<div className='table-container '>
+			                      <TabularData />
+			                    </div>
+			                    <Paging />
+			                    {/* START FOOTER EXPORT */}
+			                    <div className='col-md-12'>
+			                        <div className='pull-right'>
+			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
+			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+			                                <ExportPopup onChange={this.onChangeFormat} />
+			                            </Popup>
+			                        </div>
+			                    </div>
+			                    {/* END FOOTER EXPORT */}
+		                    </div>
+		}	
+		else{
+			activeContent = <div className='nodata'>Coming Soon</div>
+		}		
+
+		return (
+              <div className='auditlog'>
+                    <div className='row page-header'>
+                        <p className='hkjc-breadcrumb'>
+                            Home \ Tool & Adminstration \ Audit
+                        </p>
+                        <h1>Audit Trail</h1>
                     </div>
-                    {/* Search Critiria Row */}
-                    <div className="col-md-12">
-                      <div className="search-criteria-container">
-                        <div className="bet-types">
-                          {betTypes}
+                    <div className='row page-content'>
+                        <div className='col-md-6'>
+                            <Calendar className='hidden' />
                         </div>
-                        <div className="keyword-container">
-                          <input type="text" placeholder="Search with keywords & filters" />
-                        </div>
-                        <div className="filter-block-container">
-                          {filterBlockes}
-                        </div>
-                      </div>
-                    </div>
-                    {/* Search Result */}
-                    <div className="col-xs-12">
-                        <table className="table table-striped auditlog-table">
-                          <thead className="table-header">
-                            <tr>
-                              <th>Date/Time</th>
-                              <th>User ID</th>
-                              <th>User Name</th>
-                              <th>Type</th>
-                               <th>Function/Module</th>
-                              <th>Function Event Detail</th>
-                              <th>User Role</th>
-                              <th>IP Address</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                             <tr>
-                             <td>23 September 2016 19:12:01</td>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>23 September 2016 19:12:01</td>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                    </div>
-                    <Paging />
-                    {/* START FOOTER EXPORT */}
-                    <div className="col-md-12">
-                        <div className="pull-right">
-                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={() => this.state.hasData ? this.refs.exportPopup.show() : null }>Export</button>
-                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
-                            <Popup hideOnOverlayClicked ref="exportPopup" title="Export as ...">
-                                <div className="export-content">
-                                <div className="row">
-                                    <div className="col-md-4 col-md-offset-2">
-                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('PDF'); this.refs.exportPopup.hide() } }>PDF</button>
-                                   </div>
-                                    <div className="col-md-4">
-                                        <button className="btn btn-primary btn-block" onClick={() =>{ doExport('CSV'); this.refs.exportPopup.hide() } }>CSV</button>
-                                    </div>
-                                </div></div>
-                            </Popup>
+                        {/* Search Critiria Row */}
+                        <div className='col-md-12'>
+                          <div className='search-criteria-container'>
+                            <div className={betTypesContainerClassName}>
+                              {betTypes}
+                            </div>
+                            <div className='keyword-container'>
+                              <input type='text' placeholder='Search with keywords & filters'
+								value={this.state.keyword}
+								onClick={this.showMoreFilter}
+								onChange={this.handleKeywordChange}
+								onKeyPress={this.handleKeywordPress}
+								ref='keyword' />
+                            </div>
+                            <div className='filter-block-container'>
+                              {filterBlockes}
+                            </div>
+                            <div className={moreFilterContianerClassName} onClick={this.clickInMoreFilters}>
+                              <SearchEnquiryPanel setFilterEvent={this.setFilters} />
+                            </div>
+                          </div>
                         </div>
                     </div>
-                    {/* END FOOTER EXPORT */}
-                    <button onClick={this.showPageData}>forDebug</button>
-                    
-                </div>
-            </div>
-        );
-    }
-});
+                    {/* Active Content */}
+                    	{ activeContent }
+                	{/* End Active Content */}
+              </div>
+            )
+	}
+})

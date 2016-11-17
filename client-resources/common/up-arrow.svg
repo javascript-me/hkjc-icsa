@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="5px" viewBox="0 0 8 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Combined Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="1574" height="528"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="1574" height="528" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="1574" height="528" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <rect id="path-5" x="1" y="1" width="1572" height="526"></rect>
+    </defs>
+    <g id="❏-B2-Audit-Trail" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Table" transform="translate(-5.000000, -18.000000)">
+            <mask id="mask-3" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" stroke="#305091" mask="url(#mask-2)" stroke-width="2" fill="#FFFFFF">
+                <use mask="url(#mask-4)" xlink:href="#path-1"></use>
+            </g>
+            <mask id="mask-6" fill="white">
+                <use xlink:href="#path-5"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-5"></use>
+            <rect id="Table-Header-BKG" fill="#305091" mask="url(#mask-6)" x="1" y="0" width="1577" height="40"></rect>
+            <polygon id="Combined-Shape" fill="#FFFFFF" mask="url(#mask-6)" transform="translate(9.000000, 20.500000) rotate(-180.000000) translate(-9.000000, -20.500000) " points="13 19.1501715 9 23 5 19.1501715 6.24891227 18 9 20.6477217 11.7510877 18"></polygon>
+        </g>
+    </g>
+</svg>

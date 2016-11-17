@@ -1,71 +1,89 @@
-.component-search-enquiry-panel{
-  width: 900px;
-  background-color: #f6f6f6;
-  border-top: 1px solid #305091;
-  box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
-  padding: 20px 10px;
+:-ms-input-placeholder {
+	color: #9B9B9B;
+}
 
-  .mg-w010{
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-  .pd-w10{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+.component-search-enquiry-panel {
+	width: 900px;
+	background-color: #F6F6F6;
+	border-top: 1px solid #305091;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 20px 10px;
 
-  .form-group{
-    label{
-      color: #0c2963;
-      line-height: 22px;
-      margin-bottom: 6px;
-    }
-    .form-control{
-      border: 1px solid #acb8d1;
-      border-radius: 2px;
-      box-shadow: none;
-      height: 30px;
-      line-height: 30px;
-      color: #305091;
-      padding: 6px 10px;
-    }
-    &.has-error{
-      .form-control{
-        border: 1px solid #e25854;
-      }
-    }
-  }
+	.mg-w010 {
+		margin-left: -10px;
+		margin-right: -10px;
+	}
 
-  .pannel-footer{
-    display: flex;
-    display: -webkit-flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
-    .item-text{
-      .color-blue{
-        color: #2f4e91;
-      }
-      .color-red{
-        color: #e25854;
-      }
-    }
-    .btn{
-      width: 88px;
-      height: 30px;
-      &.btn-link{
-        color: #2f4e91;
-        margin-right: 10px;
-      }
-      &.btn-primary{
-        background-image: none;
-        background-color: #305091;
-        border: 1px solid #305091;
-        box-shadow: none;
-        text-shadow: none;
-        padding: 0;
-        line-height: 30px;
-      }
-    }
-  }
+	.pd-w10 {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	.form-group {
+		label {
+			color: #0C2963;
+			line-height: 22px;
+			margin-bottom: 6px;
+		}
+
+		.form-control {
+			border: 1px solid #ACB8D1;
+			border-radius: 2px;
+			box-shadow: none;
+			height: 30px;
+			line-height: 30px;
+			color: #305091;
+			padding: 0 10px;
+		}
+
+		&.has-error {
+			.form-control {
+				border: 1px solid #E25854;
+			}
+		}
+	}
+
+	.pannel-footer {
+		display: flex;
+		display: -webkit-flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 8px;
+
+		.item-text {
+			.color-blue {
+				color: #2F4E91;
+			}
+
+			.color-red {
+				color: #E25854;
+			}
+		}
+
+		.btn {
+			width: 88px;
+			height: 30px;
+
+			&.btn-link {
+				color: #2F4E91;
+				margin-right: 10px;
+			}
+
+			&.btn-primary {
+				background-image: none;
+				background-color: #305091;
+				border: 1px solid #305091;
+				box-shadow: none;
+				text-shadow: none;
+				padding: 0;
+				line-height: 30px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.component-search-enquiry-panel{
+		width: 100%;
+	}
 }

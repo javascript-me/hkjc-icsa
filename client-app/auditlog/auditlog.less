@@ -25,13 +25,12 @@
 		.bet-types {
 			display: flex;
 			height: 40px;
-			margin-bottom: 20px;
 			width: 50px;
 			overflow: hidden;
 			transition: width 0.5s;
 
-			&:hover {
-				width: 150px;
+			&.hover-enabled:hover {
+				width: 152px;
 			}
 
 			.bet-type {
@@ -42,6 +41,7 @@
 				cursor: pointer;
 				flex: 0 0 50px;
 				height: 40px;
+				margin-right: 1px;
 				order: 5;
 				width: 50px;
 				z-index: 1;
@@ -105,8 +105,9 @@
 			display: flex;
 			flex-wrap: wrap;
 			flex-direction: row;
+			height: 40px;
 			justify-content: flex-start;
-			margin-left: 16px;
+			margin-left: 6px;
 			width: calc(~"100% - 480px");
 
 			.filter-block {
@@ -114,11 +115,12 @@
 				background-position: right center;
 				background-size: 9px 9px;
 				color: rgba(255, 255, 255, 1);
+				cursor: pointer;
 				flex: 0 0 auto;
 				font-family: Roboto-Medium;
 				font-size: 14px;
 				height: 30px;
-				margin-right: 10px;
+				margin: 10px;
 				padding: 6px 25px 6px 10px;
 				position: relative;
 
@@ -129,7 +131,7 @@
 					background-size: 9px 9px;
 					content: "";
 					cursor: pointer;
-					height: 100px;
+					height: 30px;
 					position: absolute;
 					right: 9px;
 					top: 0;
@@ -137,25 +139,25 @@
 				}
 			}
 		}
+
+		.more-filter-popup {
+			height: 0;
+			margin-top: -1px;
+			overflow: hidden;
+			width: 100%;
+			z-index: 100;
+
+			&.active {
+				height: auto;
+				overflow: visible;
+			}
+		}
 	}
 
-	.auditlog-table {
-		/*font-family: Roboto-Regular;*/
-		font-size: 14px;
-		color: #305091;
-		line-height: 40px;
-		border: 1px solid #305091;
-
-		th {
-			vertical-align: bottom;
-			background: #305091;
-			color: white;
-			font-weight: normal;
-			font-size: 14px;
-		}
-
-		td {
-			border: 1px solid #EEEEEE;
-		}
+	.table-container {
+		overflow-x: auto;
+		min-height: 200px;
+		margin: 0 30px 0 30px;
+		width: auto;
 	}
 }

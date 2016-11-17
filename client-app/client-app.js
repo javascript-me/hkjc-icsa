@@ -7,7 +7,6 @@ import config from './config'
 //import MenuBar from './menu-bar'
 
 
-
 import Login from './login/login'
 import LoginService from './login/login-service'
 import Systembar from './systembar/systembar.js'
@@ -21,7 +20,6 @@ import FilterBlock from './auditlog/filterBlock'
 import Navigation from './navigation/navigation'
 
 import SearchEnquiryPanel from './searchEnquiryPanel/searchEnquiryPanel'
-
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
