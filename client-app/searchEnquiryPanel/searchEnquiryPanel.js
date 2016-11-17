@@ -312,7 +312,7 @@ export default class SearchEnquiryPanel extends React.Component {
 				<div className='row mg-w010'>
 					<div className='col-sm-3 pd-w10'>
 						<div className={dateTimeGameStartClass}>
-							<label>K.O Time/Game Start Game</label>
+							<label>K.O Time / Game Start Time</label>
 							<DateTime inputFor='dateTimeGameStart' dateTime={this.state.dateTimeGameStart} handleVal={this.handleChange.bind(this, 'dateTimeGameStart')} />
 						</div>
 					</div>
@@ -338,7 +338,7 @@ export default class SearchEnquiryPanel extends React.Component {
 				<div className='row mg-w010'>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
-							<label>Bet Type/Feature</label>
+							<label>Bet Type / Feature</label>
 							<SelectCom key="betTypeFeature" datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={this.handleChange.bind(this, 'betTypeFeature')} />
 						</div>
 					</div>
