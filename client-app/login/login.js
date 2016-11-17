@@ -17,7 +17,7 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<div className="page-login">
+			<div className='page-login'>
 				<div className='row row-login'>
 					<div className='login-dialog col-xs-offset-5 col-xs-2'>
 						<div className='form-group form-group-lg'>
