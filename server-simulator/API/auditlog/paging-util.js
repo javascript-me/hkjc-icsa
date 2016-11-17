@@ -47,18 +47,18 @@ function descendSort (key) {
 }
 
 function parseToMonthIndex(monthName) {
-    if (monthName == "January") return 0
-    if (monthName == "February") return 1
-    if (monthName == "March") return 2
-    if (monthName == "April") return 3
-    if (monthName == "May") return 4
-    if (monthName == "June") return 5
-    if (monthName == "July") return 6
-    if (monthName == "August") return 7
-    if (monthName == "September") return 8
-    if (monthName == "October") return 9
-    if (monthName == "November") return 10
-    if (monthName == "December") return 11
+    if (monthName == "January" || monthName == "Jan") return 0
+    if (monthName == "February" || monthName == "Feb") return 1
+    if (monthName == "March" || monthName == "Mar") return 2
+    if (monthName == "April" || monthName == "Apr") return 3
+    if (monthName == "May" || monthName == "May") return 4
+    if (monthName == "June" || monthName == "Jun") return 5
+    if (monthName == "July" || monthName == "Jul") return 6
+    if (monthName == "August" || monthName == "Aug") return 7
+    if (monthName == "September" || monthName == "Sep") return 8
+    if (monthName == "October" || monthName == "Oct") return 9
+    if (monthName == "November" || monthName == "Nov") return 10
+    if (monthName == "December" || monthName == "Dec") return 11
     return -1
 }
 
@@ -77,7 +77,8 @@ function parseToDate(value) {
 
     var hour = items[0]
     var minute = items[1]
-    var second = items[2]
+
+    var second = !!items[2] ? items[2] : "00"
 
     return new Date(year, monthIndex, date, hour, minute, second)
 }
@@ -118,15 +119,16 @@ function doSorting(auditlogs, fieldName, order) {
     return auditlogs
 }
 
-function doFilter(auditlogs, key_word, typeValue, userRole, systemFunc, betTypeFeature, device) {
+function doFilter(auditlogs, key_word, typeValue, userRole, systemFunc, betTypeFeature, device, dateTimeFrom, dateTimeTo) {
 
-    console.log(key_word)
-    typeValue = !!typeValue ?  typeValue : "All" 
+    key_word = !!key_word ? key_word : ""
+    typeValue = !!typeValue ?  typeValue : "All"
     userRole = !!userRole ?  userRole : "All" 
     systemFunc = !!systemFunc ? systemFunc : "All" 
     betTypeFeature = !!betTypeFeature ? betTypeFeature : "All" 
-    device = !!device ? device : "All" 
-    key_word = !!key_word ? key_word : ""
+    device = !!device ? device : "All"
+    dateTimeFrom = !!dateTimeFrom ? dateTimeFrom : "18 Sep 1900 00:00"
+    dateTimeTo = !!dateTimeTo ? dateTimeTo : "31 Dec 2099 23:59"
 
     let result = auditlogs
 
@@ -169,6 +171,11 @@ function doFilter(auditlogs, key_word, typeValue, userRole, systemFunc, betTypeF
             return (al.device == device )
         });
     }
+
+    result =  result.filter(function (al) {
+        return parseToDate(dateTimeFrom).getTime() <= parseToDate(al.date_time).getTime()
+            && parseToDate(al.date_time).getTime() <= parseToDate(dateTimeTo).getTime()
+    });
     
     return result;
 }

@@ -28,7 +28,9 @@ router.post('/filterAuditlogs', (req, res) => {
 		req.body.userRole,
 		req.body.systemFunc,
 		req.body.betTypeFeature,
-		req.body.device
+		req.body.device,
+		req.body.dateTimeFrom,
+		req.body.dateTimeTo
 	)
 
 	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
@@ -42,7 +44,8 @@ router.post('/filterAuditlogs', (req, res) => {
 		sortingObjectFieldName: req.body.sortingObjectFieldName,
 		sortingObjectOrder: req.body.sortingObjectOrder,
 		keyword: req.body.keyword,
-		username: req.body.username
+		username: req.body.username,
+		bodyFields: JSON.stringify(req.body)
 	}
 
     // TODO: check how to send JSON POST request data.
@@ -80,7 +83,7 @@ router.get('/download/:file', (req, res) => {
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json
-	const filters = !!json ? JSON.parse(json) : {}
+	const filters = !!json ? JSON.parse(decodeURIComponent(json)) : {}
 	let data = []
 
 	if (filters.username == "allgood") {
@@ -88,8 +91,7 @@ router.get('/export', (req, res) => {
 	} else {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
-
-	console.log(filters)
+	
 	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
 						filters.typeValue,
@@ -98,7 +100,7 @@ router.get('/export', (req, res) => {
 						filters.betTypeFeature,
 						filters.device
 					)
-	console.log(result)
+	
 	let status = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
 	
