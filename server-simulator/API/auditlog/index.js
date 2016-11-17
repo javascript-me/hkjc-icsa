@@ -15,7 +15,14 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	var cloneAuditlogs = jsonObject.auditlogs.slice(0)
 
-	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs, req.body.keyword)
+	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs,
+		req.body.keyword,
+		req.body.typeValue,
+		req.body.userRole,
+		req.body.systemFunc,
+		req.body.betTypeFeature,
+		req.body.device
+	)
 
 	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
@@ -38,15 +45,17 @@ router.post('/filterAuditlogs', (req, res) => {
 router.post('/search', (req, res) => {
 	let status = 200
     let result = ""
-    
-    const typeValue = req.body.typeValue;
-    const userRole = req.body.userRole;
-    const systemFunc = req.body.systemFunc;
-    const betTypeFeature = req.body.betTypeFeature;
-    const device = req.body.device;   
-        result =  jsonObject.auditlogs.filter(function (al) {
-            return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betTypeFeature && al.device == device )
-        });
+
+	const typeValue = req.body.typeValue;
+	const userRole = req.body.userRole;
+	const systemFunc = req.body.systemFunc;
+	const betTypeFeature = req.body.betTypeFeature;
+	const device = req.body.device;
+
+	result =  jsonObject.auditlogs.filter(function (al) {
+		return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betTypeFeature && al.device == device )
+	});
+
 	res.status(status)
 	res.send(result)
 })
