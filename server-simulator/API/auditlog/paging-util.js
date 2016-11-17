@@ -118,17 +118,24 @@ function doSorting(auditlogs, fieldName, order) {
     return auditlogs
 }
 
-function doFilter(auditlogs, key_word) {
-    if (key_word == "") return auditlogs
+function doFilter(auditlogs, key_word, typeValue, userRole, systemFunc, betTypeFeature, device) {
+
+    typeValue = (typeValue == undefined || typeValue == "") ? "All" : typeValue
+    userRole = (userRole == undefined || userRole == "") ? "All" : userRole
+    systemFunc = (systemFunc == undefined || systemFunc == "") ? "All" : systemFunc
+    betTypeFeature = (betTypeFeature == undefined || betTypeFeature == "") ? "All" : betTypeFeature
+    device = (device == undefined || device == "") ? "All" : device
+
+    var result = auditlogs
 
     if (key_word === "World Cup" || key_word === "EPC" || key_word === "VCL" || key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
-        return auditlogs.filter(function (al) {
+        result = auditlogs.filter(function (al) {
             return (al.event_name === key_word  )
         });
     }
 
     if (key_word === "Candy Date" || key_word === "Jagger Smith" || key_word === "Jerry Li" || key_word === "Karthik Blay") {
-        return auditlogs.filter(function (al) {
+        result = auditlogs.filter(function (al) {
             return (al.user_name === key_word )
         });
     }
@@ -138,12 +145,42 @@ function doFilter(auditlogs, key_word) {
         || key_word === "Customer Care Representative"
         || key_word === "Director of Group Treasury"
         || key_word === "System Administrator") {
-        return auditlogs.filter(function (al) {
+        result = auditlogs.filter(function (al) {
             return (al.user_role === key_word )
         });
     }
 
-    return [];
+    if (typeValue != "All") {
+        result =  result.filter(function (al) {
+            return (al.Type == typeValue)
+        });
+    }
+
+    if (userRole != "All") {
+        result =  result.filter(function (al) {
+            return (al.user_role == userRole)
+        });
+    }
+
+    if (systemFunc != "All") {
+        result =  result.filter(function (al) {
+            return (al.function_module == systemFunc)
+        });
+    }
+
+    if (betTypeFeature != "All") {
+        result =  result.filter(function (al) {
+            return (al.bet_type == betTypeFeature)
+        });
+    }
+
+    if (device != "All") {
+        result =  result.filter(function (al) {
+            return (al.device == device )
+        });
+    }
+
+    return result;
 }
 
 export default {

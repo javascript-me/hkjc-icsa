@@ -4,7 +4,7 @@ import PagingUtil from './paging-util'
 
 it('getAuditlogsFragmentByPageNumber() should return a small amount of data', () => {
 	const data = require('../json/auditlogs.json')
-	assert.equal(99, data.auditlogs.length)
+	assert.equal(44, data.auditlogs.length)
 
 	var result = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 1)
 
@@ -13,10 +13,10 @@ it('getAuditlogsFragmentByPageNumber() should return a small amount of data', ()
 	assert.equal(JSON.stringify(result[9]), JSON.stringify(data.auditlogs[9]))
 
 	var resultOfPage5 = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 5)
-	assert.equal(10, resultOfPage5.length)
+	assert.equal(4, resultOfPage5.length)
 
 	var resultOfPage10 = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 10)
-	assert.equal(9, resultOfPage10.length)
+	assert.equal(0, resultOfPage10.length)
 })
 
 it('getTotalPages() should return total pages number based on pageSize', () => {
@@ -141,14 +141,14 @@ it("Simple test", function () {
 it('doFilter() should return less data', () => {
 	const jsonObject = require('../json/auditlogs.json')
 
-	assert.equal(99, jsonObject.auditlogs.length)
+	assert.equal(44, jsonObject.auditlogs.length)
 
-	assert.equal(54, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
-	assert.equal(11, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
+	assert.equal(30, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(3, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-    assert.equal(54, PagingUtil.doFilter(jsonObject.auditlogs, "World Cup").length)
-    assert.equal(11, PagingUtil.doFilter(jsonObject.auditlogs, "EPC").length)
+    assert.equal(30, PagingUtil.doFilter(jsonObject.auditlogs, "World Cup").length)
+    assert.equal(3, PagingUtil.doFilter(jsonObject.auditlogs, "EPC").length)
 
-    assert.equal(99, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
+    assert.equal(44, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
 })
 
