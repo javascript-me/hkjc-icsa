@@ -100,12 +100,13 @@ router.get('/export', (req, res) => {
 					)
 	console.log(result)
 	let status = 200
-
+	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+	
 	switch (type.toLowerCase()) {
 		case 'pdf':
 
 			let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
-			let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+			
 			result = helper.toHTML(result, dateReport)
 			res.writeHead(200, {
 				'Content-Type': 'application/octet-stream',
