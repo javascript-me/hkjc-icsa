@@ -2,9 +2,8 @@ import PubSub from 'pubsub-js'
 
 const tokens = [
 	'LOGIN_CHANGE',
-	'AUDIT_FILTERS_CHANGE',
-	'AUDITLOG_BET_TYPE_CHANGE',
-	'AUDITLOG_REMOVE_FILTER'
+	'AUDITLOG_SEARCH',
+	'AUDITLOG_SEARCH_BY_KEY_PRESS'
 ]
 
 for (const token of tokens) {

@@ -1,37 +1,37 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import PubSub from '../pubsub';
+import React from 'react'
+import ClassNames from 'classnames'
+import PubSub from '../pubsub'
 
-export default class BetType extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
+export default class BetType extends React.Component {
+	constructor (props) {
+		super(props)
+		this.state = {
+		}
 
-    getBetTypeIconClassName(betType) {
-      return ClassNames(
+		this.changeBetTypeHandler = this.changeBetTypeHandler.bind(this)
+	}
+
+	getBetTypeIconClassName (betType) {
+		return ClassNames(
         'bet-type',
         'icon-' + betType,
-        {
-          'active': this.props.selectedBetType === betType
-        });
-    }
+			{
+				'active': this.props.selectedBetType === betType
+			})
+	}
 
-    getChangeBetTypeHandler(betType) {
-        let me = this;
-        
-    	return () => {
-    		if(me.props.selectedBetType !== betType) {
-    			PubSub.publish(PubSub[me.props.changeEventTopic], betType);
-    		}    		
-    	};
-    }
+	changeBetTypeHandler () {
+		if (this.props.selectedBetType !== this.props.betType) {
+			this.props.changeBetTypeEvent(this.props.betType)
 
-    render() {
-        return (
-              <i className={this.getBetTypeIconClassName(this.props.betType)} 
-              	onClick={this.getChangeBetTypeHandler(this.props.betType)}></i>
-        );
-    }
+			PubSub.publish(PubSub[this.props.changeEventTopic])
+		}
+	}
+
+	render () {
+		return (
+              <i className={this.getBetTypeIconClassName(this.props.betType)}
+	onClick={this.changeBetTypeHandler} />
+        )
+	}
 }
