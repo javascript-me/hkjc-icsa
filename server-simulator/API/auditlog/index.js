@@ -81,21 +81,24 @@ router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json
 	const filters = !!json ? JSON.parse(json) : {}
+	let data = []
 
-	const typeValue = filters.filters.find(i =>{ return i.name === "typeValue" })
-	const userRole = filters.filters.find(i =>{ return i.name === "userRole" })
-	const systemFunc = filters.filters.find(i =>{ return i.name === "systemFunc" })
-	const betTypeFeature = filters.filters.find(i =>{ return i.name === "betTypeFeature" })
-	const device = filters.filters.find(i =>{ return i.name === "device" })
-	const data = Array.from(jsonObject.auditlogs)
+	if (filters.username == "allgood") {
+		data = jsonObject.auditlogs.slice(0)
+	} else {
+		data = jsonObjectOfOtherUser.auditlogs.slice(0)
+	}
+
+	console.log(filters)
 	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
-						!!typeValue ? typeValue.value : null,
-						!!userRole ? userRole.value : null,
-						!!systemFunc ? systemFunc.value : null,
-						!!userRole ? betTypeFeature.value : null,
-						!!device ? device.value : null,
+						filters.typeValue,
+						filters.userRole,
+						filters.systemFunc,
+						filters.betTypeFeature,
+						filters.device
 					)
+	console.log(result)
 	let status = 200
 
 	switch (type.toLowerCase()) {
