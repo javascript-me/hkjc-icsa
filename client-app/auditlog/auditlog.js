@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Moment from 'moment'
 import Calendar from 'rc-calendar'
-import { hashHistory } from 'react-router'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
@@ -14,7 +12,6 @@ import ExportPopup from '../exportPopup'
 import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
-import AuditlogService from './auditlog-service'
 
 const doExport = async (format, filters) => {
 	const file = ExportService.getFileURL(format, filters)
@@ -36,7 +33,8 @@ export default React.createClass({
 			exportFormat: 'pdf',
 			tokens: {
 				AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
-				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
+				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
+        AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
 			},
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
@@ -125,14 +123,18 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
-		let selectedFilters = this.state.selectedFilters,
-			filterIndex = selectedFilters.indexOf(filter)
+  		let selectedFilters = this.state.selectedFilters,
+  			 filterIndex = selectedFilters.indexOf(filter)
 
-		selectedFilters.splice(filterIndex, 1)
-		this.setState({
-			selectedFilters: selectedFilters,
-			isShowingMoreFilter: false
-		})
+  		selectedFilters.splice(filterIndex, 1)
+
+  		this.setState({
+    			selectedFilters: selectedFilters,
+    			isShowingMoreFilter: false
+  		}, ()=> {
+          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
+          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+      })
 	},
 
 	searchAuditlog: async function () {
@@ -181,6 +183,22 @@ export default React.createClass({
 		})
 	},
 
+  checkIsDateRangeChanged: function () {
+      let filters = this.state.selectedFilters,
+          originDateRange = this.state.originDateRange,
+          dateTimeFrom, dateTimeTo;
+
+      for(var i in filters) {
+          if(filters[i].name === 'dateTimeFrom') {
+              dateTimeFrom = filters[i].value;
+          } else if(filters[i].name === 'dateTimeTo') {
+              dateTimeTo = filters[i].value;
+          }
+      }
+
+      return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo;
+  },
+
     // function to mock the event of loading data from the table
 	mockLoadData: function () {
 		this.setState({hasData: true})
@@ -215,10 +233,10 @@ export default React.createClass({
 					changeBetTypeEvent={this.changeBetType}
 					changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 			}),
+      isDateRangeChanged = this.checkIsDateRangeChanged(),
 
 			filterBlockes = this.state.selectedFilters.filter((f) => {
-				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo')
-                  && Moment(f.value).isSame(this.state.originDateRange[f.name])) {
+				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
 					return false
 				}
 				return true
@@ -240,22 +258,24 @@ export default React.createClass({
 		                    	<div className='table-container '>
 			                      <TabularData />
 			                    </div>
-			                    <Paging />
+                            <div className='col-md-12 vertical-gap'>
+			                      <Paging />
 			                    {/* START FOOTER EXPORT */}
-			                    <div className='col-md-12'>
+			                    <div className='col-md-4'>
 			                        <div className='pull-right'>
-			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
+			                            <button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
 			                                <ExportPopup onChange={this.onChangeFormat} />
 			                            </Popup>
 			                        </div>
 			                    </div>
+                            </div>
 			                    {/* END FOOTER EXPORT */}
 		                    </div>
-		}	
+		}
 		else{
-			activeContent = <div className='nodata'>Coming Soon</div>
-		}		
+			activeContent = <div className="temporary-layout"><div className='nodata'>Coming Soon</div></div>
+		}
 
 		return (
               <div className='auditlog'>
@@ -277,11 +297,11 @@ export default React.createClass({
                             </div>
                             <div className='keyword-container'>
                               <input type='text' placeholder='Search with keywords & filters'
-								value={this.state.keyword}
-								onClick={this.showMoreFilter}
-								onChange={this.handleKeywordChange}
-								onKeyPress={this.handleKeywordPress}
-								ref='keyword' />
+                              	value={this.state.keyword}
+                              	onClick={this.showMoreFilter}
+                              	onChange={this.handleKeywordChange}
+                              	onKeyPress={this.handleKeywordPress}
+                              	ref='keyword' />
                             </div>
                             <div className='filter-block-container'>
                               {filterBlockes}

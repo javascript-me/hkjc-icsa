@@ -71,7 +71,7 @@ export default React.createClass({
 
 	render () {
 		return (
-            <div className='paging'>
+            <div className='paging col-md-8'>
                 <ul>
                     {
                         this.state.pages.map((page, i) => {
