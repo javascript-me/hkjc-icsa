@@ -28,7 +28,9 @@ router.post('/filterAuditlogs', (req, res) => {
 		req.body.userRole,
 		req.body.systemFunc,
 		req.body.betTypeFeature,
-		req.body.device
+		req.body.device,
+		req.body.dateTimeFrom,
+		req.body.dateTimeTo
 	)
 
 	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
@@ -42,7 +44,8 @@ router.post('/filterAuditlogs', (req, res) => {
 		sortingObjectFieldName: req.body.sortingObjectFieldName,
 		sortingObjectOrder: req.body.sortingObjectOrder,
 		keyword: req.body.keyword,
-		username: req.body.username
+		username: req.body.username,
+		bodyFields: JSON.stringify(req.body)
 	}
 
     // TODO: check how to send JSON POST request data.
