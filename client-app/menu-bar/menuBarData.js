@@ -239,6 +239,17 @@ const menuList1 = [
 				]
 			},
 			{
+				text: 'Unmap Data Monitor',
+				subMenu: [
+					{
+						text: 'Competition'
+					},
+					{
+						text: 'Match'
+					}
+				]
+			},
+			{
 				text: 'Data Feed Log'
 			}
 		]
@@ -321,6 +332,9 @@ const menuList1 = [
 				subMenu: [
 					{
 						text: 'User Account Profile'
+					},
+					{
+						text: 'User Role & Permission'
 					}
 				]
 			}
@@ -625,6 +639,17 @@ const menuList2 = [
 				]
 			},
 			{
+				text: 'Unmap Data Monitor',
+				subMenu: [
+					{
+						text: 'Competition'
+					},
+					{
+						text: 'Match'
+					}
+				]
+			},
+			{
 				text: 'Data Feed Log'
 			}
 		]
@@ -692,6 +717,9 @@ const menuList2 = [
 				subMenu: [
 					{
 						text: 'User Account Profile'
+					},
+					{
+						text: 'User Role & Permission'
 					}
 				]
 			}
