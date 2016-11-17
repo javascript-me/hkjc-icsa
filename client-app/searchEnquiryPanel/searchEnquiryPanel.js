@@ -54,6 +54,7 @@ const originState = {
     tipsFlag: 1,
     errorDateTimeFrom: 1,
     errorDateTimeTo: 1,
+    errorDateTimeGameStart: 1,
     errorIPAddress: 1
 };
 
@@ -87,12 +88,16 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	renderTipsText () {
-		let { dateTimeFrom, dateTimeTo, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state
-		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorIPAddress === 0 || dateTimeTo.timestamp < dateTimeFrom.timestamp)) {
+		let { dateTimeFrom, dateTimeTo, errorDateTimeFrom, errorDateTimeTo, errorDateTimeGameStart, errorIPAddress, tipsFlag } = this.state
+		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorDateTimeGameStart === 0 || errorIPAddress === 0 || dateTimeTo.timestamp < dateTimeFrom.timestamp)) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
 			return <span className='color-blue'>* These fields are mandatory</span>
 		}
+	}
+
+	isValidDateTime(str) {
+		return Moment(str, "DD MMM YYYY HH:mm", true).isValid();
 	}
 
 	handleChange (name, event) {
@@ -110,7 +115,7 @@ export default class SearchEnquiryPanel extends React.Component {
 		this.setState(newState)
 
 		if (name === 'dateTimeFrom') {
-			if (event.target.value.replace(/^[\s]*$/, '').length > 0) {
+			if (event.target.value.replace(/^[\s]*$/, '').length > 0 && this.isValidDateTime(event.target.value)) {
 				this.setState({
 					errorDateTimeFrom: 1
 				})
@@ -120,13 +125,23 @@ export default class SearchEnquiryPanel extends React.Component {
 				})
 			}
 		} else if (name === 'dateTimeTo') {
-			if (event.target.value.replace(/^[\s]*$/, '').length > 0) {
+			if (event.target.value.replace(/^[\s]*$/, '').length > 0 && this.isValidDateTime(event.target.value)) {
 				this.setState({
 					errorDateTimeTo: 1
 				})
 			} else {
 				this.setState({
 					errorDateTimeTo: 0
+				})
+			}
+		} else if (name === 'dateTimeGameStart') {
+			if (this.isValidDateTime(event.target.value)) {
+				this.setState({
+					errorDateTimeGameStart: 1
+				})
+			} else {
+				this.setState({
+					errorDateTimeGameStart: 0
 				})
 			}
 		} else if (name === 'ipAddress') {
@@ -144,7 +159,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	isEnquiryValid () {
-		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorIPAddress)
+		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorDateTimeGameStart && this.state.errorIPAddress)
 	}
 
 	handleSubmit () {
@@ -166,6 +181,7 @@ export default class SearchEnquiryPanel extends React.Component {
 
 	handleReset () {
 		let newState = Object.assign({}, originState)
+
 		this.setState(newState)
 	}
 
@@ -206,15 +222,19 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	render () {
-		let { errorDateTimeFrom, errorDateTimeTo, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
+		let { errorDateTimeFrom, errorDateTimeTo, errorDateTimeGameStart, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
 		let fromClass = 'form-group'
 		let toClass = 'form-group'
+		let dateTimeGameStartClass = 'form-group'
 		let ipClass = 'form-group'
 		if (tipsFlag === 0 && errorDateTimeFrom === 0) {
 			fromClass = 'form-group has-error'
 		}
 		if (tipsFlag === 0 && errorDateTimeTo === 0) {
 			toClass = 'form-group has-error'
+		}
+		if (tipsFlag === 0 && errorDateTimeGameStart === 0) {
+			dateTimeGameStartClass = 'form-group has-error'
 		}
 		if (tipsFlag === 0 && errorIPAddress === 0) {
 			ipClass = 'form-group has-error'
@@ -241,7 +261,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Type</label>
-							<SelectCom datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={this.handleChange.bind(this, 'typeValue')} />
+							<SelectCom key="typeValue" datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={this.handleChange.bind(this, 'typeValue')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -279,9 +299,9 @@ export default class SearchEnquiryPanel extends React.Component {
 				</div>
 				<div className='row mg-w010'>
 					<div className='col-sm-3 pd-w10'>
-						<div className='form-group'>
+						<div className={dateTimeGameStartClass}>
 							<label>K.O Time/Game Start Game</label>
-							<DateTime inputFor='dateTimeGameStart' handleVal={this.handleChange.bind(this, 'dateTimeGameStart')} />
+							<DateTime inputFor='dateTimeGameStart' dateTime={this.state.dateTimeGameStart} handleVal={this.handleChange.bind(this, 'dateTimeGameStart')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -293,13 +313,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User Role</label>
-							<SelectCom datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={this.handleChange.bind(this, 'userRole')} />
+							<SelectCom key="userRole" datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={this.handleChange.bind(this, 'userRole')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>System Function</label>
-							<SelectCom datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={this.handleChange.bind(this, 'systemFunc')} />
+							<SelectCom key="systemFunc" datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={this.handleChange.bind(this, 'systemFunc')} />
 						</div>
 					</div>
 				</div>
@@ -307,13 +327,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Bet Type/Feature</label>
-							<SelectCom datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={this.handleChange.bind(this, 'betTypeFeature')} />
+							<SelectCom key="betTypeFeature" datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={this.handleChange.bind(this, 'betTypeFeature')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Device</label>
-							<SelectCom datas={selectdata.device} selectedVal={this.state.device} handleVal={this.handleChange.bind(this, 'device')} />
+							<SelectCom key="device" datas={selectdata.device} selectedVal={this.state.device} handleVal={this.handleChange.bind(this, 'device')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
