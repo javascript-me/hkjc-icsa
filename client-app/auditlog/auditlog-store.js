@@ -13,11 +13,6 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 
     searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 
-		var profile = LoginService.getProfile()
-
-		console.log("profile: " + JSON.stringify(profile))
-		console.log("username: " + profile.username)
-
 		if (sortingObject) {
 			this._sortingObject = sortingObject
 		}
