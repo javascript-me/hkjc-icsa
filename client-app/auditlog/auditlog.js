@@ -278,7 +278,7 @@ export default React.createClass({
 		                    </div>
 		}
 		else{
-			activeContent = <div className="temporary-layout"><div className='nodata'>Coming Soon</div></div>
+			activeContent = <div className='nopage'>Coming Soon</div>
 		}
 
 		return (
