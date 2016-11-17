@@ -104,12 +104,13 @@
 		.filter-block-container {
 			align-items: center;
 			display: flex;
-			flex-wrap: wrap;
+			flex: 1 0 0;
 			flex-direction: row;
+			flex-wrap: nowrap;
 			height: 40px;
 			justify-content: flex-start;
 			margin-left: 6px;
-			width: calc(~"100% - 480px");
+			overflow: hidden;
 
 			.filter-block {
 				background-color: rgba(124, 140, 175, 1);
