@@ -230,7 +230,7 @@ export default React.createClass({
                         </p>
                         <h1>Audit Trail</h1>
                     </div>
-                    <div className='row page-content'>
+                    <div className='row page-content search-table-gap'>
                         <div className='col-md-6'>
                             <Calendar className='hidden' />
                         </div>
@@ -261,14 +261,13 @@ export default React.createClass({
                     <div className='table-container '>
                       {this.state.betType === 'football' ? <TabularData /> : <div className='nodata'>Coming Soon</div>}
                     </div>
-                    <Paging />
                     {/* START FOOTER EXPORT */}
-                    <div className='col-md-12'>
-                        <div className='pull-right'>
-                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
-                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
-                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
-                                <ExportPopup onChange={this.onChangeFormat} />
+                    <div className='col-md-12 vertical-gap'>                        
+                        <Paging/>                        
+                        <div className='col-md-4'>
+                            <button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
+                             <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+                            <ExportPopup onChange={this.onChangeFormat} />
                             </Popup>
                         </div>
                     </div>
