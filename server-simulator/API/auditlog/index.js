@@ -83,7 +83,7 @@ router.get('/download/:file', (req, res) => {
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json
-	const filters = !!json ? JSON.parse(json) : {}
+	const filters = !!json ? JSON.parse(decodeURIComponent(json)) : {}
 	let data = []
 
 	if (filters.username == "allgood") {
@@ -91,8 +91,7 @@ router.get('/export', (req, res) => {
 	} else {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
-
-	console.log(filters)
+	
 	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
 						filters.typeValue,
@@ -101,7 +100,7 @@ router.get('/export', (req, res) => {
 						filters.betTypeFeature,
 						filters.device
 					)
-	console.log(result)
+	
 	let status = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
 	
