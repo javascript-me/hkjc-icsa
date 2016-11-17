@@ -44,7 +44,8 @@ export default React.createClass({
 			originDateRange: {},
 			selectedFilters: [],
 			isShowingMoreFilter: false,
-			isClickInMoreFilters: false
+			isClickInMoreFilters: false,
+			auditlogs: []
 		}
 	},
 	componentDidMount: function () {
@@ -53,6 +54,7 @@ export default React.createClass({
 
         // Get Table Data
         AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
+		AuditlogStore.addChangeListener(this.onChange.bind(this));
 
 		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
 			this.searchAuditlog()
@@ -64,6 +66,7 @@ export default React.createClass({
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(token)
 
+		AuditlogStore.removeChangeListener(this.onChange.bind(this));
 		document.removeEventListener('click', this.pageClick, false)
 	},
 
@@ -192,6 +195,12 @@ export default React.createClass({
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
 	},
+	onChange () {
+		this.setState({
+			auditlogs: AuditlogStore.auditlogs
+		})
+	},
+
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 				'hover-enabled': !this.state.isShowingMoreFilter
@@ -258,20 +267,28 @@ export default React.createClass({
                         </div>
                     </div>
                     {/* Search Result */}
-                    <div className='table-container '>
-                      {this.state.betType === 'football' ? <TabularData /> : <div className='nodata'>Coming Soon</div>}
-                    </div>
-                    <Paging />
-                    {/* START FOOTER EXPORT */}
-                    <div className='col-md-12'>
-                        <div className='pull-right'>
-                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
-                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
-                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
-                                <ExportPopup onChange={this.onChangeFormat} />
-                            </Popup>
-                        </div>
-                    </div>
+					{this.state.betType === 'football' ?
+						<div>
+		                    <div className='table-container '>
+		                      <TabularData />
+		                    </div>
+		                    <Paging />
+		                    {/* START FOOTER EXPORT */}
+							{this.state.auditlogs.length === 0 ?
+								'' :
+			                    <div className='col-md-12'>
+			                        <div className='pull-right'>
+			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
+			                            <button className='btn btn-primary' onClick={this.mockLoadData}>Mock Load Data</button>
+			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+			                                <ExportPopup onChange={this.onChangeFormat} />
+			                            </Popup>
+			                        </div>
+			                    </div>
+							}
+						</div> :
+						<div className='nodata'>Coming Soon</div>
+					}
                     {/* END FOOTER EXPORT */}
               </div>
             )
