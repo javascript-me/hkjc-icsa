@@ -180,7 +180,7 @@ export default React.createClass({
                 {
                     this.state.headers.map(
                         (header, i) => {
-	return <th className={header.fieldName} ><span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick} />{header.label}</th>
+	return <th><span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick} />{header.label}</th>
 }
                     )
                 }
