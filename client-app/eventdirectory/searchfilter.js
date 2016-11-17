@@ -19,7 +19,7 @@ export default React.createClass({
 		return (
 			<div rel='root' className='ed-filter'>
 				<div id='ed-search' className='form-group'>
-					<input ref='search' type='text' className='form-control' onKeyUp={this.handlerKeyUp} placeholder='Search' />
+					<input id='ed-filter-keyword' ref='search' type='text' className='form-control' onKeyUp={this.handlerKeyUp} placeholder='Search' />
 				</div>
 
 				<div id='ed-advanced' className='form-group'>
