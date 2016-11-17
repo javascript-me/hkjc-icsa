@@ -118,32 +118,59 @@ function doSorting(auditlogs, fieldName, order) {
     return auditlogs
 }
 
-function doFilter(auditlogs, key_word) {
-    if (key_word == "") return auditlogs
+function doFilter(auditlogs, key_word, typeValue, userRole, systemFunc, betTypeFeature, device) {
 
-    if (key_word === "World Cup" || key_word === "EPC" || key_word === "VCL" || key_word === "SFL" || key_word === "PFL" || key_word === "EPI") {
-        return auditlogs.filter(function (al) {
-            return (al.event_name === key_word  )
+    console.log(key_word)
+    typeValue = !!typeValue ?  typeValue : "All" 
+    userRole = !!userRole ?  userRole : "All" 
+    systemFunc = !!systemFunc ? systemFunc : "All" 
+    betTypeFeature = !!betTypeFeature ? betTypeFeature : "All" 
+    device = !!device ? device : "All" 
+    key_word = !!key_word ? key_word : ""
+
+    let result = auditlogs
+
+    result = !!key_word ? auditlogs.filter(function (al) {
+        const eventName = !!al.event_name ? al.event_name.toLowerCase() : ""
+        const userName = !!al.user_name ? al.user_name.toLowerCase() : ""
+        const userRole = !!al.user_role ? al.user_role.toLowerCase() : ""
+
+        return  eventName === key_word.toLowerCase() || 
+                userName === key_word.toLowerCase() ||
+                userRole === key_word.toLowerCase() 
+    }) : result;
+    
+    if (typeValue != "All") {
+        result =  result.filter(function (al) {
+            return (al.Type == typeValue)
         });
     }
 
-    if (key_word === "Candy Date" || key_word === "Jagger Smith" || key_word === "Jerry Li" || key_word === "Karthik Blay") {
-        return auditlogs.filter(function (al) {
-            return (al.user_name === key_word )
+    if (userRole != "All") {
+        result =  result.filter(function (al) {
+            return (al.user_role == userRole)
         });
     }
 
-    if (key_word === "BOCC Supervisor" || key_word === "Trading Manager" || key_word === "Trading Support Analyst" || key_word === "Finance Controller"
-        || key_word === "Content & Planning Manager"
-        || key_word === "Customer Care Representative"
-        || key_word === "Director of Group Treasury"
-        || key_word === "System Administrator") {
-        return auditlogs.filter(function (al) {
-            return (al.user_role === key_word )
+    if (systemFunc != "All") {
+        result =  result.filter(function (al) {
+            return (al.function_module == systemFunc)
         });
     }
 
-    return [];
+    if (betTypeFeature != "All") {
+        result =  result.filter(function (al) {
+            return (al.bet_type == betTypeFeature)
+        });
+    }
+
+    if (device != "All") {
+        result =  result.filter(function (al) {
+            return (al.device == device )
+        });
+    }
+    
+    return result;
 }
 
 export default {
