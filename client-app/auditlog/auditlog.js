@@ -44,7 +44,8 @@ export default React.createClass({
 			originDateRange: {},
 			selectedFilters: [],
 			isShowingMoreFilter: false,
-			isClickInMoreFilters: false
+			isClickInMoreFilters: false,
+			auditlogs: []
 		}
 	},
 	componentDidMount: function () {
@@ -53,6 +54,7 @@ export default React.createClass({
 
         // Get Table Data
         AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
+		AuditlogStore.addChangeListener(this.onChange);
 
 		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
 			this.searchAuditlog()
@@ -64,6 +66,7 @@ export default React.createClass({
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(token)
 
+		AuditlogStore.removeChangeListener(this.onChange.bind(this));
 		document.removeEventListener('click', this.pageClick, false)
 	},
 
@@ -192,9 +195,14 @@ export default React.createClass({
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
 	},
-	tableLoaded(data) {
-      this.setState({ hasData: true })
-    },
+    onChange () {
+		const hasData = AuditlogStore.auditlogs.length > 0
+		this.setState({
+			auditlogs: AuditlogStore.auditlogs, hasData: hasData
+		})
+	},
+
+
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 				'hover-enabled': !this.state.isShowingMoreFilter
@@ -224,7 +232,31 @@ export default React.createClass({
 
 			moreFilterContianerClassName = ClassNames('more-filter-popup', {
 				'active': this.state.isShowingMoreFilter
-			})
+			}),
+			activeContent;
+
+		if(this.state.betType === 'football'){
+			activeContent = <div>
+		                    	<div className='table-container '>
+			                      <TabularData />
+			                    </div>
+			                    <Paging />
+			                    {/* START FOOTER EXPORT */}
+			                    <div className='col-md-12'>
+			                        <div className='pull-right'>
+			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
+			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+			                                <ExportPopup onChange={this.onChangeFormat} />
+			                            </Popup>
+			                        </div>
+			                    </div>
+			                    {/* END FOOTER EXPORT */}
+		                    </div>
+		}	
+		else{
+			activeContent = <div className='nodata'>Coming Soon</div>
+		}		
+
 		return (
               <div className='auditlog'>
                     <div className='row page-header'>
@@ -260,21 +292,9 @@ export default React.createClass({
                           </div>
                         </div>
                     </div>
-                    {/* Search Result */}
-                    <div className='table-container col-md-12'>
-                      {this.state.betType === 'football' ? <TabularData onChange={this.tableLoaded} /> : <div className='nodata'>Coming Soon</div>}
-                    </div>
-                    <Paging />
-                    {/* START FOOTER EXPORT */}
-                    <div className='col-md-12'>
-                        <div className='pull-right'>
-                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
-                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
-                                <ExportPopup onChange={this.onChangeFormat} />
-                            </Popup>
-                        </div>
-                    </div>
-                    {/* END FOOTER EXPORT */}
+                    {/* Active Content */}
+                    	{ activeContent }
+                	{/* End Active Content */}
               </div>
             )
 	}

@@ -53,11 +53,11 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		AuditlogStore.addChangeListener(this.onChange.bind(this))
+		AuditlogStore.addChangeListener(this.onChange)
 	},
 
 	componentWillUnmount () {
-		AuditlogStore.removeChangeListener(this.onChange.bind(this))
+		AuditlogStore.removeChangeListener(this.onChange)
 	},
 
 	onChange () {
