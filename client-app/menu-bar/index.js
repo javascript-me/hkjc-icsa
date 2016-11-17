@@ -119,7 +119,7 @@ const SecondLevelMenu = (props) => {
 	return (
 		<div className='second-level'>
 			<div className='second-level-container'>
-				{dataList && dataList.map((item, idx) => (<div key={idx} className='second-level-item'>
+				{dataList && dataList.map((item, idx) => (<div key={idx} className={classnames('second-level-item',{noSub:!item.subMenu})}>
 					<div className='second-level-text'>
 						<Link to={item.link}>{item.text}</Link>
 						<ThirdLevelOnly data={item.subMenu} />
