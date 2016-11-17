@@ -6,7 +6,7 @@ import LoginService from './login-service'
 const doSubmit = async (username, password) => {
 	const profile = await LoginService.doLogin(username, password)
 	if (profile) {
-		hashHistory.push('/dashboard')
+		hashHistory.push('/page')
 	}
 }
 

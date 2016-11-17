@@ -4,13 +4,17 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 
 import cache from '../server-cache'
+import eventdirectory from './API/eventdirectory'
 import users from './API/users'
 import auditlog from './API/auditlog'
 import APIconfig from './API/config'
 import config from './config'
+import clock from './API/clock'
 
 const server = express.Router()
+server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
+server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
 server.use('/config/', APIconfig)
 

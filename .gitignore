@@ -13,5 +13,10 @@ build.properties
 /dist/
 
 
+# vscode setting
+/.vscode/
+
+
 # Typings From Visual Studio #
 /typings/
+
