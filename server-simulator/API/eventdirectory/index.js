@@ -24,6 +24,8 @@ router.post('/', (req, res) => {
 
 	if (keyword === '') {
 		result.result = eventdirectory.ALL
+	} else 	if (keyword === 'Premier') {
+		result.result = eventdirectory.Premier
 	} else 	if (keyword === 'ARS') {
 		result.result = eventdirectory.ARS
 	}

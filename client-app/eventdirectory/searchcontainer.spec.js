@@ -1,11 +1,12 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 import SearchContainer from './searchcontainer'
 
 describe('<SearchContainer />', () => {
 	it('renders a SearchContainer div', () => {
-		const searchContainer = shallow(<SearchContainer type={0} />)
-		expect(searchContainer.find('div.ed-container')).to.have.length(1)
+		const wrapper = mount(<SearchContainer type={0} />)
+		wrapper.find('#ed-filter-keyword').simulate('keyUp', {keyCode: 13});
+		expect(wrapper.find('div.ed-container')).to.have.length(1)
 	})
 })

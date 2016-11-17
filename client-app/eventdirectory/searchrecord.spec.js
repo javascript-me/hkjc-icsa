@@ -11,7 +11,7 @@ describe('<SearchRecord />', () => {
 			"t2": "ASV"
 		}
 
-		const searchRecord = shallow(<SearchRecord record={record} />)
-		expect(searchRecord.find('div.ed-record')).to.have.length(1)
+		const wrapper = shallow(<SearchRecord record={record} />)
+		expect(wrapper.find('div.ed-record')).to.have.length(1)
 	})
 })
