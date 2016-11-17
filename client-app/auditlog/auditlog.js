@@ -276,10 +276,10 @@ export default React.createClass({
                             </div>
 			                    {/* END FOOTER EXPORT */}
 		                    </div>
-		}	
+		}
 		else{
-			activeContent = <div className='nodata'>Coming Soon</div>
-		}		
+			activeContent = <div className="temporary-layout"><div className='nodata'>Coming Soon</div></div>
+		}
 
 		return (
               <div className='auditlog'>
