@@ -176,16 +176,17 @@ export default React.createClass({
 	render () {
 		return <table className='table-striped table auditlog-table'>
             <thead className='table-header'>
-            <tr>
-                {
-                    this.state.headers.map(
-                        (header, i) => {
-	return <th><span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick} />{header.label}</th>
-}
-                    )
-                }
-
-            </tr>
+			<tr>
+				{
+					this.state.headers.map(
+						(header, i) => {
+							return <th>
+								<span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span>
+							</th>
+						}
+					)
+				}
+			</tr>
             </thead>
             <tbody>
                 {this.renderRows()}
