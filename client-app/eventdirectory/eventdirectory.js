@@ -9,7 +9,7 @@ export default React.createClass({
 		slimMode: PropTypes.bool
 	},
 	getInitialState () {
-		return { 
+		return {
 			showContent: false
 		}
 	},
