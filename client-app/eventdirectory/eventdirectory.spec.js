@@ -8,7 +8,7 @@ jsdom()
 describe('<EventDirectory />', () => {
 	it('renders a EventDirectory div', () => {
 		const wrapper = mount(<EventDirectory />)
-		wrapper.find('#football-tab').simulate('click');
 		expect(wrapper.find('div.row-eventdirectory')).to.have.length(1)
+		wrapper.node.handleTabClick({target: wrapper.find('#football-tab')})
 	})
 })
