@@ -11,7 +11,7 @@
 	background: @hkjcWhite;
 	width: 240px;
 	text-align: left;
-	
+
 	&.slim {
 		.nav-tabs li a {
 			height: 46px;
@@ -49,6 +49,11 @@
 
 				a#horseracing-tab {
 					background-color: @horseracingLevel1;
+				}
+
+				a:hover,
+				a:focus {
+					border: none;
 				}
 			}
 		}
@@ -118,14 +123,18 @@
 			}
 
 			.rc-collapse-item {
-				.arrow {
-					background-image: url(eventdirectory/football-plus.svg);
+				> .rc-collapse-header {
+					> .arrow {
+						background-image: url(eventdirectory/football-plus.svg);
+					}
 				}
 			}
 
 			.rc-collapse-item-active {
-				.arrow {
-					background-image: url(eventdirectory/football-minus.svg);
+				> .rc-collapse-header {
+					> .arrow {
+						background-image: url(eventdirectory/football-minus.svg);
+					}
 				}
 			}
 		}
@@ -142,14 +151,18 @@
 			}
 
 			.rc-collapse-item {
-				.arrow {
-					background-image: url(eventdirectory/basketball-plus.svg);
+				> .rc-collapse-header {
+					> .arrow {
+						background-image: url(eventdirectory/basketball-plus.svg);
+					}
 				}
 			}
 
 			.rc-collapse-item-active {
-				.arrow {
-					background-image: url(eventdirectory/basketball-minus.svg);
+				> .rc-collapse-header {
+					> .arrow {
+						background-image: url(eventdirectory/basketball-minus.svg);
+					}
 				}
 			}
 		}
@@ -166,14 +179,18 @@
 			}
 
 			.rc-collapse-item {
-				.arrow {
-					background-image: url(eventdirectory/horseracing-plus.svg);
+				> .rc-collapse-header {
+					> .arrow {
+						background-image: url(eventdirectory/horseracing-plus.svg);
+					}
 				}
 			}
 
 			.rc-collapse-item-active {
-				.arrow {
-					background-image: url(eventdirectory/horseracing-minus.svg);
+				> .rc-collapse-header {
+					> .arrow {
+						background-image: url(eventdirectory/horseracing-minus.svg);
+					}
 				}
 			}
 		}

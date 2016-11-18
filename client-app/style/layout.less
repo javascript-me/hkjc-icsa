@@ -29,6 +29,19 @@ body {
 	#root {
 		width: inherit;
 		height: inherit;
+		overflow-x: hidden;
+	}
+}
+
+input {
+	&:-ms-input-placeholder {
+		color: #9B9B9B !important;
+	}
+
+	&::-ms-clear {
+		display: none !important;
+		width: 0;
+		height: 0;
 	}
 }
 
@@ -41,7 +54,7 @@ body {
 }
 
 .page-content {
-	padding: 30px 45px;
+	padding: 30px 30px 0;
 }
 
 .hidden {

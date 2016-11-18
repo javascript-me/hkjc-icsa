@@ -29,6 +29,7 @@ export default React.createClass({
 	},
 	onSearch (searchParam) {
 		searchParam.type = this.props.type
+		this.setState({result: null})
 		this.getResult(searchParam)
 	},
 	render () {
@@ -48,7 +49,6 @@ export default React.createClass({
 	async getResult (searchParam) {
 		const result = await EventDirectoryService.getEventDirectoryResult(searchParam)
 		if (result) {
-			console.log(result)
 			this.setState({result: result.result})
 		}
 	}

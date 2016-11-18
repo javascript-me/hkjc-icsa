@@ -25,6 +25,19 @@
 			}
 		}
 	},
+	"other": {
+		"password": "other",
+		"status": 200,
+		"profile": {
+			"username": "other",
+			"fullname": "All Good",
+			"authorizations": {
+				"login.*": "*",
+				"dashboard.form1.*": "read",
+				"dashboard.form2.fieldX": "read|write|audit"
+			}
+		}
+	},
 	"goodbut": {
 		"password": "^maybe$",
 		"status": 423

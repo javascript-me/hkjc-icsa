@@ -11,14 +11,12 @@ import APIconfig from './API/config'
 import config from './config'
 import clock from './API/clock'
 
-
 const server = express.Router()
 server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
 server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
 server.use('/config/', APIconfig)
-
 
 const app = express()
 app.use(
@@ -29,22 +27,21 @@ app.use(
 	})
 )
 // Add headers
-app.use(function (req, res, next) {
-
+app.use((req, res, next) => {
     // Client URL
-    res.setHeader('Access-Control-Allow-Origin', config.CLIENT_URL);
+	res.setHeader('Access-Control-Allow-Origin', config.CLIENT_URL)
 
     // Request methods to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
 
     // Request headers to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
 
     // Set to true if you need the website to include cookies in the requests sent
-    res.setHeader('Access-Control-Allow-Credentials', true);
+	res.setHeader('Access-Control-Allow-Credentials', true)
 
     // Pass to next layer of middleware
-    next();
+	next()
 })
 
 app.use('/', express.static('./dist/thin'))

@@ -12,7 +12,6 @@
 	.menu-container.slimMode {
 		.menu-box {
 			display: block;
-			padding-left: 15px;
 		}
 
 		.menu-unit {
@@ -104,6 +103,7 @@
 		display: flex;
 		align-items: center;
 		background-color: #0C2963;
+		padding-left: 15px;
 	}
 
 	.level-1-unit {
@@ -170,7 +170,9 @@
 		}
 
 		&:hover .second-level {
-			display: block;
+			opacity: 1;
+			visibility: visible;
+			overflow: visible;
 		}
 
 		.icon-N {
@@ -190,11 +192,14 @@
 		background-color: #516B9F;
 		position: absolute;
 		width: 100vw;
-		display: none;
+		opacity: 0;
+		visibility: hidden;
+		overflow: hidden;
 		top: 100%;
 		left: 0;
 		z-index: 100;
 		font-family: 'Roboto-Medium';
+		transition: all 0.5s ease 0.15s;
 
 		.item:hover {
 			.third-level {

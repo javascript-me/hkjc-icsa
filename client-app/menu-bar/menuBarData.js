@@ -2,9 +2,8 @@ const menuList1 = [
 	{
 		iconSrc: 'Icon - Dashboard.svg',
 		iconSrc_A: 'Icon - DashboardW.svg',
-		textL1: 'Dashboard',
+		textL1: 'Home',
 		link: '/page'
-
 	},
 	{
 		iconSrc: 'Icon - Event Management White.svg',
@@ -16,159 +15,239 @@ const menuList1 = [
 				text: 'Data & Feed Configuration',
 				subMenu: [
 					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'External Odds Feed Configurations'
 					},
 					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'In-Play Feed Configurations'
 					},
 					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
+						text: 'Data Feed Configurations'
 					}
 				]
 			},
-
 			{
-				text: 'Product Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-
+				text: 'Odds Parameters'
+			},
+			{
+				text: 'Product Parameters'
 			},
 			{
 				text: 'Risk Parameters',
 				subMenu: [
 					{
+						text: 'Exposure Monitoring Configurations',
+						subMenu: [
+							{
+								text: 'MNL'
+							},
+							{
+								text: 'All Up Exposure'
+							},
+							{
+								text: 'Min. Value Per Bet Line'
+							},
+							{
+								text: 'Event Exposure(Match)'
+							},
+							{
+								text: 'Exposure(Tournament)'
+							}
+						]
+					},
+					{
+						text: 'In-Play Bet Delay Configurations',
+						subMenu: [
+							{
+								text: 'Event Lv 1'
+							},
+							{
+								text: 'Bet Type'
+							},
+							{
+								text: 'Customer Category'
+							},
+							{
+								text: 'Channel / Devices'
+							}
+						]
+					},
+					{
+						text: 'Bet Validation Configurations',
+						subMenu: [
+							{
+								text: 'Bet Cancellation'
+							},
+							{
+								text: 'Bet Acceptance / Intercept'
+							},
+							{
+								text: 'Bet Ticket Display'
+							},
+							{
+								text: 'Customer Analytics Parameters and Value Score'
+							}
+						]
+					},
+					{
+						text: 'Large Bet / Investment Monitoring Configurations',
+						subMenu: [
+							{
+								text: 'One-sided-book Live Feed'
+							},
+							{
+								text: 'Large Bet Log Update & General Alert'
+							},
+							{
+								text: 'Large Bet Log Alert Per Customer Category'
+							},
+							{
+								text: 'Individual Setting'
+							}
+						]
+					},
+					{
+						text: 'Odds Target Margin Configurations',
+						subMenu: [
+							{
+								text: 'Master Setting'
+							},
+							{
+								text: 'Individual Setting'
+							}
+						]
+					}
+				]
+			},
+			{
+				text: 'SDA Governance',
+				subMenu: [
+					{
+						text: 'Customer Category Maintenance'
+					},
+					{
+						text: 'Exposure Limit',
+						subMenu: [
+							{
+								text: 'MNL'
+							},
+							{
+								text: 'Approval Threshold Alert'
+							},
+							{
+								text: 'Match'
+							},
+							{
+								text: 'Tournament'
+							},
+							{
+								text: 'All-Up'
+							}
+						]
+					},
+					{
+						text: 'Betting Event Validation',
+						subMenu: [
+							{
+								text: 'Event Lv 1(Tournament)'
+							},
+							{
+								text: 'Team'
+							},
+							{
+								text: 'Venue'
+							},
+							{
+								text: 'Odds Margin'
+							}
+						]
+					}
+				]
+			},
+			{
+				text: 'System Control',
+				subMenu: [
+					{
 						text: 'Bet Control Configurations',
 						subMenu: [
-
 							{
-								text: 'Unit Bet & Minimum Dividend Min'
+								text: 'Unit Bet & Minimum Dividend'
 							},
 							{
-								text: 'Value For Ticket/Bet Line Total Min'
+								text: 'Min. Value For Ticket/Bet Line Total'
 							},
 							{
-								text: 'Value Per Bet Line'
+								text: 'Min. Value Per Bet Line'
 							},
 							{
 								text: 'Event Information Monitoring Config'
 							},
 							{
-								text: 'xxx xxxx Monitoring Config'
+								text: 'In-Play Trading Monitoring Config'
 							}
 						]
 					},
 					{
 						text: 'Message Configurations',
 						subMenu: [
-
 							{
-								text: 'Unit Bet & Minimum Dividend Min'
+								text: 'Message Category & Assignment'
 							},
 							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
+								text: 'Distribution List'
 							}
 						]
 					},
 					{
 						text: 'Misc',
 						subMenu: [
-
 							{
-								text: 'Unit Bet & Minimum Dividend Min'
+								text: 'Miscellaneous'
 							},
 							{
-								text: 'Value For Ticket/Bet Line Total Min'
+								text: 'Pick List Maintenance'
 							},
 							{
-								text: 'Value Per Bet Line'
+								text: 'Odds Relating Config'
 							},
 							{
-								text: 'Event Information Monitoring Config'
+								text: 'Trading Analytic Config'
 							},
 							{
-								text: 'xxx xxxx Monitoring Config'
+								text: 'Result & Payout Config'
+							},
+							{
+								text: 'Start / Stop Sell Control Monitoring Config'
+							},
+							{
+								text: 'Task & Approval Workflow Config'
+							},
+							{
+								text: 'User Account, Role & Privilege Configurations'
 							}
 						]
 					},
 					{
-						text: 'Information Retenation Configuration'
+						text: 'Information Retenation Configuration',
+						subMenu: [
+							{
+								text: 'Event Information'
+							},
+							{
+								text: 'Live Feed'
+							},
+							{
+								text: 'Result'
+							},
+							{
+								text: 'Market Odds'
+							}
+						]
 					}
 				]
 			},
-			{ text: 'SDA Governance' },
-			{ text: 'System Control' },
-			{ text: 'Others' }
+			{
+				text: 'Others'
+			}
 
 		]
 
@@ -178,175 +257,7 @@ const menuList1 = [
 		iconSrc_A: 'Icon - Compile MonitoringW.svg',
 		textL1: 'Odds',
 		textL2: 'Complitation',
-		subMenu: [
-			{
-				text: 'Data & Feed Configuration',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{
-				text: 'Odds Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-			},
-			{
-				text: 'Product Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-
-			},
-			{
-				text: 'Risk Parameters',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{ text: 'SDA Governance' },
-			{ text: 'System Control' },
-			{ text: 'Others' }
-
-		]
+		
 
 	},
 	{
@@ -354,364 +265,26 @@ const menuList1 = [
 		iconSrc_A: 'Icon - Pre-Event MonitoringW.svg',
 		textL1: 'Pre-Event',
 		textL2: 'Monitoring',
-		subMenu: [
-			{
-				text: 'Data & Feed Configuration',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{
-				text: 'Odds Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-			},
-			{
-				text: 'Product Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-
-			},
-			{
-				text: 'Risk Parameters',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{ text: 'SDA Governance' },
-			{ text: 'System Control' },
-			{ text: 'Others' }
-
-		]
-
 	},
 	{
 		iconSrc: 'Icon - In-Play Monitoring.svg',
 		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
 		textL1: 'In-Play',
 		textL2: 'Monitoring',
-		subMenu: [
-			{
-				text: 'Data & Feed Configuration',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{
-				text: 'Odds Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-			},
-			{
-				text: 'Product Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-
-			},
-			{
-				text: 'Risk Parameters',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{ text: 'SDA Governance' },
-			{ text: 'System Control' },
-			{ text: 'Others' }
-
-		]
+		
 
 	},
 	{
-		iconSrc: 'Icon - In-Play Monitoring.svg',
-		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
-		textL1: 'Result&',
+		iconSrc: 'Icon - Result & Settlement.svg',
+		iconSrc_A: 'Icon - Result & SettlementW.svg',
+		textL1: 'Result &',
 		textL2: 'Settlement'
 
 	},
 	{
 		iconSrc: 'Icon - Data Management.svg',
 		iconSrc_A: 'Icon - Data ManagementW.svg',
-		textL1: 'Data&',
+		textL1: 'Data',
 		textL2: 'Management',
 		subMenu: [
 			{
@@ -721,7 +294,7 @@ const menuList1 = [
 				text: 'Name Management',
 				subMenu: [
 					{
-						text: 'Complitation'
+						text: 'Competition'
 					},
 					{
 						text: 'Team'
@@ -738,10 +311,21 @@ const menuList1 = [
 				text: 'Data Feed Alignment Summary',
 				subMenu: [
 					{
-						text: 'Complitation'
+						text: 'Competition'
 					},
 					{
-						text: 'Math'
+						text: 'Match'
+					}
+				]
+			},
+			{
+				text: 'Unmap Data Monitor',
+				subMenu: [
+					{
+						text: 'Competition'
+					},
+					{
+						text: 'Match'
 					}
 				]
 			},
@@ -758,7 +342,7 @@ const menuList1 = [
 		textL2: '& Reporting',
 		subMenu: [
 			{
-				text: 'Post-event Reports'
+				text: 'Post-Event Reports'
 			},
 			{
 				text: 'Advance Analysis'
@@ -769,9 +353,56 @@ const menuList1 = [
 	{
 		iconSrc: 'Icon - Tools & Administration.svg',
 		iconSrc_A: 'Icon - Tools & AdministrationW.svg',
-		textL1: 'Global Tools&',
+		textL1: 'Global Tools &',
 		textL2: 'Administration',
 		subMenu: [
+			{
+				text: 'Navigation',
+				subMenu: [
+					{
+						text: 'Event Directory'
+					}
+				]
+			},
+			{
+				text: 'Communication',
+				subMenu: [
+					{
+						text: 'Noticeboard'
+					},
+					{
+						text: 'Noticeboard Monitor'
+					},
+					{
+						text: 'Broadcast Message'
+					},
+					{
+						text: 'Broadcast Message History'
+					},
+					{
+						text: 'Critical Information Dissemination'
+					}
+				]
+			},
+			{
+				text: 'Action(Task)',
+				subMenu: [
+					{
+						text: 'Action'
+					},
+					{
+						text: 'Action Monitor'
+					}
+				]
+			},
+			{
+				text: 'Contingency Control',
+				subMenu: [
+					{
+						text: 'Contingency Stop Sell'
+					}
+				]
+			},
 			{
 				text: 'Audit Trail',
 				link: '/page/audit'
@@ -786,10 +417,7 @@ const menuList1 = [
 						text: 'User Role & Permission'
 					}
 				]
-			},{
-				text: 'other',
-				link: '/page/audit'
-			},
+			}
 		]
 
 	},
@@ -797,175 +425,70 @@ const menuList1 = [
 		iconSrc: 'Icon - Global Configuration.svg',
 		iconSrc_A: 'Icon - Global ConfigurationW.svg',
 		textL1: 'Global',
-		textL2: 'Configuration',
+		textL2: 'Configurations',
 		subMenu: [
+			{
+				text: 'SDA Governance',
+				subMenu: [
+					{
+						text: 'Customer Category Maintenance'
+					},
+					{
+						text: 'Exposure Limits'
+					},
+					{
+						text: 'Betting Event Validation'
+					},
+					{
+						text: 'Odds Margin'
+					}
+				]
+			},
 			{
 				text: 'Data & Feed Configuration',
 				subMenu: [
 					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'Data Feed Configurations'
 					},
 					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'In-Play Feed Configurations '
 					},
 					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
+						text: 'External Odds Feed Configurations'
 					}
 				]
 			},
 			{
-				text: 'Odds Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-			},
-			{
-				text: 'Product Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-
-			},
-			{
-				text: 'Risk Parameters',
+				text: 'System Controls Configurations',
 				subMenu: [
 					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'Communication'
 					},
 					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'Task & Approval Workflow'
 					},
 					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
+						text: 'Information Retention'
 					}
 				]
 			},
-			{ text: 'SDA Governance' },
-			{ text: 'System Control' },
-			{ text: 'Others' }
-
+			{
+				text: 'Odds Parameters'
+			},
+			{
+				text: 'Product Parameters'	
+			},
+			{
+				text: 'Risk Parameters'
+			},
+			{
+				text: 'Others',
+				subMenu: [
+					{
+						text: 'Sports Game Configurations'
+					}
+				]
+			}
 		]
 
 	}
@@ -975,9 +498,8 @@ const menuList2 = [
 	{
 		iconSrc: 'Icon - Dashboard.svg',
 		iconSrc_A: 'Icon - DashboardW.svg',
-		textL1: 'Dashboard',
+		textL1: 'Home',
 		link: '/page'
-
 	},
 	{
 		iconSrc: 'Icon - Event Management White.svg',
@@ -989,159 +511,239 @@ const menuList2 = [
 				text: 'Data & Feed Configuration',
 				subMenu: [
 					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'External Odds Feed Configurations'
 					},
 					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
+						text: 'In-Play Feed Configurations'
 					},
 					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
+						text: 'Data Feed Configurations'
 					}
 				]
 			},
-
 			{
-				text: 'Product Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-
+				text: 'Odds Parameters'
+			},
+			{
+				text: 'Product Parameters'
 			},
 			{
 				text: 'Risk Parameters',
 				subMenu: [
 					{
+						text: 'Exposure Monitoring Configurations',
+						subMenu: [
+							{
+								text: 'MNL'
+							},
+							{
+								text: 'All Up Exposure'
+							},
+							{
+								text: 'Min. Value Per Bet Line'
+							},
+							{
+								text: 'Event Exposure(Match)'
+							},
+							{
+								text: 'Exposure(Tournament)'
+							}
+						]
+					},
+					{
+						text: 'In-Play Bet Delay Configurations',
+						subMenu: [
+							{
+								text: 'Event Lv 1'
+							},
+							{
+								text: 'Bet Type'
+							},
+							{
+								text: 'Customer Category'
+							},
+							{
+								text: 'Channel / Devices'
+							}
+						]
+					},
+					{
+						text: 'Bet Validation Configurations',
+						subMenu: [
+							{
+								text: 'Bet Cancellation'
+							},
+							{
+								text: 'Bet Acceptance / Intercept'
+							},
+							{
+								text: 'Bet Ticket Display'
+							},
+							{
+								text: 'Customer Analytics Parameters and Value Score'
+							}
+						]
+					},
+					{
+						text: 'Large Bet / Investment Monitoring Configurations',
+						subMenu: [
+							{
+								text: 'One-sided-book Live Feed'
+							},
+							{
+								text: 'Large Bet Log Update & General Alert'
+							},
+							{
+								text: 'Large Bet Log Alert Per Customer Category'
+							},
+							{
+								text: 'Individual Setting'
+							}
+						]
+					},
+					{
+						text: 'Odds Target Margin Configurations',
+						subMenu: [
+							{
+								text: 'Master Setting'
+							},
+							{
+								text: 'Individual Setting'
+							}
+						]
+					}
+				]
+			},
+			{
+				text: 'SDA Governance',
+				subMenu: [
+					{
+						text: 'Customer Category Maintenance'
+					},
+					{
+						text: 'Exposure Limit',
+						subMenu: [
+							{
+								text: 'MNL'
+							},
+							{
+								text: 'Approval Threshold Alert'
+							},
+							{
+								text: 'Match'
+							},
+							{
+								text: 'Tournament'
+							},
+							{
+								text: 'All-Up'
+							}
+						]
+					},
+					{
+						text: 'Betting Event Validation',
+						subMenu: [
+							{
+								text: 'Event Lv 1(Tournament)'
+							},
+							{
+								text: 'Team'
+							},
+							{
+								text: 'Venue'
+							},
+							{
+								text: 'Odds Margin'
+							}
+						]
+					}
+				]
+			},
+			{
+				text: 'System Control',
+				subMenu: [
+					{
 						text: 'Bet Control Configurations',
 						subMenu: [
-
 							{
-								text: 'Unit Bet & Minimum Dividend Min'
+								text: 'Unit Bet & Minimum Dividend'
 							},
 							{
-								text: 'Value For Ticket/Bet Line Total Min'
+								text: 'Min. Value For Ticket/Bet Line Total'
 							},
 							{
-								text: 'Value Per Bet Line'
+								text: 'Min. Value Per Bet Line'
 							},
 							{
 								text: 'Event Information Monitoring Config'
 							},
 							{
-								text: 'xxx xxxx Monitoring Config'
+								text: 'In-Play Trading Monitoring Config'
 							}
 						]
 					},
 					{
 						text: 'Message Configurations',
 						subMenu: [
-
 							{
-								text: 'Unit Bet & Minimum Dividend Min'
+								text: 'Message Category & Assignment'
 							},
 							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
+								text: 'Distribution List'
 							}
 						]
 					},
 					{
 						text: 'Misc',
 						subMenu: [
-
 							{
-								text: 'Unit Bet & Minimum Dividend Min'
+								text: 'Miscellaneous'
 							},
 							{
-								text: 'Value For Ticket/Bet Line Total Min'
+								text: 'Pick List Maintenance'
 							},
 							{
-								text: 'Value Per Bet Line'
+								text: 'Odds Relating Config'
 							},
 							{
-								text: 'Event Information Monitoring Config'
+								text: 'Trading Analytic Config'
 							},
 							{
-								text: 'xxx xxxx Monitoring Config'
+								text: 'Result & Payout Config'
+							},
+							{
+								text: 'Start / Stop Sell Control Monitoring Config'
+							},
+							{
+								text: 'Task & Approval Workflow Config'
+							},
+							{
+								text: 'User Account, Role & Privilege Configurations'
 							}
 						]
 					},
 					{
-						text: 'Information Retenation Configuration'
+						text: 'Information Retenation Configuration',
+						subMenu: [
+							{
+								text: 'Event Information'
+							},
+							{
+								text: 'Live Feed'
+							},
+							{
+								text: 'Result'
+							},
+							{
+								text: 'Market Odds'
+							}
+						]
 					}
 				]
 			},
-			{ text: 'SDA Governance' },
-			{ text: 'System Control' },
-			{ text: 'Others' }
+			{
+				text: 'Others'
+			}
 
 		]
 
@@ -1151,198 +753,59 @@ const menuList2 = [
 		iconSrc_A: 'Icon - Pre-Event MonitoringW.svg',
 		textL1: 'Pre-Event',
 		textL2: 'Monitoring',
-		subMenu: [
-			{
-				text: 'Data & Feed Configuration',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{
-				text: 'Odds Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-			},
-			{
-				text: 'Product Parameters',
-				subMenu: [
-					{ text: 'Product Parameters' },
-					{ text: 'Risk Parameters' },
-					{ text: 'SDA Governance' },
-					{ text: 'System Control' },
-					{ text: 'Others' }
-				]
-
-			},
-			{
-				text: 'Risk Parameters',
-				subMenu: [
-					{
-						text: 'Bet Control Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Message Configurations',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Misc',
-						subMenu: [
-
-							{
-								text: 'Unit Bet & Minimum Dividend Min'
-							},
-							{
-								text: 'Value For Ticket/Bet Line Total Min'
-							},
-							{
-								text: 'Value Per Bet Line'
-							},
-							{
-								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
-							}
-						]
-					},
-					{
-						text: 'Information Retenation Configuration'
-					}
-				]
-			},
-			{ text: 'SDA Governance' },
-			{ text: 'System Control' },
-			{ text: 'Others' }
-
-		]
-
 	},
 	{
-		iconSrc: 'Icon - In-Play Monitoring.svg',
-		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
-		textL1: 'Result&',
+		iconSrc: 'Icon - Result & Settlement.svg',
+		iconSrc_A: 'Icon - Result & SettlementW.svg',
+		textL1: 'Result &',
 		textL2: 'Settlement'
 
 	},
 	{
 		iconSrc: 'Icon - Data Management.svg',
 		iconSrc_A: 'Icon - Data ManagementW.svg',
-		textL1: 'Data&',
+		textL1: 'Data',
 		textL2: 'Management',
 		subMenu: [
+			{
+				text: 'Data Attribute Mapping'
+			},
+			{
+				text: 'Name Management',
+				subMenu: [
+					{
+						text: 'Competition'
+					},
+					{
+						text: 'Team'
+					},
+					{
+						text: 'Player'
+					},
+					{
+						text: 'Venue'
+					}
+				]
+			},
 			{
 				text: 'Data Feed Alignment Summary',
 				subMenu: [
 					{
-						text: 'Complitation'
+						text: 'Competition'
 					},
 					{
-						text: 'Math'
+						text: 'Match'
+					}
+				]
+			},
+			{
+				text: 'Unmap Data Monitor',
+				subMenu: [
+					{
+						text: 'Competition'
+					},
+					{
+						text: 'Match'
 					}
 				]
 			},
@@ -1355,9 +818,56 @@ const menuList2 = [
 	{
 		iconSrc: 'Icon - Tools & Administration.svg',
 		iconSrc_A: 'Icon - Tools & AdministrationW.svg',
-		textL1: 'Global Tools&',
+		textL1: 'Global Tools &',
 		textL2: 'Administration',
 		subMenu: [
+			{
+				text: 'Navigation',
+				subMenu: [
+					{
+						text: 'Event Directory'
+					}
+				]
+			},
+			{
+				text: 'Communication',
+				subMenu: [
+					{
+						text: 'Noticeboard'
+					},
+					{
+						text: 'Noticeboard Monitor'
+					},
+					{
+						text: 'Broadcast Message'
+					},
+					{
+						text: 'Broadcast Message History'
+					},
+					{
+						text: 'Critical Information Dissemination'
+					}
+				]
+			},
+			{
+				text: 'Action(Task)',
+				subMenu: [
+					{
+						text: 'Action'
+					},
+					{
+						text: 'Action Monitor'
+					}
+				]
+			},
+			{
+				text: 'Contingency Control',
+				subMenu: [
+					{
+						text: 'Contingency Stop Sell'
+					}
+				]
+			},
 			{
 				text: 'Audit Trail',
 				link: '/page/audit'
@@ -1372,13 +882,10 @@ const menuList2 = [
 						text: 'User Role & Permission'
 					}
 				]
-			},{
-				text: 'other',
-				link: '/page/audit'
-			},
+			}
 		]
 
-	},
+	}
 ]
 
 export default { menuList1, menuList2 }
