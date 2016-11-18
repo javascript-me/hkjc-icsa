@@ -1,0 +1,65 @@
+.ed-record {
+	background-color: @hkjcWhite;
+	display: flex;
+	padding: 10px 8px;
+	height: 36px;
+
+	.ed-record-icon {
+		margin: 0 3px;
+		width: 16px;
+		height: 16px;
+		background-repeat: no-repeat;
+		background-position: center center;
+		cursor: pointer;
+
+		&.inplay-available {
+			background-image: url(eventdirectory/inplay-available.svg);
+		}
+
+		&.inplay-in-progress {
+			background-image: url(eventdirectory/inplay-in-progress.svg);
+		}
+
+		&.inplay-pending {
+			background-image: url(eventdirectory/inplay-pending.svg);
+		}
+
+		&.inplay-stopped {
+			background-image: url(eventdirectory/inplay-stopped.svg);
+		}
+
+		&.alert-0 {
+			background-image: url(eventdirectory/alert-0.svg);
+		}
+
+		&.alert-1 {
+			background-image: url(eventdirectory/alert-1.svg);
+		}
+
+		&.func-10 {
+			background-image: url(eventdirectory/func-10.svg);
+		}
+
+		&.func-cc {
+			background-image: url(eventdirectory/func-cc.svg);
+		}
+
+		&.func-e {
+			background-image: url(eventdirectory/func-e.svg);
+		}
+	}
+
+	.ed-record-text {
+		flex: 1;
+		margin: 0 3px;
+		height: 16px;
+		line-height: 16px;
+		font-size: 14px;
+		color: #0C2963;
+		cursor: pointer;
+
+		.active {
+			color: #E25854;
+		}
+	}
+}

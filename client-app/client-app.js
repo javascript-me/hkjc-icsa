@@ -1,12 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 
+import PageBase from './pageBase';
 import config from './config'
+//import MenuBar from './menu-bar'
+
+
 import Login from './login/login'
 import LoginService from './login/login-service'
+import Systembar from './systembar/systembar.js'
 import Dashboard from './dashboard/dashboard'
+
+// import Navigation from './navigation/navigation'
+
+import Audit from './auditlog/auditlog'
+import BetType from './auditlog/betType'
+import FilterBlock from './auditlog/filterBlock'
 import Navigation from './navigation/navigation'
+
+import SearchEnquiryPanel from './searchEnquiryPanel/searchEnquiryPanel'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -21,10 +34,12 @@ const configOverride = (overrides) => {
 export default (target) => {
 	ReactDOM.render((
 		<div className='container-fluid'>
-			<Navigation />
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
-				<Route path='/dashboard' component={Dashboard} onEnter={hasAuth} />
+				<Route path='/page' component={PageBase} onEnter={hasAuth}>
+					<IndexRoute component={Dashboard} />
+					<Route path='audit' component={Audit} />
+				</Route>
 			</Router>
 		</div>
 		), target)

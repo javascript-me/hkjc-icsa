@@ -11,3 +11,12 @@ build.properties
 
 # Distribution related
 /dist/
+
+
+# vscode setting
+/.vscode/
+
+
+# Typings From Visual Studio #
+/typings/
+

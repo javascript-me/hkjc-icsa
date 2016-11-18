@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="❏-B1-Global-Navigation" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="System_bar_02" transform="translate(-1755.000000, -10.000000)" fill="#3D588D">
+            <g id="system-bar" transform="translate(0.000000, -9.000000)">
+                <g id="User-dropdown" transform="translate(1745.000000, 0.000000)">
+                    <g id="User-name" transform="translate(10.000000, 18.000000)">
+                        <path d="M7.41038199,9.26065287 C4.94025466,9.26065287 0,10.5077074 0,12.9778348 C0,14.4407257 1.17510912,15.6398167 2.66198188,15.6398167 L12.2067457,15.6398167 C13.6696367,15.6398167 14.8687276,14.4647075 14.8687276,12.9778348 C14.820764,10.5077074 9.88050932,9.26065287 7.41038199,9.26065287 Z M6.93074562,7.34210737 C9.0891093,7.65387101 10.8877457,5.83125279 10.5520002,3.6728891 C10.3361639,2.32990725 9.25698203,1.25072541 7.91400018,1.03488904 C5.7556365,0.723125397 3.93301827,2.54574362 4.29274555,4.70410731 C4.4846001,6.07107098 5.58776377,7.15025282 6.93074562,7.34210737 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
