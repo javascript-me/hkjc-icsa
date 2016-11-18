@@ -87,7 +87,7 @@ export default React.createClass({
   		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
-      AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
+        AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
   		AuditlogStore.addChangeListener(this.onChange);
 
   		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
@@ -174,7 +174,6 @@ export default React.createClass({
 	},
 
 	searchAuditlog: async function () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
 		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
@@ -242,9 +241,8 @@ export default React.createClass({
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 	export () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
 		let criteriaOption = this.getSearchCriterias()
-		const filters = AuditlogStore.buildRequest(1, sortingObject, criteriaOption)
+		const filters = AuditlogStore.buildRequest(1, null, criteriaOption)
 
 		doExport(this.state.exportFormat, filters)
 	},
