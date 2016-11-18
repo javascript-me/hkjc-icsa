@@ -163,7 +163,7 @@ it('doFilter() should return less data', () => {
 
     assert.equal(451, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
 
-	assert.equal(169, PagingUtil.doFilter(jsonObject.auditlogs, "", null, null, null, null, null,
+	assert.equal(177, PagingUtil.doFilter(jsonObject.auditlogs, "", null, null, null, null, null,
 		"18 September 2016 14:30:10", "23 October 2016 10:30:30").length)
 })
 
