@@ -1,0 +1,68 @@
+.popup {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 999;
+	outline: none;
+
+	.modal-dialog {
+		width: 282px;
+		height: 182px;
+		margin: 0;
+
+		.modal-content {
+			height: 100%;
+			background: #FFFFFF;
+			border: 1px solid #ACB8D1;
+			border-radius: 0;
+			box-shadow: 0 23px 14px 0 rgba(0, 0, 0, 0.04);
+
+			.modal-header {
+				background: @hkjcDarkerBlue;
+				height: 40px;
+				color: @hkjcWhite;
+				padding: 11px 12px;
+
+				.modal-title {
+					line-height: 100%;
+				}
+
+				img,
+				.title {
+					vertical-align: top;
+				}
+
+				.title {
+					margin: 0 0 0 10px;
+					font-size: 16px;
+					font-weight: normal;
+					font-family: 'Roboto-Medium';
+				}
+
+				.close {
+					opacity: 1;
+				}
+			}
+
+			.modal-body {
+				text-align: center;
+
+				p {
+					margin: 0;
+
+					&:first-child {
+						font-size: 20px;
+						color: @hkjcDarkerBlue;
+					}
+
+					&.time {
+						font-family: 'Roboto-Bold';
+						font-size: 57px;
+						color: @hkjcDarkestBlue;
+						letter-spacing: 0;
+					}
+				}
+			}
+		}
+	}
+}

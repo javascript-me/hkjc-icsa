@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="200" height="40"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="200" height="40" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Event-Directory" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Event-Directory_new-flow" transform="translate(-4007.000000, -566.000000)">
+            <g id="event-directory_1" transform="translate(3973.000000, 521.000000)">
+                <rect id="Rectangle-3" fill="#F3F3F3" x="0" y="0" width="240" height="977"></rect>
+                <g id="Group-5" transform="translate(20.000000, 30.000000)">
+                    <use id="Rectangle-104" stroke="#305091" mask="url(#mask-2)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <path d="M25.7656392,25.6342754 L22.710109,22.5789053 C23.2696309,21.7939426 23.600032,20.8350595 23.600032,19.800016 C23.600032,17.1532872 21.4467448,15 18.800016,15 C16.1532872,15 14,17.1532872 14,19.800016 C14,22.4467448 16.1532872,24.600032 18.800016,24.600032 C19.8350595,24.600032 20.7939426,24.2696309 21.5789053,23.710109 L24.6344354,26.7656392 C24.790436,26.9219597 24.9953967,27.00004 25.2000373,27.00004 C25.404678,27.00004 25.6096387,26.9219597 25.7656392,26.7657992 C26.0781203,26.4533182 26.0781203,25.9467565 25.7656392,25.6342754 L25.7656392,25.6342754 Z M18.800016,23.0000267 C17.0326501,23.0000267 15.6000053,21.5673819 15.6000053,19.800016 C15.6000053,18.0326501 17.0326501,16.6000053 18.800016,16.6000053 C20.5673819,16.6000053 22.0000267,18.0326501 22.0000267,19.800016 C22.0000267,21.5673819 20.5673819,23.0000267 18.800016,23.0000267 L18.800016,23.0000267 Z" id="Shape" fill="#2F5091"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
