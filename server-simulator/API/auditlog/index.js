@@ -9,11 +9,18 @@ import PagingService from './paging-service'
 const router = express.Router()
 const options = { format: 'Letter', orientation: 'landscape', header: { 'height': '15mm'} }
 const jsonObject = require('../json/auditlogs.json')
+const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
 router.post('/filterAuditlogs', (req, res) => {
 	var result = {}
 
-	var cloneAuditlogs = jsonObject.auditlogs.slice(0)
+	var cloneAuditlogs
+
+	if (req.body.username == "allgood") {
+		cloneAuditlogs = jsonObject.auditlogs.slice(0)
+	} else {
+		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
+	}
 
 	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs,
 		req.body.keyword,
@@ -21,7 +28,9 @@ router.post('/filterAuditlogs', (req, res) => {
 		req.body.userRole,
 		req.body.systemFunc,
 		req.body.betTypeFeature,
-		req.body.device
+		req.body.device,
+		req.body.dateTimeFrom,
+		req.body.dateTimeTo
 	)
 
 	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
@@ -34,7 +43,9 @@ router.post('/filterAuditlogs', (req, res) => {
 	result.forDebug = {
 		sortingObjectFieldName: req.body.sortingObjectFieldName,
 		sortingObjectOrder: req.body.sortingObjectOrder,
-		keyword: req.body.keyword
+		keyword: req.body.keyword,
+		username: req.body.username,
+		bodyFields: JSON.stringify(req.body)
 	}
 
     // TODO: check how to send JSON POST request data.
@@ -72,29 +83,32 @@ router.get('/download/:file', (req, res) => {
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json
-	const filters = !!json ? JSON.parse(json) : {}
+	const filters = !!json ? JSON.parse(decodeURIComponent(json)) : {}
+	let data = []
 
-	const typeValue = filters.filters.find(i =>{ return i.name === "typeValue" })
-	const userRole = filters.filters.find(i =>{ return i.name === "userRole" })
-	const systemFunc = filters.filters.find(i =>{ return i.name === "systemFunc" })
-	const betTypeFeature = filters.filters.find(i =>{ return i.name === "betTypeFeature" })
-	const device = filters.filters.find(i =>{ return i.name === "device" })
-
-	let result =	PagingUtil.doFilter(jsonObject.auditlogs,
+	if (filters.username == "allgood") {
+		data = jsonObject.auditlogs.slice(0)
+	} else {
+		data = jsonObjectOfOtherUser.auditlogs.slice(0)
+	}
+	
+	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
-						!!typeValue ? typeValue.value : null,
-						!!userRole ? userRole.value : null,
-						!!systemFunc ? systemFunc.value : null,
-						!!userRole ? betTypeFeature.value : null,
-						!!device ? device.value : null,
+						filters.typeValue,
+						filters.userRole,
+						filters.systemFunc,
+						filters.betTypeFeature,
+						filters.device
 					)
+	
 	let status = 200
-
+	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+	
 	switch (type.toLowerCase()) {
 		case 'pdf':
 
 			let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
-			let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+			
 			result = helper.toHTML(result, dateReport)
 			res.writeHead(200, {
 				'Content-Type': 'application/octet-stream',

@@ -4,7 +4,7 @@ import PagingUtil from './paging-util'
 
 it('getAuditlogsFragmentByPageNumber() should return a small amount of data', () => {
 	const data = require('../json/auditlogs.json')
-	assert.equal(44, data.auditlogs.length)
+	assert.equal(451, data.auditlogs.length)
 
 	var result = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 1)
 
@@ -13,10 +13,10 @@ it('getAuditlogsFragmentByPageNumber() should return a small amount of data', ()
 	assert.equal(JSON.stringify(result[9]), JSON.stringify(data.auditlogs[9]))
 
 	var resultOfPage5 = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 5)
-	assert.equal(4, resultOfPage5.length)
+	assert.equal(10, resultOfPage5.length)
 
 	var resultOfPage10 = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 10)
-	assert.equal(0, resultOfPage10.length)
+	assert.equal(10, resultOfPage10.length)
 })
 
 it('getTotalPages() should return total pages number based on pageSize', () => {
@@ -131,6 +131,18 @@ it("parseToDate() should return a date based on input string", () => {
     assert.equal("10/23/2016, 10:30:33 AM", date1.toLocaleString())
     assert.equal(1477189833000, date1.getTime())
 
+	var date2 = PagingUtil.parseToDate("23 Oct 2016 10:30:33")
+	assert.equal("10/23/2016, 10:30:33 AM", date2.toLocaleString())
+	assert.equal(1477189833000, date2.getTime())
+
+	var date3 = PagingUtil.parseToDate("23 Oct 2016 10:30")
+	assert.equal("10/23/2016, 10:30:00 AM", date3.toLocaleString())
+	assert.equal(1477189833000, date2.getTime())
+
+	var date4 = PagingUtil.parseToDate("23 Oct 2016 00:00:00")
+	assert.equal("10/23/2016, 12:00:00 AM", date4.toLocaleString())
+	assert.equal(1477152000000, date4.getTime())
+
 })
 
 it("Simple test", function () {
@@ -141,14 +153,17 @@ it("Simple test", function () {
 it('doFilter() should return less data', () => {
 	const jsonObject = require('../json/auditlogs.json')
 
-	assert.equal(44, jsonObject.auditlogs.length)
+	assert.equal(451, jsonObject.auditlogs.length)
 
-	assert.equal(30, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
-	assert.equal(3, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
+	assert.equal(295, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-    assert.equal(30, PagingUtil.doFilter(jsonObject.auditlogs, "World Cup").length)
-    assert.equal(3, PagingUtil.doFilter(jsonObject.auditlogs, "EPC").length)
+    assert.equal(295, PagingUtil.doFilter(jsonObject.auditlogs, "World Cup").length)
+    assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, "EPC").length)
 
-    assert.equal(44, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
+    assert.equal(451, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
+
+	assert.equal(169, PagingUtil.doFilter(jsonObject.auditlogs, "", null, null, null, null, null,
+		"18 September 2016 14:30:10", "23 October 2016 10:30:30").length)
 })
 

@@ -42,8 +42,9 @@
       font-size: 14px;
       border: 1px solid #EEE;
       max-width: 480px;
-      padding: 10px 30px 10px 15px;
-
+      padding: 10px 30px 10px 0px;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     td {
@@ -53,75 +54,32 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       line-height: 40px;
+      max-width: 480px;
+      overflow: hidden;
     }
-    .date_time {
-      min-width: 205px;
-    }
-    .user_id {
-      min-width: 90px;
-    }
-    .user_name {
-      min-width: 115px;
-    }
-    .function_module {
-      min-width: 175px;
-    }
-    .function_event_detail {
-      min-width: 170px;
-    }
-    .user_role {
-      min-width: 175px;
-    }
-    .frontend_id {
-      min-width: 150px;
-    }
-    .backend_id {
-      min-width: 155px;
-    }
-    .ko_time_game_start_game {
-      min-width: 245px;
-    }
-    .bet_type {
-      min-width: 125px;
-    }
-    .event_name {
-      min-width: 145px;
-    }
-    .error_code {
-      min-width: 140px;
-    }
-    .error_message_content {
-      min-width: 185px;
-    }
-    .ip_address {
-      min-width: 115px;
-    }
+    
   }
 }
 
 span.up-arrow {
-  padding-left: 15px;
-
+  padding-left: 30px;
   background-image: url(common/up-arrow.svg);
-
-  background-position: center center;
+  background-position: 10px 50%;
   background-repeat: no-repeat;
   cursor: pointer;
 }
 
 span.down-arrow {
-  padding-left: 15px;
-
+  padding-left: 30px;
   background-image: url(common/down-arrow.svg);
-
-  background-position: center center;
+  background-position: 10px 50%;
   background-repeat: no-repeat;
   cursor: pointer;
 }
 
 span.no-arrow {
-  padding-left: 15px;
-  background-position: center center;
+  padding-left: 30px;
+  background-position: 10px 50%;
   background-repeat: no-repeat;
   cursor: pointer;
 }
