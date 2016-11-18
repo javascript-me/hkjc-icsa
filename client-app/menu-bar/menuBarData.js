@@ -29,9 +29,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -50,10 +47,8 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
+							
 						]
 					},
 					{
@@ -71,9 +66,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -112,9 +104,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -133,9 +122,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -154,9 +140,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -197,7 +180,7 @@ const menuList1 = [
 	{
 		iconSrc: 'Icon - Result & Settlement.svg',
 		iconSrc_A: 'Icon - Result & SettlementW.svg',
-		textL1: 'Result&',
+		textL1: 'Result &',
 		textL2: 'Settlement'
 
 	},
@@ -262,7 +245,7 @@ const menuList1 = [
 		textL2: '& Reporting',
 		subMenu: [
 			{
-				text: 'Post-event Reports'
+				text: 'Post-Event Reports'
 			},
 			{
 				text: 'Advance Analysis'
@@ -273,7 +256,7 @@ const menuList1 = [
 	{
 		iconSrc: 'Icon - Tools & Administration.svg',
 		iconSrc_A: 'Icon - Tools & AdministrationW.svg',
-		textL1: 'Global Tools&',
+		textL1: 'Global Tools &',
 		textL2: 'Administration',
 		subMenu: [
 			{
@@ -445,9 +428,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -466,9 +446,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -487,9 +464,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -528,9 +502,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -549,9 +520,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -570,9 +538,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -597,7 +562,7 @@ const menuList2 = [
 	{
 		iconSrc: 'Icon - Result & Settlement.svg',
 		iconSrc_A: 'Icon - Result & SettlementW.svg',
-		textL1: 'Result&',
+		textL1: 'Result &',
 		textL2: 'Settlement'
 
 	},
@@ -658,7 +623,7 @@ const menuList2 = [
 	{
 		iconSrc: 'Icon - Tools & Administration.svg',
 		iconSrc_A: 'Icon - Tools & AdministrationW.svg',
-		textL1: 'Global Tools&',
+		textL1: 'Global Tools &',
 		textL2: 'Administration',
 		subMenu: [
 			{
