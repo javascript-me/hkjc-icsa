@@ -29,9 +29,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -50,10 +47,8 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
+							
 						]
 					},
 					{
@@ -71,9 +66,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -112,9 +104,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -133,9 +122,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -154,9 +140,6 @@ const menuList1 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -445,9 +428,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -466,9 +446,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -487,9 +464,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -528,9 +502,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -549,9 +520,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
@@ -570,9 +538,6 @@ const menuList2 = [
 							},
 							{
 								text: 'Event Information Monitoring Config'
-							},
-							{
-								text: 'xxx xxxx Monitoring Config'
 							}
 						]
 					},
