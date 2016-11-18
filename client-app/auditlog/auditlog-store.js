@@ -12,7 +12,6 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 	forDebug: null,
 
     searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
-
 		const requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
 		let self = this
 
@@ -32,6 +31,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 			}
 		})
 	},
+
 	buildRequest(selectedPageNumber, sortingObject, criteriaOption) {
 		if (sortingObject) {
 			this._sortingObject = sortingObject
@@ -63,6 +63,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 
 		return requestData
 	},
+
 	emitChange () {
 		this.emit('change')
 	},
