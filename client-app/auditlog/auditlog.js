@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
 import Calendar from 'rc-calendar'
-import { hashHistory } from 'react-router'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
@@ -14,7 +13,29 @@ import ExportPopup from '../exportPopup'
 import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
-import AuditlogService from './auditlog-service'
+
+const getOrginDateTimeFrom = function () {
+    let dateTimeFrom = new Date(),
+        dateTimeFromObj = {}
+
+    dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
+    dateTimeFrom.setHours(0)
+    dateTimeFrom.setMinutes(0)
+    dateTimeFrom.setSeconds(0)
+    dateTimeFrom.setMilliseconds(0)
+    return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+}
+
+const getOrginDateTimeTo = function () {
+    let dateTimeTo = new Date(),
+        dateTimeToObj = {}
+
+    dateTimeTo.setHours(23)
+    dateTimeTo.setMinutes(59)
+    dateTimeTo.setSeconds(59)
+    dateTimeTo.setMilliseconds(0)
+    return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+}
 
 const doExport = async (format, filters) => {
 	const file = ExportService.getFileURL(format, filters)
@@ -29,6 +50,9 @@ let DEFAULT_BET_TYPE = 'football'
 export default React.createClass({
 	displayName: 'Audit',
 	getInitialState () {
+    let originDateTimeFrom = getOrginDateTimeFrom(),
+        originDateTimeTo = getOrginDateTimeTo();
+
 		return {
 			data: [],
 			filters: [],
@@ -36,31 +60,41 @@ export default React.createClass({
 			exportFormat: 'pdf',
 			tokens: {
 				AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
-				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS'
+				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
+        AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
 			},
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
 			keyword: '',
-			originDateRange: {},
-			selectedFilters: [],
+			originDateRange: {
+          dateTimeFrom: originDateTimeFrom,
+          dateTimeTo: originDateTimeTo
+      },
+			selectedFilters: [{
+          name: 'dateTimeFrom',
+          value: originDateTimeFrom
+      }, {
+          name: 'dateTimeTo',
+          value: originDateTimeTo
+      }],
 			isShowingMoreFilter: false,
 			isClickInMoreFilters: false,
 			auditlogs: []
 		}
 	},
 	componentDidMount: function () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
-		let criteriaOption = this.getSearchCriterias()
+  		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+  		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
-        AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
-		AuditlogStore.addChangeListener(this.onChange);
+      AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
+  		AuditlogStore.addChangeListener(this.onChange);
 
-		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
-			this.searchAuditlog()
-		})
+  		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
+  			this.searchAuditlog()
+  		})
 
-		document.addEventListener('click', this.pageClick, false)
+  		document.addEventListener('click', this.pageClick, false)
 	},
 
 	componentWillUnmount: function () {
@@ -72,9 +106,9 @@ export default React.createClass({
 
 	pageClick: function (event) {
 		let keywordTag = this.refs.keyword,
-			keywordElement = ReactDOM.findDOMNode(keywordTag),
-			isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
-			isInside = isInsideKeywordElement || this.state.isClickInMoreFilters
+  			keywordElement = ReactDOM.findDOMNode(keywordTag),
+  			isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
+  			isInside = isInsideKeywordElement || this.state.isClickInMoreFilters
 
 		if (!this.state.isShowingMoreFilter || isInside) {
 			this.setState({isClickInMoreFilters: false})
@@ -125,14 +159,18 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
-		let selectedFilters = this.state.selectedFilters,
-			filterIndex = selectedFilters.indexOf(filter)
+  		let selectedFilters = this.state.selectedFilters,
+  			 filterIndex = selectedFilters.indexOf(filter)
 
-		selectedFilters.splice(filterIndex, 1)
-		this.setState({
-			selectedFilters: selectedFilters,
-			isShowingMoreFilter: false
-		})
+  		selectedFilters.splice(filterIndex, 1)
+
+  		this.setState({
+    			selectedFilters: selectedFilters,
+    			isShowingMoreFilter: false
+  		}, ()=> {
+          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
+          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+      })
 	},
 
 	searchAuditlog: async function () {
@@ -140,7 +178,7 @@ export default React.createClass({
 		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
-		AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption)
+		AuditlogStore.searchAuditlogs(1, null, criteriaOption)
 	},
 
 	clickInMoreFilters: function () {
@@ -161,7 +199,7 @@ export default React.createClass({
 		})
 	},
 
-	setFilters: function (filters, originDateRange) {
+	setFilters: function (filters) {
 		this.hideMoreFilter()
 
 		let newFilters = []
@@ -174,12 +212,26 @@ export default React.createClass({
 		}
 
 		this.setState({
-			selectedFilters: newFilters,
-			originDateRange: originDateRange
+			selectedFilters: newFilters
 		}, () => {
 			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
 		})
 	},
+
+  checkIsDateRangeChanged: function () {
+      let filters = this.state.selectedFilters,
+          originDateRange = this.state.originDateRange,
+          dateTimeFrom, dateTimeTo;
+
+      for(var i in filters) {
+          if(filters[i].name === 'dateTimeFrom') {
+              dateTimeFrom = filters[i].value;
+          } else if(filters[i].name === 'dateTimeTo') {
+              dateTimeTo = filters[i].value;
+          }
+      }
+      return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo;
+  },
 
     // function to mock the event of loading data from the table
 	mockLoadData: function () {
@@ -190,7 +242,11 @@ export default React.createClass({
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 	export () {
-		doExport(this.state.exportFormat, this.getSearchCriterias())
+		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		let criteriaOption = this.getSearchCriterias()
+		const filters = AuditlogStore.buildRequest(1, sortingObject, criteriaOption)
+
+		doExport(this.state.exportFormat, filters)
 	},
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
@@ -215,10 +271,10 @@ export default React.createClass({
 					changeBetTypeEvent={this.changeBetType}
 					changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 			}),
+      isDateRangeChanged = this.checkIsDateRangeChanged(),
 
 			filterBlockes = this.state.selectedFilters.filter((f) => {
-				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo')
-                  && Moment(f.value).isSame(this.state.originDateRange[f.name])) {
+				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
 					return false
 				}
 				return true
@@ -240,28 +296,30 @@ export default React.createClass({
 		                    	<div className='table-container '>
 			                      <TabularData />
 			                    </div>
-			                    <Paging />
+                            <div className='col-md-12 vertical-gap'>
+			                      <Paging />
 			                    {/* START FOOTER EXPORT */}
-			                    <div className='col-md-12'>
+			                    <div className='col-md-4'>
 			                        <div className='pull-right'>
-			                            <button className={this.state.hasData ? 'btn btn-primary' : 'btn btn-primary disabled'} onClick={this.openPopup}>Export</button>
+			                            <button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 			                            <Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
 			                                <ExportPopup onChange={this.onChangeFormat} />
 			                            </Popup>
 			                        </div>
 			                    </div>
+                            </div>
 			                    {/* END FOOTER EXPORT */}
 		                    </div>
-		}	
+		}
 		else{
-			activeContent = <div className='nodata'>Coming Soon</div>
-		}		
+			activeContent = <div className='nopage'>Coming Soon</div>
+		}
 
 		return (
               <div className='auditlog'>
                     <div className='row page-header'>
                         <p className='hkjc-breadcrumb'>
-                            Home \ Tool & Adminstration \ Audit
+                            Home \ Tools & Adminstration \ Audit
                         </p>
                         <h1>Audit Trail</h1>
                     </div>
@@ -277,11 +335,11 @@ export default React.createClass({
                             </div>
                             <div className='keyword-container'>
                               <input type='text' placeholder='Search with keywords & filters'
-								value={this.state.keyword}
-								onClick={this.showMoreFilter}
-								onChange={this.handleKeywordChange}
-								onKeyPress={this.handleKeywordPress}
-								ref='keyword' />
+                              	value={this.state.keyword}
+                              	onClick={this.showMoreFilter}
+                              	onChange={this.handleKeywordChange}
+                              	onKeyPress={this.handleKeywordPress}
+                              	ref='keyword' />
                             </div>
                             <div className='filter-block-container'>
                               {filterBlockes}

@@ -134,6 +134,10 @@ export default React.createClass({
 		AuditlogStore.searchAuditlogs(1, sortingObject, null)
 	},
 
+	formatColumnVal(columnVal) {
+		return columnVal || "N / A";
+	},
+
     // TODO: below long HTML should be extracted to a method.
     // TODO: fieldName like date_time is appeared in 2 places. Need to combine.
 
@@ -151,24 +155,24 @@ export default React.createClass({
 		}
 		return this.state.auditlogs.map((row) => {
 			return <tr>
-                    <td>{row.date_time}</td>
-                    <td>{row.user_id}</td>
-                    <td>{row.user_name}</td>
-                    <td>{row.Type}</td>
-                    <td>{row.function_module}</td>
-                    <td>{row.function_event_detail}</td>
-                    <td>{row.user_role}</td>
-                    <td>{row.ip_address}</td>
-                    <td>{row.backend_id}</td>
-                    <td>{row.frontend_id}</td>
-                    <td>{row.home}</td>
-                    <td>{row.away}</td>
-                    <td>{row.ko_time_game_start_game}</td>
-                    <td>{row.bet_type}</td>
-                    <td>{row.event_name}</td>
-                    <td>{row.error_code}</td>
-                    <td>{row.error_message_content}</td>
-                    <td>{row.device}</td>
+                    <td>{this.formatColumnVal(row.date_time)}</td>
+                    <td>{this.formatColumnVal(row.user_id)}</td>
+                    <td>{this.formatColumnVal(row.user_name)}</td>
+                    <td>{this.formatColumnVal(row.Type)}</td>
+                    <td>{this.formatColumnVal(row.function_module)}</td>
+                    <td>{this.formatColumnVal(row.function_event_detail)}</td>
+                    <td>{this.formatColumnVal(row.user_role)}</td>
+                    <td>{this.formatColumnVal(row.ip_address)}</td>
+                    <td>{this.formatColumnVal(row.backend_id)}</td>
+                    <td>{this.formatColumnVal(row.frontend_id)}</td>
+                    <td>{this.formatColumnVal(row.home)}</td>
+                    <td>{this.formatColumnVal(row.away)}</td>
+                    <td>{this.formatColumnVal(row.ko_time_game_start_game)}</td>
+                    <td>{this.formatColumnVal(row.bet_type)}</td>
+                    <td>{this.formatColumnVal(row.event_name)}</td>
+                    <td>{this.formatColumnVal(row.error_code)}</td>
+                    <td>{this.formatColumnVal(row.error_message_content)}</td>
+                    <td>{this.formatColumnVal(row.device)}</td>
                 </tr>
 		})
 	},
@@ -176,16 +180,17 @@ export default React.createClass({
 	render () {
 		return <table className='table-striped table auditlog-table'>
             <thead className='table-header'>
-            <tr>
-                {
-                    this.state.headers.map(
-                        (header, i) => {
-	return <th className={header.fieldName} ><span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick} />{header.label}</th>
-}
-                    )
-                }
-
-            </tr>
+			<tr>
+				{
+					this.state.headers.map(
+						(header, i) => {
+							return <th>
+								<span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span>
+							</th>
+						}
+					)
+				}
+			</tr>
             </thead>
             <tbody>
                 {this.renderRows()}

@@ -1,7 +1,7 @@
 import Helper from './testHelper'
 import React from 'react'
 import { expect } from 'chai'
-import Popup from './popup.js'
+import Popup from './index.js'
 
 let rendered
 
