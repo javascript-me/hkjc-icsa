@@ -23,10 +23,10 @@
 	.nav-tabs {
 		border: 0;
 
-		li {
+		> li {
 			margin: 0;
 
-			a {
+			> a {
 				width: 80px;
 				height: 68px;
 				border: 0;
@@ -36,66 +36,59 @@
 				background-color: #25417A;
 				background-repeat: no-repeat;
 				background-position: center center;
-			}
 
-			&.active {
-				a#football-tab {
-					background-color: @footballLevel1;
-				}
-
-				a#basketball-tab {
-					background-color: @basketballLevel1;
-				}
-
-				a#horseracing-tab {
-					background-color: @horseracingLevel1;
-				}
-
-				a:hover,
-				a:focus {
-					border: none;
-				}
-			}
-		}
-
-		li:nth-child(1) {
-			&:not(.active) {
-				a {
+				&#football-tab {
 					background-image: url(eventdirectory/football-inactive.svg);
 				}
-			}
 
-			&.active {
-				a {
-					background-image: url(eventdirectory/football-active.svg);
-				}
-			}
-		}
-
-		li:nth-child(2) {
-			&:not(.active) {
-				a {
+				&#basketball-tab {
 					background-image: url(eventdirectory/basketball-inactive.svg);
 				}
-			}
 
-			&.active {
-				a {
-					background-image: url(eventdirectory/basketball-active.svg);
-				}
-			}
-		}
-
-		li:nth-child(3) {
-			&:not(.active) {
-				a {
+				&#horseracing-tab {
 					background-image: url(eventdirectory/horseracing-inactive.svg);
 				}
+
+				&:hover {
+					border: none;
+
+					/*&#football-tab {
+						background-color: @footballLevel1;
+						background-image: url(eventdirectory/football-active.svg);
+					}
+
+					&#basketball-tab {
+						background-color: @basketballLevel1;
+						background-image: url(eventdirectory/basketball-active.svg);
+					}
+
+					&#horseracing-tab {
+						background-color: @horseracingLevel1;
+						background-image: url(eventdirectory/horseracing-active.svg);
+					}*/
+				}
 			}
 
-			&.active {
-				a {
-					background-image: url(eventdirectory/horseracing-active.svg);
+			&.active > a {
+				&,
+				&:hover,
+				&:focus {
+					border: none;
+
+					&#football-tab {
+						background-color: @footballLevel1;
+						background-image: url(eventdirectory/football-active.svg);
+					}
+
+					&#basketball-tab {
+						background-color: @basketballLevel1;
+						background-image: url(eventdirectory/basketball-active.svg);
+					}
+
+					&#horseracing-tab {
+						background-color: @horseracingLevel1;
+						background-image: url(eventdirectory/horseracing-active.svg);
+					}
 				}
 			}
 		}
