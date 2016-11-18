@@ -40,15 +40,21 @@
       color: white;
       font-weight: normal;
       font-size: 14px;
-      border: 1px solid #EEE;
+      border: none;
+      border-right: 1px solid #8CA6DB;
       max-width: 480px;
       padding: 10px 30px 10px 0px;
       white-space: nowrap;
       overflow: hidden;
+
+      &:last-child {
+        border-right: none;
+      }
     }
 
     td {
-      border: 1px solid #EEE;
+      border: none;
+      border-right: 1px solid #8CA6DB;
       padding-left:10px;
       padding: 0 30px 0 30px;
       text-overflow: ellipsis;
@@ -56,6 +62,10 @@
       line-height: 40px;
       max-width: 480px;
       overflow: hidden;
+
+      &:last-child {
+        border-right: none;
+      }
     }
     
   }
