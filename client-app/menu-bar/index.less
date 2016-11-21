@@ -103,7 +103,7 @@
 		display: flex;
 		align-items: center;
 		background-color: #0C2963;
-		padding-left: 15px;
+		//padding-left: 15px;
 	}
 
 	.level-1-unit {
@@ -115,7 +115,7 @@
 			display: block;
 			width: 19px;
 			height: 19px;
-			margin-left: 15px;
+			//margin-left: 15px;
 			position: relative;
 
 			.icon-img {
@@ -155,9 +155,12 @@
 
 	.menu-unit {
 		background-color: @hkjcBlue;
-		width: 140px;
+		padding: 0 15px;
 		color: white;
 		font-size: 12px;
+		&:first-of-type {
+			padding-left: 30px;
+		}
 
 		&:hover {
 			background-color: #516B9F;
