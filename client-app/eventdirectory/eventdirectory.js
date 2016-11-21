@@ -14,10 +14,12 @@ export default React.createClass({
 		}
 	},
 	componentDidMount () {
-		const dom = $('.nav-tabs li a', this.refs.root);
+		const dom = $('.nav-tabs li a', this.refs.root)
 		dom.click(this.handleTabClick)
-		if (dom.tooltip) {
-			dom.tooltip({trigger: 'hover', placement: 'bottom'})
+
+		const domLi = $('.nav-tabs li', this.refs.root)
+		if (domLi.tooltip) {
+			domLi.tooltip({trigger: 'hover', placement: 'bottom'})
 		}
 	},
 	handleTabClick (e) {
@@ -40,11 +42,11 @@ export default React.createClass({
 	render () {
 		const contentClasses = classNames('tab-content', {hidden: !this.state.showContent})
 		return (
-			<div ref='root' className={classNames('row-eventdirectory', {slim:this.props.slimMode})}>
-				<ul className='nav nav-tabs' role='tablist'>
-					<li role='presentation'><a id='football-tab' href='#football-panel' role='tab' data-toggle='tab' title='Football' /></li>
-					<li role='presentation'><a id='basketball-tab' href='#basketball-panel' role='tab' data-toggle='tab' title='Basketball' /></li>
-					<li role='presentation'><a id='horseracing-tab' href='#horseracing-panel' role='tab' data-toggle='tab' title='Horse Racing' /></li>
+			<div ref='root' className={classNames('row-eventdirectory', {slim: this.props.slimMode})}>
+				<ul id='ed-nav-tabs' className='nav nav-tabs' role='tablist'>
+					<li role='presentation' title='Football'><a id='football-tab' href='#football-panel' role='tab' data-toggle='tab' /></li>
+					<li role='presentation' title='Basketball'><a id='basketball-tab' href='#basketball-panel' role='tab' data-toggle='tab' /></li>
+					<li role='presentation' title='Horse Racing'><a id='horseracing-tab' href='#horseracing-panel' role='tab' data-toggle='tab' /></li>
 				</ul>
 
 				<div className={contentClasses}>

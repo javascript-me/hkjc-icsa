@@ -16,10 +16,10 @@ describe('<SearchFilter />', () => {
 			}
 		}
 
-		const onSearch = sinon.spy();
+		const onSearch = sinon.spy()
 		const wrapper = mount(<SearchFilter filter={filter} onSearch={onSearch} />)
 		expect(wrapper.find('div.ed-filter')).to.have.length(1)
-		wrapper.find('#ed-filter-keyword').simulate('keyUp', {keyCode: 13});
-		expect(onSearch.calledOnce).to.be.true;
+		wrapper.find('#ed-filter-keyword').simulate('keyUp', {keyCode: 13})
+		expect(onSearch.calledOnce).to.be.true
 	})
 })

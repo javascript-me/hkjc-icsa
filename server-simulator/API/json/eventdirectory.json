@@ -4,7 +4,7 @@
 			"name": "England",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"status": "available",
@@ -213,7 +213,7 @@
 			"name": "Spain",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -247,7 +247,7 @@
 			"name": "Germany",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -281,7 +281,7 @@
 			"name": "Italy",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -315,7 +315,7 @@
 			"name": "France",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -349,7 +349,7 @@
 			"name": "Portugal",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -383,7 +383,7 @@
 			"name": "Netherlands",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -417,7 +417,7 @@
 			"name": "Finland",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"t1": "ARS",
@@ -455,7 +455,7 @@
 			"defaultActiveKey": "-1",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"active": true,
 					"competitions": [
 						{
@@ -520,258 +520,6 @@
 					]
 				}
 			]
-		},
-		{
-			"name": "Spain",
-			"defaultActiveKey": "-1",
-			"children": [
-				{
-					"name": "Premier",
-					"active": true,
-					"competitions": [
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "SOU",
-							"t1Tip": "Southampton",
-							"t2": "LIV",
-							"t2Tip": "Liverpool"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Germany",
-			"defaultActiveKey": "-1",
-			"children": [
-				{
-					"name": "Premier",
-					"active": true,
-					"competitions": [
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "SOU",
-							"t1Tip": "Southampton",
-							"t2": "LIV",
-							"t2Tip": "Liverpool"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Italy",
-			"defaultActiveKey": "-1",
-			"children": [
-				{
-					"name": "Premier",
-					"active": true,
-					"competitions": [
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "SOU",
-							"t1Tip": "Southampton",
-							"t2": "LIV",
-							"t2Tip": "Liverpool"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "France",
-			"defaultActiveKey": "-1",
-			"children": [
-				{
-					"name": "Premier",
-					"active": true,
-					"competitions": [
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "SOU",
-							"t1Tip": "Southampton",
-							"t2": "LIV",
-							"t2Tip": "Liverpool"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Portugal",
-			"defaultActiveKey": "-1",
-			"children": [
-				{
-					"name": "Premier",
-					"active": true,
-					"competitions": [
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "SOU",
-							"t1Tip": "Southampton",
-							"t2": "LIV",
-							"t2Tip": "Liverpool"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Netherlands",
-			"defaultActiveKey": "-1",
-			"children": [
-				{
-					"name": "Premier",
-					"active": true,
-					"competitions": [
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "SOU",
-							"t1Tip": "Southampton",
-							"t2": "LIV",
-							"t2Tip": "Liverpool"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Finland",
-			"defaultActiveKey": "-1",
-			"children": [
-				{
-					"name": "Premier",
-					"active": true,
-					"competitions": [
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "ARS",
-							"t1Tip": "Arsenal",
-							"t2": "ASV",
-							"t2Tip": "Aston Villa"
-						},
-						{
-							"t1": "SOU",
-							"t1Tip": "Southampton",
-							"t2": "LIV",
-							"t2Tip": "Liverpool"
-						}
-					]
-				}
-			]
 		}
 	],
 
@@ -780,7 +528,7 @@
 			"name": "England",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"status": "available",
@@ -1001,7 +749,7 @@
 			"name": "Spain",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"active": 1,
@@ -1038,7 +786,7 @@
 			"name": "Germany",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"active": 1,
@@ -1075,7 +823,7 @@
 			"name": "Italy",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"active": 1,
@@ -1112,7 +860,7 @@
 			"name": "France",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"active": 1,
@@ -1149,7 +897,7 @@
 			"name": "Portugal",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"active": 1,
@@ -1186,7 +934,7 @@
 			"name": "Netherlands",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"active": 1,
@@ -1223,7 +971,7 @@
 			"name": "Finland",
 			"children": [
 				{
-					"name": "Premier",
+					"name": "Premier League",
 					"competitions": [
 						{
 							"active": 1,
