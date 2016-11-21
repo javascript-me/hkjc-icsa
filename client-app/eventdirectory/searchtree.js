@@ -28,7 +28,7 @@ export default React.createClass({
 			)
 		}
 
-		const beL1 = '-1' === this.props.result[0].defaultActiveKey
+		const beL1 = this.props.result[0].defaultActiveKey === '-1'
 		let defaultActiveKey = []
 		if (beL1) {
 			this.props.result.forEach((level1, index) => defaultActiveKey.push(index + ''))
