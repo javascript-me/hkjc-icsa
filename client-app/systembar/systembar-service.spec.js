@@ -9,7 +9,7 @@ describe('SystembarService', () => {
 			rewire(SystembarService.__set__('getClock', () => {
 				return Promise.resolve(response)
 			}))
-			
+
 			const result = await SystembarService.getClock()
 
 			rewire()
@@ -22,7 +22,7 @@ describe('SystembarService', () => {
 			}))
 
 			const result = await SystembarService.getClock()
-			
+
 			rewire()
 			expect(result).to.be.null
 		})
