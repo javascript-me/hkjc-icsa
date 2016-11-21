@@ -71,15 +71,15 @@ export default React.createClass({
 
 	render () {
 		return (
-            <div className='paging col-md-8'>
-                <ul>
-                    {
-                        this.state.pages.map((page, i) => {
-	return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
-})
-                    }
-                </ul>
-            </div>
+			<div className='paging col-md-8'>
+				<ul>
+					{
+						this.state.pages.map((page, i) => {
+							return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
+						})
+					}
+				</ul>
+			</div>
         )
 	}
 })
