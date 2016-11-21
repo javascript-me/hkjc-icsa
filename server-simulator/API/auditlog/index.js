@@ -16,7 +16,7 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	var cloneAuditlogs
 
-	if (req.body.username == "allgood") {
+	if (req.body.username == 'allgood') {
 		cloneAuditlogs = jsonObject.auditlogs.slice(0)
 	} else {
 		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
@@ -55,17 +55,17 @@ router.post('/filterAuditlogs', (req, res) => {
 
 router.post('/search', (req, res) => {
 	let status = 200
-    let result = ""
+	let result = ''
 
-	const typeValue = req.body.typeValue;
-	const userRole = req.body.userRole;
-	const systemFunc = req.body.systemFunc;
-	const betTypeFeature = req.body.betTypeFeature;
-	const device = req.body.device;
+	const typeValue = req.body.typeValue
+	const userRole = req.body.userRole
+	const systemFunc = req.body.systemFunc
+	const betTypeFeature = req.body.betTypeFeature
+	const device = req.body.device
 
-	result =  jsonObject.auditlogs.filter(function (al) {
-		return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betTypeFeature && al.device == device )
-	});
+	result = jsonObject.auditlogs.filter((al) => {
+		return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betTypeFeature && al.device == device)
+	})
 
 	res.status(status)
 	res.send(result)
@@ -86,12 +86,12 @@ router.get('/export', (req, res) => {
 	const filters = !!json ? JSON.parse(decodeURIComponent(json)) : {}
 	let data = []
 
-	if (filters.username == "allgood") {
+	if (filters.username == 'allgood') {
 		data = jsonObject.auditlogs.slice(0)
 	} else {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
-	
+
 	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
 						filters.typeValue,
@@ -100,39 +100,39 @@ router.get('/export', (req, res) => {
 						filters.betTypeFeature,
 						filters.device
 					)
-	
+
 	let status = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-	
+
 	switch (type.toLowerCase()) {
-		case 'pdf':
+	case 'pdf':
 
-			let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
-			
-			result = helper.toHTML(result, dateReport)
-			res.writeHead(200, {
-				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+		let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
 
-			pdf.create(result, options).toStream((err, file) => {
-				if (err) {
-					console.log(err)
-					res.end()
-				}
-				else
+		result = helper.toHTML(result, dateReport)
+		res.writeHead(200, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+
+		pdf.create(result, options).toStream((err, file) => {
+			if (err) {
+				console.log(err)
+				res.end()
+			}
+			else
 	                file.pipe(res)
-			})
+		})
 
-			break
-		case 'csv':
-			result = helper.toCSV(result)
-			res.writeHead(200, {
-				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
-			res.end(result)
-			break
-		default:
-			break
+		break
+	case 'csv':
+		result = helper.toCSV(result)
+		res.writeHead(200, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
+		res.end(result)
+		break
+	default:
+		break
 	}
 })
 

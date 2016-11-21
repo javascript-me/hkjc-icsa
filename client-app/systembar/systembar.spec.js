@@ -13,12 +13,12 @@ describe('<Systembar />', () => {
 		let systembar = shallow(<Systembar />)
 		let childLength = systembar.find('div.row-systembar').children().length
 		systembar.find('a').simulate('click')
-		expect(systembar.find('div.row-systembar').children().length).to.equal(childLength+1)
+		expect(systembar.find('div.row-systembar').children().length).to.equal(childLength + 1)
 	})
 
 	it('send the request to get time', () => {
 		const getTime = sinon.stub().returns({})
-		rewire(Systembar.__set__('SystembarService', {getClock:getTime}))
+		rewire(Systembar.__set__('SystembarService', {getClock: getTime}))
 
 		const getClock = Systembar.__get__('getClock')
 
@@ -28,5 +28,4 @@ describe('<Systembar />', () => {
 		expect(getTime.calledOnce).to.be.true
 	})
 })
-
 

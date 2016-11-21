@@ -11,7 +11,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 	auditlogs: null,
 	forDebug: null,
 
-    searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
+	searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 		const requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
 		let self = this
 
@@ -32,7 +32,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		})
 	},
 
-	buildRequest(selectedPageNumber, sortingObject, criteriaOption) {
+	buildRequest (selectedPageNumber, sortingObject, criteriaOption) {
 		if (sortingObject) {
 			this._sortingObject = sortingObject
 		}
@@ -40,7 +40,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		if (criteriaOption) {
 			this._criteriaOption = criteriaOption
 		}
-		
+
 		let requestData = {
 			username: LoginService.getProfile().username,
 			selectedPageNumber: selectedPageNumber,
@@ -51,8 +51,8 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		}
 
 		let filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : []
-		let filterName = ""
-		let filterVal = ""
+		let filterName = ''
+		let filterVal = ''
 
         // Fill the filters into reuqest data
 		for (let i in filters) {

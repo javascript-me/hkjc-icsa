@@ -15,26 +15,26 @@ import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
 
 const getOrginDateTimeFrom = function () {
-    let dateTimeFrom = new Date(),
-        dateTimeFromObj = {}
+	let dateTimeFrom = new Date(),
+		dateTimeFromObj = {}
 
-    dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
-    dateTimeFrom.setHours(0)
-    dateTimeFrom.setMinutes(0)
-    dateTimeFrom.setSeconds(0)
-    dateTimeFrom.setMilliseconds(0)
-    return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
+	dateTimeFrom.setHours(0)
+	dateTimeFrom.setMinutes(0)
+	dateTimeFrom.setSeconds(0)
+	dateTimeFrom.setMilliseconds(0)
+	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
 }
 
 const getOrginDateTimeTo = function () {
-    let dateTimeTo = new Date(),
-        dateTimeToObj = {}
+	let dateTimeTo = new Date(),
+		dateTimeToObj = {}
 
-    dateTimeTo.setHours(23)
-    dateTimeTo.setMinutes(59)
-    dateTimeTo.setSeconds(59)
-    dateTimeTo.setMilliseconds(0)
-    return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+	dateTimeTo.setHours(23)
+	dateTimeTo.setMinutes(59)
+	dateTimeTo.setSeconds(59)
+	dateTimeTo.setMilliseconds(0)
+	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 }
 
 const doExport = async (format, filters) => {
@@ -50,8 +50,8 @@ let DEFAULT_BET_TYPE = 'football'
 export default React.createClass({
 	displayName: 'Audit',
 	getInitialState () {
-    let originDateTimeFrom = getOrginDateTimeFrom(),
-        originDateTimeTo = getOrginDateTimeTo();
+		let originDateTimeFrom = getOrginDateTimeFrom(),
+			originDateTimeTo = getOrginDateTimeTo()
 
 		return {
 			data: [],
@@ -61,22 +61,22 @@ export default React.createClass({
 			tokens: {
 				AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
 				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
-        AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
 			},
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
 			keyword: '',
 			originDateRange: {
-          dateTimeFrom: originDateTimeFrom,
-          dateTimeTo: originDateTimeTo
-      },
+				dateTimeFrom: originDateTimeFrom,
+				dateTimeTo: originDateTimeTo
+			},
 			selectedFilters: [{
-          name: 'dateTimeFrom',
-          value: originDateTimeFrom
-      }, {
-          name: 'dateTimeTo',
-          value: originDateTimeTo
-      }],
+				name: 'dateTimeFrom',
+				value: originDateTimeFrom
+			}, {
+				name: 'dateTimeTo',
+				value: originDateTimeTo
+			}],
 			isShowingMoreFilter: false,
 			isClickInMoreFilters: false,
 			auditlogs: []
@@ -87,8 +87,8 @@ export default React.createClass({
   		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
-        AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption);
-  		AuditlogStore.addChangeListener(this.onChange);
+		AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption)
+  		AuditlogStore.addChangeListener(this.onChange)
 
   		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
   			this.searchAuditlog()
@@ -100,7 +100,7 @@ export default React.createClass({
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(token)
 
-		AuditlogStore.removeChangeListener(this.onChange.bind(this));
+		AuditlogStore.removeChangeListener(this.onChange.bind(this))
 		document.removeEventListener('click', this.pageClick, false)
 	},
 
@@ -167,10 +167,10 @@ export default React.createClass({
   		this.setState({
     			selectedFilters: selectedFilters,
     			isShowingMoreFilter: false
-  		}, ()=> {
-          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
-          PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
-      })
+  		}, () => {
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+		})
 	},
 
 	searchAuditlog: async function () {
@@ -217,20 +217,20 @@ export default React.createClass({
 		})
 	},
 
-  checkIsDateRangeChanged: function () {
-      let filters = this.state.selectedFilters,
-          originDateRange = this.state.originDateRange,
-          dateTimeFrom, dateTimeTo;
+	checkIsDateRangeChanged: function () {
+		let filters = this.state.selectedFilters,
+			originDateRange = this.state.originDateRange,
+			dateTimeFrom, dateTimeTo
 
-      for(var i in filters) {
-          if(filters[i].name === 'dateTimeFrom') {
-              dateTimeFrom = filters[i].value;
-          } else if(filters[i].name === 'dateTimeTo') {
-              dateTimeTo = filters[i].value;
-          }
-      }
-      return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo;
-  },
+		for (var i in filters) {
+			if (filters[i].name === 'dateTimeFrom') {
+				dateTimeFrom = filters[i].value
+			} else if (filters[i].name === 'dateTimeTo') {
+				dateTimeTo = filters[i].value
+			}
+		}
+		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
+	},
 
     // function to mock the event of loading data from the table
 	mockLoadData: function () {
@@ -249,13 +249,12 @@ export default React.createClass({
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
 	},
-    onChange () {
+	onChange () {
 		const hasData = AuditlogStore.auditlogs.length > 0
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
 	},
-
 
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
@@ -269,7 +268,7 @@ export default React.createClass({
 					changeBetTypeEvent={this.changeBetType}
 					changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 			}),
-      isDateRangeChanged = this.checkIsDateRangeChanged(),
+			isDateRangeChanged = this.checkIsDateRangeChanged(),
 
 			filterBlockes = this.state.selectedFilters.filter((f) => {
 				if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
@@ -287,9 +286,9 @@ export default React.createClass({
 			moreFilterContianerClassName = ClassNames('more-filter-popup', {
 				'active': this.state.isShowingMoreFilter
 			}),
-			activeContent;
+			activeContent
 
-		if(this.state.betType === 'football'){
+		if (this.state.betType === 'football') {
 			activeContent = <div>
 		                    	<div className='table-container '>
 			                      <TabularData />
@@ -309,7 +308,7 @@ export default React.createClass({
 			                    {/* END FOOTER EXPORT */}
 		                    </div>
 		}
-		else{
+		else {
 			activeContent = <div className='nopage'>Coming Soon</div>
 		}
 
@@ -333,11 +332,11 @@ export default React.createClass({
                             </div>
                             <div className='keyword-container'>
                               <input type='text' placeholder='Search with keywords & filters'
-                              	value={this.state.keyword}
-                              	onClick={this.showMoreFilter}
-                              	onChange={this.handleKeywordChange}
-                              	onKeyPress={this.handleKeywordPress}
-                              	ref='keyword' />
+	value={this.state.keyword}
+	onClick={this.showMoreFilter}
+	onChange={this.handleKeywordChange}
+	onKeyPress={this.handleKeywordPress}
+	ref='keyword' />
                             </div>
                             <div className='filter-block-container'>
                               {filterBlockes}
