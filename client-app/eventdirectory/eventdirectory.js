@@ -14,10 +14,10 @@ export default React.createClass({
 		}
 	},
 	componentDidMount () {
-		const dom = $('.nav-tabs li a', this.refs.root);
+		const dom = $('.nav-tabs li a', this.refs.root)
 		dom.click(this.handleTabClick)
 
-		const domLi = $('.nav-tabs li', this.refs.root);
+		const domLi = $('.nav-tabs li', this.refs.root)
 		if (domLi.tooltip) {
 			domLi.tooltip({trigger: 'hover', placement: 'bottom'})
 		}
@@ -42,7 +42,7 @@ export default React.createClass({
 	render () {
 		const contentClasses = classNames('tab-content', {hidden: !this.state.showContent})
 		return (
-			<div ref='root' className={classNames('row-eventdirectory', {slim:this.props.slimMode})}>
+			<div ref='root' className={classNames('row-eventdirectory', {slim: this.props.slimMode})}>
 				<ul id='ed-nav-tabs' className='nav nav-tabs' role='tablist'>
 					<li role='presentation' title='Football'><a id='football-tab' href='#football-panel' role='tab' data-toggle='tab' /></li>
 					<li role='presentation' title='Basketball'><a id='basketball-tab' href='#basketball-panel' role='tab' data-toggle='tab' /></li>
