@@ -157,7 +157,7 @@ export default class SearchEnquiryPanel extends React.Component {
 				})
 			}
 		} else if (name === 'ipAddress') {
-			let reg = /((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}/
+			let reg = /^((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})){2}(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2}))$/
 			if (!event.target.value || reg.test(event.target.value)) {
 				this.setState({
 					errorIPAddress: 1

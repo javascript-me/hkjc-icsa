@@ -76,7 +76,7 @@ const Popup = React.createClass({
 	},
 	propTypes: {
 		hideClock: React.PropTypes.func,
-		date: React.PropTypes.string
+		date: React.PropTypes.number
 	},
 	move (e) {
 		this.setState(e)
@@ -94,8 +94,8 @@ const Popup = React.createClass({
 								<h4 className='modal-title' id='myModalLabel'><img src='icon/icon-clock.svg' /><span className='title'>Clock</span></h4>
 							</div>
 							<div className='modal-body'>
-								<p>{Moment(Date(time)).format('ddd, D MMM, YYYY')}</p>
-								<p className='time'>{Moment(Date(time)).format('HH:mm:ss')}</p>
+								<p>{Moment(time).format('ddd, D MMM, YYYY')}</p>
+								<p className='time'>{Moment(time).format('H:mm:ss')}</p>
 							</div>
 						</div>
 					</div>

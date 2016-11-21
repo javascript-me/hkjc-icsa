@@ -10,6 +10,8 @@ const eventdirectory = require('../json/eventdirectory.json')
  * @apiDescription Eventdirectory search result.
  *
  * @apiParam {String} keyword search keyword.
+ * @apiParam {String} scenario search scenario.
+ * @apiParam {String} competition search competition.
  *
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
@@ -24,7 +26,7 @@ router.post('/', (req, res) => {
 
 	if (keyword === '') {
 		result.result = eventdirectory.ALL
-	} else 	if (keyword === 'Premier') {
+	} else 	if (keyword === 'Premier' || keyword === 'Premier League') {
 		result.result = eventdirectory.Premier
 	} else 	if (keyword === 'ARS') {
 		result.result = eventdirectory.ARS

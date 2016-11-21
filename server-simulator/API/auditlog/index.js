@@ -11,6 +11,53 @@ const options = { format: 'Letter', orientation: 'landscape', header: { 'height'
 const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
+
+/**
+ * @api {POST} /auditlog/filterAuditlogs filterAuditlogs
+ * @apiGroup Auditlog
+
+ * @apiDescription Search criteria mock API in Audit log page.
+ *
+ * @apiParam {String} username Current customer's name
+ * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
+ * @apiParam {String} [keyword] Keyword for search criteria
+ * @apiParam {String} sortingObjectFieldName=date_time Column name which sorted by.
+ * @apiParam {String} sortingObjectOrder=DESCEND Sorting order, DESCEND or ASCEND.
+ * @apiParam {Number} selectedPageNumber=1 Selected page number.
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {String} [typeValue] Type value.
+ * @apiParam {String} [backEndID] Back end ID.
+ * @apiParam {String} [frontEndID] Front end ID.
+ * @apiParam {String} [eventLv1] Event name.
+ * @apiParam {String} [homeValue] Home team.
+ * @apiParam {String} [awayValue] Away team.
+ * @apiParam {String} [dateTimeGameStart] Game Start time.
+ * @apiParam {String} [userId] The user who trigger this log.
+ * @apiParam {String} [userRole] The role of the user who trigger this log.
+ * @apiParam {String} [systemFunc] In which function trigger this log.
+ * @apiParam {String} [betTypeFeature] Bet type of the games.
+ * @apiParam {String} [device] Device
+ * @apiParam {String} [ipAddress] IP Address.
+ * @apiParam {String} [errorCode] Error code.
+ *
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} betType football
+ * @apiSuccess (Success) {String} keyword
+ * @apiSuccess (Success) {String} sortingObjectFieldName date_time
+ * @apiSuccess (Success) {String} sortingObjectOrder DESCEND
+ * @apiSuccess (Success) {Number} selectedPageNumber 1
+ * @apiSuccess (Success) {DateTime} dateTimeFrom 22 Sep 2016 00:00 ( 60 days before)
+ * @apiSuccess (Success) {DateTime} dateTimeTo 21 Nov 2016 23:59 (Today)
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"auditlogs": [ ... ],
+ *			"pageData": {pages: [ ... ], totalPages: 40 }
+ *		}
+ *
+ *
+ */
 router.post('/filterAuditlogs', (req, res) => {
 	var result = {}
 
@@ -40,34 +87,8 @@ router.post('/filterAuditlogs', (req, res) => {
 	PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
 	result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
-	result.forDebug = {
-		sortingObjectFieldName: req.body.sortingObjectFieldName,
-		sortingObjectOrder: req.body.sortingObjectOrder,
-		keyword: req.body.keyword,
-		username: req.body.username,
-		bodyFields: JSON.stringify(req.body)
-	}
-
     // TODO: check how to send JSON POST request data.
 
-	res.send(result)
-})
-
-router.post('/search', (req, res) => {
-	let status = 200
-	let result = ''
-
-	const typeValue = req.body.typeValue
-	const userRole = req.body.userRole
-	const systemFunc = req.body.systemFunc
-	const betTypeFeature = req.body.betTypeFeature
-	const device = req.body.device
-
-	result = jsonObject.auditlogs.filter((al) => {
-		return (al.Type == typeValue && al.user_role == userRole && al.function_module == systemFunc && al.bet_type == betTypeFeature && al.device == device)
-	})
-
-	res.status(status)
 	res.send(result)
 })
 
@@ -80,6 +101,45 @@ router.get('/download/:file', (req, res) => {
 	fs.createReadStream('./' + req.params.file).pipe(res)
 })
 
+
+/**
+ * @api {GET} /auditlog/export export
+ * @apiGroup Auditlog
+
+ * @apiDescription Mock API for export search result of Audit log page.
+ *
+ * @apiParam {String} type File type (pdf, csv) ask for export.
+ * @apiParam {String} username Current customer's name
+ * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
+ * @apiParam {String} [keyword] Keyword for search criteria
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {String} [typeValue] Type value.
+ * @apiParam {String} [backEndID] Back end ID.
+ * @apiParam {String} [frontEndID] Front end ID.
+ * @apiParam {String} [eventLv1] Event name.
+ * @apiParam {String} [homeValue] Home team.
+ * @apiParam {String} [awayValue] Away team.
+ * @apiParam {String} [dateTimeGameStart] Game Start time.
+ * @apiParam {String} [userId] The user who trigger this log.
+ * @apiParam {String} [userRole] The role of the user who trigger this log.
+ * @apiParam {String} [systemFunc] In which function trigger this log.
+ * @apiParam {String} [betTypeFeature] Bet type of the games.
+ * @apiParam {String} [device] Device
+ * @apiParam {String} [ipAddress] IP Address.
+ * @apiParam {String} [errorCode] Error code.
+ *
+ * @apiSuccess (Success) {String} type pdf
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} betType football
+ * @apiSuccess (Success) {String} keyword
+ * @apiSuccess (Success) {DateTime} dateTimeFrom 22 Sep 2016 00:00 ( 60 days before)
+ * @apiSuccess (Success) {DateTime} dateTimeTo 21 Nov 2016 23:59 (Today)
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json

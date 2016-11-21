@@ -314,7 +314,7 @@ export default React.createClass({
               <div className='auditlog'>
                     <div className='row page-header'>
                         <p className='hkjc-breadcrumb'>
-                            Home \ Tools & Adminstration \ Audit
+                            Home \ Global Tools & Adminstration \ Audit Trail
                         </p>
                         <h1>Audit Trail</h1>
                     </div>
