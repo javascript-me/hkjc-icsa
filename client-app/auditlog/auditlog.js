@@ -15,8 +15,7 @@ import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
 
 const getOrginDateTimeFrom = function () {
-	let dateTimeFrom = new Date(),
-		dateTimeFromObj = {}
+	let dateTimeFrom = new Date()
 
 	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
 	dateTimeFrom.setHours(0)
@@ -27,8 +26,7 @@ const getOrginDateTimeFrom = function () {
 }
 
 const getOrginDateTimeTo = function () {
-	let dateTimeTo = new Date(),
-		dateTimeToObj = {}
+	let dateTimeTo = new Date()
 
 	dateTimeTo.setHours(23)
 	dateTimeTo.setMinutes(59)
@@ -50,8 +48,8 @@ let DEFAULT_BET_TYPE = 'football'
 export default React.createClass({
 	displayName: 'Audit',
 	getInitialState () {
-		let originDateTimeFrom = getOrginDateTimeFrom(),
-			originDateTimeTo = getOrginDateTimeTo()
+		let originDateTimeFrom = getOrginDateTimeFrom()
+		let originDateTimeTo = getOrginDateTimeTo()
 
 		return {
 			data: [],
@@ -83,18 +81,18 @@ export default React.createClass({
 		}
 	},
 	componentDidMount: function () {
-  		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
-  		let criteriaOption = this.getSearchCriterias()
+		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		let criteriaOption = this.getSearchCriterias()
 
         // Get Table Data
 		AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption)
-  		AuditlogStore.addChangeListener(this.onChange)
+		AuditlogStore.addChangeListener(this.onChange)
 
-  		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
-  			this.searchAuditlog()
-  		})
+		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
+			this.searchAuditlog()
+		})
 
-  		document.addEventListener('click', this.pageClick, false)
+		document.addEventListener('click', this.pageClick, false)
 	},
 
 	componentWillUnmount: function () {
@@ -105,10 +103,10 @@ export default React.createClass({
 	},
 
 	pageClick: function (event) {
-		let keywordTag = this.refs.keyword,
-  			keywordElement = ReactDOM.findDOMNode(keywordTag),
-  			isInsideKeywordElement = keywordElement && keywordElement.contains(event.target),
-  			isInside = isInsideKeywordElement || this.state.isClickInMoreFilters
+		let keywordTag = this.refs.keyword
+		let keywordElement = ReactDOM.findDOMNode(keywordTag)
+		let isInsideKeywordElement = keywordElement && keywordElement.contains(event.target)
+		let isInside = isInsideKeywordElement || this.state.isClickInMoreFilters
 
 		if (!this.state.isShowingMoreFilter || isInside) {
 			this.setState({isClickInMoreFilters: false})
@@ -159,12 +157,12 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
-  		let selectedFilters = this.state.selectedFilters,
-  			 filterIndex = selectedFilters.indexOf(filter)
+		let selectedFilters = this.state.selectedFilters
+		let filterIndex = selectedFilters.indexOf(filter)
 
-  		selectedFilters.splice(filterIndex, 1)
+		selectedFilters.splice(filterIndex, 1)
 
-  		this.setState({
+		this.setState({
     			selectedFilters: selectedFilters,
     			isShowingMoreFilter: false
   		}, () => {

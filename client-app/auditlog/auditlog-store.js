@@ -27,7 +27,6 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 				self.emitChange()
 			},
 			error: function (xhr, status, error) {
-				console.log('Error: ' + error.message)
 			}
 		})
 	},
