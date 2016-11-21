@@ -103,7 +103,7 @@
 		display: flex;
 		align-items: center;
 		background-color: #0C2963;
-		padding-left: 15px;
+		//padding-left: 15px;
 	}
 
 	.level-1-unit {
@@ -115,7 +115,7 @@
 			display: block;
 			width: 19px;
 			height: 19px;
-			margin-left: 15px;
+			//margin-left: 15px;
 			position: relative;
 
 			.icon-img {
@@ -155,9 +155,13 @@
 
 	.menu-unit {
 		background-color: @hkjcBlue;
-		width: 140px;
+		padding: 0 15px;
 		color: white;
 		font-size: 12px;
+
+		&:first-of-type {
+			padding-left: 30px;
+		}
 
 		&:hover {
 			background-color: #516B9F;
@@ -211,7 +215,7 @@
 			display: flex;
 			width: 100%;
 			padding: 0 50px;
-			justify-content: space-between;
+			justify-content: center;
 		}
 	}
 
@@ -219,7 +223,7 @@
 		text-align: center;
 		line-height: 50px;
 		font-size: 14px;
-		flex: 1;
+		//flex: 1;
 
 		&:hover a {
 			color: #B2C3E5;
@@ -245,6 +249,7 @@
 	.second-level-text {
 		position: relative;
 		display: block;
+		padding: 0 25px;
 		text-align: center;
 
 		&:hover .third-level-only {
