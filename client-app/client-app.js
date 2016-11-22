@@ -8,11 +8,9 @@ import config from './config'
 
 import Login from './login/login'
 import LoginService from './login/login-service'
-import Systembar from './systembar/systembar.js'
 import Dashboard from './dashboard/dashboard'
 
 import Audit from './auditlog/auditlog'
-import Navigation from './navigation/navigation'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {

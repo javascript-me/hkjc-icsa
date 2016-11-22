@@ -1,5 +1,3 @@
-import config from '../config'
-
 const getExportURL = (query) => {
 	return '/api/auditlog/export' + query
 }
