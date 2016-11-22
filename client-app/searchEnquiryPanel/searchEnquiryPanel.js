@@ -368,3 +368,8 @@ export default class SearchEnquiryPanel extends React.Component {
 		</div>
 	}
 }
+
+SearchEnquiryPanel.propTypes = {
+	selectedFilters: React.PropTypes.array,
+	setFilterEvent: React.PropTypes.func
+}
