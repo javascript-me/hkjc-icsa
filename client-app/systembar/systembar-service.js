@@ -1,5 +1,5 @@
 const getClock = (data) => {
-	return $.get('api/clock/getTime', data)
+	return $.get('api/clock', data)
 }
 
 export default {
