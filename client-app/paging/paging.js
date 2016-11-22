@@ -31,13 +31,13 @@ export default React.createClass({
 			return value
 		}
 
-		if (innerText == '<') {
+		if (innerText === '<') {
 			if (currentSelectedPageNumber > 1) {
 				return currentSelectedPageNumber - 1
 			}
 		}
 
-		if (innerText == '>') {
+		if (innerText === '>') {
 			if (currentSelectedPageNumber < totalPages) {
 				return currentSelectedPageNumber + 1
 			}
@@ -47,8 +47,8 @@ export default React.createClass({
 	},
 
 	isValid (currentSelectedPageNumber, innerText, totalPages) {
-		if (currentSelectedPageNumber == 1 && innerText == '<') return false
-		if (currentSelectedPageNumber == totalPages && innerText == '>') return false
+		if (currentSelectedPageNumber === 1 && innerText === '<') return false
+		if (currentSelectedPageNumber === totalPages && innerText === '>') return false
 
 		return true
 	},

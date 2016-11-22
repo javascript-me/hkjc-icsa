@@ -2,27 +2,30 @@ import React from 'react'
 import AuditlogStore from '../auditlog/auditlog-store'
 
 export default React.createClass({
+	propTypes: {
+		onChange: React.PropTypes.func
+	},
 
 	getInitialState () {
 		var headers = [
-            {label: 'Date/Time', fieldName: 'date_time', sortingClass: 'down-arrow'},
-            {label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow'},
-            {label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow'},
-            {label: 'Type', fieldName: 'Type', sortingClass: 'no-arrow'},
-            {label: 'Function/Module', fieldName: 'function_module', sortingClass: 'no-arrow'},
-            {label: 'Function Event Detail', fieldName: 'function_event_detail', sortingClass: 'no-arrow'},
-            {label: 'User Role', fieldName: 'user_role', sortingClass: 'no-arrow'},
-            {label: 'IP Address', fieldName: 'ip_address', sortingClass: 'no-arrow'},
-            {label: 'Back End ID', fieldName: 'backend_id', sortingClass: 'no-arrow'},
-            {label: 'Front End ID', fieldName: 'frontend_id', sortingClass: 'no-arrow'},
-            {label: 'Home', fieldName: 'home', sortingClass: 'no-arrow'},
-            {label: 'Away', fieldName: 'away', sortingClass: 'no-arrow'},
-            {label: 'K.O. Time/ Game Start Time', fieldName: 'ko_time_game_start_game', sortingClass: 'no-arrow'},
-            {label: 'Bet Type', fieldName: 'bet_type', sortingClass: 'no-arrow'},
-            {label: 'Event Name', fieldName: 'event_name', sortingClass: 'no-arrow'},
-            {label: 'Error Code', fieldName: 'error_code', sortingClass: 'no-arrow'},
-            {label: 'Error Message Content', fieldName: 'error_message_content', sortingClass: 'no-arrow'},
-            {label: 'Device', fieldName: 'device', sortingClass: 'no-arrow'}
+			{label: 'Date/Time', fieldName: 'date_time', sortingClass: 'down-arrow'},
+			{label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow'},
+			{label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow'},
+			{label: 'Type', fieldName: 'Type', sortingClass: 'no-arrow'},
+			{label: 'Function/Module', fieldName: 'function_module', sortingClass: 'no-arrow'},
+			{label: 'Function Event Detail', fieldName: 'function_event_detail', sortingClass: 'no-arrow'},
+			{label: 'User Role', fieldName: 'user_role', sortingClass: 'no-arrow'},
+			{label: 'IP Address', fieldName: 'ip_address', sortingClass: 'no-arrow'},
+			{label: 'Back End ID', fieldName: 'backend_id', sortingClass: 'no-arrow'},
+			{label: 'Front End ID', fieldName: 'frontend_id', sortingClass: 'no-arrow'},
+			{label: 'Home', fieldName: 'home', sortingClass: 'no-arrow'},
+			{label: 'Away', fieldName: 'away', sortingClass: 'no-arrow'},
+			{label: 'K.O. Time/ Game Start Time', fieldName: 'ko_time_game_start_game', sortingClass: 'no-arrow'},
+			{label: 'Bet Type', fieldName: 'bet_type', sortingClass: 'no-arrow'},
+			{label: 'Event Name', fieldName: 'event_name', sortingClass: 'no-arrow'},
+			{label: 'Error Code', fieldName: 'error_code', sortingClass: 'no-arrow'},
+			{label: 'Error Message Content', fieldName: 'error_message_content', sortingClass: 'no-arrow'},
+			{label: 'Device', fieldName: 'device', sortingClass: 'no-arrow'}
 		]
 
 		return {
@@ -91,9 +94,9 @@ export default React.createClass({
 	},
 
 	transformSortingClass (value) {
-		if (value == 'no-arrow') return 'down-arrow'
-		if (value == 'down-arrow') return 'up-arrow'
-		if (value == 'up-arrow') return 'down-arrow'
+		if (value === 'no-arrow') return 'down-arrow'
+		if (value === 'down-arrow') return 'up-arrow'
+		if (value === 'up-arrow') return 'down-arrow'
 		return ''
 	},
 
@@ -101,7 +104,7 @@ export default React.createClass({
 		for (var i = 0; i < headers.length; i++) {
 			var element = headers[i]
 
-			if (element.fieldName == fieldName) {
+			if (element.fieldName === fieldName) {
 				return element
 			}
 		}
@@ -110,11 +113,11 @@ export default React.createClass({
 	},
 
 	parseToOrder (value) {
-        // TODO: these names should be extract somewhere.
+		// TODO: these names should be extract somewhere.
 
-		if (value == 'no-arrow') return 'NO_ORDER'
-		if (value == 'up-arrow') return 'ASCEND'
-		if (value == 'down-arrow') return 'DESCEND'
+		if (value === 'no-arrow') return 'NO_ORDER'
+		if (value === 'up-arrow') return 'ASCEND'
+		if (value === 'down-arrow') return 'DESCEND'
 		return ''
 	},
 
@@ -138,8 +141,8 @@ export default React.createClass({
 		return columnVal || 'N / A'
 	},
 
-    // TODO: below long HTML should be extracted to a method.
-    // TODO: fieldName like date_time is appeared in 2 places. Need to combine.
+	// TODO: below long HTML should be extracted to a method.
+	// TODO: fieldName like date_time is appeared in 2 places. Need to combine.
 
 	renderRows () {
 		if (this.state.auditlogs.length === 0) {
@@ -155,46 +158,46 @@ export default React.createClass({
 		}
 		return this.state.auditlogs.map((row) => {
 			return <tr>
-                    <td>{this.formatColumnVal(row.date_time)}</td>
-                    <td>{this.formatColumnVal(row.user_id)}</td>
-                    <td>{this.formatColumnVal(row.user_name)}</td>
-                    <td>{this.formatColumnVal(row.Type)}</td>
-                    <td>{this.formatColumnVal(row.function_module)}</td>
-                    <td>{this.formatColumnVal(row.function_event_detail)}</td>
-                    <td>{this.formatColumnVal(row.user_role)}</td>
-                    <td>{this.formatColumnVal(row.ip_address)}</td>
-                    <td>{this.formatColumnVal(row.backend_id)}</td>
-                    <td>{this.formatColumnVal(row.frontend_id)}</td>
-                    <td>{this.formatColumnVal(row.home)}</td>
-                    <td>{this.formatColumnVal(row.away)}</td>
-                    <td>{this.formatColumnVal(row.ko_time_game_start_game)}</td>
-                    <td>{this.formatColumnVal(row.bet_type)}</td>
-                    <td>{this.formatColumnVal(row.event_name)}</td>
-                    <td>{this.formatColumnVal(row.error_code)}</td>
-                    <td>{this.formatColumnVal(row.error_message_content)}</td>
-                    <td>{this.formatColumnVal(row.device)}</td>
-                </tr>
+				<td>{this.formatColumnVal(row.date_time)}</td>
+				<td>{this.formatColumnVal(row.user_id)}</td>
+				<td>{this.formatColumnVal(row.user_name)}</td>
+				<td>{this.formatColumnVal(row.Type)}</td>
+				<td>{this.formatColumnVal(row.function_module)}</td>
+				<td>{this.formatColumnVal(row.function_event_detail)}</td>
+				<td>{this.formatColumnVal(row.user_role)}</td>
+				<td>{this.formatColumnVal(row.ip_address)}</td>
+				<td>{this.formatColumnVal(row.backend_id)}</td>
+				<td>{this.formatColumnVal(row.frontend_id)}</td>
+				<td>{this.formatColumnVal(row.home)}</td>
+				<td>{this.formatColumnVal(row.away)}</td>
+				<td>{this.formatColumnVal(row.ko_time_game_start_game)}</td>
+				<td>{this.formatColumnVal(row.bet_type)}</td>
+				<td>{this.formatColumnVal(row.event_name)}</td>
+				<td>{this.formatColumnVal(row.error_code)}</td>
+				<td>{this.formatColumnVal(row.error_message_content)}</td>
+				<td>{this.formatColumnVal(row.device)}</td>
+			</tr>
 		})
 	},
 
 	render () {
 		return <table className='table-striped table auditlog-table'>
-            <thead className='table-header'>
-			<tr>
-				{
-					this.state.headers.map(
-						(header, i) => {
-							return <th>
-								<span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span>
-							</th>
-						}
-					)
-				}
-			</tr>
-            </thead>
-            <tbody>
-                {this.renderRows()}
-            </tbody>
-        </table>
+			<thead className='table-header'>
+				<tr>
+					{
+						this.state.headers.map(
+							(header, i) => {
+								return <th>
+									<span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span>
+								</th>
+							}
+						)
+					}
+				</tr>
+			</thead>
+			<tbody>
+				{this.renderRows()}
+			</tbody>
+		</table>
 	}
 })

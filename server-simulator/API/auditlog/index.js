@@ -7,7 +7,7 @@ import PagingUtil from './paging-util'
 import PagingService from './paging-service'
 
 const router = express.Router()
-const options = { format: 'Letter', orientation: 'landscape', header: { 'height': '15mm'} }
+const options = {format: 'Letter', orientation: 'landscape', header: {'height': '15mm'}}
 const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
@@ -62,7 +62,7 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	var cloneAuditlogs
 
-	if (req.body.username == 'allgood') {
+	if (req.body.username === 'allgood') {
 		cloneAuditlogs = jsonObject.auditlogs.slice(0)
 	} else {
 		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
@@ -92,7 +92,6 @@ router.post('/filterAuditlogs', (req, res) => {
 })
 
 router.get('/download/:file', (req, res) => {
-	console.log(req.params)
 	res.writeHead(200, {
 		'Content-Type': 'application/octet-stream',
 		'Content-Disposition': 'attachment; filename=audit.pdf'})
@@ -141,10 +140,10 @@ router.get('/download/:file', (req, res) => {
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json
-	const filters = !!json ? JSON.parse(decodeURIComponent(json)) : {}
+	const filters = json ? JSON.parse(decodeURIComponent(json)) : {}
 	let data = []
 
-	if (filters.username == 'allgood') {
+	if (filters.username === 'allgood') {
 		data = jsonObject.auditlogs.slice(0)
 	} else {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
@@ -159,32 +158,31 @@ router.get('/export', (req, res) => {
 						filters.device
 					)
 
-	let status = 200
+	let statusCode = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+	let dateReport
 
 	switch (type.toLowerCase()) {
 	case 'pdf':
-
-		let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
+		dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
 
 		result = helper.toHTML(result, dateReport)
-		res.writeHead(200, {
+		res.writeHead(statusCode, {
 			'Content-Type': 'application/octet-stream',
 			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
 
 		pdf.create(result, options).toStream((err, file) => {
 			if (err) {
-				console.log(err)
 				res.end()
+			} else {
+				file.pipe(res)
 			}
-			else
-	                file.pipe(res)
 		})
 
 		break
 	case 'csv':
 		result = helper.toCSV(result)
-		res.writeHead(200, {
+		res.writeHead(statusCode, {
 			'Content-Type': 'application/octet-stream',
 			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
 		res.end(result)

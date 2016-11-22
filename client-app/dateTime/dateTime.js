@@ -8,3 +8,9 @@ export default class DateTime extends React.Component {
 		</div>
 	}
 }
+
+DateTime.propTypes = {
+	inputFor: React.PropTypes.string,
+	dateTime: React.PropTypes.string,
+	handleVal: React.PropTypes.func
+}

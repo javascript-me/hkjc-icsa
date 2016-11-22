@@ -37,12 +37,12 @@ describe('<Tabulardata />', () => {
 		assert.equal('down-arrow', resultA[0].sortingClass)
 
 		var resultB = instance.updateColumnSortingArrow(headers, 'user_id')
-		assert.equal('down-arrow', resultA[1].sortingClass)
-		assert.equal('no-arrow', resultA[0].sortingClass)
+		assert.equal('down-arrow', resultB[1].sortingClass)
+		assert.equal('no-arrow', resultB[0].sortingClass)
 
 		var resultC = instance.updateColumnSortingArrow(headers, 'user_id')
-		assert.equal('up-arrow', resultA[1].sortingClass)
-		assert.equal('no-arrow', resultA[0].sortingClass)
+		assert.equal('up-arrow', resultC[1].sortingClass)
+		assert.equal('no-arrow', resultC[0].sortingClass)
 	})
 
 	it('findHeader() should return header based on fieldName', () => {
