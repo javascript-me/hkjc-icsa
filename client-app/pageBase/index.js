@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import SystemBar from '../systembar/systembar.js'
 import MenuBar from '../menu-bar'
+import Noticeboard from '../noticeboard/noticeboard'
+
 
 
 class PageBase extends Component {
@@ -14,6 +16,7 @@ class PageBase extends Component {
 						{this.props.children || 'dashboard-page'}
 					</div>
 				</div>
+				<Noticeboard isBottomDisplay="{true}"/>
 			</div>
 		);
 	}
