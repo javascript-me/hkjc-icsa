@@ -8,8 +8,8 @@ import PubSub from '../pubsub'
 const selectdata = SearchEnquiryDataService.getData()
 
 const getOrginDateTimeFrom = function () {
-	let dateTimeFrom = new Date(),
-		dateTimeFromObj = {}
+	let dateTimeFrom = new Date()
+	let dateTimeFromObj = {}
 
 	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
 	dateTimeFrom.setHours(0)
@@ -22,8 +22,8 @@ const getOrginDateTimeFrom = function () {
 }
 
 const getOrginDateTimeTo = function () {
-	let dateTimeTo = new Date(),
-		dateTimeToObj = {}
+	let dateTimeTo = new Date()
+	let dateTimeToObj = {}
 
 	dateTimeTo.setHours(23)
 	dateTimeTo.setMinutes(59)
@@ -37,26 +37,26 @@ const getOrginDateTimeTo = function () {
 const originState = {
 	dateTimeFrom: getOrginDateTimeFrom(),
 	dateTimeTo: getOrginDateTimeTo(),
-    typeValue: '',
-    backEndID: '',
-    frontEndID: '',
-    eventLv1: '',
-    homeValue: '',
-    awayValue: '',
-    dateTimeGameStart: '',
-    userId: '',
-    userRole: '',
-    systemFunc: '',
-    betTypeFeature: '',
-    device: '',
-    ipAddress: '',
-    errorCode: '',
-    tipsFlag: 1,
-    errorDateTimeFrom: 1,
-    errorDateTimeTo: 1,
-    errorDateTimeGameStart: 1,
-    errorIPAddress: 1
-};
+	typeValue: '',
+	backEndID: '',
+	frontEndID: '',
+	eventLv1: '',
+	homeValue: '',
+	awayValue: '',
+	dateTimeGameStart: '',
+	userId: '',
+	userRole: '',
+	systemFunc: '',
+	betTypeFeature: '',
+	device: '',
+	ipAddress: '',
+	errorCode: '',
+	tipsFlag: 1,
+	errorDateTimeFrom: 1,
+	errorDateTimeTo: 1,
+	errorDateTimeGameStart: 1,
+	errorIPAddress: 1
+}
 
 let tokenKeyPress = null
 let tokenRemoveFilter = null
@@ -72,7 +72,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			}
 		}, originState)
 
-		this.setState(this.props.selectedFilters);
+		this.setState(this.props.selectedFilters)
 
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
@@ -83,9 +83,9 @@ export default class SearchEnquiryPanel extends React.Component {
 		})
 
 		tokenRemoveFilter = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], (topic, filter) => {
-			let newState = {};
+			let newState = {}
 
-			newState[filter.name] = originState[filter.name];
+			newState[filter.name] = originState[filter.name]
 			this.setState(newState)
 		})
 
@@ -108,8 +108,8 @@ export default class SearchEnquiryPanel extends React.Component {
 		}
 	}
 
-	isValidDateTime(str) {
-		return Moment(str, "DD MMM YYYY HH:mm", true).isValid();
+	isValidDateTime (str) {
+		return Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
 	}
 
 	handleChange (name, event) {
@@ -175,7 +175,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	handleSubmit () {
-  		this.setState({ tipsFlag: 0 }, function () {
+		this.setState({ tipsFlag: 0 }, function () {
 			if (this.isEnquiryValid()) {
 				let enquiries = this.getEnquiries(this.state)
 
@@ -194,32 +194,32 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	getEnquiries (src) {
-		let result = {},
-			needReturnEnquiries = [
-					'dateTimeFrom',
-					'dateTimeTo',
-					'typeValue',
-					'backEndID',
-					'frontEndID',
-					'eventLv1',
-					'homeValue',
-					'awayValue',
-					'dateTimeGameStart',
-					'userId',
-					'userRole',
-					'systemFunc',
-					'betTypeFeature',
-					'device',
-					'ipAddress',
-					'errorCode'],
-          currentAttrName,
-          currentAttrVal;
+		let result = {}
+		let needReturnEnquiries = [
+			'dateTimeFrom',
+			'dateTimeTo',
+			'typeValue',
+			'backEndID',
+			'frontEndID',
+			'eventLv1',
+			'homeValue',
+			'awayValue',
+			'dateTimeGameStart',
+			'userId',
+			'userRole',
+			'systemFunc',
+			'betTypeFeature',
+			'device',
+			'ipAddress',
+			'errorCode']
+		let currentAttrName
+		let currentAttrVal
 
 		for (let i in needReturnEnquiries) {
 			currentAttrName = needReturnEnquiries[i]
 			currentAttrVal = (currentAttrName === 'dateTimeFrom' || currentAttrName === 'dateTimeTo')
-	          ? src[currentAttrName].datetime
-	          : src[currentAttrName]
+				? src[currentAttrName].datetime
+				: src[currentAttrName]
 
 			if (currentAttrVal) {
 				result[currentAttrName] = currentAttrVal
@@ -257,7 +257,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={fromClass}>
 							<label>Date Time From <span>*</span></label>
-							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom.datetime} handleVal={(e) => {this.handleChange('dateTimeFrom', e)} } />
+							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom.datetime} handleVal={(e) => { this.handleChange('dateTimeFrom', e) }} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -269,7 +269,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Type</label>
-							<SelectCom key="typeValue" datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
+							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -321,13 +321,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User Role</label>
-							<SelectCom key="userRole" datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={(e) => this.handleChange('userRole', e)} />
+							<SelectCom key='userRole' datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={(e) => this.handleChange('userRole', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>System Function</label>
-							<SelectCom key="systemFunc" datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={(e) => this.handleChange('systemFunc', e)} />
+							<SelectCom key='systemFunc' datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={(e) => this.handleChange('systemFunc', e)} />
 						</div>
 					</div>
 				</div>
@@ -335,13 +335,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Bet Type / Feature</label>
-							<SelectCom key="betTypeFeature" datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={(e) => this.handleChange('betTypeFeature', e)} />
+							<SelectCom key='betTypeFeature' datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={(e) => this.handleChange('betTypeFeature', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Device</label>
-							<SelectCom key="device" datas={selectdata.device} selectedVal={this.state.device} handleVal={(e) => this.handleChange('device', e)} />
+							<SelectCom key='device' datas={selectdata.device} selectedVal={this.state.device} handleVal={(e) => this.handleChange('device', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>

@@ -107,13 +107,12 @@ export default {
 	},
 
 	getDataByPageNumber (selectedPageNumber) {
-
-        if (isNaN(selectedPageNumber) || this.totalPages == 0) {
-            return {
-                pages: [],
-                totalPages: this.totalPages
-            }
-        }
+		if (isNaN(selectedPageNumber) || this.totalPages == 0) {
+			return {
+				pages: [],
+				totalPages: this.totalPages
+			}
+		}
 
 		selectedPageNumber = this.fixInvalidSelectedPageNumber(selectedPageNumber)
 

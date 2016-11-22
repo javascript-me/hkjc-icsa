@@ -5,12 +5,12 @@ export default React.createClass({
 
 	currentSelectedPageNumber: 1,
 
-    getInitialState () {
-        return {
-            pages: [],
-            totalPages: 0
-        }
-    },
+	getInitialState () {
+		return {
+			pages: [],
+			totalPages: 0
+		}
+	},
 
 	componentDidMount () {
 		AuditlogStore.addChangeListener(this.onChange)
@@ -46,9 +46,9 @@ export default React.createClass({
 		return currentSelectedPageNumber
 	},
 
-	isValid(currentSelectedPageNumber, innerText, totalPages) {
-		if (currentSelectedPageNumber == 1 && innerText == "<") return false
-		if (currentSelectedPageNumber == totalPages && innerText == ">") return false
+	isValid (currentSelectedPageNumber, innerText, totalPages) {
+		if (currentSelectedPageNumber == 1 && innerText == '<') return false
+		if (currentSelectedPageNumber == totalPages && innerText == '>') return false
 
 		return true
 	},
@@ -58,8 +58,8 @@ export default React.createClass({
 
 		this.currentSelectedPageNumber = this.getUserSelectedPageNumber(this.currentSelectedPageNumber, event.target.innerText, this.state.totalPages)
 
-        AuditlogStore.searchAuditlogs(this.currentSelectedPageNumber, null, null)
-    },
+		AuditlogStore.searchAuditlogs(this.currentSelectedPageNumber, null, null)
+	},
 
 	getClassName (page) {
 		var result = []

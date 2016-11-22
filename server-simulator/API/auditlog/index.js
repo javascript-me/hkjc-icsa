@@ -11,7 +11,6 @@ const options = { format: 'Letter', orientation: 'landscape', header: { 'height'
 const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
-
 /**
  * @api {POST} /auditlog/filterAuditlogs filterAuditlogs
  * @apiGroup Auditlog
@@ -63,7 +62,7 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	var cloneAuditlogs
 
-	if (req.body.username == "allgood") {
+	if (req.body.username == 'allgood') {
 		cloneAuditlogs = jsonObject.auditlogs.slice(0)
 	} else {
 		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
@@ -100,7 +99,6 @@ router.get('/download/:file', (req, res) => {
 
 	fs.createReadStream('./' + req.params.file).pipe(res)
 })
-
 
 /**
  * @api {GET} /auditlog/export export
@@ -146,12 +144,12 @@ router.get('/export', (req, res) => {
 	const filters = !!json ? JSON.parse(decodeURIComponent(json)) : {}
 	let data = []
 
-	if (filters.username == "allgood") {
+	if (filters.username == 'allgood') {
 		data = jsonObject.auditlogs.slice(0)
 	} else {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
-	
+
 	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
 						filters.typeValue,
@@ -160,39 +158,39 @@ router.get('/export', (req, res) => {
 						filters.betTypeFeature,
 						filters.device
 					)
-	
+
 	let status = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-	
+
 	switch (type.toLowerCase()) {
-		case 'pdf':
+	case 'pdf':
 
-			let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
-			
-			result = helper.toHTML(result, dateReport)
-			res.writeHead(200, {
-				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+		let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
 
-			pdf.create(result, options).toStream((err, file) => {
-				if (err) {
-					console.log(err)
-					res.end()
-				}
-				else
+		result = helper.toHTML(result, dateReport)
+		res.writeHead(200, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+
+		pdf.create(result, options).toStream((err, file) => {
+			if (err) {
+				console.log(err)
+				res.end()
+			}
+			else
 	                file.pipe(res)
-			})
+		})
 
-			break
-		case 'csv':
-			result = helper.toCSV(result)
-			res.writeHead(200, {
-				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
-			res.end(result)
-			break
-		default:
-			break
+		break
+	case 'csv':
+		result = helper.toCSV(result)
+		res.writeHead(200, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
+		res.end(result)
+		break
+	default:
+		break
 	}
 })
 

@@ -256,22 +256,20 @@ const menuList1 = [
 		iconSrc: 'Icon - Compile Monitoring.svg',
 		iconSrc_A: 'Icon - Compile MonitoringW.svg',
 		textL1: 'Odds',
-		textL2: 'Complitation',
-		
+		textL2: 'Complitation'
 
 	},
 	{
 		iconSrc: 'Icon - Pre-Event Monitoring.svg',
 		iconSrc_A: 'Icon - Pre-Event MonitoringW.svg',
 		textL1: 'Pre-Event',
-		textL2: 'Monitoring',
+		textL2: 'Monitoring'
 	},
 	{
 		iconSrc: 'Icon - In-Play Monitoring.svg',
 		iconSrc_A: 'Icon - In-Play MonitoringW.svg',
 		textL1: 'In-Play',
-		textL2: 'Monitoring',
-		
+		textL2: 'Monitoring'
 
 	},
 	{
@@ -476,7 +474,7 @@ const menuList1 = [
 				text: 'Odds Parameters'
 			},
 			{
-				text: 'Product Parameters'	
+				text: 'Product Parameters'
 			},
 			{
 				text: 'Risk Parameters'
@@ -752,7 +750,7 @@ const menuList2 = [
 		iconSrc: 'Icon - Pre-Event Monitoring.svg',
 		iconSrc_A: 'Icon - Pre-Event MonitoringW.svg',
 		textL1: 'Pre-Event',
-		textL2: 'Monitoring',
+		textL2: 'Monitoring'
 	},
 	{
 		iconSrc: 'Icon - Result & Settlement.svg',

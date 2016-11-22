@@ -27,9 +27,9 @@ describe('<Paging />', () => {
 		assert.equal(50, instance.getUserSelectedPageNumber(50, '...', PagingService.totalPages))
 	})
 
-	it("isValid() should return false if you are click < when you are already in page 1", () => {
+	it('isValid() should return false if you are click < when you are already in page 1', () => {
 		const instance = shallow(<Paging />).instance()
-		assert.isNotOk(instance.isValid(1, "<", 100))
-		assert.isNotOk(instance.isValid(100, ">", 100))
+		assert.isNotOk(instance.isValid(1, '<', 100))
+		assert.isNotOk(instance.isValid(100, '>', 100))
 	})
 })

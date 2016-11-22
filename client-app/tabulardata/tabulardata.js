@@ -65,9 +65,9 @@ export default React.createClass({
 			auditlogs: AuditlogStore.auditlogs
 		})
 
-        if (this.props.onChange) {
-            this.props.onChange(AuditlogStore.auditlogs)
-        }
+		if (this.props.onChange) {
+			this.props.onChange(AuditlogStore.auditlogs)
+		}
 	},
 
 	setToNoArrow (headers) {
@@ -134,8 +134,8 @@ export default React.createClass({
 		AuditlogStore.searchAuditlogs(1, sortingObject, null)
 	},
 
-	formatColumnVal(columnVal) {
-		return columnVal || "N / A";
+	formatColumnVal (columnVal) {
+		return columnVal || 'N / A'
 	},
 
     // TODO: below long HTML should be extracted to a method.

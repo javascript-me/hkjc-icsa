@@ -8,8 +8,8 @@ export default class SelectCom extends React.Component {
 	}
 	render () {
 		return <select className='form-control' value={this.props.selectedVal} onChange={this.props.handleVal}>
-			<option value="">All</option>
+			<option value=''>All</option>
 			{this.renderOptions()}
-		</select>;
+		</select>
 	}
 }
