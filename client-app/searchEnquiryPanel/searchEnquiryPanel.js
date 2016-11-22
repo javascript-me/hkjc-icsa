@@ -37,26 +37,26 @@ const getOrginDateTimeTo = function () {
 const originState = {
 	dateTimeFrom: getOrginDateTimeFrom(),
 	dateTimeTo: getOrginDateTimeTo(),
-    typeValue: '',
-    backEndID: '',
-    frontEndID: '',
-    eventLv1: '',
-    homeValue: '',
-    awayValue: '',
-    dateTimeGameStart: '',
-    userId: '',
-    userRole: '',
-    systemFunc: '',
-    betTypeFeature: '',
-    device: '',
-    ipAddress: '',
-    errorCode: '',
-    tipsFlag: 1,
-    errorDateTimeFrom: 1,
-    errorDateTimeTo: 1,
-    errorDateTimeGameStart: 1,
-    errorIPAddress: 1
-};
+	typeValue: '',
+	backEndID: '',
+	frontEndID: '',
+	eventLv1: '',
+	homeValue: '',
+	awayValue: '',
+	dateTimeGameStart: '',
+	userId: '',
+	userRole: '',
+	systemFunc: '',
+	betTypeFeature: '',
+	device: '',
+	ipAddress: '',
+	errorCode: '',
+	tipsFlag: 1,
+	errorDateTimeFrom: 1,
+	errorDateTimeTo: 1,
+	errorDateTimeGameStart: 1,
+	errorIPAddress: 1
+}
 
 let tokenKeyPress = null
 let tokenRemoveFilter = null
@@ -72,7 +72,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			}
 		}, originState)
 
-		this.setState(this.props.selectedFilters);
+		this.setState(this.props.selectedFilters)
 
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
@@ -83,9 +83,9 @@ export default class SearchEnquiryPanel extends React.Component {
 		})
 
 		tokenRemoveFilter = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], (topic, filter) => {
-			let newState = {};
+			let newState = {}
 
-			newState[filter.name] = originState[filter.name];
+			newState[filter.name] = originState[filter.name]
 			this.setState(newState)
 		})
 
@@ -108,8 +108,8 @@ export default class SearchEnquiryPanel extends React.Component {
 		}
 	}
 
-	isValidDateTime(str) {
-		return Moment(str, "DD MMM YYYY HH:mm", true).isValid();
+	isValidDateTime (str) {
+		return Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
 	}
 
 	handleChange (name, event) {
@@ -196,24 +196,24 @@ export default class SearchEnquiryPanel extends React.Component {
 	getEnquiries (src) {
 		let result = {},
 			needReturnEnquiries = [
-					'dateTimeFrom',
-					'dateTimeTo',
-					'typeValue',
-					'backEndID',
-					'frontEndID',
-					'eventLv1',
-					'homeValue',
-					'awayValue',
-					'dateTimeGameStart',
-					'userId',
-					'userRole',
-					'systemFunc',
-					'betTypeFeature',
-					'device',
-					'ipAddress',
-					'errorCode'],
-          currentAttrName,
-          currentAttrVal;
+				'dateTimeFrom',
+				'dateTimeTo',
+				'typeValue',
+				'backEndID',
+				'frontEndID',
+				'eventLv1',
+				'homeValue',
+				'awayValue',
+				'dateTimeGameStart',
+				'userId',
+				'userRole',
+				'systemFunc',
+				'betTypeFeature',
+				'device',
+				'ipAddress',
+				'errorCode'],
+			currentAttrName,
+			currentAttrVal
 
 		for (let i in needReturnEnquiries) {
 			currentAttrName = needReturnEnquiries[i]
@@ -269,7 +269,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Type</label>
-							<SelectCom key="typeValue" datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={this.handleChange.bind(this, 'typeValue')} />
+							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={this.handleChange.bind(this, 'typeValue')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -321,13 +321,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User Role</label>
-							<SelectCom key="userRole" datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={this.handleChange.bind(this, 'userRole')} />
+							<SelectCom key='userRole' datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={this.handleChange.bind(this, 'userRole')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>System Function</label>
-							<SelectCom key="systemFunc" datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={this.handleChange.bind(this, 'systemFunc')} />
+							<SelectCom key='systemFunc' datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={this.handleChange.bind(this, 'systemFunc')} />
 						</div>
 					</div>
 				</div>
@@ -335,13 +335,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Bet Type / Feature</label>
-							<SelectCom key="betTypeFeature" datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={this.handleChange.bind(this, 'betTypeFeature')} />
+							<SelectCom key='betTypeFeature' datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={this.handleChange.bind(this, 'betTypeFeature')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Device</label>
-							<SelectCom key="device" datas={selectdata.device} selectedVal={this.state.device} handleVal={this.handleChange.bind(this, 'device')} />
+							<SelectCom key='device' datas={selectdata.device} selectedVal={this.state.device} handleVal={this.handleChange.bind(this, 'device')} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>

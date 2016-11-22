@@ -17,10 +17,10 @@ describe('The Clock Popup', () => {
 		expect(popup.find('h4').text()).to.equal('Clock')
 	})
 	it('set props', () => {
-	    const wrapper = mount(<Popup bar='baz' />)
-	    expect(wrapper.props().bar).to.equal('baz')
-	    wrapper.setProps({ bar: 'foo' })
-	    expect(wrapper.props().bar).to.equal('foo')
+		const wrapper = mount(<Popup bar='baz' />)
+		expect(wrapper.props().bar).to.equal('baz')
+		wrapper.setProps({ bar: 'foo' })
+		expect(wrapper.props().bar).to.equal('foo')
 	})
 	it('the popup is closed', () => {
 		const systembar = shallow(<Systembar />)
@@ -29,9 +29,6 @@ describe('The Clock Popup', () => {
 		expect(systembar.find('div.popup')).to.have.length(0)
 	})
 	it('move the popup', () => {
-		const position = {
-			x: 0,
-			y: 0
-		}
+
 	})
 })

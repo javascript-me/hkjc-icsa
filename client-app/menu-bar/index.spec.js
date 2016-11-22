@@ -22,8 +22,8 @@ describe('<MenuBar />', () => {
 		let ThirdLevelOnly = MenuBar.__get__('ThirdLevelOnly')
 		const thirdLevelOnly = shallow(<ThirdLevelOnly dataList={menuBarData.menuList1[1].subMenu[0].subMenu} />)
 		let thirdLevelLength = menuBarData.menuList1[1].subMenu[0].subMenu.length
-		for(let thirdMenuItem of  menuBarData.menuList1[1].subMenu[0].subMenu){
-			if(thirdMenuItem.subMenu){
+		for (let thirdMenuItem of menuBarData.menuList1[1].subMenu[0].subMenu) {
+			if (thirdMenuItem.subMenu) {
 				thirdLevelLength = 0
 			}
 		}
@@ -35,12 +35,12 @@ describe('<MenuBar />', () => {
 		const thirdLevelMenu = shallow(<ThirdLevelMenu data={menuBarData.menuList1[1].subMenu[0].subMenu} />)
 		let thirdLevelLength = menuBarData.menuList1[1].subMenu[0].subMenu.length
 		let forthLevelFlag = false
-		for(let thirdMenuItem of  menuBarData.menuList1[1].subMenu[0].subMenu){
-			if(thirdMenuItem.subMenu){
+		for (let thirdMenuItem of menuBarData.menuList1[1].subMenu[0].subMenu) {
+			if (thirdMenuItem.subMenu) {
 				forthLevelFlag = true
 			}
 		}
-		if(!forthLevelFlag){
+		if (!forthLevelFlag) {
 			thirdLevelLength = 0
 		}
 		expect(thirdLevelMenu.find('div.third-level-item')).to.have.length(thirdLevelLength)
