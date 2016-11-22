@@ -19,3 +19,7 @@ class PageBase extends Component {
 }
 
 export default PageBase
+
+PageBase.propTypes = {
+	children: React.PropTypes.string
+}

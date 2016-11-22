@@ -1,6 +1,3 @@
-import _ from 'underscore'
-import PubSub from '../pubsub'
-
 let auditlogsResponse = {}
 
 const postSearchCriteria = (data) => {
@@ -16,7 +13,6 @@ export default {
 		} catch (failure) {
             // returns null on failure
 		}
-		console.log(auditlogsResponse)
 		return auditlogsResponse
 	},
 	setPageData () {

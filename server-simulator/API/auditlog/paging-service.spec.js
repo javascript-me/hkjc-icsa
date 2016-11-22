@@ -21,7 +21,7 @@ describe('PagingService', () => {
 		var dataOfPageNaN = PagingService.getDataByPageNumber(NaN)
 		assert.ok(_.isEmpty(dataOfPageNaN.pages))
 		assert.equal(PagingService.totalPages, dataOfPageNaN.totalPages)
-	}),
+	})
 
 	it('should return data by small paging number', () => {
 		var dataOfPage2 = PagingService.getDataByPageNumber(2)
@@ -34,7 +34,7 @@ describe('PagingService', () => {
 
 		assert.equal(1, PagingService.getDataByPageNumber(-10).pages[1].label)
 		assert.equal(PagingService.totalPages, PagingService.getDataByPageNumber(200).pages[8].label)
-	}),
+	})
 
 	it('should return page 6 data', () => {
 		var dataOfPage6 = PagingService.getDataByPageNumber(6)

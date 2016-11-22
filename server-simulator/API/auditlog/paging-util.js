@@ -47,18 +47,18 @@ function descendSort (key) {
 }
 
 function parseToMonthIndex (monthName) {
-	if (monthName == 'January' || monthName == 'Jan') return 0
-	if (monthName == 'February' || monthName == 'Feb') return 1
-	if (monthName == 'March' || monthName == 'Mar') return 2
-	if (monthName == 'April' || monthName == 'Apr') return 3
-	if (monthName == 'May' || monthName == 'May') return 4
-	if (monthName == 'June' || monthName == 'Jun') return 5
-	if (monthName == 'July' || monthName == 'Jul') return 6
-	if (monthName == 'August' || monthName == 'Aug') return 7
-	if (monthName == 'September' || monthName == 'Sep') return 8
-	if (monthName == 'October' || monthName == 'Oct') return 9
-	if (monthName == 'November' || monthName == 'Nov') return 10
-	if (monthName == 'December' || monthName == 'Dec') return 11
+	if (monthName === 'January' || monthName === 'Jan') return 0
+	if (monthName === 'February' || monthName === 'Feb') return 1
+	if (monthName === 'March' || monthName === 'Mar') return 2
+	if (monthName === 'April' || monthName === 'Apr') return 3
+	if (monthName === 'May' || monthName === 'May') return 4
+	if (monthName === 'June' || monthName === 'Jun') return 5
+	if (monthName === 'July' || monthName === 'Jul') return 6
+	if (monthName === 'August' || monthName === 'Aug') return 7
+	if (monthName === 'September' || monthName === 'Sep') return 8
+	if (monthName === 'October' || monthName === 'Oct') return 9
+	if (monthName === 'November' || monthName === 'Nov') return 10
+	if (monthName === 'December' || monthName === 'Dec') return 11
 	return -1
 }
 
@@ -78,7 +78,7 @@ function parseToDate (value) {
 	var hour = items[0]
 	var minute = items[1]
 
-	var second = !!items[2] ? items[2] : '00'
+	var second = items[2] ? items[2] : '00'
 
 	return new Date(year, monthIndex, date, hour, minute, second)
 }
@@ -104,7 +104,7 @@ function doSorting (auditlogs, fieldName, order) {
 	var descendSortFunction
 	var ascendSortFunction
 
-	if (fieldName == 'date_time') {
+	if (fieldName === 'date_time') {
 		descendSortFunction = descendDateSort
 		ascendSortFunction = ascendDateSort
 	} else {
@@ -112,67 +112,67 @@ function doSorting (auditlogs, fieldName, order) {
 		ascendSortFunction = ascendSort(fieldName)
 	}
 
-	if (order == 'DESCEND') auditlogs.sort(descendSortFunction)
-	if (order == 'ASCEND') auditlogs.sort(ascendSortFunction)
+	if (order === 'DESCEND') auditlogs.sort(descendSortFunction)
+	if (order === 'ASCEND') auditlogs.sort(ascendSortFunction)
 
 	return auditlogs
 }
 
-function doFilter (auditlogs, key_word, typeValue, userRole, systemFunc, betTypeFeature, device, dateTimeFrom, dateTimeTo) {
-	key_word = !!key_word ? key_word : ''
-	typeValue = !!typeValue ? typeValue : 'All'
-	userRole = !!userRole ? userRole : 'All'
-	systemFunc = !!systemFunc ? systemFunc : 'All'
-	betTypeFeature = !!betTypeFeature ? betTypeFeature : 'All'
-	device = !!device ? device : 'All'
-	dateTimeFrom = !!dateTimeFrom ? dateTimeFrom : '18 Sep 1900 00:00'
-	dateTimeTo = !!dateTimeTo ? dateTimeTo : '31 Dec 2099 23:59'
+function doFilter (auditlogs, keyWord, typeValue, userRole, systemFunc, betTypeFeature, device, dateTimeFrom, dateTimeTo) {
+	keyWord = keyWord || ''
+	typeValue = typeValue || 'All'
+	userRole = userRole || 'All'
+	systemFunc = systemFunc || 'All'
+	betTypeFeature = betTypeFeature || 'All'
+	device = device || 'All'
+	dateTimeFrom = dateTimeFrom || '18 Sep 1900 00:00'
+	dateTimeTo = dateTimeTo || '31 Dec 2099 23:59'
 
 	let result = auditlogs
 
-	result = !!key_word ? auditlogs.filter((al) => {
-		const eventName = !!al.event_name ? al.event_name.toLowerCase() : ''
-		const userName = !!al.user_name ? al.user_name.toLowerCase() : ''
-		const userRole = !!al.user_role ? al.user_role.toLowerCase() : ''
+	result = keyWord ? auditlogs.filter((al) => {
+		const eventName = al.event_name ? al.event_name.toLowerCase() : ''
+		const userName = al.user_name ? al.user_name.toLowerCase() : ''
+		const userRole = al.user_role ? al.user_role.toLowerCase() : ''
 
-		return eventName === key_word.toLowerCase() ||
-                userName === key_word.toLowerCase() ||
-                userRole === key_word.toLowerCase()
+		return eventName === keyWord.toLowerCase() ||
+                userName === keyWord.toLowerCase() ||
+                userRole === keyWord.toLowerCase()
 	}) : result
 
-	if (typeValue != 'All') {
+	if (typeValue !== 'All') {
 		result = result.filter((al) => {
-			return (al.Type == typeValue)
+			return (al.Type === typeValue)
 		})
 	}
 
-	if (userRole != 'All') {
+	if (userRole !== 'All') {
 		result = result.filter((al) => {
-			return (al.user_role == userRole)
+			return (al.user_role === userRole)
 		})
 	}
 
-	if (systemFunc != 'All') {
+	if (systemFunc !== 'All') {
 		result = result.filter((al) => {
-			return (al.function_module == systemFunc)
+			return (al.function_module === systemFunc)
 		})
 	}
 
-	if (betTypeFeature != 'All') {
+	if (betTypeFeature !== 'All') {
 		result = result.filter((al) => {
-			return (al.bet_type == betTypeFeature)
+			return (al.bet_type === betTypeFeature)
 		})
 	}
 
-	if (device != 'All') {
+	if (device !== 'All') {
 		result = result.filter((al) => {
-			return (al.device == device)
+			return (al.device === device)
 		})
 	}
 
 	result = result.filter((al) => {
-		return parseToDate(dateTimeFrom).getTime() <= parseToDate(al.date_time).getTime()
-            && parseToDate(al.date_time).getTime() <= parseToDate(dateTimeTo).getTime()
+		return parseToDate(dateTimeFrom).getTime() <= parseToDate(al.date_time).getTime() &&
+			parseToDate(al.date_time).getTime() <= parseToDate(dateTimeTo).getTime()
 	})
 
 	return result

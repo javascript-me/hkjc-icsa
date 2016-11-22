@@ -11,14 +11,8 @@ import LoginService from './login/login-service'
 import Systembar from './systembar/systembar.js'
 import Dashboard from './dashboard/dashboard'
 
-// import Navigation from './navigation/navigation'
-
 import Audit from './auditlog/auditlog'
-import BetType from './auditlog/betType'
-import FilterBlock from './auditlog/filterBlock'
 import Navigation from './navigation/navigation'
-
-import SearchEnquiryPanel from './searchEnquiryPanel/searchEnquiryPanel'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
