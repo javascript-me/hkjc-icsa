@@ -6,9 +6,9 @@ import SearchRecord from './searchrecord'
 describe('<SearchRecord />', () => {
 	it('renders a SearchRecord div', () => {
 		const record = {
-			"active": 1,
-			"t1": "ARS",
-			"t2": "ASV"
+			'active': 1,
+			't1': 'ARS',
+			't2': 'ASV'
 		}
 
 		const wrapper = shallow(<SearchRecord record={record} />)
