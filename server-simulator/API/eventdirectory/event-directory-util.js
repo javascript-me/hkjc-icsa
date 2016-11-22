@@ -15,9 +15,13 @@ function doFilter(eventdirectory, keyword) {
 
     if (keyword === '') {
         return eventdirectory.ALL
-    } else 	if (keyword === 'Premier' || keyword === 'Premier League') {
+    }
+
+    if (keyword === 'Premier' || keyword === 'Premier League') {
         return eventdirectory.Premier
-    } else 	if (keyword === 'ARS') {
+    }
+
+    if (keyword === 'ARS') {
         return handleARS(eventdirectory.ARS.slice(0), keyword);
     }
 
