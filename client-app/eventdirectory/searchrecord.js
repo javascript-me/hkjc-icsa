@@ -20,10 +20,10 @@ export default React.createClass({
 				<span className='ed-record-text'>
 					<span className={this.props.record.active === 1 ? 'active' : ''} title={this.props.record.t1Tip}>{this.props.record.t1}</span> vs <span className={this.props.record.active === 2 ? 'active' : ''} title={this.props.record.t2Tip}>{this.props.record.t2}</span>
 				</span>
-				<span className='ed-record-icon func-e' title='Function E' />
-				<span className='ed-record-icon func-cc' title='Function CC' />
-				<span className='ed-record-icon func-10' title='Function 10' />
-				<span className={this.props.record.alert0 ? 'ed-record-icon alert-0' : 'ed-record-icon alert-1'} title='Alert1' />
+				<span className='ed-record-icon func-e' title='FEMO/EMOTR' />
+				<span className='ed-record-icon func-cc' title='Customer Category Adjustment' />
+				<span className='ed-record-icon func-10' title='Allowable Investment to 10k' />
+				<span className={this.props.record.alert0 ? 'ed-record-icon alert-0' : 'ed-record-icon alert-1'} title='One-sided Booking' />
 			</div>
 			)
 	}
