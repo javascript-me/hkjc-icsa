@@ -24,12 +24,6 @@ describe('<Systembar />', () => {
 		wrapper.find('a').simulate('click')
 	})
 
-	it('calls componentDidMount', () => {
-		sinon.spy(Systembar.prototype, 'componentDidMount')
-		expect(Systembar.prototype.componentDidMount).to.have.property('callCount', 1)
-		Systembar.prototype.componentDidMount.restore()
-	})
-
 	it('Show popup, when click the time showing area', () => {
 		let systembar = shallow(<Systembar />)
 		let childLength = systembar.find('div.row-systembar').children().length
