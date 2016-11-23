@@ -8,8 +8,8 @@ import PubSub from '../pubsub'
 const selectdata = SearchEnquiryDataService.getData()
 
 const getOrginDateTimeFrom = function () {
-	let dateTimeFrom = new Date(),
-		dateTimeFromObj = {}
+	let dateTimeFrom = new Date()
+	let dateTimeFromObj = {}
 
 	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
 	dateTimeFrom.setHours(0)
@@ -22,8 +22,8 @@ const getOrginDateTimeFrom = function () {
 }
 
 const getOrginDateTimeTo = function () {
-	let dateTimeTo = new Date(),
-		dateTimeToObj = {}
+	let dateTimeTo = new Date()
+	let dateTimeToObj = {}
 
 	dateTimeTo.setHours(23)
 	dateTimeTo.setMinutes(59)
@@ -37,26 +37,26 @@ const getOrginDateTimeTo = function () {
 const originState = {
 	dateTimeFrom: getOrginDateTimeFrom(),
 	dateTimeTo: getOrginDateTimeTo(),
-    typeValue: '',
-    backEndID: '',
-    frontEndID: '',
-    eventLv1: '',
-    homeValue: '',
-    awayValue: '',
-    dateTimeGameStart: '',
-    userId: '',
-    userRole: '',
-    systemFunc: '',
-    betTypeFeature: '',
-    device: '',
-    ipAddress: '',
-    errorCode: '',
-    tipsFlag: 1,
-    errorDateTimeFrom: 1,
-    errorDateTimeTo: 1,
-    errorDateTimeGameStart: 1,
-    errorIPAddress: 1
-};
+	typeValue: '',
+	backEndID: '',
+	frontEndID: '',
+	eventLv1: '',
+	homeValue: '',
+	awayValue: '',
+	dateTimeGameStart: '',
+	userId: '',
+	userRole: '',
+	systemFunc: '',
+	betTypeFeature: '',
+	device: '',
+	ipAddress: '',
+	errorCode: '',
+	tipsFlag: 1,
+	errorDateTimeFrom: 1,
+	errorDateTimeTo: 1,
+	errorDateTimeGameStart: 1,
+	errorIPAddress: 1
+}
 
 let tokenKeyPress = null
 let tokenRemoveFilter = null
@@ -72,7 +72,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			}
 		}, originState)
 
-		this.setState(this.props.selectedFilters);
+		this.setState(this.props.selectedFilters)
 
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
@@ -83,9 +83,9 @@ export default class SearchEnquiryPanel extends React.Component {
 		})
 
 		tokenRemoveFilter = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], (topic, filter) => {
-			let newState = {};
+			let newState = {}
 
-			newState[filter.name] = originState[filter.name];
+			newState[filter.name] = originState[filter.name]
 			this.setState(newState)
 		})
 
@@ -108,8 +108,8 @@ export default class SearchEnquiryPanel extends React.Component {
 		}
 	}
 
-	isValidDateTime(str) {
-		return Moment(str, "DD MMM YYYY HH:mm", true).isValid();
+	isValidDateTime (str) {
+		return Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
 	}
 
 	handleChange (name, event) {
@@ -175,7 +175,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	handleSubmit () {
-  		this.setState({ tipsFlag: 0 }, function () {
+		this.setState({ tipsFlag: 0 }, function () {
 			if (this.isEnquiryValid()) {
 				let enquiries = this.getEnquiries(this.state)
 
@@ -194,32 +194,32 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	getEnquiries (src) {
-		let result = {},
-			needReturnEnquiries = [
-					'dateTimeFrom',
-					'dateTimeTo',
-					'typeValue',
-					'backEndID',
-					'frontEndID',
-					'eventLv1',
-					'homeValue',
-					'awayValue',
-					'dateTimeGameStart',
-					'userId',
-					'userRole',
-					'systemFunc',
-					'betTypeFeature',
-					'device',
-					'ipAddress',
-					'errorCode'],
-          currentAttrName,
-          currentAttrVal;
+		let result = {}
+		let needReturnEnquiries = [
+			'dateTimeFrom',
+			'dateTimeTo',
+			'typeValue',
+			'backEndID',
+			'frontEndID',
+			'eventLv1',
+			'homeValue',
+			'awayValue',
+			'dateTimeGameStart',
+			'userId',
+			'userRole',
+			'systemFunc',
+			'betTypeFeature',
+			'device',
+			'ipAddress',
+			'errorCode']
+		let currentAttrName
+		let currentAttrVal
 
 		for (let i in needReturnEnquiries) {
 			currentAttrName = needReturnEnquiries[i]
 			currentAttrVal = (currentAttrName === 'dateTimeFrom' || currentAttrName === 'dateTimeTo')
-	          ? src[currentAttrName].datetime
-	          : src[currentAttrName]
+				? src[currentAttrName].datetime
+				: src[currentAttrName]
 
 			if (currentAttrVal) {
 				result[currentAttrName] = currentAttrVal
@@ -257,25 +257,25 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={fromClass}>
 							<label>Date Time From <span>*</span></label>
-							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom.datetime} handleVal={this.handleChange.bind(this, 'dateTimeFrom')} />
+							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom.datetime} handleVal={(e) => { this.handleChange('dateTimeFrom', e) }} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className={toClass}>
 							<label>Date Time To <span>*</span></label>
-							<DateTime inputFor='dateTimeTo' dateTime={dateTimeTo.datetime} handleVal={this.handleChange.bind(this, 'dateTimeTo')} />
+							<DateTime inputFor='dateTimeTo' dateTime={dateTimeTo.datetime} handleVal={(e) => this.handleChange('dateTimeTo', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Type</label>
-							<SelectCom key="typeValue" datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={this.handleChange.bind(this, 'typeValue')} />
+							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Back End ID</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.backEndID} onChange={this.handleChange.bind(this, 'backEndID')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.backEndID} onChange={(e) => this.handleChange('backEndID', e)} />
 						</div>
 					</div>
 				</div>
@@ -283,25 +283,25 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Front End ID</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.frontEndID} onChange={this.handleChange.bind(this, 'frontEndID')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.frontEndID} onChange={(e) => this.handleChange('frontEndID', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Event Lv1</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.eventLv1} onChange={this.handleChange.bind(this, 'eventLv1')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.eventLv1} onChange={(e) => this.handleChange('eventLv1', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Home</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.homeValue} onChange={this.handleChange.bind(this, 'homeValue')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.homeValue} onChange={(e) => this.handleChange('homeValue', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Away</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.awayValue} onChange={this.handleChange.bind(this, 'awayValue')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.awayValue} onChange={(e) => this.handleChange('awayValue', e)} />
 						</div>
 					</div>
 				</div>
@@ -309,25 +309,25 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={dateTimeGameStartClass}>
 							<label>K.O Time / Game Start Time</label>
-							<DateTime inputFor='dateTimeGameStart' dateTime={this.state.dateTimeGameStart} handleVal={this.handleChange.bind(this, 'dateTimeGameStart')} />
+							<DateTime inputFor='dateTimeGameStart' dateTime={this.state.dateTimeGameStart} handleVal={(e) => this.handleChange('dateTimeGameStart', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User ID</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.userId} onChange={this.handleChange.bind(this, 'userId')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.userId} onChange={(e) => this.handleChange('userId', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>User Role</label>
-							<SelectCom key="userRole" datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={this.handleChange.bind(this, 'userRole')} />
+							<SelectCom key='userRole' datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={(e) => this.handleChange('userRole', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>System Function</label>
-							<SelectCom key="systemFunc" datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={this.handleChange.bind(this, 'systemFunc')} />
+							<SelectCom key='systemFunc' datas={selectdata.systemFunc} selectedVal={this.state.systemFunc} handleVal={(e) => this.handleChange('systemFunc', e)} />
 						</div>
 					</div>
 				</div>
@@ -335,36 +335,41 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Bet Type / Feature</label>
-							<SelectCom key="betTypeFeature" datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={this.handleChange.bind(this, 'betTypeFeature')} />
+							<SelectCom key='betTypeFeature' datas={selectdata.betTypeFeature} selectedVal={this.state.betTypeFeature} handleVal={(e) => this.handleChange('betTypeFeature', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Device</label>
-							<SelectCom key="device" datas={selectdata.device} selectedVal={this.state.device} handleVal={this.handleChange.bind(this, 'device')} />
+							<SelectCom key='device' datas={selectdata.device} selectedVal={this.state.device} handleVal={(e) => this.handleChange('device', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className={ipClass}>
 							<label>IP Address</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.ipAddress} onChange={this.handleChange.bind(this, 'ipAddress')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.ipAddress} onChange={(e) => this.handleChange('ipAddress', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className='form-group'>
 							<label>Error Code</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.errorCode} onChange={this.handleChange.bind(this, 'errorCode')} />
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.errorCode} onChange={(e) => this.handleChange('errorCode', e)} />
 						</div>
 					</div>
 				</div>
 				<div className='pannel-footer'>
 					<div className='item-text'>{this.renderTipsText()}</div>
 					<div className='item-after'>
-						<button type='button' className='btn btn-link' onClick={this.handleReset.bind(this)}>Reset</button>
-						<button type='button' className='btn btn-primary' onClick={this.handleSubmit.bind(this)}>Search</button>
+						<button type='button' className='btn btn-link' onClick={() => this.handleReset()}>Reset</button>
+						<button type='button' className='btn btn-primary' onClick={() => this.handleSubmit()}>Search</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	}
+}
+
+SearchEnquiryPanel.propTypes = {
+	selectedFilters: React.PropTypes.array,
+	setFilterEvent: React.PropTypes.func
 }
