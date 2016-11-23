@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Popup from './popup'
 import Systembar from './../systembar'
 
@@ -15,12 +15,6 @@ describe('The Clock Popup', () => {
 	it('title is clock', () => {
 		const popup = shallow(<Popup />)
 		expect(popup.find('h4').text()).to.equal('Clock')
-	})
-	it('set props', () => {
-		const wrapper = mount(<Popup bar='baz' />)
-		expect(wrapper.props().bar).to.equal('baz')
-		wrapper.setProps({ bar: 'foo' })
-		expect(wrapper.props().bar).to.equal('foo')
 	})
 	it('the popup is closed', () => {
 		const systembar = shallow(<Systembar />)
