@@ -1,0 +1,22 @@
+[
+	{
+		"id":"id123",
+		"First Name":"Hu",
+		"Last Name":"bing",
+		"User ID":"JC10080",
+		"Position":"Manager",
+		"Staff ID":"ac45112",
+		"Phone Number":"1380000000",
+		"Email Address":"afc@hkjc.com"
+	},
+	{
+		"id":"id222",
+		"First Name":"He",
+		"Last Name":"Li",
+		"User ID":"JC10080",
+		"Position":"W-Manager",
+		"Staff ID":"ac45112",
+		"Phone Number":"1380000000",
+		"Email Address":"afc@hkjc.com"
+	}
+]
