@@ -17,22 +17,24 @@
 			.comment {
 				text-align: center;
 				color: @hkjcWhite;
-				padding: 30px 0 29px 0;
+				padding: 30px 0 29px;
 				background: @hkjcDarkerBlue;
-				box-shadow: 0px 23px 27px 0px rgba(0,0,0,0.04);
+				box-shadow: 0 23px 27px 0 rgba(0, 0, 0, 0.04);
 
-				h2 {
+				> h2 {
 					font-family: Roboto-Medium;
 					font-size: 20px;
 					line-height: 26px;
 					margin: 0;
 				}
+
 				p {
 					font-size: 14px;
 					line-height: 20px;
-					margin: 5px 0 0 0;
+					margin: 5px 0 0;
 				}
 			}
+
 			.form-field {
 				padding: 30px;
 				text-align: center;
@@ -41,12 +43,13 @@
 					text-align: left;
 					margin-bottom: 30px;
 
-					>label {
+					> label {
 						font-family: Roboto-Medium;
 						font-size: 16px;
 						color: @hkjcBlue;
-						line-height: 22px;	
+						line-height: 22px;
 					}
+
 					input {
 						height: 30px;
 						padding: 0 11px;
@@ -55,7 +58,7 @@
 						border-radius: 2px;
 						font-size: 14px;
 						color: @hkjcDarkerBlue;
-						letter-spacing: 0px;
+						letter-spacing: 0;
 						line-height: 20px;
 
 						&.error {
@@ -64,7 +67,7 @@
 						}
 					}
 				}
-				
+
 				> button {
 					width: 100px;
 					height: 40px;
@@ -76,10 +79,11 @@
 					border-radius: 4px;
 					border: 0;
 				}
+
 				.error {
 					font-size: 12px;
 					color: @hkjcRedLighter;
-					letter-spacing: 0px;
+					letter-spacing: 0;
 					line-height: 18px;
 					margin: -17px 0 21px 0;
 					display: none;

@@ -18,7 +18,7 @@ server.use('/users/', users)
 server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
 server.use('/config/', APIconfig)
-server.use('/baseusers/',baseUserProfile)
+server.use('/baseusers/', baseUserProfile)
 
 const app = express()
 app.use(
