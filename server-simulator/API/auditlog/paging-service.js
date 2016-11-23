@@ -4,7 +4,7 @@ export default {
 
 	createPageListByRange (pages, selectedPageNumber, range) {
 		for (var i = range.startIndex; i <= range.endIndex; i++) {
-			var selected = (selectedPageNumber == i) ? true : false
+			var selected = selectedPageNumber === i
 			pages.push({label: i, selected: selected, hasHandCursor: true, greyOut: false})
 		}
 	},
@@ -40,8 +40,8 @@ export default {
 		pages.push({
 			label: '<',
 			selected: false,
-			hasHandCursor: (selectedPageNumber == 1) ? false : true,
-			greyOut: (selectedPageNumber == 1) ? true : false
+			hasHandCursor: selectedPageNumber !== 1,
+			greyOut: selectedPageNumber === 1
 		})
 
 		this.setLeftHandSideSymbol(selectedPageNumber, pages)
@@ -74,8 +74,8 @@ export default {
 		pages.push({
 			label: '>',
 			selected: false,
-			hasHandCursor: (selectedPageNumber == this.totalPages) ? false : true,
-			greyOut: (selectedPageNumber == this.totalPages) ? true : false
+			hasHandCursor: selectedPageNumber !== this.totalPages,
+			greyOut: selectedPageNumber === this.totalPages
 		})
 		return pages
 	},
@@ -86,8 +86,8 @@ export default {
 		pages.push({
 			label: '<',
 			selected: false,
-			hasHandCursor: (selectedPageNumber == 1) ? false : true,
-			greyOut: (selectedPageNumber == 1) ? true : false
+			hasHandCursor: selectedPageNumber !== 1,
+			greyOut: selectedPageNumber === 1
 		})
 
 		this.createPageListByRange(
@@ -99,28 +99,26 @@ export default {
 		pages.push({
 			label: '>',
 			selected: false,
-			hasHandCursor: (selectedPageNumber == this.totalPages) ? false : true,
-			greyOut: (selectedPageNumber == this.totalPages) ? true : false
+			hasHandCursor: selectedPageNumber !== this.totalPages,
+			greyOut: selectedPageNumber === this.totalPages
 		})
 
 		return pages
 	},
 
 	getDataByPageNumber (selectedPageNumber) {
-
-        if (isNaN(selectedPageNumber) || this.totalPages == 0) {
-            return {
-                pages: [],
-                totalPages: this.totalPages
-            }
-        }
+		if (isNaN(selectedPageNumber) || this.totalPages === 0) {
+			return {
+				pages: [],
+				totalPages: this.totalPages
+			}
+		}
 
 		selectedPageNumber = this.fixInvalidSelectedPageNumber(selectedPageNumber)
 
 		var pages
 
-		if (this.totalPages >= 8)
-        {
+		if (this.totalPages >= 8) {
 			pages = this.handleTotalPageIsEightOrMore(selectedPageNumber)
 		} else {
 			pages = this.handleTotalPageIsLessThanEight(selectedPageNumber)

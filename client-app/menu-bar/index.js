@@ -46,7 +46,7 @@ class MenuBar extends Component {
 				</div>
 			</div>)
 	}
-	modeChange = () => {
+	modeChange () {
 		this.setState({slimMode: !this.state.slimMode})
 	}
 	componentDidMount () {
@@ -119,7 +119,7 @@ const SecondLevelMenu = (props) => {
 	return (
 		<div className='second-level'>
 			<div className='second-level-container'>
-				{dataList && dataList.map((item, idx) => (<div key={idx} className={classnames('second-level-item',{noSub:!item.subMenu})}>
+				{dataList && dataList.map((item, idx) => (<div key={idx} className={classnames('second-level-item', {noSub: !item.subMenu})}>
 					<div className='second-level-text'>
 						<Link to={item.link}>{item.text}</Link>
 						<ThirdLevelOnly data={item.subMenu} />

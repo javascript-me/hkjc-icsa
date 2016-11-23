@@ -1,4 +1,4 @@
-﻿
+
 import { assert } from 'chai'
 import PagingUtil from './paging-util'
 
@@ -113,41 +113,37 @@ it('doSorting() should return list with correct order', () => {
 	assert.equal('23 October 2016 10:30:31', noOrderResult[2]['date_time'])
 })
 
-it("compareDate() to date_time should return correct order", () => {
-
-    assert.equal(0, PagingUtil.compareDate("23 October 2016 10:30:30", "23 October 2016 10:30:30"))
-    assert.equal(1, PagingUtil.compareDate("23 October 2016 10:30:31", "23 October 2016 10:30:30"))
-    assert.equal(-1, PagingUtil.compareDate("23 October 2016 10:30:30", "23 October 2016 10:30:31"))
-
+it('compareDate() to date_time should return correct order', () => {
+	assert.equal(0, PagingUtil.compareDate('23 October 2016 10:30:30', '23 October 2016 10:30:30'))
+	assert.equal(1, PagingUtil.compareDate('23 October 2016 10:30:31', '23 October 2016 10:30:30'))
+	assert.equal(-1, PagingUtil.compareDate('23 October 2016 10:30:30', '23 October 2016 10:30:31'))
 })
 
-it("parseToDate() should return a date based on input string", () => {
+it('parseToDate() should return a date based on input string', () => {
+	var date0 = PagingUtil.parseToDate('23 October 2016 10:30:32')
+	assert.equal('2016-10-23 10:30:32', date0.toLocaleString())
+	assert.equal(1477189832000, date0.getTime())
 
-    var date0 = PagingUtil.parseToDate("23 October 2016 10:30:32")
-    assert.equal("10/23/2016, 10:30:32 AM", date0.toLocaleString())
-    assert.equal(1477189832000, date0.getTime())
+	var date1 = PagingUtil.parseToDate('23 October 2016 10:30:33')
+	assert.equal('2016-10-23 10:30:33', date1.toLocaleString())
+	assert.equal(1477189833000, date1.getTime())
 
-    var date1 = PagingUtil.parseToDate("23 October 2016 10:30:33")
-    assert.equal("10/23/2016, 10:30:33 AM", date1.toLocaleString())
-    assert.equal(1477189833000, date1.getTime())
-
-	var date2 = PagingUtil.parseToDate("23 Oct 2016 10:30:33")
-	assert.equal("10/23/2016, 10:30:33 AM", date2.toLocaleString())
+	var date2 = PagingUtil.parseToDate('23 Oct 2016 10:30:33')
+	assert.equal('2016-10-23 10:30:33', date2.toLocaleString())
 	assert.equal(1477189833000, date2.getTime())
 
-	var date3 = PagingUtil.parseToDate("23 Oct 2016 10:30")
-	assert.equal("10/23/2016, 10:30:00 AM", date3.toLocaleString())
+	var date3 = PagingUtil.parseToDate('23 Oct 2016 10:30')
+	assert.equal('2016-10-23 10:30:00', date3.toLocaleString())
 	assert.equal(1477189833000, date2.getTime())
 
-	var date4 = PagingUtil.parseToDate("23 Oct 2016 00:00:00")
-	assert.equal("10/23/2016, 12:00:00 AM", date4.toLocaleString())
+	var date4 = PagingUtil.parseToDate('23 Oct 2016 00:00:00')
+	assert.equal('2016-10-23 00:00:00', date4.toLocaleString())
 	assert.equal(1477152000000, date4.getTime())
-
 })
 
-it("Simple test", function () {
-    assert.ok("b" > "a")
-    assert.ok("23 October 2016 10:30:32" > "23 October 2016 10:30:30")
+it('Simple test', () => {
+	assert.ok('b' > 'a')
+	assert.ok('23 October 2016 10:30:32' > '23 October 2016 10:30:30')
 })
 
 it('doFilter() should return less data', () => {
@@ -155,15 +151,15 @@ it('doFilter() should return less data', () => {
 
 	assert.equal(451, jsonObject.auditlogs.length)
 
-	assert.equal(295, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(296, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
 	assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-    assert.equal(295, PagingUtil.doFilter(jsonObject.auditlogs, "World Cup").length)
-    assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, "EPC").length)
+	assert.equal(296, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-    assert.equal(451, PagingUtil.doFilter(jsonObject.auditlogs, "").length)
+	assert.equal(451, PagingUtil.doFilter(jsonObject.auditlogs, '').length)
 
-	assert.equal(177, PagingUtil.doFilter(jsonObject.auditlogs, "", null, null, null, null, null,
-		"18 September 2016 14:30:10", "23 October 2016 10:30:30").length)
+	assert.equal(177, PagingUtil.doFilter(jsonObject.auditlogs, '', null, null, null, null, null,
+		'18 September 2016 14:30:10', '23 October 2016 10:30:30').length)
 })
 
