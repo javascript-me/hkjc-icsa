@@ -12,19 +12,19 @@ const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
 /**
- * @api {POST} /auditlog/filterAuditlogs filterAuditlogs
+ * @api {POST} /auditlog/filterAuditlogs Filter Auditlogs
  * @apiGroup Auditlog
 
  * @apiDescription Search criteria mock API in Audit log page.
  *
- * @apiParam {String} username Current customer's name
+ * @apiParam {String} username=allgood Current customer's name
  * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
  * @apiParam {String} [keyword] Keyword for search criteria
  * @apiParam {String} sortingObjectFieldName=date_time Column name which sorted by.
  * @apiParam {String} sortingObjectOrder=DESCEND Sorting order, DESCEND or ASCEND.
  * @apiParam {Number} selectedPageNumber=1 Selected page number.
- * @apiParam {DateTime} dateTimeFrom Audit log date time from.
- * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
  * @apiParam {String} [typeValue] Type value.
  * @apiParam {String} [backEndID] Back end ID.
  * @apiParam {String} [frontEndID] Front end ID.
@@ -100,17 +100,17 @@ router.get('/download/:file', (req, res) => {
 })
 
 /**
- * @api {GET} /auditlog/export export
+ * @api {GET} /auditlog/export Export
  * @apiGroup Auditlog
 
  * @apiDescription Mock API for export search result of Audit log page.
  *
  * @apiParam {String} type File type (pdf, csv) ask for export.
- * @apiParam {String} username Current customer's name
+ * @apiParam {String} username=allgood Current customer's name
  * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
  * @apiParam {String} [keyword] Keyword for search criteria
- * @apiParam {DateTime} dateTimeFrom Audit log date time from.
- * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
  * @apiParam {String} [typeValue] Type value.
  * @apiParam {String} [backEndID] Back end ID.
  * @apiParam {String} [frontEndID] Front end ID.
