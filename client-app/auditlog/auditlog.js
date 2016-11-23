@@ -321,7 +321,7 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent = <div>
 				<div className='table-container '>
-					<TabularData displayCheckBox = {true} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
+					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
 				</div>
 				<div className='col-md-12 vertical-gap'>
 					<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
