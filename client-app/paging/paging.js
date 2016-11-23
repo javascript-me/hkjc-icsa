@@ -60,7 +60,7 @@ export default React.createClass({
 
 	render () {
 		return (
-			<div className='paging col-md-8'>
+			<div className='paging'>
 				<ul>
 					{
 						this.props.pageData.pages.map((page, i) => {
