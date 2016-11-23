@@ -1,6 +1,4 @@
 import React from 'react'
-import ClassNames from 'classnames'
-import PubSub from '../pubsub'
 
 export default class FilterBlock extends React.Component {
 	constructor (props) {
@@ -12,14 +10,19 @@ export default class FilterBlock extends React.Component {
 	}
 
 	removeHandler () {
-    	this.props.removeEvent(this.props.filter)
+		this.props.removeEvent(this.props.filter)
 	}
 
 	render () {
 		return (
-              <span className='filter-block' onClick={this.removeHandler}>
-              	{this.props.filter.value}
-              </span>
+			<span className='filter-block' onClick={this.removeHandler}>
+				{this.props.filter.value}
+			</span>
         )
 	}
+}
+
+FilterBlock.propTypes = {
+	filter: React.PropTypes.object,
+	removeEvent: React.PropTypes.func
 }

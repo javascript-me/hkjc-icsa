@@ -30,8 +30,15 @@ export default class BetType extends React.Component {
 
 	render () {
 		return (
-              <i className={this.getBetTypeIconClassName(this.props.betType)}
-	onClick={this.changeBetTypeHandler} />
+			<i className={this.getBetTypeIconClassName(this.props.betType)}
+				onClick={this.changeBetTypeHandler} />
         )
 	}
+}
+
+BetType.propTypes = {
+	betType: React.PropTypes.string,
+	selectedBetType: React.PropTypes.string,
+	changeEventTopic: React.PropTypes.string,
+	changeBetTypeEvent: React.PropTypes.func
 }

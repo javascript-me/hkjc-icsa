@@ -29,7 +29,7 @@ describe('The Popup component', () => {
 	it('will emit beforeOpen and afterOpen events when opening', () => {
 		let beforeTriggered = false
 		let afterTriggered = false
-		const onBefore = () => beforeTriggered = true
+		const onBefore = () => (beforeTriggered = true)
 		const onAfter = () => {
 			expect(beforeTriggered).to.be.true
 			afterTriggered = true
@@ -46,7 +46,7 @@ describe('The Popup component', () => {
 	it('will emit beforeClose and afterClose events when closing', () => {
 		let beforeTriggered = false
 		let afterTriggered = false
-		const onBefore = () => beforeTriggered = true
+		const onBefore = () => (beforeTriggered = true)
 		const onAfter = () => {
 			expect(beforeTriggered).to.be.true
 			afterTriggered = true
@@ -64,8 +64,8 @@ describe('The Popup component', () => {
 	it('will emit an onOverlayClicked event', () => {
 		let clicked = false
 		rendered = new Helper(
-			<Popup onOverlayClicked={() => clicked = true} />
-    	)
+			<Popup onOverlayClicked={() => (clicked = true)} />
+		)
 		rendered.show()
 		rendered.clickOnOverlay()
 		expect(clicked).to.be.true
