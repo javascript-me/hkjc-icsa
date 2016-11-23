@@ -287,7 +287,7 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent = <div>
 				<div className='table-container '>
-					<TabularData />
+					<TabularData displayCheckBox = {false}/>
 				</div>
 				<div className='col-md-12 vertical-gap'>
 					<Paging />

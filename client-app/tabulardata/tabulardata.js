@@ -8,25 +8,28 @@ export default React.createClass({
 
 	getInitialState () {
 		var headers = [
-			{label: 'Date/Time', fieldName: 'date_time', sortingClass: 'down-arrow'},
-			{label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow'},
-			{label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow'},
-			{label: 'Type', fieldName: 'Type', sortingClass: 'no-arrow'},
-			{label: 'Function/Module', fieldName: 'function_module', sortingClass: 'no-arrow'},
-			{label: 'Function Event Detail', fieldName: 'function_event_detail', sortingClass: 'no-arrow'},
-			{label: 'User Role', fieldName: 'user_role', sortingClass: 'no-arrow'},
-			{label: 'IP Address', fieldName: 'ip_address', sortingClass: 'no-arrow'},
-			{label: 'Back End ID', fieldName: 'backend_id', sortingClass: 'no-arrow'},
-			{label: 'Front End ID', fieldName: 'frontend_id', sortingClass: 'no-arrow'},
-			{label: 'Home', fieldName: 'home', sortingClass: 'no-arrow'},
-			{label: 'Away', fieldName: 'away', sortingClass: 'no-arrow'},
-			{label: 'K.O. Time/ Game Start Time', fieldName: 'ko_time_game_start_game', sortingClass: 'no-arrow'},
-			{label: 'Bet Type', fieldName: 'bet_type', sortingClass: 'no-arrow'},
-			{label: 'Event Name', fieldName: 'event_name', sortingClass: 'no-arrow'},
-			{label: 'Error Code', fieldName: 'error_code', sortingClass: 'no-arrow'},
-			{label: 'Error Message Content', fieldName: 'error_message_content', sortingClass: 'no-arrow'},
-			{label: 'Device', fieldName: 'device', sortingClass: 'no-arrow'}
+			{'id': 1, label: 'Date/Time', fieldName: 'date_time', sortingClass: 'down-arrow', addCheckBox: false},
+			{'id': 2, label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 3, label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 4, label: 'Type', fieldName: 'Type', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 5, label: 'Function/Module', fieldName: 'function_module', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 6, label: 'Function Event Detail', fieldName: 'function_event_detail', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 7, label: 'User Role', fieldName: 'user_role', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 8, label: 'IP Address', fieldName: 'ip_address', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 9, label: 'Back End ID', fieldName: 'backend_id', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 10, label: 'Front End ID', fieldName: 'frontend_id', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 11, label: 'Home', fieldName: 'home', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 12, label: 'Away', fieldName: 'away', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 13, label: 'K.O. Time/ Game Start Time', fieldName: 'ko_time_game_start_game', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 14, label: 'Bet Type', fieldName: 'bet_type', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 15, label: 'Event Name', fieldName: 'event_name', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 16, label: 'Error Code', fieldName: 'error_code', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 17, label: 'Error Message Content', fieldName: 'error_message_content', sortingClass: 'no-arrow', addCheckBox: false},
+			{'id': 18, label: 'Device', fieldName: 'device', sortingClass: 'no-arrow', addCheckBox: false}
 		]
+		if(this.props.displayCheckBox) {
+			headers.splice(0, 0, {'id': 0, label: '', fieldName: '', sortingClass: '', addCheckBox: true})
+		}
 
 		return {
 			auditlogs: [
@@ -158,6 +161,7 @@ export default React.createClass({
 		}
 		return this.state.auditlogs.map((row) => {
 			return <tr>
+				{ this.props.displayCheckBox ? <td><input type="checkbox" className="checkbox" name="user-profile"/></td> : null }
 				<td>{this.formatColumnVal(row.date_time)}</td>
 				<td>{this.formatColumnVal(row.user_id)}</td>
 				<td>{this.formatColumnVal(row.user_name)}</td>
@@ -188,6 +192,7 @@ export default React.createClass({
 						this.state.headers.map(
 							(header, i) => {
 								return <th>
+									{ this.props.displayCheckBox && header.addCheckBox ? <input type="checkbox" className="checkbox pull-right" id="checkall"/> : null }
 									<span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span>
 								</th>
 							}
