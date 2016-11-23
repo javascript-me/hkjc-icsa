@@ -232,24 +232,32 @@ export default React.createClass({
 	mockLoadData: function () {
 		this.setState({hasData: true})
 	},
+
 	openPopup () {
 		this.setState({ exportFormat: 'pdf' })// reset the format value
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
+
 	export () {
 		let criteriaOption = this.getSearchCriterias()
 		const filters = AuditlogStore.buildRequest(1, null, criteriaOption)
 
 		doExport(this.state.exportFormat, filters)
 	},
+
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
 	},
+
 	onChange () {
 		const hasData = AuditlogStore.auditlogs.length > 0
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
+	},
+
+	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
+		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	render: function () {
@@ -290,7 +298,7 @@ export default React.createClass({
 					<TabularData />
 				</div>
 				<div className='col-md-12 vertical-gap'>
-					<Paging />
+					<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
 					{/* START FOOTER EXPORT */}
 					<div className='col-md-4'>
 						<div className='pull-right'>
