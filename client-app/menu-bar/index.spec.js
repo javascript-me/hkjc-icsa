@@ -20,14 +20,14 @@ describe('<MenuBar />', () => {
 
 	it('renders third-level-only-menu', () => {
 		let ThirdLevelOnly = MenuBar.__get__('ThirdLevelOnly')
-		const thirdLevelOnly = shallow(<ThirdLevelOnly dataList={menuBarData.menuList1[1].subMenu[0].subMenu} />)
-		let thirdLevelLength = menuBarData.menuList1[1].subMenu[0].subMenu.length
-		for (let thirdMenuItem of menuBarData.menuList1[1].subMenu[0].subMenu) {
-			if (thirdMenuItem.subMenu) {
-				thirdLevelLength = 0
-			}
-		}
-		expect(thirdLevelOnly.find('div.third-level-item')).to.have.length(thirdLevelLength)
+		const thirdLevelOnly = shallow(<ThirdLevelOnly data={menuBarData.menuList1[1].subMenu[0].subMenu} />)
+		// let thirdLevelLength = menuBarData.menuList1[1].subMenu[0].subMenu.length
+		// for (let thirdMenuItem of menuBarData.menuList1[1].subMenu[0].subMenu) {
+		// 	if (thirdMenuItem.subMenu) {
+		// 		thirdLevelLength = 0
+		// 	}
+		// }
+		expect(thirdLevelOnly.find('div.third-level-only-container')).to.have.length(1)
 	})
 
 	it('renders third-level-menu', () => {
