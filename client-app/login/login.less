@@ -9,12 +9,81 @@
 
 	.row-login {
 		.login-dialog {
+			width: 300px;
 			margin-top: 25vh;
-			min-height: 50vh;
+			min-height: 41vh;
 			background-color: @hkjcWhite;
 
-			> * {
-				margin-top: 5vh;
+			.comment {
+				text-align: center;
+				color: @hkjcWhite;
+				padding: 30px 0 29px 0;
+				background: @hkjcDarkerBlue;
+				box-shadow: 0px 23px 27px 0px rgba(0,0,0,0.04);
+
+				h2 {
+					font-family: Roboto-Medium;
+					font-size: 20px;
+					line-height: 26px;
+					margin: 0;
+				}
+				p {
+					font-size: 14px;
+					line-height: 20px;
+					margin: 5px 0 0 0;
+				}
+			}
+			.form-field {
+				padding: 30px;
+				text-align: center;
+
+				.form-group {
+					text-align: left;
+					margin-bottom: 30px;
+
+					>label {
+						font-family: Roboto-Medium;
+						font-size: 16px;
+						color: @hkjcBlue;
+						line-height: 22px;	
+					}
+					input {
+						height: 30px;
+						padding: 0 11px;
+						background: @hkjcWhite;
+						border: 1px solid #ACB8D1;
+						border-radius: 2px;
+						font-size: 14px;
+						color: @hkjcDarkerBlue;
+						letter-spacing: 0px;
+						line-height: 20px;
+
+						&.error {
+							background: #FFFFFF;
+							border: 1px solid @hkjcRedLighter;
+						}
+					}
+				}
+				
+				> button {
+					width: 100px;
+					height: 40px;
+					padding: 0;
+					font-size: 16px;
+					color: @hkjcWhite;
+					line-height: 40px;
+					background: @hkjcDarkerBlue;
+					border-radius: 4px;
+					border: 0;
+				}
+				.error {
+					font-size: 12px;
+					color: @hkjcRedLighter;
+					letter-spacing: 0px;
+					line-height: 18px;
+					margin: -17px 0 21px 0;
+					display: none;
+				}
 			}
 		}
 	}
