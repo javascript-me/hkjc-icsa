@@ -121,23 +121,23 @@ it('compareDate() to date_time should return correct order', () => {
 
 it('parseToDate() should return a date based on input string', () => {
 	var date0 = PagingUtil.parseToDate('23 October 2016 10:30:32')
-	assert.equal('10/23/2016, 10:30:32 AM', date0.toLocaleString())
+	assert.equal('2016-10-23 10:30:32', date0.toLocaleString())
 	assert.equal(1477189832000, date0.getTime())
 
 	var date1 = PagingUtil.parseToDate('23 October 2016 10:30:33')
-	assert.equal('10/23/2016, 10:30:33 AM', date1.toLocaleString())
+	assert.equal('2016-10-23 10:30:33', date1.toLocaleString())
 	assert.equal(1477189833000, date1.getTime())
 
 	var date2 = PagingUtil.parseToDate('23 Oct 2016 10:30:33')
-	assert.equal('10/23/2016, 10:30:33 AM', date2.toLocaleString())
+	assert.equal('2016-10-23 10:30:33', date2.toLocaleString())
 	assert.equal(1477189833000, date2.getTime())
 
 	var date3 = PagingUtil.parseToDate('23 Oct 2016 10:30')
-	assert.equal('10/23/2016, 10:30:00 AM', date3.toLocaleString())
+	assert.equal('2016-10-23 10:30:00', date3.toLocaleString())
 	assert.equal(1477189833000, date2.getTime())
 
 	var date4 = PagingUtil.parseToDate('23 Oct 2016 00:00:00')
-	assert.equal('10/23/2016, 12:00:00 AM', date4.toLocaleString())
+	assert.equal('2016-10-23 00:00:00', date4.toLocaleString())
 	assert.equal(1477152000000, date4.getTime())
 })
 
@@ -151,10 +151,10 @@ it('doFilter() should return less data', () => {
 
 	assert.equal(451, jsonObject.auditlogs.length)
 
-	assert.equal(295, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(296, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
 	assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-	assert.equal(295, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(296, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
 	assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
 	assert.equal(451, PagingUtil.doFilter(jsonObject.auditlogs, '').length)

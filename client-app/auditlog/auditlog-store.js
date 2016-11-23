@@ -7,7 +7,10 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 	_sortingObject: null,
 	_criteriaOption: null,
 
-	pageData: null,
+	pageData: {
+		pages: [],
+		totalPages: 0
+	},
 	auditlogs: null,
 	forDebug: null,
 
@@ -50,13 +53,11 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		}
 
 		let filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : []
-		let filterName = ''
-		let filterVal = ''
 
         // Fill the filters into reuqest data
 		for (let i in filters) {
-			filterName = filters[i].name
-			filterVal = filters[i].value
+			let filterName = filters[i].name
+			let filterVal = filters[i].value
 			requestData[filterName] = filterVal
 		}
 

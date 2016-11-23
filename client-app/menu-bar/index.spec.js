@@ -18,17 +18,17 @@ describe('<MenuBar />', () => {
 		expect(secondLevelMenu.find('div.second-level-item')).to.have.length(secondLevelLength)
 	})
 
-	it('renders third-level-only-menu', () => {
-		let ThirdLevelOnly = MenuBar.__get__('ThirdLevelOnly')
-		const thirdLevelOnly = shallow(<ThirdLevelOnly dataList={menuBarData.menuList1[1].subMenu[0].subMenu} />)
-		let thirdLevelLength = menuBarData.menuList1[1].subMenu[0].subMenu.length
-		for (let thirdMenuItem of menuBarData.menuList1[1].subMenu[0].subMenu) {
-			if (thirdMenuItem.subMenu) {
-				thirdLevelLength = 0
-			}
-		}
-		expect(thirdLevelOnly.find('div.third-level-item')).to.have.length(thirdLevelLength)
-	})
+	// it('renders third-level-only-menu', () => {
+	// 	let ThirdLevelOnly = MenuBar.__get__('ThirdLevelOnly')
+	// 	const thirdLevelOnly = shallow(<ThirdLevelOnly dataList={menuBarData.menuList1[1].subMenu[0].subMenu} />)
+	// 	let thirdLevelLength = menuBarData.menuList1[1].subMenu[0].subMenu.length
+	// 	for (let thirdMenuItem of menuBarData.menuList1[1].subMenu[0].subMenu) {
+	// 		if (thirdMenuItem.subMenu) {
+	// 			thirdLevelLength = 0
+	// 		}
+	// 	}
+	// 	expect(thirdLevelOnly.find('div.third-level-item')).to.have.length(thirdLevelLength)
+	// })
 
 	it('renders third-level-menu', () => {
 		let ThirdLevelMenu = MenuBar.__get__('ThirdLevelMenu')

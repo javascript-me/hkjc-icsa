@@ -6,6 +6,10 @@ global.expect = expect
 
 global.sinon = sinon
 
+global.navigator = {
+	userAgent: 'node.js'
+}
+
 global.jsdom = (body = '') => { // TODO FIXME (AVOID!!!)
 	global.document = jsdom.jsdom(arguments)
 	global.window = document.defaultView
