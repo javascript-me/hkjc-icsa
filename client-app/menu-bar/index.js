@@ -42,7 +42,12 @@ class MenuBar extends Component {
 						))}
 					</div>
 					<div className='toggle-btn' onClick={this.modeChange}>c</div>
-					<div className='message'>Message</div>
+					<div className='message'>
+						<button type="button" className="btn btn-danger">Notifications</button>
+						{/*<button type='button' className='close'>/!*<img src='icon/icon-notification.svg' />*!/</button>
+						<button type='button' className='close'>/!*<img src='icon/icon-action.svg' />*!/</button>
+						<button type='button' className='close'>/!*<img src='icon/icon-broadcast.svg' />*!/</button>*/}
+					</div>
 				</div>
 			</div>)
 	}

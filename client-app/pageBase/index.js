@@ -16,7 +16,7 @@ class PageBase extends Component {
 						{this.props.children || 'dashboard-page'}
 					</div>
 				</div>
-				<Noticeboard isBottomDisplay="{true}"/>
+				<Noticeboard isBottomDisplay={false}/>
 			</div>
 		);
 	}
