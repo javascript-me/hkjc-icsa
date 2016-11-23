@@ -41,7 +41,7 @@ class MenuBar extends Component {
 							</div>
 						))}
 					</div>
-					<div className='toggle-btn' onClick={this.modeChange}>c</div>
+					<div className='toggle-btn' onClick={() => { this.modeChange() }}>c</div>
 					<div className='message'>Message</div>
 				</div>
 			</div>)
