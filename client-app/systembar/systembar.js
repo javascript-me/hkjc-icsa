@@ -22,7 +22,8 @@ export default class Systembar extends React.Component {
 		this.state = {
 			show: LoginService.hasProfile(),
 			date: new Date().getTime(),
-			showPopup: false
+			showPopup: false,
+			info: LoginService.getProfile()
 		}
 
 		getClock().then((data) => { this.setState({date: Number(data)}) }, () => { this.setState({date: NaN}) })
@@ -62,7 +63,16 @@ export default class Systembar extends React.Component {
 				<span className='logo'><img src='HKJC_Logo.svg' /> <span><strong className=''>HKJC</strong> SPORTS BETTING</span></span>
 				<a onClick={() => this.showClock()}><strong>{Moment(this.state.date).format('h:mma')},</strong> {Moment(this.state.date).format('D MMM, YYYY')}</a>
 				{ this.state.showPopup ? <Popup date={this.state.date} hideClock={() => this.hideClock()} /> : null }
-				<span className='username'><img src='icon/Shape.svg' /><strong>Hello, Sally Yeung</strong></span>
+				<div className='username' id='dropdownMenu1'>
+					<span className='hello'>
+						<span><img src='icon/Shape.svg' />Hello,</span>
+						<span className='name'>{this.state.info.username}</span>
+					</span>
+					<ul className='dropdown-menu'>
+						<li><a href=''>My Profile</a></li>
+						<li><a href=''>Logout</a></li>
+					</ul>
+				</div>
 			</div>
 			)
 	}
