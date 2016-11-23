@@ -11,7 +11,28 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		pages: [],
 		totalPages: 0
 	},
-	auditlogs: null,
+	auditlogs: [
+		{
+			'date_time': '23 September 2016',
+			'user_id': 'candy.crush',
+			'user_name': 'Candy Crush',
+			'Type': 'Odds',
+			'function_module': 'Master Risk Limit Log',
+			'function_event_detail': 'Update Odds',
+			'user_role': 'Role1, Role2',
+			'ip_address': '182.34.2.192'
+		},
+		{
+			'date_time': '23 September 2016',
+			'user_id': 'candy.crush',
+			'user_name': 'Candy Crush',
+			'Type': 'Odds',
+			'function_module': 'Master Risk Limit Log',
+			'function_event_detail': 'Update Odds',
+			'user_role': 'Role1, Role2',
+			'ip_address': '182.34.2.192'
+		}
+	],
 	forDebug: null,
 
 	searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {

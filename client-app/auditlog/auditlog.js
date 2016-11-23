@@ -282,6 +282,10 @@ export default React.createClass({
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
+	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
+		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
+	},
+
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 			'hover-enabled': !this.state.isShowingMoreFilter
@@ -317,7 +321,7 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent = <div>
 				<div className='table-container '>
-					<TabularData displayCheckBox = {false} headers={this.headers} />
+					<TabularData displayCheckBox = {true} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
 				</div>
 				<div className='col-md-12 vertical-gap'>
 					<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
