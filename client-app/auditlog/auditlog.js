@@ -311,7 +311,7 @@ export default React.createClass({
 				filter={f}
 				removeEvent={this.removeSearchCriteriaFilter}
 				removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		})
+		}) || []
 
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
