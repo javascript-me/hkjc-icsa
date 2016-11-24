@@ -1,8 +1,7 @@
-// import _ from 'underscore'
-// import PubSub from '../pubsub'
+import config from '../config'
 
 const postSearch = (data) => {
-	return $.post('api/eventdirectory', data)
+	return $.post(config.url('api/eventdirectory'), data)
 }
 
 export default {
