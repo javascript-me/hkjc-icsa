@@ -1,0 +1,13 @@
+{
+  "roles": [
+    {
+      "id": "",
+      "name": "",
+      "function": "",
+			"create": "",
+			"read": "",
+			"update": "",
+			"delete": ""
+    }
+  ]
+}
