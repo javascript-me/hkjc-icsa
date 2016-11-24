@@ -164,20 +164,22 @@ router.get('/export', (req, res) => {
 
 	switch (type.toLowerCase()) {
 	case 'pdf':
-		dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
+		// dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
+        //
+		// result = helper.toHTML(result, dateReport)
+		// res.writeHead(statusCode, {
+		// 	'Content-Type': 'application/octet-stream',
+		// 	'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+        //
+		// pdf.create(result, options).toStream((err, file) => {
+		// 	if (err) {
+		// 		res.end()
+		// 	} else {
+		// 		file.pipe(res)
+		// 	}
+		// })
 
-		result = helper.toHTML(result, dateReport)
-		res.writeHead(statusCode, {
-			'Content-Type': 'application/octet-stream',
-			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
-
-		pdf.create(result, options).toStream((err, file) => {
-			if (err) {
-				res.end()
-			} else {
-				file.pipe(res)
-			}
-		})
+		res.sendfile('server-simulator/API/auditlog/output.pdf');
 
 		break
 	case 'csv':
