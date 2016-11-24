@@ -7,25 +7,24 @@ import PagingUtil from './paging-util'
 import PagingService from './paging-service'
 
 const router = express.Router()
-const options = { format: 'Letter', orientation: 'landscape', header: { 'height': '15mm'} }
+const options = {format: 'Letter', orientation: 'landscape', header: {'height': '15mm'}}
 const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
-
 /**
- * @api {POST} /auditlog/filterAuditlogs filterAuditlogs
+ * @api {POST} /auditlog/filterAuditlogs Filter Auditlogs
  * @apiGroup Auditlog
 
  * @apiDescription Search criteria mock API in Audit log page.
  *
- * @apiParam {String} username Current customer's name
+ * @apiParam {String} username=allgood Current customer's name
  * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
  * @apiParam {String} [keyword] Keyword for search criteria
  * @apiParam {String} sortingObjectFieldName=date_time Column name which sorted by.
  * @apiParam {String} sortingObjectOrder=DESCEND Sorting order, DESCEND or ASCEND.
  * @apiParam {Number} selectedPageNumber=1 Selected page number.
- * @apiParam {DateTime} dateTimeFrom Audit log date time from.
- * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
  * @apiParam {String} [typeValue] Type value.
  * @apiParam {String} [backEndID] Back end ID.
  * @apiParam {String} [frontEndID] Front end ID.
@@ -63,7 +62,7 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	var cloneAuditlogs
 
-	if (req.body.username == "allgood") {
+	if (req.body.username === 'allgood') {
 		cloneAuditlogs = jsonObject.auditlogs.slice(0)
 	} else {
 		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
@@ -93,7 +92,6 @@ router.post('/filterAuditlogs', (req, res) => {
 })
 
 router.get('/download/:file', (req, res) => {
-	console.log(req.params)
 	res.writeHead(200, {
 		'Content-Type': 'application/octet-stream',
 		'Content-Disposition': 'attachment; filename=audit.pdf'})
@@ -101,19 +99,18 @@ router.get('/download/:file', (req, res) => {
 	fs.createReadStream('./' + req.params.file).pipe(res)
 })
 
-
 /**
- * @api {GET} /auditlog/export export
+ * @api {GET} /auditlog/export Export
  * @apiGroup Auditlog
 
  * @apiDescription Mock API for export search result of Audit log page.
  *
  * @apiParam {String} type File type (pdf, csv) ask for export.
- * @apiParam {String} username Current customer's name
+ * @apiParam {String} username=allgood Current customer's name
  * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
  * @apiParam {String} [keyword] Keyword for search criteria
- * @apiParam {DateTime} dateTimeFrom Audit log date time from.
- * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
  * @apiParam {String} [typeValue] Type value.
  * @apiParam {String} [backEndID] Back end ID.
  * @apiParam {String} [frontEndID] Front end ID.
@@ -143,15 +140,15 @@ router.get('/download/:file', (req, res) => {
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json
-	const filters = !!json ? JSON.parse(decodeURIComponent(json)) : {}
+	const filters = json ? JSON.parse(decodeURIComponent(json)) : {}
 	let data = []
 
-	if (filters.username == "allgood") {
+	if (filters.username === 'allgood') {
 		data = jsonObject.auditlogs.slice(0)
 	} else {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
-	
+
 	let result =	PagingUtil.doFilter(data,
 						filters.keyword,
 						filters.typeValue,
@@ -160,39 +157,38 @@ router.get('/export', (req, res) => {
 						filters.betTypeFeature,
 						filters.device
 					)
-	
-	let status = 200
+
+	let statusCode = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-	
+	let dateReport
+
 	switch (type.toLowerCase()) {
-		case 'pdf':
+	case 'pdf':
+		dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
 
-			let dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
-			
-			result = helper.toHTML(result, dateReport)
-			res.writeHead(200, {
-				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+		result = helper.toHTML(result, dateReport)
+		res.writeHead(statusCode, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
 
-			pdf.create(result, options).toStream((err, file) => {
-				if (err) {
-					console.log(err)
-					res.end()
-				}
-				else
-	                file.pipe(res)
-			})
+		pdf.create(result, options).toStream((err, file) => {
+			if (err) {
+				res.end()
+			} else {
+				file.pipe(res)
+			}
+		})
 
-			break
-		case 'csv':
-			result = helper.toCSV(result)
-			res.writeHead(200, {
-				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
-			res.end(result)
-			break
-		default:
-			break
+		break
+	case 'csv':
+		result = helper.toCSV(result)
+		res.writeHead(statusCode, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.csv'})
+		res.end(result)
+		break
+	default:
+		break
 	}
 })
 

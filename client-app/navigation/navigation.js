@@ -2,7 +2,7 @@ import React from 'react'
 import LoginService from '../login/login-service'
 import classNames from 'classnames'
 import PubSub from '../pubsub'
-import { hashHistory } from 'react-router'
+// import { hashHistory } from 'react-router'
 
 let token = null
 
@@ -23,9 +23,9 @@ export default React.createClass({
 	componentWillUnmount () {
 		PubSub.unsubscribe(token)
 	},
-	goToPage (page) {
-		hashHistory.push(page)
-	},
+	// goToPage (page) {
+	// 	hashHistory.push(page)
+	// },
 	render () {
 		const classes = classNames('row row-navigation', {hidden: !this.state.show})
 		return (

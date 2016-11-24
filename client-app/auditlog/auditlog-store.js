@@ -7,11 +7,35 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 	_sortingObject: null,
 	_criteriaOption: null,
 
-	pageData: null,
-	auditlogs: null,
+	pageData: {
+		pages: [],
+		totalPages: 0
+	},
+	auditlogs: [
+		{
+			'date_time': '23 September 2016',
+			'user_id': 'candy.crush',
+			'user_name': 'Candy Crush',
+			'Type': 'Odds',
+			'function_module': 'Master Risk Limit Log',
+			'function_event_detail': 'Update Odds',
+			'user_role': 'Role1, Role2',
+			'ip_address': '182.34.2.192'
+		},
+		{
+			'date_time': '23 September 2016',
+			'user_id': 'candy.crush',
+			'user_name': 'Candy Crush',
+			'Type': 'Odds',
+			'function_module': 'Master Risk Limit Log',
+			'function_event_detail': 'Update Odds',
+			'user_role': 'Role1, Role2',
+			'ip_address': '182.34.2.192'
+		}
+	],
 	forDebug: null,
 
-    searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
+	searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 		const requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
 		let self = this
 
@@ -27,12 +51,11 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 				self.emitChange()
 			},
 			error: function (xhr, status, error) {
-				console.log('Error: ' + error.message)
 			}
 		})
 	},
 
-	buildRequest(selectedPageNumber, sortingObject, criteriaOption) {
+	buildRequest (selectedPageNumber, sortingObject, criteriaOption) {
 		if (sortingObject) {
 			this._sortingObject = sortingObject
 		}
@@ -40,7 +63,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		if (criteriaOption) {
 			this._criteriaOption = criteriaOption
 		}
-		
+
 		let requestData = {
 			username: LoginService.getProfile().username,
 			selectedPageNumber: selectedPageNumber,
@@ -51,13 +74,11 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		}
 
 		let filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : []
-		let filterName = ""
-		let filterVal = ""
 
         // Fill the filters into reuqest data
 		for (let i in filters) {
-			filterName = filters[i].name
-			filterVal = filters[i].value
+			let filterName = filters[i].name
+			let filterVal = filters[i].value
 			requestData[filterName] = filterVal
 		}
 
