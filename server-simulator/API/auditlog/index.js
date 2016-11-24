@@ -1,13 +1,11 @@
 import express from 'express'
 import helper from './export_helper'
-import * as pdf from 'html-pdf'
 import * as fs from 'fs'
 import moment from 'moment'
 import PagingUtil from './paging-util'
 import PagingService from './paging-service'
 
 const router = express.Router()
-const options = {format: 'Letter', orientation: 'landscape', header: {'height': '15mm'}}
 const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
@@ -160,7 +158,6 @@ router.get('/export', (req, res) => {
 
 	let statusCode = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-	let dateReport
 
 	switch (type.toLowerCase()) {
 	case 'pdf':
@@ -179,7 +176,7 @@ router.get('/export', (req, res) => {
 		// 	}
 		// })
 
-		res.sendfile('server-simulator/API/auditlog/output.pdf');
+		res.sendfile('server-simulator/API/auditlog/output.pdf')
 
 		break
 	case 'csv':
