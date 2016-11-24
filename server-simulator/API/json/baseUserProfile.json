@@ -1,22 +1,102 @@
 [
 	{
-		"id":"id123",
-		"First Name":"Hu",
-		"Last Name":"bing",
-		"User ID":"JC10080",
-		"Position":"Manager",
-		"Staff ID":"ac45112",
-		"Phone Number":"1380000000",
-		"Email Address":"afc@hkjc.com"
+		"id":"id001",
+		"displayName":"Hu Bing",
+		"firstName":"Hu",
+		"lastName":"bing",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
 	},
 	{
-		"id":"id222",
-		"First Name":"He",
-		"Last Name":"Li",
-		"User ID":"JC10080",
-		"Position":"W-Manager",
-		"Staff ID":"ac45112",
-		"Phone Number":"1380000000",
-		"Email Address":"afc@hkjc.com"
+		"id":"id002",
+		"displayName":"He Li",
+		"firstName":"He",
+		"lastName":"Li",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
+	},
+	{
+		"id":"id003",
+		"displayName":"Ethan liang",
+		"firstName":"Ethan",
+		"lastName":"liang",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
+	},
+	{
+		"id":"id004",
+		"displayName":"Alber",
+		"firstName":"Alber",
+		"lastName":"bing",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
+	},
+	{
+		"id":"id005",
+		"displayName":"Chashs",
+		"firstName":"Hu",
+		"lastName":"bing",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
+	},
+	{
+		"id":"id006",
+		"displayName":"Qing",
+		"firstName":"Hu",
+		"lastName":"bing",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
+	},
+	{
+		"id":"id007",
+		"displayName":"Balsc",
+		"firstName":"Hu",
+		"lastName":"bing",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
+	},
+	{
+		"id":"id008",
+		"displayName":"Tim clock",
+		"firstName":"Hu",
+		"lastName":"bing",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
+	},
+	{
+		"id":"id009",
+		"displayName":"Jobs",
+		"firstName":"Hu",
+		"lastName":"bing",
+		"userId":"JC10080",
+		"position":"Manager",
+		"staffID":"ac45112",
+		"phoneNumber":"1380000000",
+		"emailAddress":"afc@hkjc.com"
 	}
+	
 ]

@@ -1,8 +1,14 @@
-// import _ from 'lodash'
-// import PubSub from '../pubsub'
+import _ from 'lodash'
+import PubSub from '../pubsub'
 
 export default class AddAccountProcess {
-	getAccountData () {
-		return $.get('./')
+	constructor() {
+		this.step = 1
+		this.curentSelectUser = null
+		this.userList = []
 	}
+	getAccountData () {
+		return $.post('./API/basicusers/getById')
+	}
+
 }
