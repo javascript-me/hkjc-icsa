@@ -1,5 +1,7 @@
+import config from '../config'
+
 const getClock = (data) => {
-	return $.get('api/clock', data)
+	return $.get(config.url('api/clock'), data)
 }
 
 export default {
