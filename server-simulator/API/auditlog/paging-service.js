@@ -1,29 +1,35 @@
-export default {
+export default class PagingService {
 
-	totalPages: 150,
+	static get DEFAULT_TOTAL_PAGES () {
+		return 150
+	}
 
-	createPageListByRange (pages, selectedPageNumber, range) {
+	constructor (totalPages) {
+		this.totalPages = totalPages === undefined ? PagingService.DEFAULT_TOTAL_PAGES : totalPages
+	}
+
+	static createPageListByRange (pages, selectedPageNumber, range) {
 		for (var i = range.startIndex; i <= range.endIndex; i++) {
 			var selected = selectedPageNumber === i
 			pages.push({label: i, selected: selected, hasHandCursor: true, greyOut: false})
 		}
-	},
+	}
 
-	setLeftHandSideSymbol (selectedPageNumber, pages) {
+	static setLeftHandSideSymbol (selectedPageNumber, pages) {
 		if (selectedPageNumber > 5) {
 			pages.push({label: 1, selected: false, hasHandCursor: true, greyOut: false})
 			pages.push({label: '...', selected: false, hasHandCursor: false, greyOut: false})
 		}
-	},
+	}
 
 	setRightHandSideSymbol (selectedPageNumber, pages) {
 		if (selectedPageNumber < this.totalPages - 4) {
 			pages.push({label: '...', selected: false, hasHandCursor: false, greyOut: false})
 			pages.push({label: this.totalPages, selected: false, hasHandCursor: true, greyOut: false})
 		}
-	},
+	}
 
-	fixInvalidSelectedPageNumber: function (selectedPageNumber) {
+	fixInvalidSelectedPageNumber (selectedPageNumber) {
 		if (selectedPageNumber > this.totalPages) {
 			selectedPageNumber = this.totalPages
 		}
@@ -32,9 +38,9 @@ export default {
 			selectedPageNumber = 1
 		}
 		return selectedPageNumber
-	},
+	}
 
-	handleTotalPageIsEightOrMore: function (selectedPageNumber) {
+	handleTotalPageIsEightOrMore (selectedPageNumber) {
 		var pages = []
 
 		pages.push({
@@ -44,10 +50,10 @@ export default {
 			greyOut: selectedPageNumber === 1
 		})
 
-		this.setLeftHandSideSymbol(selectedPageNumber, pages)
+		PagingService.setLeftHandSideSymbol(selectedPageNumber, pages)
 
 		if (selectedPageNumber >= 1 && selectedPageNumber <= 5) {
-			this.createPageListByRange(
+			PagingService.createPageListByRange(
                 pages,
                 selectedPageNumber,
                 {startIndex: 1, endIndex: 6}
@@ -55,7 +61,7 @@ export default {
 		}
 
 		if (selectedPageNumber > 5 && selectedPageNumber < this.totalPages - 4) {
-			this.createPageListByRange(
+			PagingService.createPageListByRange(
                 pages,
                 selectedPageNumber,
                 {startIndex: selectedPageNumber - 2, endIndex: selectedPageNumber + 2}
@@ -63,7 +69,7 @@ export default {
 		}
 
 		if (this.totalPages - 4 <= selectedPageNumber && selectedPageNumber <= this.totalPages) {
-			this.createPageListByRange(
+			PagingService.createPageListByRange(
                 pages,
                 selectedPageNumber,
                 {startIndex: this.totalPages - 5, endIndex: this.totalPages}
@@ -78,7 +84,7 @@ export default {
 			greyOut: selectedPageNumber === this.totalPages
 		})
 		return pages
-	},
+	}
 
 	handleTotalPageIsLessThanEight (selectedPageNumber) {
 		var pages = []
@@ -90,7 +96,7 @@ export default {
 			greyOut: selectedPageNumber === 1
 		})
 
-		this.createPageListByRange(
+		PagingService.createPageListByRange(
             pages,
             selectedPageNumber,
             {startIndex: 1, endIndex: this.totalPages}
@@ -104,7 +110,7 @@ export default {
 		})
 
 		return pages
-	},
+	}
 
 	getDataByPageNumber (selectedPageNumber) {
 		if (isNaN(selectedPageNumber) || this.totalPages === 0) {
@@ -129,4 +135,5 @@ export default {
 			totalPages: this.totalPages
 		}
 	}
+
 }

@@ -3,7 +3,7 @@ import helper from './export_helper'
 import * as pdf from 'html-pdf'
 import * as fs from 'fs'
 import moment from 'moment'
-import PagingUtil from './paging-util'
+import AuditlogsUtil from './auditlogs-util'
 import PagingService from './paging-service'
 
 const router = express.Router()
@@ -12,19 +12,19 @@ const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
 /**
- * @api {POST} /auditlog/filterAuditlogs filterAuditlogs
+ * @api {POST} /auditlog/filterAuditlogs Filter Auditlogs
  * @apiGroup Auditlog
 
  * @apiDescription Search criteria mock API in Audit log page.
  *
- * @apiParam {String} username Current customer's name
+ * @apiParam {String} username=allgood Current customer's name
  * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
  * @apiParam {String} [keyword] Keyword for search criteria
  * @apiParam {String} sortingObjectFieldName=date_time Column name which sorted by.
  * @apiParam {String} sortingObjectOrder=DESCEND Sorting order, DESCEND or ASCEND.
  * @apiParam {Number} selectedPageNumber=1 Selected page number.
- * @apiParam {DateTime} dateTimeFrom Audit log date time from.
- * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
  * @apiParam {String} [typeValue] Type value.
  * @apiParam {String} [backEndID] Back end ID.
  * @apiParam {String} [frontEndID] Front end ID.
@@ -68,7 +68,7 @@ router.post('/filterAuditlogs', (req, res) => {
 		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
 
-	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs,
+	var filteredAuditlogs = AuditlogsUtil.doFilter(cloneAuditlogs,
 		req.body.keyword,
 		req.body.typeValue,
 		req.body.userRole,
@@ -79,12 +79,12 @@ router.post('/filterAuditlogs', (req, res) => {
 		req.body.dateTimeTo
 	)
 
-	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+	var sortedAuditlogs = AuditlogsUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
-	result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+	result.auditlogs = AuditlogsUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
-	PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
-	result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
+	var pagingService = new PagingService(AuditlogsUtil.getTotalPages(sortedAuditlogs.length))
+	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
     // TODO: check how to send JSON POST request data.
 
@@ -100,17 +100,17 @@ router.get('/download/:file', (req, res) => {
 })
 
 /**
- * @api {GET} /auditlog/export export
+ * @api {GET} /auditlog/export Export
  * @apiGroup Auditlog
 
  * @apiDescription Mock API for export search result of Audit log page.
  *
  * @apiParam {String} type File type (pdf, csv) ask for export.
- * @apiParam {String} username Current customer's name
+ * @apiParam {String} username=allgood Current customer's name
  * @apiParam {String} betType=football Sport Type, football, basketball or horse-racing
  * @apiParam {String} [keyword] Keyword for search criteria
- * @apiParam {DateTime} dateTimeFrom Audit log date time from.
- * @apiParam {DateTime} dateTimeTo Audit log date time to.
+ * @apiParam {DateTime} dateTimeFrom Audit log date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Audit log date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
  * @apiParam {String} [typeValue] Type value.
  * @apiParam {String} [backEndID] Back end ID.
  * @apiParam {String} [frontEndID] Front end ID.
@@ -149,14 +149,14 @@ router.get('/export', (req, res) => {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
 
-	let result =	PagingUtil.doFilter(data,
-						filters.keyword,
-						filters.typeValue,
-						filters.userRole,
-						filters.systemFunc,
-						filters.betTypeFeature,
-						filters.device
-					)
+	let result = AuditlogsUtil.doFilter(data,
+		filters.keyword,
+		filters.typeValue,
+		filters.userRole,
+		filters.systemFunc,
+		filters.betTypeFeature,
+		filters.device
+	)
 
 	let statusCode = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')

@@ -18,14 +18,14 @@ describe('<Paging />', () => {
 	it('getUserSelectedPageNumber() should return correct selected page number', () => {
 		const instance = shallow(<Paging pageData={AuditlogStore.pageData} />).instance()
 
-		assert.equal(11, instance.getUserSelectedPageNumber(10, 11, PagingService.totalPages))
+		assert.equal(11, instance.getUserSelectedPageNumber(10, 11, PagingService.DEFAULT_TOTAL_PAGES))
 
-		assert.equal(9, instance.getUserSelectedPageNumber(10, '<', PagingService.totalPages))
-		assert.equal(11, instance.getUserSelectedPageNumber(10, '>', PagingService.totalPages))
-		assert.equal(1, instance.getUserSelectedPageNumber(1, '<', PagingService.totalPages))
-		assert.equal(PagingService.totalPages, instance.getUserSelectedPageNumber(PagingService.totalPages, '>', PagingService.totalPages))
+		assert.equal(9, instance.getUserSelectedPageNumber(10, '<', PagingService.DEFAULT_TOTAL_PAGES))
+		assert.equal(11, instance.getUserSelectedPageNumber(10, '>', PagingService.DEFAULT_TOTAL_PAGES))
+		assert.equal(1, instance.getUserSelectedPageNumber(1, '<', PagingService.DEFAULT_TOTAL_PAGES))
+		assert.equal(PagingService.DEFAULT_TOTAL_PAGES, instance.getUserSelectedPageNumber(PagingService.DEFAULT_TOTAL_PAGES, '>', PagingService.DEFAULT_TOTAL_PAGES))
 
-		assert.equal(50, instance.getUserSelectedPageNumber(50, '...', PagingService.totalPages))
+		assert.equal(50, instance.getUserSelectedPageNumber(50, '...', PagingService.DEFAULT_TOTAL_PAGES))
 	})
 
 	it('isValid() should return false if you are click < when you are already in page 1', () => {
