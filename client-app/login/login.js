@@ -15,6 +15,14 @@ export default React.createClass({
 	submit () {
 		doSubmit(this.refs.username.value, this.refs.password.value)
 	},
+	changeType () {
+		if (this.refs.password.type === 'password') {
+			this.refs.password.type = 'text'
+		} else {
+			this.refs.password.type = 'password'
+			this.refs.password.value.replace(/./g, '*')
+		}
+	},
 	render () {
 		return (
 			<div className='page-login'>
@@ -32,6 +40,7 @@ export default React.createClass({
 							<div className='form-group form-group-lg'>
 								<label htmlFor='password'>Password</label>
 								<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' />
+								<a className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a>
 							</div>
 							<p className='error'>The username or password you have entered is invalid. You have 3 attempts left.</p>
 							<button type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Login</button>

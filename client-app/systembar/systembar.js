@@ -69,8 +69,8 @@ export default class Systembar extends React.Component {
 						<span className='name'>{this.state.info.username}</span>
 					</span>
 					<ul className='dropdown-menu'>
-						<li><a href=''>My Profile</a></li>
-						<li><a href=''>Logout</a></li>
+						<li><a>My Profile</a></li>
+						<li><a href='#/' onClick={LoginService.logout}>Logout</a></li>
 					</ul>
 				</div>
 			</div>
