@@ -1,4 +1,5 @@
 import React from 'react'
+import NoData from '../nodata/nodata'
 
 export default React.createClass({
 	propTypes: {
@@ -91,28 +92,24 @@ export default React.createClass({
 
 	renderRows () {
 		if (this.props.dataCollection.length === 0) {
-			let rowArr = [<div className='nodata'>NO Results</div>]
-			let tdDom = []
-			for (let j = 0; j < 18; j++) {
-				tdDom.push(<td />)
-			}
-			for (let i = 0; i < 10; i++) {
-				rowArr.push(<tr className='nodata-tr'>{tdDom}</tr>)
-			}
-			return rowArr
+			return <NoData colNum={this.props.headers.length} />
 		}
-		return this.props.dataCollection.map((row) => {
-			return <tr>
-				{this.props.displayCheckBox ? <td><input type='checkbox' className='checkbox' name='user-profile' /></td> : null}
-				{this.props.headers.map(
-					(header, i) => {
-						if (header.fieldName !== '') {
-							return <td>{this.formatColumnVal(row[header.fieldName])}</td>
-						}
-					}
-				)}
-			</tr>
-		})
+		return <tbody>
+			{this.props.dataCollection.map(
+				(row) => {
+					return <tr>
+						{this.props.displayCheckBox ? <td><input type='checkbox' className='checkbox' name='user-profile' /></td> : null}
+						{this.props.headers.map(
+							(header, i) => {
+								if (header.fieldName !== '') {
+									return <td>{this.formatColumnVal(row[header.fieldName])}</td>
+								}
+							}
+						)}
+					</tr>
+				}
+			)}
+		</tbody>
 	},
 	checkAll (event) {
 		var checkboxes = document.getElementsByTagName('input')
@@ -148,9 +145,7 @@ export default React.createClass({
 					}
 				</tr>
 			</thead>
-			<tbody>
-				{this.renderRows()}
-			</tbody>
+			{this.renderRows()}
 		</table>
 	}
 })
