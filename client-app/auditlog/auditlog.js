@@ -351,19 +351,21 @@ export default React.createClass({
 					{/* Search Critiria Row */}
 					<div className='col-md-12'>
 						<div className='search-criteria-container'>
-							<div className={betTypesContainerClassName}>
-								{betTypes}
-							</div>
-							<div className='keyword-container'>
-								<input type='text' placeholder='Search with keywords & filters'
-									value={this.state.keyword}
-									onClick={this.showMoreFilter}
-									onChange={this.handleKeywordChange}
-									onKeyPress={this.handleKeywordPress}
-									ref='keyword' />
-							</div>
-							<div className='filter-block-container'>
-								{filterBlockes}
+							<div className='search-criteria-container-row'>
+								<div className={betTypesContainerClassName}>
+									{betTypes}
+								</div>
+								<div className='keyword-container'>
+									<input type='text' placeholder='Search with keywords & filters'
+										value={this.state.keyword}
+										onClick={this.showMoreFilter}
+										onChange={this.handleKeywordChange}
+										onKeyPress={this.handleKeywordPress}
+										ref='keyword' />
+								</div>
+								<div className='filter-block-container'>
+									{filterBlockes}
+								</div>
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />
