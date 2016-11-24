@@ -319,24 +319,21 @@ export default React.createClass({
 		let activeContent
 
 		if (this.state.betType === 'football') {
-			activeContent = <div>
-				<div className='table-container '>
-					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
-				</div>
-				<div className='col-md-12 vertical-gap'>
-					<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
-					{/* START FOOTER EXPORT */}
-					<div className='col-md-4'>
+			activeContent =
+				<div>
+					<div className='table-container '>
+						<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
+					</div>
+					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 							<Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
 								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>
 						</div>
+						<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 				</div>
-				{/* END FOOTER EXPORT */}
-			</div>
 		} else {
 			activeContent = <div className='nopage'>Coming Soon</div>
 		}
@@ -354,19 +351,21 @@ export default React.createClass({
 					{/* Search Critiria Row */}
 					<div className='col-md-12'>
 						<div className='search-criteria-container'>
-							<div className={betTypesContainerClassName}>
-								{betTypes}
-							</div>
-							<div className='keyword-container'>
-								<input type='text' placeholder='Search with keywords & filters'
-									value={this.state.keyword}
-									onClick={this.showMoreFilter}
-									onChange={this.handleKeywordChange}
-									onKeyPress={this.handleKeywordPress}
-									ref='keyword' />
-							</div>
-							<div className='filter-block-container'>
-								{filterBlockes}
+							<div className='search-criteria-container-row'>
+								<div className={betTypesContainerClassName}>
+									{betTypes}
+								</div>
+								<div className='keyword-container'>
+									<input type='text' placeholder='Search with keywords & filters'
+										value={this.state.keyword}
+										onClick={this.showMoreFilter}
+										onChange={this.handleKeywordChange}
+										onKeyPress={this.handleKeywordPress}
+										ref='keyword' />
+								</div>
+								<div className='filter-block-container'>
+									{filterBlockes}
+								</div>
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />

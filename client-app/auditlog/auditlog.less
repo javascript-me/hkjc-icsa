@@ -17,10 +17,14 @@
 
 	.search-criteria-container {
 		display: flex;
-		flex-wrap: wrap;
-		height: 40px;
 		margin-bottom: 20px;
 		overflow-y: visible;
+		flex-direction: column;
+
+		.search-criteria-container-row {
+			display: flex;
+			flex-direction: row;
+		}
 
 		.bet-types {
 			display: flex;
@@ -143,15 +147,17 @@
 		}
 
 		.more-filter-popup {
-			height: 0;
-			margin-top: -1px;
+			height: auto;
+			position: absolute;
+			top: 39px;
 			overflow: hidden;
-			width: 100%;
 			z-index: 100;
+			display: none;
 
 			&.active {
 				height: auto;
 				overflow: visible;
+				display: block;
 			}
 		}
 	}
