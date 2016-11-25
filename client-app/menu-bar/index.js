@@ -11,6 +11,7 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
+		this.modeChange = this.modeChange.bind(this)
 		this.state = {
 			slimMode: false,
 			menuBarShouldShow: LoginService.hasProfile(),
@@ -41,7 +42,7 @@ class MenuBar extends Component {
 							</div>
 						))}
 					</div>
-					<div className='toggle-btn' onClick={this.modeChange}>c</div>
+					<div className='toggle-btn' onClick={() => { this.modeChange() }}>c</div>
 					<div className='message'>Message</div>
 				</div>
 			</div>)

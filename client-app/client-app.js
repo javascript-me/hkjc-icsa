@@ -12,6 +12,7 @@ import Dashboard from './dashboard/dashboard'
 
 import Audit from './auditlog/auditlog'
 import UserProfile from './userprofile/userprofile'
+// import AddAccount from './add-account'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
