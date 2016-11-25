@@ -10,7 +10,7 @@ import auditlog from './API/auditlog'
 import APIconfig from './API/config'
 import config from './config'
 import clock from './API/clock'
-// import baseUserProfile from './API/base-user-profile'
+import baseUserProfile from './API/basicalUser'
 
 const server = express.Router()
 server.use('/eventdirectory/', eventdirectory)
@@ -18,7 +18,7 @@ server.use('/users/', users)
 server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
 server.use('/config/', APIconfig)
-// server.use('/baseusers/', baseUserProfile)
+server.use('/basicusers/', baseUserProfile)
 
 const app = express()
 app.use(
