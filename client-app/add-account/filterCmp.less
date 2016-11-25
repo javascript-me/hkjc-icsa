@@ -48,7 +48,7 @@
 			}
 			tbody {
 				tr:nth-of-type(even) {
-					background-color: #F8F8F8;
+					background-color: #F8F9FB;
 				}
 				tr.activeLine {
 					background-color: #FCF6C8;
@@ -130,5 +130,30 @@
 				}
 			}
 		}
+	}
+	.footer {
+		padding-top: 30px;
+		.btn {
+			line-height: 28px;
+			margin-left: 30px;
+			width: 100px;
+			font-size: 16px;
+
+			&.btn-main {
+				background-color: #305091;
+				color: #FFFFFF;
+			}
+			&.disabled {
+				background-color: #E8E8E8;
+				color: #8A8A8A;
+			}
+			&.btn-secondary {
+				background-color: #FFFFFF;
+				border: 1px solid #7C8DAF;
+				color: #305091;
+
+			}
+		}
+		
 	}
 }

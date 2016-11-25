@@ -21,7 +21,7 @@ class AddAccount extends Component {
 		return (
 			<div className='add-useraccount-cmp'>
 				<div className="filter-container">
-					<ItemFilter title="Add User" tableData={this.state.tableData} header={header} />
+					<ItemFilter title="Add User" tableData={this.state.tableData} header={header} postiveBtn={{text:'Cancle',callback:null}} activeBtn={{text:'add',callback:this.handleAdd}}/>
 				</div>
 				
 			</div>
@@ -38,6 +38,9 @@ class AddAccount extends Component {
 		this.getUsers()
 	}
 	
+	handleAdd (item) {
+		console.log(item)
+	}
 }
 
 export default AddAccount

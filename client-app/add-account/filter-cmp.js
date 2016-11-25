@@ -12,6 +12,7 @@ class ItemFilter extends Component {
 			currentSelectIndex: null,
 			filterText: ''
 		}
+		this.currentSelectItem = null
 		this.allUser = this.props.tableData
 		this.fields = _.map(this.props.header, item => item.field)
 		this.currentSortInfo = { index: null, sortType: null }
@@ -33,6 +34,10 @@ class ItemFilter extends Component {
 							<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} />
 							<TableRow data={this.state.showItems} fields={this.fields} handleItemClick={this.handleItemClick} />
 						</table>
+					</div>
+					<div className="footer">
+						<button className={classnames("btn","pull-right","btn-main",{disabled:!this.currentSelectItem})} onClick={() => {this.currentSelectItem && this.props.activeBtn.callback(this.currentSelectItem)}}>{this.props.activeBtn.text || 'Ok'}</button>
+						<button className="btn pull-right btn-secondary" onClick={() => {this.props.postiveBtn.callback()}}>{this.props.postiveBtn.text || 'Cancle'}</button>
 					</div>
 				</div>
 			</div>
@@ -65,6 +70,7 @@ class ItemFilter extends Component {
 		let flag = !item.checked;
 		_.forEach(this.props.tableData, (user, idx) => { user.checked = false })
 		item.checked = flag
+		this.currentSelectItem = flag && item
 		this.forceUpdate()
 	}
 	handleSort(index) {
