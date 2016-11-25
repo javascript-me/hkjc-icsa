@@ -1,9 +1,10 @@
-// import UserProfileService from './userprofile-service'
+import UserProfileService from './userprofile-service'
 
 describe('UserProfileService', () => {
-	describe('#getProfile', () => {
-		it('returns cloned profile', () => {
-			expect(true).to.be.equal(true)
+	describe('#getUserProfile', () => {
+		it('returns user profile', async () => {
+			let userProfile = await UserProfileService.getUserProfile('userId')
+			expect(userProfile).to.be.an('object')
 		})
 	})
 })

@@ -5,7 +5,8 @@ import BasicInformation from './basicinformation'
 
 describe('<BasicInformation />', () => {
 	it('renders a BasicInformation div', () => {
-		const wrapper = shallow(<BasicInformation />)
+		const userBasic = {}
+		const wrapper = shallow(<BasicInformation userBasic={userBasic} />)
 		expect(wrapper.find('div.basic-information')).to.have.length(1)
 	})
 })

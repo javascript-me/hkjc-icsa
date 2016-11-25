@@ -5,7 +5,7 @@ import ProfileTabs from './profiletabs'
 
 describe('<ProfileTabs />', () => {
 	it('renders a ProfileTabs div', () => {
-		const wrapper = shallow(<ProfileTabs />)
+		const wrapper = shallow(<ProfileTabs><div /><div /></ProfileTabs>)
 		expect(wrapper.find('div.profile-tabs')).to.have.length(1)
 	})
 })
