@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import _ from 'lodash'
-import _2 from 'underscore'
 
 class ItemFilter extends Component {
-	constructor(props) {
+	constructor (props) {
 		super(props)
 
 		this.state = {
@@ -20,31 +19,31 @@ class ItemFilter extends Component {
 		this.handleItemClick = this.handleItemClick.bind(this)
 		this.handleSort = this.handleSort.bind(this)
 	}
-	render() {
+	render () {
 		return (
-			<div className="filter-cmp-container">
-				<div className="title">{this.props.title}</div>
-				<div className="body">
-					<div className="serch-header">
-						<input type="text" placeholder="Search with keywords & filters" onChange={this.handleInputChange} />
-						<img className="search-icon" src="common/search.svg" />
+			<div className='filter-cmp-container'>
+				<div className='title'>{this.props.title}</div>
+				<div className='body'>
+					<div className='serch-header'>
+						<input type='text' placeholder='Search with keywords & filters' onChange={this.handleInputChange} />
+						<img className='search-icon' src='common/search.svg' />
 					</div>
-					<div className="content">
-						<table className="table">
+					<div className='content'>
+						<table className='table'>
 							<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} />
 							<TableRow data={this.state.showItems} fields={this.fields} handleItemClick={this.handleItemClick} />
 						</table>
 					</div>
-					<div className="footer">
-						<button className={classnames("btn","pull-right","btn-main",{disabled:!this.currentSelectItem})} onClick={() => {this.currentSelectItem && this.props.activeBtn.callback(this.currentSelectItem)}}>{this.props.activeBtn.text || 'Ok'}</button>
-						<button className="btn pull-right btn-secondary" onClick={() => {this.props.postiveBtn.callback()}}>{this.props.postiveBtn.text || 'Cancle'}</button>
+					<div className='footer'>
+						<button className={classnames('btn', 'pull-right', 'btn-main', {disabled: !this.currentSelectItem})} onClick={() => { this.currentSelectItem && this.props.activeBtn.callback(this.currentSelectItem) }}>{this.props.activeBtn.text || 'Ok'}</button>
+						<button className='btn pull-right btn-secondary' onClick={() => { this.props.postiveBtn.callback() }}>{this.props.postiveBtn.text || 'Cancle'}</button>
 					</div>
 				</div>
 			</div>
 		)
 	}
 
-	filterItem(keyword, fields, items) {
+	filterItem (keyword, fields, items) {
 		if (!keyword) {
 			return []
 		}
@@ -57,24 +56,23 @@ class ItemFilter extends Component {
 				}
 			}
 			return result
-
 		})
 	}
 
-	handleInputChange(e) {
+	handleInputChange (e) {
 		let keyword = e.target.value.toLowerCase()
 		this.setState({ showItems: this.filterItem(keyword, this.fields, this.props.tableData) })
 	}
 
-	handleItemClick(item) {
-		let flag = !item.checked;
+	handleItemClick (item) {
+		let flag = !item.checked
 		_.forEach(this.props.tableData, (user, idx) => { user.checked = false })
 		item.checked = flag
 		this.currentSelectItem = flag && item
 		this.forceUpdate()
 	}
-	handleSort(index) {
-		let field = this.fields[index];
+	handleSort (index) {
+		let field = this.fields[index]
 
 		if (this.currentSortInfo.index !== index || this.currentSortInfo.sortType === 'down') {
 			this.currentSortInfo = {
@@ -83,44 +81,63 @@ class ItemFilter extends Component {
 			}
 
 			this.setState({ showItems: _.sortBy(this.state.showItems, (item) => (item[field])) })
-		}
-		else {
+		} else {
 			this.currentSortInfo = {
 				index,
 				sortType: 'down'
 			}
 
-			let reverse = [];
+			let reverse = []
 			for (let item of this.state.showItems) {
 				reverse.unshift(item)
 			}
-			this.setState({ showItems: reverse });
+			this.setState({ showItems: reverse })
 		}
-
-
 	}
 }
-const TableHeader = (props) => (<thead className="table-header">
+
+ItemFilter.propTypes = {
+	activeBtn: React.propTypes.object,
+	postiveBtn: React.propTypes.object,
+	tableData: React.propTypes.array,
+	header: React.propTypes.array,
+	title: React.propTypes.string
+
+}
+
+const TableHeader = (props) => (<thead className='table-header'>
 	<tr>
-		<th className="th-header"></th>
+		<th className='th-header' />
 		{props.header && props.header.map((item, idx) => (
-			<th key={item.label} onClick={(e) => { props.handleSort(idx) } }
-				className={classnames("sort-icon", {
-					'sort-up': (props.sortInfo.index == idx && props.sortInfo.sortType === 'up'),
-					'sort-down': (props.sortInfo.index == idx && props.sortInfo.sortType === 'down')
+			<th key={item.label} onClick={(e) => { props.handleSort(idx) }}
+				className={classnames('sort-icon', {
+					'sort-up': (props.sortInfo.index === idx && props.sortInfo.sortType === 'up'),
+					'sort-down': (props.sortInfo.index === idx && props.sortInfo.sortType === 'down')
 				})}>{item.label}</th>
 		))}
 	</tr>
 </thead>)
 
+TableHeader.propTypes = {
+	header: React.propTypes.array,
+	handleSort: React.propTypes.func,
+	sortInfo: React.propTypes.object
+}
+
 const TableRow = (props) => {
 	return (<tbody>
 		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'} className={classnames({ activeLine: item.checked })}>
-			<td className="tr-header"><div className={classnames('my-checkbox', { checked: item.checked })} onClick={() => { props.handleItemClick(item) } } ></div></td>
+			<td className='tr-header'><div className={classnames('my-checkbox', { checked: item.checked })} onClick={() => { props.handleItemClick(item) }} /></td>
 			{props.fields.map((rol, idx) => (<td key={rol}>{item[rol]}</td>))}
 		</tr>))}
 
 	</tbody>)
+}
+
+TableRow.propTypes = {
+	data: React.propTypes.array,
+	handleItemClick: React.propTypes.func,
+	fields: React.propTypes.array
 }
 
 export default ItemFilter

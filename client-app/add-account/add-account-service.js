@@ -1,8 +1,8 @@
-import _ from 'lodash'
-import PubSub from '../pubsub'
+// import _ from 'lodash'
+// import PubSub from '../pubsub'
 
 export default class AddAccountProcess {
-	constructor() {
+	constructor () {
 		this.step = 1
 		this.curentSelectUser = null
 		this.userList = []

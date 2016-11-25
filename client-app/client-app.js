@@ -11,7 +11,7 @@ import LoginService from './login/login-service'
 import Dashboard from './dashboard/dashboard'
 
 import Audit from './auditlog/auditlog'
-import AddAccount from './add-account'
+// import AddAccount from './add-account'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -29,7 +29,7 @@ export default (target) => {
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
 				<Route path='/page' component={PageBase} onEnter={hasAuth}>
-					<IndexRoute component={AddAccount} />
+					<IndexRoute component={Dashboard} />
 					<Route path='audit' component={Audit} />
 				</Route>
 			</Router>
