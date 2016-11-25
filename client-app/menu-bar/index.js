@@ -11,6 +11,7 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
+		this.modeChange = this.modeChange.bind(this)
 		this.state = {
 			slimMode: false,
 			menuBarShouldShow: LoginService.hasProfile(),
@@ -41,12 +42,12 @@ class MenuBar extends Component {
 							</div>
 						))}
 					</div>
-					<div className='toggle-btn' onClick={this.modeChange}>c</div>
+					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
 					<div className='message'>Message</div>
 				</div>
 			</div>)
 	}
-	modeChange = () => {
+	modeChange () {
 		this.setState({slimMode: !this.state.slimMode})
 	}
 	componentDidMount () {
@@ -119,7 +120,7 @@ const SecondLevelMenu = (props) => {
 	return (
 		<div className='second-level'>
 			<div className='second-level-container'>
-				{dataList && dataList.map((item, idx) => (<div key={idx} className={classnames('second-level-item',{noSub:!item.subMenu})}>
+				{dataList && dataList.map((item, idx) => (<div key={idx} className={classnames('second-level-item', {noSub: !item.subMenu})}>
 					<div className='second-level-text'>
 						<Link to={item.link}>{item.text}</Link>
 						<ThirdLevelOnly data={item.subMenu} />

@@ -8,8 +8,10 @@ describe('PagingService', () => {
 	})
 
 	it('should return page 1 data', () => {
-		var dataOfPage1 = PagingService.getDataByPageNumber(1)
-		assert.isNotOk(_.isEmpty(PagingService.getDataByPageNumber(1).pages))
+		var pagingService = new PagingService()
+
+		var dataOfPage1 = pagingService.getDataByPageNumber(1)
+		assert.isNotOk(_.isEmpty(pagingService.getDataByPageNumber(1).pages))
 		assert.equal(10, dataOfPage1.pages.length)
 
 		assert.equal(1, dataOfPage1.pages[1].label)
@@ -18,39 +20,45 @@ describe('PagingService', () => {
 		assert.equal(2, dataOfPage1.pages[2].label)
 		assert.isNotOk(dataOfPage1.pages[2].selected)
 
-		var dataOfPageNaN = PagingService.getDataByPageNumber(NaN)
+		var dataOfPageNaN = pagingService.getDataByPageNumber(NaN)
 		assert.ok(_.isEmpty(dataOfPageNaN.pages))
-		assert.equal(PagingService.totalPages, dataOfPageNaN.totalPages)
-	}),
+		assert.equal(pagingService.totalPages, dataOfPageNaN.totalPages)
+	})
 
 	it('should return data by small paging number', () => {
-		var dataOfPage2 = PagingService.getDataByPageNumber(2)
+		var pagingService = new PagingService()
+
+		var dataOfPage2 = pagingService.getDataByPageNumber(2)
 		assert.ok(dataOfPage2.pages[2].selected)
 		assert.isNotOk(dataOfPage2.pages[3].selected)
 
-		assert.ok(PagingService.getDataByPageNumber(3).pages[3].selected)
+		assert.ok(pagingService.getDataByPageNumber(3).pages[3].selected)
 
-		assert.equal(10, PagingService.getDataByPageNumber(200).pages.length)
+		assert.equal(10, pagingService.getDataByPageNumber(200).pages.length)
 
-		assert.equal(1, PagingService.getDataByPageNumber(-10).pages[1].label)
-		assert.equal(PagingService.totalPages, PagingService.getDataByPageNumber(200).pages[8].label)
-	}),
+		assert.equal(1, pagingService.getDataByPageNumber(-10).pages[1].label)
+		assert.equal(pagingService.totalPages, pagingService.getDataByPageNumber(200).pages[8].label)
+	})
 
 	it('should return page 6 data', () => {
-		var dataOfPage6 = PagingService.getDataByPageNumber(6)
+		var pagingService = new PagingService()
+
+		var dataOfPage6 = pagingService.getDataByPageNumber(6)
 		assert.equal('...', dataOfPage6.pages[2].label)
 		assert.equal(6, dataOfPage6.pages[5].label)
 		assert.ok(dataOfPage6.pages[5].selected)
 
 		assert.equal('...', dataOfPage6.pages[8].label)
-		assert.equal(PagingService.totalPages, dataOfPage6.pages[9].label)
+		assert.equal(pagingService.totalPages, dataOfPage6.pages[9].label)
 	})
 
 	it('should return last page data', () => {
-		var dataOfPage100 = PagingService.getDataByPageNumber(PagingService.totalPages)
+		var pagingService = new PagingService()
+
+		var dataOfPage100 = pagingService.getDataByPageNumber(pagingService.totalPages)
 		assert.equal('...', dataOfPage100.pages[2].label)
-		assert.equal(PagingService.totalPages - 5, dataOfPage100.pages[3].label)
-		assert.equal(PagingService.totalPages, dataOfPage100.pages[8].label)
+		assert.equal(pagingService.totalPages - 5, dataOfPage100.pages[3].label)
+		assert.equal(pagingService.totalPages, dataOfPage100.pages[8].label)
 		assert.ok(dataOfPage100.pages[8].selected)
 	})
 
@@ -74,33 +82,60 @@ describe('PagingService', () => {
 	})
 
 	it('fixInvalidSelectedPageNumber() should return a valid selectedPageNumber', () => {
-		assert.equal(1, PagingService.fixInvalidSelectedPageNumber(-2))
-		assert.equal(PagingService.totalPages, PagingService.fixInvalidSelectedPageNumber(200))
+		var pagingService = new PagingService()
+
+		assert.equal(1, pagingService.fixInvalidSelectedPageNumber(-2))
+		assert.equal(pagingService.totalPages, pagingService.fixInvalidSelectedPageNumber(200))
 	})
 
 	it('hasHandCursor should be correct', () => {
-		assert.isNotOk(PagingService.getDataByPageNumber(1).pages[0].hasHandCursor)
-		assert.ok(PagingService.getDataByPageNumber(2).pages[0].hasHandCursor)
+		var pagingService = new PagingService()
 
-		assert.isNotOk(PagingService.getDataByPageNumber(PagingService.totalPages).pages[9].hasHandCursor)
-		assert.ok(PagingService.getDataByPageNumber(99).pages[9].hasHandCursor)
+		assert.isNotOk(pagingService.getDataByPageNumber(1).pages[0].hasHandCursor)
+		assert.ok(pagingService.getDataByPageNumber(2).pages[0].hasHandCursor)
+
+		assert.isNotOk(pagingService.getDataByPageNumber(pagingService.totalPages).pages[9].hasHandCursor)
+		assert.ok(pagingService.getDataByPageNumber(99).pages[9].hasHandCursor)
 	})
 
 	it('10 pages case should be working fine', () => {
-		PagingService.totalPages = 10
-		assert.ok(PagingService.getDataByPageNumber(1).pages[9].hasHandCursor)
+		assert.ok(new PagingService(10).getDataByPageNumber(1).pages[9].hasHandCursor)
 	})
 
 	it('2 pages case should be working fine', () => {
-		PagingService.totalPages = 2
-		assert.equal(4, PagingService.getDataByPageNumber(1).pages.length)
+		assert.equal(4, new PagingService(2).getDataByPageNumber(1).pages.length)
 	})
 
-	it("0 page case should return no number label paging ui", () => {
-		PagingService.totalPages = 0
-		var pages = PagingService.getDataByPageNumber(1).pages
+	it('0 page case should return no number label paging ui', () => {
+		var pages = new PagingService(0).getDataByPageNumber(1).pages
 		assert.equal(0, pages.length)
+	})
 
+	it('Page 5 with totalPages 8 should be OK', () => {
+		var pages = new PagingService(8).getDataByPageNumber(5).pages
+		assert.equal(10, pages.length)
+		assert.equal('8', pages[8].label)
+		assert.equal('...', pages[7].label)
+	})
 
+	it('Page 6 with totalPages 8 should be OK', () => {
+		var pages = new PagingService(8).getDataByPageNumber(6).pages
+		assert.equal(10, pages.length)
+		assert.equal('1', pages[1].label)
+		assert.equal('...', pages[2].label)
+	})
+
+	it('Page 5 with totalPages 9 should be OK', () => {
+		var pages = new PagingService(9).getDataByPageNumber(5).pages
+		assert.equal(10, pages.length)
+		assert.equal('9', pages[8].label)
+		assert.equal('...', pages[7].label)
+	})
+
+	it('Page 6 with totalPages 9 should be OK', () => {
+		var pages = new PagingService(9).getDataByPageNumber(6).pages
+		assert.equal(10, pages.length)
+		assert.equal('1', pages[1].label)
+		assert.equal('...', pages[2].label)
 	})
 })

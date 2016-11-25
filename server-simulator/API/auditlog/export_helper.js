@@ -12,10 +12,9 @@ helper.toCSV = data => {
 }
 
 helper.toHTML = (data, date) => {
-	const rowsNum = data.length
-
 	let temp = data
-	let html = '', headers = ''
+	let html = ''
+	let headers = ''
 	let counter = 1
 
 	const columns = Object.keys(temp[0])

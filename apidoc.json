@@ -1,3 +1,6 @@
 {
-   "sampleUrl": ".."
+   "sampleUrl": "..",
+   "template": {
+      "forceLanguage": "en"
+   }
 }
