@@ -4,16 +4,16 @@ import allUser from '../json/baseUserProfile.json'
 import _ from 'lodash'
 
 /**
- 
- 
+
  */
 router.post('/getById', (req, res) => {
 	let status = 200
 	let result = ''
-	if(!req.body.id) {
+	let id = req.body.id || null
+	if (!req.body.id) {
 		result = allUser
 	} else {
-		result = _.find(allUser,item => item.id === id)
+		result = _.find(allUser, item => item.id === id)
 	}
 	(!result) && (status = 404)
 	res.status(status)
