@@ -3,7 +3,6 @@ import express from 'express'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 
-import cache from '../server-cache'
 import eventdirectory from './API/eventdirectory'
 import users from './API/users'
 import auditlog from './API/auditlog'
@@ -47,8 +46,6 @@ app.use((req, res, next) => {
 })
 
 app.use('/', express.static('./dist/thin'))
-cache.use('/apidoc/', express.static('./dist/cache/apidoc'))
-app.use('/cache/', cache)
 server.use('/apidoc/', express.static('./dist/simulator/apidoc'))
 app.use('/api/', server)
 
