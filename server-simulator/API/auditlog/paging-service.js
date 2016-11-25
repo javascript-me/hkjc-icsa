@@ -40,7 +40,47 @@ export default class PagingService {
 		return selectedPageNumber
 	}
 
-	handleTotalPageIsEightOrMore (selectedPageNumber) {
+	handleTotalPageIsEightOrNight (selectedPageNumber) {
+		var pages = []
+
+		pages.push({
+			label: '<',
+			selected: false,
+			hasHandCursor: selectedPageNumber !== 1,
+			greyOut: selectedPageNumber === 1
+		})
+
+		if (selectedPageNumber <= 5) {
+			PagingService.createPageListByRange(
+				pages,
+				selectedPageNumber,
+				{startIndex: 1, endIndex: 6}
+			)
+
+			pages.push({label: '...', selected: false, hasHandCursor: false, greyOut: false})
+			pages.push({label: this.totalPages, selected: false, hasHandCursor: true, greyOut: false})
+		} else {
+			pages.push({label: 1, selected: false, hasHandCursor: true, greyOut: false})
+			pages.push({label: '...', selected: false, hasHandCursor: false, greyOut: false})
+
+			PagingService.createPageListByRange(
+				pages,
+				selectedPageNumber,
+				{startIndex: this.totalPages - 5, endIndex: this.totalPages}
+			)
+		}
+
+		pages.push({
+			label: '>',
+			selected: false,
+			hasHandCursor: selectedPageNumber !== this.totalPages,
+			greyOut: selectedPageNumber === this.totalPages
+		})
+
+		return pages
+	}
+
+	handleTotalPageIsTenOrMore (selectedPageNumber) {
 		var pages = []
 
 		pages.push({
@@ -124,8 +164,10 @@ export default class PagingService {
 
 		var pages
 
-		if (this.totalPages >= 8) {
-			pages = this.handleTotalPageIsEightOrMore(selectedPageNumber)
+		if (this.totalPages >= 10) {
+			pages = this.handleTotalPageIsTenOrMore(selectedPageNumber)
+		} else if (this.totalPages === 8 || this.totalPages === 9) {
+			pages = this.handleTotalPageIsEightOrNight(selectedPageNumber)
 		} else {
 			pages = this.handleTotalPageIsLessThanEight(selectedPageNumber)
 		}

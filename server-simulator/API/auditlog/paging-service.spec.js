@@ -110,4 +110,32 @@ describe('PagingService', () => {
 		var pages = new PagingService(0).getDataByPageNumber(1).pages
 		assert.equal(0, pages.length)
 	})
+
+	it('Page 5 with totalPages 8 should be OK', () => {
+		var pages = new PagingService(8).getDataByPageNumber(5).pages
+		assert.equal(10, pages.length)
+		assert.equal('8', pages[8].label)
+		assert.equal('...', pages[7].label)
+	})
+
+	it('Page 6 with totalPages 8 should be OK', () => {
+		var pages = new PagingService(8).getDataByPageNumber(6).pages
+		assert.equal(10, pages.length)
+		assert.equal('1', pages[1].label)
+		assert.equal('...', pages[2].label)
+	})
+
+	it('Page 5 with totalPages 9 should be OK', () => {
+		var pages = new PagingService(9).getDataByPageNumber(5).pages
+		assert.equal(10, pages.length)
+		assert.equal('9', pages[8].label)
+		assert.equal('...', pages[7].label)
+	})
+
+	it('Page 6 with totalPages 9 should be OK', () => {
+		var pages = new PagingService(9).getDataByPageNumber(6).pages
+		assert.equal(10, pages.length)
+		assert.equal('1', pages[1].label)
+		assert.equal('...', pages[2].label)
+	})
 })
