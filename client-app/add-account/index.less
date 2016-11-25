@@ -1,3 +1,5 @@
+@import "filterCmp.less";
+
 .add-useraccount-cmp {
 	position: fixed;
 	z-index: 1000;
@@ -6,72 +8,17 @@
 	width: 100vw;
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.3);
-	.pop-container {
-		width: 605px;
-		height: 535px;
+
+	.filter-container {
 		position: absolute;
 		left: 0;
 		top: 0;
 		right: 0;
 		bottom: 0;
 		margin: auto;
-		background-color: #F8F8F8;
-		
-		.title {
-			height: 50px;
-			padding-left: 30px;
-			line-height: 50px;
-			color: #FFFFFF;
-			font-size: 20px;
-			background-color: #305091;
-		}
-
-		.body {
-			padding: 30px;
-
-			.serch-header {
-				position: relative;
-				input {
-					display: block;
-					width: 300px;
-					height: 40px;
-					line-height: 40px;
-					padding-left: 40px;
-					border: 1px solid #305091;
-				}
-				.search-icon {
-					display: block;
-					position: absolute;
-					width:12px;
-					height: 12px;
-					left: 14px;
-					top: 14px;
-				}
-			}
-
-			.content {
-				height: 300px;
-				overflow-y: auto;
-				margin-top: 20px;
-				border: 1px solid #7C8DAF;
-			}
-
-			table {
-				width: 100%;
-				text-align: center;
-			}
-
-			thead {
-				background-color: #7C8DAF;
-				line-height: 40px;
-				
-				th {
-					text-align: center;
-					color: #FFFFFF;
-				}
-				
-				
-			}
-		}
+		width: 605px;
+		height: 535px;
 	}
+
 }
+

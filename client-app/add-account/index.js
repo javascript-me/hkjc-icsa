@@ -4,7 +4,7 @@ import ItemFilter from './filter-cmp.js'
 
 const header = [
 	{label:'Display Name',field:'displayName'},
-	{label:'User Id',field:'userId'},
+	{label:'User Id',field:'userID'},
 	{label:'Position/Title',field:'position'}
 	]
 
@@ -20,7 +20,10 @@ class AddAccount extends Component {
 	render () {
 		return (
 			<div className='add-useraccount-cmp'>
-				<ItemFilter title="Add User" tableData={this.state.tableData} header={header} />
+				<div className="filter-container">
+					<ItemFilter title="Add User" tableData={this.state.tableData} header={header} />
+				</div>
+				
 			</div>
 		)
 	}
