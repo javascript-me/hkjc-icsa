@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react'
-// import classNames from 'classnames'
 
 export default React.createClass({
 	displayName: 'BasicInformation',
 	propTypes: {
-		userBasic: PropTypes.object
+		userBasic: PropTypes.object.isRequired
 	},
 	render () {
 		return (
@@ -28,7 +27,7 @@ export default React.createClass({
 						<div className='col col-xs-3'>User ID</div>
 						<div className='col col-xs-3'>Staff ID</div>
 						<div className='col col-xs-3'>Position / Title</div>
-						<div className='col col-xs-3'>Email address</div>
+						<div className='col col-xs-3'>Email Address</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-3'>{this.props.userBasic.userID}</div>
@@ -38,8 +37,8 @@ export default React.createClass({
 					</div>
 
 					<div className='row name'>
-						<div className='col col-xs-3'>Phone Number</div>
-						<div className='col col-xs-9'>Location</div>
+						<div className='col col-xs-3'>Phone No.</div>
+						<div className='col col-xs-9'>Home Address</div>
 					</div>
 					<div className='row value margin0'>
 						<div className='col col-xs-3'>{this.props.userBasic.phoneNumber}</div>

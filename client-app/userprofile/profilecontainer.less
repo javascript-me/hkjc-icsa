@@ -1,4 +1,12 @@
 .profile-container {
+	> .row {
+		margin: 0;
+
+		> .col {
+			display: inline-block;
+		}
+	}
+
 	.header {
 		width: 100%;
 
@@ -18,17 +26,19 @@
 		padding: 20px 30px;
 
 		> .row {
+			margin: 0;
+
 			> .col {
 				padding: 0;
 			}
 		}
 
 		.name {
-			margin: 0;
 			font-family: Roboto-Medium;
 			font-size: 16px;
 			color: #0C2963;
 			line-height: 22px;
+			height: 22px;
 		}
 
 		.value {
@@ -37,6 +47,7 @@
 			font-size: 16px;
 			color: #0C2963;
 			line-height: 22px;
+			height: 22px;
 
 			&.margin0 {
 				margin-bottom: 0;

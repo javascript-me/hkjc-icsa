@@ -13,7 +13,8 @@ export default React.createClass({
 	displayName: 'UserProfile',
 	getInitialState () {
 		return {
-			userBasic: {}
+			userBasic: {},
+			userAccount: {}
 		}
 	},
 	componentDidMount () {
@@ -26,10 +27,10 @@ export default React.createClass({
 					<ProfileContainer>
 						<BasicInformation userBasic={this.state.userBasic} />
 
-						<AccountInformation />
+						<AccountInformation userAccount={this.state.userAccount} />
 
 						<ProfileButtons>
-							<button>Edit</button>
+							<button className='btn btn-primary pull-right'>Edit</button>
 						</ProfileButtons>
 					</ProfileContainer>
 
@@ -41,7 +42,10 @@ export default React.createClass({
 	async getUserProfile () {
 		const userProfile = await UserProfileService.getUserProfile()
 		if (userProfile) {
-			this.setState({userBasic: userProfile.user})
+			this.setState({
+				userBasic: userProfile.user,
+				userAccount: userProfile.account
+			})
 		}
 	}
 })

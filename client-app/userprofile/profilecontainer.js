@@ -10,15 +10,15 @@ export default React.createClass({
 		return (
 			<div ref='root' className='profile-container'>
 				<div className='row'>
-					<div className='col-lg-6 col-sm-12'>
+					<div className='col'>
 						{this.props.children[0]}
 					</div>
-					<div className='col-lg-6 col-sm-12'>
+					<div className='col'>
 						{this.props.children[1]}
 					</div>
 				</div>
 				<div className='row'>
-					<div className='col-xs-12'>
+					<div className='col'>
 						{this.props.children[2]}
 					</div>
 				</div>

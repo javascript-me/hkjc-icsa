@@ -13,7 +13,19 @@ export default {
 				'emailAddress': 'bing_hu@hkjc.com',
 				'homeAddress': 'Flat 8, HKJC Building, Block 1 Jockey Road, Central, Hong Kong'
 			},
-			account: {}
+			account: {
+				'id': '0001',
+				'displayName': 'Bing Hu',
+				'status': 'Active',
+				'assignedUserRoles': [{
+					'assignedUserRole': 'Trading User Administrator'
+				}, {
+					'assignedUserRole': 'Trading Supervisor'
+				}],
+				'activationDate': '16/09/2016',
+				'deactivationDate': '16/09/2017',
+				'userID': 'JC10001'
+			}
 		}
 
 		return userProfile
