@@ -9,6 +9,16 @@ import ProfileButtons from './profilebuttons'
 import BasicInformation from './basicinformation'
 import AccountInformation from './accountinformation'
 
+export {
+	UserProfileService,
+	ProfileTabs,
+	ProfileContainer,
+	SubscriptionContainer,
+	ProfileButtons,
+	BasicInformation,
+	AccountInformation
+}
+
 export default React.createClass({
 	displayName: 'UserProfile',
 	getInitialState () {
