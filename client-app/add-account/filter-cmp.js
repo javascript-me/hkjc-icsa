@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import _ from 'lodash'
+
 
 class ItemFilter extends Component {
 	constructor (props) {
@@ -97,11 +98,11 @@ class ItemFilter extends Component {
 }
 
 ItemFilter.propTypes = {
-	activeBtn: React.propTypes.object,
-	postiveBtn: React.propTypes.object,
-	tableData: React.propTypes.array,
-	header: React.propTypes.array,
-	title: React.propTypes.string
+	activeBtn: React.PropTypes.object,
+	postiveBtn: React.PropTypes.object,
+	tableData: React.PropTypes.array,
+	header: React.PropTypes.array,
+	title: React.PropTypes.string
 
 }
 
@@ -119,9 +120,9 @@ const TableHeader = (props) => (<thead className='table-header'>
 </thead>)
 
 TableHeader.propTypes = {
-	header: React.propTypes.array,
-	handleSort: React.propTypes.func,
-	sortInfo: React.propTypes.object
+	header: React.PropTypes.array,
+	handleSort: React.PropTypes.func,
+	sortInfo: React.PropTypes.object
 }
 
 const TableRow = (props) => {
@@ -135,9 +136,9 @@ const TableRow = (props) => {
 }
 
 TableRow.propTypes = {
-	data: React.propTypes.array,
-	handleItemClick: React.propTypes.func,
-	fields: React.propTypes.array
+	data: React.PropTypes.array,
+	handleItemClick: React.PropTypes.func,
+	fields: React.PropTypes.array
 }
 
 export default ItemFilter
