@@ -1,13 +1,13 @@
 import React from 'react'
 
-export default React.createClass({
+export default class Paging extends React.Component {
 
-	currentSelectedPageNumber: 1,
+	constructor (props) {
+		super(props)
+		this.currentSelectedPageNumber = 1
 
-	propTypes: {
-		onChangePage: React.PropTypes.func,
-		pageData: React.PropTypes.object
-	},
+		this.onItemClick = this.onItemClick.bind(this)
+	}
 
 	getUserSelectedPageNumber (currentSelectedPageNumber, innerText, totalPages) {
 		var value = Number(innerText)
@@ -29,14 +29,14 @@ export default React.createClass({
 		}
 
 		return currentSelectedPageNumber
-	},
+	}
 
 	isValid (currentSelectedPageNumber, innerText, totalPages) {
 		if (currentSelectedPageNumber === 1 && innerText === '<') return false
 		if (currentSelectedPageNumber === totalPages && innerText === '>') return false
 
 		return true
-	},
+	}
 
 	onItemClick (event) {
 		if (!this.isValid(this.currentSelectedPageNumber, event.target.innerText, this.props.pageData.totalPages)) return
@@ -48,7 +48,7 @@ export default React.createClass({
 		)
 
 		this.props.onChangePage(this.currentSelectedPageNumber, null, null)
-	},
+	}
 
 	getClassName (page) {
 		var result = []
@@ -56,7 +56,7 @@ export default React.createClass({
 		if (page.hasHandCursor) result.push('has-hand-cursor')
 		if (page.greyOut) result.push('grey-out')
 		return result.join(' ')
-	},
+	}
 
 	render () {
 		return (
@@ -64,11 +64,19 @@ export default React.createClass({
 				<ul>
 					{
 						this.props.pageData.pages.map((page, i) => {
-							return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>{page.label}</li>
+							return <li key={i} className={this.getClassName(page)} onClick={this.onItemClick}>
+								{page.label}
+							</li>
 						})
 					}
 				</ul>
 			</div>
-        )
+		)
 	}
-})
+
+}
+
+Paging.propTypes = {
+	onChangePage: React.PropTypes.func,
+	pageData: React.PropTypes.object
+}
