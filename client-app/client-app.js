@@ -30,9 +30,10 @@ export default (target) => {
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
 				<Route path='/page' component={PageBase} onEnter={hasAuth}>
-					<IndexRoute component={AddAccount} />
+					<IndexRoute component={Dashboard} />
 					<Route path='audit' component={Audit} />
 					<Route path='userprofile' component={UserProfile} />
+					<Route path='filter' component={AddAccount} />
 				</Route>
 			</Router>
 		</div>
