@@ -1,0 +1,39 @@
+{
+	"allgood": [{
+			"alert_name": "Alert",
+			"priority": "High",
+			"alert_status": "New",
+			"message_category": "Event Information",
+			"system_distribution_time": "",
+			"message_detail": "A new Event Template <Event Level 1> has been created and activated. Please click the link to navigate to it.",
+			"assignee": "BOCC"
+		}, {
+			"alert_name": "Alert",
+			"priority": "High",
+			"alert_status": "Acknowledged",
+			"message_category": "Selling Controls",
+			"system_distribution_time": "",
+			"message_detail": "Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.",
+			"assignee": "BOCC"
+		}, {
+			"alert_name": "Alert",
+			"priority": "Medium",
+			"alert_status": "New",
+			"message_category": "Result Rectification",
+			"system_distribution_time": "",
+			"message_detail": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. ",
+			"assignee": "BOCC"
+		}, {
+			"alert_name": "Alert",
+			"priority": "Low",
+			"alert_status": "Acknowledged",
+			"message_category": "Refund",
+			"system_distribution_time": "",
+			"message_detail": "A new Event Template <Event Level 1> has been created and activated. Please click the link to navigate to it.",
+			"assignee": "allgood"
+		}],
+	"somegood": [],
+	"other": [],
+	"goodbut": [],
+	"nogood": []
+}

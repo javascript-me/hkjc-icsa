@@ -1,0 +1,39 @@
+{
+	"allgood": [{
+			"alert_name": "Critical",
+			"priority": "Critical",
+			"alert_status": "New",
+			"message_category": "Critical Information",
+			"system_distribution_time": "",
+			"message_detail": "A new Event Template <Event Level 1> has been created and activated. Please click the link to navigate to it.",
+			"assignee": "Trading support"
+		}, {
+			"alert_name": "Critical",
+			"priority": "Critical",
+			"alert_status": "Acknowledged",
+			"message_category": "Critical Information",
+			"system_distribution_time": "",
+			"message_detail": "Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.",
+			"assignee": "allgood"
+		}, {
+			"alert_name": "Critical",
+			"priority": "Critical",
+			"alert_status": "New",
+			"message_category": "Critical Information",
+			"system_distribution_time": "",
+			"message_detail": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. ",
+			"assignee": "BOCC"
+		}, {
+			"alert_name": "Critical",
+			"priority": "Critical",
+			"alert_status": "Acknowledged",
+			"message_category": "Critical Information",
+			"system_distribution_time": "",
+			"message_detail": "A new Event Template <Event Level 1> has been created and activated. Please click the link to navigate to it.",
+			"assignee": "BOCC"
+		}],
+	"somegood": [],
+	"other": [],
+	"goodbut": [],
+	"nogood": []
+}
