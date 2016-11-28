@@ -41,23 +41,21 @@ export default React.createClass({
 		}
 	},
 	getInitialState () {
-		this._cloneData()
+		this._cloneData(this.props.userAccount)
 		return {}
 	},
 	componentWillReceiveProps (nextProps) {
-		if (this.props.updateMode === false && nextProps.updateMode === true) {
-			this._cloneData()
-		}
+		this._cloneData(nextProps.userAccount)
 	},
-	_cloneData () {
-		this.userAccount = _.clone(this.props.userAccount)
+	_cloneData (userAccount) {
+		this.userAccount = _.clone(userAccount)
 		this.userAccountEx = {
 			activationDate: formatDateTime(this.userAccount.activationDate),
 			deactivationDate: formatDateTime(this.userAccount.deactivationDate)
 		}
 	},
-	resetData (noUpdate) {
-		this._cloneData()
+	resetData () {
+		this._cloneData(this.props.userAccount)
 		this.forceUpdate()
 	},
 	getData () {
@@ -84,6 +82,8 @@ export default React.createClass({
 		}
 		return retStr
 	},
+	onEditRoleClick () {
+	},
 	onDisplayNameChange (event) {
 		this.userAccount.displayName = event.target.value
 		this.forceUpdate()
@@ -108,6 +108,19 @@ export default React.createClass({
 			return <div />
 		}
 	},
+	renderUserRoles (userAccount) {
+		if (!userAccount.assignedUserRoles || userAccount.assignedUserRoles.length === 0) {
+			return <div />
+		} else {
+			return (
+				<div>
+					{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
+						<div key={index} className='role'>{role.assignedUserRole}</div>
+					))}
+				</div>
+			)
+		}
+	},
 	render () {
 		if (this.props.updateMode) {
 			return this.renderUpdate(this.userAccount)
@@ -120,6 +133,9 @@ export default React.createClass({
 			<div ref='root' className='account-information'>
 				<div className='header'>
 					<h2>account-information</h2>
+					<div className='action' onClick={this.onEditRoleClick}>
+						<span className='icon pull-left' /> Edit User Role
+					</div>
 				</div>
 				<div className='content'>
 					<div className='row name'>
@@ -146,9 +162,7 @@ export default React.createClass({
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6 roles'>
-							{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
-								<div key={index} className='role'>{role.assignedUserRole}</div>
-							))}
+							{this.renderUserRoles(userAccount)}
 						</div>
 						<div className={classNames('col col-xs-6', {'has-error': !isValidDateTime(this.userAccountEx.activationDate)})}>
 							<DateTime inputFor='' dateTime={this.userAccountEx.activationDate} handleVal={this.onActivationDateChange} />
@@ -193,9 +207,7 @@ export default React.createClass({
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6 roles'>
-							{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
-								<div key={index} className='role'>{role.assignedUserRole}</div>
-							))}
+							{this.renderUserRoles(userAccount)}
 						</div>
 						<div className='col col-xs-6'>{formatTime(userAccount.activationDate)}</div>
 					</div>
