@@ -32,7 +32,7 @@ export default (target) => {
 				<Route path='/page' component={PageBase} onEnter={hasAuth}>
 					<IndexRoute component={Dashboard} />
 					<Route path='audit' component={Audit} />
-					<Route path='userprofile' component={UserProfile} />
+					<Route path='userprofile/:userId' component={UserProfile} />
 					<Route path='filter' component={AddAccount} />
 				</Route>
 			</Router>
