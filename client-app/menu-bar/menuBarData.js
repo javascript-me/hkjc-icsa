@@ -407,6 +407,7 @@ const menuList1 = [
 			},
 			{
 				text: 'User',
+				link: '/page/userlist',
 				subMenu: [
 					{
 						text: 'User Account Profile'
