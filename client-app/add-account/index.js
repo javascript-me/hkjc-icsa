@@ -16,20 +16,20 @@ class AddAccount extends Component {
 		this.state = {
 			tableData: [],
 			userBasic: {},
-			step: 1
+			step: (this.props.step || 0)
 		}
 		this.handleAdd = this.handleAdd.bind(this)
 	}
 
 	render () {
 		return (
-			<div>
-				<div className="add-useraccount-cmp" style={{display: this.state.step === 1 ? 'block' : 'none'}} >
+			<div className="add-user-main-container">
+				<div className="add-useraccount-cmp" style={{display: this.props.step === 1 ? 'block' : 'none'}} >
 					<div className='filter-container'>
 						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancle', callback: null}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
 					</div>
 				</div>
-				<div style={{display: this.state.step === 2 ? 'block' : 'none' }}>
+				<div style={{display: this.props.step === 2 ? 'block' : 'none' }}>
 					<ProfileStep userBasic={this.state.userBasic} />
 				</div>
 			</div>
@@ -44,11 +44,18 @@ class AddAccount extends Component {
 
 	componentDidMount () {
 		this.getUsers()
+		
 	}
-
+	
+	
 	handleAdd (item) {
-		this.setState({userBasic:item,step:2})
+		this.setState({userBasic:item})
+		this.props.handleStep(2)
 }
+}
+AddAccount.propTypes = {
+	step: React.PropTypes.number
+	
 }
 
 export default AddAccount

@@ -20,7 +20,7 @@ class ProfileStep extends Component {
 	}
 	render() {
 		return (
-			<div>
+			<div className="step2-container">
 				<ProfileTabs>
 					<ProfileContainer>
 						<BasicInformation userBasic={this.props.userBasic} />
@@ -43,14 +43,10 @@ class ProfileStep extends Component {
 	componentDidMount() {
 		this.getUserProfile()
 	}
+	
 
 	async getUserProfile () {
-		const userProfile = await UserProfileService.getUserProfile()
-		if (userProfile) {
-			this.setState({
-				userAccount: userProfile.account
-			})
-		}
+		
 	}
 	
 }

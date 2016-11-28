@@ -11,8 +11,12 @@ import LoginService from './login/login-service'
 import Dashboard from './dashboard/dashboard'
 
 import Audit from './auditlog/auditlog'
+
 import UserProfile from './userprofile/userprofile'
 import AddAccount from './add-account'
+
+import UserList from './userlist/userlist'
+
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -30,10 +34,12 @@ export default (target) => {
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
 				<Route path='/page' component={PageBase} onEnter={hasAuth}>
-					<IndexRoute component={Audit} />
+					<IndexRoute component={Dashboard} />
 					<Route path='audit' component={Audit} />
 					<Route path='userprofile/:userId' component={UserProfile} />
 					<Route path='filter' component={AddAccount} />
+					<Route path='userlist' component={UserList} />
+
 				</Route>
 			</Router>
 		</div>
