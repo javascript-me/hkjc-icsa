@@ -25,7 +25,6 @@ const sortNoticesBySystemDistributionTimeDESC = (a, b) => {
 	return moment(b.system_distribution_time).valueOf() - moment(a.system_distribution_time).valueOf()
 }
 
-
 /**
  * @api {GET} /notice-board/ Get notice board data
  * @apiGroup NoticeBoard
