@@ -18,41 +18,42 @@ export default React.createClass({
 
 	getInitialState () {
 		return {
+			pageTitle: 'Home \\ Tool & Administration \\ User',
 			auditlogs: []
 		}
 	},
 
 	render () {
-		return <div className="row userlist-page">
-			<div className="page-header">
-				<p>Home \ Tool & Administration \ User</p>
+		return <div className='row userlist-page'>
+			<div className='page-header'>
+				<p>{this.state.pageTitle}</p>
 				<h1>User Account Profile List</h1>
 			</div>
-			<div className="page-content">
-				<div className="content-header">
-					<div className="content-header-left">
-						<i className="icon icon-search"></i>
-						<input className="input-search" type="text" placeholder="Search with keywords & filters" />
+			<div className='page-content'>
+				<div className='content-header'>
+					<div className='content-header-left'>
+						<i className='icon icon-search' />
+						<input className='input-search' type='text' placeholder='Search with keywords & filters' />
 					</div>
-					<div className="content-header-right">
+					<div className='content-header-right'>
 						add user
 					</div>
 				</div>
-				<div className="content-table">
+				<div className='content-table'>
 					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={this.state.auditlogs} />
 				</div>
-				<div className="content-footer">
-					<div className="content-footer-left">
-						<button className="btn btn-primary btn-disable">Delete</button>
+				<div className='content-footer'>
+					<div className='content-footer-left'>
+						<button className='btn btn-primary btn-disable'>Delete</button>
 					</div>
-					<div className="content-footer-center">
+					<div className='content-footer-center'>
 						Page Component
 					</div>
-					<div className="content-footer-right">
-						<button className="btn btn-primary">Update</button>
+					<div className='content-footer-right'>
+						<button className='btn btn-primary'>Update</button>
 					</div>
 				</div>
 			</div>
-		</div>;
+		</div>
 	}
 })
