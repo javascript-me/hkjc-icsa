@@ -3,8 +3,15 @@ import UserProfileService from './userprofile-service'
 describe('UserProfileService', () => {
 	describe('#getUserProfile', () => {
 		it('returns user profile', async () => {
-			let userProfile = await UserProfileService.getUserProfile('userId')
-			expect(userProfile).to.be.an('object')
+			const response = {}
+			rewire(UserProfileService.__set__('getUserProfile', () => {
+				return Promise.resolve(response)
+			}))
+
+			const result = await UserProfileService.getUserProfile('JC10001')
+
+			rewire()
+			expect(result).to.be.deep.equal(response)
 		})
 	})
 })

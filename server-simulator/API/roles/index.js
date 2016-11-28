@@ -4,40 +4,57 @@ const router = express.Router()
 const roles = require('../json/roles.json')
 
 /**
- * @api {POST} /roles/ roles search result
  * @apiGroup Roles
-
- * @apiDescription roles search result.
+ * @api {GET} /roles/list all roles
+ * @apiDescription return all roles
+ * @apiExample {curl} Example usage:
+ *		curl -i http://localhost/roles/list
  *
- * @apiParam {String} keyword Search keyword.
- * @apiParam {String} [scenario] Scenario filter.
- * @apiParam {String} [competition] Competition filter.
-
- * @apiSuccess (Success) {String} status In-Play and selling status
- * @apiSuccess (Success) {String} t1 Home team short name
- * @apiSuccess (Success) {String} t1Tip Home team full name
- * @apiSuccess (Success) {String} t2 Away team short name
- * @apiSuccess (Success) {String} t2Tip Away team full name
- * @apiSuccessExample Success response
+ * @apiSuccess (Success) {String} roleId roleId
+ * @apiSuccess (Success) {String} roleName roleName
+ * @apiSuccess (Success) {Object[]} functionNames functionNames
+ * @apiSuccess (Success) {String} functionNames.functionName functionName
+ * @apiSuccess (Success) {String} functionNames.create can create
+ * @apiSuccess (Success) {String} functionNames.read can red
+ * @apiSuccess (Success) {String} functionNames.update can update
+ * @apiSuccess (Success) {String} functionNames.delete can delete
+ * @apiSuccessExample {json} Success-Response:
  *		HTTP/1.1 200 OK
- *		{
- *			"result": [{
- *				"name": "England",
- *				"children": [{
- *					"name": "Premier League",
- *					"competitions": [{
- *						"status": "available",
- *						"t1": "ARS",
- *						"t1Tip": "Arsenal",
- *						"t2": "ASV",
- *						"t2Tip": "Aston Villa"
- *					}]
- *				}]
- *			}]
- *		}
- *
+ *		[{
+ *		  "roleId": "001",
+ *		  "roleName": "Trading Solutions Analyst",
+ *		  "functionNames": [{
+ *		    "functionName": "Event Template - Data Feed Rating - Fixture Before Start Sell",
+ *		    "create": "Yes",
+ *		    "read": "Yes",
+ *		    "update": "Yes",
+ *		    "delete": "No"
+ *		  }, {
+ *		    "functionName": "Event Template - General & Structure Setting",
+ *		    "create": "Yes",
+ *		    "read": "Yes",
+ *		    "update": "Yes",
+ *		    "delete": "Yes"
+ *		  }]
+ *		}, {
+ *		  "roleId": "002",
+ *		  "roleName": "Trading Supervisor",
+ *		  "functionNames": [{
+ *		    "functionName": "Event Template - Bet Type Preference, Expected Business Start Sell Time & Odds Submission Deadline",
+ *		    "create": "Yes",
+ *		    "read": "Yes",
+ *		    "update": "Yes",
+ *		    "delete": "No"
+ *		  }, {
+ *		    "functionName": "Event Template",
+ *		    "create": "No",
+ *		    "read": "Yes",
+ *		    "update": "No",
+ *		    "delete": "No"
+ *		  }]
+ *		}]
  */
-router.post('/list', (req, res) => {
+router.get('/list', (req, res) => {
 	let result = roles
 
 	res.send(result)

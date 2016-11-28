@@ -5,7 +5,10 @@ import UserProfile from './userprofile'
 
 describe('<UserProfile />', () => {
 	it('renders a UserProfile div', () => {
-		const wrapper = shallow(<UserProfile />)
+		const params = {
+			userId: 'JC10001'
+		}
+		const wrapper = shallow(<UserProfile params={params} />)
 		expect(wrapper.find('div.user-profile')).to.have.length(1)
 	})
 })
