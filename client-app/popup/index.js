@@ -64,13 +64,30 @@ export default class Popup extends React.Component {
 		}
 	}
 
+	onOther () {
+		this.hide()
+
+		if (this.props.onOther) {
+			this.props.onOther()
+		}
+	}
+
 	render () {
-		let overlay, footer
+		let overlay, footer, other, confirm, cancel
 		if (this.props.showOverlay) {
 			overlay = (<div className='popup-overlay' onClick={() => this.onOverlayClicked()} />)
 		}
 		if (this.props.showFooter) {
 			footer = (<div className='panel-footer' />)
+		}
+		if (this.props.showOther) {
+			other = (<a role='button' className='pull-left btn popup-button other' onClick={() => this.onOther()}>{this.props.otherBtn}</a>)
+		}
+		if (this.props.showConfirm) {
+			confirm = (<a role='button' className='pull-right btn popup-button confirm' onClick={() => this.onConfirm()}> {this.props.confirmBtn} </a>)
+		}
+		if (this.props.showCancel) {
+			cancel = (<a role='button' className='pull-right btn popup-button cancel' onClick={() => this.onCancel()}> {this.props.cancelBtn} </a>)
 		}
 
 		return this.state.isVisible ? (
@@ -84,8 +101,9 @@ export default class Popup extends React.Component {
 						<div className='row'>
 							<div className='popup-content'>{this.props.children}</div>
 							<div className='popup-actions'>
-								<a role='button' className='pull-right btn popup-button confirm' onClick={() => this.onConfirm()}> Confirm </a>
-								<a role='button' className='pull-right btn popup-button cancel' onClick={() => this.onCancel()}> Cancel </a>
+								{other}
+								{confirm}
+								{cancel}
 							</div>
 						</div>
 					</div>
@@ -101,9 +119,16 @@ Popup.displayName = 'Popup'
 Popup.sharedPropTypes = {
 	onCancel: React.PropTypes.func,
 	onConfirm: React.PropTypes.func,
+	onOther: React.PropTypes.func,
 	onOverlayClicked: React.PropTypes.func,
 	showOverlay: React.PropTypes.bool,
-	title: React.PropTypes.string
+	showConfirm: React.PropTypes.bool,
+	showCancel: React.PropTypes.bool,
+	title: React.PropTypes.string,
+	confirmBtn: React.PropTypes.string,
+	cancelBtn: React.PropTypes.string,
+	otherBtn: React.PropTypes.string
+
 }
 
 Popup.propTypes = {
@@ -118,6 +143,10 @@ Popup.propTypes = {
 
 Popup.defaultProps = {
 	title: '',
+	confirmBtn: 'Confirm',
+	cancelBtn: 'Cancel',
 	showOverlay: true,
+	showConfirm: true,
+	showCancel: true,
 	hideOnOverlayClicked: false
 }
