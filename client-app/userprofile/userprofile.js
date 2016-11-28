@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import UserProfileService from './userprofile-service'
 
@@ -21,14 +21,28 @@ export {
 
 export default React.createClass({
 	displayName: 'UserProfile',
+	propTypes: {
+		params: PropTypes.any
+	},
 	getInitialState () {
+		this.userID = this.props.params.userId
 		return {
+			accountUpdate: false,
 			userBasic: {},
 			userAccount: {}
 		}
 	},
 	componentDidMount () {
 		this.getUserProfile()
+	},
+	onEditClick () {
+		// this.setState({accountUpdate: true})
+	},
+	onResetClick () {
+		this.refs.accountCmp.resetData()
+	},
+	onUpdateClick () {
+		this.setState({accountUpdate: false})
 	},
 	render () {
 		return (
@@ -37,10 +51,12 @@ export default React.createClass({
 					<ProfileContainer>
 						<BasicInformation userBasic={this.state.userBasic} />
 
-						<AccountInformation userAccount={this.state.userAccount} />
+						<AccountInformation ref='accountCmp' userAccount={this.state.userAccount} updateMode={this.state.accountUpdate} />
 
 						<ProfileButtons>
-							<button className='btn btn-primary pull-right'>Edit</button>
+							{this.state.accountUpdate && (<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>)}
+							{!this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onUpdateClick}>Update</button>)}
 						</ProfileButtons>
 					</ProfileContainer>
 
@@ -50,7 +66,7 @@ export default React.createClass({
 		)
 	},
 	async getUserProfile () {
-		const userProfile = await UserProfileService.getUserProfile()
+		const userProfile = await UserProfileService.getUserProfile(this.userID)
 		if (userProfile) {
 			this.setState({
 				userBasic: userProfile.user,
