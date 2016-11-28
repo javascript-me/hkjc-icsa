@@ -36,13 +36,16 @@ export default React.createClass({
 		this.getUserProfile()
 	},
 	onEditClick () {
-		// this.setState({accountUpdate: true})
+		this.setState({accountUpdate: true})
 	},
 	onResetClick () {
 		this.refs.accountCmp.resetData()
 	},
 	onUpdateClick () {
-		this.setState({accountUpdate: false})
+		if (this.refs.accountCmp.verifyData()) {
+			// console.log(this.refs.accountCmp.getData())
+			// this.setState({accountUpdate: false})
+		}
 	},
 	render () {
 		return (
