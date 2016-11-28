@@ -298,6 +298,7 @@ export default class SearchEnquiryPanel extends React.Component {
 				
 				
 				<div className='pannel-footer'>
+					<div className='item-text'>{' '}</div>
 					<div className='item-after'>
 						<button type='button' className='btn btn-link' onClick={() => this.handleReset()}>Reset</button>
 						<button type='button' className='btn btn-primary' onClick={() => this.handleSubmit()}>Search</button>

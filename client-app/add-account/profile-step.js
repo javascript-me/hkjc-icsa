@@ -9,12 +9,14 @@ import {
 	AccountInformation
 } from '../userprofile/userprofile.js'
 
+
+
 class ProfileStep extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			userBasic: {},
-			userAccount: {}
+			userAccount: this.props.userAccount
 		}
 		this.getUserProfile = this.getUserProfile.bind(this)
 	}
@@ -25,17 +27,14 @@ class ProfileStep extends Component {
 					<ProfileContainer>
 						<BasicInformation userBasic={this.props.userBasic} />
 
-						<AccountInformation userAccount={this.state.userAccount} />
+						<AccountInformation userAccount={this.props.userAccount} updateMode={true}/>
 
 						
 					</ProfileContainer>
 
 					<SubscriptionContainer />
 				</ProfileTabs>
-				<div className="clearfix" style={{width:'100%'}}>
-					<button className='btn btn-primary pull-right'>Create</button>
-					<button className='btn disabled pull-left'>Reset</button>
-				</div>
+				
 			</div>
 		);
 	}
@@ -43,6 +42,10 @@ class ProfileStep extends Component {
 	componentDidMount() {
 		this.getUserProfile()
 	}
+	componentDidUpdate(prevProps, prevState) {
+		
+	}
+	
 	
 
 	async getUserProfile () {
