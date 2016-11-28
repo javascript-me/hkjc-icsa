@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import AddAccountProcess from './add-account-service.js'
 import ItemFilter from './filter-cmp.js'
+import ProfileStep from './profile-step.js'
 
 const header = [
 	{label: 'Display Name', field: 'displayName'},
@@ -13,17 +14,24 @@ class AddAccount extends Component {
 		super(props)
 		this.AddAccount = new AddAccountProcess()
 		this.state = {
-			tableData: []
+			tableData: [],
+			userBasic: {},
+			step: 1
 		}
+		this.handleAdd = this.handleAdd.bind(this)
 	}
 
 	render () {
 		return (
-			<div className='add-useraccount-cmp'>
-				<div className='filter-container'>
-					<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancle', callback: null}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
+			<div>
+				<div className="add-useraccount-cmp" style={{display: this.state.step === 1 ? 'block' : 'none'}} >
+					<div className='filter-container'>
+						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancle', callback: null}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
+					</div>
 				</div>
-
+				<div style={{display: this.state.step === 2 ? 'block' : 'none' }}>
+					<ProfileStep userBasic={this.state.userBasic} />
+				</div>
 			</div>
 		)
 	}
@@ -39,7 +47,8 @@ class AddAccount extends Component {
 	}
 
 	handleAdd (item) {
-	}
+		this.setState({userBasic:item,step:2})
+}
 }
 
 export default AddAccount
