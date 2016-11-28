@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 import eventdirectory from './API/eventdirectory'
 import users from './API/users'
 import auditlog from './API/auditlog'
+import noticeBoard from './API/notice-board'
 import APIconfig from './API/config'
 import config from './config'
 import clock from './API/clock'
@@ -15,6 +16,7 @@ server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
 server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
+server.use('/notice-board/', noticeBoard)
 server.use('/config/', APIconfig)
 
 const app = express()
