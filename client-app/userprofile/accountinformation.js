@@ -1,7 +1,33 @@
 import React, { PropTypes } from 'react'
+import classNames from 'classnames'
 import _ from 'underscore'
 import Moment from 'moment'
 import DateTime from '../dateTime/dateTime'
+
+function isValidDateTime (str) {
+	let bRet = Moment(str, 'DD MMM YYYY', true).isValid()
+	return bRet
+}
+
+function formatDateTime (time, inverse) {
+	if (!time) {
+		return ''
+	}
+
+	if (inverse) {
+		return Moment(time, 'DD MMM YYYY').format('DD/MM/YYYY')
+	} else {
+		return Moment(time, 'DD/MM/YYYY').format('DD MMM YYYY')
+	}
+}
+
+function formatTime (time) {
+	if (!time) {
+		return ''
+	}
+
+	return Moment(time, 'DD/MM/YYYY').format('MMM DD,YYYY')
+}
 
 export default React.createClass({
 	displayName: 'AccountInformation',
@@ -14,25 +40,45 @@ export default React.createClass({
 			updateMode: false
 		}
 	},
-	resetData (noUpdate) {
-		this.userAccount = _.clone(this.props.userAccount)
-		if (!noUpdate) {
-			this.forceUpdate()
+	getInitialState () {
+		this._cloneData()
+		return {}
+	},
+	componentWillReceiveProps (nextProps) {
+		if (this.props.updateMode === false && nextProps.updateMode === true) {
+			this._cloneData()
 		}
 	},
+	_cloneData () {
+		this.userAccount = _.clone(this.props.userAccount)
+		this.userAccountEx = {
+			activationDate: formatDateTime(this.userAccount.activationDate),
+			deactivationDate: formatDateTime(this.userAccount.deactivationDate)
+		}
+	},
+	resetData (noUpdate) {
+		this._cloneData()
+		this.forceUpdate()
+	},
 	getData () {
+		this.userAccount.activationDate = formatDateTime(this.userAccountEx.activationDate, true)
+		this.userAccount.deactivationDate = formatDateTime(this.userAccountEx.deactivationDate, true)
 		return this.userAccount
 	},
-	verifyData () {
-		return false
+	hasDataError (userAccount) {
+		return !userAccount.displayName || !isValidDateTime(this.userAccountEx.activationDate) || !isValidDateTime(this.userAccountEx.deactivationDate)
 	},
-	formatTime (time) {
-		return Moment(time, 'DD-MM-YYYY').format('MMM DD,YYYY')
+	verifyData () {
+		let hasDataError = this.hasDataError(this.userAccount)
+		if (hasDataError) {
+			return false
+		}
+		return true
 	},
 	getAccountDescription (userAccount) {
 		let retStr = ''
 		if (userAccount.status === 'Active') {
-			retStr = 'Active since ' + this.formatTime(userAccount.activationDate)
+			retStr = 'Active since ' + formatTime(userAccount.activationDate)
 		} else {
 			retStr = 'Inactive'
 		}
@@ -47,14 +93,23 @@ export default React.createClass({
 		this.forceUpdate()
 	},
 	onActivationDateChange (event) {
+		this.userAccountEx.activationDate = event.target.value
+		this.forceUpdate()
 	},
 	onDeactivationDateChange (event) {
+		this.userAccountEx.deactivationDate = event.target.value
+		this.forceUpdate()
+	},
+	renderTipsText () {
+		let hasDataError = this.hasDataError(this.userAccount)
+		if (hasDataError) {
+			return <div className='color-red'>Invalid fields are highlighted in red</div>
+		} else {
+			return <div />
+		}
 	},
 	render () {
 		if (this.props.updateMode) {
-			if (!this.userAccount) {
-				this.resetData(true)
-			}
 			return this.renderUpdate(this.userAccount)
 		} else {
 			return this.renderNormal(this.props.userAccount)
@@ -72,7 +127,7 @@ export default React.createClass({
 						<div className='col col-xs-6'>Account:</div>
 					</div>
 					<div className='row value'>
-						<div className='col col-xs-6'>
+						<div className={classNames('col col-xs-6', {'has-error': !userAccount.displayName})}>
 							<input type='text' maxLength='40' className='form-control display-name' placeholder='Type in display name' value={userAccount.displayName} onChange={this.onDisplayNameChange} />
 						</div>
 						<div className='col col-xs-6'>
@@ -95,8 +150,8 @@ export default React.createClass({
 								<div key={index} className='role'>{role.assignedUserRole}</div>
 							))}
 						</div>
-						<div className='col col-xs-6'>
-							<DateTime inputFor='' dateTime={this.formatTime(userAccount.activationDate)} handleVal={this.onActivationDateChange} />
+						<div className={classNames('col col-xs-6', {'has-error': !isValidDateTime(this.userAccountEx.activationDate)})}>
+							<DateTime inputFor='' dateTime={this.userAccountEx.activationDate} handleVal={this.onActivationDateChange} />
 						</div>
 					</div>
 
@@ -105,9 +160,11 @@ export default React.createClass({
 						<div className='col col-xs-6'>Deactivation Date</div>
 					</div>
 					<div className='row value margin0'>
-						<div className='col col-xs-6' />
 						<div className='col col-xs-6'>
-							<DateTime inputFor='' dateTime={this.formatTime(userAccount.deactivationDate)} handleVal={this.onDeactivationDateChange} />
+							{this.renderTipsText()}
+						</div>
+						<div className={classNames('col col-xs-6', {'has-error': !isValidDateTime(this.userAccountEx.deactivationDate)})}>
+							<DateTime inputFor='' dateTime={this.userAccountEx.deactivationDate} handleVal={this.onDeactivationDateChange} />
 						</div>
 					</div>
 				</div>
@@ -140,7 +197,7 @@ export default React.createClass({
 								<div key={index} className='role'>{role.assignedUserRole}</div>
 							))}
 						</div>
-						<div className='col col-xs-6'>{this.formatTime(userAccount.activationDate)}</div>
+						<div className='col col-xs-6'>{formatTime(userAccount.activationDate)}</div>
 					</div>
 
 					<div className='row name'>
@@ -149,7 +206,7 @@ export default React.createClass({
 					</div>
 					<div className='row value margin0'>
 						<div className='col col-xs-6' />
-						<div className='col col-xs-6'>{this.formatTime(userAccount.deactivationDate)}</div>
+						<div className='col col-xs-6'>{formatTime(userAccount.deactivationDate)}</div>
 					</div>
 				</div>
 			</div>
