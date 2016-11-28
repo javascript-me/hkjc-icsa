@@ -251,54 +251,53 @@ export default class SearchEnquiryPanel extends React.Component {
 			fromClass = 'form-group has-error'
 			toClass = 'form-group has-error'
 		}
-		return <div className='component-search-enquiry-panel'>
+		return <div className='component-search-enquiry-panel' style={{width:'680px'}}>
 			<div className='container-fluid pd-w10'>
 				<div className='row mg-w010'>
-					<div className='col-sm-3 pd-w10'>
+					<div className='col-sm-4 pd-w10'>
+						<div className='form-group'>
+							<label>Position / Title</label>
+							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
+						</div>
+					</div>
+					<div className='col-sm-4 pd-w10'>
+						<div className='form-group'>
+							<label>User Roles</label>
+							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
+						</div>
+					</div>
+					<div className='col-sm-4 pd-w10'>
+						<div className='form-group'>
+							<label>Assignee</label>
+							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.homeValue} onChange={(e) => this.handleChange('homeValue', e)} />
+						</div>
+					</div>
+				</div>
+				<div className='row mg-w010'>
+					<div className='col-sm-4 pd-w10'>
 						<div className={fromClass}>
-							<label>Date Time From <span>*</span></label>
+							<label>Date Time From</label>
 							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom.datetime} handleVal={(e) => { this.handleChange('dateTimeFrom', e) }} />
 						</div>
 					</div>
-					<div className='col-sm-3 pd-w10'>
+					<div className='col-sm-4 pd-w10'>
 						<div className={toClass}>
-							<label>Date Time To <span>*</span></label>
+							<label>Date Time To</label>
 							<DateTime inputFor='dateTimeTo' dateTime={dateTimeTo.datetime} handleVal={(e) => this.handleChange('dateTimeTo', e)} />
 						</div>
 					</div>
-					<div className='col-sm-3 pd-w10'>
+					<div className='col-sm-4 pd-w10'>
 						<div className='form-group'>
-							<label>Type</label>
+							<label>Account Status</label>
 							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
 						</div>
 					</div>
 					
 				</div>
-				<div className='row mg-w010'>
-					<div className='col-sm-3 pd-w10'>
-						<div className='form-group'>
-							<label>Front End ID</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.frontEndID} onChange={(e) => this.handleChange('frontEndID', e)} />
-						</div>
-					</div>
-					<div className='col-sm-3 pd-w10'>
-						<div className='form-group'>
-							<label>Event Lv1</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.eventLv1} onChange={(e) => this.handleChange('eventLv1', e)} />
-						</div>
-					</div>
-					<div className='col-sm-3 pd-w10'>
-						<div className='form-group'>
-							<label>Home</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.homeValue} onChange={(e) => this.handleChange('homeValue', e)} />
-						</div>
-					</div>
-					
-				</div>
+				
 				
 				
 				<div className='pannel-footer'>
-					<div className='item-text'>{this.renderTipsText()}</div>
 					<div className='item-after'>
 						<button type='button' className='btn btn-link' onClick={() => this.handleReset()}>Reset</button>
 						<button type='button' className='btn btn-primary' onClick={() => this.handleSubmit()}>Search</button>
