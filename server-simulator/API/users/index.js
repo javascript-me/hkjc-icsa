@@ -59,5 +59,17 @@ router.post('/login', (req, res) => {
 	res.status(status)
 	res.send(result)
 })
+router.post('/updateNoticeBoardDisplaySettings', (req, res) => {
+	const display = req.body.display
+	const username = req.body.username
+	var user = users[username]
+	let status = 200
+	var userProfile = user.profile
+	if (userProfile.noticeboardSettings.display !== display) {
+		userProfile.noticeboardSettings.display = display
+	}
+	res.status(status)
+	res.send(userProfile)
+})
 
 export default router

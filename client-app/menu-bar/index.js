@@ -54,11 +54,11 @@ class MenuBar extends Component {
 						))}
 					</div>
 					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
-					<div className='message'><i className="icon-notification " onClick={this.showHideNoticeBoard}><img src='icon/notification.svg' /></i>
+					<div className='message'>{LoginService.getProfile().noticeboardSettings.display}<i className="icon-notification " onClick={this.showHideNoticeBoard}><img src='icon/notification.svg' /></i>
 					</div>
 
 				</div>
-				{ this.state.showNoticeBoard ? <Noticeboard isBottomDisplay={true} /> : null }
+				{ this.state.showNoticeBoard ? <Noticeboard /> : null }
 			</div>)
 	}
 	modeChange () {
