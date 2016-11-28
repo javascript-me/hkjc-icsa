@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="24px" viewBox="0 0 20 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon - Notification</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="nav-/-navbar-1st-(wo-Event-Directory)" transform="translate(-1755.000000, -23.000000)">
+            <g id="navbar-1st">
+                <g id="navbar-1st-bkg" fill="#0C2963">
+                    <rect x="0" y="0" width="1920" height="68"></rect>
+                </g>
+                <g id="notifications/broadcast/action" transform="translate(1755.000000, 22.000000)" fill="#FFFFFF">
+                    <path d="M9.89473684,24.6 C11.1842105,24.6 12.2368421,23.5333333 12.2368421,22.2266667 L7.55263158,22.2266667 C7.55263158,23.5333333 8.60526316,24.6 9.89473684,24.6 L9.89473684,24.6 Z M17.4473684,17.5066667 L17.4473684,11.0266667 C17.4473684,7.4 14.9736842,4.36 11.6315789,3.56 L11.6315789,2.76 C11.6315789,1.77333333 10.8421053,1 9.89473684,1 C8.94736842,1 8.15789474,1.8 8.15789474,2.76 L8.15789474,3.56 C4.81578947,4.36 2.34210526,7.4 2.34210526,11.0266667 L2.34210526,17.5066667 L0,19.88 L0,21.0533333 L19.7894737,21.0533333 L19.7894737,19.88 L17.4473684,17.5066667 L17.4473684,17.5066667 Z" id="Icon---Notification"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
