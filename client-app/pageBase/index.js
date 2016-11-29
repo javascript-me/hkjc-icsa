@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import SystemBar from '../systembar/systembar.js'
 import MenuBar from '../menu-bar'
 
+
+
 class PageBase extends Component {
 	render () {
 		return (
