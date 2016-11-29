@@ -71,5 +71,13 @@ router.post('/updateNoticeBoardDisplaySettings', (req, res) => {
 	res.status(status)
 	res.send(userProfile)
 })
+router.post('/getNoticeBoardDisplaySettings', (req, res) => {
+	const username = req.body.username
+	var user = users[username]
+	let status = 200
+	var userProfile = user.profile
+	res.status(status)
+	res.send(userProfile)
+})
 
 export default router

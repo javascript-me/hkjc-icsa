@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import FilterBlock from './filterBlock'
+import FilterBlock from './index'
 
 const testFilter = {
 	name: 'type',

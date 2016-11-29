@@ -40,7 +40,7 @@
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
 			"noticeboardSettings": {
-				"display": "bottom"
+				"display": "right"
 			}
 		}
 	},
