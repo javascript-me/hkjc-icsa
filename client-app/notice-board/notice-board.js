@@ -1,6 +1,6 @@
 import React from 'react'
 import Popup from '../popup'
-import NoticeboardPopup from '../noticeboardPopup'
+import NoticeboardPopup from '../notice-board-popup'
 import LoginService from '../login/login-service'
 export default React.createClass({
 	getInitialState () {
