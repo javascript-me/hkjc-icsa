@@ -1,6 +1,8 @@
 import React from 'react'
 // import classnames from 'classnames'
 import TabularData from '../tabulardata/tabulardata'
+import Paging from '../paging/paging'
+import UserStore from './user-store'
 import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
 import AddingUserCmp from '../add-account'
 
@@ -22,21 +24,49 @@ export default React.createClass({
 	getInitialState () {
 		return {
 			pageTitle: 'Home \\ Tool & Administration \\ User',
-			auditlogs: [],
+			userprofiles: [],
 			isShowingMoreFilter: false,
 			addingUserStep: 0
 		}
+	},
+
+	componentDidMount () {
+		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		// Get Table Data
+		UserStore.searchAuditlogs(1, sortingObject, null)
+		UserStore.addChangeListener(this.onChange)
+	},
+
+	componentWillUnmount: function () {
+		UserStore.removeChangeListener(this.onChange.bind(this))
+		document.removeEventListener('click', this.pageClick, false)
+	},
+
+	onChange () {
+		const hasData = UserStore.userProfiles.length > 0
+		this.setState({
+			userprofiles: UserStore.userProfiles, hasData: hasData
+		})
+	},
+
+	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
+		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
+	},
+
+	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
+		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	showMoreFilter () {
 		this.setState({isShowingMoreFilter: !this.state.isShowingMoreFilter})
 	},
 
+
 	setAddStep (step) {
 		this.setState({addingUserStep:step})
+
 	},
 
-	
 
 	render () {
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {
@@ -62,14 +92,14 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table'>
-					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={this.state.auditlogs} />
+					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
 				</div>
 				<div className='content-footer'>
 					<div className='content-footer-left'>
 						<button className='btn btn-primary btn-disable'>Delete</button>
 					</div>
 					<div className='content-footer-center'>
-						Page Component
+						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 					<div className='content-footer-right'>
 						<button className='btn btn-primary'>Update</button>

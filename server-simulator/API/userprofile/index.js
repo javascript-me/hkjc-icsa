@@ -20,9 +20,15 @@ router.post('/add', (req, res) => {
 	let result = null
 	if (req.body.userData) {
 		let userData = _.clone(req.body.userData)
-		accountProfiles.push(userData.accountProfiles)
-		basicUsers.push(userData.userBasic)
-		result = {status: true,data:{accountProfiles,basicUsers}}
+		if(_.find(accountProfiles,(item) => (userData.userBasic.userID === item.userID))) {
+			result = {status: false}
+			console.log('repeat')
+		} else {
+			accountProfiles.push(userData.accountProfiles)
+			basicUsers.push(userData.userBasic)
+			result = {status: true}
+		}
+		
 	} else {
 		result = {status: false}
 	}

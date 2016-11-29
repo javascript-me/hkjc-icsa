@@ -47,7 +47,10 @@ class ProfileStep extends Component {
 		postData = Object.assign({},{userBasic:this.props.userBasic},{accountProfiles:this.refs.accountCmp.getData()})
 		$.post('./API/userprofile/add',{userData:postData})
 		.then((res) => {if(res.status){
-			this.props.handleCreateSuccess()
+			this.props.setStep(0)
+			console.log('addsuccess')
+		} else {
+			alert('add user fail')
 		}})
 	}
 	onCancel() {
