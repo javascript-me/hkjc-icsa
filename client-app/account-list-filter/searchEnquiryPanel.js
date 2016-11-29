@@ -251,7 +251,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			fromClass = 'form-group has-error'
 			toClass = 'form-group has-error'
 		}
-		return <div className='component-search-enquiry-panel' style={{width:'680px'}}>
+		return <div className='component-search-enquiry-panel' style={{width: '680px'}}>
 			<div className='container-fluid pd-w10'>
 				<div className='row mg-w010'>
 					<div className='col-sm-4 pd-w10'>
@@ -292,11 +292,9 @@ export default class SearchEnquiryPanel extends React.Component {
 							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
 						</div>
 					</div>
-					
+
 				</div>
-				
-				
-				
+
 				<div className='pannel-footer'>
 					<div className='item-text'>{' '}</div>
 					<div className='item-after'>

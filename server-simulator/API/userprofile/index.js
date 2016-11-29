@@ -1,17 +1,33 @@
 import express from 'express'
 import UserProfileUtil from './userprofile-util'
+import _ from 'lodash'
 
 const router = express.Router()
 
 const accountProfiles = require('../json/accountprofiles.json')
 const basicUsers = require('../json/baseUserProfile.json')
 
-// router.post('/list', (req, res) => {
-// 	let result = accountProfiles
+router.get('/list', (req, res) => {
+	let result = accountProfiles.map((item, index) => {
+		let user = _.find(basicUsers,(baseItem,idx) => (item.userID === baseItem.userID))
+		let newItem = Object.assign({},item,user)
+		return newItem
+	})
+	res.send(result)
+})
 
-// 	res.send(result)
-// })
-
+router.post('/add', (req, res) => {
+	let result = null
+	if (req.body.userData) {
+		let userData = _.clone(req.body.userData)
+		accountProfiles.push(userData.accountProfiles)
+		basicUsers.push(userData.userBasic)
+		result = {status: true,data:{accountProfiles,basicUsers}}
+	} else {
+		result = {status: false}
+	}
+	res.send(result)
+})
 /**
  * @apiGroup UserProfile
  * @api {GET} /userprofile/item user profile by user id

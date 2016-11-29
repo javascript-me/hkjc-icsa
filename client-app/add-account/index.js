@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import AddAccountProcess from './add-account-service.js'
 import ItemFilter from './filter-cmp.js'
 import ProfileStep from './profile-step.js'
-
+import moment from 'moment'
 
 const header = [
 	{label: 'Display Name', field: 'displayName'},
@@ -10,16 +10,14 @@ const header = [
 	{label: 'Position/Title', field: 'position'}
 ]
 
-const  initialAccountInfo = {
-  id: "",
-  displayName: "default",
-  status: "Active",
-  assignedUserRoles: [{
-    assignedUserRole: "Trader"
-  }],
-  activationDate: "",
-  deactivationDate: "",
-  userID: ""
+const initialAccountInfo = {
+	id: '',
+	displayName: 'default',
+	status: 'Active',
+	assignedUserRoles: [],
+	activationDate: moment(new Date()).format('DD/MM/YYYY'),
+	deactivationDate: moment(new Date()).format('DD/MM/YYYY'),
+	userID: ''
 }
 
 class AddAccount extends Component {
@@ -29,22 +27,24 @@ class AddAccount extends Component {
 		this.state = {
 			tableData: [],
 			userAccount: initialAccountInfo,
-			userBasic: {},
-			step: (this.props.step || 0)
+			userBasic: {}
+
 		}
 		this.handleAdd = this.handleAdd.bind(this)
+		this.setStep = this.setStep.bind(this)
+		this.handleCreateSuccess = this.handleCreateSuccess.bind(this)
 	}
 
 	render () {
 		return (
-			<div className="add-user-main-container">
-				<div className="add-useraccount-cmp" style={{display: this.props.step === 1 ? 'block' : 'none'}} >
+			<div className='add-user-main-container'>
+				<div className='add-useraccount-cmp' style={{display: this.state.step === 1 ? 'block' : 'none'}} >
 					<div className='filter-container'>
-						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancle', callback: null}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
+						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancle', callback: () => {this.setStep(0)}}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
 					</div>
 				</div>
-				<div style={{display: this.props.step === 2 ? 'block' : 'none' }}>
-					<ProfileStep userBasic={this.state.userBasic} userAccount={this.state.userAccount}/>
+				<div style={{display: this.state.step === 2 ? 'block' : 'none' }} >
+					<ProfileStep userBasic={this.state.userBasic} userAccount={this.state.userAccount} handleCreateSuccess={this.handleCreateSuccess} setStep={this.setStep}/>
 				</div>
 			</div>
 		)
@@ -58,19 +58,21 @@ class AddAccount extends Component {
 
 	componentDidMount () {
 		this.getUsers()
-		
 	}
-	
-	
+	componentWillReceiveProps (nextProps) {
+		this.setState({step: nextProps.step})
+	}
+
 	handleAdd (item) {
-		let newAccountInfo = Object.assign({},initialAccountInfo,{displayName:item.displayName})
-		this.setState({userBasic:item,userAccount:newAccountInfo})
-		this.props.handleStep(2)
-}
-}
-AddAccount.propTypes = {
-	step: React.PropTypes.number
-	
+		let newAccountInfo = Object.assign({}, initialAccountInfo, {displayName: item.displayName,userID: item.userID})
+		this.setState({userBasic: item, userAccount: newAccountInfo, step: 2})
+	}
+	setStep (step) {
+		this.setState({step})
+	}
+	handleCreateSuccess () {
+		this.setState({step:0})
+	}
 }
 
 export default AddAccount

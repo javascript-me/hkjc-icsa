@@ -410,7 +410,7 @@ const menuList1 = [
 				subMenu: [
 					{
 						text: 'User Account Profile',
-						link: '/page/userlist',
+						link: '/page/userlist'
 					},
 					{
 						text: 'User Role & Permission'

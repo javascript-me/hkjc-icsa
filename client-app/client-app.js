@@ -17,7 +17,6 @@ import AddAccount from './add-account'
 
 import UserList from './userlist/userlist'
 
-
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
 		replace('/')
@@ -39,6 +38,8 @@ export default (target) => {
 					<Route path='userprofile/:userId' component={UserProfile} />
 					<Route path='filter' component={AddAccount} />
 					<Route path='userlist' component={UserList} />
+					<Route path='userlist2' component={UserList} />
+
 
 				</Route>
 			</Router>
