@@ -60,10 +60,17 @@ export default class Systembar extends React.Component {
 		})
 	}
 	showComfirmPopup () {
-		this.refs.logout.show()
 		LoginService.getTasksNum().then((data) => {
-			const num = data[this.state.info.username].num
-			this.setState({taskNum: num})
+			let num
+			if(data[this.state.info.username] && data[this.state.info.username].num) {
+				num = data[this.state.info.username].num
+				this.setState({taskNum: num})
+			}
+			if (this.state.taskNum !== 0) {
+				this.refs.logout.show()
+			} else {
+				this.logout()
+			}
 		})
 	}
 	logout () {
