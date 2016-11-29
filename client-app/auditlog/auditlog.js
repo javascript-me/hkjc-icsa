@@ -1,6 +1,6 @@
 import React from 'react'
 import Moment from 'moment'
-import Calendar from 'rc-calendar'
+import Calendar from '../calendar'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
@@ -345,8 +345,9 @@ export default React.createClass({
 					<h1>Audit Trail</h1>
 				</div>
 				<div className='row page-content'>
-					<div className='col-md-6'>
-						<Calendar className='hidden' />
+					<div className='col-md-2 col-md-offset-4'>
+						<Calendar dateFormat="DD MMM YYYY" timeFormat="HH:mm" value="26 Aug 2006 16:45"/>
+						<Calendar dateFormat="DD MMM YYYY" timeFormat="HH:mm" />
 					</div>
 					{/* Search Critiria Row */}
 					<div className='col-md-12'>
