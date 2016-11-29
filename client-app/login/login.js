@@ -55,31 +55,33 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<div className='page-login'>
-				<div className='row row-login'>
-					<div className='login-dialog col-xs-offset-5'>
-						<div className='comment'>
-							<h2>Welcome</h2>
-							<p>Sign in with your sport betting account</p>
-						</div>
-						<div className='form-field'>
-							<div className='form-group form-group-lg'>
-								<label htmlFor='usernamer'>Username</label>
-								<input ref='username' type='text' className='form-control' id='login-username' placeholder='Username' />
+			<div className='row'>
+				<div className='page-login'>
+					<div className='row row-login'>
+						<div className='login-dialog col-xs-offset-5'>
+							<div className='comment'>
+								<h2>Welcome</h2>
+								<p>Sign in with your sport betting account</p>
 							</div>
-							<div className='form-group form-group-lg'>
-								<label htmlFor='password'>Password</label>
-								<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' />
-								<a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a>
+							<div className='form-field'>
+								<div className='form-group form-group-lg'>
+									<label htmlFor='usernamer'>Username</label>
+									<input ref='username' type='text' className='form-control' id='login-username' placeholder='Username' />
+								</div>
+								<div className='form-group form-group-lg'>
+									<label htmlFor='password'>Password</label>
+									<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' />
+									<a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a>
+								</div>
+								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
+								<button type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Login</button>
 							</div>
-							{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
-							<button type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Login</button>
 						</div>
 					</div>
+					<Overlay hideOnOverlayClicked ref='overlay' title={this.state.title} showCancel={this.state.showCancel} onConfirm={() => this.gotoLogin()} confirmBtn={this.state.confirmBtn}>
+						<p className='warning'>{this.state.msg}</p>
+					</Overlay>
 				</div>
-				<Overlay hideOnOverlayClicked ref='overlay' title={this.state.title} showCancel={this.state.showCancel} onConfirm={() => this.gotoLogin()} confirmBtn={this.state.confirmBtn}>
-					<p className='warning'>{this.state.msg}</p>
-				</Overlay>
 			</div>
 			)
 	}
