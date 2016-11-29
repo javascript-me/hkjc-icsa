@@ -14,8 +14,7 @@ export default {
 		try {
 			noticeBoardList = await getNoticeBoardList({username: username})
 			result = noticeBoardList
-		}
-		catch(failure) {
+		} catch (failure) {
 			// returns null on failure
 			result = null
 		}
