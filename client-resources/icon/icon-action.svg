@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon - Action</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Bottom_Panel_Three" transform="translate(-1856.000000, -58.000000)" fill="#FFFFFF">
+            <g id="Nav_01">
+                <g id="nav-/-navbar-1st-(wo-Event-Directory)" transform="translate(0.000000, 35.000000)">
+                    <g id="navbar-1st">
+                        <g id="notifications/broadcast/action" transform="translate(1755.000000, 22.000000)">
+                            <path d="M113,1 C106.372533,1 101,6.37226667 101,13 C101,19.6277333 106.372533,25 113,25 C119.627467,25 125,19.6277333 125,13 C125,6.37226667 119.627467,1 113,1 L113,1 Z M113,20.8541333 C112.036,20.8541333 111.254667,20.0728 111.254667,19.1088 C111.254667,18.1448 112.036,17.3634667 113,17.3634667 C113.964,17.3634667 114.7456,18.1448 114.7456,19.1088 C114.7456,20.0728 113.964,20.8541333 113,20.8541333 L113,20.8541333 Z M114.894667,7.3624 L114.2216,15.2688 C114.2216,15.9434667 113.674667,16.4904 113,16.4904 C112.325333,16.4904 111.778133,15.9434667 111.778133,15.2688 L111.105333,7.3624 C111.0904,7.2656 111.08,7.16693333 111.08,7.06533333 C111.08,6.00506667 111.94,5.1456 113,5.1456 C114.060533,5.1456 114.92,6.00506667 114.92,7.06533333 C114.92,7.16693333 114.909867,7.2656 114.894667,7.3624 L114.894667,7.3624 Z" id="Icon---Action"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
