@@ -20,7 +20,7 @@ export default React.createClass({
 		return (
 			<div className='row row-dashboard'>
 				<div className='col-xs-12'>
-					{/*<h1 style={{marginTop: '300px'}}>Dashboard</h1>*/}
+					{/* <h1 style={{marginTop: '300px'}}>Dashboard</h1> */}
 
 				</div>
 			</div>

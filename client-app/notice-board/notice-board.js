@@ -11,42 +11,42 @@ export default React.createClass({
 			displaySettings: LoginService.getProfile().noticeboardSettings.display,
 			selectedSettings: '',
 
-			allNoticesVisible : true,
+			allNoticesVisible: true,
 			unreadNoticesVisible: false,
 
 			noticeBoxData: {
 				allNotices: [
-					{icon:"Critical", date:"22:32:14", title:"title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"High", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:false},
-					{icon:"Low", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"Critical", date:"22:32:14", title:"title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"High", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:false},
-					{icon:"Low", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"Critical", date:"22:32:14", title:"title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"High", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:false},
-					{icon:"Low", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"Critical", date:"22:32:14", title:"title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"High", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:false},
-					{icon:"Low", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"Critical", date:"22:32:14", title:"title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"High", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:false},
-					{icon:"Low", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"Critical", date:"22:32:14", title:"title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"High", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:false},
-					{icon:"Low", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:true},
-					{icon:"Medium", date:"22:32:14", title:"title title title title title title title title title title ", isAcknowledged:true}
+					{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+					{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+					{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+					{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+					{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+					{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+					{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+					{icon: 'Medium', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true}
 				],
 
 				unreadNotices: [
-					{icon:"Critical", date:"22:32:14", title:"unacknowledged unacknowledged unacknowledged unacknowledged ", isAcknowledged:true},
-					{icon:"Low", date:"22:32:14", title:"unacknowledged unacknowledged unacknowledged unacknowledged ", isAcknowledged:false},
-					{icon:"Medium", date:"22:32:14", title:"unacknowledged unacknowledged unacknowledged unacknowledged ", isAcknowledged:true}
+					{icon: 'Critical', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true},
+					{icon: 'Low', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: false},
+					{icon: 'Medium', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true}
 				]
 			},
 
 			tabData: [
-				{label: "All", isOn: true},
-				{label: "Unread", isOn: false}
+				{label: 'All', isOn: true},
+				{label: 'Unread', isOn: false}
 			]
 		}
 	},
@@ -98,10 +98,10 @@ export default React.createClass({
 			})
 		}
 
-		this.state.tabData.forEach(function (item) {
+		this.state.tabData.forEach((item) => {
 			if (item.label === key) {
 				item.isOn = true
-			}else {
+			} else {
 				item.isOn = false
 			}
 		})
@@ -116,16 +116,16 @@ export default React.createClass({
 				<div className={this.getClassName()}>
 					<div className='header-container'>
 						<div className='pull-right'>
-							<span className='noticeboard-list-container'><i className=""><img src='icon/list.svg' /></i></span>
-							<span className="noticeboard-settings-container"><i className=""><img src='icon/Setting.svg' onClick={this.openPopup}/></i></span>
+							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>
+							<span className='noticeboard-settings-container'><i className=''><img src='icon/Setting.svg' onClick={this.openPopup} /></i></span>
 							<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Action Panel Setting' onConfirm={this.applySettings} >
 								<NoticeboardPopup onChange={this.onChangeSetting} />
 							</Popup>
 						</div>
 						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} />
-						<div className="container-title">
-							<span className="noticeboard-icon-container"><img src='icon/noticeboard.svg'></img></span>
-							<span className="header-title">Noticeboard 8(4)</span>
+						<div className='container-title'>
+							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+							<span className='header-title'>Noticeboard 8(4)</span>
 						</div>
 					</div>
 					<div className='messages-container'>
