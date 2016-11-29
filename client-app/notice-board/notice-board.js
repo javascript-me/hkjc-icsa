@@ -77,13 +77,26 @@ export default React.createClass({
 		this.setState({selectedSettings: setting})
 	},
 	getClassName () {
-		if (this.state.displaySettings === 'bottom') {
+		let requestData = {
+			username: LoginService.getProfile().username
+		}
+		var self = this
+		$.ajax({
+			url: 'api/users/getNoticeBoardDisplaySettings',
+			data: requestData,
+			type: 'POST',
+			success: function (data) {
+				self.setState({ displaySettings: data.noticeboardSettings.display })
+			},
+			error: function (xhr, status, error) {
+			}
+		})
+		if (self.state.displaySettings === 'bottom') {
 			return 'bottom-noticeboard-container'
 		} else {
 			return 'right-noticeboard-container'
 		}
 	},
-
 	changeTab (key) {
 		if (key === 'All') {
 			this.setState({
