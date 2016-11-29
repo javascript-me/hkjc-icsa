@@ -12,6 +12,7 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
+		this.showHideNoticeBoard = this.showHideNoticeBoard.bind(this)
 		this.state = {
 			slimMode: false,
 			showNoticeBoard: false,
@@ -20,45 +21,44 @@ class MenuBar extends Component {
 		}
 	}
 
-    showHideNoticeBoard = (e) => {
-        if(this.state.showNoticeBoard) {
-            this.setState({ showNoticeBoard: false });
-        }
-        else {
-            this.setState({ showNoticeBoard: true });
-        }
-    }
+	showHideNoticeBoard () {
+		if (this.state.showNoticeBoard) {
+			this.setState({ showNoticeBoard: false })
+		} else {
+			this.setState({ showNoticeBoard: true })
+		}
+	}
 
-    render () {
-        let menuBarData = (this.state.userProfile && this.state.userProfile.username === 'allgood') ? menuData.menuList1 : menuData.menuList2
-        return (
-            <div className='menu-bar-wrap row' style={{display: this.state.menuBarShouldShow ? 'block' : 'none'}}>
-                <div className={classnames('menu-container', {slimMode: this.state.slimMode})}>
-                    <EventDirectory slimMode={this.state.slimMode} />
-                    <div className='menu-box'>
-                        {menuBarData.length > 0 && menuBarData.map((item, idx) => (
-                            <div className='menu-unit' key={idx}>
-                                <Link to={item.link} className='level-1-unit'>
-                                    <div className='icon'>
-                                        <img className='icon-N icon-img' src={'menu-bar/' + item.iconSrc} />
-                                        <img className='icon-A icon-img' src={'menu-bar/' + item.iconSrc_A} />
-                                    </div>
-                                    <div className='text' style={{display: this.state.slimMode ? 'none' : 'block'}}>
-                                        <div>{item.textL1}</div>
-                                        <div>{item.textL2}</div>
-                                    </div>
+	render () {
+		let menuBarData = (this.state.userProfile && this.state.userProfile.username === 'allgood') ? menuData.menuList1 : menuData.menuList2
+		return (
+			<div className='menu-bar-wrap row' style={{display: this.state.menuBarShouldShow ? 'block' : 'none'}}>
+				<div className={classnames('menu-container', {slimMode: this.state.slimMode})}>
+					<EventDirectory slimMode={this.state.slimMode} />
+					<div className='menu-box'>
+						{menuBarData.length > 0 && menuBarData.map((item, idx) => (
+							<div className='menu-unit' key={idx}>
+								<Link to={item.link} className='level-1-unit'>
+									<div className='icon'>
+										<img className='icon-N icon-img' src={'menu-bar/' + item.iconSrc} />
+										<img className='icon-A icon-img' src={'menu-bar/' + item.iconSrc_A} />
+									</div>
+									<div className='text' style={{display: this.state.slimMode ? 'none' : 'block'}}>
+										<div>{item.textL1}</div>
+										<div>{item.textL2}</div>
+									</div>
 
-                                </Link>
-                                <SecondLevelMenu dataList={item.subMenu} />
-                            </div>
-                        ))}
-                    </div>
-                    <div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
-                    <div className='message'><i className="icon-notification " onClick={this.showHideNoticeBoard}><img src='icon/notification.svg' /></i></div>
-                </div>
-                { this.state.showNoticeBoard ? <Noticeboard /> : null }
-            </div>)
-    }
+								</Link>
+								<SecondLevelMenu dataList={item.subMenu} />
+							</div>
+						))}
+					</div>
+					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
+					<div className='message'><i className='icon-notification ' onClick={this.showHideNoticeBoard}><img src='icon/notification.svg' /></i></div>
+				</div>
+				{ this.state.showNoticeBoard ? <Noticeboard /> : null }
+			</div>)
+	}
 
 	modeChange () {
 		this.setState({slimMode: !this.state.slimMode})
@@ -151,8 +151,4 @@ const SecondLevelMenu = (props) => {
 SecondLevelMenu.propTypes = {
 	dataList: React.PropTypes.array
 }
-/*export default React.createClass({
-
-
-})*/
 export default MenuBar

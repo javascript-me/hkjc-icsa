@@ -3,10 +3,6 @@ import ClassNames from 'classnames'
 
 export default class NoticeBox extends React.Component {
 
-	constructor (props) {
-		super(props)
-	}
-
 	getPriorityImageSrc (icon) {
 		if (icon === 'Critical') return 'notice-board/Critical.svg'
 		if (icon === 'High') return 'notice-board/High.svg'
@@ -26,29 +22,34 @@ export default class NoticeBox extends React.Component {
 
 	render () {
 		return (
-            <div className={this.getNoticeBoxClassNames()}>
-                <ul className='list-box'>
-                    {
-                        this.props.notices.map((notice, i) => {
-	return <li>
-                                <ul className='row'>
-                                    <li><img src={this.getPriorityImageSrc(notice.icon)} /></li>
-                                    <li className='notice-date'>{notice.date}</li>
+			<div className={this.getNoticeBoxClassNames()}>
+				<ul className='list-box'>
+					{
+						this.props.notices.map((notice, i) => {
+							return <li>
+								<ul className='row'>
+									<li><img src={this.getPriorityImageSrc(notice.icon)} /></li>
+									<li className='notice-date'>{notice.date}</li>
 
-                                    <li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.isAcknowledged)} /></li>
+									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.isAcknowledged)} /></li>
 
-                                    <li className='notice-title'>
-                                        <div className='wrap-text'>
-                                            {notice.title}
-                                        </div>
-                                    </li>
+									<li className='notice-title'>
+										<div className='wrap-text'>
+											{notice.title}
+										</div>
+									</li>
 
-                                </ul>
-                            </li>
-})
-                    }
-                </ul>
-            </div>
-        )
+								</ul>
+							</li>
+						})
+					}
+				</ul>
+			</div>
+		)
 	}
+}
+
+NoticeBox.propTypes = {
+	visible: React.PropTypes.bool,
+	notices: React.PropTypes.object
 }
