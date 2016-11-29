@@ -31,7 +31,6 @@ class AddAccount extends Component {
 
 		}
 		this.handleAdd = this.handleAdd.bind(this)
-		this.setStep = this.setStep.bind(this)
 		this.handleCreateSuccess = this.handleCreateSuccess.bind(this)
 	}
 
@@ -40,11 +39,11 @@ class AddAccount extends Component {
 			<div className='add-user-main-container'>
 				<div className='add-useraccount-cmp' style={{display: this.state.step === 1 ? 'block' : 'none'}} >
 					<div className='filter-container'>
-						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancle', callback: () => {this.setStep(0)}}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
+						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancel', callback: () => {this.props.setStep(0)}}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
 					</div>
 				</div>
 				<div style={{display: this.state.step === 2 ? 'block' : 'none' }} >
-					<ProfileStep userBasic={this.state.userBasic} userAccount={this.state.userAccount} handleCreateSuccess={this.handleCreateSuccess} setStep={this.setStep}/>
+					<ProfileStep userBasic={this.state.userBasic} userAccount={this.state.userAccount} handleCreateSuccess={this.handleCreateSuccess} setStep={this.props.setStep}/>
 				</div>
 			</div>
 		)
@@ -67,11 +66,9 @@ class AddAccount extends Component {
 		let newAccountInfo = Object.assign({}, initialAccountInfo, {displayName: item.displayName,userID: item.userID})
 		this.setState({userBasic: item, userAccount: newAccountInfo, step: 2})
 	}
-	setStep (step) {
-		this.setState({step})
-	}
+	
 	handleCreateSuccess () {
-		this.setState({step:0})
+		this.props.setState(0)
 	}
 }
 

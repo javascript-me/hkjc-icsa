@@ -18,7 +18,7 @@ class ProfileStep extends Component {
 		}
 		this.getUserProfile = this.getUserProfile.bind(this)
 		this.onCreateClick = this.onCreateClick.bind(this)
-		this.onCancle = this.onCancle.bind(this)
+		this.onCancel = this.onCancel.bind(this)
 	}
 	render () {
 		return (
@@ -31,7 +31,7 @@ class ProfileStep extends Component {
 						<ProfileButtons>
 							<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>
 							<button className='btn btn-primary pull-right' onClick={this.onCreateClick}>Create</button>
-							<button className='btn btn-cancle pull-right' onClick={this.onCancle}>Cancle</button>
+							<button className='btn btn-cancle pull-right' onClick={this.onCancel}>Cancel</button>
 						</ProfileButtons>
 					</ProfileContainer>
 
@@ -50,7 +50,7 @@ class ProfileStep extends Component {
 			this.props.handleCreateSuccess()
 		}})
 	}
-	onCancle() {
+	onCancel() {
 		this.props.setStep(0)
 	}
 	componentDidMount () {

@@ -36,7 +36,7 @@ class ItemFilter extends Component {
 					</div>
 					<div className='footer'>
 						{this.props.activeBtn && <button className={classnames('btn', 'pull-right', 'btn-main', {disabled: !this.currentSelectItem})} onClick={() => { this.currentSelectItem && this.props.activeBtn.callback(this.currentSelectItem) }}>{this.props.activeBtn.text || 'Ok'}</button>}
-						{this.props.postiveBtn && <button className='btn pull-right btn-secondary' onClick={() => { this.props.postiveBtn.callback() }}>{this.props.postiveBtn.text || 'Cancle'}</button>}
+						{this.props.postiveBtn && <button className='btn pull-right btn-secondary' onClick={() => { this.props.postiveBtn.callback() }}>{this.props.postiveBtn.text || 'Cancel'}</button>}
 					</div>
 				</div>
 			</div>

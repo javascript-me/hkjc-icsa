@@ -31,16 +31,19 @@ export default React.createClass({
 	showMoreFilter () {
 		this.setState({isShowingMoreFilter: !this.state.isShowingMoreFilter})
 	},
-	startAddingUser () {
-		this.setState({addingUserStep: 1})
+
+	setAddStep (step) {
+		this.setState({addingUserStep:step})
 	},
+
+	
 
 	render () {
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {
 		// 	'active': this.state.isShowingMoreFilter
 		// })
 		return <div className='row userlist-page'>
-			<AddingUserCmp step={this.state.addingUserStep} />
+			<AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep}/>
 			<div className='page-header'>
 				<p>{this.state.pageTitle}</p>
 				<h1>User Account Profile List</h1>
@@ -54,7 +57,7 @@ export default React.createClass({
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
 					</div>
-					<div className='content-header-right' onClick={this.startAddingUser}>
+					<div className='content-header-right' onClick={() => {this.setAddStep(1)}}>
 						add user
 					</div>
 				</div>
