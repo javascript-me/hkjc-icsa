@@ -1,18 +1,19 @@
 import React from 'react'
 import ClassNames from 'classnames'
+import Moment from 'moment'
 
 export default class NoticeBox extends React.Component {
 
-	getPriorityImageSrc (icon) {
-		if (icon === 'Critical') return 'notice-board/Critical.svg'
-		if (icon === 'High') return 'notice-board/High.svg'
-		if (icon === 'Low') return 'notice-board/Low.svg'
-		if (icon === 'Medium') return 'notice-board/Medium.svg'
+	getPriorityImageSrc (priority) {
+		if (priority === 'Critical') return 'notice-board/Critical.svg'
+		if (priority === 'High') return 'notice-board/High.svg'
+		if (priority === 'Low') return 'notice-board/Low.svg'
+		if (priority === 'Medium') return 'notice-board/Medium.svg'
 		return ''
 	}
 
-	getIsAcknowledgedImageSrc (isAcknowledged) {
-		if (isAcknowledged) return 'notice-board/Tick.svg'
+	getIsAcknowledgedImageSrc (status) {
+		if (status === 'Acknowledged') return 'notice-board/Tick.svg'
 		return 'notice-board/Mail.svg'
 	}
 
@@ -20,25 +21,44 @@ export default class NoticeBox extends React.Component {
 		return ClassNames('notice-box', this.props.visible ? '' : 'not-visible')
 	}
 
+	getListBoxClassName () {
+		if (this.props.displayPosition === 'right') {
+			return 'list-box' + '-' + 'right'
+		} else {
+			return 'list-box'
+		}
+	}
+
+	getNoticeTitle (isAcknowledged) {
+		return ClassNames('notice-title', isAcknowledged === 'Acknowledged' ? '' : 'bold-text')
+	}
+
+	formatDistibutionTime (dateStr) {
+		return Moment(dateStr).format('hh:mm:ss')
+	}
+
+	textEllipsisWhenOverflow (text) {
+		return text.length > 380 ? (text.substring(0, 380) + '...') : text
+	}
+	// 380
+
 	render () {
 		return (
 			<div className={this.getNoticeBoxClassNames()}>
-				<ul className='list-box'>
+				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.notices.map((notice, i) => {
 							return <li>
 								<ul className='row'>
-									<li><img src={this.getPriorityImageSrc(notice.icon)} /></li>
-									<li className='notice-date'>{notice.date}</li>
 
-									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.isAcknowledged)} /></li>
+									{ this.props.displayPosition === 'right' ? <li className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li> : null}
 
-									<li className='notice-title'>
-										<div className='wrap-text'>
-											{notice.title}
-										</div>
-									</li>
+									<li><img src={this.getPriorityImageSrc(notice.priority)} /></li>
+									<li className='notice-date'>{this.formatDistibutionTime(notice.system_distribution_time)}</li>
 
+									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
+
+									{ this.props.displayPosition === 'bottom' ? <li className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li> : null}
 								</ul>
 							</li>
 						})
@@ -51,5 +71,6 @@ export default class NoticeBox extends React.Component {
 
 NoticeBox.propTypes = {
 	visible: React.PropTypes.bool,
-	notices: React.PropTypes.object
+	notices: React.PropTypes.object,
+	displayPosition: React.PropTypes.string
 }
