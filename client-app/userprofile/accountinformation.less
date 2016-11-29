@@ -1,3 +1,5 @@
+@import "rolescontainer.less";
+
 .account-information {
 	flex: 1;
 
@@ -14,6 +16,13 @@
 
 	.roles {
 		margin-top: -5px;
+		min-height: 40px;
+
+		.role-wrapper {
+			height: 100px;
+			overflow: auto;
+			width: 90%;
+		}
 
 		.role {
 			display: inline-block;
@@ -25,6 +34,11 @@
 			font-size: 14px;
 			color: #4A4A4A;
 			letter-spacing: 0;
+		}
+
+		.highlight {
+			background: #97C363;
+			color: #FFFFFF;
 		}
 	}
 
@@ -63,6 +77,14 @@
 			.form-control {
 				border: 1px solid #E25854;
 			}
+		}
+	}
+
+	.popup-wrapper {
+		.popup-dialog {
+			top: 18%;
+			left: 50%;
+			margin-left: -318px;
 		}
 	}
 }
