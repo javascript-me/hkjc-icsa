@@ -1,0 +1,51 @@
+.notice-box {
+	&.not-visible {
+		display: none;
+	}
+
+	ul.list-box {
+		list-style-type: none;
+		padding: 0;
+		height: 120px;
+		overflow: auto;
+
+		li ul.row {
+			list-style-type: none;
+			//border: 2px solid #916211;
+			margin: 10px 10px 0;
+			padding: 0;
+
+			.notice-date {
+				font-family: Roboto-Regular;
+				font-size: 14px;
+				color: #9D9D9D;
+				line-height: 20px;
+			}
+
+			li {
+				display: inline;
+				padding: 0 5px;
+			}
+
+			li.notice-title {
+				display: block;
+				margin-bottom: -20px;
+
+				.wrap-text {
+					font-family: Roboto-Medium;
+					font-size: 14px;
+					color: #305091;
+					letter-spacing: -0.16px;
+					line-height: 20px;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+					margin-left: 100px;
+					margin-right: 50px;
+					position: relative;
+					top: -20px;
+				}
+			}
+		}
+	}
+}
