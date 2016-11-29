@@ -234,7 +234,7 @@ export default React.createClass({
 		})
 	},
 
-	checkIsDateRangeChanged: function () {
+	checkIsDateRangeNotChanged: function () {
 		let filters = this.state.selectedFilters
 		let originDateRange = this.state.originDateRange
 		let dateTimeFrom
@@ -247,6 +247,7 @@ export default React.createClass({
 				dateTimeTo = filters[i].value
 			}
 		}
+
 		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
 	},
 
@@ -298,10 +299,10 @@ export default React.createClass({
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 		})
-		let isDateRangeChanged = this.checkIsDateRangeChanged()
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
 
 		let filterBlockes = this.state.selectedFilters.filter((f) => {
-			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
+			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeNotChanged) {
 				return false
 			}
 			return true
@@ -311,7 +312,7 @@ export default React.createClass({
 				filter={f}
 				removeEvent={this.removeSearchCriteriaFilter}
 				removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		})
+		}) || []
 
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
@@ -351,19 +352,21 @@ export default React.createClass({
 					{/* Search Critiria Row */}
 					<div className='col-md-12'>
 						<div className='search-criteria-container'>
-							<div className={betTypesContainerClassName}>
-								{betTypes}
-							</div>
-							<div className='keyword-container'>
-								<input type='text' placeholder='Search with keywords & filters'
-									value={this.state.keyword}
-									onClick={this.showMoreFilter}
-									onChange={this.handleKeywordChange}
-									onKeyPress={this.handleKeywordPress}
-									ref='keyword' />
-							</div>
-							<div className='filter-block-container'>
-								{filterBlockes}
+							<div className='search-criteria-container-row'>
+								<div className={betTypesContainerClassName}>
+									{betTypes}
+								</div>
+								<div className='keyword-container'>
+									<input type='text' placeholder='Search with keywords & filters'
+										value={this.state.keyword}
+										onClick={this.showMoreFilter}
+										onChange={this.handleKeywordChange}
+										onKeyPress={this.handleKeywordPress}
+										ref='keyword' />
+								</div>
+								<div className='filter-block-container'>
+									{filterBlockes}
+								</div>
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />

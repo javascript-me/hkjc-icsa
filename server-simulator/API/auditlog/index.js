@@ -1,13 +1,11 @@
 import express from 'express'
 import helper from './export_helper'
-import * as pdf from 'html-pdf'
 import * as fs from 'fs'
 import moment from 'moment'
-import PagingUtil from './paging-util'
+import AuditlogsUtil from './auditlogs-util'
 import PagingService from './paging-service'
 
 const router = express.Router()
-const options = {format: 'Letter', orientation: 'landscape', header: {'height': '15mm'}}
 const jsonObject = require('../json/auditlogs.json')
 const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
 
@@ -68,7 +66,7 @@ router.post('/filterAuditlogs', (req, res) => {
 		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
 
-	var filteredAuditlogs = PagingUtil.doFilter(cloneAuditlogs,
+	var filteredAuditlogs = AuditlogsUtil.doFilter(cloneAuditlogs,
 		req.body.keyword,
 		req.body.typeValue,
 		req.body.userRole,
@@ -79,12 +77,12 @@ router.post('/filterAuditlogs', (req, res) => {
 		req.body.dateTimeTo
 	)
 
-	var sortedAuditlogs = PagingUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+	var sortedAuditlogs = AuditlogsUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
-	result.auditlogs = PagingUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+	result.auditlogs = AuditlogsUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
-	PagingService.totalPages = PagingUtil.getTotalPages(sortedAuditlogs.length)
-	result.pageData = PagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
+	var pagingService = new PagingService(AuditlogsUtil.getTotalPages(sortedAuditlogs.length))
+	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 
     // TODO: check how to send JSON POST request data.
 
@@ -149,35 +147,36 @@ router.get('/export', (req, res) => {
 		data = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
 
-	let result =	PagingUtil.doFilter(data,
-						filters.keyword,
-						filters.typeValue,
-						filters.userRole,
-						filters.systemFunc,
-						filters.betTypeFeature,
-						filters.device
-					)
+	let result = AuditlogsUtil.doFilter(data,
+		filters.keyword,
+		filters.typeValue,
+		filters.userRole,
+		filters.systemFunc,
+		filters.betTypeFeature,
+		filters.device
+	)
 
 	let statusCode = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-	let dateReport
 
 	switch (type.toLowerCase()) {
 	case 'pdf':
-		dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
+		// dateReport = moment(new Date()).format('DD-MMM-YYYY HH:mm')
+        //
+		// result = helper.toHTML(result, dateReport)
+		// res.writeHead(statusCode, {
+		// 	'Content-Type': 'application/octet-stream',
+		// 	'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
+        //
+		// pdf.create(result, options).toStream((err, file) => {
+		// 	if (err) {
+		// 		res.end()
+		// 	} else {
+		// 		file.pipe(res)
+		// 	}
+		// })
 
-		result = helper.toHTML(result, dateReport)
-		res.writeHead(statusCode, {
-			'Content-Type': 'application/octet-stream',
-			'Content-Disposition': 'attachment; filename=AuditLogReport_' + dateFilename + '.pdf'})
-
-		pdf.create(result, options).toStream((err, file) => {
-			if (err) {
-				res.end()
-			} else {
-				file.pipe(res)
-			}
-		})
+		res.sendfile('server-simulator/API/auditlog/output.pdf')
 
 		break
 	case 'csv':
