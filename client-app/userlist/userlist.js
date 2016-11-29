@@ -10,15 +10,15 @@ export default React.createClass({
 	displayName: 'UserProfileList',
 
 	headers: [
-		{'id': 1, label: 'User Display Name', fieldName: 'date_time', sortingClass: 'down-arrow', addCheckBox: true},
-		{'id': 2, label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 3, label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 4, label: 'Staff ID', fieldName: 'Type', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 5, label: 'Position / Title', fieldName: 'function_module', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 6, label: 'User Roles', fieldName: 'function_event_detail', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 7, label: 'Account Status', fieldName: 'user_role', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 8, label: 'Date of Activation', fieldName: 'ip_address', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 9, label: 'Date of Inactivation', fieldName: 'backend_id', sortingClass: 'no-arrow', addCheckBox: true}
+		{'id': 1, label: 'User Display Name', fieldName: 'displayName', sortingClass: 'down-arrow', addCheckBox: true},
+		{'id': 2, label: 'User ID', fieldName: 'userID', sortingClass: 'no-arrow', addCheckBox: true},
+		{'id': 3, label: 'User Name', fieldName: 'firstName', sortingClass: 'no-arrow', addCheckBox: true},
+		{'id': 4, label: 'Staff ID', fieldName: 'staffID', sortingClass: 'no-arrow', addCheckBox: true},
+		{'id': 5, label: 'Position / Title', fieldName: 'position', sortingClass: 'no-arrow', addCheckBox: true},
+		{'id': 6, label: 'User Roles', fieldName: 'assignedUserRoles', sortingClass: 'no-arrow', addCheckBox: true},
+		{'id': 7, label: 'Account Status', fieldName: 'status', sortingClass: 'no-arrow', addCheckBox: true},
+		{'id': 8, label: 'Date of Activation', fieldName: 'activationDate', sortingClass: 'no-arrow', addCheckBox: true},
+		{'id': 9, label: 'Date of Inactivation', fieldName: 'deactivationDate', sortingClass: 'no-arrow', addCheckBox: true}
 	],
 
 	getInitialState () {
