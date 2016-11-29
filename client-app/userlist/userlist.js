@@ -1,5 +1,7 @@
 import React from 'react'
 import TabularData from '../tabulardata/tabulardata'
+import Paging from '../paging/paging'
+import UserStore from './user-store'
 
 export default React.createClass({
 	displayName: 'UserProfileList',
@@ -19,8 +21,35 @@ export default React.createClass({
 	getInitialState () {
 		return {
 			pageTitle: 'Home \\ Tool & Administration \\ User',
-			auditlogs: []
+			userprofiles: []
 		}
+	},
+
+	componentDidMount () {
+		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		// Get Table Data
+		UserStore.searchAuditlogs(1, sortingObject, null)
+		UserStore.addChangeListener(this.onChange)
+	},
+
+	componentWillUnmount: function () {
+		UserStore.removeChangeListener(this.onChange.bind(this))
+		document.removeEventListener('click', this.pageClick, false)
+	},
+
+	onChange () {
+		const hasData = UserStore.userProfiles.length > 0
+		this.setState({
+			userprofiles: UserStore.userProfiles, hasData: hasData
+		})
+	},
+
+	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
+		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
+	},
+
+	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
+		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	render () {
@@ -40,14 +69,14 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table'>
-					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={this.state.auditlogs} />
+					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
 				</div>
 				<div className='content-footer'>
 					<div className='content-footer-left'>
 						<button className='btn btn-primary btn-disable'>Delete</button>
 					</div>
 					<div className='content-footer-center'>
-						Page Component
+						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 					<div className='content-footer-right'>
 						<button className='btn btn-primary'>Update</button>
