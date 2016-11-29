@@ -40,7 +40,7 @@ export default {
 		}
 		return result
 	},
-    updateProfile () {
-        getProfile()
-    }
+	updateProfile () {
+		getProfile()
+	}
 }
