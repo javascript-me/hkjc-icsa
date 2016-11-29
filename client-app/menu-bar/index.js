@@ -11,6 +11,7 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
+		this.modeChange = this.modeChange.bind(this)
 		this.state = {
 			slimMode: false,
 			menuBarShouldShow: LoginService.hasProfile(),
@@ -41,7 +42,9 @@ class MenuBar extends Component {
 							</div>
 						))}
 					</div>
+
 					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
+
 					<div className='message'>Message</div>
 				</div>
 			</div>)
@@ -103,7 +106,7 @@ export const ThirdLevelOnly = (props) => {
 		return (<div className='third-level-only'>
 			<div className='third-level-only-container'>
 				{props.data && props.data.map((item, idx) => (
-					<Link className='third-only-item' key={item.text}>{item.text}</Link>))}
+					<Link className='third-only-item' to={item.link} key={item.text}>{item.text}</Link>))}
 			</div>
 		</div>)
 	}

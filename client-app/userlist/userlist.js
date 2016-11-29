@@ -1,7 +1,10 @@
 import React from 'react'
+// import classnames from 'classnames'
 import TabularData from '../tabulardata/tabulardata'
 import Paging from '../paging/paging'
 import UserStore from './user-store'
+import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
+import AddingUserCmp from '../add-account'
 
 export default React.createClass({
 	displayName: 'UserProfileList',
@@ -21,7 +24,9 @@ export default React.createClass({
 	getInitialState () {
 		return {
 			pageTitle: 'Home \\ Tool & Administration \\ User',
-			userprofiles: []
+			userprofiles: [],
+			isShowingMoreFilter: false,
+			addingUserStep: 0
 		}
 	},
 
@@ -52,8 +57,20 @@ export default React.createClass({
 		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
+	showMoreFilter () {
+		this.setState({isShowingMoreFilter: !this.state.isShowingMoreFilter})
+	},
+
+	startAddingUser () {
+		this.setState({addingUserStep: 1})
+	},
+
 	render () {
+		// let moreFilterContianerClassName = classnames('more-filter-popup', {
+		// 	'active': this.state.isShowingMoreFilter
+		// })
 		return <div className='row userlist-page'>
+			<AddingUserCmp step={this.state.addingUserStep} />
 			<div className='page-header'>
 				<p>{this.state.pageTitle}</p>
 				<h1>User Account Profile List</h1>
@@ -62,9 +79,12 @@ export default React.createClass({
 				<div className='content-header'>
 					<div className='content-header-left'>
 						<i className='icon icon-search' />
-						<input className='input-search' type='text' placeholder='Search with keywords & filters' />
+						<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' />
+						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching}>
+							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
+						</div>
 					</div>
-					<div className='content-header-right'>
+					<div className='content-header-right' onClick={this.startAddingUser}>
 						add user
 					</div>
 				</div>

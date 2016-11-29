@@ -1,0 +1,75 @@
+.profile-container {
+	> .row {
+		margin: 0;
+		display: flex;
+	}
+
+	.header {
+		width: 100%;
+
+		h2 {
+			display: inline-block;
+			margin: 0;
+			font-family: Roboto-Medium;
+			font-size: 20px;
+			color: #0C2963;
+		}
+
+		.action {
+			cursor: pointer;
+			float: right;
+			display: inline-block;
+			padding: 5px 12px;
+			background: #F8F9FB;
+			border-radius: 4px;
+			font-family: Roboto-Bold;
+			font-size: 14px;
+			color: #305091;
+			line-height: 20px;
+
+			.icon {
+				display: inline-block;
+				background-repeat: no-repeat;
+				background-position: center center;
+				margin-right: 8px;
+			}
+		}
+	}
+
+	.content {
+		margin: 13px 0 30px;
+		width: 100%;
+		background: #FFFFFF;
+		border: 1px solid #305091;
+		padding: 20px 30px;
+
+		> .row {
+			margin: 0;
+
+			> .col {
+				padding: 0;
+			}
+		}
+
+		.name {
+			font-family: Roboto-Medium;
+			font-size: 16px;
+			color: #0C2963;
+			line-height: 22px;
+			height: 22px;
+		}
+
+		.value {
+			margin: 11px 0 24px;
+			font-family: Roboto-Regular;
+			font-size: 16px;
+			color: #0C2963;
+			line-height: 22px;
+			height: 22px;
+
+			&.margin0 {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

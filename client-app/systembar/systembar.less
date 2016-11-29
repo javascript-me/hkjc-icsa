@@ -37,6 +37,74 @@ img {
 		}
 	}
 
+	.username {
+		float: right;
+		color: @hkjcGreyLighter;
+		width: 200px;
+		padding: 0 29px 0 9px;
+		height: 35px;
+		margin-right: -4px;
+		line-height: 35px;
+		cursor: pointer;
+		position: relative;
+
+		&:hover {
+			background: #F8F8F8;
+			border: 1px solid #ACB8D1;
+			box-shadow: 0 23px 27px 0 rgba(0, 0, 0, 0.04);
+			border-radius: 4px 4px 0 0;
+			top: -1px;
+			left: -1px;
+
+			.dropdown-menu {
+				display: block;
+			}
+		}
+
+		.hello > span {
+			float: left;
+			font-family: Roboto-Medium;
+			font-size: 14px;
+			color: #4A4A4A;
+
+			> img {
+				width: 14px;
+				margin-right: 10px;
+			}
+		}
+
+		.name {
+			max-width: 90px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.dropdown-menu {
+			width: 100%;
+			right: 0;
+			top: 31px;
+			margin-left: -1px;
+			padding-top: 0;
+			padding-bottom: 0;
+			border-radius: 0 0 4px 4px;
+			border: 1px solid rgba(172, 184, 209, 1);
+
+			> li a {
+				height: 37px;
+				line-height: 37px;
+				padding: 0 32px;
+				font-family: Roboto-Medium;
+				font-size: 14px;
+				color: #4A4A4A;
+
+				&:hover {
+					background: #E2E5EE;
+				}
+			}
+		}
+	}
+
 	> span,
 	> a {
 		color: @hkjcBlue;

@@ -3,20 +3,25 @@ import express from 'express'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 
-import cache from '../server-cache'
 import eventdirectory from './API/eventdirectory'
 import users from './API/users'
 import auditlog from './API/auditlog'
+import userprofile from './API/userprofile'
+import roles from './API/roles'
 import APIconfig from './API/config'
 import config from './config'
 import clock from './API/clock'
+import baseUserProfile from './API/basicalUser'
 
 const server = express.Router()
 server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
 server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
+server.use('/userprofile/', userprofile)
+server.use('/roles/', roles)
 server.use('/config/', APIconfig)
+server.use('/basicusers/', baseUserProfile)
 
 const app = express()
 app.use(
@@ -45,8 +50,6 @@ app.use((req, res, next) => {
 })
 
 app.use('/', express.static('./dist/thin'))
-cache.use('/apidoc/', express.static('./dist/cache/apidoc'))
-app.use('/cache/', cache)
 server.use('/apidoc/', express.static('./dist/simulator/apidoc'))
 app.use('/api/', server)
 
