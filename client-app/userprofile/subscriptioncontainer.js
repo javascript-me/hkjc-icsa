@@ -6,12 +6,6 @@ export default React.createClass({
 	propTypes: {
 		someProp: PropTypes.bool
 	},
-	getInitialState () {
-		return {
-		}
-	},
-	componentDidMount () {
-	},
 	render () {
 		return (
 			<div ref='root' className='subscription-container'>
