@@ -118,9 +118,10 @@ function doSorting (auditlogs, fieldName, order) {
 	return auditlogs
 }
 
-function doFilter (userprofiles, keyWord, position, userRole, accountStatus, dateTimeFrom, dateTimeTo) {
+function doFilter (userprofiles, keyWord, position, userRole, status, dateTimeFrom, dateTimeTo) {
 	keyWord = keyWord || ''
 	position = position || 'All'
+	status = status || 'All'
 	userRole = userRole || 'All'
 	accountStatus = accountStatus || 'All'
 	dateTimeFrom = dateTimeFrom || '18 Sep 1900 00:00'
@@ -133,9 +134,9 @@ function doFilter (userprofiles, keyWord, position, userRole, accountStatus, dat
 		const userName = al.user_name ? al.user_name.toLowerCase() : ''
 		const userRole = al.user_role ? al.user_role.toLowerCase() : ''
 
-		return eventName === keyWord.toLowerCase() ||
-                userName === keyWord.toLowerCase() ||
-                userRole === keyWord.toLowerCase()
+		return position === keyWord.toLowerCase() ||
+                userName === keyWord.toLowerCase()
+                
 	}) : result
 
 	if (position !== 'All') {
@@ -150,9 +151,9 @@ function doFilter (userprofiles, keyWord, position, userRole, accountStatus, dat
 		})
 	}
 
-	if (accountStatus !== 'All') {
+	if (status !== 'All') {
 		result = result.filter((al) => {
-			return (al.accountStatus === accountStatus)
+			return (al.status === status)
 		})
 	}
 

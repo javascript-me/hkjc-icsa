@@ -32,7 +32,7 @@ router.post('/list', (req, res) => {
 		return newItem
 	})
 	var filteredUserProfiles = allUsers
-		
+		filteredUserProfiles = UserProfileListUtil.doFilter(allUsers,req.body.keyWord, req.body.position, req.body.userRole, req.body.accountStatus, req.body.dateTimeFrom, req.body.dateTimeTo)	
 	var sortedUserProfiles = UserProfileListUtil.doSorting(filteredUserProfiles, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 		
 	result.userProfiles = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedUserProfiles, Number(req.body.selectedPageNumber))
