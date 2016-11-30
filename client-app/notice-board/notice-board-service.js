@@ -7,6 +7,11 @@ const getNoticeBoardList = (data) => {
 	return $.get(url, data)
 }
 
+const getRemindCount = (data) => {
+	let url = config.url('api/notice-board/remind-count/')
+	return $.get(url, data)
+}
+
 export default {
 	async getNotices (username) {
 		let result = null
@@ -19,5 +24,19 @@ export default {
 			result = null
 		}
 		return result
+	},
+
+	async getRemindCount (username) {
+		let responseData = null
+		let noticeCount = 0
+
+		try {
+			responseData = await getRemindCount({username: username})
+			noticeCount = responseData.count || 0
+		} catch (failure) {
+			// returns null on failure
+			noticeCount = 0
+		}
+		return noticeCount
 	}
 }

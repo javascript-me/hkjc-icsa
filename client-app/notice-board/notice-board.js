@@ -5,6 +5,7 @@ import LoginService from '../login/login-service'
 import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
+
 let latestDisplaySettings = ''
 const getAllNoticesPromise = async (username) => {
 	let notices = null
@@ -46,7 +47,6 @@ export default React.createClass({
 		let userProfile = LoginService.getProfile()
 		let noticePromise = getAllNoticesPromise(userProfile.username)
 		let allNotices
-		let unreadNotices
 		let self = this
 
 		self.setState({
@@ -55,17 +55,19 @@ export default React.createClass({
 
 		noticePromise.then((notices) => {
 			allNotices = notices || []
+			self.setNoticesInfoIntoState(allNotices)
+		})
+	},
+	setNoticesInfoIntoState (allNotices) {
+		let unreadNotices = allNotices.filter((notice) => {
+			return notice.alert_status === 'New'
+		})
 
-			unreadNotices = allNotices.filter((notice) => {
-				return notice.alert_status === 'New'
-			})
-
-			self.setState({
-				noticeBoxData: {
-					allNotices: allNotices,
-					unreadNotices: unreadNotices
-				}
-			})
+		this.setState({
+			noticeBoxData: {
+				allNotices: allNotices,
+				unreadNotices: unreadNotices
+			}
 		})
 	},
 	openPopup () {
@@ -166,8 +168,12 @@ export default React.createClass({
 					</div>
 					<div className='messages-container'>
 						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} />
+						<NoticeBox notices={this.state.noticeBoxData.allNotices}
+							visible={this.state.allNoticesVisible}
+							displayPosition={this.state.displaySettings} />
+						<NoticeBox notices={this.state.noticeBoxData.unreadNotices}
+							visible={this.state.unreadNoticesVisible}
+							displayPosition={this.state.displaySettings} />
 					</div>
 				</div>
 			</div>
