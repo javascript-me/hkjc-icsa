@@ -62,9 +62,12 @@ router.post('/login', (req, res) => {
 router.post('/updateNoticeBoardDisplaySettings', (req, res) => {
 	const display = req.body.display
 	const username = req.body.username
-	var user = users[username]
+	let user = users[username]
+	let userProfile = user.profile
 	let status = 200
-	var userProfile = user.profile
+
+	userProfile.noticeboardSettings = userProfile.noticeboardSettings || {}
+
 	if (userProfile.noticeboardSettings.display !== display) {
 		userProfile.noticeboardSettings.display = display
 	}
