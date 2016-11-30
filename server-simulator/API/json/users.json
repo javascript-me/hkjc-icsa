@@ -44,6 +44,49 @@
 			}
 		}
 	},
+	"expiredAccount": {
+		"password": "expiredAccount",
+		"passwordExpired": true,
+		"status": 200,
+		"profile": {
+			"username": "expiredAccount",
+			"fullname": "expired Account",
+			"authorizations": {
+				"login.*": "*",
+				"dashboard.form1.*": "read",
+				"dashboard.form2.fieldX": "read|write|audit"
+			}
+		}
+	},
+	"lockedAccount": {
+		"password": "lockedAccount",
+		"locked": true,
+		"status": 200,
+		"profile": {
+			"username": "lockedAccount",
+			"fullname": "locked Account",
+			"authorizations": {
+				"login.*": "*",
+				"dashboard.form1.*": "read",
+				"dashboard.form2.fieldX": "read|write|audit"
+			}
+		}
+	},
+	"testlocked": {
+		"password": "testlocked",
+		"locked": false,
+		"count": 0,
+		"status": 200,
+		"profile": {
+			"username": "testlocked",
+			"fullname": "test locked",
+			"authorizations": {
+				"login.*": "*",
+				"dashboard.form1.*": "read",
+				"dashboard.form2.fieldX": "read|write|audit"
+			}
+		}
+	},
 	"goodbut": {
 		"password": "^maybe$",
 		"status": 423

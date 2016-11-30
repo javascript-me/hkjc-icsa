@@ -40,7 +40,6 @@ export default (target) => {
 					<Route path='userlist' component={UserList} />
 					<Route path='userlist2' component={UserList} />
 
-
 				</Route>
 			</Router>
 		</div>

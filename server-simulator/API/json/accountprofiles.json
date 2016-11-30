@@ -9,6 +9,10 @@
   }],
   "activationDate": "16/09/2016",
   "deactivationDate": "16/09/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10001"
 }, {
   "id": "0003",
@@ -19,6 +23,10 @@
   }],
   "activationDate": "16/06/2016",
   "deactivationDate": "16/06/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10003"
 }, {
   "id": "0004",
@@ -29,6 +37,10 @@
   }],
   "activationDate": "16/03/2016",
   "deactivationDate": "16/03/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10004"
 }, {
   "id": "0005",
@@ -39,6 +51,10 @@
   }],
   "activationDate": "16/08/2016",
   "deactivationDate": "16/08/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10005"
 }, {
   "id": "0006",
@@ -49,6 +65,10 @@
   }],
   "activationDate": "11/11/2016",
   "deactivationDate": "11/11/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10006"
 }, {
   "id": "0007",
@@ -59,6 +79,10 @@
   }],
   "activationDate": "22/03/2016",
   "deactivationDate": "22/11/2016",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10007"
 }, {
   "id": "0008",
@@ -71,6 +95,10 @@
   }],
   "activationDate": "15/11/2016",
   "deactivationDate": "15/11/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10008"
 }, {
   "id": "0009",
@@ -81,6 +109,10 @@
   }],
   "activationDate": "16/11/2016",
   "deactivationDate": "16/11/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10009"
 }, {
   "id": "0010",
@@ -91,6 +123,10 @@
   }],
   "activationDate": "16/04/2016",
   "deactivationDate": "16/11/2016",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10010"
 }, {
   "id": "0011",
@@ -101,6 +137,10 @@
   }],
   "activationDate": "19/11/2016",
   "deactivationDate": "19/11/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10011"
 }, {
   "id": "0012",
@@ -111,6 +151,10 @@
   }],
   "activationDate": "16/11/2016",
   "deactivationDate": "16/11/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10012"
 }, {
   "id": "0013",
@@ -121,6 +165,10 @@
   }],
   "activationDate": "01/11/2016",
   "deactivationDate": "01/11/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10013"
 }, {
   "id": "0014",
@@ -131,6 +179,10 @@
   }],
   "activationDate": "16/09/2016",
   "deactivationDate": "16/09/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10014"
 }, {
   "id": "0015",
@@ -141,6 +193,10 @@
   }],
   "activationDate": "16/05/2016",
   "deactivationDate": "16/05/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10015"
 }, {
   "id": "0016",
@@ -151,6 +207,10 @@
   }],
   "activationDate": "18/05/2016",
   "deactivationDate": "18/05/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10016"
 }, {
   "id": "0017",
@@ -161,6 +221,10 @@
   }],
   "activationDate": "20/05/2016",
   "deactivationDate": "20/05/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10017"
 }, {
   "id": "0018",
@@ -171,6 +235,10 @@
   }],
   "activationDate": "14/05/2016",
   "deactivationDate": "14/05/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10018"
 }, {
   "id": "0019",
@@ -181,6 +249,10 @@
   }],
   "activationDate": "14/06/2016",
   "deactivationDate": "14/05/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10019"
 }, {
   "id": "0020",
@@ -191,6 +263,10 @@
   }],
   "activationDate": "14/06/2016",
   "deactivationDate": "24/11/2016",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10020"
 }, {
   "id": "0021",
@@ -201,6 +277,10 @@
   }],
   "activationDate": "14/06/2016",
   "deactivationDate": "24/06/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10021"
 }, {
   "id": "0022",
@@ -211,5 +291,9 @@
   }],
   "activationDate": "14/06/2016",
   "deactivationDate": "24/11/2017",
+  "createApprovalStatus":"1",
+  "updateApprovalStatus":"1",
+  "deleteApprovalStatus":"1",
+  "lastModifiedUserID": "JC10000",
   "userID": "JC10022"
 }]

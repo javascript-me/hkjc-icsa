@@ -19,6 +19,7 @@ const UserStore = assign({}, EventEmitter.prototype, {
 
 	async searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 		let requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
+		console.log(selectedPageNumber, sortingObject, criteriaOption)
 
 		console.log("requestData" + JSON.stringify(requestData, null, 4))
 
@@ -26,7 +27,7 @@ const UserStore = assign({}, EventEmitter.prototype, {
 			let result = await this.sendRequest(requestData)
 
 			this.pageData = result.pageData
-			this.userProfiles = result.auditlogs
+			this.userProfiles = result.userProfiles
 			this.emitChange()
 		} catch (failure) {}
 	},
@@ -46,7 +47,6 @@ const UserStore = assign({}, EventEmitter.prototype, {
 			selectedPageNumber: selectedPageNumber,
 			sortingObjectFieldName: this._sortingObject.fieldName,
 			sortingObjectOrder: this._sortingObject.order,
-			betType: this._criteriaOption ? this._criteriaOption.betType : '',
 			keyword: this._criteriaOption ? this._criteriaOption.keyword : ''
 		}
 
@@ -55,7 +55,6 @@ const UserStore = assign({}, EventEmitter.prototype, {
 		for (let i in filters) {
 			requestData[filters[i].name] = filters[i].value
 		}
-
 		return requestData
 	},
 

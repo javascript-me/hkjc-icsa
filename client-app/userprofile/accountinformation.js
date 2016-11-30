@@ -3,6 +3,8 @@ import classNames from 'classnames'
 import _ from 'underscore'
 import Moment from 'moment'
 import DateTime from '../dateTime/dateTime'
+import Popup from '../popup'
+import RolesContainer from './rolescontainer'
 
 function isValidDateTime (str) {
 	let bRet = Moment(str, 'DD MMM YYYY', true).isValid()
@@ -53,6 +55,7 @@ export default React.createClass({
 			activationDate: formatDateTime(this.userAccount.activationDate),
 			deactivationDate: formatDateTime(this.userAccount.deactivationDate)
 		}
+		this.highlightIndex = 100000
 	},
 	resetData () {
 		this._cloneData(this.props.userAccount)
@@ -83,6 +86,42 @@ export default React.createClass({
 		return retStr
 	},
 	onEditRoleClick () {
+		this.refs.editRole.show()
+	},
+	onEditRoleUpdate (userAccount) {
+		const roles = this.refs.rolesCmp.getUpdateRoles()
+		const oldUserRoles = this.props.userAccount.assignedUserRoles.filter((item) => {
+			let bRet = true
+			let found = -1
+
+			for (let i = 0; i < roles.length; i++) {
+				if (roles[i] === item.assignedUserRole) {
+					found = i
+					break
+				}
+			}
+
+			if (found > -1) {
+				roles.splice(found, 1)
+			} else {
+				bRet = false
+			}
+
+			return bRet
+		})
+
+		this.highlightIndex = oldUserRoles.length
+
+		const highlightRoles = []
+		roles.forEach((roleName) => {
+			highlightRoles.push({
+				assignedUserRole: roleName
+			})
+		})
+
+		userAccount.assignedUserRoles = oldUserRoles.concat(highlightRoles)
+
+		this.forceUpdate()
 	},
 	onDisplayNameChange (event) {
 		this.userAccount.displayName = event.target.value
@@ -113,9 +152,9 @@ export default React.createClass({
 			return <div />
 		} else {
 			return (
-				<div>
+				<div className='role-wrapper'>
 					{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
-						<div key={index} className='role'>{role.assignedUserRole}</div>
+						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})}>{role.assignedUserRole}</div>
 					))}
 				</div>
 			)
@@ -136,6 +175,9 @@ export default React.createClass({
 					<div className='action' onClick={this.onEditRoleClick}>
 						<span className='icon pull-left' /> Edit User Role
 					</div>
+					<Popup hideOnOverlayClicked ref='editRole' title='Edit User Role / Privilege' onConfirm={() => { this.onEditRoleUpdate(userAccount) }} confirmBtn='Update'>
+						<RolesContainer ref='rolesCmp' inputSelected={userAccount.assignedUserRoles} />
+					</Popup>
 				</div>
 				<div className='content'>
 					<div className='row name'>
