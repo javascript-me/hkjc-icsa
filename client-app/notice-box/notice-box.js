@@ -54,7 +54,7 @@ export default class NoticeBox extends React.Component {
 				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.notices.map((notice, i) => {
-							return <li className={this.getNoticeItemClassName(notice)}>
+							return <li key={i} className={this.getNoticeItemClassName(notice)}>
 								<ul className='row'>
 
 									{ this.props.displayPosition === 'right' ? <li className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li> : null}
