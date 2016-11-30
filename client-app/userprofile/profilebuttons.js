@@ -5,12 +5,6 @@ export default React.createClass({
 	propTypes: {
 		children: PropTypes.any
 	},
-	getInitialState () {
-		return {
-		}
-	},
-	componentDidMount () {
-	},
 	render () {
 		return (
 			<div ref='root' className='profile-buttons'>

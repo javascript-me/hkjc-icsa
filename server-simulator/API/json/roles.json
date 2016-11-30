@@ -330,6 +330,16 @@
   }]
 }, {
   "roleId": "019",
+  "roleName": "Trader",
+  "functionNames": [{
+    "functionName": "Top & Side Navigation Bar ",
+    "create": "No",
+    "read": "Yes",
+    "update": "No",
+    "delete": "No"
+  }]
+}, {
+  "roleId": "020",
   "roleName": "IT Operation Manager",
   "functionNames": [{
     "functionName": "Top & Side Navigation Bar ",
