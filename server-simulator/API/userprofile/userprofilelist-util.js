@@ -118,19 +118,17 @@ function doSorting (auditlogs, fieldName, order) {
 	return auditlogs
 }
 
-function doFilter (auditlogs, keyWord, typeValue, userRole, systemFunc, betTypeFeature, device, dateTimeFrom, dateTimeTo) {
+function doFilter (userprofiles, keyWord, position, userRole, accountStatus, dateTimeFrom, dateTimeTo) {
 	keyWord = keyWord || ''
-	typeValue = typeValue || 'All'
+	position = position || 'All'
 	userRole = userRole || 'All'
-	systemFunc = systemFunc || 'All'
-	betTypeFeature = betTypeFeature || 'All'
-	device = device || 'All'
+	accountStatus = accountStatus || 'All'
 	dateTimeFrom = dateTimeFrom || '18 Sep 1900 00:00'
 	dateTimeTo = dateTimeTo || '31 Dec 2099 23:59'
 
-	let result = auditlogs
+	let result = userprofiles
 
-	result = keyWord ? auditlogs.filter((al) => {
+	result = keyWord ? userprofiles.filter((al) => {
 		const eventName = al.event_name ? al.event_name.toLowerCase() : ''
 		const userName = al.user_name ? al.user_name.toLowerCase() : ''
 		const userRole = al.user_role ? al.user_role.toLowerCase() : ''
@@ -140,33 +138,21 @@ function doFilter (auditlogs, keyWord, typeValue, userRole, systemFunc, betTypeF
                 userRole === keyWord.toLowerCase()
 	}) : result
 
-	if (typeValue !== 'All') {
+	if (position !== 'All') {
 		result = result.filter((al) => {
-			return (al.Type === typeValue)
+			return (al.position === position)
 		})
 	}
 
 	if (userRole !== 'All') {
 		result = result.filter((al) => {
-			return (al.user_role === userRole)
+			return (al.userRole === userRole)
 		})
 	}
 
-	if (systemFunc !== 'All') {
+	if (accountStatus !== 'All') {
 		result = result.filter((al) => {
-			return (al.function_module === systemFunc)
-		})
-	}
-
-	if (betTypeFeature !== 'All') {
-		result = result.filter((al) => {
-			return (al.bet_type === betTypeFeature)
-		})
-	}
-
-	if (device !== 'All') {
-		result = result.filter((al) => {
-			return (al.device === device)
+			return (al.accountStatus === accountStatus)
 		})
 	}
 

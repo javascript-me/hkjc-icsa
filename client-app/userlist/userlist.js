@@ -6,8 +6,31 @@ import UserStore from './user-store'
 import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
 import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
+import Moment from 'moment'
 
 let reFlashToken = null
+let serchToken = null
+
+const getOrginDateTimeFrom = function () {
+	let dateTimeFrom = new Date()
+
+	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
+	dateTimeFrom.setHours(0)
+	dateTimeFrom.setMinutes(0)
+	dateTimeFrom.setSeconds(0)
+	dateTimeFrom.setMilliseconds(0)
+	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+}
+
+const getOrginDateTimeTo = function () {
+	let dateTimeTo = new Date()
+
+	dateTimeTo.setHours(23)
+	dateTimeTo.setMinutes(59)
+	dateTimeTo.setSeconds(59)
+	dateTimeTo.setMilliseconds(0)
+	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+}
 
 export default React.createClass({
 	displayName: 'UserProfileList',
@@ -30,18 +53,34 @@ export default React.createClass({
 			userprofiles: [],
 			isShowingMoreFilter: false,
 			addingUserStep: 0,
-			filterReflashFlag: true
+			filterReflashFlag: true,
+			tokens: {
+				USERPROFILE_SEARCH: 'USERPROFILE_SEARCH',
+				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
+				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+			},
+			keyword: '',
+			selectedFilters: [{
+				name: 'dateTimeFrom',
+				value: getOrginDateTimeFrom()
+			}, {
+				name: 'dateTimeTo',
+				value: getOrginDateTimeTo()
+			}],
 		}
 	},
 
 	componentDidMount () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		let sortingObject = {fieldName: 'activationDate', order: 'DESCEND'}
 		// Get Table Data
 		UserStore.searchAuditlogs(1, sortingObject, null)
 		UserStore.addChangeListener(this.onChange)
 		reFlashToken = PubSub.subscribe(PubSub.FliterRefreshEvent, () => {
 			this.setState({filterReflashFlag: false})
 			setTimeout(() => { this.setState({filterReflashFlag: true}) }, 0)
+		})
+		serchToken = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH], () => {
+			this.searchAuditlog()
 		})
 	},
 
@@ -52,6 +91,7 @@ export default React.createClass({
 	},
 
 	onChange () {
+		console.log(UserStore.userProfiles)
 		const hasData = UserStore.userProfiles.length > 0
 		this.setState({
 			userprofiles: UserStore.userProfiles, hasData: hasData
@@ -70,9 +110,43 @@ export default React.createClass({
 		this.setState({isShowingMoreFilter: !this.state.isShowingMoreFilter})
 	},
 
+	handleKeywordChange: function (event) {
+		var newKeyword = event.target.value
+
+		this.setState({
+			keyword: newKeyword
+		})
+	},
+
+	handleKeywordPress: function (event) {
+		if (event.key === 'Enter') {
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS])
+		}
+	},
+
 	setAddStep (step) {
 		this.setState({addingUserStep: step})
 	},
+
+	hideMoreFilter: function () {
+		this.setState({
+			isShowingMoreFilter: false
+		})
+	},
+
+	searchAuditlog: async function () {
+		let criteriaOption = this.getSearchCriterias()
+		// Get Table Data
+		UserStore.searchAuditlogs(1, null, criteriaOption)
+	},
+
+	getSearchCriterias: function () {
+		return {
+			keyword: this.state.keyword,
+			filters: this.state.selectedFilters
+		}
+	},
+	
 	
 	setFilters: function (filters) {
 		this.hideMoreFilter()
@@ -89,7 +163,7 @@ export default React.createClass({
 		this.setState({
 			selectedFilters: newFilters
 		}, () => {
-			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH])
 		})
 	},
 
@@ -107,7 +181,11 @@ export default React.createClass({
 				<div className='content-header'>
 					<div className='content-header-left'>
 						<i className='icon icon-search' />
-						<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' />
+						<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
+										onClick={this.showMoreFilter}
+										onChange={this.handleKeywordChange}
+										onKeyPress={this.handleKeywordPress}
+										ref='keyword'/>
 						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching}>
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
@@ -124,7 +202,7 @@ export default React.createClass({
 						<button className='btn btn-primary btn-disable'>Delete</button>
 					</div>
 					<div className='content-footer-center'>
-						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
+						{/*<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />*/}
 					</div>
 					<div className='content-footer-right'>
 						<button className='btn btn-primary'>Update</button>

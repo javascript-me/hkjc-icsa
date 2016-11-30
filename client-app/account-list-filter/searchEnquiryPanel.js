@@ -156,8 +156,8 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	isEnquiryValid () {
-		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
-		
+		// return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
+		return true
 }
 
 	handleSubmit () {
@@ -200,7 +200,6 @@ export default class SearchEnquiryPanel extends React.Component {
 				result[currentAttrName] = currentAttrVal
 			}
 		}
-		console.log(result)
 		return result
 	}
 

@@ -5,7 +5,10 @@ const tokens = [
 	'AUDITLOG_SEARCH',
 	'AUDITLOG_SEARCH_BY_KEY_PRESS',
 	'AUDITLOG_SEARCH_BY_REMOVE_FILTER',
-	'FliterRefreshEvent'
+	'FliterRefreshEvent',
+	'USERPROFILE_SEARCH',
+	'USERPROFILE_SEARCH_BY_KEY_PRESS',
+	'USERPROFILE_SEARCH_BY_REMOVE_FILTER',
 ]
 
 for (const token of tokens) {
