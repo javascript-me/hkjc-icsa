@@ -22,16 +22,14 @@ export default class NoticeBox extends React.Component {
 	}
 
 	getListBoxClassName () {
-		if (this.props.displayPosition === 'right') {
-			return 'list-box' + '-' + 'right'
-		} else {
+		if (this.props.displayPosition === 'bottom') {
 			return 'list-box'
 		}
+		return 'list-box' + '-' + 'right'
 	}
 
 	getNoticeItemClassName (notice) {
 		let needBlink = notice.alert_status === 'New' && (notice.priority === 'Critical' || notice.priority === 'High')
-
 		return ClassNames(needBlink ? 'blink' : '')
 	}
 
