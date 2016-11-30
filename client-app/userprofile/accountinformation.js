@@ -28,17 +28,19 @@ function formatTime (time) {
 		return ''
 	}
 
-	return Moment(time, 'DD/MM/YYYY').format('MMM DD,YYYY')
+	return Moment(time, 'DD/MM/YYYY').format('MMM DD, YYYY')
 }
 
 export default React.createClass({
 	displayName: 'AccountInformation',
 	propTypes: {
 		userAccount: PropTypes.object.isRequired,
+		showDate: PropTypes.bool,
 		updateMode: PropTypes.bool
 	},
 	getDefaultProps () {
 		return {
+			showDate: true,
 			updateMode: false
 		}
 	},
@@ -163,6 +165,8 @@ export default React.createClass({
 	render () {
 		if (this.props.updateMode) {
 			return this.renderUpdate(this.userAccount)
+		} else if (!this.props.showDate) {
+			return this.renderNoDate(this.props.userAccount)
 		} else {
 			return this.renderNormal(this.props.userAccount)
 		}
@@ -171,7 +175,7 @@ export default React.createClass({
 		return (
 			<div ref='root' className='account-information'>
 				<div className='header'>
-					<h2>account-information</h2>
+					<h2>Account Information</h2>
 					<div className='action' onClick={this.onEditRoleClick}>
 						<span className='icon pull-left' /> Edit User Role
 					</div>
@@ -231,7 +235,7 @@ export default React.createClass({
 		return (
 			<div ref='root' className='account-information'>
 				<div className='header'>
-					<h2>account-information</h2>
+					<h2>Account Information</h2>
 				</div>
 				<div className='content'>
 					<div className='row name'>
@@ -261,6 +265,34 @@ export default React.createClass({
 					<div className='row value margin0'>
 						<div className='col col-xs-6' />
 						<div className='col col-xs-6'>{formatTime(userAccount.deactivationDate)}</div>
+					</div>
+				</div>
+			</div>
+		)
+	},
+	renderNoDate (userAccount) {
+		return (
+			<div ref='root' className='account-information'>
+				<div className='header'>
+					<h2>Account Information</h2>
+				</div>
+				<div className='content'>
+					<div className='row name'>
+						<div className='col col-xs-6'>User Display Name</div>
+						<div className='col col-xs-6'>Account:</div>
+					</div>
+					<div className='row value'>
+						<div className='col col-xs-6'>{userAccount.displayName}</div>
+						<div className='col col-xs-6'>{this.getAccountDescription(userAccount)}</div>
+					</div>
+
+					<div className='row name'>
+						<div className='col col-xs-12'>Assigned User Role / Privilege</div>
+					</div>
+					<div className='row value'>
+						<div className='col col-xs-12 roles'>
+							{this.renderUserRoles(userAccount)}
+						</div>
 					</div>
 				</div>
 			</div>
