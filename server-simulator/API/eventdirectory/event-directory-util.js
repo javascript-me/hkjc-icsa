@@ -1,33 +1,31 @@
-function handleARS(list, keyword) {
+function handleARS (list, keyword) {
+	list.forEach((item) => {
+		item.children.forEach((child) => {
+			child.competitions = child.competitions.filter((element) => {
+				return element.t1.toLowerCase() === keyword.toLowerCase() || element.t2.toLowerCase() === keyword.toLowerCase()
+			})
+		})
+	})
 
-    list.forEach(function (item) {
-        item.children.forEach(function (child) {
-            child.competitions = child.competitions.filter(function (element) {
-                return element.t1.toLowerCase() === keyword.toLowerCase() || element.t2.toLowerCase() === keyword.toLowerCase()
-            })
-        })
-    })
-
-    return list
+	return list
 }
 
-function doFilter(eventdirectory, keyword) {
+function doFilter (eventdirectory, keyword) {
+	if (keyword === '') {
+		return eventdirectory.ALL
+	}
 
-    if (keyword === '') {
-        return eventdirectory.ALL
-    }
+	if (keyword === 'Premier' || keyword === 'Premier League') {
+		return eventdirectory.Premier
+	}
 
-    if (keyword === 'Premier' || keyword === 'Premier League') {
-        return eventdirectory.Premier
-    }
+	if (keyword === 'ARS') {
+		return handleARS(eventdirectory.ARS.slice(0), keyword)
+	}
 
-    if (keyword === 'ARS') {
-        return handleARS(eventdirectory.ARS.slice(0), keyword);
-    }
-
-    return []
+	return []
 }
 
 export default {
-    doFilter: doFilter
+	doFilter: doFilter
 }
