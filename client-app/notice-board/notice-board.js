@@ -132,7 +132,11 @@ export default React.createClass({
 	},
 
 	getHeadTitle () {
-		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + this.state.noticeBoxData.unreadNotices.length + ')'
+		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
+			return e.priority === 'Critical' || e.priority === 'High'
+		})
+
+		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + criticalOrHighNotices.length + ')'
 	},
 
 	render () {
