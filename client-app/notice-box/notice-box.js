@@ -29,7 +29,7 @@ export default class NoticeBox extends React.Component {
 		}
 	}
 
-	getNoticeItemClassName(notice) {
+	getNoticeItemClassName (notice) {
 		let needBlink = notice.alert_status === 'New' && (notice.priority === 'Critical' || notice.priority === 'High')
 
 		return ClassNames(needBlink ? 'blink' : '')
