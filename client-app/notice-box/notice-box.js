@@ -35,7 +35,7 @@ export default class NoticeBox extends React.Component {
 	}
 
 	checkNoticeIsImportant (notice) {
-		return notice.alert_status === 'New' && (notice.priority === 'Critical' || notice.priority === 'High');
+		return notice.alert_status === 'New' && (notice.priority === 'Critical' || notice.priority === 'High')
 	}
 
 	getNoticeTitle (isAcknowledged) {

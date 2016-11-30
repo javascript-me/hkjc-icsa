@@ -30,7 +30,7 @@ export default {
 		return getProfile()
 	},
 	getNoticeBoardSettings (profile) {
-		profile = profile || getProfile();
+		profile = profile || getProfile()
 
 		return (profile && profile.noticeboardSettings) ? profile.noticeboardSettings : {}
 	},

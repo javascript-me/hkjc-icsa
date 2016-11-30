@@ -73,11 +73,11 @@ class MenuBar extends Component {
 						<i className='icon-notification ' onClick={this.showHideNoticeBoard}>
 							<img src='icon/notification.svg' />
 							{
-								this.state.noticeRemindCount > 0 ?
-									<span className="message-count">{this.state.noticeRemindCount}</span> :
-									''
+								this.state.noticeRemindCount > 0
+								? <span className='message-count'>{this.state.noticeRemindCount}</span>
+								: ''
 							}
-							
+
 						</i>
 					</div>
 				</div>
@@ -93,7 +93,7 @@ class MenuBar extends Component {
 		let self = this
 		let userProfile = LoginService.getProfile()
 		let noticePromise = getNoticeCountPromise(userProfile.username)
-		
+
 		noticePromise.then((noticeRemindCount) => {
 			self.setState({noticeRemindCount: noticeRemindCount})
 		})

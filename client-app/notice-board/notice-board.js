@@ -6,7 +6,6 @@ import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
 
-let latestDisplaySettings = ''
 const getAllNoticesPromise = async (username) => {
 	let notices = null
 
@@ -88,7 +87,7 @@ export default React.createClass({
 			type: 'POST',
 			success: function (userProfile) {
 				userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-				
+
 				self.updateSet(userNoticeboardSettings.display || 'bottom')
 			},
 			error: function (xhr, status, error) {

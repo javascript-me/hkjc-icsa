@@ -4,11 +4,15 @@ let noticeBoardList = null
 
 const getNoticeBoardList = (data) => {
 	let url = config.url('api/notice-board/')
+
+	data.temp = Math.random()
 	return $.get(url, data)
 }
 
 const getRemindCount = (data) => {
 	let url = config.url('api/notice-board/remind-count/')
+
+	data.temp = Math.random()
 	return $.get(url, data)
 }
 

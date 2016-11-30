@@ -5,7 +5,6 @@ const router = express.Router()
 const jsonAlerts = require('../json/notice-alerts.json') || {}
 const jsonCriticalInformations = require('../json/notice-critical-informations.json') || {}
 
-
 const getRecentlySixMonthNoticesByUserName = (alerts, criticalInformations, userName) => {
 	let cloneNotices = []
 
@@ -42,9 +41,8 @@ const sortNoticesBySystemDistributionTimeDESC = (a, b) => {
 }
 
 const checkNoticeIsImportant = (notice) => {
-	return notice.alert_status === 'New';
+	return notice.alert_status === 'New'
 }
-
 
 /**
  * @api {GET} /notice-board/ Get notice board data

@@ -9,7 +9,7 @@ export default React.createClass({
 	},
 	getInitialState () {
 		let userNoticeboardSettings = LoginService.getNoticeBoardSettings()
-		
+
 		return { setting: userNoticeboardSettings.display || 'bottom' }
 	},
 	onSettingChange (e) {},
