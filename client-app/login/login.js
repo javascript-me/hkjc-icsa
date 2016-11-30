@@ -18,7 +18,8 @@ export default React.createClass({
 			title: '',
 			showPopup: true,
 			confirmBtn: '',
-			showCancel: false
+			showCancel: false,
+			showMaskPwd: false
 		}
 	},
 	submit () {
@@ -40,6 +41,21 @@ export default React.createClass({
 			}
 		})
 	},
+	handleKeyUp (event) {
+		if (event.keyCode === 13) {
+			this.submit()
+		}
+		if (this.refs.username.value === '' || this.refs.password.value === '') {
+			this.refs.submit.disabled = true
+		} else {
+			this.refs.submit.disabled = false
+		}
+		if (this.refs.password.value !== '') {
+			this.setState({showMaskPwd: true})
+		} else {
+			this.setState({showMaskPwd: false})
+		}
+	},
 	changeType () {
 		if (this.refs.password.type === 'password') {
 			this.refs.password.type = 'text'
@@ -57,24 +73,25 @@ export default React.createClass({
 		return (
 			<div className='row'>
 				<div className='page-login'>
+					<a className='logo'><img src='HKJC_Logo.svg' /><img src='HKJC_logo_text.svg' /></a>
 					<div className='row row-login'>
-						<div className='login-dialog col-xs-offset-5'>
+						<div className='login-dialog'>
 							<div className='comment'>
 								<h2>Welcome</h2>
 								<p>Sign in with your sport betting account</p>
 							</div>
 							<div className='form-field'>
 								<div className='form-group form-group-lg'>
-									<label htmlFor='usernamer'>Username</label>
-									<input ref='username' type='text' className='form-control' id='login-username' placeholder='Username' />
+									<label htmlFor='usernamer'>User Name</label>
+									<input ref='username' type='text' className='form-control' id='login-username' placeholder='User Name' onKeyUp={this.handleKeyUp} />
 								</div>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='password'>Password</label>
-									<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' />
-									<a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a>
+									<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} />
+									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
-								<button type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Login</button>
+								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Login</button>
 							</div>
 						</div>
 					</div>

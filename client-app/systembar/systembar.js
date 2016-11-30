@@ -26,7 +26,8 @@ export default class Systembar extends React.Component {
 			showPopup: false,
 			info: LoginService.getProfile(),
 			showOther: true,
-			taskNum: 0
+			taskNum: 0,
+			text: ''
 		}
 
 		getClock().then((data) => { this.setState({date: Number(data)}) }, () => { this.setState({date: NaN}) })
@@ -61,16 +62,18 @@ export default class Systembar extends React.Component {
 	}
 	showComfirmPopup () {
 		LoginService.getTasksNum().then((data) => {
-			let num
+			let num = 0
 			if (data[this.state.info.username] && data[this.state.info.username].num) {
 				num = data[this.state.info.username].num
 				this.setState({taskNum: num})
 			}
-			if (this.state.taskNum !== 0) {
-				this.refs.logout.show()
+
+			if (num === 0) {
+				this.setState({showOther: false, text: 'Are you sure you want to log out now?'})
 			} else {
-				this.logout()
+				this.setState({text: 'Do you want to logout the system?'})
 			}
+			this.refs.logout.show()
 		})
 	}
 	logout () {
@@ -89,8 +92,7 @@ export default class Systembar extends React.Component {
 				{ this.state.showPopup ? <Popup date={this.state.date} hideClock={() => this.hideClock()} /> : null }
 				<div className='username' id='dropdownMenu1'>
 					<span className='hello'>
-						<span><img src='icon/Shape.svg' />Hello,</span>
-						<span className='name'>{this.state.info.username}</span>
+						<img src='icon/Shape.svg' />Hello, {this.state.info.username}
 					</span>
 					<ul className='dropdown-menu'>
 						<li><a href='#/page/myprofile'>My Profile</a></li>
@@ -98,8 +100,8 @@ export default class Systembar extends React.Component {
 					</ul>
 				</div>
 				<Overlay hideOnOverlayClicked ref='logout' title='Logout' onConfirm={() => this.logout()} showOther={this.state.showOther} otherBtn='My Tasks' confirmBtn='Logout' onOther={() => this.goOther()}>
-					<p>You still have <span className='warning'>{this.state.taskNum} of outstanding task</span> need to be completed.</p>
-					<p>Do you want to logout the system?</p>
+					{ this.state.showOther ? <p>You still have <span className='warning'>{this.state.taskNum} of outstanding task</span> need to be completed.</p> : null }
+					<p>{this.state.text}</p>
 				</Overlay>
 			</div>
 			)
