@@ -73,6 +73,25 @@ export default React.createClass({
 	setAddStep (step) {
 		this.setState({addingUserStep: step})
 	},
+	
+	setFilters: function (filters) {
+		this.hideMoreFilter()
+
+		let newFilters = []
+
+		for (let attr in filters) {
+			newFilters.push({
+				'name': attr,
+				'value': filters[attr]
+			})
+		}
+
+		this.setState({
+			selectedFilters: newFilters
+		}, () => {
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+		})
+	},
 
 	render () {
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {

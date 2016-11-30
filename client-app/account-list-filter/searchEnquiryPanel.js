@@ -37,25 +37,10 @@ const getOrginDateTimeTo = function () {
 const originState = {
 	dateTimeFrom: getOrginDateTimeFrom(),
 	dateTimeTo: getOrginDateTimeTo(),
-	typeValue: '',
-	backEndID: '',
-	frontEndID: '',
-	eventLv1: '',
-	homeValue: '',
-	awayValue: '',
-	dateTimeGameStart: '',
-	userId: '',
+	position: '',
 	userRole: '',
-	systemFunc: '',
-	betTypeFeature: '',
-	device: '',
-	ipAddress: '',
-	errorCode: '',
-	tipsFlag: 1,
-	errorDateTimeFrom: 1,
-	errorDateTimeTo: 1,
-	errorDateTimeGameStart: 1,
-	errorIPAddress: 1
+	accountStatus: ''
+	
 }
 
 let tokenKeyPress = null
@@ -171,14 +156,14 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	isEnquiryValid () {
-		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorDateTimeGameStart && this.state.errorIPAddress && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
-	}
+		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
+		
+}
 
 	handleSubmit () {
 		this.setState({ tipsFlag: 0 }, function () {
 			if (this.isEnquiryValid()) {
 				let enquiries = this.getEnquiries(this.state)
-
 				this.props.setFilterEvent(enquiries)
 				this.setState({
 					tipsFlag: 1
@@ -198,20 +183,10 @@ export default class SearchEnquiryPanel extends React.Component {
 		let needReturnEnquiries = [
 			'dateTimeFrom',
 			'dateTimeTo',
-			'typeValue',
-			'backEndID',
-			'frontEndID',
-			'eventLv1',
-			'homeValue',
-			'awayValue',
-			'dateTimeGameStart',
-			'userId',
-			'userRole',
-			'systemFunc',
-			'betTypeFeature',
-			'device',
-			'ipAddress',
-			'errorCode']
+			'position',
+			'accountStatus',
+			'userRole'
+			]
 		let currentAttrName
 		let currentAttrVal
 
@@ -225,7 +200,7 @@ export default class SearchEnquiryPanel extends React.Component {
 				result[currentAttrName] = currentAttrVal
 			}
 		}
-
+		console.log(result)
 		return result
 	}
 
@@ -257,21 +232,22 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-4 pd-w10'>
 						<div className='form-group'>
 							<label>Position / Title</label>
-							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
+							<SelectCom key='position' datas={selectdata.position} selectedVal={this.state.position} handleVal={(e) => this.handleChange('position', e)} />
 						</div>
 					</div>
 					<div className='col-sm-4 pd-w10'>
 						<div className='form-group'>
 							<label>User Roles</label>
-							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
+							<SelectCom key='Roles' datas={selectdata.userRole} selectedVal={this.state.userRole} handleVal={(e) => this.handleChange('userRole', e)} />
 						</div>
 					</div>
 					<div className='col-sm-4 pd-w10'>
 						<div className='form-group'>
-							<label>Assignee</label>
-							<input type='text' className='form-control' placeholder='Type in keyword' value={this.state.homeValue} onChange={(e) => this.handleChange('homeValue', e)} />
+							<label>Account status</label>
+							<SelectCom key='AccountStatus' datas={selectdata.accountStatus} selectedVal={this.state.accountStatus} handleVal={(e) => this.handleChange('accountStatus', e)} />
 						</div>
 					</div>
+					
 				</div>
 				<div className='row mg-w010'>
 					<div className='col-sm-4 pd-w10'>
@@ -286,13 +262,6 @@ export default class SearchEnquiryPanel extends React.Component {
 							<DateTime inputFor='dateTimeTo' dateTime={dateTimeTo.datetime} handleVal={(e) => this.handleChange('dateTimeTo', e)} />
 						</div>
 					</div>
-					<div className='col-sm-4 pd-w10'>
-						<div className='form-group'>
-							<label>Account Status</label>
-							<SelectCom key='typeValue' datas={selectdata.typeValue} selectedVal={this.state.typeValue} handleVal={(e) => this.handleChange('typeValue', e)} />
-						</div>
-					</div>
-
 				</div>
 
 				<div className='pannel-footer'>
