@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon / Low</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Components" transform="translate(-60.000000, -79.000000)" fill="#9BC14D">
+            <g id="Icon-/-Low" transform="translate(60.000000, 79.000000)">
+                <path d="M7.5,0 C3.35783333,0 0,3.35766667 0,7.5 C0,11.6423333 3.35783333,15 7.5,15 C11.6421667,15 15,11.6423333 15,7.5 C15,3.35766667 11.6421667,0 7.5,0 L7.5,0 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
