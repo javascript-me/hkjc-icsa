@@ -146,7 +146,7 @@ export default React.createClass({
 		if (hasDataError) {
 			return <div className='color-red'>Invalid fields are highlighted in red</div>
 		} else {
-			return <div />
+			return ''
 		}
 	},
 	renderUserRoles (userAccount) {
@@ -186,11 +186,11 @@ export default React.createClass({
 				<div className='content'>
 					<div className='row name'>
 						<div className='col col-xs-6'>User Display Name</div>
-						<div className='col col-xs-6'>Account:</div>
+						<div className='col col-xs-6'>Account Status</div>
 					</div>
 					<div className='row value'>
 						<div className={classNames('col col-xs-6', {'has-error': !userAccount.displayName})}>
-							<input type='text' maxLength='40' className='form-control display-name' placeholder='Type in display name' value={userAccount.displayName} onChange={this.onDisplayNameChange} />
+							<input type='text' maxLength='100' className='form-control display-name' placeholder='Type in display name' value={userAccount.displayName} onChange={this.onDisplayNameChange} />
 						</div>
 						<div className='col col-xs-6'>
 							<label className='radio-inline'>
@@ -204,7 +204,7 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
-						<div className='col col-xs-6'>Activation Date</div>
+						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6 roles'>
@@ -217,16 +217,16 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6' />
-						<div className='col col-xs-6'>Deactivation Date</div>
+						<div className='col col-xs-6'>Date of Inactivation</div>
 					</div>
 					<div className='row value margin0'>
-						<div className='col col-xs-6'>
-							{this.renderTipsText()}
-						</div>
+						<div className='col col-xs-6' />
 						<div className={classNames('col col-xs-6', {'has-error': !isValidDateTime(this.userAccountEx.deactivationDate)})}>
 							<DateTime inputFor='' dateTime={this.userAccountEx.deactivationDate} handleVal={this.onDeactivationDateChange} />
 						</div>
 					</div>
+
+					{this.renderTipsText()}
 				</div>
 			</div>
 		)
@@ -240,7 +240,7 @@ export default React.createClass({
 				<div className='content'>
 					<div className='row name'>
 						<div className='col col-xs-6'>User Display Name</div>
-						<div className='col col-xs-6'>Account:</div>
+						<div className='col col-xs-6'>Account Status</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6'>{userAccount.displayName}</div>
@@ -249,7 +249,7 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
-						<div className='col col-xs-6'>Activation Date</div>
+						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6 roles'>
@@ -260,7 +260,7 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6' />
-						<div className='col col-xs-6'>Deactivation Date</div>
+						<div className='col col-xs-6'>Date of Inactivation</div>
 					</div>
 					<div className='row value margin0'>
 						<div className='col col-xs-6' />
@@ -279,7 +279,7 @@ export default React.createClass({
 				<div className='content'>
 					<div className='row name'>
 						<div className='col col-xs-6'>User Display Name</div>
-						<div className='col col-xs-6'>Account:</div>
+						<div className='col col-xs-6'>Account Status</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6'>{userAccount.displayName}</div>
