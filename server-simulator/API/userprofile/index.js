@@ -9,8 +9,8 @@ const basicUsers = require('../json/baseUserProfile.json')
 
 router.get('/list', (req, res) => {
 	let result = accountProfiles.map((item, index) => {
-		let user = _.find(basicUsers,(baseItem,idx) => (item.userID === baseItem.userID))
-		let newItem = Object.assign({},item,user)
+		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
+		let newItem = Object.assign({}, item, user)
 		return newItem
 	})
 	res.send(result)
@@ -20,15 +20,13 @@ router.post('/add', (req, res) => {
 	let result = null
 	if (req.body.userData) {
 		let userData = _.clone(req.body.userData)
-		if(_.find(accountProfiles,(item) => (userData.userBasic.userID === item.userID))) {
+		if (_.find(accountProfiles, (item) => (userData.userBasic.userID === item.userID))) {
 			result = {status: false}
-			console.log('repeat')
 		} else {
 			accountProfiles.push(userData.accountProfiles)
 			basicUsers.push(userData.userBasic)
 			result = {status: true}
 		}
-		
 	} else {
 		result = {status: false}
 	}

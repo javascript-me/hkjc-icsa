@@ -4,7 +4,8 @@ const tokens = [
 	'LOGIN_CHANGE',
 	'AUDITLOG_SEARCH',
 	'AUDITLOG_SEARCH_BY_KEY_PRESS',
-	'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+	'AUDITLOG_SEARCH_BY_REMOVE_FILTER',
+	'FliterRefreshEvent'
 ]
 
 for (const token of tokens) {

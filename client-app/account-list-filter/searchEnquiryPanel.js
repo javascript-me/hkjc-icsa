@@ -251,7 +251,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			fromClass = 'form-group has-error'
 			toClass = 'form-group has-error'
 		}
-		return <div className='component-search-enquiry-panel' style={{width: '680px',zIndex:1,position:'relative'}}>
+		return <div className='component-search-enquiry-panel' style={{width: '680px', zIndex: 1, position: 'relative'}}>
 			<div className='container-fluid pd-w10'>
 				<div className='row mg-w010'>
 					<div className='col-sm-4 pd-w10'>

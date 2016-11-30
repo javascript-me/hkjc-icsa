@@ -39,11 +39,11 @@ class AddAccount extends Component {
 			<div className='add-user-main-container'>
 				<div className='add-useraccount-cmp' style={{display: this.state.step === 1 ? 'block' : 'none'}} >
 					<div className='filter-container'>
-						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancel', callback: () => {this.props.setStep(0)}}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
+						<ItemFilter title='Add User' tableData={this.state.tableData} header={header} postiveBtn={{text: 'Cancel', callback: () => { this.props.setStep(0) }}} activeBtn={{text: 'Add', callback: this.handleAdd}} />
 					</div>
 				</div>
-				<div style={{display: this.state.step === 2 ? 'block' : 'none' }} >
-					<ProfileStep userBasic={this.state.userBasic} userAccount={this.state.userAccount} handleCreateSuccess={this.handleCreateSuccess} setStep={this.props.setStep}/>
+				<div style={{display: this.state.step === 2 ? 'block' : 'none'}}>
+					<ProfileStep userBasic={this.state.userBasic} userAccount={this.state.userAccount} handleCreateSuccess={this.handleCreateSuccess} setStep={this.props.setStep} />
 				</div>
 			</div>
 		)
@@ -63,13 +63,17 @@ class AddAccount extends Component {
 	}
 
 	handleAdd (item) {
-		let newAccountInfo = Object.assign({}, initialAccountInfo, {displayName: item.displayName,userID: item.userID})
+		let newAccountInfo = Object.assign({}, initialAccountInfo, {displayName: item.displayName, userID: item.userID})
 		this.setState({userBasic: item, userAccount: newAccountInfo, step: 2})
 	}
-	
+
 	handleCreateSuccess () {
-		this.props.setState(0)
+		this.props.setStep(0)
 	}
+}
+
+AddAccount.propTypes = {
+	setStep: React.PropTypes.func
 }
 
 export default AddAccount

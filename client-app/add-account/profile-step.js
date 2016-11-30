@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import { hashHistory, browserHistory } from 'react-router'
+// import { hashHistory } from 'react-router'
+import Pubsub from '../pubsub'
 import {
 	ProfileTabs,
 	ProfileContainer,
@@ -27,7 +28,7 @@ class ProfileStep extends Component {
 					<ProfileContainer>
 						<BasicInformation userBasic={this.props.userBasic} />
 
-						<AccountInformation userAccount={this.props.userAccount} updateMode={true} ref='accountCmp' />
+						<AccountInformation userAccount={this.props.userAccount} updateMode ref='accountCmp' />
 						<ProfileButtons>
 							<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>
 							<button className='btn btn-primary pull-right' onClick={this.onCreateClick}>Create</button>
@@ -43,17 +44,18 @@ class ProfileStep extends Component {
 	}
 
 	onCreateClick () {
-		let postData = {};
-		postData = Object.assign({},{userBasic:this.props.userBasic},{accountProfiles:this.refs.accountCmp.getData()})
-		$.post('./API/userprofile/add',{userData:postData})
-		.then((res) => {if(res.status){
-			this.props.setStep(0)
-			console.log('addsuccess')
-		} else {
-			alert('add user fail')
-		}})
+		let postData = {}
+		postData = Object.assign({}, {userBasic: this.props.userBasic}, {accountProfiles: this.refs.accountCmp.getData()})
+		$.post('./API/userprofile/add', {userData: postData})
+		.then((res) => {
+			if (res.status) {
+				this.props.setStep(0)
+				Pubsub.publish(Pubsub.FliterRefreshEvent)
+			} else {
+				alert('add user fail')
+			} })
 	}
-	onCancel() {
+	onCancel () {
 		this.props.setStep(0)
 	}
 	componentDidMount () {
@@ -68,6 +70,7 @@ class ProfileStep extends Component {
 
 ProfileStep.propTypes = {
 	userBasic: React.PropTypes.object,
-	userAccount: React.PropTypes.object
+	userAccount: React.PropTypes.object,
+	setStep: React.PropTypes.func
 }
 export default ProfileStep

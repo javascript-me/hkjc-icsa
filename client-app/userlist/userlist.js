@@ -5,6 +5,9 @@ import Paging from '../paging/paging'
 import UserStore from './user-store'
 import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
 import AddingUserCmp from '../add-account'
+import PubSub from '../pubsub'
+
+let reFlashToken = null
 
 export default React.createClass({
 	displayName: 'UserProfileList',
@@ -26,7 +29,8 @@ export default React.createClass({
 			pageTitle: 'Home \\ Tool & Administration \\ User',
 			userprofiles: [],
 			isShowingMoreFilter: false,
-			addingUserStep: 0
+			addingUserStep: 0,
+			filterReflashFlag: true
 		}
 	},
 
@@ -35,11 +39,16 @@ export default React.createClass({
 		// Get Table Data
 		UserStore.searchAuditlogs(1, sortingObject, null)
 		UserStore.addChangeListener(this.onChange)
+		reFlashToken = PubSub.subscribe(PubSub.FliterRefreshEvent, () => {
+			this.setState({filterReflashFlag: false})
+			setTimeout(() => { this.setState({filterReflashFlag: true}) }, 0)
+		})
 	},
 
 	componentWillUnmount: function () {
 		UserStore.removeChangeListener(this.onChange.bind(this))
 		document.removeEventListener('click', this.pageClick, false)
+		PubSub.unsubscribe(reFlashToken)
 	},
 
 	onChange () {
@@ -61,19 +70,16 @@ export default React.createClass({
 		this.setState({isShowingMoreFilter: !this.state.isShowingMoreFilter})
 	},
 
-
 	setAddStep (step) {
-		this.setState({addingUserStep:step})
-
+		this.setState({addingUserStep: step})
 	},
-
 
 	render () {
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {
 		// 	'active': this.state.isShowingMoreFilter
 		// })
 		return <div className='row userlist-page'>
-			<AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep}/>
+			{this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
 			<div className='page-header'>
 				<p>{this.state.pageTitle}</p>
 				<h1>User Account Profile List</h1>
@@ -87,7 +93,7 @@ export default React.createClass({
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
 					</div>
-					<div className='content-header-right' onClick={() => {this.setAddStep(1)}}>
+					<div className='content-header-right' onClick={() => { this.setAddStep(1) }}>
 						add user
 					</div>
 				</div>
