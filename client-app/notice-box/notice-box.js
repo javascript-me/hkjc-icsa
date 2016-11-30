@@ -29,6 +29,12 @@ export default class NoticeBox extends React.Component {
 		}
 	}
 
+	getNoticeItemClassName(notice) {
+		let needBlink = notice.alert_status === 'New' && (notice.priority === 'Critical' || notice.priority === 'High')
+
+		return ClassNames(needBlink ? 'blink' : '')
+	}
+
 	getNoticeTitle (isAcknowledged) {
 		return ClassNames('notice-title', isAcknowledged === 'Acknowledged' ? '' : 'bold-text')
 	}
@@ -38,7 +44,7 @@ export default class NoticeBox extends React.Component {
 	}
 
 	textEllipsisWhenOverflow (text) {
-		return text.length > 380 ? (text.substring(0, 380) + '...') : text
+		return text.length > 140 ? (text.substring(0, 140) + '...') : text
 	}
 	// 380
 
@@ -48,7 +54,7 @@ export default class NoticeBox extends React.Component {
 				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.notices.map((notice, i) => {
-							return <li>
+							return <li className={this.getNoticeItemClassName(notice)}>
 								<ul className='row'>
 
 									{ this.props.displayPosition === 'right' ? <li className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li> : null}
