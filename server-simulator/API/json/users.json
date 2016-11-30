@@ -10,6 +10,9 @@
 				"login.*": "*", 
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
+			},
+			"noticeboardSettings": {
+				"display": "bottom"
 			}
 		}
 	},
@@ -84,6 +87,9 @@
 				"login.*": "*",
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
+			},
+			"noticeboardSettings": {
+				"display": "right"
 			}
 		}
 	},
