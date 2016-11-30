@@ -29,34 +29,7 @@ export default React.createClass({
 
 			noticeBoxData: {
 				allNotices: [],
-				// [
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Medium', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true}
-				// ],
-
 				unreadNotices: []
-				// [
-				// 	{icon: 'Critical', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true},
-				// 	{icon: 'Low', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: false},
-				// 	{icon: 'Medium', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true}
-				// ]
 			},
 
 			tabData: [
