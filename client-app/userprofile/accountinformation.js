@@ -186,7 +186,7 @@ export default React.createClass({
 				<div className='content'>
 					<div className='row name'>
 						<div className='col col-xs-6'>User Display Name</div>
-						<div className='col col-xs-6'>Account:</div>
+						<div className='col col-xs-6'>Account Status</div>
 					</div>
 					<div className='row value'>
 						<div className={classNames('col col-xs-6', {'has-error': !userAccount.displayName})}>
@@ -204,7 +204,7 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
-						<div className='col col-xs-6'>Activation Date</div>
+						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6 roles'>
@@ -217,7 +217,7 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6' />
-						<div className='col col-xs-6'>Deactivation Date</div>
+						<div className='col col-xs-6'>Date of Inactivation</div>
 					</div>
 					<div className='row value margin0'>
 						<div className='col col-xs-6' />
@@ -240,7 +240,7 @@ export default React.createClass({
 				<div className='content'>
 					<div className='row name'>
 						<div className='col col-xs-6'>User Display Name</div>
-						<div className='col col-xs-6'>Account:</div>
+						<div className='col col-xs-6'>Account Status</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6'>{userAccount.displayName}</div>
@@ -249,7 +249,7 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
-						<div className='col col-xs-6'>Activation Date</div>
+						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6 roles'>
@@ -260,7 +260,7 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-6' />
-						<div className='col col-xs-6'>Deactivation Date</div>
+						<div className='col col-xs-6'>Date of Inactivation</div>
 					</div>
 					<div className='row value margin0'>
 						<div className='col col-xs-6' />
@@ -279,7 +279,7 @@ export default React.createClass({
 				<div className='content'>
 					<div className='row name'>
 						<div className='col col-xs-6'>User Display Name</div>
-						<div className='col col-xs-6'>Account:</div>
+						<div className='col col-xs-6'>Account Status</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-6'>{userAccount.displayName}</div>
