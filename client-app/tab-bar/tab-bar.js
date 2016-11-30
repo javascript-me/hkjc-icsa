@@ -16,21 +16,31 @@ export default class TabBar extends React.Component {
 		return ClassNames('tab-button', item.isOn ? 'on' : 'off')
 	}
 
+	getTabBarClassNames () {
+		if (this.props.displayPosition === 'right') {
+			return 'tab-bar' + '-' + 'right'
+		} else {
+			return 'tab-bar'
+		}
+	}
+
 	render () {
+		let tabBarClassName = this.getTabBarClassNames()
+
 		return (
-			<div className='tab-bar'>
+			<div className={tabBarClassName}>
 				{
 					this.props.tabData.map((item, i) => {
-						return <div className={this.getTabClassNames(item)} id={item.label} onClick={this.onItemClick}>{item.label}</div>
+						return <div key={i} className={this.getTabClassNames(item)} id={item.label} onClick={this.onItemClick}>{item.label}</div>
 					})
 				}
 			</div>
 		)
 	}
-
 }
 
 TabBar.propTypes = {
 	onChangeTab: React.PropTypes.func,
-	tabData: React.PropTypes.object
+	tabData: React.PropTypes.object,
+	displayPosition: React.PropTypes.string
 }

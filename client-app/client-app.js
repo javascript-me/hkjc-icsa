@@ -13,6 +13,7 @@ import Dashboard from './dashboard/dashboard'
 import Audit from './auditlog/auditlog'
 
 import UserProfile from './userprofile/userprofile'
+import MyProfile from './myprofile/myprofile'
 import AddAccount from './add-account'
 
 import UserList from './userlist/userlist'
@@ -36,6 +37,7 @@ export default (target) => {
 					<IndexRoute component={Dashboard} />
 					<Route path='audit' component={Audit} />
 					<Route path='userprofile/:userId' component={UserProfile} />
+					<Route path='myprofile' component={MyProfile} />
 					<Route path='filter' component={AddAccount} />
 					<Route path='userlist' component={UserList} />
 					<Route path='userlist2' component={UserList} />
