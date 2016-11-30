@@ -18,6 +18,18 @@ const getAllNoticesPromise = async (username) => {
 	return notices
 }
 
+const updateUserNoticeBoardSettingsPromise = async (username, display) => {
+	let userProfile = null
+
+	try {
+		userProfile = await LoginService.updateNoticeBoardSettings(username, display)
+	} catch (ex) {
+
+	}
+
+	return userProfile
+}
+
 export default React.createClass({
 	propTypes: {
 		isSlim: React.PropTypes.bool
@@ -75,23 +87,14 @@ export default React.createClass({
 	},
 	applySettings () {
 		let self = this
-		let requestData = {
-			username: LoginService.getProfile().username,
-			display: this.state.selectedSettings
-		}
+		let userProfile = LoginService.getProfile()
+		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
 		let userNoticeboardSettings = null
 
-		$.ajax({
-			url: 'api/users/updateNoticeBoardDisplaySettings',
-			data: requestData,
-			type: 'POST',
-			success: function (userProfile) {
-				userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
+		settingPromise.then((userProfile) => {
+			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
 
-				self.updateSet(userNoticeboardSettings.display || 'bottom')
-			},
-			error: function (xhr, status, error) {
-			}
+			self.updateSet(userNoticeboardSettings.display || 'bottom')
 		})
 	},
 	updateSet (setting) {
@@ -132,7 +135,11 @@ export default React.createClass({
 	},
 
 	getHeadTitle () {
-		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + this.state.noticeBoxData.unreadNotices.length + ')'
+		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
+			return e.priority === 'Critical' || e.priority === 'High'
+		})
+
+		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + criticalOrHighNotices.length + ')'
 	},
 
 	render () {
