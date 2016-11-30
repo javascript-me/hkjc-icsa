@@ -45,12 +45,13 @@ export default React.createClass({
 	},
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
+		let userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
 		let noticePromise = getAllNoticesPromise(userProfile.username)
 		let allNotices
 		let self = this
 
 		self.setState({
-			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
+			displaySettings: userNoticeboardSettings.display || 'bottom'
 		})
 
 		noticePromise.then((notices) => {
@@ -74,17 +75,21 @@ export default React.createClass({
 		this.refs.noticeboardPopup.show()
 	},
 	applySettings () {
+		let self = this
 		let requestData = {
 			username: LoginService.getProfile().username,
 			display: this.state.selectedSettings
 		}
-		var self = this
+		let userNoticeboardSettings = null
+
 		$.ajax({
 			url: 'api/users/updateNoticeBoardDisplaySettings',
 			data: requestData,
 			type: 'POST',
-			success: function (data) {
-				self.updateSet(data.noticeboardSettings.display)
+			success: function (userProfile) {
+				userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
+				
+				self.updateSet(userNoticeboardSettings.display || 'bottom')
 			},
 			error: function (xhr, status, error) {
 			}
@@ -98,25 +103,7 @@ export default React.createClass({
 	},
 
 	getClassName () {
-		let requestData = {
-			username: LoginService.getProfile().username
-		}
-
-		var self = this
-		if (latestDisplaySettings !== self.state.displaySettings) {
-			$.ajax({
-				url: 'api/users/getNoticeBoardDisplaySettings',
-				data: requestData,
-				type: 'POST',
-				success: function (data) {
-					self.setState({ displaySettings: data.noticeboardSettings.display })
-					latestDisplaySettings = data.noticeboardSettings.display
-				},
-				error: function (xhr, status, error) {
-				}
-			})
-		}
-		if (self.state.displaySettings === 'right') {
+		if (this.state.displaySettings === 'right') {
 			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
 		} else {
 			return 'bottom-noticeboard-container'
