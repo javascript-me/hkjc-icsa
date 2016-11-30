@@ -12,6 +12,7 @@ import Dashboard from './dashboard/dashboard'
 
 import Audit from './auditlog/auditlog'
 import UserProfile from './userprofile/userprofile'
+import MyProfile from './myprofile/myprofile'
 import AddAccount from './add-account'
 
 const hasAuth = (nextState, replace) => {
@@ -33,6 +34,7 @@ export default (target) => {
 					<IndexRoute component={Dashboard} />
 					<Route path='audit' component={Audit} />
 					<Route path='userprofile/:userId' component={UserProfile} />
+					<Route path='myprofile' component={MyProfile} />
 					<Route path='filter' component={AddAccount} />
 				</Route>
 			</Router>

@@ -21,7 +21,7 @@ export default React.createClass({
 	getDefaultProps () {
 		return {
 			pageTitle: 'Home \\ Tool & Adminstration \\ User',
-			h1Title: 'User Profile'
+			h1Title: 'User Account Profile'
 		}
 	},
 	onTabClick (tabIndex) {
@@ -47,7 +47,7 @@ export default React.createClass({
 					<h1>{this.props.h1Title}</h1>
 
 					<ul className='nav nav-pills'>
-						<li className={navClasses.userProfile} onClick={() => { this.onTabClick(WHICHTAB.UserProfile) }}><a href='javascript:void(0)'>User Profile</a></li>
+						<li className={navClasses.userProfile} onClick={() => { this.onTabClick(WHICHTAB.UserProfile) }}><a href='javascript:void(0)'>{this.props.h1Title}</a></li>
 						<li className={navClasses.subscription} onClick={() => { this.onTabClick(WHICHTAB.Subscription) }}><a href='javascript:void(0)'>Subscription</a></li>
 					</ul>
 				</div>
