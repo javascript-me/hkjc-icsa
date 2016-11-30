@@ -121,9 +121,8 @@ function doSorting (auditlogs, fieldName, order) {
 function doFilter (userprofiles, keyWord, position, userRole, status, dateTimeFrom, dateTimeTo) {
 	keyWord = keyWord || ''
 	position = position || 'All'
-	status = status || 'All'
 	userRole = userRole || 'All'
-	accountStatus = accountStatus || 'All'
+	status = status || 'All'
 	dateTimeFrom = dateTimeFrom || '18 Sep 1900 00:00'
 	dateTimeTo = dateTimeTo || '31 Dec 2099 23:59'
 
@@ -136,7 +135,7 @@ function doFilter (userprofiles, keyWord, position, userRole, status, dateTimeFr
 
 		return position === keyWord.toLowerCase() ||
                 userName === keyWord.toLowerCase()
-                
+
 	}) : result
 
 	if (position !== 'All') {
@@ -157,10 +156,10 @@ function doFilter (userprofiles, keyWord, position, userRole, status, dateTimeFr
 		})
 	}
 
-	result = result.filter((al) => {
-		return parseToDate(dateTimeFrom).getTime() <= parseToDate(al.date_time).getTime() &&
-			parseToDate(al.date_time).getTime() <= parseToDate(dateTimeTo).getTime()
-	})
+	// result = result.filter((al) => {
+	// 	return parseToDate(dateTimeFrom).getTime() <= parseToDate(al.date_time).getTime() &&
+	// 		parseToDate(al.date_time).getTime() <= parseToDate(dateTimeTo).getTime()
+	// })
 
 	return result
 }

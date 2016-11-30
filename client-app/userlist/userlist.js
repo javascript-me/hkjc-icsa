@@ -153,8 +153,8 @@ export default React.createClass({
 			filters: this.state.selectedFilters
 		}
 	},
-	
-	
+
+
 	setFilters: function (filters) {
 		this.hideMoreFilter()
 
@@ -209,7 +209,7 @@ export default React.createClass({
 						<button className='btn btn-primary btn-disable'>Delete</button>
 					</div>
 					<div className='content-footer-center'>
-						{/*<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />*/}
+						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 					<div className='content-footer-right'>
 						<button className='btn btn-primary' onClick={this.onChange}>Update</button>
