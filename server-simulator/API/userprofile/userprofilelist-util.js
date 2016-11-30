@@ -93,11 +93,11 @@ function compareDate (value0, value1) {
 }
 
 function ascendDateSort (a, b) {
-	return compareDate(a['date_time'], b['date_time'])
+	return compareDate(a['activationDate'], b['activationDate'])
 }
 
 function descendDateSort (a, b) {
-	return compareDate(b['date_time'], a['date_time'])
+	return compareDate(b['activationDate'], a['activationDate'])
 }
 
 function doSorting (auditlogs, fieldName, order) {

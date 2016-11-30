@@ -10,15 +10,15 @@ export default React.createClass({
 	displayName: 'UserProfileList',
 
 	headers: [
-		{'id': 1, label: 'User Display Name', fieldName: 'displayName', sortingClass: 'down-arrow', addCheckBox: true},
-		{'id': 2, label: 'User ID', fieldName: 'userID', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 3, label: 'User Name', fieldName: 'firstName', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 4, label: 'Staff ID', fieldName: 'staffID', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 5, label: 'Position / Title', fieldName: 'position', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 6, label: 'User Roles', fieldName: 'assignedUserRoles', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 7, label: 'Account Status', fieldName: 'status', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 8, label: 'Date of Activation', fieldName: 'activationDate', sortingClass: 'no-arrow', addCheckBox: true},
-		{'id': 9, label: 'Date of Inactivation', fieldName: 'deactivationDate', sortingClass: 'no-arrow', addCheckBox: true}
+		{'id': 1, label: 'User Display Name', fieldName: 'displayName', sortingClass: 'down-arrow', addCheckBox: false},
+		{'id': 2, label: 'User ID', fieldName: 'userID', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 3, label: 'User Name', fieldName: 'firstName', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 4, label: 'Staff ID', fieldName: 'staffID', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 5, label: 'Position / Title', fieldName: 'position', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 6, label: 'User Roles', fieldName: 'assignedUserRoles', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 7, label: 'Account Status', fieldName: 'status', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 8, label: 'Date of Activation', fieldName: 'activationDate', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 9, label: 'Date of Inactivation', fieldName: 'deactivationDate', sortingClass: 'no-arrow', addCheckBox: false}
 	],
 
 	getInitialState () {
@@ -31,7 +31,7 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
+		let sortingObject = {fieldName: 'activationDate', order: 'DESCEND'}
 		// Get Table Data
 		UserStore.searchAuditlogs(1, sortingObject, null)
 		UserStore.addChangeListener(this.onChange)
@@ -43,7 +43,15 @@ export default React.createClass({
 	},
 
 	onChange () {
+
 		const hasData = UserStore.userProfiles.length > 0
+
+		UserStore.userProfiles.forEach((item) =>{
+			let role = item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(',')
+			item.assignedUserRoles = role
+		})
+
+		console.log(UserStore.userProfiles,'ddd')
 		this.setState({
 			userprofiles: UserStore.userProfiles, hasData: hasData
 		})
@@ -89,7 +97,7 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table'>
-					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
+					<TabularData displayCheckBox={true} headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
 				</div>
 				<div className='content-footer'>
 					<div className='content-footer-left'>
@@ -99,7 +107,7 @@ export default React.createClass({
 						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 					<div className='content-footer-right'>
-						<button className='btn btn-primary'>Update</button>
+						<button className='btn btn-primary' onClick={this.onChange}>Update</button>
 					</div>
 				</div>
 			</div>

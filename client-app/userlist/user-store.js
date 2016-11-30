@@ -11,36 +11,7 @@ const UserStore = assign({}, EventEmitter.prototype, {
 		pages: [],
 		totalPages: 0
 	},
-	userProfiles: [
-		{
-			"id":"id002",
-			"firstName":"Albert",
-			"displayName":"Albert Choi",
-			"userID":"JC10002",
-			"position":"Sr. Trader",
-			"staffID":"0000002",
-			"status": "Active",
-		    "assignedUserRoles": [{
-		      "assignedUserRole": "Trader"
-		    }],
-		    "activationDate": "16/06/2016",
-		    "deactivationDate": "16/06/2017",
-		},
-		{
-			"id":"id003",
-			"firstName":"Mike",
-			"displayName":"Mike Wang",
-			"userID":"JC10003",
-			"position":"Trader",
-			"staffID":"0000003",
-			"status": "Active",
-		    "assignedUserRoles": [{
-		      "assignedUserRole": "Trader"
-		    }],
-		    "activationDate": "16/06/2016",
-		    "deactivationDate": "16/06/2017",
-		},
-	],
+	userProfiles: [],
 
 	sendRequest (requestData) {
 		return $.post('api/userprofile/list', requestData)
@@ -48,6 +19,8 @@ const UserStore = assign({}, EventEmitter.prototype, {
 
 	async searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 		let requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
+
+		console.log("requestData" + JSON.stringify(requestData, null, 4))
 
 		try {
 			let result = await this.sendRequest(requestData)

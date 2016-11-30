@@ -9,6 +9,7 @@ const router = express.Router()
 const accountProfiles = require('../json/accountprofiles.json')
 const basicUsers = require('../json/baseUserProfile.json')
 
+
 /**
  * @apiGroup UserProfile
  * @api {POST} /userprofile/list user profile list
@@ -25,19 +26,25 @@ const basicUsers = require('../json/baseUserProfile.json')
  *
  */
 router.post('/list', (req, res) => {
-	let result = accountProfiles.map((item, index) => {
+	let result = {}
+	let allUser = accountProfiles.map((item, index) => {
 		let user = _.find(basicUsers,(baseItem,idx) => (item.userID === baseItem.userID))
 		let newItem = Object.assign({},item,user)
 		return newItem
 	})
-	var filteredAuditlogs = accountProfiles.slice(0)
+	// var filteredAuditlogs = accountProfiles.slice(0)
 
-	var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+	// var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
-	result.auditlogs = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+	// result.auditlogs = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
-	var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
-	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
+	// var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
+	// result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
+	result.auditlogs = allUser
+	result.pageData = {
+		"pages": [],
+		"totalPages": 1
+	}
 	res.send(result)
 })
 
