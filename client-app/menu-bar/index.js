@@ -56,7 +56,7 @@ class MenuBar extends Component {
 					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
 					<div className='message'><i className='icon-notification ' onClick={this.showHideNoticeBoard}><img src='icon/notification.svg' /></i></div>
 				</div>
-				{ this.state.showNoticeBoard ? <Noticeboard /> : null }
+				{ this.state.showNoticeBoard ? <Noticeboard isSlim={this.state.slimMode} /> : null }
 			</div>)
 	}
 
