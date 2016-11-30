@@ -5,7 +5,7 @@ import LoginService from '../login/login-service'
 import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
-
+let latestDisplaySettings = ''
 const getAllNoticesPromise = async (username) => {
 	let notices = null
 
@@ -19,6 +19,10 @@ const getAllNoticesPromise = async (username) => {
 }
 
 export default React.createClass({
+	propTypes: {
+		isSlim: React.PropTypes.bool
+	},
+
 	getInitialState () {
 		return {
 			displaySettings: 'bottom',
@@ -90,11 +94,30 @@ export default React.createClass({
 	onChangeSetting (setting) {
 		this.setState({selectedSettings: setting})
 	},
+
 	getClassName () {
-		if (this.state.displaySettings === 'bottom') {
-			return 'bottom-noticeboard-container'
+		let requestData = {
+			username: LoginService.getProfile().username
+		}
+
+		var self = this
+		if (latestDisplaySettings !== self.state.displaySettings) {
+			$.ajax({
+				url: 'api/users/getNoticeBoardDisplaySettings',
+				data: requestData,
+				type: 'POST',
+				success: function (data) {
+					self.setState({ displaySettings: data.noticeboardSettings.display })
+					latestDisplaySettings = data.noticeboardSettings.display
+				},
+				error: function (xhr, status, error) {
+				}
+			})
+		}
+		if (self.state.displaySettings === 'right') {
+			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
 		} else {
-			return 'right-noticeboard-container'
+			return 'bottom-noticeboard-container'
 		}
 	},
 	changeTab (key) {
@@ -123,7 +146,7 @@ export default React.createClass({
 	render () {
 		return (
 			<div>
-				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Action Panel Setting' onConfirm={this.applySettings}>
+				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings}>
 					<NoticeboardPopup onChange={this.onChangeSetting} />
 				</Popup>
 				<div className={this.getClassName()}>
@@ -131,11 +154,7 @@ export default React.createClass({
 						<div className='pull-right'>
 							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>
 							<span className='noticeboard-settings-container'><i className=''><img src='icon/Setting.svg' onClick={this.openPopup} /></i></span>
-							<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Action Panel Setting' onConfirm={this.applySettings} >
-								<NoticeboardPopup onChange={this.onChangeSetting} />
-							</Popup>
 						</div>
-						{/* <TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} /> */}
 						<div className='container-title'>
 							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
 							<span className='header-title'>Noticeboard 8(4)</span>
