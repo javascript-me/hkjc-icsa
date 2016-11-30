@@ -43,7 +43,7 @@ export default class NoticeBox extends React.Component {
 	}
 
 	formatDistibutionTime (dateStr) {
-		return Moment(dateStr).format('hh:mm:ss')
+		return Moment(dateStr).format('DD MMM YYYY hh:mm:ss')
 	}
 
 	textEllipsisWhenOverflow (text) {
