@@ -16,7 +16,6 @@ export default React.createClass({
 		}
 		this.pageTitle = 'Home \\ Tool & Adminstration \\ User'
 		this.h1Title = 'My Profile'
-		if (LoginService)
 		return {
 			userBasic: {},
 			userAccount: {}
