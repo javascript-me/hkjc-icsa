@@ -129,13 +129,12 @@ function doFilter (userprofiles, keyWord, position, userRole, status, dateTimeFr
 	let result = userprofiles
 
 	result = keyWord ? userprofiles.filter((al) => {
-		const eventName = al.event_name ? al.event_name.toLowerCase() : ''
+		// const eventName = al.event_name ? al.event_name.toLowerCase() : ''
 		const userName = al.user_name ? al.user_name.toLowerCase() : ''
-		const userRole = al.user_role ? al.user_role.toLowerCase() : ''
+		// const userRole = al.user_role ? al.user_role.toLowerCase() : ''
 
 		return position === keyWord.toLowerCase() ||
                 userName === keyWord.toLowerCase()
-
 	}) : result
 
 	if (position !== 'All') {

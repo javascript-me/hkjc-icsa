@@ -40,7 +40,7 @@ const originState = {
 	position: '',
 	userRole: '',
 	accountStatus: ''
-	
+
 }
 
 let tokenKeyPress = null
@@ -158,7 +158,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	isEnquiryValid () {
 		// return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
 		return true
-}
+	}
 
 	handleSubmit () {
 		this.setState({ tipsFlag: 0 }, function () {
@@ -186,7 +186,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			'position',
 			'accountStatus',
 			'userRole'
-			]
+		]
 		let currentAttrName
 		let currentAttrVal
 
@@ -204,23 +204,23 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	render () {
-		let { errorDateTimeFrom, errorDateTimeTo, errorDateTimeGameStart, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
+		let { errorDateTimeFrom, errorDateTimeTo, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
 		let fromClass = 'form-group'
 		let toClass = 'form-group'
-		let dateTimeGameStartClass = 'form-group'
-		let ipClass = 'form-group'
+		// let dateTimeGameStartClass = 'form-group'
+		// let ipClass = 'form-group'
 		if (tipsFlag === 0 && errorDateTimeFrom === 0) {
 			fromClass = 'form-group has-error'
 		}
 		if (tipsFlag === 0 && errorDateTimeTo === 0) {
 			toClass = 'form-group has-error'
 		}
-		if (tipsFlag === 0 && errorDateTimeGameStart === 0) {
-			dateTimeGameStartClass = 'form-group has-error'
-		}
-		if (tipsFlag === 0 && errorIPAddress === 0) {
-			ipClass = 'form-group has-error'
-		}
+		// if (tipsFlag === 0 && errorDateTimeGameStart === 0) {
+		// 	dateTimeGameStartClass = 'form-group has-error'
+		// }
+		// if (tipsFlag === 0 && errorIPAddress === 0) {
+		// 	ipClass = 'form-group has-error'
+		// }
 		if (tipsFlag === 0 && dateTimeTo.timestamp < dateTimeFrom.timestamp) {
 			fromClass = 'form-group has-error'
 			toClass = 'form-group has-error'
@@ -246,7 +246,7 @@ export default class SearchEnquiryPanel extends React.Component {
 							<SelectCom key='AccountStatus' datas={selectdata.accountStatus} selectedVal={this.state.accountStatus} handleVal={(e) => this.handleChange('accountStatus', e)} />
 						</div>
 					</div>
-					
+
 				</div>
 				<div className='row mg-w010'>
 					<div className='col-sm-4 pd-w10'>

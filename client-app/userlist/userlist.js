@@ -9,7 +9,7 @@ import PubSub from '../pubsub'
 import Moment from 'moment'
 
 let reFlashToken = null
-let serchToken = null
+let searchToken = null
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -66,7 +66,7 @@ export default React.createClass({
 			}, {
 				name: 'dateTimeTo',
 				value: getOrginDateTimeTo()
-			}],
+			}]
 		}
 	},
 
@@ -79,7 +79,7 @@ export default React.createClass({
 			this.setState({filterReflashFlag: false})
 			setTimeout(() => { this.setState({filterReflashFlag: true}) }, 0)
 		})
-		serchToken = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH], () => {
+		searchToken = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH], () => {
 			this.searchAuditlog()
 		})
 	},
@@ -88,18 +88,17 @@ export default React.createClass({
 		UserStore.removeChangeListener(this.onChange.bind(this))
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(reFlashToken)
+		PubSub.unsubscribe(searchToken)
 	},
 
 	onChange () {
-
 		const hasData = UserStore.userProfiles.length > 0
 
-		UserStore.userProfiles.forEach((item) =>{
+		UserStore.userProfiles.forEach((item) => {
 			let role = item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(',')
 			item.assignedUserRoles = role
 		})
 
-		console.log(UserStore.userProfiles,'ddd')
 		this.setState({
 			userprofiles: UserStore.userProfiles, hasData: hasData
 		})
@@ -154,7 +153,6 @@ export default React.createClass({
 		}
 	},
 
-
 	setFilters: function (filters) {
 		this.hideMoreFilter()
 
@@ -189,10 +187,9 @@ export default React.createClass({
 					<div className='content-header-left'>
 						<i className='icon icon-search' />
 						<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
-										onClick={this.showMoreFilter}
-										onChange={this.handleKeywordChange}
-										onKeyPress={this.handleKeywordPress}
-										ref='keyword'/>
+							onChange={this.handleKeywordChange}
+							onKeyPress={this.handleKeywordPress}
+							ref='keyword' />
 						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching}>
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
@@ -202,7 +199,7 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table'>
-					<TabularData displayCheckBox={true} headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
+					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
 				</div>
 				<div className='content-footer'>
 					<div className='content-footer-left'>

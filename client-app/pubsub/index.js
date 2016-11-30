@@ -8,7 +8,7 @@ const tokens = [
 	'FliterRefreshEvent',
 	'USERPROFILE_SEARCH',
 	'USERPROFILE_SEARCH_BY_KEY_PRESS',
-	'USERPROFILE_SEARCH_BY_REMOVE_FILTER',
+	'USERPROFILE_SEARCH_BY_REMOVE_FILTER'
 ]
 
 for (const token of tokens) {

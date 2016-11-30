@@ -19,9 +19,6 @@ const UserStore = assign({}, EventEmitter.prototype, {
 
 	async searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
 		let requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
-		console.log(selectedPageNumber, sortingObject, criteriaOption)
-
-		console.log("requestData" + JSON.stringify(requestData, null, 4))
 
 		try {
 			let result = await this.sendRequest(requestData)

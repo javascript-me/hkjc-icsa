@@ -9,7 +9,6 @@ const router = express.Router()
 const accountProfiles = require('../json/accountprofiles.json')
 const basicUsers = require('../json/userProfile2.json')
 
-
 /**
  * @apiGroup UserProfile
  * @api {POST} /userprofile/list user profile list
@@ -29,11 +28,10 @@ router.post('/list', (req, res) => {
 	let result = {}
 
 	let allUser = accountProfiles.map((item, index) => {
-		let user = _.find(basicUsers,(baseItem,idx) => (item.userID === baseItem.userID))
-		let newItem = Object.assign({},item,user)
+		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
+		let newItem = Object.assign({}, item, user)
 		return newItem
 	})
-
 
 	// var filteredResult = UserProfileListUtil.doFilter(
 	// 	allUser,
@@ -59,7 +57,7 @@ router.post('/list', (req, res) => {
 
 	var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
-	 result.userProfiles = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+	result.userProfiles = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
 	var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
 	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))

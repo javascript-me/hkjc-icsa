@@ -96,14 +96,14 @@ export default React.createClass({
 		}
 		return <tbody>
 			{this.props.dataCollection.map(
-				
+
 				(row) => {
 					return <tr>
 						{this.props.displayCheckBox ? <td><input type='checkbox' className='checkbox' name='user-profile' /></td> : null}
 						{this.props.headers.map(
 							(header, i) => {
 								if (header.fieldName !== '') {
-									return <td>{row[header.fieldName] ? row[header.fieldName]: ""}</td>
+									return <td>{row[header.fieldName] ? row[header.fieldName] : ''}</td>
 								}
 							}
 						)}
