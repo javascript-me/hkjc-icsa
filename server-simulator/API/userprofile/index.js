@@ -7,7 +7,7 @@ import PagingService from '../auditlog/paging-service'
 const router = express.Router()
 
 const accountProfiles = require('../json/accountprofiles.json')
-const basicUsers = require('../json/baseUserProfile.json')
+const basicUsers = require('../json/userProfile2.json')
 
 
 /**
@@ -32,15 +32,15 @@ router.post('/list', (req, res) => {
 		let newItem = Object.assign({},item,user)
 		return newItem
 	})
-	// var filteredAuditlogs = accountProfiles.slice(0)
+	
 
-	// var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+	//var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
 
-	// result.auditlogs = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+	 //result.auditlogs = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
 
 	// var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
 	// result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
-	result.auditlogs = allUser
+	
 	result.pageData = {
 		"pages": [],
 		"totalPages": 1
