@@ -35,9 +35,7 @@ export default React.createClass({
 
 						<AccountInformation ref='accountCmp' userAccount={this.state.userAccount} updateMode={false} showDate={false} />
 
-						<ProfileButtons>
-							<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>
-						</ProfileButtons>
+						<ProfileButtons />
 					</ProfileContainer>
 
 					<SubscriptionContainer />
