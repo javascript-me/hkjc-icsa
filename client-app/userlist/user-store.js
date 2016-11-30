@@ -13,44 +13,49 @@ const UserStore = assign({}, EventEmitter.prototype, {
 	},
 	userProfiles: [
 		{
-			'date_time': '23 September 2016',
-			'user_id': 'candy.crush',
-			'user_name': 'Candy Crush',
-			'Type': 'Odds',
-			'function_module': 'Master Risk Limit Log',
-			'function_event_detail': 'Update Odds',
-			'user_role': 'Role1, Role2',
-			'ip_address': '182.34.2.192'
+			"id":"id002",
+			"firstName":"Albert",
+			"displayName":"Albert Choi",
+			"userID":"JC10002",
+			"position":"Sr. Trader",
+			"staffID":"0000002",
+			"status": "Active",
+		    "assignedUserRoles": [{
+		      "assignedUserRole": "Trader"
+		    }],
+		    "activationDate": "16/06/2016",
+		    "deactivationDate": "16/06/2017",
 		},
 		{
-			'date_time': '23 September 2016',
-			'user_id': 'candy.crush',
-			'user_name': 'Candy Crush',
-			'Type': 'Odds',
-			'function_module': 'Master Risk Limit Log',
-			'function_event_detail': 'Update Odds',
-			'user_role': 'Role1, Role2',
-			'ip_address': '182.34.2.192'
-		}
+			"id":"id003",
+			"firstName":"Mike",
+			"displayName":"Mike Wang",
+			"userID":"JC10003",
+			"position":"Trader",
+			"staffID":"0000003",
+			"status": "Active",
+		    "assignedUserRoles": [{
+		      "assignedUserRole": "Trader"
+		    }],
+		    "activationDate": "16/06/2016",
+		    "deactivationDate": "16/06/2017",
+		},
 	],
 
-	searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
-		const requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
-		let self = this
+	sendRequest (requestData) {
+		return $.post('api/userprofile/list', requestData)
+	},
 
-		$.ajax({
-			url: 'api/auditlog/filterAuditlogs',
-			data: requestData,
-			type: 'POST',
+	async searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
+		let requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
 
-			success: function (data) {
-				self.pageData = data.pageData
-				self.userProfiles = data.auditlogs
-				self.emitChange()
-			},
-			error: function (xhr, status, error) {
-			}
-		})
+		try {
+			let result = await this.sendRequest(requestData)
+
+			this.pageData = result.pageData
+			this.userProfiles = result.auditlogs
+			this.emitChange()
+		} catch (failure) {}
 	},
 
 	buildRequest (selectedPageNumber, sortingObject, criteriaOption) {
@@ -62,8 +67,9 @@ const UserStore = assign({}, EventEmitter.prototype, {
 			this._criteriaOption = criteriaOption
 		}
 
+		let profile = LoginService.getProfile() || {}
 		let requestData = {
-			username: LoginService.getProfile().username,
+			username: profile.username,
 			selectedPageNumber: selectedPageNumber,
 			sortingObjectFieldName: this._sortingObject.fieldName,
 			sortingObjectOrder: this._sortingObject.order,
@@ -73,11 +79,8 @@ const UserStore = assign({}, EventEmitter.prototype, {
 
 		let filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : []
 
-        // Fill the filters into reuqest data
 		for (let i in filters) {
-			let filterName = filters[i].name
-			let filterVal = filters[i].value
-			requestData[filterName] = filterVal
+			requestData[filters[i].name] = filters[i].value
 		}
 
 		return requestData
