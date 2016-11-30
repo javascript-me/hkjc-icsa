@@ -6,8 +6,22 @@ import PubSub from '../pubsub'
 import menuData from './menuBarData.js'
 import EventDirectory from '../eventdirectory/eventdirectory'
 import Noticeboard from '../notice-board/notice-board'
+import NoticeBoardService from '../notice-board/notice-board-service'
 
-let token = null
+let loginChangeToken = null
+
+const getNoticeCountPromise = async (username) => {
+	let count = 0
+
+	try {
+		count = await NoticeBoardService.getRemindCount(username)
+	} catch (ex) {
+
+	}
+
+	return count
+}
+
 class MenuBar extends Component {
 	constructor (props) {
 		super(props)
@@ -17,7 +31,8 @@ class MenuBar extends Component {
 			slimMode: false,
 			showNoticeBoard: false,
 			menuBarShouldShow: LoginService.hasProfile(),
-			userProfile: LoginService.getProfile()
+			userProfile: LoginService.getProfile(),
+			noticeRemindCount: 0
 		}
 	}
 
@@ -54,7 +69,17 @@ class MenuBar extends Component {
 						))}
 					</div>
 					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
-					<div className='message'><i className='icon-notification ' onClick={this.showHideNoticeBoard}><img src='icon/notification.svg' /></i></div>
+					<div className='message'>
+						<i className='icon-notification ' onClick={this.showHideNoticeBoard}>
+							<img src='icon/notification.svg' />
+							{
+								this.state.noticeRemindCount > 0
+								? <span className='message-count'>{this.state.noticeRemindCount}</span>
+								: ''
+							}
+
+						</i>
+					</div>
 				</div>
 				{ this.state.showNoticeBoard ? <Noticeboard isSlim={this.state.slimMode} /> : null }
 			</div>)
@@ -65,13 +90,21 @@ class MenuBar extends Component {
 	}
 
 	componentDidMount () {
-		token = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
-			this.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: LoginService.getProfile()})
+		let self = this
+		let userProfile = LoginService.getProfile()
+		let noticePromise = getNoticeCountPromise(userProfile.username)
+
+		noticePromise.then((noticeRemindCount) => {
+			self.setState({noticeRemindCount: noticeRemindCount})
+		})
+
+		loginChangeToken = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
+			self.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: userProfile})
 		})
 	}
 
 	componentWillUnmount () {
-		PubSub.unsubscribe(token)
+		PubSub.unsubscribe(loginChangeToken)
 	}
 
 }
