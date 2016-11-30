@@ -8,8 +8,9 @@ export default React.createClass({
 		onChange: React.PropTypes.func
 	},
 	getInitialState () {
-		this.getSettings()
-		return { setting: LoginService.getProfile().noticeboardSettings.display }
+		let userNoticeboardSettings = LoginService.getNoticeBoardSettings()
+
+		return { setting: userNoticeboardSettings.display || 'bottom' }
 	},
 	onSettingChange (e) {},
 	changeSetting (e) {
@@ -17,22 +18,6 @@ export default React.createClass({
 		if (this.props.onChange) {
 			this.props.onChange(e.currentTarget.attributes['value'].nodeValue)
 		}
-	},
-	getSettings () {
-		let requestData = {
-			username: LoginService.getProfile().username
-		}
-		var self = this
-		$.ajax({
-			url: 'api/users/getNoticeBoardDisplaySettings',
-			data: requestData,
-			type: 'POST',
-			success: function (data) {
-				self.setState({ setting: data.noticeboardSettings.display })
-			},
-			error: function (xhr, status, error) {
-			}
-		})
 	},
 	render () {
 		return (
