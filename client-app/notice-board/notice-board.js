@@ -120,6 +120,10 @@ export default React.createClass({
 		})
 	},
 
+	getHeadTitle () {
+		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + this.state.noticeBoxData.unreadNotices.length + ')'
+	},
+
 	render () {
 		return (
 			<div>
@@ -138,7 +142,7 @@ export default React.createClass({
 						{/* <TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} /> */}
 						<div className='container-title'>
 							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>Noticeboard 8(4)</span>
+							<span className='header-title'>{this.getHeadTitle()}</span>
 						</div>
 					</div>
 					<div className='messages-container'>
