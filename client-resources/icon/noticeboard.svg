@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="17px" viewBox="0 0 15 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="288" height="489"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="288" height="489" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="288" height="489" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Side_Panel_A-+-Bottom_N&amp;B" transform="translate(-1354.000000, -114.000000)">
+            <g id="noticeboard" transform="translate(1344.000000, 103.000000)">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask" stroke="#979797" mask="url(#mask-2)" stroke-width="2" fill="#D8D8D8">
+                    <use mask="url(#mask-4)" xlink:href="#path-1"></use>
+                </g>
+                <g id="component-/-notification_panel" mask="url(#mask-3)">
+                    <rect id="Rectangle-3" fill="#FFFFFF" x="0" y="0" width="288" height="552"></rect>
+                    <g id="Noticebaord-/-Top-Title" stroke-width="1">
+                        <rect id="Rectangle-3" fill="#2F5091" x="0" y="0" width="288" height="40"></rect>
+                        <text id="Noticeboard-8(4)" font-family="Roboto-Medium, Roboto" font-size="14" font-weight="400" line-spacing="18" fill="#FFFFFF">
+                            <tspan x="30" y="24">Noticeboard 8</tspan>
+                            <tspan x="127.791805" y="24.7861328" font-family="PingFangSC-Medium, PingFang SC">(4)</tspan>
+                        </text>
+                        <g id="Group-3" transform="translate(225.000000, 12.000000)" fill="#768FC2">
+                            <g id="Group" transform="translate(0.873239, 1.000000)">
+                                <rect id="Rectangle-4" x="5" y="0" width="11" height="3"></rect>
+                                <rect id="Rectangle-4" x="5" y="6.5" width="11" height="3"></rect>
+                                <rect id="Rectangle-4" x="5" y="13" width="11" height="3"></rect>
+                                <rect id="Rectangle-4" x="0" y="0" width="3" height="3"></rect>
+                                <rect id="Rectangle-4" x="0" y="6.5" width="3" height="3"></rect>
+                                <rect id="Rectangle-4" x="0" y="13" width="3" height="3"></rect>
+                            </g>
+                            <path d="M32.8537539,0 L36.6924454,0.00644180733 C36.6924454,0.00644180733 36.5963112,1.7033749 37.9296724,2.52309489 C39.2630335,3.34281487 41.2180958,2.68671679 41.2180958,2.68671679 L42.8732394,5.39227587 C42.8732394,5.39227587 41.2102515,6.39446005 41.2075811,7.68266047 C41.2049107,8.97102193 42.8620572,10.7024187 42.8620572,10.7024187 L41.1306404,13.4327787 C41.1306404,13.4327787 39.471825,12.4867993 37.9882541,13.426659 C36.5045164,14.3665187 36.3708298,16 36.3708298,16 L33.1142842,15.9935582 C33.1142842,15.9935582 33.1832138,14.328512 31.8173072,13.4461455 C30.4514006,12.5637789 28.3658228,13.3136053 28.3658228,13.3136053 L26.8732394,10.6710149 C26.8732394,10.6710149 28.2431516,9.66818653 28.3768382,8.00330143 C28.5105248,6.33825528 26.8845886,5.29806444 26.8845886,5.29806444 L28.4207328,2.59878612 C28.4207328,2.59878612 30.3078669,3.41931133 31.7750816,2.54242031 C33.2424631,1.66552929 32.8537539,0 32.8537539,0 L32.8537539,0 Z M34.8638039,4.57049243 C32.8690104,4.56661227 31.2484585,6.12372271 31.2444373,8.04880219 C31.240282,9.97310564 32.8541319,11.5368124 34.8489253,11.5409512 C36.8438529,11.5452194 38.4644047,9.98785027 38.4688281,8.06302946 C38.4724472,6.13794999 36.8584633,4.57450194 34.8638039,4.57049243 L34.8638039,4.57049243 Z" id="Setting"></path>
+                        </g>
+                    </g>
+                </g>
+                <path d="M17.5,28 C18.4773936,28 19.275266,27.2316384 19.275266,26.2903955 L15.724734,26.2903955 C15.724734,27.2316384 16.5226064,28 17.5,28 L17.5,28 Z M23.224734,22.8903955 L23.224734,18.2225989 C23.224734,15.6101695 21.349734,13.420339 18.8164894,12.8440678 L18.8164894,12.2677966 C18.8164894,11.5570621 18.2180851,11 17.5,11 C16.7819149,11 16.1835106,11.5762712 16.1835106,12.2677966 L16.1835106,12.8440678 C13.650266,13.420339 11.775266,15.6101695 11.775266,18.2225989 L11.775266,22.8903955 L10,24.6 L10,25.4451977 L25,25.4451977 L25,24.6 L23.224734,22.8903955 L23.224734,22.8903955 Z" id="Shape" fill="#768FC2" mask="url(#mask-3)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,29 +1,28 @@
-
 import { assert } from 'chai'
-import PagingUtil from './paging-util'
+import AuditlogsUtil from './auditlogs-util'
 
 it('getAuditlogsFragmentByPageNumber() should return a small amount of data', () => {
 	const data = require('../json/auditlogs.json')
 	assert.equal(451, data.auditlogs.length)
 
-	var result = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 1)
+	var result = AuditlogsUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 1)
 
 	assert.equal(10, result.length)
 	assert.equal(JSON.stringify(result[0]), JSON.stringify(data.auditlogs[0]))
 	assert.equal(JSON.stringify(result[9]), JSON.stringify(data.auditlogs[9]))
 
-	var resultOfPage5 = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 5)
+	var resultOfPage5 = AuditlogsUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 5)
 	assert.equal(10, resultOfPage5.length)
 
-	var resultOfPage10 = PagingUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 10)
+	var resultOfPage10 = AuditlogsUtil.getAuditlogsFragmentByPageNumber(data.auditlogs, 10)
 	assert.equal(10, resultOfPage10.length)
 })
 
 it('getTotalPages() should return total pages number based on pageSize', () => {
-	assert.equal(10, PagingUtil.getTotalPages(99))
-	assert.equal(1, PagingUtil.getTotalPages(9))
-	assert.equal(3, PagingUtil.getTotalPages(30))
-	assert.equal(4, PagingUtil.getTotalPages(35))
+	assert.equal(10, AuditlogsUtil.getTotalPages(99))
+	assert.equal(1, AuditlogsUtil.getTotalPages(9))
+	assert.equal(3, AuditlogsUtil.getTotalPages(30))
+	assert.equal(4, AuditlogsUtil.getTotalPages(35))
 })
 
 it('doSorting() should return list with correct order', () => {
@@ -90,7 +89,7 @@ it('doSorting() should return list with correct order', () => {
 		}
 	]
 
-	var descendResult = PagingUtil.doSorting(auditlogs.slice(0), 'date_time', 'DESCEND')
+	var descendResult = AuditlogsUtil.doSorting(auditlogs.slice(0), 'date_time', 'DESCEND')
 
 	assert.equal('23 October 2016 10:30:32', descendResult[0]['date_time'])
 	assert.equal('23 October 2016 10:30:31', descendResult[1]['date_time'])
@@ -100,13 +99,13 @@ it('doSorting() should return list with correct order', () => {
 	assert.equal('23 October 2016 10:30:32', auditlogs[1]['date_time'])
 	assert.equal('23 October 2016 10:30:31', auditlogs[2]['date_time'])
 
-	var ascendResult = PagingUtil.doSorting(auditlogs.slice(0), 'date_time', 'ASCEND')
+	var ascendResult = AuditlogsUtil.doSorting(auditlogs.slice(0), 'date_time', 'ASCEND')
 
 	assert.equal('23 October 2016 10:30:30', ascendResult[0]['date_time'])
 	assert.equal('23 October 2016 10:30:31', ascendResult[1]['date_time'])
 	assert.equal('23 October 2016 10:30:32', ascendResult[2]['date_time'])
 
-	var noOrderResult = PagingUtil.doSorting(auditlogs.slice(0), 'date_time', 'NO_ORDER')
+	var noOrderResult = AuditlogsUtil.doSorting(auditlogs.slice(0), 'date_time', 'NO_ORDER')
 
 	assert.equal('23 October 2016 10:30:30', noOrderResult[0]['date_time'])
 	assert.equal('23 October 2016 10:30:32', noOrderResult[1]['date_time'])
@@ -114,29 +113,29 @@ it('doSorting() should return list with correct order', () => {
 })
 
 it('compareDate() to date_time should return correct order', () => {
-	assert.equal(0, PagingUtil.compareDate('23 October 2016 10:30:30', '23 October 2016 10:30:30'))
-	assert.equal(1, PagingUtil.compareDate('23 October 2016 10:30:31', '23 October 2016 10:30:30'))
-	assert.equal(-1, PagingUtil.compareDate('23 October 2016 10:30:30', '23 October 2016 10:30:31'))
+	assert.equal(0, AuditlogsUtil.compareDate('23 October 2016 10:30:30', '23 October 2016 10:30:30'))
+	assert.equal(1, AuditlogsUtil.compareDate('23 October 2016 10:30:31', '23 October 2016 10:30:30'))
+	assert.equal(-1, AuditlogsUtil.compareDate('23 October 2016 10:30:30', '23 October 2016 10:30:31'))
 })
 
 it('parseToDate() should return a date based on input string', () => {
-	var date0 = PagingUtil.parseToDate('23 October 2016 10:30:32')
+	var date0 = AuditlogsUtil.parseToDate('23 October 2016 10:30:32')
 	assert.equal('2016-10-23 10:30:32', date0.toLocaleString())
 	assert.equal(1477189832000, date0.getTime())
 
-	var date1 = PagingUtil.parseToDate('23 October 2016 10:30:33')
+	var date1 = AuditlogsUtil.parseToDate('23 October 2016 10:30:33')
 	assert.equal('2016-10-23 10:30:33', date1.toLocaleString())
 	assert.equal(1477189833000, date1.getTime())
 
-	var date2 = PagingUtil.parseToDate('23 Oct 2016 10:30:33')
+	var date2 = AuditlogsUtil.parseToDate('23 Oct 2016 10:30:33')
 	assert.equal('2016-10-23 10:30:33', date2.toLocaleString())
 	assert.equal(1477189833000, date2.getTime())
 
-	var date3 = PagingUtil.parseToDate('23 Oct 2016 10:30')
+	var date3 = AuditlogsUtil.parseToDate('23 Oct 2016 10:30')
 	assert.equal('2016-10-23 10:30:00', date3.toLocaleString())
 	assert.equal(1477189833000, date2.getTime())
 
-	var date4 = PagingUtil.parseToDate('23 Oct 2016 00:00:00')
+	var date4 = AuditlogsUtil.parseToDate('23 Oct 2016 00:00:00')
 	assert.equal('2016-10-23 00:00:00', date4.toLocaleString())
 	assert.equal(1477152000000, date4.getTime())
 })
@@ -151,15 +150,15 @@ it('doFilter() should return less data', () => {
 
 	assert.equal(451, jsonObject.auditlogs.length)
 
-	assert.equal(296, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
-	assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
+	assert.equal(296, AuditlogsUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(34, AuditlogsUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-	assert.equal(296, PagingUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
-	assert.equal(34, PagingUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
+	assert.equal(296, AuditlogsUtil.doFilter(jsonObject.auditlogs, 'World Cup').length)
+	assert.equal(34, AuditlogsUtil.doFilter(jsonObject.auditlogs, 'EPC').length)
 
-	assert.equal(451, PagingUtil.doFilter(jsonObject.auditlogs, '').length)
+	assert.equal(451, AuditlogsUtil.doFilter(jsonObject.auditlogs, '').length)
 
-	assert.equal(177, PagingUtil.doFilter(jsonObject.auditlogs, '', null, null, null, null, null,
+	assert.equal(177, AuditlogsUtil.doFilter(jsonObject.auditlogs, '', null, null, null, null, null,
 		'18 September 2016 14:30:10', '23 October 2016 10:30:30').length)
 })
 
