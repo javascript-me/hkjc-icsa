@@ -40,13 +40,27 @@ img {
 	.username {
 		float: right;
 		color: @hkjcGreyLighter;
-		max-width: 200px;
 		padding: 0 29px 0 9px;
 		height: 35px;
 		margin-right: -4px;
 		line-height: 35px;
 		cursor: pointer;
 		position: relative;
+
+		.hello {
+			max-width: 600px;
+			display: inline-block;
+			white-space: nowrap;
+			overflow: hidden;
+			font-family: Roboto-Medium;
+			font-size: 14px;
+			color: #4A4A4A;
+
+			> img {
+				width: 14px;
+				margin-right: 10px;
+			}
+		}
 
 		&:hover {
 			background: #F8F8F8;
@@ -59,25 +73,6 @@ img {
 			.dropdown-menu {
 				display: block;
 			}
-		}
-
-		.hello > span {
-			float: left;
-			font-family: Roboto-Medium;
-			font-size: 14px;
-			color: #4A4A4A;
-
-			> img {
-				width: 14px;
-				margin-right: 10px;
-			}
-		}
-
-		.name {
-			max-width: 90px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 		}
 
 		.dropdown-menu {
