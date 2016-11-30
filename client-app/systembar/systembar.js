@@ -95,7 +95,7 @@ export default class Systembar extends React.Component {
 						<img src='icon/Shape.svg' />Hello, {this.state.info.username}
 					</span>
 					<ul className='dropdown-menu'>
-						<li><a>My Profile</a></li>
+						<li><a href='#/page/myprofile'>My Profile</a></li>
 						<li><a onClick={() => this.showComfirmPopup()}>Logout</a></li>
 					</ul>
 				</div>

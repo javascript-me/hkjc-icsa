@@ -46,5 +46,8 @@ export default {
 			if (!auth) break // TODO
 		}
 		return result
+	},
+	updateProfile () {
+		getProfile()
 	}
 }

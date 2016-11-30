@@ -72,12 +72,12 @@ export default class SearchEnquiryPanel extends React.Component {
 			}
 		}, originState)
 
-		this.setState(this.props.selectedFilters)
-
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	componentDidMount () {
+		this.setState(this.props.selectedFilters)
+
 		tokenKeyPress = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS], () => {
 			this.handleSubmit()
 		})

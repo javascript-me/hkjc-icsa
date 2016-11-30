@@ -8,6 +8,7 @@ import users from './API/users'
 import auditlog from './API/auditlog'
 import userprofile from './API/userprofile'
 import roles from './API/roles'
+import noticeBoard from './API/notice-board'
 import APIconfig from './API/config'
 import config from './config'
 import clock from './API/clock'
@@ -20,6 +21,7 @@ server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
 server.use('/userprofile/', userprofile)
 server.use('/roles/', roles)
+server.use('/notice-board/', noticeBoard)
 server.use('/config/', APIconfig)
 server.use('/basicusers/', baseUserProfile)
 

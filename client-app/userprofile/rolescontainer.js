@@ -29,7 +29,7 @@ TableHeader.propTypes = {
 
 const TableRow = (props) => {
 	return (<tbody>
-		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'} className={classNames({ activeLine: item.checked })}>
+		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'}>
 			<td className='tr-header'><div className={classNames('my-checkbox', { checked: item.checked })} onClick={() => { props.handleItemClick(item) }} /></td>
 			{props.fields.map((rol, idx) => (<td key={rol}>{item[rol]}</td>))}
 		</tr>))}
@@ -61,7 +61,7 @@ export default React.createClass({
 	getInitialState () {
 		this.checkedAll = false
 		this.tableData = []
-		this.currentSortInfo = { index: null, sortType: null }
+		this.currentSortInfo = { index: 0, sortType: 'up' }
 		this.fields = _.map(this.props.header, item => item.field)
 		return {
 			showItems: []
@@ -77,8 +77,36 @@ export default React.createClass({
 			return item.roleName
 		})
 	},
+	sortItemsByCheck (showItems) {
+		let checkedArray = []
+		let unCheckedArray = []
+		showItems.forEach((item) => {
+			if (item.checked) {
+				checkedArray.push(item)
+			} else {
+				unCheckedArray.push(item)
+			}
+		})
+		return checkedArray.concat(unCheckedArray)
+	},
+	doSort (index, items) {
+		let field = this.fields[index]
+		let showItems = _.sortBy(items, (item) => (item[field]))
+		if (this.currentSortInfo.sortType === 'down') {
+			showItems.reverse()
+		}
+		return showItems
+	},
+	handleSort (index) {
+		this.currentSortInfo = {
+			index,
+			sortType: this.currentSortInfo.sortType === 'down' ? 'up' : 'down'
+		}
+		let showItems = this.doSort(index, this.state.showItems)
+		this.setState({ showItems: this.sortItemsByCheck(showItems) })
+	},
 	filterItem (keyword, fields, items) {
-		return _.filter(items, (item, idx) => {
+		let showItems = _.filter(items, (item, idx) => {
 			let result = false
 
 			if (!keyword) {
@@ -93,6 +121,10 @@ export default React.createClass({
 
 			return result
 		})
+
+		showItems = this.doSort(0, showItems)
+
+		return this.sortItemsByCheck(showItems)
 	},
 	initCheckedAll (items) {
 		let allSelected = true
@@ -127,36 +159,13 @@ export default React.createClass({
 		item.checked = !item.checked
 		this.forceUpdate()
 	},
-	handleSort (index) {
-		let field = this.fields[index]
-
-		if (this.currentSortInfo.index !== index || this.currentSortInfo.sortType === 'down') {
-			this.currentSortInfo = {
-				index,
-				sortType: 'up'
-			}
-
-			this.setState({ showItems: _.sortBy(this.state.showItems, (item) => (item[field])) })
-		} else {
-			this.currentSortInfo = {
-				index,
-				sortType: 'down'
-			}
-
-			let reverse = []
-			for (let item of this.state.showItems) {
-				reverse.unshift(item)
-			}
-			this.setState({ showItems: reverse })
-		}
-	},
 	render () {
 		return (
 			<div ref='root' className='roles-container'>
 				<div className='filter-cmp-container'>
 					<div className='body'>
 						<div className='serch-header'>
-							<input type='text' placeholder='Search with keywords & filters' onChange={this.handleInputChange} />
+							<input type='text' maxLength='100' placeholder='Search with keywords & filters' onChange={this.handleInputChange} />
 							<img className='search-icon' src='common/search.svg' />
 						</div>
 						<div className='content'>

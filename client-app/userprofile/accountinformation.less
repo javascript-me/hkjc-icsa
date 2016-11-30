@@ -6,10 +6,10 @@
 	.header {
 		.action {
 			.icon {
-				margin-top: 1px;
-				width: 16px;
-				height: 16px;
-				background-image: url(eventdirectory/func-cc.svg);
+				margin-top: 2px;
+				width: 14px;
+				height: 14px;
+				background-image: url(icon/edit.svg);
 			}
 		}
 	}
@@ -19,7 +19,7 @@
 		min-height: 40px;
 
 		.role-wrapper {
-			height: 100px;
+			height: 88px;
 			overflow: auto;
 			width: 90%;
 		}
@@ -47,6 +47,7 @@
 		background: #FFFFFF;
 		border: 1px solid #ACB8D1;
 		border-radius: 2px;
+		color: #2F5091;
 	}
 
 	.radio-inline {
@@ -63,6 +64,9 @@
 	}
 
 	.color-red {
+		position: absolute;
+		left: 28px;
+		bottom: 6px;
 		color: #E25854;
 		font-family: Roboto-Regular;
 		font-size: 14px;
@@ -81,10 +85,13 @@
 	}
 
 	.popup-wrapper {
+		user-select: none;
+
 		.popup-dialog {
-			top: 18%;
+			top: 50%;
 			left: 50%;
 			margin-left: -318px;
+			margin-top: -278px;
 		}
 	}
 }
