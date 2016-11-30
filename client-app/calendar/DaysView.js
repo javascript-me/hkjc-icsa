@@ -15,7 +15,7 @@ let DateTimePickerDays = React.createClass({
 			<thead key='th' className='top'>
 				<tr key='h'>
 					<th key='p' className='rdtPrev'><span key='pspan' className='icon-arrow-left' onClick={this.props.subtractTime(1, 'months')} /></th>
-					<th key='s' className='rdtSwitch' colSpan='5' data-value={this.props.viewDate.month()}>{ date.format('D MMMM YYYY')}</th>
+					<th key='s' className='rdtSwitch' colSpan='5' data-value={this.props.viewDate.month()}>{ date.format('MMMM YYYY')}</th>
 					<th key='n' className='rdtNext'><span key='nspan' className='icon-arrow-right' onClick={this.props.addTime(1, 'months')} /></th>
 				</tr>
 			</thead>,
@@ -59,7 +59,7 @@ let DateTimePickerDays = React.createClass({
 	renderDays: function () {
 		const date = this.props.viewDate
 		const selected = this.props.selectedDate && this.props.selectedDate.clone()
-		const prevMonth = date.clone().subtract(1, 'months')
+		const prevMonth = date.clone()
 		const currentYear = date.year()
 		const currentMonth = date.month()
 		let weeks = []
@@ -72,8 +72,8 @@ let DateTimePickerDays = React.createClass({
 		let currentDate
 
 		// Go to the last week of the previous month
-		prevMonth.date(prevMonth.daysInMonth()).startOf('week')
-		const lastDay = prevMonth.clone().add(42, 'd')
+		prevMonth.startOf('week')
+		const lastDay = prevMonth.clone().add(35, 'd')
 
 		while (prevMonth.isBefore(lastDay)) {
 			classes = 'rdtDay'
