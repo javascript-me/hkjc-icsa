@@ -4,7 +4,7 @@ import Calendar from 'rc-calendar'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
-import FilterBlock from './filterBlock'
+import FilterBlock from '../filter-block'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Paging from '../paging/paging'
 import Popup from '../popup'
@@ -234,7 +234,7 @@ export default React.createClass({
 		})
 	},
 
-	checkIsDateRangeChanged: function () {
+	checkIsDateRangeNotChanged: function () {
 		let filters = this.state.selectedFilters
 		let originDateRange = this.state.originDateRange
 		let dateTimeFrom
@@ -247,6 +247,7 @@ export default React.createClass({
 				dateTimeTo = filters[i].value
 			}
 		}
+
 		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
 	},
 
@@ -298,10 +299,10 @@ export default React.createClass({
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 		})
-		let isDateRangeChanged = this.checkIsDateRangeChanged()
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
 
 		let filterBlockes = this.state.selectedFilters.filter((f) => {
-			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
+			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeNotChanged) {
 				return false
 			}
 			return true
@@ -311,7 +312,7 @@ export default React.createClass({
 				filter={f}
 				removeEvent={this.removeSearchCriteriaFilter}
 				removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		})
+		}) || []
 
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
@@ -319,24 +320,21 @@ export default React.createClass({
 		let activeContent
 
 		if (this.state.betType === 'football') {
-			activeContent = <div>
-				<div className='table-container '>
-					<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
-				</div>
-				<div className='col-md-12 vertical-gap'>
-					<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
-					{/* START FOOTER EXPORT */}
-					<div className='col-md-4'>
+			activeContent =
+				<div>
+					<div className='table-container '>
+						<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
+					</div>
+					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 							<Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
 								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>
 						</div>
+						<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 				</div>
-				{/* END FOOTER EXPORT */}
-			</div>
 		} else {
 			activeContent = <div className='nopage'>Coming Soon</div>
 		}
@@ -354,19 +352,21 @@ export default React.createClass({
 					{/* Search Critiria Row */}
 					<div className='col-md-12'>
 						<div className='search-criteria-container'>
-							<div className={betTypesContainerClassName}>
-								{betTypes}
-							</div>
-							<div className='keyword-container'>
-								<input type='text' placeholder='Search with keywords & filters'
-									value={this.state.keyword}
-									onClick={this.showMoreFilter}
-									onChange={this.handleKeywordChange}
-									onKeyPress={this.handleKeywordPress}
-									ref='keyword' />
-							</div>
-							<div className='filter-block-container'>
-								{filterBlockes}
+							<div className='search-criteria-container-row'>
+								<div className={betTypesContainerClassName}>
+									{betTypes}
+								</div>
+								<div className='keyword-container'>
+									<input type='text' placeholder='Search with keywords & filters'
+										value={this.state.keyword}
+										onClick={this.showMoreFilter}
+										onChange={this.handleKeywordChange}
+										onKeyPress={this.handleKeywordPress}
+										ref='keyword' />
+								</div>
+								<div className='filter-block-container'>
+									{filterBlockes}
+								</div>
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />

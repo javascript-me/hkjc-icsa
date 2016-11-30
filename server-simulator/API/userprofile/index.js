@@ -1,18 +1,43 @@
 import express from 'express'
 import UserProfileUtil from './userprofile-util'
 import _ from 'lodash'
+import UserProfileListUtil from './userprofilelist-util'
+import PagingService from '../auditlog/paging-service'
 
 const router = express.Router()
 
 const accountProfiles = require('../json/accountprofiles.json')
 const basicUsers = require('../json/baseUserProfile.json')
 
-router.get('/list', (req, res) => {
+/**
+ * @apiGroup UserProfile
+ * @api {POST} /userprofile/list user profile list
+
+ * @apiDescription Search criteria mock API in Audit log page.
+ *
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"auditlogs": [ ... ],
+ *			"pageData": {pages: [ ... ], totalPages: 40 }
+ *		}
+ *
+ *
+ */
+router.post('/list', (req, res) => {
 	let result = accountProfiles.map((item, index) => {
 		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
 		let newItem = Object.assign({}, item, user)
 		return newItem
 	})
+	var filteredAuditlogs = accountProfiles.slice(0)
+
+	var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+
+	result.auditlogs = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
+
+	var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
+	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
 	res.send(result)
 })
 
