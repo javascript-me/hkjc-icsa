@@ -4,7 +4,7 @@ import Calendar from 'rc-calendar'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
-import FilterBlock from './filterBlock'
+import FilterBlock from '../filter-block'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Paging from '../paging/paging'
 import Popup from '../popup'
@@ -234,7 +234,7 @@ export default React.createClass({
 		})
 	},
 
-	checkIsDateRangeChanged: function () {
+	checkIsDateRangeNotChanged: function () {
 		let filters = this.state.selectedFilters
 		let originDateRange = this.state.originDateRange
 		let dateTimeFrom
@@ -247,6 +247,7 @@ export default React.createClass({
 				dateTimeTo = filters[i].value
 			}
 		}
+
 		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
 	},
 
@@ -298,10 +299,10 @@ export default React.createClass({
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 		})
-		let isDateRangeChanged = this.checkIsDateRangeChanged()
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
 
 		let filterBlockes = this.state.selectedFilters.filter((f) => {
-			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
+			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeNotChanged) {
 				return false
 			}
 			return true
@@ -311,7 +312,7 @@ export default React.createClass({
 				filter={f}
 				removeEvent={this.removeSearchCriteriaFilter}
 				removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		})
+		}) || []
 
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter

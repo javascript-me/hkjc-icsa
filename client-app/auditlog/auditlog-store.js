@@ -38,8 +38,9 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 			this._criteriaOption = criteriaOption
 		}
 
+		let profile = LoginService.getProfile() || {}
 		let requestData = {
-			username: LoginService.getProfile().username,
+			username: profile.username,
 			selectedPageNumber: selectedPageNumber,
 			sortingObjectFieldName: this._sortingObject.fieldName,
 			sortingObjectOrder: this._sortingObject.order,

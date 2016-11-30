@@ -1,0 +1,92 @@
+.bottom-noticeboard-container {
+	position: absolute;
+	width: 100%;
+	bottom: 1px;
+	min-width: 715px;
+	z-index: 1000;
+
+	.header-container {
+		width: 100%;
+		height: 40px;
+		background: #305091;
+		padding-top: 10px;
+
+		div {
+			span {
+				padding-right: 5px;
+			}
+		}
+
+		.container-title {
+			margin: auto;
+			right: 0;
+			left: 0;
+			width: 130px;
+			text-align: center;
+			line-height: 28px;
+
+			.header-title {
+				font-family: Roboto-Medium;
+				font-size: 14px;
+				color: #FFFFFF;
+				line-height: 18px;
+			}
+		}
+	}
+
+	.messages-container {
+		width: 100%;
+		height: 130px;
+		background: #FFFFFF;
+	}
+}
+
+.right-noticeboard-container {
+	width: 288px;
+	position: fixed;
+	bottom: 1px;
+	top: 103px; /*Height of Systembar + height of Menubar*/
+	right: 1px;
+	z-index: 10000;
+
+	.header-container {
+		width: 100%;
+		height: 40px;
+		background: #305091;
+
+		div {
+			span {
+				padding-right: 5px;
+			}
+		}
+
+		.container-title {
+			.header-title {
+				font-family: Roboto-Medium;
+				font-size: 14px;
+				color: #FFFFFF;
+				line-height: 18px;
+			}
+		}
+
+		.noticeboard-icon-container {
+			padding: 10px;
+			display: inline-block;
+		}
+
+		.noticeboard-list-container {
+			display: inline-block;
+		}
+
+		.noticeboard-settings-container {
+			padding: 10px;
+			display: inline-block;
+		}
+	}
+
+	.messages-container {
+		width: 100%;
+		height: 100%;
+		background: #FFFFFF;
+	}
+}
