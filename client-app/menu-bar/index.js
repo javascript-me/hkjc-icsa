@@ -119,7 +119,7 @@ export const ThirdLevelOnly = (props) => {
 		return (<div className='third-level-only'>
 			<div className='third-level-only-container'>
 				{props.data && props.data.map((item, idx) => (
-					<Link className='third-only-item' key={item.text}>{item.text}</Link>))}
+					<Link className='third-only-item' to={item.link} key={item.text}>{item.text}</Link>))}
 			</div>
 		</div>)
 	}
