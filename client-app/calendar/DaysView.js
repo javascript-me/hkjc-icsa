@@ -125,24 +125,18 @@ let DateTimePickerDays = React.createClass({
 		this.props.updateSelectedDate(event, true)
 	},
 
-	onHourChange: function(e){
-		if(isNaN(this.refs.hour.value) || this.refs.hour.value > 23 || this.refs.hour.value < 0)
-		{
-			this.refs.hour.value = this.props.selectedDate.format("HH")
-		}
-		else
-		{
+	onHourChange: function (e) {
+		if (isNaN(this.refs.hour.value) || this.refs.hour.value > 23 || this.refs.hour.value < 0) {
+			this.refs.hour.value = this.props.selectedDate.format('HH')
+		} else {
 			this.props.onHourChange(e)
 		}
 	},
 
-	onMinutesChange: function(e){
-		if(isNaN(this.refs.minutes.value) || this.refs.minutes.value > 59 || this.refs.minutes.value < 0)
-		{
-			this.refs.minutes.value = this.props.selectedDate.format("MM")
-		}
-		else
-		{
+	onMinutesChange: function (e) {
+		if (isNaN(this.refs.minutes.value) || this.refs.minutes.value > 59 || this.refs.minutes.value < 0) {
+			this.refs.minutes.value = this.props.selectedDate.format('MM')
+		} else {
 			this.props.onMinutesChange(e)
 		}
 	},
@@ -160,9 +154,9 @@ let DateTimePickerDays = React.createClass({
 		return 	<tfoot key='tf'>
 			<tr>
 				<td colSpan='7' className='rdtTimeToggle'>
-					<input key='hour' ref="hour" type='text' className='form-control input-hour' maxLength="2" onChange={(e) => this.onHourChange(e)} defaultValue={date.format('HH')} />
+					<input key='hour' ref='hour' type='text' className='form-control input-hour' maxLength='2' onChange={(e) => this.onHourChange(e)} defaultValue={date.format('HH')} />
 					<span key='separator-hour'>:</span>
-					<input key='minutes' ref="minutes" type='text' className='form-control input-minutes' maxLength="2" onChange={(e) => this.onMinutesChange(e)} defaultValue={date.format('mm')} />
+					<input key='minutes' ref='minutes' type='text' className='form-control input-minutes' maxLength='2' onChange={(e) => this.onMinutesChange(e)} defaultValue={date.format('mm')} />
 				</td>
 			</tr>
 		</tfoot>
