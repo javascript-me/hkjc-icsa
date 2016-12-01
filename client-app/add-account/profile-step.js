@@ -9,6 +9,7 @@ import {
 	ProfileButtons,
 	AccountInformation
 } from '../userprofile/userprofile.js'
+import UserStore from '../userlist/user-store'
 
 class ProfileStep extends Component {
 	constructor (props) {
@@ -45,10 +46,12 @@ class ProfileStep extends Component {
 
 	onCreateClick () {
 		let postData = {}
-		postData = Object.assign({}, {userBasic: this.props.userBasic}, {accountProfiles: this.refs.accountCmp.getData()})
+		let accountProfiles = Object.assign(this.refs.accountCmp.getData(), {createApprovalStatus: 1, updateApprovalStatus: 0, lastModifiedUserID: 0, id: '2055', assignedUserRoles: []})
+		postData = Object.assign({}, {userBasic: this.props.userBasic}, {accountProfiles})
 		$.post('./API/userprofile/add', {userData: postData})
 		.then((res) => {
 			if (res.status) {
+				UserStore.searchAuditlogs(1, {fieldName: 'userID', order: 'DESCEND'}, null)
 				this.props.setStep(0)
 				Pubsub.publish(Pubsub.FliterRefreshEvent)
 			} else {
