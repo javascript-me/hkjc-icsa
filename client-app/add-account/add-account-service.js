@@ -8,7 +8,7 @@ export default class AddAccountProcess {
 		this.userList = []
 	}
 	getAccountData () {
-		return $.post('./API/basicusers/getById')
+		return $.post('./API/userprofile/outsidedata')
 	}
 
 }

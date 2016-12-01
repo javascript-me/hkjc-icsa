@@ -71,7 +71,7 @@ export default class Systembar extends React.Component {
 			if (num === 0) {
 				this.setState({showOther: false, text: 'Are you sure you want to log out now?'})
 			} else {
-				this.setState({text: 'Do you want to logout the system?'})
+				this.setState({text: 'Do you want to log out of the system?'})
 			}
 			this.refs.logout.show()
 		})
@@ -96,11 +96,11 @@ export default class Systembar extends React.Component {
 					</span>
 					<ul className='dropdown-menu'>
 						<li><a href='#/page/myprofile'>My Profile</a></li>
-						<li><a onClick={() => this.showComfirmPopup()}>Logout</a></li>
+						<li><a onClick={() => this.showComfirmPopup()}>Log out</a></li>
 					</ul>
 				</div>
-				<Overlay hideOnOverlayClicked ref='logout' title='Logout' onConfirm={() => this.logout()} showOther={this.state.showOther} otherBtn='My Tasks' confirmBtn='Logout' onOther={() => this.goOther()}>
-					{ this.state.showOther ? <p>You still have <span className='warning'>{this.state.taskNum} of outstanding task</span> need to be completed.</p> : null }
+				<Overlay hideOnOverlayClicked ref='logout' title='Log out' onConfirm={() => this.logout()} showOther={this.state.showOther} otherBtn='My Tasks' confirmBtn='Log out' onOther={() => this.goOther()}>
+					{ this.state.showOther ? <p>You still have <span className='warning'>{this.state.taskNum} of outstanding task(s)</span> which have not been completed.</p> : null }
 					<p>{this.state.text}</p>
 				</Overlay>
 			</div>
