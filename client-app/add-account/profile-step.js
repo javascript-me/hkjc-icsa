@@ -50,10 +50,10 @@ class ProfileStep extends Component {
 		)
 	}
 	onCreateClick () {
-		if(this.props.userBasic.displayName != this.refs.accountCmp.getData().displayName){
+		if (this.props.userBasic.displayName !== this.refs.accountCmp.getData().displayName) {
 			this.props.userBasic.displayName = this.refs.accountCmp.getData().displayName
 		}
-		this.setState({lastUserName:this.refs.accountCmp.getData().displayName})
+		this.setState({lastUserName: this.refs.accountCmp.getData().displayName})
 		this.refs.overlay.show()
 	}
 
@@ -61,7 +61,7 @@ class ProfileStep extends Component {
 		let postData = {}
 		let accountProfiles = Object.assign(this.refs.accountCmp.getData(), {createApprovalStatus: 1, updateApprovalStatus: 0, lastModifiedUserID: 0, id: '2055'})
 		postData = Object.assign({}, {accountProfiles}, {userBasic: this.props.userBasic})
-		
+
 		$.post('./API/userprofile/add', {userData: postData})
 		.then((res) => {
 			if (res.status) {

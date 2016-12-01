@@ -19,6 +19,7 @@
 			.content {
 				// margin: 0;
 				padding: 0;
+				overflow-x: hidden;
 
 				.th-header {
 					position: relative;
@@ -35,6 +36,36 @@
 			}
 
 			table {
+				position: relative;
+
+				thead {
+					display: block;
+					width: 545px;
+					position: fixed;
+					z-index: 99;
+
+					> tr > th {
+						height: 38px;
+						border-bottom: 0;
+					}
+				}
+
+				tbody {
+					overflow-y: scroll;
+					display: block;
+					padding-top: 38px;
+
+					> tr {
+						width: 545px;
+						display: inline-block;
+						border-top: 1px solid #DDDDDD;
+
+						> td {
+							border-top: 0;
+						}
+					}
+				}
+
 				th {
 					font-weight: normal;
 				}
