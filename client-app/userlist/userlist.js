@@ -52,7 +52,7 @@ export default React.createClass({
 
 	getInitialState () {
 		return {
-			pageTitle: 'Home \\ Global Tool & Administration \\ User',
+			pageTitle: 'Home \\ Global Tools & Administration \\ User',
 			editMode: false,
 			userprofiles: [],
 			isShowingMoreFilter: false,
