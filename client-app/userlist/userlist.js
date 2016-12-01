@@ -173,15 +173,14 @@ export default React.createClass({
 		})
 	},
 
-<<<<<<< HEAD
 	setEditMode () {
 		this.setState({editMode: !this.state.editMode})
-=======
+	},
+
 	onClickRow (rowItem) {
 		if (rowItem.userID) {
 			location.href = '#/page/userprofile/' + rowItem.userID
 		}
->>>>>>> 7f23f2a2bf1012f3437bcfcb4dcbbfd224ce84db
 	},
 
 	render () {
