@@ -49,7 +49,9 @@ export default React.createClass({
 		return {}
 	},
 	componentWillReceiveProps (nextProps) {
-		this._cloneData(nextProps.userAccount)
+		if (!_.isEqual(nextProps.userAccount, this.props.userAccount)) {
+			this._cloneData(nextProps.userAccount)
+		}
 	},
 	_cloneData (userAccount) {
 		this.userAccount = _.clone(userAccount)
