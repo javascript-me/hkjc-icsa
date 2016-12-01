@@ -1,6 +1,15 @@
 import assign from 'object-assign'
 import {EventEmitter} from 'events'
+import Moment from 'moment'
 import LoginService from '../login/login-service'
+
+function formatTime (time) {
+	if (!time) {
+		return ''
+	}
+
+	return Moment(time, 'DD MMM YYYY HH:mm').format('DD/MM/YYYY')
+}
 
 const UserStore = assign({}, EventEmitter.prototype, {
 
@@ -50,8 +59,13 @@ const UserStore = assign({}, EventEmitter.prototype, {
 		let filters = (this._criteriaOption && this._criteriaOption.filters) ? this._criteriaOption.filters : []
 
 		for (let i in filters) {
-			requestData[filters[i].name] = filters[i].value
+			let value = filters[i].value
+			if (filters[i].name === 'dateTimeFrom' || filters[i].name === 'dateTimeTo') {
+				value = formatTime(value)
+			}
+			requestData[filters[i].name] = value
 		}
+
 		return requestData
 	},
 
