@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="37" width="670" height="254"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="670" height="254" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <mask id="mask-3" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="300" height="30" fill="white">
+            <use xlink:href="#(null)"></use>
+        </mask>
+        <rect id="path-4" x="0" y="0" width="300" height="30" rx="2"></rect>
+        <mask id="mask-5" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="300" height="30" fill="white">
+            <use xlink:href="#path-4"></use>
+        </mask>
+        <rect id="path-6" x="0" y="0" width="60" height="26" rx="2"></rect>
+        <mask id="mask-7" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="60" height="26" fill="white">
+            <use xlink:href="#path-6"></use>
+        </mask>
+        <rect id="path-8" x="0" y="0" width="60" height="26" rx="2"></rect>
+        <mask id="mask-9" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="60" height="26" fill="white">
+            <use xlink:href="#path-8"></use>
+        </mask>
+        <rect id="path-10" x="0" y="0" width="60" height="26" rx="2"></rect>
+        <mask id="mask-11" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="60" height="26" fill="white">
+            <use xlink:href="#path-10"></use>
+        </mask>
+        <rect id="path-12" x="0" y="0" width="60" height="26" rx="2"></rect>
+        <mask id="mask-13" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="60" height="26" fill="white">
+            <use xlink:href="#path-12"></use>
+        </mask>
+        <rect id="path-14" x="0" y="0" width="60" height="26" rx="2"></rect>
+        <mask id="mask-15" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="60" height="26" fill="white">
+            <use xlink:href="#path-14"></use>
+        </mask>
+        <rect id="path-16" x="0" y="1" width="18" height="18" rx="9"></rect>
+        <mask id="mask-17" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="18" height="18" fill="white">
+            <use xlink:href="#path-16"></use>
+        </mask>
+        <rect id="path-18" x="0" y="1" width="18" height="18" rx="9"></rect>
+        <mask id="mask-19" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="18" height="18" fill="white">
+            <use xlink:href="#path-18"></use>
+        </mask>
+        <rect id="path-20" x="0" y="0" width="240" height="30" rx="2"></rect>
+        <mask id="mask-21" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="240" height="30" fill="white">
+            <use xlink:href="#path-20"></use>
+        </mask>
+        <rect id="path-22" x="0" y="0" width="240" height="30" rx="2"></rect>
+        <mask id="mask-23" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="240" height="30" fill="white">
+            <use xlink:href="#path-22"></use>
+        </mask>
+        <rect id="path-24" x="-5.68434189e-14" y="0" width="134" height="30" rx="4"></rect>
+        <mask id="mask-25" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="134" height="30" fill="white">
+            <use xlink:href="#path-24"></use>
+        </mask>
+    </defs>
+    <g id="❏-B2-My-Profile-&amp;-User-Profile-(Spec)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UserProfile_03(Add/Edit-Role_01)@2x" transform="translate(-1484.000000, -125.000000)">
+            <g id="Account-Information_UserProfile-(Edit-mode)" transform="translate(937.000000, 128.000000)">
+                <g id="Account-Information" stroke-width="1" fill-rule="evenodd">
+                    <use id="Rectangle" stroke="#305091" mask="url(#mask-2)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <text font-family="Roboto-Medium, Roboto" font-size="20" font-weight="400" fill="#0C2963">
+                        <tspan x="0" y="19">Account Information</tspan>
+                    </text>
+                    <g id="Group-23" transform="translate(30.000000, 57.000000)">
+                        <text id="System-Name" font-family="Roboto-Medium, Roboto" font-size="16" font-weight="400" line-spacing="22" fill="#0C2963">
+                            <tspan x="0" y="15">System Name</tspan>
+                        </text>
+                        <g id="component-/-input-text(long)" stroke="#ACB8D1" mask="url(#mask-3)" stroke-width="2" fill="#FFFFFF">
+                            <g transform="translate(0.000000, 29.000000)" id="Group-4" stroke-width="1" stroke="none" fill="none">
+                                <g>
+                                    <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-5)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-4"></use>
+                                    <text id="user-name" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" line-spacing="20" fill="#2F5091">
+                                        <tspan x="10" y="18">user name</tspan>
+                                    </text>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="roles" transform="translate(30.000000, 169.000000)">
+                        <g id="Group">
+                            <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-7)" stroke-width="2" xlink:href="#path-6"></use>
+                            <text id="Admin" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" fill="#4A4A4A">
+                                <tspan x="10" y="18">Admin</tspan>
+                            </text>
+                        </g>
+                        <g id="Group" transform="translate(0.000000, 36.000000)">
+                            <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-9)" stroke-width="2" xlink:href="#path-8"></use>
+                            <text id="Role4" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" fill="#4A4A4A">
+                                <tspan x="13" y="18">Role4</tspan>
+                            </text>
+                        </g>
+                        <g id="Group" transform="translate(140.000000, 0.000000)">
+                            <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-11)" stroke-width="2" xlink:href="#path-10"></use>
+                            <text id="Role2" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" fill="#4A4A4A">
+                                <tspan x="13" y="18">Role2</tspan>
+                            </text>
+                        </g>
+                        <g id="Group" transform="translate(70.000000, 0.000000)">
+                            <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-13)" stroke-width="2" xlink:href="#path-12"></use>
+                            <text id="Role1" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" fill="#4A4A4A">
+                                <tspan x="14" y="18">Role1</tspan>
+                            </text>
+                        </g>
+                        <g id="Group" transform="translate(210.000000, 0.000000)">
+                            <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-15)" stroke-width="2" xlink:href="#path-14"></use>
+                            <text id="Role3" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" fill="#4A4A4A">
+                                <tspan x="14" y="18">Role3</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <g id="Assigned-User-Role" transform="translate(30.000000, 136.000000)" font-size="16" font-family="Roboto-Medium, Roboto" line-spacing="22" fill="#0C2963" font-weight="400">
+                        <text id="Assigned-User-Role-/">
+                            <tspan x="0" y="15">Assigned User Role / Privilege</tspan>
+                        </text>
+                    </g>
+                    <g id="Group-3" transform="translate(447.000000, 91.000000)">
+                        <text id="Inactive" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" line-spacing="20" fill="#4A4A4A">
+                            <tspan x="28" y="13">Inactive</tspan>
+                        </text>
+                        <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-17)" stroke-width="2" xlink:href="#path-16"></use>
+                    </g>
+                    <g id="Group-2" transform="translate(360.000000, 91.000000)">
+                        <rect id="Rectangle-104-Copy" fill="#2F5091" x="5" y="6" width="8" height="8" rx="4"></rect>
+                        <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-19)" stroke-width="2" xlink:href="#path-18"></use>
+                        <text id="Active" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" line-spacing="20" fill="#4A4A4A">
+                            <tspan x="28" y="13">Active</tspan>
+                        </text>
+                    </g>
+                    <g id="Group-4" transform="translate(360.000000, 136.000000)">
+                        <text id="Activation-since" font-family="Roboto-Medium, Roboto" font-size="16" font-weight="400" line-spacing="22" fill="#0C2963">
+                            <tspan x="0" y="15">Activation since</tspan>
+                        </text>
+                        <g id="component-/-select-time" transform="translate(0.000000, 29.000000)">
+                            <g id="Select-data">
+                                <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-21)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-20"></use>
+                                <g id="Icon---Event-Management" transform="translate(217.000000, 6.000000)" fill="#2F5091">
+                                    <g id="Group">
+                                        <path d="M2.42962963,15.1805385 L4.26065926,15.1805385 L4.26065926,13.3495089 L2.42962963,13.3495089 L2.42962963,15.1805385 Z M2.42962963,12.7509089 L4.26065926,12.7509089 L4.26065926,10.9198793 L2.42962963,10.9198793 L2.42962963,12.7509089 Z M4.85925926,15.1805385 L6.69028889,15.1805385 L6.69028889,13.3495089 L4.85925926,13.3495089 L4.85925926,15.1805385 Z M4.85925926,12.7509089 L6.69028889,12.7509089 L6.69028889,10.9198793 L4.85925926,10.9198793 L4.85925926,12.7509089 Z M4.85925926,10.3212793 L6.69028889,10.3212793 L6.69028889,8.49024963 L4.85925926,8.49024963 L4.85925926,10.3212793 Z M7.28888889,15.1805385 L9.11991852,15.1805385 L9.11991852,13.3495089 L7.28888889,13.3495089 L7.28888889,15.1805385 Z M7.28888889,12.7509089 L9.11991852,12.7509089 L9.11991852,10.9198793 L7.28888889,10.9198793 L7.28888889,12.7509089 Z M7.28888889,10.3212793 L9.11991852,10.3212793 L9.11991852,8.49024963 L7.28888889,8.49024963 L7.28888889,10.3212793 Z M9.71851852,15.1805385 L11.5495481,15.1805385 L11.5495481,13.3495089 L9.71851852,13.3495089 L9.71851852,15.1805385 Z M9.71851852,12.7509089 L11.5495481,12.7509089 L11.5495481,10.9198793 L9.71851852,10.9198793 L9.71851852,12.7509089 Z M9.71851852,10.3212793 L11.5495481,10.3212793 L11.5495481,8.49024963 L9.71851852,8.49024963 L9.71851852,10.3212793 Z M12.1481481,12.7509089 L13.9791778,12.7509089 L13.9791778,10.9198793 L12.1481481,10.9198793 L12.1481481,12.7509089 Z M12.1481481,10.3212793 L13.9791778,10.3212793 L13.9791778,8.49024963 L12.1481481,8.49024963 L12.1481481,10.3212793 Z M0,16.6945015 C0,17.5333311 0.679992593,18.21302 1.51851852,18.21302 L14.8814815,18.21302 C15.7200074,18.21302 16.4,17.5333311 16.4,16.6945015 L16.4,6.06487185 L0,6.06487185 L0,16.6945015 Z" id="Fill-1"></path>
+                                        <path d="M11.237037,3.03703704 C11.5726296,3.03703704 11.8444444,2.76491852 11.8444444,2.42962963 L11.8444444,1.51851852 L11.8444444,0.607407407 C11.8444444,0.271814815 11.5726296,0 11.237037,0 C10.9017481,0 10.6296296,0.271814815 10.6296296,0.607407407 L10.6296296,1.51851852 L10.6296296,2.42962963 C10.6296296,2.76491852 10.9017481,3.03703704 11.237037,3.03703704" id="Fill-3"></path>
+                                        <path d="M14.8814815,1.51851852 L14.8623481,1.51851852 L14.1601852,1.51851852 L12.4518519,1.51851852 L12.4518519,2.42962963 C12.4518519,3.0992963 11.9070074,3.64444444 11.237037,3.64444444 C10.5670667,3.64444444 10.0222222,3.0992963 10.0222222,2.42962963 L10.0222222,1.51851852 L8.80740741,1.51851852 L7.59259259,1.51851852 L6.37777778,1.51851852 L6.37777778,2.42962963 C6.37777778,3.0992963 5.83293333,3.64444444 5.16296296,3.64444444 C4.49299259,3.64444444 3.94814815,3.0992963 3.94814815,2.42962963 L3.94814815,1.51851852 L1.51851852,1.51851852 C0.679992593,1.51851852 0,2.19820741 0,3.03703704 L0,5.45755556 L16.4,5.45755556 L16.4,3.03703704 C16.4,2.19820741 15.7200074,1.51851852 14.8814815,1.51851852" id="Fill-4"></path>
+                                        <path d="M5.16296296,3.03703704 C5.49855556,3.03703704 5.77037037,2.76491852 5.77037037,2.42962963 L5.77037037,1.51851852 L5.77037037,0.607407407 C5.77037037,0.271814815 5.49855556,0 5.16296296,0 C4.82767407,0 4.55555556,0.271814815 4.55555556,0.607407407 L4.55555556,1.51851852 L4.55555556,2.42962963 C4.55555556,2.76491852 4.82767407,3.03703704 5.16296296,3.03703704" id="Fill-5"></path>
+                                    </g>
+                                </g>
+                                <text id="Select-Time" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" line-spacing="30" fill="#2F5091">
+                                    <tspan x="10" y="13">Select Time</tspan>
+                                </text>
+                            </g>
+                        </g>
+                    </g>
+                    <text id="Deactivation-date" font-family="Roboto-Medium, Roboto" font-size="16" font-weight="400" line-spacing="22" fill="#0C2963">
+                        <tspan x="360" y="230">Deactivation date</tspan>
+                    </text>
+                    <g id="component-/-select-time" transform="translate(360.000000, 244.000000)">
+                        <g id="Select-data">
+                            <use id="Rectangle-104" stroke="#ACB8D1" mask="url(#mask-23)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-22"></use>
+                            <g id="Icon---Event-Management" transform="translate(217.000000, 6.000000)" fill="#2F5091">
+                                <g id="Group">
+                                    <path d="M2.42962963,15.1805385 L4.26065926,15.1805385 L4.26065926,13.3495089 L2.42962963,13.3495089 L2.42962963,15.1805385 Z M2.42962963,12.7509089 L4.26065926,12.7509089 L4.26065926,10.9198793 L2.42962963,10.9198793 L2.42962963,12.7509089 Z M4.85925926,15.1805385 L6.69028889,15.1805385 L6.69028889,13.3495089 L4.85925926,13.3495089 L4.85925926,15.1805385 Z M4.85925926,12.7509089 L6.69028889,12.7509089 L6.69028889,10.9198793 L4.85925926,10.9198793 L4.85925926,12.7509089 Z M4.85925926,10.3212793 L6.69028889,10.3212793 L6.69028889,8.49024963 L4.85925926,8.49024963 L4.85925926,10.3212793 Z M7.28888889,15.1805385 L9.11991852,15.1805385 L9.11991852,13.3495089 L7.28888889,13.3495089 L7.28888889,15.1805385 Z M7.28888889,12.7509089 L9.11991852,12.7509089 L9.11991852,10.9198793 L7.28888889,10.9198793 L7.28888889,12.7509089 Z M7.28888889,10.3212793 L9.11991852,10.3212793 L9.11991852,8.49024963 L7.28888889,8.49024963 L7.28888889,10.3212793 Z M9.71851852,15.1805385 L11.5495481,15.1805385 L11.5495481,13.3495089 L9.71851852,13.3495089 L9.71851852,15.1805385 Z M9.71851852,12.7509089 L11.5495481,12.7509089 L11.5495481,10.9198793 L9.71851852,10.9198793 L9.71851852,12.7509089 Z M9.71851852,10.3212793 L11.5495481,10.3212793 L11.5495481,8.49024963 L9.71851852,8.49024963 L9.71851852,10.3212793 Z M12.1481481,12.7509089 L13.9791778,12.7509089 L13.9791778,10.9198793 L12.1481481,10.9198793 L12.1481481,12.7509089 Z M12.1481481,10.3212793 L13.9791778,10.3212793 L13.9791778,8.49024963 L12.1481481,8.49024963 L12.1481481,10.3212793 Z M0,16.6945015 C0,17.5333311 0.679992593,18.21302 1.51851852,18.21302 L14.8814815,18.21302 C15.7200074,18.21302 16.4,17.5333311 16.4,16.6945015 L16.4,6.06487185 L0,6.06487185 L0,16.6945015 Z" id="Fill-1"></path>
+                                    <path d="M11.237037,3.03703704 C11.5726296,3.03703704 11.8444444,2.76491852 11.8444444,2.42962963 L11.8444444,1.51851852 L11.8444444,0.607407407 C11.8444444,0.271814815 11.5726296,0 11.237037,0 C10.9017481,0 10.6296296,0.271814815 10.6296296,0.607407407 L10.6296296,1.51851852 L10.6296296,2.42962963 C10.6296296,2.76491852 10.9017481,3.03703704 11.237037,3.03703704" id="Fill-3"></path>
+                                    <path d="M14.8814815,1.51851852 L14.8623481,1.51851852 L14.1601852,1.51851852 L12.4518519,1.51851852 L12.4518519,2.42962963 C12.4518519,3.0992963 11.9070074,3.64444444 11.237037,3.64444444 C10.5670667,3.64444444 10.0222222,3.0992963 10.0222222,2.42962963 L10.0222222,1.51851852 L8.80740741,1.51851852 L7.59259259,1.51851852 L6.37777778,1.51851852 L6.37777778,2.42962963 C6.37777778,3.0992963 5.83293333,3.64444444 5.16296296,3.64444444 C4.49299259,3.64444444 3.94814815,3.0992963 3.94814815,2.42962963 L3.94814815,1.51851852 L1.51851852,1.51851852 C0.679992593,1.51851852 0,2.19820741 0,3.03703704 L0,5.45755556 L16.4,5.45755556 L16.4,3.03703704 C16.4,2.19820741 15.7200074,1.51851852 14.8814815,1.51851852" id="Fill-4"></path>
+                                    <path d="M5.16296296,3.03703704 C5.49855556,3.03703704 5.77037037,2.76491852 5.77037037,2.42962963 L5.77037037,1.51851852 L5.77037037,0.607407407 C5.77037037,0.271814815 5.49855556,0 5.16296296,0 C4.82767407,0 4.55555556,0.271814815 4.55555556,0.607407407 L4.55555556,1.51851852 L4.55555556,2.42962963 C4.55555556,2.76491852 4.82767407,3.03703704 5.16296296,3.03703704" id="Fill-5"></path>
+                                </g>
+                            </g>
+                            <text id="Select-Time" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" line-spacing="30" fill="#2F5091">
+                                <tspan x="10" y="13">Select Time</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <text id="Account:" font-family="Roboto-Medium, Roboto" font-size="16" font-weight="400" line-spacing="22" fill="#0C2963">
+                    <tspan x="360" y="72">Account:</tspan>
+                </text>
+            </g>
+            <g id="add-btn" transform="translate(1473.000000, 118.000000)">
+                <use id="BG" stroke="#ACB8D1" mask="url(#mask-25)" stroke-width="2" fill="#F6F6F6" xlink:href="#path-24"></use>
+                <path d="M21.1298554,7.8365902 L21.3362631,7.63041631 C22.1777715,6.78986123 23.5432379,6.78986123 24.3688687,7.63041631 C25.2103771,8.4709714 25.2103771,9.83489097 24.3688687,10.6595865 L24.162461,10.8657604 L21.1298554,7.8365902 L21.1298554,7.8365902 Z M20.1930819,8.78816199 L11.6668557,17.28887 L11,21 L14.7153388,20.3180402 L23.2415651,11.8014727 L20.1930819,8.78816199 L20.1930819,8.78816199 Z" id="Shape" fill="#305091"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -15,7 +15,7 @@ let DateTimePickerDays = React.createClass({
 			<thead key='th' className='top'>
 				<tr key='h'>
 					<th key='p' className='rdtPrev'><span key='pspan' className='icon-arrow-left' onClick={this.props.subtractTime(1, 'months')} /></th>
-					<th key='s' className='rdtSwitch' colSpan='5' data-value={this.props.viewDate.month()}>{ date.format('D MMMM YYYY')}</th>
+					<th key='s' className='rdtSwitch' colSpan='5' data-value={this.props.viewDate.month()}>{ date.format('MMMM YYYY')}</th>
 					<th key='n' className='rdtNext'><span key='nspan' className='icon-arrow-right' onClick={this.props.addTime(1, 'months')} /></th>
 				</tr>
 			</thead>,
@@ -59,7 +59,7 @@ let DateTimePickerDays = React.createClass({
 	renderDays: function () {
 		const date = this.props.viewDate
 		const selected = this.props.selectedDate && this.props.selectedDate.clone()
-		const prevMonth = date.clone().subtract(1, 'months')
+		const prevMonth = date.clone()
 		const currentYear = date.year()
 		const currentMonth = date.month()
 		let weeks = []
@@ -72,8 +72,8 @@ let DateTimePickerDays = React.createClass({
 		let currentDate
 
 		// Go to the last week of the previous month
-		prevMonth.date(prevMonth.daysInMonth()).startOf('week')
-		const lastDay = prevMonth.clone().add(42, 'd')
+		prevMonth.startOf('week')
+		const lastDay = prevMonth.clone().add(35, 'd')
 
 		while (prevMonth.isBefore(lastDay)) {
 			classes = 'rdtDay'
@@ -125,6 +125,22 @@ let DateTimePickerDays = React.createClass({
 		this.props.updateSelectedDate(event, true)
 	},
 
+	onHourChange: function (e) {
+		if (isNaN(this.refs.hour.value) || this.refs.hour.value > 23 || this.refs.hour.value < 0) {
+			this.refs.hour.value = this.props.selectedDate.format('HH')
+		} else {
+			this.props.onHourChange(e)
+		}
+	},
+
+	onMinutesChange: function (e) {
+		if (isNaN(this.refs.minutes.value) || this.refs.minutes.value > 59 || this.refs.minutes.value < 0) {
+			this.refs.minutes.value = this.props.selectedDate.format('MM')
+		} else {
+			this.props.onMinutesChange(e)
+		}
+	},
+
 	renderDay: function (props, currentDate) {
 		return <td {...props}>{currentDate.date()}</td>
 	},
@@ -138,9 +154,9 @@ let DateTimePickerDays = React.createClass({
 		return 	<tfoot key='tf'>
 			<tr>
 				<td colSpan='7' className='rdtTimeToggle'>
-					<input key='hour' type='text' className='form-control input-hour' onChange={this.props.onHourChange} defaultValue={date.format('HH')} />
+					<input key='hour' ref='hour' type='text' className='form-control input-hour' maxLength='2' onChange={(e) => this.onHourChange(e)} defaultValue={date.format('HH')} />
 					<span key='separator-hour'>:</span>
-					<input key='minutes' type='text' className='form-control input-minutes' onChange={this.props.onMinutesChange} defaultValue={date.format('mm')} />
+					<input key='minutes' ref='minutes' type='text' className='form-control input-minutes' maxLength='2' onChange={(e) => this.onMinutesChange(e)} defaultValue={date.format('mm')} />
 				</td>
 			</tr>
 		</tfoot>

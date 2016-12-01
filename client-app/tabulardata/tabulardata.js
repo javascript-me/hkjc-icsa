@@ -13,7 +13,7 @@ export default React.createClass({
 	getInitialState () {
 		/* Checks whether check box needs to be add in headers array */
 		// TODO: This code should be moved somewhere.
-		if (this.props.displayCheckBox) {
+		if (this.props.displayCheckBox && this.props.headers[0].fieldName !== '') {
 			this.props.headers.splice(0, 0, {'id': 0, label: '', fieldName: '', sortingClass: '', addCheckBox: true})
 		}
 		return {}
@@ -96,13 +96,14 @@ export default React.createClass({
 		}
 		return <tbody>
 			{this.props.dataCollection.map(
+
 				(row) => {
 					return <tr>
-						{this.props.displayCheckBox ? <td><input type='checkbox' className='checkbox' name='user-profile' /></td> : null}
+						{this.props.displayCheckBox ? <td className='checkbox-td'><input type='checkbox' className='checkbox' name='user-profile' /></td> : null}
 						{this.props.headers.map(
 							(header, i) => {
 								if (header.fieldName !== '') {
-									return <td>{this.formatColumnVal(row[header.fieldName])}</td>
+									return <td>{row[header.fieldName] ? row[header.fieldName] : ''}</td>
 								}
 							}
 						)}
@@ -136,9 +137,13 @@ export default React.createClass({
 					{
 					this.props.headers.map(
 						(header) => {
-							return <th>
-								{ this.props.displayCheckBox && header.addCheckBox ? <input type='checkbox' className='checkbox pull-right' id='checkall' onChange={(e) => this.checkAll(e)} /> : null }
-								<span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span>
+							let thClass = ''
+							if (header.addCheckBox && header.fieldName === '') {
+								thClass = 'checkbox-th'
+							}
+							return <th className={thClass}>
+								{ this.props.displayCheckBox && header.addCheckBox ? <input type='checkbox' className='checkbox' id='checkall' onChange={(e) => this.checkAll(e)} /> : null }
+								{ header.fieldName === '' ? '' : <span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span> }
 							</th>
 						}
 					)

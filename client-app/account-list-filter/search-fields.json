@@ -1,0 +1,40 @@
+{
+  "position" : [
+    {"id": 1, "value": "Trading Solutions Analyst"},
+    {"id": 2, "value": "Trading Supervisor"},
+    {"id": 3, "value": "Trading Support"},
+    {"id": 4, "value": "Trading Support Analyst"},
+    {"id": 5, "value": "Trading User Administrator"},
+    {"id": 6, "value": "BOCC Part-Time"},
+    {"id": 7, "value": "Live Betting Algorithm Comprehensive Detail"},
+    {"id": 8, "value": "BOCC Manager"},
+    {"id": 9, "value": "Finance Compliance Officer"},
+    {"id": 10, "value": "Finance Compliance Manager"},
+    {"id": 11, "value": "Finance Compliance Controller"},
+    {"id": 12, "value": "Finance Compliance User Administrator"},
+    {"id": 13, "value": "Marketing Manager"},
+    {"id": 14, "value": "PA Manager"},
+    {"id": 15, "value": "Claim Manager"}
+  ],
+  "userRole" : [
+    {"id": 1, "value": "Trading Solutions Analyst"},
+    {"id": 2, "value": "Trading Supervisor"},
+    {"id": 3, "value": "Trading Support"},
+    {"id": 4, "value": "Trading Support Analyst"},
+    {"id": 5, "value": "Trading User Administrator"},
+    {"id": 6, "value": "BOCC Part-Time"},
+    {"id": 7, "value": "Live Betting Algorithm Comprehensive Detail"},
+    {"id": 8, "value": "BOCC Manager"},
+    {"id": 9, "value": "Finance Compliance Officer"},
+    {"id": 10, "value": "Finance Compliance Manager"},
+    {"id": 11, "value": "Finance Compliance Controller"},
+    {"id": 12, "value": "Finance Compliance User Administrator"},
+    {"id": 13, "value": "Marketing Manager"},
+    {"id": 14, "value": "PA Manager"},
+    {"id": 15, "value": "Claim Manager"}
+  ],
+  "accountStatus" : [
+    {"id": 1, "value": "Active"},
+    {"id": 2, "value": "Inactive"}
+  ]
+}

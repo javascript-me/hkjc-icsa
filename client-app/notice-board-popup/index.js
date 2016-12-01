@@ -1,6 +1,5 @@
 import React from 'react'
 import LoginService from '../login/login-service'
-
 const settings = { BOTTOM: 'bottom', RIGHT: 'right' }
 export default React.createClass({
 	displayName: 'NoticeboardPopup',
@@ -8,9 +7,7 @@ export default React.createClass({
 		onChange: React.PropTypes.func
 	},
 	getInitialState () {
-		let userNoticeboardSettings = LoginService.getNoticeBoardSettings()
-
-		return { setting: userNoticeboardSettings.display || 'bottom' }
+		return {setting: LoginService.getNoticeBoardSettings().display}
 	},
 	onSettingChange (e) {},
 	changeSetting (e) {

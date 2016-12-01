@@ -5,7 +5,6 @@ import LoginService from '../login/login-service'
 import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
-
 const getAllNoticesPromise = async (username) => {
 	let notices = null
 
@@ -17,7 +16,6 @@ const getAllNoticesPromise = async (username) => {
 
 	return notices
 }
-
 const updateUserNoticeBoardSettingsPromise = async (username, display) => {
 	let userProfile = null
 
@@ -56,30 +54,28 @@ export default React.createClass({
 	},
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
-		let userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
 		let noticePromise = getAllNoticesPromise(userProfile.username)
 		let allNotices
+		let unreadNotices
 		let self = this
 
 		self.setState({
-			displaySettings: userNoticeboardSettings.display || 'bottom'
+			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
 		})
 
 		noticePromise.then((notices) => {
 			allNotices = notices || []
-			self.setNoticesInfoIntoState(allNotices)
-		})
-	},
-	setNoticesInfoIntoState (allNotices) {
-		let unreadNotices = allNotices.filter((notice) => {
-			return notice.alert_status === 'New'
-		})
 
-		this.setState({
-			noticeBoxData: {
-				allNotices: allNotices,
-				unreadNotices: unreadNotices
-			}
+			unreadNotices = allNotices.filter((notice) => {
+				return notice.alert_status === 'New'
+			})
+
+			self.setState({
+				noticeBoxData: {
+					allNotices: allNotices,
+					unreadNotices: unreadNotices
+				}
+			})
 		})
 	},
 	openPopup () {
@@ -90,11 +86,9 @@ export default React.createClass({
 		let userProfile = LoginService.getProfile()
 		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
 		let userNoticeboardSettings = null
-
 		settingPromise.then((userProfile) => {
 			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-
-			self.updateSet(userNoticeboardSettings.display || 'bottom')
+			self.updateSet(userNoticeboardSettings.display)
 		})
 	},
 	updateSet (setting) {
@@ -133,19 +127,14 @@ export default React.createClass({
 			}
 		})
 	},
-
-	getHeadTitle () {
-		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
-			return e.priority === 'Critical' || e.priority === 'High'
-		})
-
-		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + criticalOrHighNotices.length + ')'
+	clearselectedSettings () {
+		this.setState({selectedSettings: ''})
 	},
 
 	render () {
 		return (
 			<div>
-				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings}>
+				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
 					<NoticeboardPopup onChange={this.onChangeSetting} />
 				</Popup>
 				<div className={this.getClassName()}>
@@ -156,17 +145,13 @@ export default React.createClass({
 						</div>
 						<div className='container-title'>
 							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>{this.getHeadTitle()}</span>
+							<span className='header-title'>Noticeboard 8(4)</span>
 						</div>
 					</div>
 					<div className='messages-container'>
 						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices}
-							visible={this.state.allNoticesVisible}
-							displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices}
-							visible={this.state.unreadNoticesVisible}
-							displayPosition={this.state.displaySettings} />
+						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} />
+						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} />
 					</div>
 				</div>
 			</div>
