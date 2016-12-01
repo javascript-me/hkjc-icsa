@@ -61,7 +61,13 @@ export default React.createClass({
 			this.refs.submit.disabled = false
 		}
 		if (this.refs.password.value !== '') {
-			this.setState({showMaskPwd: true})
+			this.setState({showMaskPwd: true}, () => {
+				if (this.refs.password.type === 'password') {
+					this.refs.btn.text = 'show'
+				} else {
+					this.refs.btn.text = 'hide'
+				}
+			})
 		} else {
 			this.setState({showMaskPwd: false})
 		}
@@ -71,9 +77,6 @@ export default React.createClass({
 	},
 	typePwd (event) {
 		this.setState({password: event.target.value})
-		if (event.target.value !== '') {
-			this.setState({showMaskPwd: true})
-		}
 	},
 	changeType () {
 		if (this.refs.password.type === 'password') {
