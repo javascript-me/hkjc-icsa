@@ -11,6 +11,10 @@ const getProfile = () => {
 	return _.clone(profile)
 }
 
+const getTasksNum = (data) => {
+	return $.get('api/users/getTasks', data)
+}
+
 const postUpdateNoticeBoardSettings = (data) => {
 	return $.post('api/users/updateNoticeBoardDisplaySettings', data)
 }
@@ -51,6 +55,9 @@ export default {
 	logout () {
 		profile = null
 		PubSub.publish(PubSub.LOGIN_CHANGE)
+	},
+	getTasksNum () {
+		return getTasksNum()
 	},
 	access (feature, level) {
 		const result = false
