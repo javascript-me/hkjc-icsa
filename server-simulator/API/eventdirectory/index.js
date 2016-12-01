@@ -1,4 +1,5 @@
 import express from 'express'
+import EventDirectoryUtil from './event-directory-util'
 const router = express.Router()
 
 const eventdirectory = require('../json/eventdirectory.json')
@@ -39,15 +40,8 @@ const eventdirectory = require('../json/eventdirectory.json')
  */
 router.post('/', (req, res) => {
 	const keyword = req.body.keyword
-	let result = {result: []}
-
-	if (keyword === '') {
-		result.result = eventdirectory.ALL
-	} else 	if (keyword === 'Premier' || keyword === 'Premier League') {
-		result.result = eventdirectory.Premier
-	} else 	if (keyword === 'ARS') {
-		result.result = eventdirectory.ARS
-	}
+	let result = {}
+	result.result = EventDirectoryUtil.doFilter(eventdirectory, keyword)
 
 	res.send(result)
 })
