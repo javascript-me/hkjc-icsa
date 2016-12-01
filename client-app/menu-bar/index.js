@@ -5,19 +5,45 @@ import LoginService from '../login/login-service'
 import PubSub from '../pubsub'
 import menuData from './menuBarData.js'
 import EventDirectory from '../eventdirectory/eventdirectory'
+import Noticeboard from '../notice-board/notice-board'
+import NoticeBoardService from '../notice-board/notice-board-service'
 
-let token = null
+let loginChangeToken = null
+
+const getNoticeCountPromise = async (username) => {
+	let count = 0
+
+	try {
+		count = await NoticeBoardService.getRemindCount(username)
+	} catch (ex) {
+
+	}
+
+	return count
+}
+
 class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
-		this.modeChange = this.modeChange.bind(this)
+		this.showHideNoticeBoard = this.showHideNoticeBoard.bind(this)
 		this.state = {
 			slimMode: false,
+			showNoticeBoard: false,
 			menuBarShouldShow: LoginService.hasProfile(),
-			userProfile: LoginService.getProfile()
+			userProfile: LoginService.getProfile(),
+			noticeRemindCount: 0
 		}
 	}
+
+	showHideNoticeBoard () {
+		if (this.state.showNoticeBoard) {
+			this.setState({ showNoticeBoard: false })
+		} else {
+			this.setState({ showNoticeBoard: true })
+		}
+	}
+
 	render () {
 		let menuBarData = (this.state.userProfile && this.state.userProfile.username === 'allgood') ? menuData.menuList1 : menuData.menuList2
 		return (
@@ -42,21 +68,43 @@ class MenuBar extends Component {
 							</div>
 						))}
 					</div>
-					<div className='toggle-btn' onClick={this.modeChange}>c</div>
-					<div className='message'>Message</div>
+					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
+					<div className='message'>
+						<i className='icon-notification ' onClick={this.showHideNoticeBoard}>
+							<img src='icon/notification.svg' />
+							{
+								this.state.noticeRemindCount > 0
+								? <span className='message-count'>{this.state.noticeRemindCount}</span>
+								: ''
+							}
+
+						</i>
+					</div>
 				</div>
+				{ this.state.showNoticeBoard ? <Noticeboard isSlim={this.state.slimMode} /> : null }
 			</div>)
 	}
+
 	modeChange () {
 		this.setState({slimMode: !this.state.slimMode})
 	}
+
 	componentDidMount () {
-		token = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
-			this.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: LoginService.getProfile()})
+		let self = this
+		let userProfile = LoginService.getProfile()
+		let noticePromise = getNoticeCountPromise(userProfile.username)
+
+		noticePromise.then((noticeRemindCount) => {
+			self.setState({noticeRemindCount: noticeRemindCount})
+		})
+
+		loginChangeToken = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
+			self.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: userProfile})
 		})
 	}
+
 	componentWillUnmount () {
-		PubSub.unsubscribe(token)
+		PubSub.unsubscribe(loginChangeToken)
 	}
 
 }
@@ -104,7 +152,7 @@ export const ThirdLevelOnly = (props) => {
 		return (<div className='third-level-only'>
 			<div className='third-level-only-container'>
 				{props.data && props.data.map((item, idx) => (
-					<Link className='third-only-item' key={item.text}>{item.text}</Link>))}
+					<Link className='third-only-item' to={item.link} key={item.text}>{item.text}</Link>))}
 			</div>
 		</div>)
 	}
@@ -129,6 +177,7 @@ const SecondLevelMenu = (props) => {
 				</div>))}
 			</div>
 		</div>
+
     )
 }
 

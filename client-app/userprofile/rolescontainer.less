@@ -1,0 +1,94 @@
+.roles-container {
+	.filter-cmp-container {
+		user-select: none;
+		height: auto;
+
+		.body {
+			padding-bottom: 0;
+
+			.serch-header {
+				input {
+					font-family: Roboto-Regular;
+					font-size: 16px;
+					color: #9B9B9B;
+					letter-spacing: 0;
+					line-height: 30px;
+				}
+			}
+
+			.content {
+				// margin: 0;
+				padding: 0;
+				overflow-x: hidden;
+
+				.th-header {
+					position: relative;
+					width: 52px;
+
+					.my-checkbox {
+						background-color: #FFFFFF;
+					}
+				}
+
+				.tr-header {
+					width: 52px;
+				}
+			}
+
+			table {
+				position: relative;
+
+				thead {
+					display: block;
+					width: 545px;
+					position: fixed;
+					z-index: 99;
+
+					> tr > th {
+						height: 38px;
+						border-bottom: 0;
+					}
+				}
+
+				tbody {
+					overflow-y: scroll;
+					display: block;
+					padding-top: 38px;
+
+					> tr {
+						width: 545px;
+						display: inline-block;
+						border-top: 1px solid #DDDDDD;
+
+						> td {
+							border-top: 0;
+						}
+					}
+				}
+
+				th {
+					font-weight: normal;
+				}
+
+				td {
+					padding-left: 24px;
+				}
+			}
+
+			.sort-icon {
+				padding-left: 24px;
+
+				&.sort-down::after {
+					height: 8px;
+					width: 8px;
+				}
+
+				&.sort-up::before,
+				&:not(.sort-down):hover::before {
+					height: 8px;
+					width: 8px;
+				}
+			}
+		}
+	}
+}

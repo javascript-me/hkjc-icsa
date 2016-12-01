@@ -1,10 +1,9 @@
 import React from 'react'
 import Moment from 'moment'
-import Calendar from 'rc-calendar'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
-import FilterBlock from './filterBlock'
+import FilterBlock from '../filter-block'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Paging from '../paging/paging'
 import Popup from '../popup'
@@ -46,6 +45,28 @@ let DEFAULT_BET_TYPE = 'football'
 
 export default React.createClass({
 	displayName: 'Audit',
+
+	headers: [
+		{'id': 1, label: 'Date/Time', fieldName: 'date_time', sortingClass: 'down-arrow', addCheckBox: false},
+		{'id': 2, label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 3, label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 4, label: 'Type', fieldName: 'Type', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 5, label: 'Function/Module', fieldName: 'function_module', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 6, label: 'Function Event Detail', fieldName: 'function_event_detail', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 7, label: 'User Role', fieldName: 'user_role', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 8, label: 'IP Address', fieldName: 'ip_address', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 9, label: 'Back End ID', fieldName: 'backend_id', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 10, label: 'Front End ID', fieldName: 'frontend_id', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 11, label: 'Home', fieldName: 'home', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 12, label: 'Away', fieldName: 'away', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 13, label: 'K.O. Time/ Game Start Time', fieldName: 'ko_time_game_start_game', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 14, label: 'Bet Type', fieldName: 'bet_type', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 15, label: 'Event Name', fieldName: 'event_name', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 16, label: 'Error Code', fieldName: 'error_code', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 17, label: 'Error Message Content', fieldName: 'error_message_content', sortingClass: 'no-arrow', addCheckBox: false},
+		{'id': 18, label: 'Device', fieldName: 'device', sortingClass: 'no-arrow', addCheckBox: false}
+	],
+
 	getInitialState () {
 		let originDateTimeFrom = getOrginDateTimeFrom()
 		let originDateTimeTo = getOrginDateTimeTo()
@@ -212,7 +233,7 @@ export default React.createClass({
 		})
 	},
 
-	checkIsDateRangeChanged: function () {
+	checkIsDateRangeNotChanged: function () {
 		let filters = this.state.selectedFilters
 		let originDateRange = this.state.originDateRange
 		let dateTimeFrom
@@ -225,6 +246,7 @@ export default React.createClass({
 				dateTimeTo = filters[i].value
 			}
 		}
+
 		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
 	},
 
@@ -260,6 +282,10 @@ export default React.createClass({
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
+	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
+		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
+	},
+
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 			'hover-enabled': !this.state.isShowingMoreFilter
@@ -272,10 +298,10 @@ export default React.createClass({
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 		})
-		let isDateRangeChanged = this.checkIsDateRangeChanged()
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
 
 		let filterBlockes = this.state.selectedFilters.filter((f) => {
-			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeChanged) {
+			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeNotChanged) {
 				return false
 			}
 			return true
@@ -285,7 +311,7 @@ export default React.createClass({
 				filter={f}
 				removeEvent={this.removeSearchCriteriaFilter}
 				removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		})
+		}) || []
 
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
@@ -293,24 +319,21 @@ export default React.createClass({
 		let activeContent
 
 		if (this.state.betType === 'football') {
-			activeContent = <div>
-				<div className='table-container '>
-					<TabularData />
-				</div>
-				<div className='col-md-12 vertical-gap'>
-					<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
-					{/* START FOOTER EXPORT */}
-					<div className='col-md-4'>
+			activeContent =
+				<div>
+					<div className='table-container '>
+						<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
+					</div>
+					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 							<Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
 								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>
 						</div>
+						<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 				</div>
-				{/* END FOOTER EXPORT */}
-			</div>
 		} else {
 			activeContent = <div className='nopage'>Coming Soon</div>
 		}
@@ -322,25 +345,24 @@ export default React.createClass({
 					<h1>Audit Trail</h1>
 				</div>
 				<div className='row page-content'>
-					<div className='col-md-6'>
-						<Calendar className='hidden' />
-					</div>
 					{/* Search Critiria Row */}
 					<div className='col-md-12'>
 						<div className='search-criteria-container'>
-							<div className={betTypesContainerClassName}>
-								{betTypes}
-							</div>
-							<div className='keyword-container'>
-								<input type='text' placeholder='Search with keywords & filters'
-									value={this.state.keyword}
-									onClick={this.showMoreFilter}
-									onChange={this.handleKeywordChange}
-									onKeyPress={this.handleKeywordPress}
-									ref='keyword' />
-							</div>
-							<div className='filter-block-container'>
-								{filterBlockes}
+							<div className='search-criteria-container-row'>
+								<div className={betTypesContainerClassName}>
+									{betTypes}
+								</div>
+								<div className='keyword-container'>
+									<input type='text' placeholder='Search with keywords & filters'
+										value={this.state.keyword}
+										onClick={this.showMoreFilter}
+										onChange={this.handleKeywordChange}
+										onKeyPress={this.handleKeywordPress}
+										ref='keyword' />
+								</div>
+								<div className='filter-block-container'>
+									{filterBlockes}
+								</div>
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />

@@ -1,0 +1,126 @@
+.notice-box {
+	&.not-visible {
+		display: none;
+	}
+
+	ul.list-box,
+	ul.list-box-right {
+		li.blink {
+			animation-duration: 0.7s;
+			animation-name: opacity-blink;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+			animation-timing-function: linear;
+		}
+	}
+
+	ul.list-box {
+		list-style-type: none;
+		padding: 0;
+		height: 120px;
+		overflow: auto;
+
+		li ul.row {
+			list-style-type: none;
+			margin: 10px 10px 0;
+			padding: 0;
+
+			.notice-date {
+				font-family: Roboto-Regular;
+				font-size: 14px;
+				color: #9D9D9D;
+				line-height: 20px;
+			}
+
+			li {
+				display: inline;
+				padding: 0 5px;
+			}
+
+			li.notice-title {
+				display: block;
+				margin-bottom: -20px;
+				font-family: Roboto-Regular;
+				color: #9D9D9D;
+
+				&.bold-text {
+					font-family: Roboto-Medium;
+					color: #305091;
+				}
+
+				.wrap-text {
+					font-size: 14px;
+					letter-spacing: -0.16px;
+					line-height: 20px;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+					margin-left: 185px;
+					margin-right: 50px;
+					position: relative;
+					top: -20px;
+				}
+			}
+		}
+	}
+
+	ul.list-box-right {
+		list-style-type: none;
+		padding: 0;
+		bottom: 0;
+		position: absolute;
+		top: 70px;
+		overflow-y: auto;
+
+		li ul.row {
+			list-style-type: none;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-top: 10px;
+			padding: 10px;
+			background: #EEF1F8;
+			border-radius: 6px;
+
+			.notice-date {
+				font-family: Roboto-Regular;
+				font-size: 14px;
+				color: #9D9D9D;
+				line-height: 20px;
+				position: relative;
+				top: 2px;
+				left: 8px;
+			}
+
+			li {
+				display: inline;
+			}
+
+			li.notice-title {
+				display: block;
+				font-family: Roboto-Regular;
+				color: #9D9D9D;
+
+				&.bold-text {
+					font-family: Roboto-Medium;
+					color: #305091;
+				}
+
+				.wrap-text {
+					font-size: 14px;
+					letter-spacing: -0.16px;
+					line-height: 20px;
+				}
+			}
+		}
+	}
+
+	@keyframes opacity-blink {
+		from {
+			opacity: 1;
+		}
+
+		to {
+			opacity: 0.5;
+		}
+	}
+}

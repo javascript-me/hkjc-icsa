@@ -6,16 +6,24 @@ import bodyParser from 'body-parser'
 import eventdirectory from './API/eventdirectory'
 import users from './API/users'
 import auditlog from './API/auditlog'
+
+import noticeBoard from './API/notice-board'
+import userprofile from './API/userprofile'
+import roles from './API/roles'
 import APIconfig from './API/config'
 import config from './config'
 import clock from './API/clock'
-
+import baseUserProfile from './API/basicalUser'
 const server = express.Router()
 server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
 server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
+server.use('/notice-board/', noticeBoard)
+server.use('/userprofile/', userprofile)
+server.use('/roles/', roles)
 server.use('/config/', APIconfig)
+server.use('/basicusers/', baseUserProfile)
 
 const app = express()
 app.use(
