@@ -111,7 +111,7 @@ export default React.createClass({
 									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
-								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit} disabled={!this.state.disabled}>Login</button>
+								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit} disabled={this.state.disabled}>Log in</button>
 							</div>
 						</div>
 					</div>
