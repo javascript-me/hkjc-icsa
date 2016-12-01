@@ -13,7 +13,7 @@ export default React.createClass({
 	getInitialState () {
 		/* Checks whether check box needs to be add in headers array */
 		// TODO: This code should be moved somewhere.
-		if (this.props.displayCheckBox) {
+		if (this.props.displayCheckBox  && this.props.headers[0].fieldName !== "") {
 			this.props.headers.splice(0, 0, {'id': 0, label: '', fieldName: '', sortingClass: '', addCheckBox: true})
 		}
 		return {}
