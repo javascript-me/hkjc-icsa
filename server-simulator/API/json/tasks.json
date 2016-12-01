@@ -1,0 +1,18 @@
+{
+	"allgood": {
+		"userID": "allgood",
+		"status": 200,
+		"tasks": {
+			
+		},
+		"num": 3
+	},
+	"somegood": {
+		"userID": "somegood",
+		"status": 200,
+		"tasks": {
+
+		},
+		"num": 6
+	}
+}
