@@ -8,7 +8,7 @@ export default React.createClass({
 		onChange: React.PropTypes.func
 	},
 	getInitialState () {
-		console.log("Initial=>"+LoginService.getNoticeBoardSettings().display)
+		console.log('Initial=>' + LoginService.getNoticeBoardSettings().display)
 		return { setting: LoginService.getNoticeBoardSettings().display}
 	},
 	onSettingChange (e) {},
