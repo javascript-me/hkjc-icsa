@@ -89,7 +89,7 @@ export default React.createClass({
 	},
 
 	componentWillUnmount: function () {
-		UserStore.removeChangeListener(this.onChange.bind(this))
+		UserStore.removeChangeListener(this.onChange)
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(reFlashToken)
 		PubSub.unsubscribe(searchToken)
