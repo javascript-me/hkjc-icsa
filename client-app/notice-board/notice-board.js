@@ -99,11 +99,30 @@ export default React.createClass({
 		this.refs.noticeboardPopup.show()
 	},
 	applySettings () {
+		var self = this
+		if (this.state.selectedSettings === '') {
+			let requestData = {
+				username: LoginService.getProfile().username
+			}
+			if (latestDisplaySettings !== self.state.displaySettings) {
+				$.ajax({
+					url: 'api/users/getNoticeBoardDisplaySettings',
+					data: requestData,
+					type: 'POST',
+					success: function (data) {
+						self.setState({
+							selectedSettings: data.noticeboardSettings.display
+						})
+					},
+					error: function (xhr, status, error) {
+					}
+				})
+			}
+		}
 		let requestData = {
 			username: LoginService.getProfile().username,
 			display: this.state.selectedSettings
 		}
-		var self = this
 		$.ajax({
 			url: 'api/users/updateNoticeBoardDisplaySettings',
 			data: requestData,
@@ -126,7 +145,6 @@ export default React.createClass({
 		let requestData = {
 			username: LoginService.getProfile().username
 		}
-
 		var self = this
 		if (latestDisplaySettings !== self.state.displaySettings) {
 			$.ajax({
