@@ -5,7 +5,7 @@ import LoginService from '../login/login-service'
 import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
-
+let latestDisplaySettings = ''
 const getAllNoticesPromise = async (username) => {
 	let notices = null
 
@@ -16,18 +16,6 @@ const getAllNoticesPromise = async (username) => {
 	}
 
 	return notices
-}
-
-const updateUserNoticeBoardSettingsPromise = async (username, display) => {
-	let userProfile = null
-
-	try {
-		userProfile = await LoginService.updateNoticeBoardSettings(username, display)
-	} catch (ex) {
-
-	}
-
-	return userProfile
 }
 
 export default React.createClass({
@@ -45,7 +33,34 @@ export default React.createClass({
 
 			noticeBoxData: {
 				allNotices: [],
+				// [
+				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
+				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
+				// 	{icon: 'Medium', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true}
+				// ],
+
 				unreadNotices: []
+				// [
+				// 	{icon: 'Critical', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true},
+				// 	{icon: 'Low', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: false},
+				// 	{icon: 'Medium', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true}
+				// ]
 			},
 
 			tabData: [
@@ -56,45 +71,67 @@ export default React.createClass({
 	},
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
-		let userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
 		let noticePromise = getAllNoticesPromise(userProfile.username)
 		let allNotices
+		let unreadNotices
 		let self = this
 
 		self.setState({
-			displaySettings: userNoticeboardSettings.display || 'bottom'
+			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
 		})
 
 		noticePromise.then((notices) => {
 			allNotices = notices || []
-			self.setNoticesInfoIntoState(allNotices)
-		})
-	},
-	setNoticesInfoIntoState (allNotices) {
-		let unreadNotices = allNotices.filter((notice) => {
-			return notice.alert_status === 'New'
-		})
 
-		this.setState({
-			noticeBoxData: {
-				allNotices: allNotices,
-				unreadNotices: unreadNotices
-			}
+			unreadNotices = allNotices.filter((notice) => {
+				return notice.alert_status === 'New'
+			})
+
+			self.setState({
+				noticeBoxData: {
+					allNotices: allNotices,
+					unreadNotices: unreadNotices
+				}
+			})
 		})
 	},
 	openPopup () {
 		this.refs.noticeboardPopup.show()
 	},
 	applySettings () {
-		let self = this
-		let userProfile = LoginService.getProfile()
-		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
-		let userNoticeboardSettings = null
-
-		settingPromise.then((userProfile) => {
-			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-
-			self.updateSet(userNoticeboardSettings.display || 'bottom')
+		var self = this
+		if (this.state.selectedSettings === '') {
+			let requestData = {
+				username: LoginService.getProfile().username
+			}
+			if (latestDisplaySettings !== self.state.displaySettings) {
+				$.ajax({
+					url: 'api/users/getNoticeBoardDisplaySettings',
+					data: requestData,
+					type: 'POST',
+					success: function (data) {
+						self.setState({
+							selectedSettings: data.noticeboardSettings.display
+						})
+					},
+					error: function (xhr, status, error) {
+					}
+				})
+			}
+		}
+		let requestData = {
+			username: LoginService.getProfile().username,
+			display: this.state.selectedSettings
+		}
+		$.ajax({
+			url: 'api/users/updateNoticeBoardDisplaySettings',
+			data: requestData,
+			type: 'POST',
+			success: function (data) {
+				self.updateSet(data.noticeboardSettings.display)
+			},
+			error: function (xhr, status, error) {
+			}
 		})
 	},
 	updateSet (setting) {
@@ -105,7 +142,24 @@ export default React.createClass({
 	},
 
 	getClassName () {
-		if (this.state.displaySettings === 'right') {
+		let requestData = {
+			username: LoginService.getProfile().username
+		}
+		var self = this
+		if (latestDisplaySettings !== self.state.displaySettings) {
+			$.ajax({
+				url: 'api/users/getNoticeBoardDisplaySettings',
+				data: requestData,
+				type: 'POST',
+				success: function (data) {
+					self.setState({ displaySettings: data.noticeboardSettings.display })
+					latestDisplaySettings = data.noticeboardSettings.display
+				},
+				error: function (xhr, status, error) {
+				}
+			})
+		}
+		if (self.state.displaySettings === 'right') {
 			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
 		} else {
 			return 'bottom-noticeboard-container'
@@ -134,14 +188,6 @@ export default React.createClass({
 		})
 	},
 
-	getHeadTitle () {
-		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
-			return e.priority === 'Critical' || e.priority === 'High'
-		})
-
-		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + criticalOrHighNotices.length + ')'
-	},
-
 	render () {
 		return (
 			<div>
@@ -156,17 +202,13 @@ export default React.createClass({
 						</div>
 						<div className='container-title'>
 							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>{this.getHeadTitle()}</span>
+							<span className='header-title'>Noticeboard 8(4)</span>
 						</div>
 					</div>
 					<div className='messages-container'>
 						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices}
-							visible={this.state.allNoticesVisible}
-							displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices}
-							visible={this.state.unreadNoticesVisible}
-							displayPosition={this.state.displaySettings} />
+						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} />
+						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} />
 					</div>
 				</div>
 			</div>
