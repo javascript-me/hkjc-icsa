@@ -20,6 +20,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setMinutes(0)
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
+	dateTimeFrom.setFullYear(1900)
 	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
 }
 
@@ -30,6 +31,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setMinutes(59)
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
+	dateTimeTo.setFullYear(2050)
 	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 }
 
@@ -50,7 +52,7 @@ export default React.createClass({
 
 	getInitialState () {
 		return {
-			pageTitle: 'Home \\ Tool & Administration \\ User',
+			pageTitle: 'Home \\ Global Tool & Administration \\ User',
 			editMode: false,
 			userprofiles: [],
 			isShowingMoreFilter: false,
@@ -231,12 +233,12 @@ export default React.createClass({
 						<div className='filter-block-container'>
 							{filterBlockes}
 						</div>
-						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching}>
+						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className="user-list-serch-pannel">
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
 					</div>
 					<div className='content-header-right add-user-btn' onClick={() => { this.setAddStep(1) }} style={{display: this.state.editMode ? 'block' : 'none'}}>
-						+ add user
+						+ Add User
 					</div>
 				</div>
 				<div className='content-table'>
