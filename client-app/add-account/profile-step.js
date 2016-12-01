@@ -24,6 +24,7 @@ class ProfileStep extends Component {
 		this.getUserProfile = this.getUserProfile.bind(this)
 		this.onCreateClick = this.onCreateClick.bind(this)
 		this.onCancel = this.onCancel.bind(this)
+		this.onResetClick = this.onResetClick.bind(this)
 	}
 	render () {
 		return (
@@ -77,6 +78,9 @@ class ProfileStep extends Component {
 	}
 	componentDidMount () {
 		this.getUserProfile()
+	}
+	onResetClick () {
+		this.refs.accountCmp.resetData()
 	}
 
 	async getUserProfile () {
