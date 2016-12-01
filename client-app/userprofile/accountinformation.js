@@ -28,7 +28,7 @@ function formatTime (time) {
 		return ''
 	}
 
-	return Moment(time, 'DD/MM/YYYY').format('MMM DD, YYYY')
+	return Moment(time, 'DD/MM/YYYY').format('DD MMM, YYYY')
 }
 
 export default React.createClass({
@@ -211,7 +211,7 @@ export default React.createClass({
 							{this.renderUserRoles(userAccount)}
 						</div>
 						<div className={classNames('col col-xs-6', {'has-error': !isValidDateTime(this.userAccountEx.activationDate)})}>
-							<DateTime inputFor='' dateTime={this.userAccountEx.activationDate} handleVal={this.onActivationDateChange} />
+							<DateTime inputFor='' disabled={userAccount.status !== 'Active'} dateTime={this.userAccountEx.activationDate} handleVal={this.onActivationDateChange} />
 						</div>
 					</div>
 

@@ -14,7 +14,6 @@ export default React.createClass({
 		if (profile) {
 			this.userID = profile.userID
 		}
-		this.pageTitle = 'Home \\ Tool & Adminstration \\ User'
 		this.h1Title = 'My Profile'
 		return {
 			userBasic: {},
@@ -29,7 +28,7 @@ export default React.createClass({
 	render () {
 		return (
 			<div ref='root' className='my-profile'>
-				<ProfileTabs pageTitle={this.pageTitle} h1Title={this.h1Title}>
+				<ProfileTabs h1Title={this.h1Title}>
 					<ProfileContainer>
 						<BasicInformation userBasic={this.state.userBasic} />
 
