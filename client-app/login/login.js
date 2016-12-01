@@ -30,6 +30,7 @@ export default React.createClass({
 		if ($('input[type=password]').value !== '' && $('input[type=text]').value !== '') {
 			this.setState({disabled: true})
 		}
+		this.refs.submit.disabled = true
 	},
 	submit () {
 		doSubmit(this.refs.username.value, this.refs.password.value).then((data) => {
@@ -70,10 +71,8 @@ export default React.createClass({
 	},
 	typePwd (event) {
 		this.setState({password: event.target.value})
-	},
-	clearPassword (event) {
-		if (this.refs.password.value !== '') {
-			this.setState({password: '', showMaskPwd: false, disabled: false})
+		if (event.target.value !== '') {
+			this.setState({showMaskPwd: true})
 		}
 	},
 	changeType () {
@@ -107,17 +106,18 @@ export default React.createClass({
 								</div>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='password'>Password</label>
-									<input ref='password' onFocus={this.clearPassword} value={this.state.password} type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
+									<input ref='password' value={this.state.password} type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
 									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
-								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit} disabled={this.state.disabled}>Log in</button>
+								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Log in</button>
 							</div>
 						</div>
 					</div>
 					<Overlay hideOnOverlayClicked ref='overlay' title={this.state.title} showCancel={this.state.showCancel} onConfirm={() => this.gotoLogin()} confirmBtn={this.state.confirmBtn}>
 						<p className='warning'>{this.state.msg}</p>
 					</Overlay>
+					<div className='mask' />
 				</div>
 			</div>
 			)
