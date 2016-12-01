@@ -60,7 +60,7 @@ router.post('/list', (req, res) => {
 
 	var filteredResult = UserProfileListUtil.doFilter(
 		allUser,
-		req.body.keyWord,
+		req.body.keyword,
 		req.body.position,
 		req.body.userRole,
 		req.body.accountStatus,
