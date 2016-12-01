@@ -83,14 +83,14 @@ export default React.createClass({
 		this.refs.noticeboardPopup.show()
 	},
 	applySettings () {
-		let self = this
-		let userProfile = LoginService.getProfile()
-		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
-		let userNoticeboardSettings = null
-		settingPromise.then((userProfile) => {
-			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-			self.updateSet(userNoticeboardSettings.display || 'bottom')
-		})
+			let self = this
+			let userProfile = LoginService.getProfile()
+			let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
+			let userNoticeboardSettings = null
+			settingPromise.then((userProfile) => {
+				userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
+				self.updateSet(userNoticeboardSettings.display)
+			})
 	},
 	updateSet (setting) {
 		this.setState({displaySettings: setting})
@@ -128,11 +128,14 @@ export default React.createClass({
 			}
 		})
 	},
+	clearselectedSettings (){
+		this.setState({selectedSettings: ""})
+	},
 
 	render () {
 		return (
 			<div>
-				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings}>
+				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
 					<NoticeboardPopup onChange={this.onChangeSetting} />
 				</Popup>
 				<div className={this.getClassName()}>
