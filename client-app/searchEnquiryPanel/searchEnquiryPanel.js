@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchEnquiryDataService from './searchEnquiryPanel-service'
 import Moment from 'moment'
-import DateTime from '../dateTime/dateTime'
+import Calendar from '../calendar'
 import SelectCom from '../select/select'
 import PubSub from '../pubsub'
 
@@ -55,7 +55,8 @@ const originState = {
 	errorDateTimeFrom: 1,
 	errorDateTimeTo: 1,
 	errorDateTimeGameStart: 1,
-	errorIPAddress: 1
+	errorIPAddress: 1,
+	calendarVersion: 0
 }
 
 let tokenKeyPress = null
@@ -110,6 +111,21 @@ export default class SearchEnquiryPanel extends React.Component {
 
 	isValidDateTime (str) {
 		return Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
+	}
+
+	dateChange (name, date) {
+		let newState = {}
+
+		if (name === 'dateTimeFrom' || name === 'dateTimeTo') {
+			newState[name] = {
+				timestamp: date,
+				datetime: date.format('DD MMM YYYY HH:mm')
+			}
+		} else {
+			newState[name] = event.target.value
+		}
+
+		this.setState(newState)
 	}
 
 	handleChange (name, event) {
@@ -189,7 +205,7 @@ export default class SearchEnquiryPanel extends React.Component {
 
 	handleReset () {
 		let newState = Object.assign({}, originState)
-
+		newState.calendarVersion = ++this.state.calendarVersion
 		this.setState(newState)
 	}
 
@@ -230,7 +246,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	render () {
-		let { errorDateTimeFrom, errorDateTimeTo, errorDateTimeGameStart, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag } = this.state
+		let { errorDateTimeFrom, errorDateTimeTo, errorDateTimeGameStart, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag, calendarVersion } = this.state
 		let fromClass = 'form-group'
 		let toClass = 'form-group'
 		let dateTimeGameStartClass = 'form-group'
@@ -257,13 +273,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={fromClass}>
 							<label>Date Time From <span>*</span></label>
-							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom.datetime} handleVal={(e) => { this.handleChange('dateTimeFrom', e) }} />
+							<Calendar key={`from-${calendarVersion}`} defaultValue={dateTimeFrom.datetime} onChange={(e) => { this.dateChange('dateTimeFrom', e) }} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className={toClass}>
 							<label>Date Time To <span>*</span></label>
-							<DateTime inputFor='dateTimeTo' dateTime={dateTimeTo.datetime} handleVal={(e) => this.handleChange('dateTimeTo', e)} />
+							<Calendar key={`to-${calendarVersion}`} defaultValue={dateTimeTo.datetime} onChange={(e) => this.dateChange('dateTimeTo', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -309,7 +325,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={dateTimeGameStartClass}>
 							<label>K.O Time / Game Start Time</label>
-							<DateTime inputFor='dateTimeGameStart' dateTime={this.state.dateTimeGameStart} handleVal={(e) => this.handleChange('dateTimeGameStart', e)} />
+							<Calendar key={`gameStartTime-${calendarVersion}`} defaultValue={this.state.dateTimeGameStart} onChange={(e) => this.dateChange('dateTimeGameStart', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>

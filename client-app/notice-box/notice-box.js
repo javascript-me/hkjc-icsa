@@ -22,11 +22,20 @@ export default class NoticeBox extends React.Component {
 	}
 
 	getListBoxClassName () {
-		if (this.props.displayPosition === 'right') {
-			return 'list-box' + '-' + 'right'
-		} else {
+		if (this.props.displayPosition === 'bottom') {
 			return 'list-box'
 		}
+		return 'list-box' + '-' + 'right'
+	}
+
+	getNoticeItemClassName (notice) {
+		let needBlink = this.checkNoticeIsImportant(notice)
+
+		return ClassNames(needBlink ? 'blink' : '')
+	}
+
+	checkNoticeIsImportant (notice) {
+		return notice.alert_status === 'New' && (notice.priority === 'Critical' || notice.priority === 'High')
 	}
 
 	getNoticeTitle (isAcknowledged) {
@@ -34,13 +43,12 @@ export default class NoticeBox extends React.Component {
 	}
 
 	formatDistibutionTime (dateStr) {
-		return Moment(dateStr).format('hh:mm:ss')
+		return Moment(dateStr).format('DD MMM YYYY HH:mm:ss')
 	}
 
 	textEllipsisWhenOverflow (text) {
-		return text.length > 380 ? (text.substring(0, 380) + '...') : text
+		return text.length > 140 ? (text.substring(0, 140) + '...') : text
 	}
-	// 380
 
 	render () {
 		return (
@@ -48,17 +56,15 @@ export default class NoticeBox extends React.Component {
 				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.notices.map((notice, i) => {
-							return <li>
+							var messageHTML = <li key={i} className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li>
+
+							return <li className={this.getNoticeItemClassName(notice)}>
 								<ul className='row'>
-
-									{ this.props.displayPosition === 'right' ? <li className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li> : null}
-
+									{this.props.displayPosition !== 'bottom' ? messageHTML : null}
 									<li><img src={this.getPriorityImageSrc(notice.priority)} /></li>
 									<li className='notice-date'>{this.formatDistibutionTime(notice.system_distribution_time)}</li>
-
 									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
-
-									{ this.props.displayPosition === 'bottom' ? <li className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li> : null}
+									{this.props.displayPosition === 'bottom' ? messageHTML : null}
 								</ul>
 							</li>
 						})
