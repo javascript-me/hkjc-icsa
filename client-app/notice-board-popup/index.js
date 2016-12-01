@@ -1,6 +1,5 @@
 import React from 'react'
 import LoginService from '../login/login-service'
-let updateState = ''
 const settings = { BOTTOM: 'bottom', RIGHT: 'right' }
 export default React.createClass({
 	displayName: 'NoticeboardPopup',
@@ -8,7 +7,7 @@ export default React.createClass({
 		onChange: React.PropTypes.func
 	},
 	getInitialState () {
-		return { setting: this.getSettings() }
+		return {setting: LoginService.getNoticeBoardSettings().display}
 	},
 	onSettingChange (e) {},
 	changeSetting (e) {
@@ -16,24 +15,6 @@ export default React.createClass({
 		if (this.props.onChange) {
 			this.props.onChange(e.currentTarget.attributes['value'].nodeValue)
 		}
-	},
-	getSettings () {
-		let requestData = {
-			username: LoginService.getProfile().username
-		}
-		var self = this
-		$.ajax({
-			url: 'api/users/getNoticeBoardDisplaySettings',
-			data: requestData,
-			type: 'POST',
-			success: function (data) {
-				self.setState({ setting: data.noticeboardSettings.display })
-				updateState = data.noticeboardSettings.display
-			},
-			error: function (xhr, status, error) {
-			}
-		})
-		return updateState
 	},
 	render () {
 		return (
