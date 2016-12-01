@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 // import { hashHistory } from 'react-router'
+import PopUp from '../popup'
 import Pubsub from '../pubsub'
 import {
 	ProfileTabs,
@@ -39,12 +40,18 @@ class ProfileStep extends Component {
 
 					<SubscriptionContainer />
 				</ProfileTabs>
+				<PopUp hideOnOverlayClicked ref='overlay' title='Submit for Approval' onConfirm={() => { this.onCreate() }} onCancel={() => { this.refs.overlay.hide() }}>
 
+					<div>Are you sure you want to create a new account for {this.props.userBasic.displayName}</div>
+				</PopUp>
 			</div>
 		)
 	}
-
 	onCreateClick () {
+		this.refs.overlay.show()
+	}
+
+	onCreate () {
 		let postData = {}
 		let accountProfiles = Object.assign(this.refs.accountCmp.getData(), {createApprovalStatus: 1, updateApprovalStatus: 0, lastModifiedUserID: 0, id: '2055', assignedUserRoles: []})
 		postData = Object.assign({}, {userBasic: this.props.userBasic}, {accountProfiles})
