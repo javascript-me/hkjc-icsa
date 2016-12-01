@@ -47,6 +47,9 @@ export default React.createClass({
 			// this.setState({accountUpdate: false})
 		}
 	},
+	onCancelClick () {
+		window.history.back()
+	},
 	render () {
 		return (
 			<div ref='root' className='user-profile'>
@@ -60,6 +63,7 @@ export default React.createClass({
 							{this.state.accountUpdate && (<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>)}
 							{!this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
 							{this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onUpdateClick}>Update</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-cancle pull-right' onClick={this.onCancelClick}>Cancel</button>)}
 						</ProfileButtons>
 					</ProfileContainer>
 
