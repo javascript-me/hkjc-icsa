@@ -108,7 +108,7 @@ export default React.createClass({
 						{this.props.headers.map(
 							(header, i) => {
 								if (header.fieldName !== '') {
-									return <td>{row[header.fieldName] ? row[header.fieldName] : ''}</td>
+									return <td>{row[header.fieldName] ? row[header.fieldName] : 'N / A'}</td>
 								}
 							}
 						)}
