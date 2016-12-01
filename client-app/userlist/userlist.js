@@ -215,7 +215,8 @@ export default React.createClass({
 					</div>
 					<div className='content-footer-right'>
 						{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
-						: <button className='btn btn-primary' onClick={this.onChange}>Update</button>
+							: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+								<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
 					}
 
 					</div>
