@@ -5,7 +5,6 @@ import LoginService from '../login/login-service'
 import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
-let latestDisplaySettings = ''
 const getAllNoticesPromise = async (username) => {
 	let notices = null
 
@@ -83,14 +82,14 @@ export default React.createClass({
 		this.refs.noticeboardPopup.show()
 	},
 	applySettings () {
-			let self = this
-			let userProfile = LoginService.getProfile()
-			let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
-			let userNoticeboardSettings = null
-			settingPromise.then((userProfile) => {
-				userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-				self.updateSet(userNoticeboardSettings.display)
-			})
+		let self = this
+		let userProfile = LoginService.getProfile()
+		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
+		let userNoticeboardSettings = null
+		settingPromise.then((userProfile) => {
+			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
+			self.updateSet(userNoticeboardSettings.display)
+		})
 	},
 	updateSet (setting) {
 		this.setState({displaySettings: setting})
@@ -128,8 +127,8 @@ export default React.createClass({
 			}
 		})
 	},
-	clearselectedSettings (){
-		this.setState({selectedSettings: ""})
+	clearselectedSettings () {
+		this.setState({selectedSettings: ''})
 	},
 
 	render () {
