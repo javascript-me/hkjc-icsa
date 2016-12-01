@@ -53,7 +53,7 @@ class ProfileStep extends Component {
 
 	onCreate () {
 		let postData = {}
-		let accountProfiles = Object.assign(this.refs.accountCmp.getData(), {createApprovalStatus: 1, updateApprovalStatus: 0, lastModifiedUserID: 0, id: '2055', assignedUserRoles: []})
+		let accountProfiles = Object.assign(this.refs.accountCmp.getData(), {createApprovalStatus: 1, updateApprovalStatus: 0, lastModifiedUserID: 0, id: '2055'})
 		postData = Object.assign({}, {userBasic: this.props.userBasic}, {accountProfiles})
 		$.post('./API/userprofile/add', {userData: postData})
 		.then((res) => {
