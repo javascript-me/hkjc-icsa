@@ -49,7 +49,7 @@ export default React.createClass({
 
 	getInitialState () {
 		return {
-			pageTitle: 'Home \\ Tool & Administration \\ User',
+			pageTitle: 'Home \\ Global Tools & Administration \\ User',
 			userprofiles: [],
 			isShowingMoreFilter: false,
 			addingUserStep: 0,
