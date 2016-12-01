@@ -5,7 +5,6 @@ import LoginService from '../login/login-service'
 import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
-let latestDisplaySettings = ''
 const getAllNoticesPromise = async (username) => {
 	let notices = null
 
