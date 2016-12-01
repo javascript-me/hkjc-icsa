@@ -17,6 +17,17 @@ const getAllNoticesPromise = async (username) => {
 
 	return notices
 }
+const updateUserNoticeBoardSettingsPromise = async (username, display) => {
+	let userProfile = null
+
+	try {
+		userProfile = await LoginService.updateNoticeBoardSettings(username, display)
+	} catch (ex) {
+
+	}
+
+	return userProfile
+}
 
 export default React.createClass({
 	propTypes: {
@@ -33,34 +44,7 @@ export default React.createClass({
 
 			noticeBoxData: {
 				allNotices: [],
-				// [
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Critical', date: '22:32:14', title: 'title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'High', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: false},
-				// 	{icon: 'Low', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true},
-				// 	{icon: 'Medium', date: '22:32:14', title: 'title title title title title title title title title title ', isAcknowledged: true}
-				// ],
-
 				unreadNotices: []
-				// [
-				// 	{icon: 'Critical', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true},
-				// 	{icon: 'Low', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: false},
-				// 	{icon: 'Medium', date: '22:32:14', title: 'unacknowledged unacknowledged unacknowledged unacknowledged ', isAcknowledged: true}
-				// ]
 			},
 
 			tabData: [
@@ -99,39 +83,13 @@ export default React.createClass({
 		this.refs.noticeboardPopup.show()
 	},
 	applySettings () {
-		var self = this
-		if (this.state.selectedSettings === '') {
-			let requestData = {
-				username: LoginService.getProfile().username
-			}
-			if (latestDisplaySettings !== self.state.displaySettings) {
-				$.ajax({
-					url: 'api/users/getNoticeBoardDisplaySettings',
-					data: requestData,
-					type: 'POST',
-					success: function (data) {
-						self.setState({
-							selectedSettings: data.noticeboardSettings.display
-						})
-					},
-					error: function (xhr, status, error) {
-					}
-				})
-			}
-		}
-		let requestData = {
-			username: LoginService.getProfile().username,
-			display: this.state.selectedSettings
-		}
-		$.ajax({
-			url: 'api/users/updateNoticeBoardDisplaySettings',
-			data: requestData,
-			type: 'POST',
-			success: function (data) {
-				self.updateSet(data.noticeboardSettings.display)
-			},
-			error: function (xhr, status, error) {
-			}
+		let self = this
+		let userProfile = LoginService.getProfile()
+		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
+		let userNoticeboardSettings = null
+		settingPromise.then((userProfile) => {
+			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
+			self.updateSet(userNoticeboardSettings.display || 'bottom')
 		})
 	},
 	updateSet (setting) {
@@ -142,24 +100,7 @@ export default React.createClass({
 	},
 
 	getClassName () {
-		let requestData = {
-			username: LoginService.getProfile().username
-		}
-		var self = this
-		if (latestDisplaySettings !== self.state.displaySettings) {
-			$.ajax({
-				url: 'api/users/getNoticeBoardDisplaySettings',
-				data: requestData,
-				type: 'POST',
-				success: function (data) {
-					self.setState({ displaySettings: data.noticeboardSettings.display })
-					latestDisplaySettings = data.noticeboardSettings.display
-				},
-				error: function (xhr, status, error) {
-				}
-			})
-		}
-		if (self.state.displaySettings === 'right') {
+		if (this.state.displaySettings === 'right') {
 			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
 		} else {
 			return 'bottom-noticeboard-container'

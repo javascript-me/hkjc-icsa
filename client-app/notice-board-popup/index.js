@@ -8,7 +8,7 @@ export default React.createClass({
 		onChange: React.PropTypes.func
 	},
 	getInitialState () {
-		return { setting: this.getSettings() }
+		return { setting: LoginService.getNoticeBoardSettings.display}
 	},
 	onSettingChange (e) {},
 	changeSetting (e) {
