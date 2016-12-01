@@ -19,7 +19,16 @@ export default React.createClass({
 			showPopup: true,
 			confirmBtn: '',
 			showCancel: false,
-			showMaskPwd: false
+			showMaskPwd: false,
+			username: '',
+			password: '',
+			disabled: false
+		}
+	},
+	componentDidMount () {
+		$('input[type=text]').focus()
+		if ($('input[type=password]').value !== '' && $('input[type=text]').value !== '') {
+			this.setState({disabled: true})
 		}
 	},
 	submit () {
@@ -56,6 +65,17 @@ export default React.createClass({
 			this.setState({showMaskPwd: false})
 		}
 	},
+	typeUsername (event) {
+		this.setState({username: event.target.value})
+	},
+	typePwd (event) {
+		this.setState({password: event.target.value})
+	},
+	clearPassword (event) {
+		if (this.refs.password.value !== '') {
+			this.setState({password: '', showMaskPwd: false, disabled: false})
+		}
+	},
 	changeType () {
 		if (this.refs.password.type === 'password') {
 			this.refs.password.type = 'text'
@@ -83,15 +103,15 @@ export default React.createClass({
 							<div className='form-field'>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='usernamer'>User Name</label>
-									<input ref='username' type='text' className='form-control' id='login-username' placeholder='User Name' onKeyUp={this.handleKeyUp} />
+									<input ref='username' autoComplete='off' type='text' value={this.state.username} className='form-control' id='login-username' placeholder='User Name' onKeyUp={this.handleKeyUp} onChange={this.typeUsername} />
 								</div>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='password'>Password</label>
-									<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} />
+									<input ref='password' onFocus={this.clearPassword} value={this.state.password} type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
 									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
-								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Login</button>
+								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit} disabled={!this.state.disabled}>Login</button>
 							</div>
 						</div>
 					</div>
