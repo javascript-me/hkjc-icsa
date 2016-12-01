@@ -173,8 +173,15 @@ export default React.createClass({
 		})
 	},
 
+<<<<<<< HEAD
 	setEditMode () {
 		this.setState({editMode: !this.state.editMode})
+=======
+	onClickRow (rowItem) {
+		if (rowItem.userID) {
+			location.href = '#/page/userprofile/' + rowItem.userID
+		}
+>>>>>>> 7f23f2a2bf1012f3437bcfcb4dcbbfd224ce84db
 	},
 
 	render () {
@@ -204,7 +211,7 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table'>
-					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
+					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} onClickRow={this.onClickRow} />
 				</div>
 				<div className='content-footer'>
 					<div className='content-footer-left'>
