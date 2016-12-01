@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 const pageSize = 10
 
 function getAuditlogsByPageNumber (auditlogs, selectedPageNumber) {
@@ -46,41 +48,41 @@ function descendSort (key) {
 	}
 }
 
-function parseToMonthIndex (monthName) {
-	if (monthName === 'January' || monthName === 'Jan') return 0
-	if (monthName === 'February' || monthName === 'Feb') return 1
-	if (monthName === 'March' || monthName === 'Mar') return 2
-	if (monthName === 'April' || monthName === 'Apr') return 3
-	if (monthName === 'May' || monthName === 'May') return 4
-	if (monthName === 'June' || monthName === 'Jun') return 5
-	if (monthName === 'July' || monthName === 'Jul') return 6
-	if (monthName === 'August' || monthName === 'Aug') return 7
-	if (monthName === 'September' || monthName === 'Sep') return 8
-	if (monthName === 'October' || monthName === 'Oct') return 9
-	if (monthName === 'November' || monthName === 'Nov') return 10
-	if (monthName === 'December' || monthName === 'Dec') return 11
-	return -1
-}
+// function parseToMonthIndex (monthName) {
+// 	if (monthName === 'January' || monthName === 'Jan') return 0
+// 	if (monthName === 'February' || monthName === 'Feb') return 1
+// 	if (monthName === 'March' || monthName === 'Mar') return 2
+// 	if (monthName === 'April' || monthName === 'Apr') return 3
+// 	if (monthName === 'May' || monthName === 'May') return 4
+// 	if (monthName === 'June' || monthName === 'Jun') return 5
+// 	if (monthName === 'July' || monthName === 'Jul') return 6
+// 	if (monthName === 'August' || monthName === 'Aug') return 7
+// 	if (monthName === 'September' || monthName === 'Sep') return 8
+// 	if (monthName === 'October' || monthName === 'Oct') return 9
+// 	if (monthName === 'November' || monthName === 'Nov') return 10
+// 	if (monthName === 'December' || monthName === 'Dec') return 11
+// 	return -1
+// }
 
 function parseToDate (value) {
-	var parts = value.split(' ')
+	var parts = value.split('/')
 
 	var date = parts[0]
 
 	var monthName = parts[1]
-	var monthIndex = parseToMonthIndex(monthName)
+	// var monthIndex = parseToMonthIndex(monthName)
 
 	var year = parts[2]
 
-	var time = parts[3]
-	var items = time.split(':')
+	// var time = parts[3]
+	// var items = time.split(':')
 
-	var hour = items[0]
-	var minute = items[1]
+	// var hour = items[0]
+	// var minute = items[1]
 
-	var second = items[2] ? items[2] : '00'
+	// var second = items[2] ? items[2] : '00'
 
-	return new Date(year, monthIndex, date, hour, minute, second)
+	return new Date(year, monthName, date)
 }
 
 function compareDate (value0, value1) {
@@ -123,42 +125,67 @@ function doFilter (userprofiles, keyWord, position, userRole, status, dateTimeFr
 	position = position || 'All'
 	userRole = userRole || 'All'
 	status = status || 'All'
-	dateTimeFrom = dateTimeFrom || '18 Sep 1900 00:00'
-	dateTimeTo = dateTimeTo || '31 Dec 2099 23:59'
+	dateTimeFrom = dateTimeFrom || '18/09/1900'
+	dateTimeTo = dateTimeTo || '31/12/2099'
 
 	let result = userprofiles
 
-	result = keyWord ? userprofiles.filter((al) => {
-		// const eventName = al.event_name ? al.event_name.toLowerCase() : ''
-		const userName = al.user_name ? al.user_name.toLowerCase() : ''
-		// const userRole = al.user_role ? al.user_role.toLowerCase() : ''
+	// console.log(result)
+	// result.forEach((item) => {
+	// 	console.log(item.assignedUserRoles)
+	// })
 
-		return position === keyWord.toLowerCase() ||
-                userName === keyWord.toLowerCase()
+	// console.log('--begin doFilter:')
+	// console.log('keyWord'+keyWord)
+	// console.log('position'+position)
+	// console.log('userRole'+userRole)
+	// console.log('status'+status)
+	// console.log('dateTimeFrom'+dateTimeFrom)
+	// console.log('dateTimeTo'+dateTimeTo)
+
+	result = keyWord ? result.filter((al) => {
+		const userID = al.userID ? al.userID.toLowerCase() : ''
+		const userName = al.displayName ? al.displayName.toLowerCase() : ''
+		let found = userID.indexOf(keyWord.toLowerCase()) > -1 ||
+						userName.indexOf(keyWord.toLowerCase()) > -1
+		return found
 	}) : result
+
+	// console.log(result)
 
 	if (position !== 'All') {
 		result = result.filter((al) => {
-			return (al.position === position)
+			return (al.position.toLowerCase().indexOf(position.toLowerCase()) > -1)
 		})
 	}
 
+	// console.log(result)
+
 	if (userRole !== 'All') {
-		result = result.filter((al) => {
-			return (al.userRole === userRole)
+		result = result.filter((item) => {
+			let found = _.find(item.assignedUserRoles, (role) => {
+				return role.assignedUserRole.toLowerCase().indexOf(userRole.toLowerCase()) > -1
+			})
+			return (found !== undefined)
 		})
 	}
+
+	// console.log(result)
 
 	if (status !== 'All') {
 		result = result.filter((al) => {
-			return (al.status === status)
+			return (al.status.toLowerCase().indexOf(status.toLowerCase()) > -1)
 		})
 	}
 
-	// result = result.filter((al) => {
-	// 	return parseToDate(dateTimeFrom).getTime() <= parseToDate(al.date_time).getTime() &&
-	// 		parseToDate(al.date_time).getTime() <= parseToDate(dateTimeTo).getTime()
-	// })
+	// console.log(result)
+
+	result = result.filter((al) => {
+		return parseToDate(dateTimeFrom).getTime() <= parseToDate(al.activationDate).getTime() &&
+			parseToDate(al.deactivationDate).getTime() <= parseToDate(dateTimeTo).getTime()
+	})
+
+	// console.log(result)
 
 	return result
 }
