@@ -172,6 +172,12 @@ export default React.createClass({
 		})
 	},
 
+	onClickRow (rowItem) {
+		if (rowItem.userID) {
+			location.href = '#/page/userprofile/' + rowItem.userID
+		}
+	},
+
 	render () {
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {
 		// 	'active': this.state.isShowingMoreFilter
@@ -199,7 +205,7 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table'>
-					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
+					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} onClickRow={this.onClickRow} />
 				</div>
 				<div className='content-footer'>
 					<div className='content-footer-left'>
