@@ -44,7 +44,7 @@ router.post('/list', (req, res) => {
 
 	let allUser = accountProfiles.map((item, index) => {
 		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
-		let newItem = Object.assign({}, item, user)
+		let newItem = Object.assign({}, user, item)
 		return newItem
 	})
 
