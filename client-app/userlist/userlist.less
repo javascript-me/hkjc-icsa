@@ -153,29 +153,32 @@
 	margin-bottom: 0;
 
 	thead {
-		th {
-			vertical-align: top;
-			background: #305091;
-			color: white;
-			font-weight: normal;
-			font-size: 14px;
-			border: none;
-			border-right: 1px solid #D8E1F3;
-			max-width: 480px;
-			padding: 10px 30px 10px 0;
-			white-space: nowrap;
-			overflow: hidden;
+		tr {
+			th {
+				vertical-align: top;
+				background: #305091;
+				color: white;
+				font-weight: normal;
+				font-size: 14px;
+				border: none;
+				border-right: 1px solid #D8E1F3;
+				max-width: 480px;
+				padding: 10px 30px 10px 0;
+				white-space: nowrap;
+				overflow: hidden;
 
-			&:last-child {
-				border-right: none;
-			}
+				&:last-child {
+					border-right: none;
+				}
 
-			&.checkbox-th {
-				text-align: center;
-				vertical-align: middle;
+				&.checkbox-th {
+					text-align: center;
+					vertical-align: middle;
+					padding: 8px;
 
-				input.checkbox {
-					display: inline;
+					input.checkbox {
+						display: inline;
+					}
 				}
 			}
 		}

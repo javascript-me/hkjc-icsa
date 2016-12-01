@@ -60,7 +60,7 @@
 			"priority": "Medium",
 			"alert_status": "New",
 			"message_category": "Result Rectification",
-			"system_distribution_time": "01 Augest 2016 12:30:30",
+			"system_distribution_time": "01 August 2016 12:30:30",
 			"message_detail": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. ",
 			"assignee": "BOCC"
 		}, {
@@ -68,7 +68,7 @@
 			"priority": "Low",
 			"alert_status": "Acknowledged",
 			"message_category": "Refund",
-			"system_distribution_time": "20 Augest 2016 03:10:30",
+			"system_distribution_time": "20 August 2016 03:10:30",
 			"message_detail": "A new Event Template <Event Level 1> has been created and activated. Please click the link to navigate to it.",
 			"assignee": "allgood"
 		}, {
@@ -117,7 +117,7 @@
 			"priority": "Medium",
 			"alert_status": "New",
 			"message_category": "Result Rectification",
-			"system_distribution_time": "01 Augest 2016 12:30:30",
+			"system_distribution_time": "01 August 2016 12:30:30",
 			"message_detail": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. ",
 			"assignee": "BOCC"
 		}],
