@@ -7,13 +7,14 @@ export default React.createClass({
 		displayCheckBox: React.PropTypes.bool,
 		headers: React.PropTypes.array,
 		dataCollection: React.PropTypes.array,
-		onClickSorting: React.PropTypes.func
+		onClickSorting: React.PropTypes.func,
+		onClickRow: React.PropTypes.func
 	},
 
 	getInitialState () {
 		/* Checks whether check box needs to be add in headers array */
 		// TODO: This code should be moved somewhere.
-		if (this.props.displayCheckBox  && this.props.headers[0].fieldName !== "") {
+		if (this.props.displayCheckBox && this.props.headers[0].fieldName !== '') {
 			this.props.headers.splice(0, 0, {'id': 0, label: '', fieldName: '', sortingClass: '', addCheckBox: true})
 		}
 		return {}
@@ -87,6 +88,10 @@ export default React.createClass({
 		return columnVal || 'N / A'
 	},
 
+	onClickRow (rowItem) {
+		this.props.onClickRow && this.props.onClickRow(rowItem)
+	},
+
 	// TODO: below long HTML should be extracted to a method.
 	// TODO: fieldName like date_time is appeared in 2 places. Need to combine.
 
@@ -98,8 +103,8 @@ export default React.createClass({
 			{this.props.dataCollection.map(
 
 				(row) => {
-					return <tr>
-						{this.props.displayCheckBox ? <td><input type='checkbox' className='checkbox' name='user-profile' /></td> : null}
+					return <tr onClick={() => { this.onClickRow(row) }}>
+						{this.props.displayCheckBox ? <td><input type='checkbox' className='checkbox' name='user-profile' onClick={(event) => { event.stopPropagation() }} /></td> : null}
 						{this.props.headers.map(
 							(header, i) => {
 								if (header.fieldName !== '') {

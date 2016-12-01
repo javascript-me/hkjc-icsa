@@ -50,6 +50,7 @@ export default React.createClass({
 	getInitialState () {
 		return {
 			pageTitle: 'Home \\ Tool & Administration \\ User',
+			editMode: false,
 			userprofiles: [],
 			isShowingMoreFilter: false,
 			addingUserStep: 0,
@@ -71,7 +72,7 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		let sortingObject = {fieldName: 'activationDate', order: 'DESCEND'}
+		let sortingObject = {fieldName: 'userID', order: 'DESCEND'}
 		// Get Table Data
 		UserStore.searchAuditlogs(1, sortingObject, null)
 		UserStore.addChangeListener(this.onChange)
@@ -95,7 +96,7 @@ export default React.createClass({
 		const hasData = UserStore.userProfiles.length > 0
 
 		UserStore.userProfiles.forEach((item) => {
-			let role = item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(',')
+			let role = item.assignedUserRoles ? item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(',') : ' '
 			item.assignedUserRoles = role
 		})
 
@@ -172,6 +173,16 @@ export default React.createClass({
 		})
 	},
 
+	setEditMode () {
+		this.setState({editMode: !this.state.editMode})
+	},
+
+	onClickRow (rowItem) {
+		if (rowItem.userID) {
+			location.href = '#/page/userprofile/' + rowItem.userID
+		}
+	},
+
 	render () {
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {
 		// 	'active': this.state.isShowingMoreFilter
@@ -194,12 +205,12 @@ export default React.createClass({
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
 					</div>
-					<div className='content-header-right' onClick={() => { this.setAddStep(1) }}>
-						add user
+					<div className='content-header-right add-user-btn' onClick={() => { this.setAddStep(1) }} style={{display: this.state.editMode ? 'block' : 'none'}}>
+						+ add user
 					</div>
 				</div>
 				<div className='content-table'>
-					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
+					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} onClickRow={this.onClickRow} />
 				</div>
 				<div className='content-footer'>
 					<div className='content-footer-left'>
@@ -209,7 +220,11 @@ export default React.createClass({
 						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 					<div className='content-footer-right'>
-						<button className='btn btn-primary' onClick={this.onChange}>Update</button>
+						{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+							: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+								<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+					}
+
 					</div>
 				</div>
 			</div>
