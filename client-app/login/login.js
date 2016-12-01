@@ -118,6 +118,7 @@ export default React.createClass({
 					<Overlay hideOnOverlayClicked ref='overlay' title={this.state.title} showCancel={this.state.showCancel} onConfirm={() => this.gotoLogin()} confirmBtn={this.state.confirmBtn}>
 						<p className='warning'>{this.state.msg}</p>
 					</Overlay>
+					<div className='mask' />
 				</div>
 			</div>
 			)
