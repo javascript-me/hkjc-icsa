@@ -49,7 +49,6 @@
 
 		.content-table {
 			margin: 21px auto 36px;
-			overflow: scroll;
 		}
 
 		.content-footer {
@@ -84,36 +83,58 @@
 	border: 1px solid #305091;
 	margin-bottom: 0;
 
-	th {
-		vertical-align: top;
-		background: #305091;
-		color: white;
-		font-weight: normal;
-		font-size: 14px;
-		border: none;
-		border-right: 1px solid #D8E1F3;
-		max-width: 480px;
-		padding: 10px 30px 10px 0;
-		white-space: nowrap;
-		overflow: hidden;
+	thead {
+		th {
+			vertical-align: top;
+			background: #305091;
+			color: white;
+			font-weight: normal;
+			font-size: 14px;
+			border: none;
+			border-right: 1px solid #D8E1F3;
+			max-width: 480px;
+			padding: 10px 30px 10px 0;
+			white-space: nowrap;
+			overflow: hidden;
 
-		&:last-child {
-			border-right: none;
+			&:last-child {
+				border-right: none;
+			}
+
+			&.checkbox-th {
+				text-align: center;
+				vertical-align: middle;
+
+				input.checkbox {
+					display: inline;
+				}
+			}
 		}
 	}
 
-	td {
-		border: none !important;
-		border-right: 1px solid #D8E1F3 !important;
-		padding: 0 30px;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		line-height: 40px;
-		max-width: 480px;
-		overflow: hidden;
+	tbody {
+		td {
+			border: none !important;
+			border-right: 1px solid #D8E1F3 !important;
+			padding: 8px 30px !important;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			line-height: 40px;
+			max-width: 480px;
+			overflow: hidden;
 
-		&:last-child {
-			border-right: none;
+			&:last-child {
+				border-right: none !important;
+			}
+
+			&.checkbox-td {
+				padding: 8px 12px !important;
+				text-align: center;
+
+				input {
+					display: inline;
+				}
+			}
 		}
 	}
 }
