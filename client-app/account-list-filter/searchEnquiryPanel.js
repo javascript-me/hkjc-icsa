@@ -158,8 +158,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	isEnquiryValid () {
-		 return this.state.tipsFlag || (this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
-		
+		return this.state.tipsFlag || (this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
 	}
 
 	handleSubmit () {

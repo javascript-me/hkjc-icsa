@@ -233,7 +233,7 @@ export default React.createClass({
 						<div className='filter-block-container'>
 							{filterBlockes}
 						</div>
-						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className="user-list-serch-pannel">
+						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
 					</div>

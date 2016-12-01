@@ -49,6 +49,7 @@ export default React.createClass({
 		return {}
 	},
 	componentWillReceiveProps (nextProps) {
+		console.log('componentWillReceiveProps')
 		this._cloneData(nextProps.userAccount)
 	},
 	_cloneData (userAccount) {

@@ -17,8 +17,10 @@ class ProfileStep extends Component {
 		super(props)
 		this.state = {
 			userBasic: {},
-			userAccount: this.props.userAccount
+			userAccount: this.props.userAccount,
+			lastUserName: this.props.userBasic.displayName
 		}
+		this.lastUserName = this.props.userBasic.displayName
 		this.getUserProfile = this.getUserProfile.bind(this)
 		this.onCreateClick = this.onCreateClick.bind(this)
 		this.onCancel = this.onCancel.bind(this)
@@ -42,19 +44,24 @@ class ProfileStep extends Component {
 				</ProfileTabs>
 				<PopUp hideOnOverlayClicked ref='overlay' title='Submit for Approval' onConfirm={() => { this.onCreate() }} onCancel={() => { this.refs.overlay.hide() }}>
 
-					<div>Are you sure you want to create a new account for {this.props.userBasic.displayName}</div>
+					<div>Are you sure you want to create a new account for {this.state.lastUserName}</div>
 				</PopUp>
 			</div>
 		)
 	}
 	onCreateClick () {
+		if(this.props.userBasic.displayName != this.refs.accountCmp.getData().displayName){
+			this.props.userBasic.displayName = this.refs.accountCmp.getData().displayName
+		}
+		this.setState({lastUserName:this.refs.accountCmp.getData().displayName})
 		this.refs.overlay.show()
 	}
 
 	onCreate () {
 		let postData = {}
 		let accountProfiles = Object.assign(this.refs.accountCmp.getData(), {createApprovalStatus: 1, updateApprovalStatus: 0, lastModifiedUserID: 0, id: '2055'})
-		postData = Object.assign({}, {userBasic: this.props.userBasic}, {accountProfiles})
+		postData = Object.assign({}, {accountProfiles}, {userBasic: this.props.userBasic})
+		
 		$.post('./API/userprofile/add', {userData: postData})
 		.then((res) => {
 			if (res.status) {
