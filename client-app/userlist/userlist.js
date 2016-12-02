@@ -1,5 +1,6 @@
 import React from 'react'
 // import classnames from 'classnames'
+import FilterBlock from '../filter-block'
 import TabularData from '../tabulardata/tabulardata'
 import Paging from '../paging/paging'
 import UserStore from './user-store'
@@ -19,6 +20,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setMinutes(0)
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
+	dateTimeFrom.setFullYear(2015)
 	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
 }
 
@@ -29,6 +31,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setMinutes(59)
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
+	dateTimeTo.setFullYear(2018)
 	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 }
 
@@ -49,7 +52,7 @@ export default React.createClass({
 
 	getInitialState () {
 		return {
-			pageTitle: 'Home \\ Tool & Administration \\ User',
+			pageTitle: 'Home \\ Global Tools & Administration \\ User',
 			editMode: false,
 			userprofiles: [],
 			isShowingMoreFilter: false,
@@ -57,8 +60,8 @@ export default React.createClass({
 			filterReflashFlag: true,
 			tokens: {
 				USERPROFILE_SEARCH: 'USERPROFILE_SEARCH',
-				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
-				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+				USERPROFILE_SEARCH_BY_KEY_PRESS: 'USERPROFILE_SEARCH_BY_KEY_PRESS',
+				USERPROFILE_SEARCH_BY_REMOVE_FILTER: 'USERPROFILE_SEARCH_BY_REMOVE_FILTER'
 			},
 			keyword: '',
 			selectedFilters: [{
@@ -86,7 +89,7 @@ export default React.createClass({
 	},
 
 	componentWillUnmount: function () {
-		UserStore.removeChangeListener(this.onChange.bind(this))
+		UserStore.removeChangeListener(this.onChange)
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(reFlashToken)
 		PubSub.unsubscribe(searchToken)
@@ -127,8 +130,23 @@ export default React.createClass({
 
 	handleKeywordPress: function (event) {
 		if (event.key === 'Enter') {
-			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS])
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS])
 		}
+	},
+
+	removeSearchCriteriaFilter: function (filter) {
+		let selectedFilters = this.state.selectedFilters
+		let filterIndex = selectedFilters.indexOf(filter)
+
+		selectedFilters.splice(filterIndex, 1)
+
+		this.setState({
+			selectedFilters: selectedFilters,
+			isShowingMoreFilter: false
+		}, () => {
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER], filter)
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH])
+		})
 	},
 
 	setAddStep (step) {
@@ -187,6 +205,15 @@ export default React.createClass({
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {
 		// 	'active': this.state.isShowingMoreFilter
 		// })
+
+		let filterBlockes = this.state.selectedFilters.map((f, index) => {
+			return <FilterBlock
+				key={index}
+				filter={f}
+				removeEvent={this.removeSearchCriteriaFilter}
+				removeEventTopic={this.state.tokens.USERPROFILE_SEARCH} />
+		}) || []
+
 		return <div className='row userlist-page'>
 			{this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
 			<div className='page-header'>
@@ -196,17 +223,22 @@ export default React.createClass({
 			<div className='page-content'>
 				<div className='content-header'>
 					<div className='content-header-left'>
-						<i className='icon icon-search' />
-						<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
-							onChange={this.handleKeywordChange}
-							onKeyPress={this.handleKeywordPress}
-							ref='keyword' />
-						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching}>
+						<div className='keyword-search'>
+							<i className='icon icon-search' />
+							<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
+								onChange={this.handleKeywordChange}
+								onKeyPress={this.handleKeywordPress}
+								ref='keyword' />
+						</div>
+						<div className='filter-block-container'>
+							{filterBlockes}
+						</div>
+						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
 					</div>
 					<div className='content-header-right add-user-btn' onClick={() => { this.setAddStep(1) }} style={{display: this.state.editMode ? 'block' : 'none'}}>
-						+ add user
+						+ Add User
 					</div>
 				</div>
 				<div className='content-table'>

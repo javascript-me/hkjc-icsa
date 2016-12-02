@@ -16,6 +16,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setMinutes(0)
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
+	dateTimeFrom.setFullYear(2015)
 	dateTimeFromObj.timestamp = Date.parse(dateTimeFrom)
 	dateTimeFromObj.datetime = Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
 	return dateTimeFromObj
@@ -29,6 +30,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setMinutes(59)
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
+	dateTimeTo.setFullYear(2018)
 	dateTimeToObj.timestamp = Date.parse(dateTimeTo)
 	dateTimeToObj.datetime = Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 	return dateTimeToObj
@@ -52,8 +54,8 @@ export default class SearchEnquiryPanel extends React.Component {
 		super(props)
 		this.state = Object.assign({
 			tokens: {
-				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
-				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+				USERPROFILE_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
+				USERPROFILE_SEARCH_BY_REMOVE_FILTER: 'USERPROFILE_SEARCH_BY_REMOVE_FILTER'
 			}
 		}, originState)
 
@@ -63,11 +65,11 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	componentDidMount () {
-		tokenKeyPress = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS], () => {
+		tokenKeyPress = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS], () => {
 			this.handleSubmit()
 		})
 
-		tokenRemoveFilter = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], (topic, filter) => {
+		tokenRemoveFilter = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER], (topic, filter) => {
 			let newState = {}
 
 			newState[filter.name] = originState[filter.name]
@@ -156,8 +158,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	isEnquiryValid () {
-		// return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
-		return true
+		return this.state.tipsFlag || (this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
 	}
 
 	handleSubmit () {
@@ -251,13 +252,13 @@ export default class SearchEnquiryPanel extends React.Component {
 				<div className='row mg-w010'>
 					<div className='col-sm-4 pd-w10'>
 						<div className={fromClass}>
-							<label>Date Time From</label>
+							<label>Date of Activation</label>
 							<DateTime inputFor='dateTimeFrom' dateTime={dateTimeFrom.datetime} handleVal={(e) => { this.handleChange('dateTimeFrom', e) }} />
 						</div>
 					</div>
 					<div className='col-sm-4 pd-w10'>
 						<div className={toClass}>
-							<label>Date Time To</label>
+							<label>Date of Inactivation</label>
 							<DateTime inputFor='dateTimeTo' dateTime={dateTimeTo.datetime} handleVal={(e) => this.handleChange('dateTimeTo', e)} />
 						</div>
 					</div>

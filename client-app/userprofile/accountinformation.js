@@ -49,7 +49,9 @@ export default React.createClass({
 		return {}
 	},
 	componentWillReceiveProps (nextProps) {
-		this._cloneData(nextProps.userAccount)
+		if (!_.isEqual(nextProps.userAccount, this.props.userAccount)) {
+			this._cloneData(nextProps.userAccount)
+		}
 	},
 	_cloneData (userAccount) {
 		this.userAccount = _.clone(userAccount)
@@ -87,11 +89,11 @@ export default React.createClass({
 		}
 		return retStr
 	},
-	onEditRoleClick () {
-		this.refs.editRole.show()
+	onEditRoleClick (editRole) {
+		editRole.show()
 	},
-	onEditRoleUpdate (userAccount) {
-		const roles = this.refs.rolesCmp.getUpdateRoles()
+	onEditRoleUpdate (userAccount, rolesCmp) {
+		const roles = rolesCmp.getUpdateRoles()
 		const oldUserRoles = this.props.userAccount.assignedUserRoles.filter((item) => {
 			let bRet = true
 			let found = -1
@@ -176,10 +178,10 @@ export default React.createClass({
 			<div ref='root' className='account-information'>
 				<div className='header'>
 					<h2>Account Information</h2>
-					<div className='action' onClick={this.onEditRoleClick}>
+					<div className='action' onClick={() => { this.onEditRoleClick(this.refs.editRole) }}>
 						<span className='icon pull-left' /> Edit User Role
 					</div>
-					<Popup hideOnOverlayClicked ref='editRole' title='Edit User Role / Privilege' onConfirm={() => { this.onEditRoleUpdate(userAccount) }} confirmBtn='Update'>
+					<Popup hideOnOverlayClicked ref='editRole' title='Edit User Role / Privilege' onConfirm={() => { this.onEditRoleUpdate(userAccount, this.refs.rolesCmp) }} confirmBtn='Update'>
 						<RolesContainer ref='rolesCmp' inputSelected={userAccount.assignedUserRoles} />
 					</Popup>
 				</div>

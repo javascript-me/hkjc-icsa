@@ -1,6 +1,16 @@
 .userlist-page {
 	position: relative;
 
+	.user-list-serch-pannel {
+		position: absolute;
+		left: 0;
+		top: 40px;
+	}
+
+	.content-header-left {
+		position: relative;
+	}
+
 	.page-header {
 		p {
 			color: #FFFFFF;
@@ -19,9 +29,13 @@
 	.add-user-btn {
 		color: #305091;
 		font-size: 14px;
-		line-height: 20px;
+		line-height: 35px;
+		height: 35px;
+		padding: 0 8px;
 		font-family: Roboto-Bold;
+		background: #F8F9FB;
 		cursor: pointer;
+		border-radius: 3px;
 	}
 
 	.page-content {
@@ -31,33 +45,79 @@
 			justify-content: space-between;
 
 			.content-header-left {
-				width: 300px;
+				display: flex;
+				flex-direction: row;
 				height: 40px;
-				border: 1px solid #305091;
 
-				.icon-search {
-					display: block;
-					float: left;
-					width: 38px;
-					height: 38px;
-					background: url(common/search.svg) no-repeat center center;
+				.keyword-search {
+					border: 1px solid #305091;
+					height: 40px;
+					width: 300px;
+
+					.icon-search {
+						display: block;
+						float: left;
+						width: 38px;
+						height: 38px;
+						background: url(common/search.svg) no-repeat center center;
+					}
+
+					.input-search {
+						width: 260px;
+						margin: 0;
+						padding: 0;
+						height: 38px;
+						line-height: 38px;
+						border: none;
+						text-indent: 12px;
+					}
 				}
 
-				.input-search {
-					width: 260px;
-					margin: 0;
-					padding: 0;
-					height: 38px;
-					line-height: 38px;
-					border: none;
-					text-indent: 12px;
+				.filter-block-container {
+					align-items: center;
+					display: flex;
+					flex: 1 0 0;
+					flex-direction: row;
+					flex-wrap: nowrap;
+					height: 40px;
+					justify-content: flex-start;
+					margin-left: 6px;
+					overflow: hidden;
+
+					.filter-block {
+						background-color: rgba(124, 140, 175, 1);
+						background-position: right center;
+						background-size: 9px 9px;
+						color: rgba(255, 255, 255, 1);
+						cursor: pointer;
+						flex: 0 0 auto;
+						font-family: Roboto-Medium;
+						font-size: 14px;
+						height: 30px;
+						margin: 10px;
+						padding: 6px 25px 6px 10px;
+						position: relative;
+
+						&::after {
+							background-image: url(common/cross.svg);
+							background-position: center center;
+							background-repeat: no-repeat;
+							background-size: 9px 9px;
+							content: "";
+							cursor: pointer;
+							height: 30px;
+							position: absolute;
+							right: 9px;
+							top: 0;
+							width: 9px;
+						}
+					}
 				}
 			}
 		}
 
 		.content-table {
 			margin: 21px auto 36px;
-			overflow: scroll;
 		}
 
 		.content-footer {
@@ -92,36 +152,61 @@
 	border: 1px solid #305091;
 	margin-bottom: 0;
 
-	th {
-		vertical-align: top;
-		background: #305091;
-		color: white;
-		font-weight: normal;
-		font-size: 14px;
-		border: none;
-		border-right: 1px solid #D8E1F3;
-		max-width: 480px;
-		padding: 10px 30px 10px 0;
-		white-space: nowrap;
-		overflow: hidden;
+	thead {
+		tr {
+			th {
+				vertical-align: top;
+				background: #305091;
+				color: white;
+				font-weight: normal;
+				font-size: 14px;
+				border: none;
+				border-right: 1px solid #D8E1F3;
+				max-width: 480px;
+				padding: 10px 30px 10px 0;
+				white-space: nowrap;
+				overflow: hidden;
 
-		&:last-child {
-			border-right: none;
+				&:last-child {
+					border-right: none;
+				}
+
+				&.checkbox-th {
+					text-align: center;
+					vertical-align: middle;
+					padding: 8px;
+
+					input.checkbox {
+						display: inline;
+					}
+				}
+			}
 		}
 	}
 
-	td {
-		border: none !important;
-		border-right: 1px solid #D8E1F3 !important;
-		padding: 0 30px;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		line-height: 40px;
-		max-width: 480px;
-		overflow: hidden;
+	tbody {
+		td {
+			border: none !important;
+			border-right: 1px solid #D8E1F3 !important;
+			padding: 8px 30px !important;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			line-height: 40px;
+			max-width: 480px;
+			overflow: hidden;
 
-		&:last-child {
-			border-right: none;
+			&:last-child {
+				border-right: none !important;
+			}
+
+			&.checkbox-td {
+				padding: 8px 12px !important;
+				text-align: center;
+
+				input {
+					display: inline;
+				}
+			}
 		}
 	}
 }
