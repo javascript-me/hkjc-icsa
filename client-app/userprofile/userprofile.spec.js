@@ -22,9 +22,5 @@ describe('<UserProfile />', () => {
 		let instance = wrapper.instance()
 		instance.componentDidMount()
 		rewire()
-
-		// instance.state.accountUpdate = true
-		// wrapper.find('button.btn-primary').simulate('click')
-		// wrapper.find('button.btn-danger').simulate('click')
 	})
 })
