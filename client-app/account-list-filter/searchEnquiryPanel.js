@@ -16,7 +16,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setMinutes(0)
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
-	dateTimeFrom.setFullYear(1900)
+	dateTimeFrom.setFullYear(2015)
 	dateTimeFromObj.timestamp = Date.parse(dateTimeFrom)
 	dateTimeFromObj.datetime = Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
 	return dateTimeFromObj
@@ -30,7 +30,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setMinutes(59)
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
-	dateTimeTo.setFullYear(2050)
+	dateTimeTo.setFullYear(2018)
 	dateTimeToObj.timestamp = Date.parse(dateTimeTo)
 	dateTimeToObj.datetime = Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 	return dateTimeToObj
