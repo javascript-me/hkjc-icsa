@@ -131,7 +131,8 @@ const Datetime = React.createClass({
 			minutes: timeData[1],
 			timeValue: timeValue,
 			formats: formats,
-			open: props.open
+			open: props.open,
+			input: props.input
 		}
 	},
 
