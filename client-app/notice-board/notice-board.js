@@ -130,6 +130,13 @@ export default React.createClass({
 	clearselectedSettings () {
 		this.setState({selectedSettings: ''})
 	},
+	getHeadTitle () {
+		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
+			return e.priority === 'Critical' || e.priority === 'High'
+		})
+
+		return 'Noticeboard ' + this.state.noticeBoxData.allNotices.length + '(' + criticalOrHighNotices.length + ')'
+	},
 
 	render () {
 		return (
@@ -145,7 +152,7 @@ export default React.createClass({
 						</div>
 						<div className='container-title'>
 							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>Noticeboard 8(4)</span>
+							<span className='header-title'>{this.getHeadTitle()}</span>
 						</div>
 					</div>
 					<div className='messages-container'>
