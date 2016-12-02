@@ -20,7 +20,7 @@ export default React.createClass({
 	},
 	getDefaultProps () {
 		return {
-			pageTitle: 'Home \\ Tool & Adminstration \\ User',
+			pageTitle: 'Home \\ Global Tools & Administration \\ User',
 			h1Title: 'User Account Profile'
 		}
 	},

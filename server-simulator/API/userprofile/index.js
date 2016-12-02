@@ -8,6 +8,21 @@ const router = express.Router()
 
 const accountProfiles = require('../json/accountprofiles.json')
 const basicUsers = require('../json/userProfile2.json')
+const basicUserOutSide = require('../json/baseUserProfile.json')
+
+router.post('/outsidedata', (req, res) => {
+	let status = 200
+	let result = ''
+	let id = req.body.id || null
+	if (!req.body.id) {
+		result = basicUserOutSide
+	} else {
+		result = _.find(basicUserOutSide, item => item.id === id)
+	}
+	(!result) && (status = 404)
+	res.status(status)
+	res.send(result)
+})
 
 /**
  * @apiGroup UserProfile
@@ -29,7 +44,7 @@ router.post('/list', (req, res) => {
 
 	let allUser = accountProfiles.map((item, index) => {
 		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
-		let newItem = Object.assign({}, item, user)
+		let newItem = Object.assign({}, user, item)
 		return newItem
 	})
 
@@ -45,7 +60,7 @@ router.post('/list', (req, res) => {
 
 	var filteredResult = UserProfileListUtil.doFilter(
 		allUser,
-		req.body.keyWord,
+		req.body.keyword,
 		req.body.position,
 		req.body.userRole,
 		req.body.accountStatus,
@@ -80,6 +95,7 @@ router.post('/add', (req, res) => {
 		} else {
 			accountProfiles.push(userData.accountProfiles)
 			basicUsers.push(userData.userBasic)
+			_.remove(basicUserOutSide, (item) => (userData.userBasic.userID === item.userID))
 			result = {status: true}
 		}
 	} else {

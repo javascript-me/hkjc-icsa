@@ -19,8 +19,18 @@ export default React.createClass({
 			showPopup: true,
 			confirmBtn: '',
 			showCancel: false,
-			showMaskPwd: false
+			showMaskPwd: false,
+			username: '',
+			password: '',
+			disabled: false
 		}
+	},
+	componentDidMount () {
+		$('input[type=text]').focus()
+		if ($('input[type=password]').value !== '' && $('input[type=text]').value !== '') {
+			this.setState({disabled: true})
+		}
+		this.refs.submit.disabled = true
 	},
 	submit () {
 		doSubmit(this.refs.username.value, this.refs.password.value).then((data) => {
@@ -51,10 +61,22 @@ export default React.createClass({
 			this.refs.submit.disabled = false
 		}
 		if (this.refs.password.value !== '') {
-			this.setState({showMaskPwd: true})
+			this.setState({showMaskPwd: true}, () => {
+				if (this.refs.password.type === 'password') {
+					this.refs.btn.text = 'show'
+				} else {
+					this.refs.btn.text = 'hide'
+				}
+			})
 		} else {
 			this.setState({showMaskPwd: false})
 		}
+	},
+	typeUsername (event) {
+		this.setState({username: event.target.value})
+	},
+	typePwd (event) {
+		this.setState({password: event.target.value})
 	},
 	changeType () {
 		if (this.refs.password.type === 'password') {
@@ -83,21 +105,22 @@ export default React.createClass({
 							<div className='form-field'>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='usernamer'>User Name</label>
-									<input ref='username' type='text' className='form-control' id='login-username' placeholder='User Name' onKeyUp={this.handleKeyUp} />
+									<input ref='username' autoComplete='off' type='text' value={this.state.username} className='form-control' id='login-username' placeholder='User Name' onKeyUp={this.handleKeyUp} onChange={this.typeUsername} />
 								</div>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='password'>Password</label>
-									<input ref='password' type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} />
+									<input ref='password' value={this.state.password} type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
 									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
-								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Login</button>
+								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Log in</button>
 							</div>
 						</div>
 					</div>
 					<Overlay hideOnOverlayClicked ref='overlay' title={this.state.title} showCancel={this.state.showCancel} onConfirm={() => this.gotoLogin()} confirmBtn={this.state.confirmBtn}>
 						<p className='warning'>{this.state.msg}</p>
 					</Overlay>
+					<div className='mask' />
 				</div>
 			</div>
 			)
