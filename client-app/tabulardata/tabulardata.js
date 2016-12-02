@@ -104,11 +104,11 @@ export default React.createClass({
 
 				(row) => {
 					return <tr onClick={() => { this.onClickRow(row) }}>
-						{this.props.displayCheckBox ? <td><input type='checkbox' className='checkbox' name='user-profile' onClick={(event) => { event.stopPropagation() }} /></td> : null}
+						{this.props.displayCheckBox ? <td className='checkbox-td'><input type='checkbox' className='checkbox' name='user-profile' onClick={(event) => { event.stopPropagation() }} /></td> : null}
 						{this.props.headers.map(
 							(header, i) => {
 								if (header.fieldName !== '') {
-									return <td>{row[header.fieldName] ? row[header.fieldName] : ''}</td>
+									return <td>{row[header.fieldName] ? row[header.fieldName] : 'N / A'}</td>
 								}
 							}
 						)}
@@ -142,9 +142,13 @@ export default React.createClass({
 					{
 					this.props.headers.map(
 						(header) => {
-							return <th>
-								{ this.props.displayCheckBox && header.addCheckBox ? <input type='checkbox' className='checkbox pull-right' id='checkall' onChange={(e) => this.checkAll(e)} /> : null }
-								<span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span>
+							let thClass = ''
+							if (header.addCheckBox && header.fieldName === '') {
+								thClass = 'checkbox-th'
+							}
+							return <th className={thClass}>
+								{ this.props.displayCheckBox && header.addCheckBox ? <input type='checkbox' className='checkbox' id='checkall' onChange={(e) => this.checkAll(e)} /> : null }
+								{ header.fieldName === '' ? '' : <span id={header.fieldName} className={header.sortingClass} onClick={this.onItemClick}>{header.label}</span> }
 							</th>
 						}
 					)

@@ -135,7 +135,7 @@ let DateTimePickerDays = React.createClass({
 
 	onMinutesChange: function (e) {
 		if (isNaN(this.refs.minutes.value) || this.refs.minutes.value > 59 || this.refs.minutes.value < 0) {
-			this.refs.minutes.value = this.props.selectedDate.format('MM')
+			this.refs.minutes.value = this.props.selectedDate.format('mm')
 		} else {
 			this.props.onMinutesChange(e)
 		}
