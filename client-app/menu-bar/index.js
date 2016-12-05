@@ -79,6 +79,14 @@ class MenuBar extends Component {
 							}
 
 						</i>
+						<i className='icon-notification tips'>
+							<img src='icon/icon-action.svg' />
+							{
+								this.state.noticeRemindCount > 0
+								? <span className='message-count'>{this.state.noticeRemindCount}</span>
+								: ''
+							}
+						</i>
 					</div>
 				</div>
 				{ this.state.showNoticeBoard ? <Noticeboard isSlim={this.state.slimMode} /> : null }
