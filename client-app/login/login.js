@@ -113,7 +113,7 @@ export default React.createClass({
 								</div>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='password'>Password</label>
-									<input ref='password' value={this.state.password} type='password' onPaste={(e) => this.onPasteHandler(e)} className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
+									<input ref='password' value={this.state.password} type='password' onPaste={(e) => this.onPasteHandler(e)} onCopy={(e) => this.onPasteHandler(e)} className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
 									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
