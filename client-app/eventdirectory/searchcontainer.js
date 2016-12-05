@@ -23,14 +23,14 @@ export default React.createClass({
 		}
 	},
 	componentDidMount () {
-		this.getFilter()
+		this.getFilter(EventDirectoryService)
 	},
 	componentWillUnmount () {
 	},
 	onSearch (searchParam) {
 		searchParam.type = this.props.type
 		this.setState({result: null})
-		this.getResult(searchParam)
+		this.getResult(EventDirectoryService, searchParam)
 	},
 	render () {
 		return (
@@ -40,14 +40,14 @@ export default React.createClass({
 			</div>
 			)
 	},
-	async getFilter () {
-		const filter = await EventDirectoryService.getEventDirectoryFilter()
+	async getFilter (service) {
+		const filter = await service.getEventDirectoryFilter()
 		if (filter) {
 			this.setState({filter})
 		}
 	},
-	async getResult (searchParam) {
-		const result = await EventDirectoryService.getEventDirectoryResult(searchParam)
+	async getResult (service, searchParam) {
+		const result = await service.getEventDirectoryResult(searchParam)
 		if (result) {
 			this.setState({result: result.result})
 		}

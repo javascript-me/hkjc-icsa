@@ -4,7 +4,19 @@ import { shallow } from 'enzyme'
 import SearchTree from './searchtree'
 
 describe('<SearchTree />', () => {
-	it('renders a SearchTree div', () => {
+	it('SearchTree render null', () => {
+		const result = null
+		const wrapper = shallow(<SearchTree result={result} />)
+		expect(wrapper.find('div.ed-tree')).to.have.length(1)
+	})
+
+	it('SearchTree render []', () => {
+		const result = []
+		const wrapper = shallow(<SearchTree result={result} />)
+		expect(wrapper.find('div.ed-tree')).to.have.length(1)
+	})
+
+	it('SearchTree render all', () => {
 		const result = [
 			{
 				'name': 'Finland',
