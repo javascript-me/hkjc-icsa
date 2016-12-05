@@ -43,7 +43,7 @@ export default React.createClass({
 						this.setState({locked: data.locked, title: 'Account Locked', showPopup: true, confirmBtn: 'Go to Login'})
 					}
 					if (data.expired) {
-						this.setState({expired: data.expired, title: 'Password Expried', showPopup: true, confirmBtn: 'Confirm'})
+						this.setState({expired: data.expired, title: 'Password Expired', showPopup: true, confirmBtn: 'Go to Login'})
 					}
 				}
 			} else {
