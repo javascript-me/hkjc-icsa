@@ -84,10 +84,14 @@ export default class SearchEnquiryPanel extends React.Component {
 		})
 
 		tokenRemoveFilter = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], (topic, filter) => {
-			let newState = {}
+			let newStates = {}
+			let filterNames = filter.name.split(',')
 
-			newState[filter.name] = originState[filter.name]
-			this.setState(newState)
+			filterNames.forEach(function(filterName) {
+				newStates[filterName] = originState[filterName]
+			})
+
+			this.setState(newStates)
 		})
 
 		document.addEventListener('click', this.pageClick, false)
@@ -118,7 +122,7 @@ export default class SearchEnquiryPanel extends React.Component {
 
 		if (name === 'dateTimeFrom' || name === 'dateTimeTo') {
 			newState[name] = {
-				timestamp: date,
+				timestamp: date.valueOf(),
 				datetime: date.format('DD MMM YYYY HH:mm')
 			}
 		} else {
@@ -273,13 +277,13 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={fromClass}>
 							<label>Date Time From <span>*</span></label>
-							<Calendar key={`from-${calendarVersion}`} defaultValue={dateTimeFrom.datetime} onChange={(e) => { this.dateChange('dateTimeFrom', e) }} />
+							<Calendar key={`from-${calendarVersion}`} defaultValue={dateTimeFrom.datetime} value={dateTimeFrom.datetime} onChange={(e) => { this.dateChange('dateTimeFrom', e) }} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
 						<div className={toClass}>
 							<label>Date Time To <span>*</span></label>
-							<Calendar key={`to-${calendarVersion}`} defaultValue={dateTimeTo.datetime} onChange={(e) => this.dateChange('dateTimeTo', e)} />
+							<Calendar key={`to-${calendarVersion}`} defaultValue={dateTimeTo.datetime} value={dateTimeTo.datetime} onChange={(e) => this.dateChange('dateTimeTo', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -325,7 +329,7 @@ export default class SearchEnquiryPanel extends React.Component {
 					<div className='col-sm-3 pd-w10'>
 						<div className={dateTimeGameStartClass}>
 							<label>K.O Time / Game Start Time</label>
-							<Calendar key={`gameStartTime-${calendarVersion}`} defaultValue={this.state.dateTimeGameStart} onChange={(e) => this.dateChange('dateTimeGameStart', e)} />
+							<Calendar key={`gameStartTime-${calendarVersion}`} defaultValue={this.state.dateTimeGameStart} value={this.state.dateTimeGameStart} onChange={(e) => this.dateChange('dateTimeGameStart', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>

@@ -10,19 +10,20 @@ export default class FilterBlock extends React.Component {
 	}
 
 	removeHandler () {
-		this.props.removeEvent(this.props.filter)
+		this.props.removeEvent(this.props.dataValue)
 	}
 
 	render () {
 		return (
 			<span className='filter-block' onClick={this.removeHandler}>
-				{this.props.filter.value}
+				{this.props.dataText}
 			</span>
         )
 	}
 }
 
 FilterBlock.propTypes = {
-	filter: React.PropTypes.object,
+	dataText: React.PropTypes.string,
+	dataValue: React.PropTypes.object,
 	removeEvent: React.PropTypes.func
 }

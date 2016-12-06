@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'underscore'
 import Moment from 'moment'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
@@ -85,6 +86,7 @@ export default React.createClass({
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
 			keyword: '',
+			selectedKeyword: '',
 			originDateRange: {
 				dateTimeFrom: originDateTimeFrom,
 				dateTimeTo: originDateTimeTo
@@ -173,22 +175,69 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
+		const callback = () => {
+			this.setState({
+				isShowingMoreFilter: false
+			})
+
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+		}
+
+		switch(filter.name) {
+			case 'keyword':
+				this.removeKeywordFilter(filter, callback)
+				break;
+			case 'dateTimeFrom,dateTimeTo':
+				this.removeDateRangeFilter(filter, callback)
+				break;
+			default:
+				this.removeNormalFilter(filter, callback)
+				break;
+		}
+	},
+
+	removeKeywordFilter: function (keyword, callback = new Function()) {
+		this.setState({
+			keyword: ''
+		}, callback)
+	},
+
+	removeDateRangeFilter: function(dateRange, callback = new Function()) {
+		let selectedFilters = this.state.selectedFilters
+		let cloneFilters = _.clone(selectedFilters)
+		let originDateRange = this.state.originDateRange
+
+		cloneFilters.forEach(function(filter){
+			if(filter.name === 'dateTimeFrom') {
+				filter.value = originDateRange.dateTimeFrom
+			} else if(filter.name === 'dateTimeTo') {
+				filter.value = originDateRange.dateTimeTo
+			}
+		})
+
+		this.setState({
+			selectedFilters: cloneFilters
+		}, callback)
+	},
+
+	removeNormalFilter: function(filter, callback = new Function()) {
 		let selectedFilters = this.state.selectedFilters
 		let filterIndex = selectedFilters.indexOf(filter)
 
 		selectedFilters.splice(filterIndex, 1)
 
 		this.setState({
-			selectedFilters: selectedFilters,
-			isShowingMoreFilter: false
-		}, () => {
-			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
-			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
-		})
+			selectedFilters: selectedFilters
+		}, callback)
 	},
 
 	searchAuditlog: async function () {
 		let criteriaOption = this.getSearchCriterias()
+
+		this.setState({
+			selectedKeyword: this.state.keyword
+		})
 
 		// Get Table Data
 		AuditlogStore.searchAuditlogs(1, null, criteriaOption)
@@ -286,6 +335,51 @@ export default React.createClass({
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
+	generateFilterBlockesJsx (filters) {
+		const filterDisplayFormatting = (filter) => {
+			return filter.name === 'keyword'
+				? `${filter.name}: ${filter.value}`
+				: filter.value
+		}
+
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
+		let keywordFilter = {
+			name: 'keyword',
+			value: this.state.selectedKeyword
+		}
+		let dateFromFilter = filters.filter((f) => {
+			return f.name === 'dateTimeFrom'
+		})[0]
+		let dateToFilter = filters.filter((f) => {
+			return f.name === 'dateTimeTo'
+		})[0]
+		let dateRangeFilter = {
+			name: 'dateTimeFrom,dateTimeTo',
+			value: `${dateFromFilter.value} - ${dateToFilter.value}`
+		}
+		let filtersArrayWithoutDateRange = filters.filter((f) => {
+			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
+				return false
+			}
+			return true
+		})
+
+		let filtersArray = []
+			.concat(this.state.selectedKeyword ? keywordFilter : [])
+			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
+			.concat(filtersArrayWithoutDateRange)
+
+		let filterBlockes = filtersArray.map((f, index) => {
+			return <FilterBlock
+				key={index}
+				dataText={filterDisplayFormatting(f)}
+				dataValue={f}
+				removeEvent={this.removeSearchCriteriaFilter} />
+		}) || []
+
+		return filterBlockes
+	},
+
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 			'hover-enabled': !this.state.isShowingMoreFilter
@@ -297,22 +391,8 @@ export default React.createClass({
 				betType={betType}
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		})
-		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
-
-		let filterBlockes = this.state.selectedFilters.filter((f) => {
-			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeNotChanged) {
-				return false
-			}
-			return true
-		}).map((f, index) => {
-			return <FilterBlock
-				key={index}
-				filter={f}
-				removeEvent={this.removeSearchCriteriaFilter}
-				removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		}) || []
-
+		})		
+		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
 		})
