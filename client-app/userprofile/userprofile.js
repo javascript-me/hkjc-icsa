@@ -8,6 +8,7 @@ import SubscriptionContainer from './subscriptioncontainer'
 import ProfileButtons from './profilebuttons'
 import BasicInformation from './basicinformation'
 import AccountInformation from './accountinformation'
+import UserDelegation from './userdelegation'
 
 export {
 	UserProfileService,
@@ -16,7 +17,8 @@ export {
 	SubscriptionContainer,
 	ProfileButtons,
 	BasicInformation,
-	AccountInformation
+	AccountInformation,
+	UserDelegation
 }
 
 export default React.createClass({
@@ -58,6 +60,8 @@ export default React.createClass({
 						<BasicInformation userBasic={this.state.userBasic} />
 
 						<AccountInformation ref='accountCmp' userAccount={this.state.userAccount} updateMode={this.state.accountUpdate} />
+
+						<UserDelegation />
 
 						<ProfileButtons>
 							{this.state.accountUpdate && (<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>)}

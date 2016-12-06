@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import LoginService from '../login/login-service'
 
-import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation} from '../userprofile/userprofile'
+import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
 
 export default React.createClass({
 	displayName: 'MyProfile',
@@ -17,7 +17,8 @@ export default React.createClass({
 		this.h1Title = 'My Profile'
 		return {
 			userBasic: {},
-			userAccount: {}
+			userAccount: {},
+			userDelegation: []
 		}
 	},
 	componentDidMount () {
@@ -34,7 +35,12 @@ export default React.createClass({
 
 						<AccountInformation ref='accountCmp' userAccount={this.state.userAccount} updateMode={false} showDate={false} />
 
-						<ProfileButtons />
+						<UserDelegation userDelegation={this.state.userDelegation} />
+
+						<ProfileButtons>
+							<button className='btn btn-danger' onClick={() => {}}>Delete</button>
+							<button className='btn btn-primary pull-right' onClick={() => {}}>Update</button>
+						</ProfileButtons>
 					</ProfileContainer>
 
 					<SubscriptionContainer />

@@ -7,14 +7,22 @@ export default React.createClass({
 		children: PropTypes.array.isRequired
 	},
 	render () {
+		const basicInformation = this.props.children[0]
+		const accountInformation = this.props.children[1]
+		const userDelegation = this.props.children[2]
+		const profileButtons = this.props.children[3]
+
 		return (
 			<div ref='root' className='profile-container'>
 				<div className='row'>
-					{this.props.children[0]}
-					{this.props.children[1]}
+					{basicInformation}
+					{accountInformation}
 				</div>
 				<div className='row'>
-					{this.props.children[2]}
+					{userDelegation}
+				</div>
+				<div className='row'>
+					{profileButtons}
 				</div>
 			</div>
 		)
