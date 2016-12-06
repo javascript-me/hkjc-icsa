@@ -12,13 +12,11 @@ describe('<MyProfile />', () => {
 			user: {},
 			account: {}
 		}
-		const service = {
-			getUserProfile () {
-				return Promise.resolve(response)
-			}
-		}
+		rewireService(MyProfile, 'UserProfileService', 'getUserProfile', response)
 
 		const instance = wrapper.instance()
-		instance.getUserProfile(service)
+		instance.getUserProfile()
+
+		rewire()
 	})
 })
