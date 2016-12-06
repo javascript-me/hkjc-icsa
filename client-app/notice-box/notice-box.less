@@ -3,7 +3,7 @@
 		display: none;
 	}
 
-	ul.list-box,
+	ul.list-box-bottom,
 	ul.list-box-right {
 		li.blink {
 			animation-duration: 0.7s;
@@ -14,7 +14,7 @@
 		}
 	}
 
-	ul.list-box {
+	ul.list-box-bottom {
 		list-style-type: none;
 		padding: 0;
 		height: 120px;
@@ -41,6 +41,7 @@
 				display: block;
 				margin-bottom: -20px;
 				font-family: Roboto-Regular;
+				letter-spacing: -0.16px;
 				color: #9D9D9D;
 
 				&.bold-text {
@@ -49,16 +50,11 @@
 				}
 
 				.wrap-text {
-					font-size: 14px;
-					letter-spacing: -0.16px;
-					line-height: 20px;
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					overflow: hidden;
 					margin-left: 185px;
 					margin-right: 50px;
-					position: relative;
-					top: -20px;
 				}
 			}
 		}
@@ -103,12 +99,6 @@
 				&.bold-text {
 					font-family: Roboto-Medium;
 					color: #305091;
-				}
-
-				.wrap-text {
-					font-size: 14px;
-					letter-spacing: -0.16px;
-					line-height: 20px;
 				}
 			}
 		}

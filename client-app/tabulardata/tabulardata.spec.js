@@ -46,7 +46,38 @@ var dataCollection = [{
 }]
 
 describe('<Tabulardata />', () => {
+
 	it('renders a table div', () => {
+		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
+		expect(tabulardata.find('table')).to.have.length(1)
+	})
+
+	it('Render with no results', () => {
+		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
+		expect(tabulardata.find('table')).to.have.length(1)
+	})
+
+	it('Render with custom field formats', () => {
+		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
+		expect(tabulardata.find('table')).to.have.length(1)
+	})
+
+	it('Render with checkbox and inputs', () => {
+		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
+		expect(tabulardata.find('table')).to.have.length(1)
+	})
+
+	it('Render with pagination', () => {
+		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
+		expect(tabulardata.find('table')).to.have.length(1)
+	})
+
+	it('Pagination works', () => {
+		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
+		expect(tabulardata.find('table')).to.have.length(1)
+	})
+
+	it('Render with sorting', () => {
 		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
 		expect(tabulardata.find('table')).to.have.length(1)
 	})

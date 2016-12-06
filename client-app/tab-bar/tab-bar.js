@@ -17,18 +17,12 @@ export default class TabBar extends React.Component {
 	}
 
 	getTabBarClassNames () {
-		if (this.props.displayPosition === 'right') {
-			return 'tab-bar' + '-' + 'right'
-		} else {
-			return 'tab-bar'
-		}
+		return this.props.displayPosition === 'bottom' ? 'tab-bar-bottom' : 'tab-bar-right'
 	}
 
 	render () {
-		let tabBarClassName = this.getTabBarClassNames()
-
 		return (
-			<div className={tabBarClassName}>
+			<div className={this.getTabBarClassNames()}>
 				{
 					this.props.tabData.map((item, i) => {
 						return <div key={i} className={this.getTabClassNames(item)} id={item.label} onClick={this.onItemClick}>{item.label}</div>

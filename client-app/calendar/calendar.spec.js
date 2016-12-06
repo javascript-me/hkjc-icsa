@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-
+import sinon from 'sinon'
 import Calendar from './'
 
 describe('Calendar', () => {
@@ -9,6 +9,20 @@ describe('Calendar', () => {
 		expect(calendar.find('span.title')).to.have.length(1)
 		expect(calendar.find('span.input-group-addon')).to.have.length(1)
 		expect(calendar.find('div.rdtPicker')).to.have.length(1)
+	})
+
+	it(' Create calendar without input', () => {
+		const calendar = shallow(<Calendar input={false} />)
+		expect(calendar.find('span.title')).to.have.length(0)
+		expect(calendar.find('span.input-group-addon')).to.have.length(0)
+		expect(calendar.find('div.rdtStatic')).to.have.length(1)
+	})
+
+	it(' Create calendar opened', () => {
+		const calendar = shallow(<Calendar open />)
+		expect(calendar.find('span.title')).to.have.length(1)
+		expect(calendar.find('span.input-group-addon')).to.have.length(1)
+		expect(calendar.find('div.rdtOpen')).to.have.length(1)
 	})
 
 	it(' accept changes', () => {
@@ -82,5 +96,20 @@ describe('Calendar', () => {
 		const current = calendar.find('.rdtSwitch').text()
 		calendar.find('.icon-arrow-left').simulate('click')
 		expect(calendar.find('.icon-arrow-left').text()).to.not.equal(current)
+	})
+
+	it(' close onclick outside', () => {
+		const onBlur = sinon.spy()
+		// Simulate window addEventListener :D
+		const map = {}
+		window.addEventListener = (event, cb) => {
+			map[event] = cb
+		}
+
+		const calendar = mount(<Calendar onBlur={onBlur} />)
+		calendar.find('.input-group').simulate('click')
+		map.mousedown({target: {}})
+
+		expect(onBlur.calledOnce).to.be.true
 	})
 })
