@@ -21,7 +21,7 @@ export default React.createClass({
 		}
 	},
 	componentDidMount () {
-		this.getUserProfile(UserProfileService)
+		this.getUserProfile()
 	},
 	onEditClick () {
 	},
@@ -42,8 +42,8 @@ export default React.createClass({
 			</div>
 		)
 	},
-	async getUserProfile (service) {
-		const userProfile = await service.getUserProfile(this.userID)
+	async getUserProfile () {
+		const userProfile = await UserProfileService.getUserProfile(this.userID)
 		if (userProfile) {
 			this.setState({
 				userBasic: userProfile.user,
