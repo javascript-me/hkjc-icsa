@@ -60,6 +60,7 @@ const originState = {
 
 let tokenKeyPress = null
 let tokenRemoveFilter = null
+let tokenResetFilters = null
 
 export default class SearchEnquiryPanel extends React.Component {
 
@@ -68,7 +69,8 @@ export default class SearchEnquiryPanel extends React.Component {
 		this.state = Object.assign({
 			tokens: {
 				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
-				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER',
+				AUDITLOG_SEARCH_BY_RESET_FILTERS: 'AUDITLOG_SEARCH_BY_RESET_FILTERS'
 			}
 		}, originState)
 
@@ -76,7 +78,9 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	componentDidMount () {
-		this.setState(this.props.selectedFilters || [])
+		if (this.props.selectedFilters && this.props.selectedFilters.length) {
+			this.setState(this.props.selectedFilters)
+		}
 
 		tokenKeyPress = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS], () => {
 			this.handleSubmit()
@@ -93,12 +97,17 @@ export default class SearchEnquiryPanel extends React.Component {
 			this.setState(newStates)
 		})
 
+		tokenResetFilters = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_RESET_FILTERS], () => {
+			this.handleReset()
+		})
+
 		document.addEventListener('click', this.pageClick, false)
 	}
 
 	componentWillUnmount () {
 		PubSub.unsubscribe(tokenKeyPress)
 		PubSub.unsubscribe(tokenRemoveFilter)
+		PubSub.unsubscribe(tokenResetFilters)
 
 		document.removeEventListener('click', this.pageClick, false)
 	}

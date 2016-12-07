@@ -124,7 +124,7 @@ describe('<Audit /> component', () => {
 
 			expect(auditlog.state('betType')).to.equal('basketball')
 			expect(auditlog.state('keyword')).to.equal('')
-			expect(auditlog.state('selectedFilters')).to.have.length(0)
+			expect(auditlog.state('selectedFilters')).to.have.length(2)
 			expect(auditlog.state('isShowingMoreFilter')).to.be.false
 		})
 	})

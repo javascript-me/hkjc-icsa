@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'underscore'
 import Moment from 'moment'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
@@ -32,6 +31,16 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
 	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+}
+
+const getDefaultSelectedFilters = () => {
+	return [{
+		name: 'dateTimeFrom',
+		value: getOrginDateTimeFrom()
+	}, {
+		name: 'dateTimeTo',
+		value: getOrginDateTimeTo()
+	}]
 }
 
 const doExport = async (format, filters) => {
@@ -69,9 +78,6 @@ export default React.createClass({
 	],
 
 	getInitialState () {
-		let originDateTimeFrom = getOrginDateTimeFrom()
-		let originDateTimeTo = getOrginDateTimeTo()
-
 		return {
 			pageTitle: 'Home \\ Global Tools & Adminstration \\ Audit Trail',
 			data: [],
@@ -81,23 +87,18 @@ export default React.createClass({
 			tokens: {
 				AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
 				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
-				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER',
+				AUDITLOG_SEARCH_BY_RESET_FILTERS: 'AUDITLOG_SEARCH_BY_RESET_FILTERS'
 			},
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
 			keyword: '',
 			selectedKeyword: '',
 			originDateRange: {
-				dateTimeFrom: originDateTimeFrom,
-				dateTimeTo: originDateTimeTo
+				dateTimeFrom: getOrginDateTimeFrom(),
+				dateTimeTo: getOrginDateTimeTo()
 			},
-			selectedFilters: [{
-				name: 'dateTimeFrom',
-				value: originDateTimeFrom
-			}, {
-				name: 'dateTimeTo',
-				value: originDateTimeTo
-			}],
+			selectedFilters: getDefaultSelectedFilters(),
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
 			auditlogs: []
@@ -137,7 +138,7 @@ export default React.createClass({
 	getSearchCriterias: function () {
 		return {
 			betType: this.state.betType,
-			keyword: this.state.keyword,
+			keyword: this.state.selectedKeyword,
 			filters: this.state.selectedFilters
 		}
 	},
@@ -155,13 +156,16 @@ export default React.createClass({
 		this.setState({
 			betType: betType,
 			keyword: '',
-			selectedFilters: [],
+			selectedKeyword: '',
+			selectedFilters: getDefaultSelectedFilters(),
 			isShowingMoreFilter: false
 		})
+
+		PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_RESET_FILTERS])
 	},
 
 	handleKeywordChange: function (event) {
-		var newKeyword = event.target.value
+		let newKeyword = event.target.value
 
 		this.setState({
 			keyword: newKeyword
@@ -206,10 +210,9 @@ export default React.createClass({
 
 	removeDateRangeFilter: function (dateRange, callback) {
 		let selectedFilters = this.state.selectedFilters
-		let cloneFilters = _.clone(selectedFilters)
 		let originDateRange = this.state.originDateRange
 
-		cloneFilters.forEach((filter) => {
+		selectedFilters.forEach((filter) => {
 			if (filter.name === 'dateTimeFrom') {
 				filter.value = originDateRange.dateTimeFrom
 			} else if (filter.name === 'dateTimeTo') {
@@ -218,7 +221,7 @@ export default React.createClass({
 		})
 
 		this.setState({
-			selectedFilters: cloneFilters
+			selectedFilters: selectedFilters
 		}, callback)
 	},
 
@@ -305,38 +308,38 @@ export default React.createClass({
 		this.setState({hasData: true})
 	},
 
-	openPopup () {
+	openPopup: function () {
 		this.setState({ exportFormat: 'pdf' })// reset the format value
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 
-	export () {
+	export: function () {
 		let criteriaOption = this.getSearchCriterias()
 		const filters = AuditlogStore.buildRequest(1, null, criteriaOption)
 
 		doExport(this.state.exportFormat, filters)
 	},
 
-	onChangeFormat (format) {
+	onChangeFormat: function (format) {
 		this.setState({ exportFormat: format })
 	},
 
-	onChange () {
+	onChange: function () {
 		const hasData = AuditlogStore.auditlogs.length > 0
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
 	},
 
-	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
+	handleChangePage: function (selectedPageNumber, sortingObject, criteriaOption) {
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
-	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
+	handleClickSorting: function (selectedPageNumber, sortingObject, criteriaOption) {
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
-	generateFilterBlockesJsx (filters) {
+	generateFilterBlockesJsx: function (filters) {
 		const filterDisplayFormatting = (filter) => {
 			return filter.name === 'keyword'
 				? `${filter.name}: ${filter.value}`
