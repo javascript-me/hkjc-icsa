@@ -47,27 +47,6 @@ let DEFAULT_BET_TYPE = 'football'
 export default React.createClass({
 	displayName: 'Audit',
 
-	headers: [
-		{'id': 1, label: 'Date/Time', fieldName: 'date_time', sortingClass: 'down-arrow', addCheckBox: false},
-		{'id': 2, label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 3, label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 4, label: 'Type', fieldName: 'Type', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 5, label: 'Function/Module', fieldName: 'function_module', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 6, label: 'Function Event Detail', fieldName: 'function_event_detail', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 7, label: 'User Role', fieldName: 'user_role', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 8, label: 'IP Address', fieldName: 'ip_address', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 9, label: 'Back End ID', fieldName: 'backend_id', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 10, label: 'Front End ID', fieldName: 'frontend_id', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 11, label: 'Home', fieldName: 'home', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 12, label: 'Away', fieldName: 'away', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 13, label: 'K.O. Time/ Game Start Time', fieldName: 'ko_time_game_start_game', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 14, label: 'Bet Type', fieldName: 'bet_type', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 15, label: 'Event Name', fieldName: 'event_name', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 16, label: 'Error Code', fieldName: 'error_code', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 17, label: 'Error Message Content', fieldName: 'error_message_content', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 18, label: 'Device', fieldName: 'device', sortingClass: 'no-arrow', addCheckBox: false}
-	],
-
 	getInitialState () {
 		let originDateTimeFrom = getOrginDateTimeFrom()
 		let originDateTimeTo = getOrginDateTimeTo()
@@ -111,7 +90,7 @@ export default React.createClass({
 		let criteriaOption = this.getSearchCriterias()
 
 		// Get Table Data
-		AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption)
+		AuditlogStore.searchAuditlogs(criteriaOption)
 		AuditlogStore.addChangeListener(this.onChange)
 
 		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
@@ -196,7 +175,7 @@ export default React.createClass({
 		let criteriaOption = this.getSearchCriterias()
 
 		// Get Table Data
-		AuditlogStore.searchAuditlogs(1, null, criteriaOption)
+		AuditlogStore.searchAuditlogs(criteriaOption)
 	},
 
 	clickForSearching: function () {
@@ -255,11 +234,6 @@ export default React.createClass({
 		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
 	},
 
-	// function to mock the event of loading data from the table
-	mockLoadData: function () {
-		this.setState({hasData: true})
-	},
-
 	openPopup () {
 		this.setState({ exportFormat: 'pdf' })// reset the format value
 		this.state.hasData ? this.refs.exportPopup.show() : null
@@ -267,7 +241,7 @@ export default React.createClass({
 
 	export () {
 		let criteriaOption = this.getSearchCriterias()
-		const filters = AuditlogStore.buildRequest(1, null, criteriaOption)
+		const filters = AuditlogStore.buildRequest(criteriaOption)
 
 		doExport(this.state.exportFormat, filters)
 	},
@@ -281,14 +255,6 @@ export default React.createClass({
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
-	},
-
-	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
-		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
-	},
-
-	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
-		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	render: function () {
@@ -326,8 +292,8 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent =
 				<div>
-					<div className="container">
-						<div className="row">
+					<div className="tableComponent-container">
+					
 							<TableComponent data={ AuditlogStore.auditlogs } pagination={true} options={this.state.tableOptions} striped={true} keyField='id'
 								tableHeaderClass="table-header" tableContainerClass="auditlog-table">
 								<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
@@ -350,11 +316,9 @@ export default React.createClass({
 								<TableHeaderColumn dataField='error_message_content' dataSort={true}>Error Message Content</TableHeaderColumn>
 								<TableHeaderColumn dataField='device' dataSort={true}>Device</TableHeaderColumn>
 							</TableComponent>
-						</div>
+					
 					</div>
-					<div className='table-container '>
-						<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
-					</div>
+					
 					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>

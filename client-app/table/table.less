@@ -4,7 +4,6 @@
 
 .react-bs-table {
   border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
 .react-bs-table table {
@@ -12,19 +11,34 @@
   table-layout: fixed;
 }
 
-.react-bs-table table td,
-.react-bs-table table th {
+.react-bs-table .table > tbody > tr > td,
+.react-bs-table .table > tfoot > tr > td {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding: 0 30px;
+  line-height: 40px;
 }
 
 .react-bs-table {
-  margin: 5px 10px 5px 10px;
 }
 
 .react-bs-table-pagination {
   margin: 10px;
+}
+
+.react-bs-table-pagination .page-item {
+  font-family: Roboto-Regular;
+  font-size: 14px;
+  color: #305091;
+  padding: 6px 10px;
+  display: inline;
+}
+
+.react-bs-table-pagination .active {
+  background: #305091;
+  border-radius: 100px;
+  color: #FFF;
 }
 
 .react-bs-table-tool-bar {
@@ -132,17 +146,37 @@
   float: left;
 }
 
+.react-bs-table .react-bs-container-header > table > thead > tr > th > .order {
+  visibility: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.react-bs-table .react-bs-container-header .sort-column:hover .order,
+.react-bs-table .react-bs-container-header .sort-column .order .active {
+  visibility: visible;
+}
+
+.react-bs-table .react-bs-container-header .sortCaret {
+  background-image: url(common/down-arrow.svg);
+  background-position: 0;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.react-bs-table .react-bs-container-header > table > thead > tr > th > .dropup .sortCaret {
+  background-image: url(common/up-arrow.svg);
+}
+
 .react-bs-table .react-bs-container-header .sort-column {
   cursor: pointer;
 }
 
+
 /*inline editor default style*/
 .react-bs-container .form-control.editor{
-  /*width:100%;
-  top:0;
-  left:0;*/
-  /*height: 100%;
-  position: absolute;*/
+
 }
 
 .react-bs-container  .textarea-save-btn{
@@ -244,3 +278,10 @@
 .bounceOut {
   animation-name: bounceOut;
 }
+
+.tableComponent-container {
+  min-height: 500px;
+  width: auto;
+  margin: 0 30px;
+}
+

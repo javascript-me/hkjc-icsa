@@ -909,6 +909,42 @@ class TableComponent extends Component {
     this._adjustHeight();
   }
 
+  _getCellWidth = (cell) => {
+    // re-use canvas object for better performance
+    const computedStyle = getComputedStyle(cell);
+    const font = `${computedStyle.fontSize} ${computedStyle.fontFamily}`
+
+    const canvas = this._getCellWidth.canvas || (this._getCellWidth.canvas = document.createElement("canvas"))
+    const context = canvas.getContext("2d")
+    context.font = font;
+    var metrics = context.measureText(cell.textContent);
+    return metrics.width;
+}
+
+  _getRealWidth = () => {
+    const tbody = this.refs.body.refs.tbody;
+    let maxWidth = this.refs.header.refs.container.offsetWidth
+    let rwidth = Array(tbody.childNodes[0].childNodes.length).fill(0);
+
+    for (let i = 0; i < tbody.childNodes.length; i++) {
+      
+      const row = tbody.childNodes[i]
+      for (let c = 0; c < row.childNodes.length; c++) {
+        const cell = row.childNodes[c]
+        const clength = this._getCellWidth(cell) + 64 //60 for margin, 4 for borders
+        rwidth[c] = clength > rwidth[c] ? Math.ceil(clength) : rwidth[c]
+      }
+
+      const currentWidth = rwidth.reduce((a,b)=> a + b)
+      maxWidth =  currentWidth > maxWidth ? currentWidth : maxWidth
+    }
+
+    return {
+      width : maxWidth,
+      columns : rwidth
+    }
+  }
+
   _adjustHeaderWidth = () => {
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
@@ -916,11 +952,15 @@ class TableComponent extends Component {
     const firstRow = tbody.childNodes[0];
     const isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
+    
     if (firstRow && this.store.getDataNum()) {
       const cells = firstRow.childNodes;
+      const realWidth = this._getRealWidth()
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
         const computedStyle = getComputedStyle(cell);
+        const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 64 //60 for margin, 4 for borders
+
         let width = parseFloat(computedStyle.width.replace('px', ''));
         if (this.isIE) {
           const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
@@ -930,10 +970,12 @@ class TableComponent extends Component {
           width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
         }
         const lastPadding = (cells.length - 1 === i ? scrollBarWidth : 0);
-        if (width <= 0) {
-          width = 120;
+        if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
+          const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
+          width = bestWith > 480 ? 480 : bestWith;
           cell.width = width + lastPadding + 'px';
         }
+
         const result = width + lastPadding + 'px';
         header.childNodes[i].style.width = result;
         header.childNodes[i].style.minWidth = result;

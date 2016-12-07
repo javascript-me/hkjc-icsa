@@ -91,19 +91,18 @@ class TableHeaderColumn extends Component {
       textAlign: headerAlign || dataAlign,
       display: hidden ? 'none' : null
     };
+
     if (sortIndicator) {
       defaultCaret = (!dataSort) ? null : (
         <span className='order'>
           <span className='dropdown'>
-            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
-          </span>
-          <span className='dropup'>
-            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
+            <span className='sortCaret'></span>
           </span>
         </span>
       );
     }
-    let sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
+
+    let sortCaret = sort ? this.renderReactSortCaret(sort) : defaultCaret;
     if (caretRender) {
       sortCaret = caretRender(sort, dataField);
     }
@@ -113,16 +112,23 @@ class TableHeaderColumn extends Component {
 
     const title = headerTitle && typeof children === 'string' ? { title: children } : null;
     return (
-      <th ref='header-col'
-          className={ classes }
-          style={ thStyle }
-          onClick={ this.handleColumnClick }
-          { ...title }>
-        { children }{ sortCaret }
+      <th ref='header-col' className={ classes } style={ thStyle } onClick={ this.handleColumnClick } { ...title }>
+        { sortCaret } { children }
         <div onClick={ e => e.stopPropagation() }>
           { this.props.filter ? this.getFilters() : null }
         </div>
       </th>
+    );
+  }
+
+   renderReactSortCaret(order) {
+    const orderClass = classSet('order', {
+      'dropup': order === Const.SORT_ASC
+    });
+    return (
+      <span className={ orderClass }>
+        <span className='sortCaret active'></span>
+      </span>
     );
   }
 
