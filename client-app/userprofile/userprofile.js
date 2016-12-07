@@ -31,7 +31,8 @@ export default React.createClass({
 		return {
 			accountUpdate: false,
 			userBasic: {},
-			userAccount: {}
+			userAccount: {},
+			userDelegation: null
 		}
 	},
 	componentDidMount () {
@@ -61,7 +62,7 @@ export default React.createClass({
 
 						<AccountInformation ref='accountCmp' userAccount={this.state.userAccount} updateMode={this.state.accountUpdate} />
 
-						<UserDelegation />
+						<UserDelegation userDelegation={this.state.userDelegation} delegationUpdate={false} />
 
 						<ProfileButtons>
 							{this.state.accountUpdate && (<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>)}
@@ -81,7 +82,8 @@ export default React.createClass({
 		if (userProfile) {
 			this.setState({
 				userBasic: userProfile.user,
-				userAccount: userProfile.account
+				userAccount: userProfile.account,
+				userDelegation: userProfile.account.delegationList
 			})
 		}
 	}

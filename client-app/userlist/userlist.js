@@ -245,21 +245,25 @@ export default React.createClass({
 					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} onClickRow={this.onClickRow} />
 				</div>
 				<div className='content-footer'>
-					<div className='content-footer-left'>
-						<button className='btn btn-primary btn-disable'>Delete</button>
-					</div>
+					<div className='content-footer-left' />
 					<div className='content-footer-center'>
 						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
-					<div className='content-footer-right'>
-						{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
-							: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
-								<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
-					}
-
-					</div>
+					<div className='content-footer-right' />
 				</div>
 			</div>
 		</div>
 	}
 })
+
+// <div className='content-footer-left'>
+// 	<button className='btn btn-primary btn-disable'>Delete</button>
+// </div>
+
+// <div className='content-footer-right'>
+// 	{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+// 		: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+// 			<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+// }
+
+// </div>

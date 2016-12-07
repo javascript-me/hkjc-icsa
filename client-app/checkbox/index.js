@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
 class Checkbox extends Component {
   componentDidMount() { this.update(this.props.checked); }

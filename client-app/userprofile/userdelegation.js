@@ -5,8 +5,8 @@ import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
 // import UserProfileService from '../userprofile/userprofile-service'
 
-function priceFormatter (cell, row) {
-	return '$' + cell
+function roleFormatter (cell, row) {
+	return cell.map(item => item.delegatedRole).join(',')
 }
 
 export default React.createClass({
@@ -20,6 +20,17 @@ export default React.createClass({
 			userDelegation: null,
 			delegationUpdate: false
 		}
+	},
+	getInitialState () {
+		this.selectRowProp = {
+			mode: 'checkbox'
+			// clickToSelect: true,
+			// selected: [], // default select on table
+			// bgColor: 'rgb(238, 193, 213)',
+			// onSelect: onRowSelect,
+			// onSelectAll: onSelectAll
+		}
+		return {}
 	},
 	onAddClick (popupCmp) {
 		popupCmp.show()
@@ -71,10 +82,18 @@ export default React.createClass({
 					</Popup>
 				</div>
 				<div className='content'>
-					<TableComponent data={tableData} bodyStyle={{height: 'calc(100% - 42px)'}}>
-						<TableHeaderColumn dataField='id' isKey dataAlign='center' dataSort>Product ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='name' dataSort>Product Name</TableHeaderColumn>
-						<TableHeaderColumn dataField='price' dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
+					<TableComponent
+						data={tableData}
+						bodyStyle={{height: 'calc(100% - 42px)'}}
+						selectRow={this.selectRowProp}
+					>
+						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center'>Username</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormatter} dataAlign='center'>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataAlign='center'>Date of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' dataAlign='center'>Date of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>
 					</TableComponent>
 				</div>
 			</div>
