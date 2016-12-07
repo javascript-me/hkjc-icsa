@@ -64,6 +64,7 @@ export default React.createClass({
 				USERPROFILE_SEARCH_BY_REMOVE_FILTER: 'USERPROFILE_SEARCH_BY_REMOVE_FILTER'
 			},
 			keyword: '',
+			selectedKeyword: '',
 			selectedFilters: [{
 				name: 'dateTimeFrom',
 				value: getOrginDateTimeFrom()
@@ -84,7 +85,7 @@ export default React.createClass({
 			setTimeout(() => { this.setState({filterReflashFlag: true}) }, 0)
 		})
 		searchToken = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH], () => {
-			this.searchAuditlog()
+			this.searchUserProfileList()
 		})
 	},
 
@@ -135,18 +136,58 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
+		const callback = () => {
+			this.setState({
+				isShowingMoreFilter: false
+			})
+
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER], filter)
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH])
+		}
+
+		switch (filter.name) {
+		case 'keyword':
+			this.removeKeywordFilter(filter, callback)
+			break
+		case 'dateTimeFrom':
+		case 'dateTimeTo':
+			this.removeDateRangeFilter(filter, callback)
+			break
+		default:
+			this.removeNormalFilter(filter, callback)
+			break
+		}
+	},
+	removeKeywordFilter: function (keyword, callback) {
+		this.setState({
+			keyword: '',
+			selectedKeyword: ''
+		}, callback)
+	},
+	removeDateRangeFilter: function (dateTime, callback) {
+		let selectedFilters = this.state.selectedFilters
+
+		selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeFrom()
+			} else if (filter.name === 'dateTimeTo' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeTo()
+			}
+		})
+
+		this.setState({
+			selectedFilters: selectedFilters
+		}, callback)
+	},
+	removeNormalFilter: function (filter, callback) {
 		let selectedFilters = this.state.selectedFilters
 		let filterIndex = selectedFilters.indexOf(filter)
 
 		selectedFilters.splice(filterIndex, 1)
 
 		this.setState({
-			selectedFilters: selectedFilters,
-			isShowingMoreFilter: false
-		}, () => {
-			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER], filter)
-			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH])
-		})
+			selectedFilters: selectedFilters
+		}, callback)
 	},
 
 	setAddStep (step) {
@@ -159,17 +200,78 @@ export default React.createClass({
 		})
 	},
 
-	searchAuditlog: async function () {
+	searchUserProfileList: async function () {
 		let criteriaOption = this.getSearchCriterias()
+
+		this.setState({
+			selectedKeyword: this.state.keyword
+		})
+
 		// Get Table Data
 		UserStore.searchAuditlogs(1, null, criteriaOption)
 	},
 
 	getSearchCriterias: function () {
 		return {
-			keyword: this.state.keyword,
+			keyword: this.state.selectedKeyword,
 			filters: this.state.selectedFilters
 		}
+	},
+
+	generateFilterBlockesJsx: function (filters) {
+		const filterDisplayFormatting = (filter) => {
+			let filterDisplayName = filter.value
+
+			switch (filter.name) {
+			case 'keyword':
+				filterDisplayName = `${filter.name}: ${filter.value}`
+				break
+			case 'dateTimeFrom':
+				filterDisplayName = `From: ${filter.value}`
+				break
+			case 'dateTimeTo':
+				filterDisplayName = `To: ${filter.value}`
+				break
+			}
+
+			return filterDisplayName
+		}
+
+		let defaultDateTimeFrom = getOrginDateTimeFrom()
+		let defaultDateTimeTo = getOrginDateTimeTo()
+
+		let keywordFilter = {
+			name: 'keyword',
+			value: this.state.selectedKeyword
+		}
+		let dateFromFilter = filters.filter((f) => {
+			return f.name === 'dateTimeFrom'
+		})[0] || {}
+		let dateToFilter = filters.filter((f) => {
+			return f.name === 'dateTimeTo'
+		})[0] || {}
+		let filtersArrayWithoutDateRange = filters.filter((f) => {
+			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
+				return false
+			}
+			return true
+		})
+
+		let filtersArray = []
+			.concat(this.state.selectedKeyword ? keywordFilter : [])
+			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
+			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
+			.concat(filtersArrayWithoutDateRange)
+
+		let filterBlockes = filtersArray.map((f, index) => {
+			return <FilterBlock
+				key={index}
+				dataText={filterDisplayFormatting(f)}
+				dataValue={f}
+				removeEvent={this.removeSearchCriteriaFilter} />
+		}) || []
+
+		return filterBlockes
 	},
 
 	setFilters: function (filters) {
@@ -206,13 +308,7 @@ export default React.createClass({
 		// 	'active': this.state.isShowingMoreFilter
 		// })
 
-		let filterBlockes = this.state.selectedFilters.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				filter={f}
-				removeEvent={this.removeSearchCriteriaFilter}
-				removeEventTopic={this.state.tokens.USERPROFILE_SEARCH} />
-		}) || []
+		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 
 		return <div className='row userlist-page'>
 			{this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
