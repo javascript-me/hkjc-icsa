@@ -184,34 +184,35 @@ export default React.createClass({
 			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
 		}
 
-		switch(filter.name) {
-			case 'keyword':
-				this.removeKeywordFilter(filter, callback)
-				break;
-			case 'dateTimeFrom,dateTimeTo':
-				this.removeDateRangeFilter(filter, callback)
-				break;
-			default:
-				this.removeNormalFilter(filter, callback)
-				break;
+		switch (filter.name) {
+		case 'keyword':
+			this.removeKeywordFilter(filter, callback)
+			break
+		case 'dateTimeFrom,dateTimeTo':
+			this.removeDateRangeFilter(filter, callback)
+			break
+		default:
+			this.removeNormalFilter(filter, callback)
+			break
 		}
 	},
 
-	removeKeywordFilter: function (keyword, callback = new Function()) {
+	removeKeywordFilter: function (keyword, callback) {
 		this.setState({
-			keyword: ''
+			keyword: '',
+			selectedKeyword: ''
 		}, callback)
 	},
 
-	removeDateRangeFilter: function(dateRange, callback = new Function()) {
+	removeDateRangeFilter: function (dateRange, callback) {
 		let selectedFilters = this.state.selectedFilters
 		let cloneFilters = _.clone(selectedFilters)
 		let originDateRange = this.state.originDateRange
 
-		cloneFilters.forEach(function(filter){
-			if(filter.name === 'dateTimeFrom') {
+		cloneFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom') {
 				filter.value = originDateRange.dateTimeFrom
-			} else if(filter.name === 'dateTimeTo') {
+			} else if (filter.name === 'dateTimeTo') {
 				filter.value = originDateRange.dateTimeTo
 			}
 		})
@@ -221,7 +222,7 @@ export default React.createClass({
 		}, callback)
 	},
 
-	removeNormalFilter: function(filter, callback = new Function()) {
+	removeNormalFilter: function (filter, callback) {
 		let selectedFilters = this.state.selectedFilters
 		let filterIndex = selectedFilters.indexOf(filter)
 
@@ -349,10 +350,10 @@ export default React.createClass({
 		}
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
-		})[0]
+		})[0] || {}
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
-		})[0]
+		})[0] || {}
 		let dateRangeFilter = {
 			name: 'dateTimeFrom,dateTimeTo',
 			value: `${dateFromFilter.value} - ${dateToFilter.value}`
@@ -391,7 +392,7 @@ export default React.createClass({
 				betType={betType}
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		})		
+		})
 		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter

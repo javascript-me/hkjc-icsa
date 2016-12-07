@@ -14,9 +14,11 @@ export default class FilterBlock extends React.Component {
 	}
 
 	render () {
+		let filterText = this.props.dataText || this.props.dataValue.value
+
 		return (
 			<span className='filter-block' onClick={this.removeHandler}>
-				{this.props.dataText}
+				{filterText}
 			</span>
         )
 	}

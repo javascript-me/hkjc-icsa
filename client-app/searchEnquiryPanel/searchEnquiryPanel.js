@@ -54,7 +54,6 @@ const originState = {
 	tipsFlag: 1,
 	errorDateTimeFrom: 1,
 	errorDateTimeTo: 1,
-	errorDateTimeGameStart: 1,
 	errorIPAddress: 1,
 	calendarVersion: 0
 }
@@ -77,7 +76,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	componentDidMount () {
-		this.setState(this.props.selectedFilters)
+		this.setState(this.props.selectedFilters || [])
 
 		tokenKeyPress = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS], () => {
 			this.handleSubmit()
@@ -87,7 +86,7 @@ export default class SearchEnquiryPanel extends React.Component {
 			let newStates = {}
 			let filterNames = filter.name.split(',')
 
-			filterNames.forEach(function(filterName) {
+			filterNames.forEach((filterName) => {
 				newStates[filterName] = originState[filterName]
 			})
 
@@ -105,8 +104,8 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	renderTipsText () {
-		let { dateTimeFrom, dateTimeTo, errorDateTimeFrom, errorDateTimeTo, errorDateTimeGameStart, errorIPAddress, tipsFlag } = this.state
-		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorDateTimeGameStart === 0 || errorIPAddress === 0 || dateTimeTo.timestamp < dateTimeFrom.timestamp)) {
+		let { dateTimeFrom, dateTimeTo, errorDateTimeFrom, errorDateTimeTo, errorIPAddress, tipsFlag } = this.state
+		if (tipsFlag === 0 && (errorDateTimeTo === 0 || errorDateTimeFrom === 0 || errorIPAddress === 0 || dateTimeTo.timestamp < dateTimeFrom.timestamp)) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
 			return <span className='color-blue'>* These fields are mandatory</span>
@@ -135,48 +134,10 @@ export default class SearchEnquiryPanel extends React.Component {
 	handleChange (name, event) {
 		let newState = {}
 
-		if (name === 'dateTimeFrom' || name === 'dateTimeTo') {
-			newState[name] = {
-				timestamp: Date.parse(event.target.value),
-				datetime: event.target.value
-			}
-		} else {
-			newState[name] = event.target.value
-		}
-
+		newState[name] = event.target.value
 		this.setState(newState)
 
-		if (name === 'dateTimeFrom') {
-			if (event.target.value.replace(/^[\s]*$/, '').length > 0 && this.isValidDateTime(event.target.value)) {
-				this.setState({
-					errorDateTimeFrom: 1
-				})
-			} else {
-				this.setState({
-					errorDateTimeFrom: 0
-				})
-			}
-		} else if (name === 'dateTimeTo') {
-			if (event.target.value.replace(/^[\s]*$/, '').length > 0 && this.isValidDateTime(event.target.value)) {
-				this.setState({
-					errorDateTimeTo: 1
-				})
-			} else {
-				this.setState({
-					errorDateTimeTo: 0
-				})
-			}
-		} else if (name === 'dateTimeGameStart') {
-			if (event.target.value.replace(/^[\s]*$/, '').length === 0 || this.isValidDateTime(event.target.value)) {
-				this.setState({
-					errorDateTimeGameStart: 1
-				})
-			} else {
-				this.setState({
-					errorDateTimeGameStart: 0
-				})
-			}
-		} else if (name === 'ipAddress') {
+		if (name === 'ipAddress') {
 			let reg = /^((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})){2}(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2}))$/
 			if (!event.target.value || reg.test(event.target.value)) {
 				this.setState({
@@ -191,7 +152,7 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	isEnquiryValid () {
-		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorDateTimeGameStart && this.state.errorIPAddress && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
+		return this.state.tipsFlag || (this.state.errorDateTimeFrom && this.state.errorDateTimeTo && this.state.errorIPAddress && this.state.dateTimeTo.timestamp > this.state.dateTimeFrom.timestamp)
 	}
 
 	handleSubmit () {
@@ -250,40 +211,39 @@ export default class SearchEnquiryPanel extends React.Component {
 	}
 
 	render () {
-		let { errorDateTimeFrom, errorDateTimeTo, errorDateTimeGameStart, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag, calendarVersion } = this.state
-		let fromClass = 'form-group'
-		let toClass = 'form-group'
-		let dateTimeGameStartClass = 'form-group'
+		let { errorDateTimeFrom, errorDateTimeTo, errorIPAddress, dateTimeTo, dateTimeFrom, tipsFlag, calendarVersion } = this.state
+
 		let ipClass = 'form-group'
-		if (tipsFlag === 0 && errorDateTimeFrom === 0) {
-			fromClass = 'form-group has-error'
-		}
-		if (tipsFlag === 0 && errorDateTimeTo === 0) {
-			toClass = 'form-group has-error'
-		}
-		if (tipsFlag === 0 && errorDateTimeGameStart === 0) {
-			dateTimeGameStartClass = 'form-group has-error'
-		}
+
 		if (tipsFlag === 0 && errorIPAddress === 0) {
 			ipClass = 'form-group has-error'
 		}
 		if (tipsFlag === 0 && dateTimeTo.timestamp < dateTimeFrom.timestamp) {
-			fromClass = 'form-group has-error'
-			toClass = 'form-group has-error'
+			errorDateTimeFrom = 0
+			errorDateTimeTo = 0
 		}
+
 		return <div className='component-search-enquiry-panel'>
 			<div className='container-fluid pd-w10'>
 				<div className='row mg-w010'>
 					<div className='col-sm-3 pd-w10'>
-						<div className={fromClass}>
+						<div className='form-group'>
 							<label>Date Time From <span>*</span></label>
-							<Calendar key={`from-${calendarVersion}`} defaultValue={dateTimeFrom.datetime} value={dateTimeFrom.datetime} onChange={(e) => { this.dateChange('dateTimeFrom', e) }} />
+							<Calendar
+								key={`from-${calendarVersion}`}
+								value={dateTimeFrom.datetime}
+								warning={!errorDateTimeFrom}
+								onChange={(e) => { this.dateChange('dateTimeFrom', e) }} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
-						<div className={toClass}>
+						<div className='form-group'>
 							<label>Date Time To <span>*</span></label>
-							<Calendar key={`to-${calendarVersion}`} defaultValue={dateTimeTo.datetime} value={dateTimeTo.datetime} onChange={(e) => this.dateChange('dateTimeTo', e)} />
+							<Calendar
+								key={`to-${calendarVersion}`}
+								value={dateTimeTo.datetime}
+								warning={!errorDateTimeTo}
+								onChange={(e) => this.dateChange('dateTimeTo', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
@@ -327,9 +287,12 @@ export default class SearchEnquiryPanel extends React.Component {
 				</div>
 				<div className='row mg-w010'>
 					<div className='col-sm-3 pd-w10'>
-						<div className={dateTimeGameStartClass}>
+						<div className='form-group'>
 							<label>K.O Time / Game Start Time</label>
-							<Calendar key={`gameStartTime-${calendarVersion}`} defaultValue={this.state.dateTimeGameStart} value={this.state.dateTimeGameStart} onChange={(e) => this.dateChange('dateTimeGameStart', e)} />
+							<Calendar
+								key={`gameStartTime-${calendarVersion}`}
+								value={this.state.dateTimeGameStart}
+								onChange={(e) => this.dateChange('dateTimeGameStart', e)} />
 						</div>
 					</div>
 					<div className='col-sm-3 pd-w10'>
