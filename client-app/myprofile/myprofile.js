@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import LoginService from '../login/login-service'
 
-import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation} from '../userprofile/userprofile'
+import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
 
 export default React.createClass({
 	displayName: 'MyProfile',
@@ -16,14 +16,30 @@ export default React.createClass({
 		}
 		this.h1Title = 'My Profile'
 		return {
+			delegationUpdate: false,
 			userBasic: {},
-			userAccount: {}
+			userAccount: {},
+			userDelegation: null
 		}
 	},
 	componentDidMount () {
-		this.getUserProfile(UserProfileService)
+		this.getUserProfile()
 	},
 	onEditClick () {
+		this.setState({
+			delegationUpdate: true
+		})
+	},
+	onUpdateClick (delegationCmp) {
+		delegationCmp.onUpdateClick()
+	},
+	onCancelClick () {
+		this.setState({
+			delegationUpdate: false
+		})
+	},
+	onDeleteClick (delegationCmp) {
+		delegationCmp.onDeleteClick()
 	},
 	render () {
 		return (
@@ -32,9 +48,16 @@ export default React.createClass({
 					<ProfileContainer>
 						<BasicInformation userBasic={this.state.userBasic} />
 
-						<AccountInformation ref='accountCmp' userAccount={this.state.userAccount} updateMode={false} showDate={false} />
+						<AccountInformation userAccount={this.state.userAccount} updateMode={false} showDate={false} />
 
-						<ProfileButtons />
+						<UserDelegation ref='delegationCmp' userDelegation={this.state.userDelegation} delegationUpdate={this.state.delegationUpdate} />
+
+						<ProfileButtons>
+							{this.state.delegationUpdate && (<button className='btn btn-danger' onClick={() => { this.onDeleteClick(this.refs.delegationCmp) }}>Delete</button>)}
+							{!this.state.delegationUpdate && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
+							{this.state.delegationUpdate && (<button className='btn btn-primary pull-right' onClick={() => { this.onUpdateClick(this.refs.delegationCmp) }}>Update</button>)}
+							{this.state.delegationUpdate && (<button className='btn btn-cancle pull-right' onClick={this.onCancelClick}>Cancel</button>)}
+						</ProfileButtons>
 					</ProfileContainer>
 
 					<SubscriptionContainer />
@@ -42,12 +65,13 @@ export default React.createClass({
 			</div>
 		)
 	},
-	async getUserProfile (service) {
-		const userProfile = await service.getUserProfile(this.userID)
+	async getUserProfile () {
+		const userProfile = await UserProfileService.getUserProfile(this.userID)
 		if (userProfile) {
 			this.setState({
 				userBasic: userProfile.user,
-				userAccount: userProfile.account
+				userAccount: userProfile.account,
+				userDelegation: userProfile.account.delegationList
 			})
 		}
 	}

@@ -5,6 +5,10 @@
   "assignedUserRoles": [{
     "assignedUserRole": "Trading User Administrator"
   }, {
+    "assignedUserRole": "Trading Support Supervisor"
+  },{  
+    "assignedUserRole": "Trading Support Analyst"
+  }, {
     "assignedUserRole": "Trading Supervisor"
   }],
   "activationDate": "16/09/2016",
@@ -13,13 +17,62 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10001"
+  "userID": "JC10001",
+  "departmentId": "TR",
+  "delegationList": [{
+    "userName": "Mike Wang",	
+    "position": "Trader",	
+    "delegatedRoles":  [
+      {
+      "delegatedRole": "Trading Supervisor"
+      }],
+     "delegationFrom": "16/11/2016",
+     "delegationTo": "22/12/2016",
+     "delegateStatus": "Active",
+     "secondaryApprover": "Albert Choi"
+  },
+  {
+    "userName": "Mike Wang",	
+    "position": "Trader",	
+    "delegatedRoles":  [
+      {
+      "delegatedRole": "Trading Supervisor"
+      }],
+     "delegationFrom": "24/12/2016",
+     "delegationTo": "12/01/2017",
+     "delegateStatus": "Pending",
+     "secondaryApprover": "Albert Choi"
+  },
+  {
+    "userName": "Albert Choi",	
+    "position": "Trader",	
+    "delegatedRoles":  [
+      {
+      "delegatedRole": "Trading Supervisor"
+      }],
+     "delegationFrom": "24/09/2016",
+     "delegationTo": "24/11/2017",
+     "delegateStatus": "Expired",
+     "secondaryApprover": "Acton Chang"
+  },
+  {
+    "userName": "Alma Ma",	
+    "position": "Trader",	
+    "delegatedRoles":  [
+      {
+      "delegatedRole": "Trading Support Analyst"
+      }],
+     "delegationFrom": "07/12/2016",
+     "delegationTo": "24/01/2017",
+     "delegateStatus": "Active",
+     "secondaryApprover": "Mike Wang"
+  }]
 }, {
   "id": "0003",
   "displayName": "Mike Wang",
   "status": "Active",
   "assignedUserRoles": [{
-    "assignedUserRole": "Trader"
+    "assignedUserRole": "Trader Viewer"
   }],
   "activationDate": "16/06/2016",
   "deactivationDate": "16/06/2017",
@@ -27,13 +80,15 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10003"
+  "userID": "JC10003",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0004",
   "displayName": "Albert Choi",
   "status": "Active",
   "assignedUserRoles": [{
-    "assignedUserRole": "Trader"
+    "assignedUserRole": "Trader Viewer"
   }],
   "activationDate": "16/03/2016",
   "deactivationDate": "16/03/2017",
@@ -41,13 +96,15 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10004"
+  "userID": "JC10004",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0005",
   "displayName": "Acton Chang",
   "status": "Active",
   "assignedUserRoles": [{
-    "assignedUserRole": "Trader"
+    "assignedUserRole": "Trader Viewer"
   }],
   "activationDate": "16/08/2016",
   "deactivationDate": "16/08/2017",
@@ -55,13 +112,15 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10005"
+  "userID": "JC10005",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0006",
   "displayName": "Alma Ma",
   "status": "Active",
   "assignedUserRoles": [{
-    "assignedUserRole": "Trader"
+    "assignedUserRole": "Trader Viewer"
   }],
   "activationDate": "11/11/2016",
   "deactivationDate": "11/11/2017",
@@ -69,13 +128,15 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10006"
+  "userID": "JC10006",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0007",
   "displayName": "Brian Chang",
   "status": "Inactive",
   "assignedUserRoles": [{
-    "assignedUserRole": "Trader"
+    "assignedUserRole": "Trader Viewer"
   }],
   "activationDate": "22/03/2016",
   "deactivationDate": "22/11/2016",
@@ -83,13 +144,15 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10007"
+  "userID": "JC10007",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0008",
   "displayName": "Bailey Hua",
   "status": "Active",
   "assignedUserRoles": [{
-    "assignedUserRole": "Sr. Trader"
+    "assignedUserRole": "Trading Solutions Supervisor"
   }, {
     "assignedUserRole": "Trading User Administrator"
   }],
@@ -99,7 +162,20 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10008"
+  "userID": "JC10008",
+  "departmentId": "BD",
+  "delegationList": [{
+    "userName": "Backer Zhou",	
+    "position": "Trading Solutions Analyst",	
+    "delegatedRoles":  [
+      {
+      "delegatedRole": "Trading Solutions Supervisor"
+      }],
+     "delegationFrom": "16/11/2016",
+     "delegationTo": "22/12/2016",
+     "delegateStatus": "Active",
+     "secondaryApprover": "Anthony Liu"
+  }]
 }, {
   "id": "0009",
   "displayName": "Backer Zhou",
@@ -113,7 +189,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10009"
+  "userID": "JC10009",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0010",
   "displayName": "Godi Weng",
@@ -127,7 +205,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10010"
+  "userID": "JC10010",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0011",
   "displayName": "Steven Chen",
@@ -141,7 +221,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10011"
+  "userID": "JC10011",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0012",
   "displayName": "Anthony Liu",
@@ -155,7 +237,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10012"
+  "userID": "JC10012",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0013",
   "displayName": "Kuwana Li",
@@ -169,7 +253,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10013"
+  "userID": "JC10013",
+  "departmentId": "BO",
+  "delegationList": []
 }, {
   "id": "0014",
   "displayName": "Bowie Jiang",
@@ -183,13 +269,19 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10014"
+  "userID": "JC10014",
+  "departmentId": "BO",
+  "delegationList": []
 }, {
   "id": "0015",
   "displayName": "Cathy Dan",
   "status": "Active",
   "assignedUserRoles": [{
-    "assignedUserRole": "Trading Supervisor"
+    "assignedUserRole": "BOCC User Administrator"
+  },{
+    "assignedUserRole": "BOCC Supervisor"
+  },{
+    "assignedUserRole": "BOCC Manager"
   }],
   "activationDate": "16/05/2016",
   "deactivationDate": "16/05/2017",
@@ -197,7 +289,34 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10015"
+  "userID": "JC10015",
+  "departmentId": "BO",
+  "delegationList": [{
+    "userName": "Bowie Jiang",	
+    "position": "BOCC Part-Time",	
+    "delegatedRoles":  [
+      {
+      "delegatedRole": "BOCC Supervisor"
+      }],
+     "delegationFrom": "16/11/2016",
+     "delegationTo": "22/12/2016",
+     "delegateStatus": "Active",
+     "secondaryApprover": "Camellia Yan"
+  },
+  {
+    "userName": "Kuwana Li",	
+    "position": "BOCC Part-Time",	
+    "delegatedRoles":  [
+      {
+      "delegatedRole": "BOCC Supervisor"
+      },{
+      "delegatedRole": "BOCC Manager"
+      }],
+     "delegationFrom": "24/12/2016",
+     "delegationTo": "12/01/2017",
+     "delegateStatus": "Pending",
+     "secondaryApprover": "Camellia Yan"
+ }]
 }, {
   "id": "0016",
   "displayName": "Camellia Yan",
@@ -211,7 +330,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10016"
+  "userID": "JC10016",
+  "departmentId": "BO",
+  "delegationList": []
 }, {
   "id": "0017",
   "displayName": "Callan He",
@@ -225,7 +346,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10017"
+  "userID": "JC10017",
+  "departmentId": "TR",
+  "delegationList": []
 }, {
   "id": "0018",
   "displayName": "Dylan Chen",
@@ -239,7 +362,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10018"
+  "userID": "JC10018",
+  "departmentId": "BO",
+  "delegationList": []
 }, {
   "id": "0019",
   "displayName": "Zack Chen",
@@ -253,7 +378,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10019"
+  "userID": "JC10019",
+  "departmentId": "FC",
+  "delegationList": []
 }, {
   "id": "0020",
   "displayName": "Daisy Guo",
@@ -267,7 +394,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10020"
+  "userID": "JC10020",
+  "departmentId": "FC",
+  "delegationList": []
 }, {
   "id": "0021",
   "displayName": "Edmund Gao",
@@ -281,7 +410,9 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10021"
+  "userID": "JC10021",
+  "departmentId": "FC",
+  "delegationList": []
 }, {
   "id": "0022",
   "displayName": "Faye Wang",
@@ -295,5 +426,7 @@
   "updateApprovalStatus":"1",
   "deleteApprovalStatus":"1",
   "lastModifiedUserID": "JC10000",
-  "userID": "JC10022"
+  "userID": "JC10022",
+  "departmentId": "FC",
+  "delegationList": []
 }]

@@ -8,7 +8,8 @@ import {
 	SubscriptionContainer,
 	BasicInformation,
 	ProfileButtons,
-	AccountInformation
+	AccountInformation,
+	UserDelegation
 } from '../userprofile/userprofile.js'
 import UserStore from '../userlist/user-store'
 
@@ -34,6 +35,9 @@ class ProfileStep extends Component {
 						<BasicInformation userBasic={this.props.userBasic} />
 
 						<AccountInformation userAccount={this.props.userAccount} updateMode ref='accountCmp' />
+
+						<UserDelegation />
+
 						<ProfileButtons>
 							<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>
 							<button className='btn btn-primary pull-right' onClick={this.onCreateClick}>Create</button>

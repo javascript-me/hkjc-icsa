@@ -22,6 +22,18 @@ const getNoticeCountPromise = async (username) => {
 	return count
 }
 
+const getTipsCountPromise = async (username) => {
+	let count = 0
+
+	try {
+		count = await NoticeBoardService.getTipsNum(username)
+	} catch (ex) {
+
+	}
+
+	return count
+}
+
 class MenuBar extends Component {
 	constructor (props) {
 		super(props)
@@ -32,7 +44,8 @@ class MenuBar extends Component {
 			showNoticeBoard: false,
 			menuBarShouldShow: LoginService.hasProfile(),
 			userProfile: LoginService.getProfile(),
-			noticeRemindCount: 0
+			noticeRemindCount: 0,
+			tipsNum: 0
 		}
 	}
 
@@ -79,6 +92,12 @@ class MenuBar extends Component {
 							}
 
 						</i>
+						<i className='icon-notification tips'>
+							<img src='icon/icon-action.svg' />
+							{
+								<span className='message-count'>{this.state.tipsNum}</span>
+							}
+						</i>
 					</div>
 				</div>
 				{ this.state.showNoticeBoard ? <Noticeboard isSlim={this.state.slimMode} /> : null }
@@ -98,6 +117,12 @@ class MenuBar extends Component {
 			self.setState({noticeRemindCount: noticeRemindCount})
 		})
 
+		this.interval = setInterval(() => {
+			getTipsCountPromise(userProfile.username).then((data) => {
+				self.setState({tipsNum: data})
+			})
+		}, 9000)
+
 		loginChangeToken = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
 			self.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: userProfile})
 		})
@@ -105,6 +130,7 @@ class MenuBar extends Component {
 
 	componentWillUnmount () {
 		PubSub.unsubscribe(loginChangeToken)
+		this.interval = clearInterval(this.interval)
 	}
 
 }

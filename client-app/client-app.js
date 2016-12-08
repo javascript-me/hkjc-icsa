@@ -17,7 +17,6 @@ import MyProfile from './myprofile/myprofile'
 import AddAccount from './add-account'
 
 import UserList from './userlist/userlist'
-import MutiSelect from './muti-select'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -35,7 +34,7 @@ export default (target) => {
 			<Router history={hashHistory}>
 				<Route path='/' component={Login} />
 				<Route path='/page' component={PageBase} onEnter={hasAuth}>
-					<IndexRoute component={MutiSelect} />
+					<IndexRoute component={Dashboard} />
 					<Route path='audit' component={Audit} />
 					<Route path='userprofile/:userId' component={UserProfile} />
 					<Route path='myprofile' component={MyProfile} />

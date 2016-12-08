@@ -11,6 +11,7 @@ import ExportPopup from '../exportPopup'
 import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
+import {TableHeaderColumn , TableComponent } from '../table'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -31,6 +32,16 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
 	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+}
+
+const getDefaultSelectedFilters = () => {
+	return [{
+		name: 'dateTimeFrom',
+		value: getOrginDateTimeFrom()
+	}, {
+		name: 'dateTimeTo',
+		value: getOrginDateTimeTo()
+	}]
 }
 
 const doExport = async (format, filters) => {
@@ -68,9 +79,6 @@ export default React.createClass({
 	],
 
 	getInitialState () {
-		let originDateTimeFrom = getOrginDateTimeFrom()
-		let originDateTimeTo = getOrginDateTimeTo()
-
 		return {
 			pageTitle: 'Home \\ Global Tools & Adminstration \\ Audit Trail',
 			data: [],
@@ -80,24 +88,24 @@ export default React.createClass({
 			tokens: {
 				AUDITLOG_SEARCH: 'AUDITLOG_SEARCH',
 				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
-				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER',
+				AUDITLOG_SEARCH_BY_RESET_FILTERS: 'AUDITLOG_SEARCH_BY_RESET_FILTERS'
 			},
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: DEFAULT_BET_TYPE,
 			keyword: '',
+			selectedKeyword: '',
 			originDateRange: {
-				dateTimeFrom: originDateTimeFrom,
-				dateTimeTo: originDateTimeTo
+				dateTimeFrom: getOrginDateTimeFrom(),
+				dateTimeTo: getOrginDateTimeTo()
 			},
-			selectedFilters: [{
-				name: 'dateTimeFrom',
-				value: originDateTimeFrom
-			}, {
-				name: 'dateTimeTo',
-				value: originDateTimeTo
-			}],
+			selectedFilters: getDefaultSelectedFilters(),
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
+			tableOptions: {
+		      defaultSortName: 'Date/Time',  // default sort column name
+		      defaultSortOrder: 'desc'  // default sort order
+		    },
 			auditlogs: []
 		}
 	},
@@ -135,7 +143,7 @@ export default React.createClass({
 	getSearchCriterias: function () {
 		return {
 			betType: this.state.betType,
-			keyword: this.state.keyword,
+			keyword: this.state.selectedKeyword,
 			filters: this.state.selectedFilters
 		}
 	},
@@ -153,13 +161,16 @@ export default React.createClass({
 		this.setState({
 			betType: betType,
 			keyword: '',
-			selectedFilters: [],
+			selectedKeyword: '',
+			selectedFilters: getDefaultSelectedFilters(),
 			isShowingMoreFilter: false
 		})
+
+		PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_RESET_FILTERS])
 	},
 
 	handleKeywordChange: function (event) {
-		var newKeyword = event.target.value
+		let newKeyword = event.target.value
 
 		this.setState({
 			keyword: newKeyword
@@ -173,22 +184,69 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
+		const callback = () => {
+			this.setState({
+				isShowingMoreFilter: false
+			})
+
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
+			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
+		}
+
+		switch (filter.name) {
+		case 'keyword':
+			this.removeKeywordFilter(filter, callback)
+			break
+		case 'dateTimeFrom,dateTimeTo':
+			this.removeDateRangeFilter(filter, callback)
+			break
+		default:
+			this.removeNormalFilter(filter, callback)
+			break
+		}
+	},
+
+	removeKeywordFilter: function (keyword, callback) {
+		this.setState({
+			keyword: '',
+			selectedKeyword: ''
+		}, callback)
+	},
+
+	removeDateRangeFilter: function (dateRange, callback) {
+		let selectedFilters = this.state.selectedFilters
+		let originDateRange = this.state.originDateRange
+
+		selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom') {
+				filter.value = originDateRange.dateTimeFrom
+			} else if (filter.name === 'dateTimeTo') {
+				filter.value = originDateRange.dateTimeTo
+			}
+		})
+
+		this.setState({
+			selectedFilters: selectedFilters
+		}, callback)
+	},
+
+	removeNormalFilter: function (filter, callback) {
 		let selectedFilters = this.state.selectedFilters
 		let filterIndex = selectedFilters.indexOf(filter)
 
 		selectedFilters.splice(filterIndex, 1)
 
 		this.setState({
-			selectedFilters: selectedFilters,
-			isShowingMoreFilter: false
-		}, () => {
-			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER], filter)
-			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH])
-		})
+			selectedFilters: selectedFilters
+		}, callback)
 	},
 
 	searchAuditlog: async function () {
 		let criteriaOption = this.getSearchCriterias()
+
+		this.setState({
+			selectedKeyword: this.state.keyword
+		})
 
 		// Get Table Data
 		AuditlogStore.searchAuditlogs(1, null, criteriaOption)
@@ -255,35 +313,80 @@ export default React.createClass({
 		this.setState({hasData: true})
 	},
 
-	openPopup () {
+	openPopup: function () {
 		this.setState({ exportFormat: 'pdf' })// reset the format value
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 
-	export () {
+	export: function () {
 		let criteriaOption = this.getSearchCriterias()
 		const filters = AuditlogStore.buildRequest(1, null, criteriaOption)
 
 		doExport(this.state.exportFormat, filters)
 	},
 
-	onChangeFormat (format) {
+	onChangeFormat: function (format) {
 		this.setState({ exportFormat: format })
 	},
 
-	onChange () {
+	onChange: function () {
 		const hasData = AuditlogStore.auditlogs.length > 0
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
 	},
 
-	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
+	handleChangePage: function (selectedPageNumber, sortingObject, criteriaOption) {
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
-	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
+	handleClickSorting: function (selectedPageNumber, sortingObject, criteriaOption) {
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
+	},
+
+	generateFilterBlockesJsx: function (filters) {
+		const filterDisplayFormatting = (filter) => {
+			return filter.name === 'keyword'
+				? `${filter.name}: ${filter.value}`
+				: filter.value
+		}
+
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
+		let keywordFilter = {
+			name: 'keyword',
+			value: this.state.selectedKeyword
+		}
+		let dateFromFilter = filters.filter((f) => {
+			return f.name === 'dateTimeFrom'
+		})[0] || {}
+		let dateToFilter = filters.filter((f) => {
+			return f.name === 'dateTimeTo'
+		})[0] || {}
+		let dateRangeFilter = {
+			name: 'dateTimeFrom,dateTimeTo',
+			value: `${dateFromFilter.value} - ${dateToFilter.value}`
+		}
+		let filtersArrayWithoutDateRange = filters.filter((f) => {
+			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
+				return false
+			}
+			return true
+		})
+
+		let filtersArray = []
+			.concat(this.state.selectedKeyword ? keywordFilter : [])
+			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
+			.concat(filtersArrayWithoutDateRange)
+
+		let filterBlockes = filtersArray.map((f, index) => {
+			return <FilterBlock
+				key={index}
+				dataText={filterDisplayFormatting(f)}
+				dataValue={f}
+				removeEvent={this.removeSearchCriteriaFilter} />
+		}) || []
+
+		return filterBlockes
 	},
 
 	render: function () {
@@ -298,21 +401,7 @@ export default React.createClass({
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 		})
-		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
-
-		let filterBlockes = this.state.selectedFilters.filter((f) => {
-			if ((f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') && isDateRangeNotChanged) {
-				return false
-			}
-			return true
-		}).map((f, index) => {
-			return <FilterBlock
-				key={index}
-				filter={f}
-				removeEvent={this.removeSearchCriteriaFilter}
-				removeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
-		}) || []
-
+		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
 		})
@@ -321,6 +410,32 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent =
 				<div>
+					<div className="container">
+						<div className="row">
+							<TableComponent data={ AuditlogStore.auditlogs } pagination={true} options={this.state.tableOptions} striped={true} keyField='id'
+								tableHeaderClass="table-header" tableContainerClass="auditlog-table">
+								<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='date_time' dataSort={true}>Date/Time</TableHeaderColumn>
+								<TableHeaderColumn dataField='user_id' dataSort={true}>User ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='user_name' dataSort={true}>User Name</TableHeaderColumn>
+								<TableHeaderColumn dataField='Type' dataSort={true}>Type</TableHeaderColumn>
+								<TableHeaderColumn dataField='function_module' dataSort={true}>Function/Module</TableHeaderColumn>
+								<TableHeaderColumn dataField='function_event_detail' dataSort={true}>Function Event Detail</TableHeaderColumn>
+								<TableHeaderColumn dataField='user_role' dataSort={true}>User Role</TableHeaderColumn>
+								<TableHeaderColumn dataField='ip_address' dataSort={true}>IP Address</TableHeaderColumn>
+								<TableHeaderColumn dataField='backend_id' dataSort={true}>Back End ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='frontend_id' dataSort={true}>Front End ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='home' dataSort={true}>Home</TableHeaderColumn>
+								<TableHeaderColumn dataField='away' dataSort={true}>Away</TableHeaderColumn>
+								<TableHeaderColumn dataField='ko_time_game_start_game' dataSort={true}>K.O. Time/ Game Start Time</TableHeaderColumn>
+								<TableHeaderColumn dataField='bet_type' dataSort={true}>Bet Type</TableHeaderColumn>
+								<TableHeaderColumn dataField='event_name' dataSort={true}>Event Name</TableHeaderColumn>
+								<TableHeaderColumn dataField='error_code' dataSort={true}>Error Code</TableHeaderColumn>
+								<TableHeaderColumn dataField='error_message_content' dataSort={true}>Error Message Content</TableHeaderColumn>
+								<TableHeaderColumn dataField='device' dataSort={true}>Device</TableHeaderColumn>
+							</TableComponent>
+						</div>
+					</div>
 					<div className='table-container '>
 						<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
 					</div>
