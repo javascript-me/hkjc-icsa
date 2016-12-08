@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 
+import {PopupService} from '../popup'
 import UserProfileService from './userprofile-service'
 
 import ProfileTabs from './profiletabs'
@@ -42,7 +43,9 @@ export default React.createClass({
 		this.setState({accountUpdate: true})
 	},
 	onResetClick () {
-		this.refs.accountCmp.resetData()
+		PopupService.showMessageBox('Are you sure want to reset?', () => {
+			this.refs.accountCmp.resetData()
+		})
 	},
 	onUpdateClick () {
 		if (this.refs.accountCmp.verifyData()) {
@@ -51,7 +54,9 @@ export default React.createClass({
 		}
 	},
 	onCancelClick () {
-		window.history.back()
+		PopupService.showMessageBox('Are you sure want to give up your input and go to list page?', () => {
+			window.history.back()
+		})
 	},
 	render () {
 		return (
