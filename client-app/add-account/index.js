@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import AddAccountProcess from './add-account-service.js'
-import ItemFilter from './filter-cmp.js'
+import ItemFilter from '../search-list-pannel'
 import ProfileStep from './profile-step.js'
 import moment from 'moment'
 
