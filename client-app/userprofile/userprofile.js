@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import {PopupService} from '../popup'
+import { PopupService } from '../popup'
 import UserProfileService from './userprofile-service'
 
 import ProfileTabs from './profiletabs'
@@ -51,11 +51,31 @@ export default React.createClass({
 		if (this.refs.accountCmp.verifyData()) {
 			// console.log(this.refs.accountCmp.getData())
 			// this.setState({accountUpdate: false})
+
+			PopupService.showMessageBox('Are you sure want to update?', () => {
+				const data = this.refs.accountCmp.getData()
+				UserProfileService.updateUserProfile({
+					'userID': data.userID,
+					'displayName': data.displayName,
+					'status': data.status,
+					'assignedUserRoles': data.assignedUserRoles,
+					'activationDate': data.activationDate,
+					'deactivationDate': data.deactivationDate
+				}).then((data) => {
+					if (data) {
+						this.getUserProfile()
+						let afterUpdate = () => {
+							this.setState({accountUpdate: false})
+						}
+						PopupService.showMessageBox(data.msg, afterUpdate, afterUpdate)
+					}
+				})
+			})
 		}
 	},
 	onCancelClick () {
-		PopupService.showMessageBox('Are you sure want to give up your input and go to list page?', () => {
-			window.history.back()
+		PopupService.showMessageBox('Are you sure want to give up your input.', () => {
+			this.setState({accountUpdate: false})
 		})
 	},
 	render () {

@@ -103,6 +103,13 @@ router.post('/add', (req, res) => {
 	}
 	res.send(result)
 })
+
+// router.post('/delete', (req, res) => {
+// 	let result = accountProfiles
+
+// 	res.send(result)
+// })
+
 /**
  * @apiGroup UserProfile
  * @api {GET} /userprofile/item user profile by user id
@@ -182,22 +189,56 @@ router.get('/item', (req, res) => {
 	}
 })
 
-// router.post('/add', (req, res) => {
-// 	let result = accountProfiles
+/**
+ * @apiGroup UserProfile
+ * @api {POST} /userprofile/update update user profile by user id
+ * @apiDescription update user profile by user id
+ * @apiParam {String} userID user id
+ * @apiParam {String} [displayName] display name
+ * @apiParam {String} [status] status Active or Inactive
+ * @apiParam {Object[]} [assignedUserRoles] user roles
+ * @apiParam {String} [assignedUserRoles.assignedUserRole] some role
+ * @apiParam {String} [activationDate] activation date
+ * @apiParam {String} [deactivationDate] deactivation date
+ * @apiParamExample {json} Request-Example:
+ * 		{
+ * 			"userID": "JC10001",
+ * 			"displayName": "Bing Hu New",
+ * 			"status": "Active",
+ * 			"assignedUserRoles": [{"assignedUserRole": "Trading User Administrator"}],
+ * 			"activationDate": "26/09/2016",
+ * 			"deactivationDate": "26/09/2017",
+ * 		}
+ *
+ * @apiSuccess (Success) {String} msg success message
+ * @apiSuccessExample {json} Success-Response:
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"msg": "You have success updated you account information!"
+ *		}
+ *
+ * @apiError (Error) {String} error  UserAccountNotFound
+ * @apiErrorExample {json} Error-Response:
+ *		HTTP/1.1 404 Not Found
+ *		{
+ *			"error": "The user you have updated is invalid."
+ *		}
+ */
+router.post('/update', (req, res) => {
+	const userID = req.body.userID
+	const bUpdate = UserProfileUtil.itemUpdate(accountProfiles, userID, req.body)
+	let result = {
+		msg: 'You have success updated you account information!'
+	}
 
-// 	res.send(result)
-// })
+	if (!bUpdate) {
+		res.status(404)
+		result = {
+			error: 'The user you have updated is invalid.'
+		}
+	}
 
-// router.post('/update', (req, res) => {
-// 	let result = accountProfiles
-
-// 	res.send(result)
-// })
-
-// router.post('/delete', (req, res) => {
-// 	let result = accountProfiles
-
-// 	res.send(result)
-// })
+	res.send(result)
+})
 
 export default router
