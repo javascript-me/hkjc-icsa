@@ -50,13 +50,15 @@ export default class Popup extends React.Component {
 	}
 
 	onOverlayClicked () {
-		if (this.props.hideOnOverlayClicked) {
-			this.hide()
-		}
+		// if (this.props.hideOnOverlayClicked) {
+		// 	this.hide()
+		// }
 
-		if (this.props.onOverlayClicked) {
-			this.props.onOverlayClicked()
-		}
+		// if (this.props.onOverlayClicked) {
+		// 	this.props.onOverlayClicked()
+		// }
+
+		this.onCancel()
 	}
 
 	onConfirm () {

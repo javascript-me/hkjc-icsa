@@ -4,7 +4,7 @@ let globalPopupCmp = null
 
 /*
 * showCustom (options)
-*							ptions {
+*							options {
 *								title: string required
 *								children: component instance required
 *								confirmBtn: string optional
