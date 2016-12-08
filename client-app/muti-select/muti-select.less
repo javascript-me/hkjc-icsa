@@ -5,6 +5,7 @@
 	color: #305091;
 	font-size: 14px;
 	cursor: pointer;
+	
 
 	.show-box {
 		width: 100%;
@@ -31,7 +32,7 @@
 		}
 	}
 
-	.content {
+	.muti-select-content {
 		position: absolute;
 		top: 100%;
 		left: 0;
@@ -39,6 +40,9 @@
 		border: 1px solid #ACB8D1;
 		border-top: 0;
 		border-radius: 0 0 2px 2px;
+		z-index: 1000;
+		max-height: 245px;
+		overflow-y: scroll;
 	}
 
 	.option {
@@ -46,6 +50,7 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+		background-color: #FFFFFF;
 
 		&:nth-of-type(odd) {
 			background-color: #F8F9FB;

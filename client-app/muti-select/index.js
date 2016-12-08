@@ -18,7 +18,7 @@ class MutiSelect extends Component {
 		return (
 			<div className='muti-select-box' style={this.props.style}>
 				<div className='show-box' onClick={() => { this.toggleFocus() }}>{this.state.selectText}</div>
-				<div className='content' style={{display: this.state.isFocus ? 'block' : 'none'}}>
+				<div className='muti-select-content' style={{display: this.state.isFocus ? 'block' : 'none'}}>
 					<div onClick={() => { this.toggleAll() }} className='option'>
 						<input type='checkbox' checked={this.state.isAll} />
 						All

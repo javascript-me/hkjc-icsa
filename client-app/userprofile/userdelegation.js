@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
+import MutiSelect from '../muti-select'
 
 import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
@@ -8,6 +9,22 @@ import {TableComponent, TableHeaderColumn} from '../table'
 function roleFormatter (cell, row) {
 	return cell.map(item => item.delegatedRole).join(',')
 }
+let sampleRole = ['Trading User','Trading Support Analyst','Trading Supervisor']
+const roleFormat = (cell, row, enumObject, index) => {
+	let placeHolder = cell.map(item => item.delegatedRole).join(',')
+	const options = sampleRole.map(item => ({label:item}))
+	const style = {
+		width:'100%',
+		height:'100%',
+		position:'absolute',
+		left:0,
+		top:0,
+		textAlign:'left'
+	}
+	return (<MutiSelect placeHolder={placeHolder} options={options} style={style}/>)
+}
+
+
 
 export default React.createClass({
 	displayName: 'UserDelegation',
@@ -81,15 +98,17 @@ export default React.createClass({
 						<div>come soon</div>
 					</Popup>
 				</div>
-				<div className='content'>
+				<div className='content user-delegation-table' >
 					<TableComponent
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
-						selectRow={this.selectRowProp}
+						
+						// selectRow={this.selectRowProp}
+						
 					>
-						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center'>Username</TableHeaderColumn>
+						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormatter} dataAlign='center'>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormat} dataAlign='center'>Delegate Role</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationFrom' dataAlign='center'>Date of Delegation From</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationTo' dataAlign='center'>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
@@ -100,3 +119,4 @@ export default React.createClass({
 		)
 	}
 })
+
