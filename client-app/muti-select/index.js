@@ -53,10 +53,10 @@ class MutiSelect extends Component {
 }
 
 MutiSelect.propTypes = {
-	options: React.PropTypes.array,
+	options: React.PropTypes.array, // like [{label:'aaa',value:1},{label:'bbb',value:2}]
 	placeHolder: React.PropTypes.string,
-	onChange: React.PropTypes.func,
-	style: React.PropTypes.object
+	onChange: React.PropTypes.func, // like (result) => {dosth(result)} ,result is array of selected option's index [0,2,5]
+	style: React.PropTypes.object // object custom the width and height...
 }
 
 export default MutiSelect

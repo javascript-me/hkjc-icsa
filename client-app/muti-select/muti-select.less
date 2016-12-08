@@ -1,7 +1,7 @@
 .muti-select-box {
 	position: relative;
 	display: inline-block;
-	min-width: 100px;
+	width: 100px;
 	color: #305091;
 	font-size: 14px;
 	cursor: pointer;
@@ -43,6 +43,9 @@
 
 	.option {
 		line-height: 30px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 
 		&:nth-of-type(odd) {
 			background-color: #F8F9FB;
@@ -50,6 +53,9 @@
 
 		input {
 			margin: 0 13px 0 10px;
+			width: 18px;
+			height: 18px;
+			vertical-align: -2px;
 		}
 
 		&:hover,
