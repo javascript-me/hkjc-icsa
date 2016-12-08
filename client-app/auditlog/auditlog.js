@@ -4,6 +4,9 @@ import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from './betType'
 import FilterBlock from '../filter-block'
+import FilterPanel from '../filter-panel'
+import FilterPanelRow from '../filter-panel/filter-panel-row'
+import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Paging from '../paging/paging'
 import Popup from '../popup'
@@ -11,6 +14,11 @@ import ExportPopup from '../exportPopup'
 import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
+
+import SearchEnquiryDataService from '../searchEnquiryPanel/searchEnquiryPanel-service'
+
+const selectdata = SearchEnquiryDataService.getData()
+
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -384,6 +392,22 @@ export default React.createClass({
 		return filterBlockes
 	},
 
+	handleChange (name, value) {
+		console.log('In Auditlog change', name, value)
+	},
+
+	handleFilterReset: function() {
+		console.log('in auditlog reset')
+	},
+
+	/*
+	 * Sample of filters: 
+	 * { dateTimeFrom: '08 Dec 2016 23:59', type: 'Odds', eventLv1: 'some event' }
+	 */
+	handleFilterSubmit: function(filters) {
+		console.log('in auditlog submit', filters)
+	},
+
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 			'hover-enabled': !this.state.isShowingMoreFilter
@@ -450,6 +474,16 @@ export default React.createClass({
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />
+								<FilterPanel onReset={this.handleFilterReset} onSubmit={this.handleFilterSubmit}>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName="textField" filterTitle="Text Field" onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="textDateTimeField" filterTitle="Text Date Time Field" filterValue="08 Dec 2016 23:59" ctrlType="calendar" onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="textSelectField" filterTitle="Text Select Field" ctrlType="select" dataSource={selectdata.typeValue} onChange={this.handleChange}>
+										</FilterPanelColumn>
+									</FilterPanelRow>									
+								</FilterPanel>
 							</div>
 						</div>
 					</div>
