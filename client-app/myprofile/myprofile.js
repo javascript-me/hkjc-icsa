@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import LoginService from '../login/login-service'
-
+import {PopupService} from '../popup'
 import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
 
 export default React.createClass({
@@ -34,8 +34,10 @@ export default React.createClass({
 		delegationCmp.onUpdateClick()
 	},
 	onCancelClick () {
-		this.setState({
-			delegationUpdate: false
+		PopupService.showMessageBox('Are you sure want to cancel?', () => {
+			this.setState({
+				delegationUpdate: false
+			})
 		})
 	},
 	onDeleteClick (delegationCmp) {
