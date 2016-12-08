@@ -17,8 +17,8 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		return $.post('api/auditlog/filterAuditlogs', requestData)
 	},
 
-	async searchAuditlogs ( criteriaOption ) {
-		let requestData = this.buildRequest( criteriaOption )
+	async searchAuditlogs (criteriaOption) {
+		let requestData = this.buildRequest(criteriaOption)
 
 		try {
 			let result = await this.sendRequest(requestData)
@@ -29,7 +29,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		} catch (failure) {}
 	},
 
-	buildRequest ( criteriaOption ) {
+	buildRequest (criteriaOption) {
 		if (criteriaOption) {
 			this._criteriaOption = criteriaOption
 		}

@@ -77,7 +77,7 @@ router.post('/filterAuditlogs', (req, res) => {
 
 	// TODO: check how to send JSON POST request data.
 
-	res.send( AuditlogsUtil.doSorting(filteredAuditlogs, "date_time", "DESCEND") )
+	res.send(AuditlogsUtil.doSorting(filteredAuditlogs, 'date_time', 'DESCEND'))
 })
 
 router.get('/download/:file', (req, res) => {

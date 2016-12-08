@@ -5,13 +5,11 @@ import PubSub from '../pubsub'
 import BetType from './betType'
 import FilterBlock from '../filter-block'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
-import Paging from '../paging/paging'
 import Popup from '../popup'
 import ExportPopup from '../exportPopup'
-import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
-import {TableHeaderColumn , TableComponent } from '../table'
+import {TableHeaderColumn, TableComponent} from '../table'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -79,14 +77,16 @@ export default React.createClass({
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
 			tableOptions: {
-		      defaultSortName: 'Date/Time',  // default sort column name
-		      defaultSortOrder: 'desc'  // default sort order
-		    },
+				defaultSortName: 'date_time',  // default sort column name
+				defaultSortOrder: 'desc', // default sort order
+				hideSizePerPage: true,
+				paginationSize: 7,
+				paginationClassContainer: 'text-center'
+			},
 			auditlogs: []
 		}
 	},
 	componentDidMount: function () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
 		let criteriaOption = this.getSearchCriterias()
 
 		// Get Table Data
@@ -292,33 +292,31 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent =
 				<div>
-					<div className="tableComponent-container">
-					
-							<TableComponent data={ AuditlogStore.auditlogs } pagination={true} options={this.state.tableOptions} striped={true} keyField='id'
-								tableHeaderClass="table-header" tableContainerClass="auditlog-table">
-								<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='date_time' dataSort={true}>Date/Time</TableHeaderColumn>
-								<TableHeaderColumn dataField='user_id' dataSort={true}>User ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='user_name' dataSort={true}>User Name</TableHeaderColumn>
-								<TableHeaderColumn dataField='Type' dataSort={true}>Type</TableHeaderColumn>
-								<TableHeaderColumn dataField='function_module' dataSort={true}>Function/Module</TableHeaderColumn>
-								<TableHeaderColumn dataField='function_event_detail' dataSort={true}>Function Event Detail</TableHeaderColumn>
-								<TableHeaderColumn dataField='user_role' dataSort={true}>User Role</TableHeaderColumn>
-								<TableHeaderColumn dataField='ip_address' dataSort={true}>IP Address</TableHeaderColumn>
-								<TableHeaderColumn dataField='backend_id' dataSort={true}>Back End ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='frontend_id' dataSort={true}>Front End ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='home' dataSort={true}>Home</TableHeaderColumn>
-								<TableHeaderColumn dataField='away' dataSort={true}>Away</TableHeaderColumn>
-								<TableHeaderColumn dataField='ko_time_game_start_game' dataSort={true}>K.O. Time/ Game Start Time</TableHeaderColumn>
-								<TableHeaderColumn dataField='bet_type' dataSort={true}>Bet Type</TableHeaderColumn>
-								<TableHeaderColumn dataField='event_name' dataSort={true}>Event Name</TableHeaderColumn>
-								<TableHeaderColumn dataField='error_code' dataSort={true}>Error Code</TableHeaderColumn>
-								<TableHeaderColumn dataField='error_message_content' dataSort={true}>Error Message Content</TableHeaderColumn>
-								<TableHeaderColumn dataField='device' dataSort={true}>Device</TableHeaderColumn>
-							</TableComponent>
-					
+					<div className='tableComponent-container'>
+						<TableComponent data={AuditlogStore.auditlogs} pagination options={this.state.tableOptions} striped keyField='id'
+							tableHeaderClass='table-header' tableContainerClass='auditlog-table' >
+							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='date_time' dataSort>Date/Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='user_id' dataSort>User ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='user_name' dataSort>User Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='Type' dataSort>Type</TableHeaderColumn>
+							<TableHeaderColumn dataField='function_module' dataSort>Function/Module</TableHeaderColumn>
+							<TableHeaderColumn dataField='function_event_detail' dataSort>Function Event Detail</TableHeaderColumn>
+							<TableHeaderColumn dataField='user_role' dataSort>User Role</TableHeaderColumn>
+							<TableHeaderColumn dataField='ip_address' dataSort>IP Address</TableHeaderColumn>
+							<TableHeaderColumn dataField='backend_id' dataSort>Back End ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='frontend_id' dataSort>Front End ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='home' dataSort>Home</TableHeaderColumn>
+							<TableHeaderColumn dataField='away' dataSort>Away</TableHeaderColumn>
+							<TableHeaderColumn dataField='ko_time_game_start_game' dataSort>K.O. Time/ Game Start Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='bet_type' dataSort>Bet Type</TableHeaderColumn>
+							<TableHeaderColumn dataField='event_name' dataSort>Event Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='error_code' dataSort>Error Code</TableHeaderColumn>
+							<TableHeaderColumn dataField='error_message_content' dataSort>Error Message Content</TableHeaderColumn>
+							<TableHeaderColumn dataField='device' dataSort>Device</TableHeaderColumn>
+						</TableComponent>
 					</div>
-					
+
 					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
@@ -326,7 +324,6 @@ export default React.createClass({
 								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>
 						</div>
-						<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 				</div>
 		} else {
