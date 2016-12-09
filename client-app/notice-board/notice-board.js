@@ -1,166 +1,78 @@
 import React from 'react'
+import ExportService from '../auditlog/export-service'
 import Popup from '../popup'
-import NoticeboardPopup from '../notice-board-popup'
-import LoginService from '../login/login-service'
-import NoticeBox from '../notice-box/notice-box'
-import TabBar from '../tab-bar/tab-bar'
-import NoticeBoardService from './notice-board-service'
-const getAllNoticesPromise = async (username) => {
-	let notices = null
+import ExportPopup from '../exportPopup'
 
-	try {
-		notices = await NoticeBoardService.getNotices(username)
-	} catch (ex) {
-
+const doExport = async (format, filters) => {
+	const file = ExportService.getNoticeboardFileURL(format, filters)
+	if (file) {
+		window.open(file, '_blank')
 	}
-
-	return notices
 }
-const updateUserNoticeBoardSettingsPromise = async (username, display) => {
-	let userProfile = null
-
-	try {
-		userProfile = await LoginService.updateNoticeBoardSettings(username, display)
-	} catch (ex) {
-
-	}
-
-	return userProfile
-}
-
 export default React.createClass({
 	propTypes: {
-		isSlim: React.PropTypes.bool
+		someThing: React.PropTypes.bool
 	},
 
 	getInitialState () {
 		return {
-			displaySettings: 'bottom',
-			selectedSettings: '',
-
-			allNoticesVisible: true,
-			unreadNoticesVisible: false,
-
-			noticeBoxData: {
-				allNotices: [],
-				unreadNotices: []
-			},
-
-			tabData: [
-				{label: 'All', isOn: true},
-				{label: 'Unread', isOn: false}
-			]
+			data: [],
+			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication \\ Noticeboard',
+			exportFormat: 'pdf'
 		}
 	},
-	componentDidMount: function async () {
-		let userProfile = LoginService.getProfile()
-		let noticePromise = getAllNoticesPromise(userProfile.username)
-		let allNotices
-		let unreadNotices
-		let self = this
-
-		self.setState({
-			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
-		})
-
-		noticePromise.then((notices) => {
-			allNotices = notices || []
-
-			unreadNotices = allNotices.filter((notice) => {
-				return notice.alert_status === 'New'
-			})
-
-			self.setState({
-				noticeBoxData: {
-					allNotices: allNotices,
-					unreadNotices: unreadNotices
-				}
-			})
-		})
+	componentDidMount: function async() {
 	},
 	openPopup () {
-		this.refs.noticeboardPopup.show()
-	},
-	applySettings () {
-		let self = this
-		let userProfile = LoginService.getProfile()
-		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
-		let userNoticeboardSettings = null
-		settingPromise.then((userProfile) => {
-			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-			self.updateSet(userNoticeboardSettings.display)
-		})
-	},
-	updateSet (setting) {
-		this.setState({displaySettings: setting})
-	},
-	onChangeSetting (setting) {
-		this.setState({selectedSettings: setting})
+		this.setState({ exportFormat: 'pdf' })// reset the format value
+		this.refs.exportPopup.show()
 	},
 
-	getClassName () {
-		if (this.state.displaySettings === 'right') {
-			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
-		} else {
-			return 'bottom-noticeboard-container'
-		}
-	},
-	changeTab (key) {
-		if (key === 'All') {
-			this.setState({
-				allNoticesVisible: true,
-				unreadNoticesVisible: false
-			})
-		}
-		if (key === 'Unread') {
-			this.setState({
-				allNoticesVisible: false,
-				unreadNoticesVisible: true
-			})
-		}
+	export () {
+		const filters ={ username: "allgood", selectedPageNumber: 1, sortingObjectFieldName: "date_time", sortingObjectOrder: "DESCEND", betType: "football", keyword: "", dateTimeFrom: "09 Oct 2016 00:00", dateTimeTo: "08 Dec 2016 23:59" }
+		doExport(this.state.exportFormat, filters)
+		//api/notice-board/noticeboardTableData
 
-		this.state.tabData.forEach((item) => {
-			if (item.label === key) {
-				item.isOn = true
-			} else {
-				item.isOn = false
-			}
-		})
+
 	},
-	clearselectedSettings () {
-		this.setState({selectedSettings: ''})
-	},
-	getHeadTitle () {
-		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
-			return e.priority === 'Critical' || e.priority === 'High'
-		})
-		return 'Noticeboard ' + this.state.noticeBoxData.unreadNotices.length + '(' + criticalOrHighNotices.length + ')'
+
+	onChangeFormat (format) {
+		this.setState({ exportFormat: format })
 	},
 
 	render () {
 		return (
-			<div>
-				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
-					<NoticeboardPopup onChange={this.onChangeSetting} />
-				</Popup>
-				<div className={this.getClassName()}>
-					<div className='header-container'>
-						<div className='pull-right'>
-							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>
-							<span className='noticeboard-settings-container'><i className=''><img src='icon/Setting.svg' onClick={this.openPopup} /></i></span>
-						</div>
-						<div className='container-title'>
-							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>{this.getHeadTitle()}</span>
+
+
+			<div className='conatainer-alert '>
+				<div className='row page-header'>
+					<p className='hkjc-breadcrumb'>{this.state.pageTitle}</p>
+					<h1>Noticeboard</h1>
+				</div>
+				<div className='row page-content'>
+					{/* Search Critiria Row */}
+					<div className='col-md-12'>
+						<div className='search-criteria-container'>
+							{/*Filters will Go here...*/}
 						</div>
 					</div>
-					<div className='messages-container'>
-						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} />
+				</div>
+				<div>
+					<div className='table-container '>
+						{/*Table component will go here...*/}
+					</div>
+					<div className='vertical-gap'>
+						<div className='pull-right'>
+							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
+							<Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+								<ExportPopup onChange={this.onChangeFormat} />
+							</Popup>
+							{/*Export popup will go here...*/}
+						</div>
 					</div>
 				</div>
 			</div>
+
 		)
 	}
 })

@@ -1,11 +1,10 @@
-import {assert} from 'chai'
+import React from 'react'
+import { shallow } from 'enzyme'
+import Noticeboard from './notice-board'
 
-it('Array.filter() should not change original data', () => {
-	var values = [1, 2, 3]
-	var filteredValues = values.filter((element) => {
-		return element === 1
+describe('<Noticeboard /> component', () => {
+	it('will renders notice-board', () => {
+		const noticeboard = shallow(<Noticeboard />)
+
 	})
-	assert.equal(3, values.length)
-	assert.equal(1, filteredValues.length)
 })
-

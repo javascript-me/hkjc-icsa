@@ -18,6 +18,8 @@ import AddAccount from './add-account'
 
 import UserList from './userlist/userlist'
 
+import Noticeboard from './notice-board/notice-board'
+
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
 		replace('/')
@@ -41,6 +43,7 @@ export default (target) => {
 					<Route path='filter' component={AddAccount} />
 					<Route path='userlist' component={UserList} />
 					<Route path='userlist2' component={UserList} />
+					<Route path='noticeboard' component={Noticeboard} />
 
 				</Route>
 			</Router>

@@ -5,8 +5,8 @@ import LoginService from '../login/login-service'
 import PubSub from '../pubsub'
 import menuData from './menuBarData.js'
 import EventDirectory from '../eventdirectory/eventdirectory'
-import Noticeboard from '../notice-board/notice-board'
-import NoticeBoardService from '../notice-board/notice-board-service'
+import Notifications from '../communication/notifications/notifications'
+import NotificationsService from '../communication/notifications/notifications'
 
 let loginChangeToken = null
 
@@ -14,7 +14,7 @@ const getNoticeCountPromise = async (username) => {
 	let count = 0
 
 	try {
-		count = await NoticeBoardService.getRemindCount(username)
+		count = await NotificationsService.getRemindCount(username)
 	} catch (ex) {
 
 	}
@@ -26,21 +26,21 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
-		this.showHideNoticeBoard = this.showHideNoticeBoard.bind(this)
+		this.showHideNotifications = this.showHideNotifications.bind(this)
 		this.state = {
 			slimMode: false,
-			showNoticeBoard: false,
+			showNotifications: false,
 			menuBarShouldShow: LoginService.hasProfile(),
 			userProfile: LoginService.getProfile(),
 			noticeRemindCount: 0
 		}
 	}
 
-	showHideNoticeBoard () {
-		if (this.state.showNoticeBoard) {
-			this.setState({ showNoticeBoard: false })
+	showHideNotifications () {
+		if (this.state.showHideNotifications) {
+			this.setState({ showHideNotifications: false })
 		} else {
-			this.setState({ showNoticeBoard: true })
+			this.setState({ showHideNotifications: true })
 		}
 	}
 
@@ -70,7 +70,7 @@ class MenuBar extends Component {
 					</div>
 					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
 					<div className='message'>
-						<i className='icon-notification ' onClick={this.showHideNoticeBoard}>
+						<i className='icon-notification ' onClick={this.showHideNotifications}>
 							<img src='icon/notification.svg' />
 							{
 								this.state.noticeRemindCount > 0
@@ -81,7 +81,7 @@ class MenuBar extends Component {
 						</i>
 					</div>
 				</div>
-				{ this.state.showNoticeBoard ? <Noticeboard isSlim={this.state.slimMode} /> : null }
+				{ this.state.showHideNotifications ? <Notifications isSlim={this.state.slimMode} /> : null }
 			</div>)
 	}
 

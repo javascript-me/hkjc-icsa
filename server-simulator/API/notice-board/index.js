@@ -1,5 +1,8 @@
 import express from 'express'
 import moment from 'moment'
+import helper from './export_helper'
+import AuditlogsUtil from '../auditlog/auditlogs-util'
+const jsonObject = require('../json/auditlogs.json')
 
 const router = express.Router()
 const jsonAlerts = require('../json/notice-alerts.json') || {}
@@ -128,6 +131,47 @@ router.get('/remind-count', (req, res) => {
 		count: cloneNotices.filter(checkNoticeIsImportant).length
 	}
 
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/export', (req, res) => {
+	const type = req.params.type || req.query.type
+	const json = req.params.json || req.query.json
+	const filters = json ? JSON.parse(decodeURIComponent(json)) : {}
+	let data = []
+
+	if (filters.username === 'allgood') {
+		data = jsonAlerts[filters.username]
+	}
+
+	let result = data
+
+	let statusCode = 200
+	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+
+	switch (type.toLowerCase()) {
+		case 'pdf':
+			res.sendfile('server-simulator/API/notice-board/output.pdf')
+
+			break
+		case 'csv':
+			result = helper.toCSV(result)
+			res.writeHead(statusCode, {
+				'Content-Type': 'application/octet-stream',
+				'Content-Disposition': 'attachment; filename=NoticeBoardReport_' + dateFilename + '.csv'})
+			res.end(result)
+			break
+		default:
+			break
+	}
+})
+
+router.post('/noticeboardTableData', (req, res) => {
+	const username =  req.body.username
+	let data = []
+	let status = 200
+	let result = jsonAlerts[username]
 	res.status(status)
 	res.send(result)
 })
