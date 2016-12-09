@@ -5,6 +5,7 @@ import Moment from 'moment'
 import DateTime from '../dateTime/dateTime'
 import Popup from '../popup'
 import RolesContainer from './rolescontainer'
+import RolesPermission from './rolespermission'
 
 function isValidDateTime (str) {
 	let bRet = Moment(str, 'DD MMM YYYY', true).isValid()
@@ -92,6 +93,9 @@ export default React.createClass({
 	onEditRoleClick (editRole) {
 		editRole.show()
 	},
+	onRoleShowClick (roleDetail) {
+		roleDetail.show()
+	},
 	onEditRoleUpdate (userAccount, rolesCmp) {
 		const roles = rolesCmp.getUpdateRoles()
 		const oldUserRoles = this.props.userAccount.assignedUserRoles.filter((item) => {
@@ -158,8 +162,11 @@ export default React.createClass({
 			return (
 				<div className='role-wrapper'>
 					{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
-						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})}>{role.assignedUserRole}</div>
+						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})} onClick={() => { this.onRoleShowClick(this.refs.rolesDetail) }}>{role.assignedUserRole}</div>
 					))}
+					<Popup hideOnOverlayClicked className='permission' ref='rolesDetail' title='Admin Roles & Permission' showCancel={false} confirmBtn='Close'>
+						<RolesPermission ref='rolesShow' inputSelected={userAccount.assignedUserRoles} />
+					</Popup>
 				</div>
 			)
 		}
@@ -208,7 +215,7 @@ export default React.createClass({
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
 						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
-					<div className='row value'>
+					<div className='row value roles-detail'>
 						<div className='col col-xs-6 roles'>
 							{this.renderUserRoles(userAccount)}
 						</div>
@@ -253,8 +260,8 @@ export default React.createClass({
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
 						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
-					<div className='row value'>
-						<div className='col col-xs-6 roles'>
+					<div className='row value roles-detail'>
+						<div className='col col-xs-6 roles '>
 							{this.renderUserRoles(userAccount)}
 						</div>
 						<div className='col col-xs-6'>{formatTime(userAccount.activationDate)}</div>
@@ -291,7 +298,7 @@ export default React.createClass({
 					<div className='row name'>
 						<div className='col col-xs-12'>Assigned User Role / Privilege</div>
 					</div>
-					<div className='row value'>
+					<div className='row value roles-detail'>
 						<div className='col col-xs-12 roles'>
 							{this.renderUserRoles(userAccount)}
 						</div>
