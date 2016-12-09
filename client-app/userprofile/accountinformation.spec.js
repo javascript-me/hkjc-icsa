@@ -38,8 +38,8 @@ describe('<AccountInformation />', () => {
 
 		const instance = wrapper.instance()
 		instance.resetData()
-		instance.onActivationDateChange({target: {value: '01 Dec 2016'}})
-		instance.onDeactivationDateChange({target: {value: '01 Dec 2016'}})
+		instance.onActivationDateChange({format: () => '20 Jun 2016 00:00'})
+		instance.onDeactivationDateChange({format: () => '20 Jun 2017 00:00'})
 		expect(instance.getData()).to.have.property('userID')
 		expect(instance.verifyData()).to.be.true
 
