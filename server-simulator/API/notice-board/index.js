@@ -7,6 +7,16 @@ const jsonObject = require('../json/auditlogs.json')
 const router = express.Router()
 const jsonAlerts = require('../json/notice-alerts.json') || {}
 const jsonCriticalInformations = require('../json/notice-critical-informations.json') || {}
+/*Filter panel dropdowns*/
+const allCategories = require('../json/filter-dropdowns/categories.json')
+const allCompetitions = require('../json/filter-dropdowns/competitions.json')
+const allContinents = require('../json/filter-dropdowns/continents.json')
+const allCountries = require('../json/filter-dropdowns/countries.json')
+const allInplays = require('../json/filter-dropdowns/inplay.json')
+const allMatches = require('../json/filter-dropdowns/matches.json')
+const allPriorities = require('../json/filter-dropdowns/priorities.json')
+const allSports = require('../json/filter-dropdowns/sports.json')
+const allStatuses = require('../json/filter-dropdowns/status.json')
 
 const getRecentlySixMonthNoticesByUserName = (alerts, criticalInformations, userName) => {
 	let cloneNotices = []
@@ -163,11 +173,75 @@ router.get('/export', (req, res) => {
 	}
 })
 
-router.post('/filterNoticeBoardTableData', (req, res) => {
+router.get('/filterNoticeBoardTableData', (req, res) => {
 	const username =  req.body.username
 	let data = []
 	let status = 200
 	let result = jsonAlerts[username]
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/categories', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allCategories
+	res.status(status)
+	res.send(result)
+})
+router.get('/competitions', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allCompetitions
+	res.status(status)
+	res.send(result)
+})
+router.get('/continents', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allContinents
+	res.status(status)
+	res.send(result)
+})
+router.get('/countries', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allCountries
+	res.status(status)
+	res.send(result)
+})
+router.get('/inplays', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allInplays
+	res.status(status)
+	res.send(result)
+})
+router.get('/matches', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allMatches
+	res.status(status)
+	res.send(result)
+})
+router.get('/priorities', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allPriorities
+	res.status(status)
+	res.send(result)
+})
+router.get('/sports', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allSports
+	res.status(status)
+	res.send(result)
+})
+router.get('/statuses', (req, res) => {
+	let data = []
+	let status = 200
+	let result = allStatuses
 	res.status(status)
 	res.send(result)
 })

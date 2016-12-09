@@ -22,8 +22,11 @@ export default React.createClass({
 			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication \\ Noticeboard',
 			exportFormat: 'pdf',
 			tableOptions: {
-				defaultSortName: 'Alert Name',  // default sort column name
-				defaultSortOrder: 'desc'  // default sort order
+				defaultSortName: 'Alert Status',  // default sort column name
+				defaultSortOrder: 'desc', // default sort order
+				hideSizePerPage: true,
+				paginationSize: 7,
+				paginationClassContainer: 'text-center'
 			},
 			noticesList: []
 		}
