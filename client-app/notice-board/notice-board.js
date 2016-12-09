@@ -186,8 +186,8 @@ export default React.createClass({
 
 				<Popup hideOnOverlayClicked ref='detailPopup'
 					title={this.state.detail.alert_name}
-					showCancel
-					showCloseIcon
+					showCancel={false}
+					showCloseIcon={true}
 					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
 					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
 					headerColor={this.getPriorityColor(this.state.detail.priority)}>
