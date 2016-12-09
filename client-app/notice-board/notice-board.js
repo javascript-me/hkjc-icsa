@@ -6,7 +6,6 @@ import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
 import NoticeDetail from '../notice-detail/notice-detail'
-import ZIndex from '../global-util/z-index'
 
 const getAllNoticesPromise = async (username) => {
 	let notices = null
@@ -197,7 +196,7 @@ export default React.createClass({
 						message_detail={this.state.detail.message_detail} />
 				</Popup>
 
-				<div className={this.getClassName()} style={{zIndex: ZIndex.COMMUNICATION_PANEL}} >
+				<div className={this.getClassName()}>
 					<div className='header-container'>
 						<div className='pull-right'>
 							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>

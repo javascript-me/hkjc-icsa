@@ -1,5 +1,5 @@
 import React from 'react'
-import DateParser from '../global-util/date-parser'
+import DateFormatter from '../formatter/date-formatter'
 
 export default class NoticeDetail extends React.Component {
 
@@ -11,7 +11,7 @@ export default class NoticeDetail extends React.Component {
 					<li><span className='detail-label'>Category: </span><span className='detail-value'>{this.props.message_category}</span></li>
 					<li>
 						<span className='detail-label'>Received Time: </span>
-						<span className='detail-value'>{DateParser.formatDistributionTimeShortWay(this.props.system_distribution_time)}</span>
+						<span className='detail-value'>{DateFormatter.toDDMMMYYY(this.props.system_distribution_time)}</span>
 					</li>
 				</ul>
 
