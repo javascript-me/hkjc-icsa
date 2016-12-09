@@ -1,5 +1,4 @@
 import React from 'react'
-import ZIndex from '../global-util/z-index'
 
 const isOpening = (s1, s2) => !s1.isVisible && s2.isVisible
 const isClosing = (s1, s2) => s1.isVisible && !s2.isVisible
@@ -88,7 +87,7 @@ export default class Popup extends React.Component {
 	render () {
 		let overlay, footer, other, confirm, cancel, closeIcon
 		if (this.props.showOverlay) {
-			overlay = (<div className='popup-overlay' style={{zIndex: ZIndex.POPUP}} onClick={() => this.onOverlayClicked()} />)
+			overlay = (<div className='popup-overlay' onClick={() => this.onOverlayClicked()} />)
 		}
 		if (this.props.showFooter) {
 			footer = (<div className='panel-footer' />)
