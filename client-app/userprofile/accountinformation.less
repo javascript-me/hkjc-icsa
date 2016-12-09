@@ -119,6 +119,10 @@
 			padding: 0 14px;
 			margin-top: 7px;
 		}
+
+		.roles-detail {
+			height: 161px;
+		}
 	}
 }
 
@@ -163,6 +167,7 @@
 
 		> td {
 			text-align: center;
+			vertical-align: middle;
 			border-right: 1px solid #D8E1F3;
 
 			&:first-child {
@@ -175,18 +180,19 @@
 			}
 
 			i {
-				margin-top: 2px;
-				width: 14px;
-				height: 14px;
 				display: inline-block;
 				background-repeat: no-repeat;
 				background-position: center center;
 
 				&.tick {
+					width: 15px;
+					height: 10px;
 					background-image: url(icon/tick.svg);
 				}
 
 				&.cross {
+					width: 13px;
+					height: 13px;
 					background-image: url(icon/cross.svg);
 				}
 			}
