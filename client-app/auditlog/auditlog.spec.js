@@ -98,7 +98,7 @@ describe('<Audit /> component', () => {
 
 	it('will render table component initially', () => {
 		const auditlog = shallow(<Audit />)
-		const tableContainer = auditlog.find('.table-container')
+		const tableContainer = auditlog.find('.tableComponent-container')
 
 		expect(tableContainer.children()).to.have.length(1)
 	})

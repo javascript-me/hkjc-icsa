@@ -118,7 +118,7 @@ export class TableDataStore {
 			this.isOnFilter = true
 			this.filteredData = this.data.filter(row => {
 				const result = this.selected.find(x => row[this.keyField] === x)
-				return typeof result !== 'undefined' ? true : false
+				return typeof result !== 'undefined'
 			})
 		} else {
 			this.isOnFilter = false
@@ -128,11 +128,12 @@ export class TableDataStore {
 	sort (order, sortField) {
 		this.setSortInfo(order, sortField)
 
-		let currentDisplayData = this.getCurrentDisplayData()
-		if (!this.colInfos[sortField]) return this
+		if (!this.colInfos[sortField]) {
+			return this
+		}
 
 		const { sortFunc, sortFuncExtraData } = this.colInfos[sortField]
-		currentDisplayData = _sort(currentDisplayData, sortField, order, sortFunc, sortFuncExtraData)
+		_sort(this.getCurrentDisplayData(), sortField, order, sortFunc, sortFuncExtraData)
 
 		return this
 	}
@@ -396,11 +397,7 @@ export class TableDataStore {
 					break
 				}
 				case Const.FILTER_TYPE.CUSTOM: {
-					filterVal = (typeof filterObj[key].value === 'object') ?
-            undefined :
-            (typeof filterObj[key].value === 'string') ?
-              filterObj[key].value.toLowerCase() :
-              filterObj[key].value
+					filterVal = (typeof filterObj[key].value === 'object') ? undefined : (typeof filterObj[key].value === 'string') ? filterObj[key].value.toLowerCase() : filterObj[key].value
 					break
 				}
 				case Const.FILTER_TYPE.DATE: {
@@ -412,11 +409,9 @@ export class TableDataStore {
 					break
 				}
 				default: {
-					filterVal = (typeof filterObj[key].value === 'string') ?
-            filterObj[key].value.toLowerCase() :
-            filterObj[key].value
+					filterVal = (typeof filterObj[key].value === 'string') ? filterObj[key].value.toLowerCase() : filterObj[key].value
 					if (filterVal === undefined) {
-            // Support old filter
+							// Support old filter
 						filterVal = filterObj[key].toLowerCase()
 					}
 					break
@@ -453,8 +448,7 @@ export class TableDataStore {
 					break
 				}
 				default: {
-					if (filterObj[key].type === Const.FILTER_TYPE.SELECT &&
-            filterFormatted && filterFormatted && format) {
+					if (filterObj[key].type === Const.FILTER_TYPE.SELECT && filterFormatted && filterFormatted && format) {
 						filterVal = format(filterVal, row, formatExtraData, r)
 					}
 					valid = this.filterText(targetVal, filterVal)
@@ -481,23 +475,22 @@ export class TableDataStore {
 		this.filteredData = source.filter((row, r) => {
 			const keys = Object.keys(row)
 			let valid = false
-      // for loops are ugly, but performance matters here.
-      // And you cant break from a forEach.
-      // http://jsperf.com/for-vs-foreach/66
+			// for loops are ugly, but performance matters here.
+			// And you cant break from a forEach.
+			// http://jsperf.com/for-vs-foreach/66
 			for (let i = 0, keysLength = keys.length; i < keysLength; i++) {
 				const key = keys[i]
-        // fixed data filter when misunderstand 0 is false
+				// fixed data filter when misunderstand 0 is false
 				let filterSpecialNum = false
-				if (!isNaN(row[key]) &&
-          parseInt(row[key], 10) === 0) { filterSpecialNum = true }
+				if (!isNaN(row[key]) && parseInt(row[key], 10) === 0) { filterSpecialNum = true }
 				if (this.colInfos[key] && (row[key] || filterSpecialNum)) {
 					const {
-            format,
-            filterFormatted,
-            filterValue,
-            formatExtraData,
-            searchable
-          } = this.colInfos[key]
+						format,
+						filterFormatted,
+						filterValue,
+						formatExtraData,
+						searchable
+					} = this.colInfos[key]
 					let targetVal = row[key]
 					if (searchable) {
 						if (filterFormatted && format) {
@@ -550,13 +543,11 @@ export class TableDataStore {
 	}
 
 	isChangedPage () {
-		return this.pageObj.start && this.pageObj.end ? true : false
+		return this.pageObj.start && this.pageObj.end
 	}
 
 	isEmpty () {
-		return (this.data.length === 0 ||
-    this.data === null ||
-    this.data === undefined)
+		return (this.data.length === 0 || this.data === null || this.data === undefined)
 	}
 
 	getAllRowkey () {
