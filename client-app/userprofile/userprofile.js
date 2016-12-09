@@ -33,7 +33,8 @@ export default React.createClass({
 			accountUpdate: false,
 			userBasic: {},
 			userAccount: {},
-			userDelegation: null
+			userDelegation: null,
+			userSubscription: []
 		}
 	},
 	componentDidMount () {
@@ -93,7 +94,11 @@ export default React.createClass({
 						</ProfileButtons>
 					</ProfileContainer>
 
-					<SubscriptionContainer />
+					<SubscriptionContainer userSubscription={this.state.userSubscription}>
+						<ProfileButtons>
+							<button className='btn btn-primary pull-right' onClick={() => {}}>Configure Message</button>
+						</ProfileButtons>
+					</SubscriptionContainer>
 				</ProfileTabs>
 			</div>
 		)
@@ -105,7 +110,8 @@ export default React.createClass({
 				accountUpdate: false,
 				userBasic: userProfile.user,
 				userAccount: userProfile.account,
-				userDelegation: userProfile.account.delegationList
+				userDelegation: userProfile.account.delegationList,
+				userSubscription: userProfile.account.subscribedCategoryMessages
 			})
 		}
 	}

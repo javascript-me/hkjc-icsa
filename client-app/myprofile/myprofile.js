@@ -19,7 +19,8 @@ export default React.createClass({
 			delegationUpdate: false,
 			userBasic: {},
 			userAccount: {},
-			userDelegation: null
+			userDelegation: null,
+			userSubscription: []
 		}
 	},
 	componentDidMount () {
@@ -62,7 +63,11 @@ export default React.createClass({
 						</ProfileButtons>
 					</ProfileContainer>
 
-					<SubscriptionContainer />
+					<SubscriptionContainer userSubscription={this.state.userSubscription}>
+						<ProfileButtons>
+							<button className='btn btn-primary pull-right' onClick={() => {}}>Edit</button>
+						</ProfileButtons>
+					</SubscriptionContainer>
 				</ProfileTabs>
 			</div>
 		)
@@ -73,7 +78,8 @@ export default React.createClass({
 			this.setState({
 				userBasic: userProfile.user,
 				userAccount: userProfile.account,
-				userDelegation: userProfile.account.delegationList
+				userDelegation: userProfile.account.delegationList,
+				userSubscription: userProfile.account.subscribedCategoryMessages
 			})
 		}
 	}
