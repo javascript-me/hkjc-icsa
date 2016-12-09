@@ -29,7 +29,7 @@ describe('<Paging />', () => {
 		assert.equal(2, onButtonClick.callCount)
 		assert.equal('1', wrapper.instance().currentSelectedPageNumber)
 
-		var items = wrapper.find('.paging ul li')
+		let items = wrapper.find('.paging ul li')
 		assert.equal(10, items.length)
 
 		items.at(3).simulate('click', {target: {innerText: '3'}})
