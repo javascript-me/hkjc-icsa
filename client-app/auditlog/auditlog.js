@@ -11,6 +11,7 @@ import ExportPopup from '../exportPopup'
 import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
+import {TableHeaderColumn , TableComponent } from '../table'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -98,6 +99,10 @@ export default React.createClass({
 			}],
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
+			tableOptions: {
+		      defaultSortName: 'Date/Time',  // default sort column name
+		      defaultSortOrder: 'desc'  // default sort order
+		    },
 			auditlogs: []
 		}
 	},
@@ -322,6 +327,32 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent =
 				<div>
+					<div className="container">
+						<div className="row">
+							<TableComponent data={ AuditlogStore.auditlogs } pagination={true} options={this.state.tableOptions} striped={true} keyField='id'
+								tableHeaderClass="table-header" tableContainerClass="auditlog-table">
+								<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='date_time' dataSort={true}>Date/Time</TableHeaderColumn>
+								<TableHeaderColumn dataField='user_id' dataSort={true}>User ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='user_name' dataSort={true}>User Name</TableHeaderColumn>
+								<TableHeaderColumn dataField='Type' dataSort={true}>Type</TableHeaderColumn>
+								<TableHeaderColumn dataField='function_module' dataSort={true}>Function/Module</TableHeaderColumn>
+								<TableHeaderColumn dataField='function_event_detail' dataSort={true}>Function Event Detail</TableHeaderColumn>
+								<TableHeaderColumn dataField='user_role' dataSort={true}>User Role</TableHeaderColumn>
+								<TableHeaderColumn dataField='ip_address' dataSort={true}>IP Address</TableHeaderColumn>
+								<TableHeaderColumn dataField='backend_id' dataSort={true}>Back End ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='frontend_id' dataSort={true}>Front End ID</TableHeaderColumn>
+								<TableHeaderColumn dataField='home' dataSort={true}>Home</TableHeaderColumn>
+								<TableHeaderColumn dataField='away' dataSort={true}>Away</TableHeaderColumn>
+								<TableHeaderColumn dataField='ko_time_game_start_game' dataSort={true}>K.O. Time/ Game Start Time</TableHeaderColumn>
+								<TableHeaderColumn dataField='bet_type' dataSort={true}>Bet Type</TableHeaderColumn>
+								<TableHeaderColumn dataField='event_name' dataSort={true}>Event Name</TableHeaderColumn>
+								<TableHeaderColumn dataField='error_code' dataSort={true}>Error Code</TableHeaderColumn>
+								<TableHeaderColumn dataField='error_message_content' dataSort={true}>Error Message Content</TableHeaderColumn>
+								<TableHeaderColumn dataField='device' dataSort={true}>Device</TableHeaderColumn>
+							</TableComponent>
+						</div>
+					</div>
 					<div className='table-container '>
 						<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
 					</div>
