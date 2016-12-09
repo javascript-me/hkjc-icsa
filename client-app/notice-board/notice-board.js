@@ -5,6 +5,9 @@ import LoginService from '../login/login-service'
 import NoticeBox from '../notice-box/notice-box'
 import TabBar from '../tab-bar/tab-bar'
 import NoticeBoardService from './notice-board-service'
+import NoticeDetail from '../notice-detail/notice-detail'
+import ZIndex from '../global-util/z-index'
+
 const getAllNoticesPromise = async (username) => {
 	let notices = null
 
@@ -49,7 +52,16 @@ export default React.createClass({
 			tabData: [
 				{label: 'All', isOn: true},
 				{label: 'Unread', isOn: false}
-			]
+			],
+
+			detail: {
+				id: '',
+				message_detail: '',
+				alert_status: '',
+				message_category: '',
+				system_distribution_time: '',
+				priority: ''
+			}
 		}
 	},
 	componentDidMount: function async () {
@@ -137,13 +149,55 @@ export default React.createClass({
 		return 'Noticeboard ' + this.state.noticeBoxData.unreadNotices.length + '(' + criticalOrHighNotices.length + ')'
 	},
 
+	openDetail (notice) {
+		this.setState(
+			{detail: {
+				id: notice.id,
+				alert_name: notice.alert_name,
+				message_detail: notice.message_detail,
+				alert_status: notice.alert_status,
+				message_category: notice.message_category,
+				system_distribution_time: notice.system_distribution_time,
+				priority: notice.priority
+			}})
+
+		this.refs.detailPopup.show()
+	},
+
+	getConfirmButtonLabel (alertStatus) {
+		if (alertStatus === 'New') return 'Acknowledge'
+		return 'Unacknowledge'
+	},
+
+	getPriorityColor (priority) {
+		if (priority === 'Critical') return '#EF0000'
+		if (priority === 'High') return '#FF6320'
+		if (priority === 'Medium') return '#FFA400'
+		if (priority === 'Low') return '#9BC14D'
+		return ''
+	},
+
 	render () {
 		return (
 			<div>
 				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
 					<NoticeboardPopup onChange={this.onChangeSetting} />
 				</Popup>
-				<div className={this.getClassName()}>
+
+				<Popup hideOnOverlayClicked ref='detailPopup'
+					title={this.state.detail.alert_name}
+					showCancel
+					showCloseIcon
+					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
+					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
+					headerColor={this.getPriorityColor(this.state.detail.priority)}>
+					<NoticeDetail alert_status={this.state.detail.alert_status}
+						message_category={this.state.detail.message_category}
+						system_distribution_time={this.state.detail.system_distribution_time}
+						message_detail={this.state.detail.message_detail} />
+				</Popup>
+
+				<div className={this.getClassName()} style={{zIndex: ZIndex.COMMUNICATION_PANEL}} >
 					<div className='header-container'>
 						<div className='pull-right'>
 							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>
@@ -156,8 +210,8 @@ export default React.createClass({
 					</div>
 					<div className='messages-container'>
 						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} />
+						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} />
+						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} />
 					</div>
 				</div>
 			</div>
