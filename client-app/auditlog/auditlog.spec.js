@@ -124,7 +124,7 @@ describe('<Audit /> component', () => {
 
 			expect(auditlog.state('betType')).to.equal('basketball')
 			expect(auditlog.state('keyword')).to.equal('')
-			expect(auditlog.state('selectedFilters')).to.have.length(0)
+			expect(auditlog.state('selectedFilters')).to.have.length(2)
 			expect(auditlog.state('isShowingMoreFilter')).to.be.false
 		})
 	})
@@ -256,6 +256,53 @@ describe('<Audit /> component', () => {
 	})
 
 	describe('#removeSearchCriteriaFilter(filter)', () => {
+		it('will clear state.keyword and state.selectedKeyword when filter.name equals "keyword"', () => {
+			const auditlog = shallow(<Audit />)
+			const filter = {
+				name: 'keyword', value: 'keyword1'
+			}
+
+			auditlog.setState({
+				keyword: filter.value,
+				selectedKeyword: filter.value
+			})
+			auditlog.instance().removeSearchCriteriaFilter(filter)
+
+			expect(auditlog.state('keyword').length).to.equal(0)
+			expect(auditlog.state('selectedKeyword').length).to.equal(0)
+		})
+
+		it('will reset dateTimeFrom and dateTimeTo of state.selectedFilters when filter.name equals "dateTimeFrom,dateTimeTo"', () => {
+			const auditlog = shallow(<Audit />)
+			const filter = {
+				name: 'dateTimeFrom,dateTimeTo', value: '05 Oct 2016 00:00 - 07 Dec 2016 23:59'
+			}
+			let stateDateTimeFrom
+			let stateDateTimeTo
+
+			auditlog.setState({
+				selectedFilters: [{
+					name: 'dateTimeFrom',
+					value: '05 Oct 2016 00:00'
+				}, {
+					name: 'dateTimeTo',
+					value: '07 Dec 2016 23:59'
+				}]
+			})
+			auditlog.instance().removeSearchCriteriaFilter(filter)
+
+			stateDateTimeFrom = auditlog.state('selectedFilters').filter((f) => {
+				return f.name === 'dateTimeFrom'
+			})[0] || {}
+
+			stateDateTimeTo = auditlog.state('selectedFilters').filter((f) => {
+				return f.name === 'dateTimeTo'
+			})[0] || {}
+
+			expect(stateDateTimeFrom.value).to.equal(auditlog.state('originDateRange').dateTimeFrom)
+			expect(stateDateTimeTo.value).to.equal(auditlog.state('originDateRange').dateTimeTo)
+		})
+
 		it('will return the exact filter in state.selectedFilters', () => {
 			const auditlog = shallow(<Audit />)
 			const targetFilter = {
@@ -291,7 +338,7 @@ describe('<Audit /> component', () => {
 			const auditlog = shallow(<Audit />)
 			const originDateRange = auditlog.state('originDateRange')
 			const defaultDateFrom = originDateRange.dateTimeFrom
-			let changedDateFrom = Moment(defaultDateFrom).add('1', 'seconds')
+			let changedDateFrom = Moment(defaultDateFrom, 'DD MMM YYYY HH:mm').add('1', 'seconds')
 			let isDateRangeNotChanged
 
 			auditlog.instance().setFilters({

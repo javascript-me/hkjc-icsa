@@ -112,4 +112,18 @@ describe('Calendar', () => {
 
 		expect(onBlur.calledOnce).to.be.true
 	})
+
+	it(' is not warning', () => {
+		let warning = false
+		const calendar = shallow(<Calendar warning={warning} />)
+
+		expect(calendar.find('.input-group').hasClass('warning')).to.be.false
+	})
+
+	it(' is warning', () => {
+		let warning = true
+		const calendar = shallow(<Calendar warning={warning} />)
+
+		expect(calendar.find('.input-group').hasClass('warning')).to.be.true
+	})
 })
