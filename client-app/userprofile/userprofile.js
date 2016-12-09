@@ -64,10 +64,6 @@ export default React.createClass({
 				}).then((data) => {
 					if (data) {
 						this.getUserProfile()
-						let afterUpdate = () => {
-							this.setState({accountUpdate: false})
-						}
-						PopupService.showMessageBox(data.msg, afterUpdate, afterUpdate)
 					}
 				})
 			})
@@ -106,6 +102,7 @@ export default React.createClass({
 		const userProfile = await UserProfileService.getUserProfile(this.userID)
 		if (userProfile) {
 			this.setState({
+				accountUpdate: false,
 				userBasic: userProfile.user,
 				userAccount: userProfile.account,
 				userDelegation: userProfile.account.delegationList
