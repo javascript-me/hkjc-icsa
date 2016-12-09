@@ -263,6 +263,7 @@ export default React.createClass({
 	export () {
 		let criteriaOption = this.getSearchCriterias()
 		const filters = AuditlogStore.buildRequest(1, null, criteriaOption)
+		console.log(filters)
 
 		doExport(this.state.exportFormat, filters)
 	},

@@ -31,14 +31,13 @@ export default React.createClass({
 	export () {
 		const filters ={ username: "allgood", selectedPageNumber: 1, sortingObjectFieldName: "date_time", sortingObjectOrder: "DESCEND", betType: "football", keyword: "", dateTimeFrom: "09 Oct 2016 00:00", dateTimeTo: "08 Dec 2016 23:59" }
 		doExport(this.state.exportFormat, filters)
-		//api/notice-board/noticeboardTableData
-
-
-	},
+		},
 
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
 	},
+
+
 
 	render () {
 		return (

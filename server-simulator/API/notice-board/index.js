@@ -140,16 +140,12 @@ router.get('/export', (req, res) => {
 	const json = req.params.json || req.query.json
 	const filters = json ? JSON.parse(decodeURIComponent(json)) : {}
 	let data = []
-
 	if (filters.username === 'allgood') {
 		data = jsonAlerts[filters.username]
 	}
-
 	let result = data
-
 	let statusCode = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
-
 	switch (type.toLowerCase()) {
 		case 'pdf':
 			res.sendfile('server-simulator/API/notice-board/output.pdf')
