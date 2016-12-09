@@ -1,4 +1,16 @@
 ﻿.popup-wrapper {
+	.popup-wrapper-inner {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 100;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
 	.popup-overlay {
 		position: fixed;
 		top: 0;
@@ -12,9 +24,6 @@
 
 	.popup-dialog {
 		min-width: 470px;
-		position: fixed;
-		top: 37%;
-		left: 40%;
 		z-index: 100;
 		background: #F8F8F8;
 		border: 1px solid #ACB8D1;
