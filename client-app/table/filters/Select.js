@@ -7,8 +7,7 @@ class SelectFilter extends Component {
 		super(props)
 		this.filter = this.filter.bind(this)
 		this.state = {
-			isPlaceholderSelected: (this.props.defaultValue === undefined ||
-              !this.props.options.hasOwnProperty(this.props.defaultValue))
+			isPlaceholderSelected: (this.props.defaultValue === undefined || !this.props.options.hasOwnProperty(this.props.defaultValue))
 		}
 	}
 
@@ -37,8 +36,8 @@ class SelectFilter extends Component {
 		const { options, placeholder, columnName, selectText } = this.props
 		const selectTextValue = (selectText !== undefined) ? selectText : 'Select'
 		optionTags.push((
-      <option key='-1' value=''>{ placeholder || `${selectTextValue} ${columnName}...` }</option>
-    ))
+			<option key='-1' value=''>{ placeholder || `${selectTextValue} ${columnName}...` }</option>
+		))
 		Object.keys(options).map(key => {
 			optionTags.push(<option key={key} value={key}>{ options[key] + '' }</option>)
 		})
@@ -53,17 +52,13 @@ class SelectFilter extends Component {
 	}
 
 	render () {
-		const selectClass = classSet('filter', 'select-filter', 'form-control',
-              { 'placeholder-selected': this.state.isPlaceholderSelected })
+		const selectClass = classSet('filter', 'select-filter', 'form-control', { 'placeholder-selected': this.state.isPlaceholderSelected })
 
 		return (
-      <select ref='selectInput'
-	className={selectClass}
-	onChange={this.filter}
-	defaultValue={(this.props.defaultValue !== undefined) ? this.props.defaultValue : ''} >
-        { this.getOptions() }
-      </select>
-    )
+			<select ref='selectInput' className={selectClass} onChange={this.filter} defaultValue={(this.props.defaultValue !== undefined) ? this.props.defaultValue : ''} >
+				{ this.getOptions() }
+			</select>
+		)
 	}
 }
 

@@ -5,61 +5,17 @@ const PAGE_START_INDEX = 1
 
 class PaginationList extends Component {
 
-	changePage (page) {
-		const {
-			pageStartIndex,
-			prePage,
-			currPage,
-			nextPage,
-			lastPage,
-			firstPage,
-			sizePerPage
-		} = this.props
-
-		if (page === prePage) {
-			page = (currPage - 1) < pageStartIndex ? pageStartIndex : currPage - 1
-		} else if (page === nextPage) {
-			page = (currPage + 1) > this.lastPage ? this.lastPage : currPage + 1
-		} else if (page === lastPage) {
-			page = this.lastPage
-		} else if (page === firstPage) {
-			page = pageStartIndex
-		} else {
-			page = parseInt(page, 10)
-		}
-
-		if (page !== currPage) {
-			this.props.changePage(page, sizePerPage)
-		}
-	}
-
-	changeSizePerPage (e) {
-		e.preventDefault()
-
-		const selectSize = parseInt(e.currentTarget.getAttribute('data-page'), 10)
-		let { currPage } = this.props
-		if (selectSize !== this.props.sizePerPage) {
-			this.totalPages = Math.ceil(this.props.dataSize / selectSize)
-			this.lastPage = this.props.pageStartIndex + this.totalPages - 1
-			if (currPage > this.lastPage) currPage = this.lastPage
-			this.props.changePage(currPage, selectSize)
-			if (this.props.onSizePerPageList) {
-				this.props.onSizePerPageList(selectSize)
-			}
-		}
-	}
-
 	render () {
 		const {
-      currPage,
-      dataSize,
-      sizePerPage,
-      sizePerPageList,
-      paginationShowsTotal,
-      pageStartIndex,
-      hideSizePerPage,
-      paginationClassContainer
-    } = this.props
+			currPage,
+			dataSize,
+			sizePerPage,
+			sizePerPageList,
+			paginationShowsTotal,
+			pageStartIndex,
+			hideSizePerPage,
+			paginationClassContainer
+		} = this.props
 		let sizePerPageText = ''
 		this.totalPages = Math.ceil(dataSize / sizePerPage)
 		this.lastPage = this.props.pageStartIndex + this.totalPages - 1
@@ -136,6 +92,50 @@ class PaginationList extends Component {
 		)
 	}
 
+	changePage (page) {
+		const {
+			pageStartIndex,
+			prePage,
+			currPage,
+			nextPage,
+			lastPage,
+			firstPage,
+			sizePerPage
+		} = this.props
+
+		if (page === prePage) {
+			page = (currPage - 1) < pageStartIndex ? pageStartIndex : currPage - 1
+		} else if (page === nextPage) {
+			page = (currPage + 1) > this.lastPage ? this.lastPage : currPage + 1
+		} else if (page === lastPage) {
+			page = this.lastPage
+		} else if (page === firstPage) {
+			page = pageStartIndex
+		} else {
+			page = parseInt(page, 10)
+		}
+
+		if (page !== currPage) {
+			this.props.changePage(page, sizePerPage)
+		}
+	}
+
+	changeSizePerPage (e) {
+		e.preventDefault()
+
+		const selectSize = parseInt(e.currentTarget.getAttribute('data-page'), 10)
+		let { currPage } = this.props
+		if (selectSize !== this.props.sizePerPage) {
+			this.totalPages = Math.ceil(this.props.dataSize / selectSize)
+			this.lastPage = this.props.pageStartIndex + this.totalPages - 1
+			if (currPage > this.lastPage) currPage = this.lastPage
+			this.props.changePage(currPage, selectSize)
+			if (this.props.onSizePerPageList) {
+				this.props.onSizePerPageList(selectSize)
+			}
+		}
+	}
+
 	makePage () {
 		const pages = this.props.showMinimalView ? this.getMinimalPages() : this.getPages()
 		return pages.map((page, i) => {
@@ -155,7 +155,7 @@ class PaginationList extends Component {
 				disabled = true
 			}
 
-			const event = disabled === false ? { changePage: this.changePage } : {}
+			const event = disabled === false ? { changePage: this.changePage.bind(this) } : {}
 			return (
 				<PageButton key={i} active={isActive} withoutLink={page === '...' || disabled} hidden={hidden} {...event}>{ page }</PageButton>
 			)

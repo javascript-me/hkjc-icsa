@@ -182,10 +182,6 @@ class ToolBar extends Component {
     this.debounceCallback(event);
   }
 
-  handleExportCSV = () => {
-    this.props.onExportCSV();
-  }
-
   handleClearBtnClick = () => {
     this.refs.seachInput.value = '';
     this.props.onSearch('');
@@ -195,7 +191,6 @@ class ToolBar extends Component {
     this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
     let insertBtn = null;
     let deleteBtn = null;
-    let exportCSV = null;
     let showSelectedOnlyBtn = null;
 
     if (this.props.enableInsert) {
@@ -234,16 +229,6 @@ class ToolBar extends Component {
       );
     }
 
-    if (this.props.enableExportCSV) {
-      exportCSV = (
-        <button type='button'
-          className='btn btn-success hidden-print'
-          onClick={ this.handleExportCSV }>
-            <i className='glyphicon glyphicon-export'></i>{ this.props.exportCSVText }
-        </button>
-      );
-    }
-
     const searchTextInput = this.renderSearchPanel();
     const modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
 
@@ -251,7 +236,6 @@ class ToolBar extends Component {
       <div className='row'>
         <div className='col-xs-12 col-sm-6 col-md-6 col-lg-8'>
           <div className='btn-group btn-group-sm' role='group'>
-            { exportCSV }
             { insertBtn }
             { deleteBtn }
             { showSelectedOnlyBtn }
@@ -384,7 +368,6 @@ ToolBar.propTypes = {
   enableShowOnlySelected: PropTypes.bool,
   columns: PropTypes.array,
   searchPlaceholder: PropTypes.string,
-  exportCSVText: PropTypes.string,
   insertText: PropTypes.string,
   deleteText: PropTypes.string,
   saveText: PropTypes.string,
@@ -401,7 +384,6 @@ ToolBar.defaultProps = {
   enableShowOnlySelected: false,
   clearSearch: false,
   ignoreEditable: false,
-  exportCSVText: Const.EXPORT_CSV_TEXT,
   insertText: Const.INSERT_BTN_TEXT,
   deleteText: Const.DELETE_BTN_TEXT,
   saveText: Const.SAVE_BTN_TEXT,

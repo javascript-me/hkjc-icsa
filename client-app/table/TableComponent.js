@@ -10,7 +10,6 @@ import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
-import exportCSV from './csv_export_util';
 import { Filter } from './Filter';
 
 class TableComponent extends Component {
@@ -442,9 +441,7 @@ class TableComponent extends Component {
     const { selectRow: { onSelectAll, unselectable, selected } } = this.props;
     let selectedRowKeys = [];
     let result = true;
-    let rows = isSelected ?
-      this.store.get() :
-      this.store.getRowByKey(this.state.selectedRowKeys);
+    let rows = isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys);
 
     if (unselectable && unselectable.length > 0) {
       if (isSelected) {
@@ -712,37 +709,6 @@ class TableComponent extends Component {
     });
   }
 
-  handleExportCSV = () => {
-    let result = {};
-
-    let { csvFileName } = this.props;
-    const { onExportToCSV } = this.props.options;
-    if (onExportToCSV) {
-      result = onExportToCSV();
-    } else {
-      result = this.store.getDataIgnoringPagination();
-    }
-
-    const keys = [];
-    this.props.children.map(function(column) {
-      if (column.props.export === true ||
-        (typeof column.props.export === 'undefined' &&
-        column.props.hidden === false)) {
-        keys.push({
-          field: column.props.dataField,
-          format: column.props.csvFormat,
-          header: column.props.csvHeader || column.props.dataField
-        });
-      }
-    });
-
-    if (typeof csvFileName === 'function') {
-      csvFileName = csvFileName();
-    }
-
-    exportCSV(result, keys, csvFileName);
-  }
-
   handleSearch = searchText => {
     const { onSearchChange } = this.props.options;
     if (onSearchChange) {
@@ -826,11 +792,7 @@ class TableComponent extends Component {
   renderToolBar() {
     const { selectRow, insertRow, deleteRow, search, children } = this.props;
     const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
-    if (enableShowOnlySelected
-      || insertRow
-      || deleteRow
-      || search
-      || this.props.exportCSV) {
+    if (enableShowOnlySelected || insertRow || deleteRow || search) {
       let columns;
       if (Array.isArray(children)) {
         columns = children.map((column, r) => {
@@ -865,11 +827,9 @@ class TableComponent extends Component {
             enableInsert={ insertRow }
             enableDelete={ deleteRow }
             enableSearch={ search }
-            enableExportCSV={ this.props.exportCSV }
             enableShowOnlySelected={ enableShowOnlySelected }
             columns={ columns }
             searchPlaceholder={ this.props.searchPlaceholder }
-            exportCSVText={ this.props.options.exportCSVText }
             insertText={ this.props.options.insertText }
             deleteText={ this.props.options.deleteText }
             saveText= { this.props.options.saveText }
@@ -878,7 +838,6 @@ class TableComponent extends Component {
             onAddRow={ this.handleAddRow }
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
-            onExportCSV={ this.handleExportCSV }
             onShowOnlySelected={ this.handleShowOnlySelected }/>
         </div>
       );
@@ -1132,7 +1091,6 @@ TableComponent.propTypes = {
     firstPage: PropTypes.string,
     lastPage: PropTypes.string,
     searchDelayTime: PropTypes.number,
-    exportCSVText: PropTypes.string,
     insertText: PropTypes.string,
     deleteText: PropTypes.string,
     saveText: PropTypes.string,
@@ -1144,7 +1102,6 @@ TableComponent.propTypes = {
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
   }),
-  exportCSV: PropTypes.bool,
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   ignoreSinglePage: PropTypes.bool,
   expandableRow: PropTypes.func,
@@ -1231,7 +1188,6 @@ TableComponent.defaultProps = {
     lastPage: Const.LAST_PAGE,
     pageStartIndex: undefined,
     searchDelayTime: undefined,
-    exportCSVText: Const.EXPORT_CSV_TEXT,
     insertText: Const.INSERT_BTN_TEXT,
     deleteText: Const.DELETE_BTN_TEXT,
     saveText: Const.SAVE_BTN_TEXT,
@@ -1243,8 +1199,6 @@ TableComponent.defaultProps = {
   fetchInfo: {
     dataTotalSize: 0
   },
-  exportCSV: false,
-  csvFileName: 'spreadsheet.csv',
   ignoreSinglePage: false
 };
 

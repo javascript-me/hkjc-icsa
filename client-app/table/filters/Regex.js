@@ -43,13 +43,9 @@ class RegexFilter extends Component {
 	render () {
 		const { defaultValue, placeholder, columnName } = this.props
 		return (
-      <input ref='inputText'
-	className='filter text-filter form-control'
-	type='text'
-	onChange={this.filter}
-	placeholder={placeholder || `Enter Regex for ${columnName}...`}
-	defaultValue={(defaultValue) ? defaultValue : ''} />
-    )
+			<input ref='inputText' className='filter text-filter form-control' type='text' onChange={this.filter}
+				placeholder={placeholder || `Enter Regex for ${columnName}...`} defaultValue={(defaultValue) ? defaultValue : ''} />
+		)
 	}
 }
 

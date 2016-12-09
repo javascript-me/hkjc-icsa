@@ -11,9 +11,8 @@ class NumberFilter extends Component {
 		this.timeout = null
 		this.state = {
 			isPlaceholderSelected: (this.props.defaultValue === undefined ||
-        this.props.defaultValue.number === undefined ||
-        (this.props.options &&
-          this.props.options.indexOf(this.props.defaultValue.number) === -1))
+									this.props.defaultValue.number === undefined ||
+									(this.props.options && this.props.options.indexOf(this.props.defaultValue.number) === -1))
 		}
 		this.onChangeNumber = this.onChangeNumber.bind(this)
 		this.onChangeNumberSet = this.onChangeNumberSet.bind(this)
@@ -75,10 +74,10 @@ class NumberFilter extends Component {
 		optionTags.push(<option key='-1' />)
 		for (let i = 0; i < this.numberComparators.length; i++) {
 			optionTags.push(
-        <option key={i} value={this.numberComparators[i]}>
-          { this.numberComparators[i] }
-        </option>
-      )
+				<option key={i} value={this.numberComparators[i]}>
+					{ this.numberComparators[i] }
+				</option>
+			)
 		}
 		return optionTags
 	}
@@ -88,10 +87,10 @@ class NumberFilter extends Component {
 		const { options } = this.props
 
 		optionTags.push(
-      <option key='-1' value=''>
-        { this.props.placeholder || `Select ${this.props.columnName}...` }
-      </option>
-    )
+			<option key='-1' value=''>
+				{ this.props.placeholder || `Select ${this.props.columnName}...` }
+			</option>
+		)
 		for (let i = 0; i < options.length; i++) {
 			optionTags.push(<option key={i} value={options[i]}>{ options[i] }</option>)
 		}
@@ -111,41 +110,28 @@ class NumberFilter extends Component {
 	}
 
 	render () {
-		const selectClass = classSet(
-      'select-filter', 'number-filter-input', 'form-control',
-      { 'placeholder-selected': this.state.isPlaceholderSelected })
+		const selectClass = classSet('select-filter', 'number-filter-input', 'form-control', { 'placeholder-selected': this.state.isPlaceholderSelected })
+		const defaultNumber = (this.props.defaultValue) ? this.props.defaultValue.number : ''
+		const renderOptions = (
+			<select ref='numberFilter' className={selectClass} onChange={this.onChangeNumberSet} defaultValue={defaultNumber}>
+				{ this.getNumberOptions() }
+			</select>
+		)
+
+		const inputText = <input ref='numberFilter' type='number' className='number-filter-input form-control' placeholder={this.props.placeholder || `Enter ${this.props.columnName}...`}
+			onChange={this.onChangeNumber} defaultValue={defaultNumber} />
 
 		return (
-      <div className='filter number-filter'>
-        <select ref='numberFilterComparator'
-	className='number-filter-comparator form-control'
-	onChange={this.onChangeComparator}
-	defaultValue={
-                  (this.props.defaultValue) ? this.props.defaultValue.comparator : ''
-                }>
-          { this.getComparatorOptions() }
-        </select>
-        {
-          (this.props.options) ?
-            <select ref='numberFilter'
-	className={selectClass}
-	onChange={this.onChangeNumberSet}
-	defaultValue={
-                (this.props.defaultValue) ? this.props.defaultValue.number : ''
-              }>
-              { this.getNumberOptions() }
-            </select> :
-            <input ref='numberFilter'
-	type='number'
-	className='number-filter-input form-control'
-	placeholder={this.props.placeholder || `Enter ${this.props.columnName}...`}
-	onChange={this.onChangeNumber}
-	defaultValue={
-                     (this.props.defaultValue) ? this.props.defaultValue.number : ''
-                   } />
-        }
-      </div>
-    )
+			<div className='filter number-filter'>
+				<select ref='numberFilterComparator'
+					className='number-filter-comparator form-control'
+					onChange={this.onChangeComparator}
+					defaultValue={(this.props.defaultValue) ? this.props.defaultValue.comparator : ''}>
+					{ this.getComparatorOptions() }
+				</select>
+				{ (this.props.options) ? renderOptions : inputText }
+			</div>
+		)
 	}
 }
 
@@ -157,7 +143,7 @@ NumberFilter.propTypes = {
 		comparator: PropTypes.oneOf(legalComparators)
 	}),
 	delay: PropTypes.number,
-  /* eslint consistent-return: 0 */
+	/* eslint consistent-return: 0 */
 	numberComparators: function (props, propName) {
 		if (!props[propName]) {
 			return
@@ -171,8 +157,7 @@ NumberFilter.propTypes = {
 				}
 			}
 			if (!comparatorIsValid) {
-				return new Error(`Number comparator provided is not supported.
-          Use only ${legalComparators}`)
+				return new Error(`Number comparator provided is not supported. Use only ${legalComparators}`)
 			}
 		}
 	},

@@ -1,14 +1,22 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import classSet from 'classnames'
 
-class PageButton extends Component {
+const PageButton = React.createClass({
+	propTypes: {
+		changePage: PropTypes.func,
+		active: PropTypes.bool,
+		disable: PropTypes.bool,
+		hidden: PropTypes.bool,
+		children: PropTypes.node,
+		withoutLink: PropTypes.bool
+	},
 
-	pageBtnClick (e) {
+	pageBtnClick: function (e) {
 		e.preventDefault()
 		this.props.changePage(e.currentTarget.textContent ? e.currentTarget.textContent : e.currentTarget.innerHTML)
-	}
+	},
 
-	render () {
+	render: function () {
 		const classes = classSet({
 			'active': this.props.active,
 			'disabled': this.props.disable,
@@ -24,15 +32,6 @@ class PageButton extends Component {
 			</li>
 		)
 	}
-}
-
-PageButton.propTypes = {
-	changePage: PropTypes.func,
-	active: PropTypes.bool,
-	disable: PropTypes.bool,
-	hidden: PropTypes.bool,
-	children: PropTypes.node,
-	withoutLink: PropTypes.bool
-}
+})
 
 export default PageButton

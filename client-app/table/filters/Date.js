@@ -21,7 +21,7 @@ class DateFilter extends Component {
 		let defaultDate = ''
 		const { defaultValue } = this.props
 		if (defaultValue && defaultValue.date) {
-      // Set the appropriate format for the input type=date, i.e. "YYYY-MM-DD"
+			// Set the appropriate format for the input type=date, i.e. "YYYY-MM-DD"
 			defaultDate = dateParser(new Date(defaultValue.date))
 		}
 		return defaultDate
@@ -42,10 +42,10 @@ class DateFilter extends Component {
 		optionTags.push(<option key='-1' />)
 		for (let i = 0; i < this.dateComparators.length; i++) {
 			optionTags.push(
-        <option key={i} value={this.dateComparators[i]}>
-          { this.dateComparators[i] }
-        </option>
-      )
+				<option key={i} value={this.dateComparators[i]}>
+					{ this.dateComparators[i] }
+				</option>
+			)
 		}
 		return optionTags
 	}
@@ -88,20 +88,13 @@ class DateFilter extends Component {
 	render () {
 		const { defaultValue } = this.props
 		return (
-      <div className='filter date-filter'>
-        <select ref='dateFilterComparator'
-	className='date-filter-comparator form-control'
-	onChange={this.onChangeComparator}
-	defaultValue={(defaultValue) ? defaultValue.comparator : ''}>
-          { this.getComparatorOptions() }
-        </select>
-        <input ref='inputDate'
-	className='filter date-filter-input form-control'
-	type='date'
-	onChange={this.filter}
-	defaultValue={this.setDefaultDate()} />
-      </div>
-    )
+			<div className='filter date-filter'>
+				<select ref='dateFilterComparator' className='date-filter-comparator form-control' onChange={this.onChangeComparator} defaultValue={(defaultValue) ? defaultValue.comparator : ''}>
+					{ this.getComparatorOptions() }
+				</select>
+				<input ref='inputDate' className='filter date-filter-input form-control' type='date' onChange={this.filter} defaultValue={this.setDefaultDate()} />
+			</div>
+		)
 	}
 }
 
@@ -111,7 +104,7 @@ DateFilter.propTypes = {
 		date: PropTypes.object,
 		comparator: PropTypes.oneOf(legalComparators)
 	}),
-  /* eslint consistent-return: 0 */
+	/* eslint consistent-return: 0 */
 	dateComparators: function (props, propName) {
 		if (!props[propName]) {
 			return
@@ -125,8 +118,7 @@ DateFilter.propTypes = {
 				}
 			}
 			if (!comparatorIsValid) {
-				return new Error(`Date comparator provided is not supported.
-          Use only ${legalComparators}`)
+				return new Error(`Date comparator provided is not supported. Use only ${legalComparators}`)
 			}
 		}
 	},
