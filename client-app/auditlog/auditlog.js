@@ -476,13 +476,10 @@ export default React.createClass({
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 								<FilterPanel onReset={this.handleFilterReset} onSubmit={this.handleFilterSubmit}>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="textField" filterTitle="Text Field" onChange={this.handleChange}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="textDateTimeField" filterTitle="Text Date Time Field" filterValue="08 Dec 2016 23:59" ctrlType="calendar" onChange={this.handleChange}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="textSelectField" filterTitle="Text Select Field" ctrlType="select" dataSource={selectdata.typeValue} onChange={this.handleChange}>
-										</FilterPanelColumn>
-									</FilterPanelRow>									
+										<FilterPanelColumn filterName="textField" filterTitle="Text Field" />
+										<FilterPanelColumn filterName="textDateTimeField" filterTitle="Text Date Time Field" filterValue={Moment('08 Dec 2016 23:59','DD MMM YYYY HH:mm')} ctrlType="calendar" />
+										<FilterPanelColumn filterName="textSelectField" filterTitle="Text Select Field" ctrlType="select" dataSource={selectdata.typeValue} />
+									</FilterPanelRow>			
 								</FilterPanel>
 							</div>
 						</div>

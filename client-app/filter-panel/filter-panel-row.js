@@ -1,9 +1,17 @@
 import React from 'react'
 
+const emptyFn = () => {}
+
 export default React.createClass({
 	displayName: 'FilterPanelRow',
 	propTypes: {
-
+		changeFilter: React.PropTypes.func,
+		doPairingVerifyForFilter: React.PropTypes.func
+	},
+	getDefaultProps: function () {
+		return {
+			doPairingVerifyForFilter: emptyFn
+		}
 	},
 	getInitialState () {
 		return {
@@ -19,7 +27,10 @@ export default React.createClass({
 	render: function () {
 		let filterColumns = React.Children.map(this.props.children, column => {
 			return <div className='col-sm-3 pd-w10'>
-				{column}
+				{React.cloneElement(column, {
+					onChange: this.props.changeFilter,
+					doPairingVerify: this.props.doPairingVerifyForFilter
+				})}
 			</div>
 		})
 
