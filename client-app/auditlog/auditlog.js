@@ -5,13 +5,11 @@ import PubSub from '../pubsub'
 import BetType from './betType'
 import FilterBlock from '../filter-block'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
-import Paging from '../paging/paging'
 import Popup from '../popup'
 import ExportPopup from '../exportPopup'
-import TabularData from '../tabulardata/tabulardata'
 import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
-import {TableHeaderColumn , TableComponent } from '../table'
+import {TableHeaderColumn, TableComponent} from '../table'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -47,27 +45,6 @@ let DEFAULT_BET_TYPE = 'football'
 export default React.createClass({
 	displayName: 'Audit',
 
-	headers: [
-		{'id': 1, label: 'Date/Time', fieldName: 'date_time', sortingClass: 'down-arrow', addCheckBox: false},
-		{'id': 2, label: 'User ID', fieldName: 'user_id', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 3, label: 'User Name', fieldName: 'user_name', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 4, label: 'Type', fieldName: 'Type', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 5, label: 'Function/Module', fieldName: 'function_module', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 6, label: 'Function Event Detail', fieldName: 'function_event_detail', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 7, label: 'User Role', fieldName: 'user_role', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 8, label: 'IP Address', fieldName: 'ip_address', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 9, label: 'Back End ID', fieldName: 'backend_id', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 10, label: 'Front End ID', fieldName: 'frontend_id', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 11, label: 'Home', fieldName: 'home', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 12, label: 'Away', fieldName: 'away', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 13, label: 'K.O. Time/ Game Start Time', fieldName: 'ko_time_game_start_game', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 14, label: 'Bet Type', fieldName: 'bet_type', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 15, label: 'Event Name', fieldName: 'event_name', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 16, label: 'Error Code', fieldName: 'error_code', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 17, label: 'Error Message Content', fieldName: 'error_message_content', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 18, label: 'Device', fieldName: 'device', sortingClass: 'no-arrow', addCheckBox: false}
-	],
-
 	getInitialState () {
 		let originDateTimeFrom = getOrginDateTimeFrom()
 		let originDateTimeTo = getOrginDateTimeTo()
@@ -100,18 +77,20 @@ export default React.createClass({
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
 			tableOptions: {
-		      defaultSortName: 'Date/Time',  // default sort column name
-		      defaultSortOrder: 'desc'  // default sort order
-		    },
+				defaultSortName: 'date_time',  // default sort column name
+				defaultSortOrder: 'desc', // default sort order
+				hideSizePerPage: true,
+				paginationSize: 7,
+				paginationClassContainer: 'text-center'
+			},
 			auditlogs: []
 		}
 	},
 	componentDidMount: function () {
-		let sortingObject = {fieldName: 'date_time', order: 'DESCEND'}
 		let criteriaOption = this.getSearchCriterias()
 
 		// Get Table Data
-		AuditlogStore.searchAuditlogs(1, sortingObject, criteriaOption)
+		AuditlogStore.searchAuditlogs(criteriaOption)
 		AuditlogStore.addChangeListener(this.onChange)
 
 		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
@@ -196,7 +175,7 @@ export default React.createClass({
 		let criteriaOption = this.getSearchCriterias()
 
 		// Get Table Data
-		AuditlogStore.searchAuditlogs(1, null, criteriaOption)
+		AuditlogStore.searchAuditlogs(criteriaOption)
 	},
 
 	clickForSearching: function () {
@@ -255,11 +234,6 @@ export default React.createClass({
 		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
 	},
 
-	// function to mock the event of loading data from the table
-	mockLoadData: function () {
-		this.setState({hasData: true})
-	},
-
 	openPopup () {
 		this.setState({ exportFormat: 'pdf' })// reset the format value
 		this.state.hasData ? this.refs.exportPopup.show() : null
@@ -267,8 +241,7 @@ export default React.createClass({
 
 	export () {
 		let criteriaOption = this.getSearchCriterias()
-		const filters = AuditlogStore.buildRequest(1, null, criteriaOption)
-		console.log(filters)
+		const filters = AuditlogStore.buildRequest(criteriaOption)
 
 		doExport(this.state.exportFormat, filters)
 	},
@@ -282,14 +255,6 @@ export default React.createClass({
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
-	},
-
-	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
-		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
-	},
-
-	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
-		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	render: function () {
@@ -327,35 +292,31 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent =
 				<div>
-					<div className="container">
-						<div className="row">
-							<TableComponent data={ AuditlogStore.auditlogs } pagination={true} options={this.state.tableOptions} striped={true} keyField='id'
-								tableHeaderClass="table-header" tableContainerClass="auditlog-table">
-								<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='date_time' dataSort={true}>Date/Time</TableHeaderColumn>
-								<TableHeaderColumn dataField='user_id' dataSort={true}>User ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='user_name' dataSort={true}>User Name</TableHeaderColumn>
-								<TableHeaderColumn dataField='Type' dataSort={true}>Type</TableHeaderColumn>
-								<TableHeaderColumn dataField='function_module' dataSort={true}>Function/Module</TableHeaderColumn>
-								<TableHeaderColumn dataField='function_event_detail' dataSort={true}>Function Event Detail</TableHeaderColumn>
-								<TableHeaderColumn dataField='user_role' dataSort={true}>User Role</TableHeaderColumn>
-								<TableHeaderColumn dataField='ip_address' dataSort={true}>IP Address</TableHeaderColumn>
-								<TableHeaderColumn dataField='backend_id' dataSort={true}>Back End ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='frontend_id' dataSort={true}>Front End ID</TableHeaderColumn>
-								<TableHeaderColumn dataField='home' dataSort={true}>Home</TableHeaderColumn>
-								<TableHeaderColumn dataField='away' dataSort={true}>Away</TableHeaderColumn>
-								<TableHeaderColumn dataField='ko_time_game_start_game' dataSort={true}>K.O. Time/ Game Start Time</TableHeaderColumn>
-								<TableHeaderColumn dataField='bet_type' dataSort={true}>Bet Type</TableHeaderColumn>
-								<TableHeaderColumn dataField='event_name' dataSort={true}>Event Name</TableHeaderColumn>
-								<TableHeaderColumn dataField='error_code' dataSort={true}>Error Code</TableHeaderColumn>
-								<TableHeaderColumn dataField='error_message_content' dataSort={true}>Error Message Content</TableHeaderColumn>
-								<TableHeaderColumn dataField='device' dataSort={true}>Device</TableHeaderColumn>
-							</TableComponent>
-						</div>
+					<div className='tableComponent-container'>
+						<TableComponent data={AuditlogStore.auditlogs} pagination options={this.state.tableOptions} striped keyField='id'
+							tableHeaderClass='table-header' tableContainerClass='auditlog-table' >
+							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='date_time' dataSort>Date/Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='user_id' dataSort>User ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='user_name' dataSort>User Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='Type' dataSort>Type</TableHeaderColumn>
+							<TableHeaderColumn dataField='function_module' dataSort>Function/Module</TableHeaderColumn>
+							<TableHeaderColumn dataField='function_event_detail' dataSort>Function Event Detail</TableHeaderColumn>
+							<TableHeaderColumn dataField='user_role' dataSort>User Role</TableHeaderColumn>
+							<TableHeaderColumn dataField='ip_address' dataSort>IP Address</TableHeaderColumn>
+							<TableHeaderColumn dataField='backend_id' dataSort>Back End ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='frontend_id' dataSort>Front End ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='home' dataSort>Home</TableHeaderColumn>
+							<TableHeaderColumn dataField='away' dataSort>Away</TableHeaderColumn>
+							<TableHeaderColumn dataField='ko_time_game_start_game' dataSort>K.O. Time/ Game Start Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='bet_type' dataSort>Bet Type</TableHeaderColumn>
+							<TableHeaderColumn dataField='event_name' dataSort>Event Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='error_code' dataSort>Error Code</TableHeaderColumn>
+							<TableHeaderColumn dataField='error_message_content' dataSort>Error Message Content</TableHeaderColumn>
+							<TableHeaderColumn dataField='device' dataSort>Device</TableHeaderColumn>
+						</TableComponent>
 					</div>
-					<div className='table-container '>
-						<TabularData displayCheckBox={false} headers={this.headers} dataCollection={AuditlogStore.auditlogs} onClickSorting={this.handleClickSorting} />
-					</div>
+
 					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
@@ -363,7 +324,6 @@ export default React.createClass({
 								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>
 						</div>
-						<Paging pageData={AuditlogStore.pageData} onChangePage={this.handleChangePage} />
 					</div>
 				</div>
 		} else {

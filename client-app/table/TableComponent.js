@@ -10,7 +10,6 @@ import ToolBar from './toolbar/ToolBar';
 import TableFilter from './TableFilter';
 import { TableDataStore } from './store/TableDataStore';
 import Util from './util';
-import exportCSV from './csv_export_util';
 import { Filter } from './Filter';
 
 class TableComponent extends Component {
@@ -442,9 +441,7 @@ class TableComponent extends Component {
     const { selectRow: { onSelectAll, unselectable, selected } } = this.props;
     let selectedRowKeys = [];
     let result = true;
-    let rows = isSelected ?
-      this.store.get() :
-      this.store.getRowByKey(this.state.selectedRowKeys);
+    let rows = isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys);
 
     if (unselectable && unselectable.length > 0) {
       if (isSelected) {
@@ -712,37 +709,6 @@ class TableComponent extends Component {
     });
   }
 
-  handleExportCSV = () => {
-    let result = {};
-
-    let { csvFileName } = this.props;
-    const { onExportToCSV } = this.props.options;
-    if (onExportToCSV) {
-      result = onExportToCSV();
-    } else {
-      result = this.store.getDataIgnoringPagination();
-    }
-
-    const keys = [];
-    this.props.children.map(function(column) {
-      if (column.props.export === true ||
-        (typeof column.props.export === 'undefined' &&
-        column.props.hidden === false)) {
-        keys.push({
-          field: column.props.dataField,
-          format: column.props.csvFormat,
-          header: column.props.csvHeader || column.props.dataField
-        });
-      }
-    });
-
-    if (typeof csvFileName === 'function') {
-      csvFileName = csvFileName();
-    }
-
-    exportCSV(result, keys, csvFileName);
-  }
-
   handleSearch = searchText => {
     const { onSearchChange } = this.props.options;
     if (onSearchChange) {
@@ -815,7 +781,8 @@ class TableComponent extends Component {
             nextPage={ options.nextPage || Const.NEXT_PAGE }
             firstPage={ options.firstPage || Const.FIRST_PAGE }
             lastPage={ options.lastPage || Const.LAST_PAGE }
-            hideSizePerPage={ options.hideSizePerPage }/>
+            hideSizePerPage={ options.hideSizePerPage }
+            paginationClassContainer={ options.paginationClassContainer }/>
         </div>
       );
     }
@@ -825,11 +792,7 @@ class TableComponent extends Component {
   renderToolBar() {
     const { selectRow, insertRow, deleteRow, search, children } = this.props;
     const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
-    if (enableShowOnlySelected
-      || insertRow
-      || deleteRow
-      || search
-      || this.props.exportCSV) {
+    if (enableShowOnlySelected || insertRow || deleteRow || search) {
       let columns;
       if (Array.isArray(children)) {
         columns = children.map((column, r) => {
@@ -864,11 +827,9 @@ class TableComponent extends Component {
             enableInsert={ insertRow }
             enableDelete={ deleteRow }
             enableSearch={ search }
-            enableExportCSV={ this.props.exportCSV }
             enableShowOnlySelected={ enableShowOnlySelected }
             columns={ columns }
             searchPlaceholder={ this.props.searchPlaceholder }
-            exportCSVText={ this.props.options.exportCSVText }
             insertText={ this.props.options.insertText }
             deleteText={ this.props.options.deleteText }
             saveText= { this.props.options.saveText }
@@ -877,7 +838,6 @@ class TableComponent extends Component {
             onAddRow={ this.handleAddRow }
             onDropRow={ this.handleDropRow }
             onSearch={ this.handleSearch }
-            onExportCSV={ this.handleExportCSV }
             onShowOnlySelected={ this.handleShowOnlySelected }/>
         </div>
       );
@@ -909,6 +869,42 @@ class TableComponent extends Component {
     this._adjustHeight();
   }
 
+  _getCellWidth = (cell) => {
+    // re-use canvas object for better performance
+    const computedStyle = getComputedStyle(cell);
+    const font = `${computedStyle.fontSize} ${computedStyle.fontFamily}`
+
+    const canvas = this._getCellWidth.canvas || (this._getCellWidth.canvas = document.createElement("canvas"))
+    const context = canvas.getContext("2d")
+    context.font = font;
+    var metrics = context.measureText(cell.textContent);
+    return metrics.width;
+}
+
+  _getRealWidth = () => {
+    const tbody = this.refs.body.refs.tbody;
+    let maxWidth = this.refs.header.refs.container.offsetWidth
+    let rwidth = Array(tbody.childNodes[0].childNodes.length).fill(0);
+
+    for (let i = 0; i < tbody.childNodes.length; i++) {
+      
+      const row = tbody.childNodes[i]
+      for (let c = 0; c < row.childNodes.length; c++) {
+        const cell = row.childNodes[c]
+        const clength = this._getCellWidth(cell) + 64 //60 for margin, 4 for borders
+        rwidth[c] = clength > rwidth[c] ? Math.ceil(clength) : rwidth[c]
+      }
+
+      const currentWidth = rwidth.reduce((a,b)=> a + b)
+      maxWidth =  currentWidth > maxWidth ? currentWidth : maxWidth
+    }
+
+    return {
+      width : maxWidth,
+      columns : rwidth
+    }
+  }
+
   _adjustHeaderWidth = () => {
     const header = this.refs.header.refs.header;
     const headerContainer = this.refs.header.refs.container;
@@ -916,11 +912,15 @@ class TableComponent extends Component {
     const firstRow = tbody.childNodes[0];
     const isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth;
     const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0;
+    
     if (firstRow && this.store.getDataNum()) {
       const cells = firstRow.childNodes;
+      const realWidth = this._getRealWidth()
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
         const computedStyle = getComputedStyle(cell);
+        const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 64 //60 for margin, 4 for borders
+
         let width = parseFloat(computedStyle.width.replace('px', ''));
         if (this.isIE) {
           const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
@@ -930,10 +930,12 @@ class TableComponent extends Component {
           width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
         }
         const lastPadding = (cells.length - 1 === i ? scrollBarWidth : 0);
-        if (width <= 0) {
-          width = 120;
+        if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
+          const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
+          width = bestWith > 480 ? 480 : bestWith;
           cell.width = width + lastPadding + 'px';
         }
+
         const result = width + lastPadding + 'px';
         header.childNodes[i].style.width = result;
         header.childNodes[i].style.minWidth = result;
@@ -1089,7 +1091,6 @@ TableComponent.propTypes = {
     firstPage: PropTypes.string,
     lastPage: PropTypes.string,
     searchDelayTime: PropTypes.number,
-    exportCSVText: PropTypes.string,
     insertText: PropTypes.string,
     deleteText: PropTypes.string,
     saveText: PropTypes.string,
@@ -1101,7 +1102,6 @@ TableComponent.propTypes = {
   fetchInfo: PropTypes.shape({
     dataTotalSize: PropTypes.number
   }),
-  exportCSV: PropTypes.bool,
   csvFileName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]),
   ignoreSinglePage: PropTypes.bool,
   expandableRow: PropTypes.func,
@@ -1188,7 +1188,6 @@ TableComponent.defaultProps = {
     lastPage: Const.LAST_PAGE,
     pageStartIndex: undefined,
     searchDelayTime: undefined,
-    exportCSVText: Const.EXPORT_CSV_TEXT,
     insertText: Const.INSERT_BTN_TEXT,
     deleteText: Const.DELETE_BTN_TEXT,
     saveText: Const.SAVE_BTN_TEXT,
@@ -1200,8 +1199,6 @@ TableComponent.defaultProps = {
   fetchInfo: {
     dataTotalSize: 0
   },
-  exportCSV: false,
-  csvFileName: 'spreadsheet.csv',
   ignoreSinglePage: false
 };
 

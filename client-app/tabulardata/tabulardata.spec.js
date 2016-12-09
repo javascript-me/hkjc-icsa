@@ -46,7 +46,6 @@ var dataCollection = [{
 }]
 
 describe('<Tabulardata />', () => {
-
 	it('renders a table div', () => {
 		const tabulardata = shallow(<Tabulardata headers={headers} dataCollection={dataCollection} />)
 		expect(tabulardata.find('table')).to.have.length(1)

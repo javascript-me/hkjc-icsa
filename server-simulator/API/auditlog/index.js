@@ -56,9 +56,7 @@ const jsonObjectOfOtherUser = require('../json/auditlogs-other-user.json')
  *
  */
 router.post('/filterAuditlogs', (req, res) => {
-	var result = {}
-
-	var cloneAuditlogs
+	let cloneAuditlogs
 
 	if (req.body.username === 'allgood') {
 		cloneAuditlogs = jsonObject.auditlogs.slice(0)
@@ -66,7 +64,7 @@ router.post('/filterAuditlogs', (req, res) => {
 		cloneAuditlogs = jsonObjectOfOtherUser.auditlogs.slice(0)
 	}
 
-	var filteredAuditlogs = AuditlogsUtil.doFilter(cloneAuditlogs,
+	const filteredAuditlogs = AuditlogsUtil.doFilter(cloneAuditlogs,
 		req.body.keyword,
 		req.body.typeValue,
 		req.body.userRole,
@@ -77,16 +75,9 @@ router.post('/filterAuditlogs', (req, res) => {
 		req.body.dateTimeTo
 	)
 
-	var sortedAuditlogs = AuditlogsUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
+	// TODO: check how to send JSON POST request data.
 
-	result.auditlogs = AuditlogsUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
-
-	var pagingService = new PagingService(AuditlogsUtil.getTotalPages(sortedAuditlogs.length))
-	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
-
-    // TODO: check how to send JSON POST request data.
-
-	res.send(result)
+	res.send(AuditlogsUtil.doSorting(filteredAuditlogs, 'date_time', 'DESCEND'))
 })
 
 router.get('/download/:file', (req, res) => {
