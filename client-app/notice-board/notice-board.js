@@ -2,6 +2,8 @@ import React from 'react'
 import ExportService from '../auditlog/export-service'
 import Popup from '../popup'
 import ExportPopup from '../exportPopup'
+import NoticeboardService from './noticeboard-service'
+import {TableHeaderColumn, TableComponent} from '../table'
 
 const doExport = async (format, filters) => {
 	const file = ExportService.getNoticeboardFileURL(format, filters)
@@ -18,10 +20,30 @@ export default React.createClass({
 		return {
 			data: [],
 			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication \\ Noticeboard',
-			exportFormat: 'pdf'
+			exportFormat: 'pdf',
+			tableOptions: {
+				defaultSortName: 'Alert Name',  // default sort column name
+				defaultSortOrder: 'desc'  // default sort order
+			},
+			noticesList: []
 		}
+		console.log("getInitialState")
+		NoticeboardService.filterNoticeBoardTableData()
 	},
 	componentDidMount: function async() {
+		console.log("componentDidMount")
+		NoticeboardService.filterNoticeBoardTableData()
+		NoticeboardService.addChangeListener(this.onChange)
+	},
+	componentWillUnmount: function () {
+		NoticeboardService.removeChangeListener(this.onChange.bind(this))
+		document.removeEventListener('click', this.pageClick, false)
+	},
+	pageClick: function (event) {
+
+	},
+	onChange () {
+		this.setState({noticesList: NoticeboardService.noticesList})
 	},
 	openPopup () {
 		this.setState({ exportFormat: 'pdf' })// reset the format value
@@ -58,7 +80,17 @@ export default React.createClass({
 				</div>
 				<div>
 					<div className='table-container '>
-						{/*Table component will go here...*/}
+						<TableComponent data={ NoticeboardService.noticesList } pagination={true} options={this.state.tableOptions} striped={true} keyField='id' tableHeaderClass="table-header" tableContainerClass="auditlog-table">
+							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_status' dataSort={true}>Alert Status</TableHeaderColumn>
+							<TableHeaderColumn dataField='system_distribution_time' dataSort={true}>System Distribution Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_category' dataSort={true}>Message Category</TableHeaderColumn>
+							<TableHeaderColumn dataField='recipient' dataSort={true}>Recipient</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_name' dataSort={true}>Alert Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='priority' dataSort={true}>Priority</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_detail' dataSort={true}>Message Detail</TableHeaderColumn>
+							<TableHeaderColumn dataField='assignee' dataSort={true}>Assignee</TableHeaderColumn>
+						</TableComponent>
 					</div>
 					<div className='vertical-gap'>
 						<div className='pull-right'>

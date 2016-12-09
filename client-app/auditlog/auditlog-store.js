@@ -25,6 +25,7 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 
 			this.pageData = result.pageData
 			this.auditlogs = result.auditlogs
+			console.log(""+ result.auditlogs)
 			this.emitChange()
 		} catch (failure) {}
 	},

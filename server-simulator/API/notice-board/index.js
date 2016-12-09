@@ -163,7 +163,7 @@ router.get('/export', (req, res) => {
 	}
 })
 
-router.post('/noticeboardTableData', (req, res) => {
+router.post('/filterNoticeBoardTableData', (req, res) => {
 	const username =  req.body.username
 	let data = []
 	let status = 200
