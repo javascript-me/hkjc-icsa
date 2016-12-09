@@ -72,8 +72,20 @@ export default class Popup extends React.Component {
 		}
 	}
 
+	getHeaderStyles () {
+		return {
+			background: this.props.headerColor || '#305091'
+		}
+	}
+
+	getPopupDialogStyle () {
+		return {
+			borderColor: this.props.popupDialogBorderColor || '#ACB8D1'
+		}
+	}
+
 	render () {
-		let overlay, footer, other, confirm, cancel
+		let overlay, footer, other, confirm, cancel, closeIcon
 		if (this.props.showOverlay) {
 			overlay = (<div className='popup-overlay' onClick={() => this.onOverlayClicked()} />)
 		}
@@ -89,13 +101,17 @@ export default class Popup extends React.Component {
 		if (this.props.showCancel) {
 			cancel = (<a role='button' className='pull-right btn popup-button cancel' onClick={() => this.onCancel()}> {this.props.cancelBtn} </a>)
 		}
+		if (this.props.showCloseIcon) {
+			closeIcon = (<span className='close-icon-span'><img className='close-icon' src={'common/close-cross.svg'} onClick={() => this.onCancel()} /></span>)
+		}
 
 		return this.state.isVisible ? (
 			<section className='popup-wrapper'>
 				<div className='popup-wrapper-inner'>
 					{overlay}
-					<div className='popup-dialog panel'>
-						<div className='panel-heading'>
+					<div className='popup-dialog panel' style={this.getPopupDialogStyle()}>
+						<div className='panel-heading' style={this.getHeaderStyles()}>
+							{closeIcon}
 							<h1 className='title'>{this.props.title}</h1>
 						</div>
 						<div className='panel-body'>
@@ -129,8 +145,9 @@ Popup.sharedPropTypes = {
 	title: React.PropTypes.string,
 	confirmBtn: React.PropTypes.string,
 	cancelBtn: React.PropTypes.string,
-	otherBtn: React.PropTypes.string
-
+	otherBtn: React.PropTypes.string,
+	headerColor: React.PropTypes.string,
+	popupDialogBorderColor: React.PropTypes.string
 }
 
 Popup.propTypes = {
@@ -150,5 +167,6 @@ Popup.defaultProps = {
 	showOverlay: true,
 	showConfirm: true,
 	showCancel: true,
+	showCloseIcon: false,
 	hideOnOverlayClicked: false
 }

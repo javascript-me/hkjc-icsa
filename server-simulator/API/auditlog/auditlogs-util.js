@@ -46,6 +46,7 @@ function descendSort (key) {
 	}
 }
 
+// TODO: refactor to use Moment library.
 function parseToMonthIndex (monthName) {
 	if (monthName === 'January' || monthName === 'Jan') return 0
 	if (monthName === 'February' || monthName === 'Feb') return 1
