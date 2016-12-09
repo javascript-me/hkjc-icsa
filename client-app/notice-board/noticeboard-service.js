@@ -5,6 +5,16 @@ import LoginService from '../login/login-service'
 const NoticeboardService = assign({}, EventEmitter.prototype, {
 
 	noticesList: [],
+	categoriesList:[],
+	competitionsList:[],
+	continentsList:[],
+	countriesList:[],
+	inplaysList:[],
+	matchesList:[],
+	prioritiesList:[],
+	sportsList:[],
+	statusesList:[],
+
 
 	sendRequest (requestData) {
 		return $.post('api/notice-board/filterNoticeBoardTableData', requestData)
@@ -40,6 +50,19 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 
 	removeChangeListener (callback) {
 		this.removeListener('change', callback)
+	},
+	/**/
+	async getAllCategories () {
+		try {
+			let result = await this.sendRequestToGetList('api/notice-board/categories')
+			this.categoriesList = result
+			console.log(this.categoriesList)
+			this.emitChange()
+		} catch (failure) {
+		}
+	},
+	sendRequestToGetList(requestURL){
+		return $.get(requestURL)
 	}
 
 })

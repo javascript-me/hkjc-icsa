@@ -34,9 +34,12 @@ export default React.createClass({
 		NoticeboardService.filterNoticeBoardTableData()
 	},
 	componentDidMount: function async() {
-		console.log("componentDidMount")
 		NoticeboardService.filterNoticeBoardTableData()
 		NoticeboardService.addChangeListener(this.onChange)
+		/*Testing purpose*/
+		NoticeboardService.getAllCategories()
+		NoticeboardService.addChangeListener(this.onChange)
+
 	},
 	componentWillUnmount: function () {
 		NoticeboardService.removeChangeListener(this.onChange.bind(this))
