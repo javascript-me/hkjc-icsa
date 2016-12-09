@@ -47,7 +47,7 @@ class MutiSelect extends Component {
 	}
 	onchange () {
 		const result = []
-		_.forEach(this.state.selectedOption, (item, idx) => { item && result.push(idx) })
+		_.forEach(this.state.selectedOption, (item, idx) => { item && result.push(item[idx].value) })
 		this.props.onChange && this.props.onChange(result)
 	}
 }
@@ -55,7 +55,7 @@ class MutiSelect extends Component {
 MutiSelect.propTypes = {
 	options: React.PropTypes.array, // like [{label:'aaa',value:1},{label:'bbb',value:2}]
 	placeHolder: React.PropTypes.string,
-	onChange: React.PropTypes.func, // like (result) => {dosth(result)} ,result is array of selected option's index [0,2,5]
+	onChange: React.PropTypes.func, // like (result) => {dosth(result)} ,result is array of selected option's value [val1,val2...]
 	style: React.PropTypes.object // object custom the width and height...
 }
 

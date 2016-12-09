@@ -14,12 +14,17 @@ const roleFormat = (cell, row, enumObject, index) => {
 	let placeHolder = cell.map(item => item.delegatedRole).join(',')
 	const options = sampleRole.map(item => ({label:item}))
 	const style = {
-		width:'100%',
-		height:'100%',
-		position:'absolute',
-		left:0,
+		
+		position:'absulute',
+		width:'90%',
+		
 		top:0,
-		textAlign:'left'
+		bottom:0,
+		left:0,
+		right:0,
+		margin:'auto',
+		textAlign:'left',
+		
 	}
 	return (<MutiSelect placeHolder={placeHolder} options={options} style={style}/>)
 }
