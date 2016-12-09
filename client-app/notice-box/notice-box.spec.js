@@ -5,11 +5,6 @@ import {shallow} from 'enzyme'
 import NoticeBox from './notice-box'
 import Moment from 'moment'
 
-it('Moment should accept good date string', () => {
-	assert.equal('19 Nov 2016 17:13:30', Moment('19 November 2016 17:13:30', 'DD MMM YYYY HH:mm:ss').format('DD MMM YYYY HH:mm:ss'))
-	assert.equal('1995-12-25T00:00:00+08:00', Moment('12-25-1995', 'MM-DD-YYYY').format())
-})
-
 it('ClassNames should return concat string', () => {
 	assert.equal(2, 2)
 	assert.equal('abc ddd', ClassNames('abc', 'ddd'))
