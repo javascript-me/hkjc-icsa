@@ -92,22 +92,24 @@ export default class Popup extends React.Component {
 
 		return this.state.isVisible ? (
 			<section className='popup-wrapper'>
-				{overlay}
-				<div className='popup-dialog panel'>
-					<div className='panel-heading'>
-						<h1 className='title'>{this.props.title}</h1>
-					</div>
-					<div className='panel-body'>
-						<div className='row'>
-							<div className='popup-content'>{this.props.children}</div>
-							<div className='popup-actions'>
-								{other}
-								{confirm}
-								{cancel}
+				<div className='popup-wrapper-inner'>
+					{overlay}
+					<div className='popup-dialog panel'>
+						<div className='panel-heading'>
+							<h1 className='title'>{this.props.title}</h1>
+						</div>
+						<div className='panel-body'>
+							<div className='row'>
+								<div className='popup-content'>{this.props.children}</div>
+								<div className='popup-actions'>
+									{other}
+									{confirm}
+									{cancel}
+								</div>
 							</div>
 						</div>
+						{footer}
 					</div>
-					{footer}
 				</div>
 			</section>
 		) : <div />
