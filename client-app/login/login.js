@@ -30,7 +30,6 @@ export default React.createClass({
 		if ($('input[type=password]').value !== '' && $('input[type=text]').value !== '') {
 			this.setState({disabled: true})
 		}
-		this.refs.submit.disabled = true
 	},
 	submit () {
 		doSubmit(this.refs.username.value, this.refs.password.value).then((data) => {
