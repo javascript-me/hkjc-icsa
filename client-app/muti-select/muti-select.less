@@ -1,0 +1,66 @@
+.muti-select-box {
+	position: relative;
+	display: inline-block;
+	width: 100px;
+	color: #305091;
+	font-size: 14px;
+	cursor: pointer;
+
+	.show-box {
+		width: 100%;
+		height: 100%;
+		border: 1px #ACB8D1 solid;
+		padding: 5px 10px;
+		line-height: 20px;
+		padding-right: 30px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+
+		&::after {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			right: 10px;
+			top: 50%;
+			margin-top: -6px;
+			border: solid 4px;
+			border-color: transparent transparent #7C8DAF #7C8DAF;
+			transform: rotate(-45deg);
+		}
+	}
+
+	.content {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		border: 1px solid #ACB8D1;
+		border-top: 0;
+		border-radius: 0 0 2px 2px;
+	}
+
+	.option {
+		line-height: 30px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+
+		&:nth-of-type(odd) {
+			background-color: #F8F9FB;
+		}
+
+		input {
+			margin: 0 13px 0 10px;
+			width: 18px;
+			height: 18px;
+			vertical-align: -2px;
+		}
+
+		&:hover,
+		&.selected {
+			background-color: #FCF6C8;
+		}
+	}
+}

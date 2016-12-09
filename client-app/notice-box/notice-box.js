@@ -22,10 +22,7 @@ export default class NoticeBox extends React.Component {
 	}
 
 	getListBoxClassName () {
-		if (this.props.displayPosition === 'bottom') {
-			return 'list-box'
-		}
-		return 'list-box' + '-' + 'right'
+		return this.props.displayPosition === 'bottom' ? 'list-box-bottom' : 'list-box-right'
 	}
 
 	getNoticeItemClassName (notice) {
@@ -56,15 +53,14 @@ export default class NoticeBox extends React.Component {
 				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.notices.map((notice, i) => {
-							var messageHTML = <li key={i} className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li>
-
 							return <li className={this.getNoticeItemClassName(notice)}>
 								<ul className='row'>
-									{this.props.displayPosition !== 'bottom' ? messageHTML : null}
+									<li key={i} className={this.getNoticeTitle(notice.alert_status)}>
+										<div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div>
+									</li>
 									<li><img src={this.getPriorityImageSrc(notice.priority)} /></li>
 									<li className='notice-date'>{this.formatDistibutionTime(notice.system_distribution_time)}</li>
 									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
-									{this.props.displayPosition === 'bottom' ? messageHTML : null}
 								</ul>
 							</li>
 						})

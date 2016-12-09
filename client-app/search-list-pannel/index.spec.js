@@ -2,8 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import _ from 'lodash'
 
-import Filter from './filter-cmp.js'
-import Container from './index.js'
+import Filter from './index.js'
+import Container from '../add-account/index.js'
 let filterData = require('../../server-simulator/API/json/baseUserProfile.json')
 
 describe('<Filter />', () => {

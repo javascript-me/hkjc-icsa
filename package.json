@@ -43,7 +43,7 @@
     "dist": "npm install && run-s lint test && cross-env NODE_ENV=production run-s build",
     "lint": "run-p lint:less lint:js",
     "lint:less": "stylelint \"client-app/**/*.less\" --syntax less",
-    "lint:js": "eslint --fix --ignore-pattern=\"dist/*\" **/*.js **/*.json",
+    "lint:js": "eslint --fix --ignore-pattern=\"dist/*\" --ignore-pattern=\"client-app/table/*\" --ignore-pattern=\"client-app/auditlog/*\" --ignore-pattern=\"client-app/checkbox/*\" --ignore-pattern=\"client-app/pagination/*\" **/*.js **/*.json",
     "test": "istanbul cover node_modules/mocha/bin/_mocha --root client-app --include-all-sources true --preserve-comments true --dir ./dist/coverage --report html --report text -x \"**.spec.js\" -x \"**.d3.js\" -- client-app/**/*.spec.js"
   },
   "repository": {
@@ -119,6 +119,7 @@
     "underscore": "1.8.3"
   },
   "stylelint": {
+    "ignoreFiles": "client-app/table/*.less",
     "extends": "stylelint-config-standard",
     "rules": {
       "indentation": "tab",
