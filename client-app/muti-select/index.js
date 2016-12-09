@@ -62,7 +62,6 @@ class MutiSelect extends Component {
 		const result = []
 		_.forEach(this.state.selectedOption, (item, idx) => { item && result.push(this.props.options[idx].value) })
 		this.props.onChange && this.props.onChange(result)
-		console.log(result)
 	}
 }
 
