@@ -17,7 +17,7 @@ class MutiSelect extends Component {
 	render () {
 		const { options } = this.props
 		return (
-			<div className='muti-select-box' style={this.props.style} ref="container">
+			<div className='muti-select-box' style={this.props.style} ref='container'>
 				<div className='show-box' onClick={() => { this.toggleFocus() }}>{this.state.selectText}</div>
 				<div className='muti-select-content' style={{display: this.state.isFocus ? 'block' : 'none'}}>
 					<div onClick={() => { this.toggleAll() }} className='option'>
@@ -32,13 +32,13 @@ class MutiSelect extends Component {
 			</div>
 		)
 	}
-	componentDidMount() {
+	componentDidMount () {
 		document.addEventListener('click', this.pageClick, false)
 	}
-	componentWillUnmont() {
+	componentWillUnmont () {
 		document.removeEventListener('click', this.pageClick, false)
 	}
-	pageClick(e) {
+	pageClick (e) {
 		var source = e.target
 		var found = false
 
@@ -50,7 +50,7 @@ class MutiSelect extends Component {
 
 		if (this.state.isFocus && !found) {
 			this.toggleFocus()
-		} 
+		}
 	}
 	toggleFocus () {
 		this.setState({isFocus: !this.state.isFocus})
