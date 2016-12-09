@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import MutiSelect from '../muti-select'
+import Calendar from '../calendar'
 
 import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
@@ -12,7 +13,7 @@ function roleFormatter (cell, row) {
 let sampleRole = ['Trading User','Trading Support Analyst','Trading Supervisor']
 const roleFormat = (cell, row, enumObject, index) => {
 	let placeHolder = cell.map(item => item.delegatedRole).join(',')
-	const options = sampleRole.map(item => ({label:item}))
+	const options = sampleRole.map((item,idx) => ({label:item,value:idx}))
 	const style = {
 		
 		position:'absulute',
@@ -43,6 +44,14 @@ export default React.createClass({
 			delegationUpdate: false
 		}
 	},
+	calendarFormat (cell, row, enumObject, index) {
+	let cellDate = cell;
+	const handleChang = (value) => {
+		console.log(enumObject)
+	}
+	return (<Calendar />)
+},
+
 	getInitialState () {
 		this.selectRowProp = {
 			mode: 'checkbox'
@@ -114,7 +123,7 @@ export default React.createClass({
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormat} dataAlign='center'>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' dataAlign='center'>Date of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' dataFormat={this.calendarFormat} >Date of Delegation From</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationTo' dataAlign='center'>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
 						<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>

@@ -12,6 +12,7 @@ class MutiSelect extends Component {
 			selectedOption: this.props.options ? _.fill(Array(this.props.options.length), false) : []
 		}
 		this.onchange = this.onchange.bind(this)
+		this.pageClick = this.pageClick.bind(this)
 	}
 	render () {
 		const { options } = this.props
@@ -31,6 +32,18 @@ class MutiSelect extends Component {
 			</div>
 		)
 	}
+	componentDidMount() {
+		document.addEventListener('click', this.pageClick, false)
+	}
+	componentWillUnmont() {
+		document.removeEventListener('click', this.pageClick, false)
+	}
+	pageClick(e) {
+		let isIn = $(e.target).parents('.muti-select-box').length
+		if (!isIn && this.state.isFocus) {
+			this.toggleFocus()
+		}
+	}
 	toggleFocus () {
 		this.setState({isFocus: !this.state.isFocus})
 	}
@@ -47,8 +60,9 @@ class MutiSelect extends Component {
 	}
 	onchange () {
 		const result = []
-		_.forEach(this.state.selectedOption, (item, idx) => { item && result.push(item[idx].value) })
+		_.forEach(this.state.selectedOption, (item, idx) => { item && result.push(this.props.options[idx].value) })
 		this.props.onChange && this.props.onChange(result)
+		console.log(result)
 	}
 }
 
