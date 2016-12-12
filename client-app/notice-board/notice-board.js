@@ -4,7 +4,31 @@ import Popup from '../popup'
 import ExportPopup from '../exportPopup'
 import NoticeboardService from './noticeboard-service'
 import {TableHeaderColumn, TableComponent} from '../table'
+import PubSub from '../pubsub'
+import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
+import Moment from 'moment'
+import ClassNames from 'classnames'
 
+const getOrginDateTimeFrom = function () {
+	let dateTimeFrom = new Date()
+
+	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
+	dateTimeFrom.setHours(0)
+	dateTimeFrom.setMinutes(0)
+	dateTimeFrom.setSeconds(0)
+	dateTimeFrom.setMilliseconds(0)
+	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+}
+
+const getOrginDateTimeTo = function () {
+	let dateTimeTo = new Date()
+
+	dateTimeTo.setHours(23)
+	dateTimeTo.setMinutes(59)
+	dateTimeTo.setSeconds(59)
+	dateTimeTo.setMilliseconds(0)
+	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+}
 const doExport = async (format, filters) => {
 	const file = ExportService.getNoticeboardFileURL(format, filters)
 	if (file) {
@@ -17,10 +41,26 @@ export default React.createClass({
 	},
 
 	getInitialState () {
+		let originDateTimeFrom = getOrginDateTimeFrom()
+		let originDateTimeTo = getOrginDateTimeTo()
 		return {
 			data: [],
 			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication \\ Noticeboard',
 			exportFormat: 'pdf',
+			keyword: '',
+			isShowingMoreFilter: false,
+			isClickForSearching: false,
+			tokens: {
+				NOTICEBOARD_SEARCH_BY_KEY_PRESS: 'NOTICEBOARD_SEARCH_BY_KEY_PRESS',
+				NOTICEBOARD_SEARCH: 'NOTICEBOARD_SEARCH'
+			},
+			selectedFilters: [{
+				name: 'dateTimeFrom',
+				value: originDateTimeFrom
+			}, {
+				name: 'dateTimeTo',
+				value: originDateTimeTo
+			}],
 			tableOptions: {
 				defaultSortName: 'Alert Status',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
@@ -30,8 +70,8 @@ export default React.createClass({
 			},
 			noticesList: []
 		}
-		console.log("getInitialState")
-		NoticeboardService.filterNoticeBoardTableData()
+
+
 	},
 	componentDidMount: function async() {
 		NoticeboardService.filterNoticeBoardTableData()
@@ -64,12 +104,62 @@ export default React.createClass({
 	onChangeFormat (format) {
 		this.setState({ exportFormat: format })
 	},
+	showMoreFilter: function (event) {
+		this.clickForSearching()
+
+		this.setState({
+			isShowingMoreFilter: true
+		})
+	},
+	clickForSearching: function () {
+		this.setState({
+			isClickForSearching: true
+		})
+	},
+	handleKeywordChange: function (event) {
+		var newKeyword = event.target.value
+
+		this.setState({
+			keyword: newKeyword
+		})
+	},
+
+	handleKeywordPress: function (event) {
+		if (event.key === 'Enter') {
+			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH_BY_KEY_PRESS])
+		}
+	},
+	hideMoreFilter: function () {
+		this.setState({
+			isShowingMoreFilter: false
+		})
+	},
+	setFilters: function (filters) {
+		this.hideMoreFilter()
+
+		let newFilters = []
+
+		for (let attr in filters) {
+			newFilters.push({
+				'name': attr,
+				'value': filters[attr]
+			})
+		}
+
+		this.setState({
+			selectedFilters: newFilters
+		}, () => {
+			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH])
+		})
+	},
 
 
 
 	render () {
+		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
+			'active': this.state.isShowingMoreFilter
+		})
 		return (
-
 
 			<div className='conatainer-alert '>
 				<div className='row page-header'>
@@ -80,7 +170,22 @@ export default React.createClass({
 					{/* Search Critiria Row */}
 					<div className='col-md-12'>
 						<div className='search-criteria-container'>
-							{/*Filters will Go here...*/}
+							<div className='search-criteria-container-row'>
+								<div className='keyword-container'>
+									<input type='text' placeholder='Search with keywords & filters'
+										   value={this.state.keyword}
+										   onClick={this.showMoreFilter}
+										   onChange={this.handleKeywordChange}
+										   onKeyPress={this.handleKeywordPress}
+										   ref='keyword' />
+								</div>
+								{/*<div className='filter-block-container'>
+									{filterBlockes}
+								</div>*/}
+							</div>
+							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
+								<SearchEnquiryPanel setFilterEvent={this.setFilters} />
+							</div>
 						</div>
 					</div>
 				</div>
