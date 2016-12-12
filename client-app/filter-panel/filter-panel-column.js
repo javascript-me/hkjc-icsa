@@ -52,7 +52,7 @@ export default React.createClass({
 	componentWillUnmount: function () {
 
 	},
-	generateResetHandle: function() {
+	generateResetHandle: function () {
 		let defaultValue = this.props.filterValue
 
 		return () => {
@@ -63,14 +63,14 @@ export default React.createClass({
 			})
 		}
 	},
-	generateSetValidHandle: function() {
+	generateSetValidHandle: function () {
 		return isValid => {
 			this.setState({
 				isValid: isValid
 			})
 		}
 	},
-	generateShowErrorHandle: function() {
+	generateShowErrorHandle: function () {
 		return () => {
 			this.setState({
 				showWarning: true
@@ -100,7 +100,7 @@ export default React.createClass({
 
 		this.handleChange(this.props.filterName, e.target.value)
 	},
-	handleChange: function(name, value) {
+	handleChange: function (name, value) {
 		let isValid = this.verifyFilterValidation(value)
 
 		this.setState({
@@ -109,7 +109,7 @@ export default React.createClass({
 
 		this.props.onChange(name, value, isValid)
 	},
-	verifyFilterValidation: function(filterValue) {
+	verifyFilterValidation: function (filterValue) {
 		let isValid = true
 		let customVerification = this.props.customVerification
 		let pairingVerify = this.props.pairingVerify
@@ -117,25 +117,25 @@ export default React.createClass({
 		let typeofPairingVerify = Object.prototype.toString.call(pairingVerify)
 
 		// Step 1 check does column required and has value or not
-		if(isValid && this.props.isRequired) {
+		if (isValid && this.props.isRequired) {
 			isValid = !!filterValue
 		}
 
 		// Step 2 check column by props.customVerification
-		if(isValid && filterValue && typeofCustomerVerify !== '[object Undefined]') {
-			if(typeofCustomerVerify === '[object Function]') {
+		if (isValid && filterValue && typeofCustomerVerify !== '[object Undefined]') {
+			if (typeofCustomerVerify === '[object Function]') {
 				isValid = customVerification(filterValue)
-			} else if(typeofCustomerVerify === '[object RegExp]') {
+			} else if (typeofCustomerVerify === '[object RegExp]') {
 				isValid = customVerification.test(filterValue)
 			}
 		}
 
 		// Step 3 check column by props.pairingVerify
-		if(isValid && filterValue && typeofPairingVerify === '[object Array]' && typeofPairingVerify.length) {
+		if (isValid && filterValue && typeofPairingVerify === '[object Array]' && typeofPairingVerify.length) {
 			isValid = this.props.doPairingVerify(filterValue, this.props.ctrlType, pairingVerify)
 		}
 
-		return isValid;
+		return isValid
 	},
 	getCtrl: function () {
 		let ctrl

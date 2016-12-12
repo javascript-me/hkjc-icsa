@@ -7,7 +7,6 @@ import FilterBlock from '../filter-block'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
-import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Paging from '../paging/paging'
 import Popup from '../popup'
 import ExportPopup from '../exportPopup'
@@ -18,7 +17,6 @@ import ExportService from './export-service'
 import SearchEnquiryDataService from '../searchEnquiryPanel/searchEnquiryPanel-service'
 
 const selectdata = SearchEnquiryDataService.getData()
-
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -462,46 +460,46 @@ export default React.createClass({
 									removeOneFilterTopic={this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER}
 									onSubmit={this.setFilters}>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="dateTimeFrom" 
-											filterTitle="Date Time From" 
-											filterValue={this.state.originDateRange.dateTimeFrom} 
-											ctrlType="calendar"
-											isRequired={true} 
+										<FilterPanelColumn filterName='dateTimeFrom'
+											filterTitle='Date Time From'
+											filterValue={this.state.originDateRange.dateTimeFrom}
+											ctrlType='calendar'
+											isRequired
 											pairingVerify={[{
 												operation: '<=',
 												partners: ['dateTimeTo']
-											}]}/>
-										<FilterPanelColumn filterName="dateTimeTo" 
-											filterTitle="Date Time To" 
-											filterValue={this.state.originDateRange.dateTimeTo} 
-											ctrlType="calendar"
-											isRequired={true}
+											}]} />
+										<FilterPanelColumn filterName='dateTimeTo'
+											filterTitle='Date Time To'
+											filterValue={this.state.originDateRange.dateTimeTo}
+											ctrlType='calendar'
+											isRequired
 											pairingVerify={[{
 												operation: '>=',
 												partners: ['dateTimeFrom']
-											}]}/>
-										<FilterPanelColumn filterName="typeValue" filterTitle="Type" ctrlType="select" dataSource={selectdata.typeValue} />
-										<FilterPanelColumn filterName="backEndID" filterTitle="Back End ID" />
+											}]} />
+										<FilterPanelColumn filterName='typeValue' filterTitle='Type' ctrlType='select' dataSource={selectdata.typeValue} />
+										<FilterPanelColumn filterName='backEndID' filterTitle='Back End ID' />
 									</FilterPanelRow>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="frontEndID" filterTitle="Front End ID" />
-										<FilterPanelColumn filterName="eventLv1" filterTitle="Event Lv1" />
-										<FilterPanelColumn filterName="homeValue" filterTitle="Home" />
-										<FilterPanelColumn filterName="awayValue" filterTitle="Away" />
+										<FilterPanelColumn filterName='frontEndID' filterTitle='Front End ID' />
+										<FilterPanelColumn filterName='eventLv1' filterTitle='Event Lv1' />
+										<FilterPanelColumn filterName='homeValue' filterTitle='Home' />
+										<FilterPanelColumn filterName='awayValue' filterTitle='Away' />
 									</FilterPanelRow>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="dateTimeGameStart" filterTitle="K.O Time / Game Start Time" ctrlType="calendar"/>
-										<FilterPanelColumn filterName="userId" filterTitle="User ID" />
-										<FilterPanelColumn filterName="userRole" filterTitle="Type" ctrlType="select" dataSource={selectdata.userRole} />
-										<FilterPanelColumn filterName="systemFunc" filterTitle="System Function" ctrlType="select" dataSource={selectdata.systemFunc} />
+										<FilterPanelColumn filterName='dateTimeGameStart' filterTitle='K.O Time / Game Start Time' ctrlType='calendar' />
+										<FilterPanelColumn filterName='userId' filterTitle='User ID' />
+										<FilterPanelColumn filterName='userRole' filterTitle='Type' ctrlType='select' dataSource={selectdata.userRole} />
+										<FilterPanelColumn filterName='systemFunc' filterTitle='System Function' ctrlType='select' dataSource={selectdata.systemFunc} />
 									</FilterPanelRow>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="betTypeFeature" filterTitle="Bet Type / Feature" ctrlType="select" dataSource={selectdata.betTypeFeature} />
-										<FilterPanelColumn filterName="device" filterTitle="Device" ctrlType="select" dataSource={selectdata.device} />
-										<FilterPanelColumn filterName="ipAddress" 
-											filterTitle="IP Address"
+										<FilterPanelColumn filterName='betTypeFeature' filterTitle='Bet Type / Feature' ctrlType='select' dataSource={selectdata.betTypeFeature} />
+										<FilterPanelColumn filterName='device' filterTitle='Device' ctrlType='select' dataSource={selectdata.device} />
+										<FilterPanelColumn filterName='ipAddress'
+											filterTitle='IP Address'
 											customVerification={/^((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})){2}(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2}))$/} />
-										<FilterPanelColumn filterName="errorCode" filterTitle="Error Code" />
+										<FilterPanelColumn filterName='errorCode' filterTitle='Error Code' />
 									</FilterPanelRow>
 								</FilterPanel>
 							</div>
