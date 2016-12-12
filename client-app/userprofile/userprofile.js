@@ -84,7 +84,7 @@ export default React.createClass({
 
 						<AccountInformation ref='accountCmp' userAccount={this.state.userAccount} updateMode={this.state.accountUpdate} />
 
-						<UserDelegation userDelegation={this.state.userDelegation} delegationUpdate={this.state.accountUpdate} />
+						<UserDelegation userDelegation={this.state.userDelegation} delegationUpdate={false} />
 
 						<ProfileButtons>
 							{this.state.accountUpdate && (<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>)}

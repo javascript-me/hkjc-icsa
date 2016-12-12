@@ -20,7 +20,7 @@ const roleFormat = (cell, row, enumObject, index) => {
 		left: 0,
 		right: 0,
 		margin: 'auto',
-		height:'30px'
+		height: '30px'
 
 	}
 	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} />)

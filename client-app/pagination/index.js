@@ -215,7 +215,7 @@ class PaginationList extends Component {
 			startPage = this.lastPage - 5
 		}
 
-		if(this.props.paginationSize === this.totalPages) {
+		if (this.props.paginationSize === this.totalPages) {
 			startPage = 1
 			endPage = this.totalPages
 			pages = [ this.props.prePage ]
