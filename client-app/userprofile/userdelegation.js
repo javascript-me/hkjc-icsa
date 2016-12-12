@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import MutiSelect from '../muti-select'
 import Calendar from '../calendar'
 import _ from 'lodash'
-// import moment from 'moment'
+import moment from 'moment'
 
 import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
@@ -114,10 +114,11 @@ export default React.createClass({
 	},
 	onAddClick (popupCmp) {
 		popupCmp.show()
-		this.addNewRecord()
+		
 	},
 	addNewRecord (user) {
-		let newUser = user || {userName:'New User',position:'new position'}
+		let newUser = user[0] || {userName:'New User',position:'new position'}
+		let newDelegationID = "Delegate"+(Math.random()*1000000)
 		const newDelegate = Object.assign({},newUser,{delegateStatus:'pedding',secondaryApprover:'please select',changeFlag:true})
 		const  next = _.cloneDeep(this.state.editUserDelegation)
 		next.unshift(newDelegate)
@@ -138,7 +139,7 @@ export default React.createClass({
 	},
 	onAddDelegation (delegationShow) {
 		const delegation = delegationShow.getDelegation()
-		return delegation
+		this.addNewRecord(delegation)
 	},
 	render () {
 		if (!this.props.userDelegation) {
@@ -164,7 +165,7 @@ export default React.createClass({
 	renderNormal (tableData) {
 		const { delegationUpdate } = this.props
 		return (
-			<div ref='root' className='user-delegation mid-overlay'>
+			<div ref='root' className='user-delegation mid-overlay' style={{width: '600px'}}>
 				<div className='header'>
 					<h2>User Delegation</h2>
 					<div className={classNames('action', {hidden: !this.props.delegationUpdate})} onClick={() => { this.onAddClick(this.refs.addDelegation) }}>

@@ -31,9 +31,15 @@ export default React.createClass({
 			delegationUpdate: true
 		})
 	},
-	onUpdateClick (delegationCmp) {
+	async onUpdateClick (delegationCmp) {
 		const result = delegationCmp.onUpdateClick()
-		console.log(result)
+		
+		let UpdateFlag = await UserProfileService.postUserDelegation(this.userID,{delegationList:result})
+		
+		if (UpdateFlag.status) {
+			this.getUserProfile()
+			
+		}
 	},
 	onCancelClick () {
 		PopupService.showMessageBox('Are you sure want to cancel?', () => {

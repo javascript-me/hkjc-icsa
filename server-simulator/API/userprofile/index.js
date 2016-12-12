@@ -189,6 +189,27 @@ router.get('/item', (req, res) => {
 	}
 })
 
+router.post('/updateDelegation', (req, res) => {
+	const userID = req.query.userID
+	const userData = _.find(accountProfiles,(item) => (item.userID === userID))
+	if(!userData) {
+		res.status(404)
+		res.send({status:fasle})
+	} else {
+		const oldDelegationList = userData.delegationList;
+		req.body.delegationList && req.body.delegationList.forEach((item,index) => {
+			let oldRecordItem = _.find(oldDelegationList,(_item) => (_item.delegationID === item.delegationID))
+			if(oldRecordItem) {
+				_.remove(oldDelegationList,(_item) => (_item.delegationID === item.delegationID))
+			}
+			 userData.delegationList.unshift(item)
+			 res.send({status:true})
+		})
+	}
+	
+})
+
+
 /**
  * @apiGroup UserProfile
  * @api {POST} /userprofile/update update user profile by user id
