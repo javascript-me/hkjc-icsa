@@ -1,6 +1,73 @@
 .subscription-container {
-	.nopage {
-		margin-top: 150px;
-		height: 60px;
+	.row {
+		margin: 0;
+		display: flex;
+
+		.col-category {
+			width: 40%;
+		}
+
+		.col-message {
+			width: 60%;
+		}
+	}
+
+	.header {
+		font-family: Roboto-Medium;
+		font-size: 20px;
+		color: #0C2963;
+		line-height: 26px;
+	}
+
+	.content {
+		margin: 21px 0 30px;
+		border: 1px solid #305091;
+		height: 540px;
+
+		.col-category {
+			overflow-y: auto;
+			border-right: 1px solid #305091;
+
+			.item {
+				border-bottom: 1px solid #ACB8D1;
+				padding: 0 13px 0 29px;
+				height: 40px;
+				font-family: Roboto-Medium;
+				font-size: 14px;
+				color: #305091;
+				line-height: 40px;
+
+				i {
+					margin-top: 13px;
+					width: 14px;
+					height: 14px;
+					display: inline-block;
+					background-repeat: no-repeat;
+					background-position: center center;
+
+					&.arrow {
+						background-image: url(icon/cross.svg);
+					}
+				}
+			}
+
+			.item.active {
+				background-color: #FCF6C8;
+			}
+		}
+
+		.col-message {
+			overflow-y: auto;
+
+			.item {
+				border-bottom: 1px solid #ACB8D1;
+				padding-left: 50px;
+				height: 40px;
+				font-family: Roboto-Regular;
+				font-size: 14px;
+				color: #4A4A4A;
+				line-height: 40px;
+			}
+		}
 	}
 }

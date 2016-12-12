@@ -84,6 +84,16 @@
 		}
 	}
 
+	.calendar {
+		.input-group {
+			width: 200px;
+
+			.calendar-input {
+				padding: 0 10px;
+			}
+		}
+	}
+
 	.popup-wrapper {
 		user-select: none;
 
@@ -92,6 +102,100 @@
 			left: 50%;
 			margin-left: -318px;
 			margin-top: -278px;
+		}
+
+		.confirm {
+			line-height: 26px;
+		}
+	}
+
+	.roles-detail .popup-wrapper .popup-dialog {
+		width: 748px;
+		height: 332px;
+		margin-left: -374px;
+		margin-top: -166px;
+
+		.popup-content {
+			padding: 0 14px;
+			margin-top: 7px;
+		}
+
+		.roles-detail {
+			height: 161px;
+		}
+	}
+}
+
+.table.sm-table {
+	border-collapse: inherit;
+	border: 1px solid #7C8DAF;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+	color: #4A4A4A;
+	line-height: 40px;
+
+	> thead {
+		background-color: #7C8DAF;
+		line-height: 40px;
+		color: #FFFFFF;
+
+		> tr > th {
+			font-weight: normal;
+			text-align: center;
+			font-size: 14px;
+			border: 0;
+			border-right: 1px solid #D8E1F3;
+
+			&:first-child {
+				text-align: left;
+				padding-left: 30px;
+				width: 44%;
+			}
+
+			&:last-child {
+				border-right: none;
+			}
+		}
+	}
+
+	tbody > tr {
+		border-top: 1px solid #DDDDDD;
+
+		&:nth-child(even) {
+			background: #F8F9FB;
+		}
+
+		> td {
+			text-align: center;
+			vertical-align: middle;
+			border-right: 1px solid #D8E1F3;
+
+			&:first-child {
+				text-align: left;
+				padding-left: 30px;
+			}
+
+			&:last-child {
+				border-right: none;
+			}
+
+			i {
+				display: inline-block;
+				background-repeat: no-repeat;
+				background-position: center center;
+
+				&.tick {
+					width: 15px;
+					height: 10px;
+					background-image: url(icon/tick.svg);
+				}
+
+				&.cross {
+					width: 13px;
+					height: 13px;
+					background-image: url(icon/cross.svg);
+				}
+			}
 		}
 	}
 }

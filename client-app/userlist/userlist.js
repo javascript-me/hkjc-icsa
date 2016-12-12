@@ -5,7 +5,7 @@ import TabularData from '../tabulardata/tabulardata'
 import Paging from '../paging/paging'
 import UserStore from './user-store'
 import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
-import AddingUserCmp from '../add-account'
+// import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
@@ -310,8 +310,9 @@ export default React.createClass({
 
 		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 
+		// {this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
+
 		return <div className='row userlist-page'>
-			{this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
 			<div className='page-header'>
 				<p>{this.state.pageTitle}</p>
 				<h1>User Account Profile List</h1>
