@@ -338,7 +338,7 @@ describe('<Audit /> component', () => {
 			const auditlog = shallow(<Audit />)
 			const originDateRange = auditlog.state('originDateRange')
 			const defaultDateFrom = originDateRange.dateTimeFrom
-			let changedDateFrom = Moment(defaultDateFrom).add('1', 'seconds')
+			let changedDateFrom = Moment(defaultDateFrom, 'DD MMM YYYY HH:mm').add('1', 'seconds')
 			let isDateRangeNotChanged
 
 			auditlog.instance().setFilters({
