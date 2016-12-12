@@ -8,6 +8,7 @@ import _ from 'lodash'
 import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
 // import UserProfileService from '../userprofile/userprofile-service'
+import AddDelegation from './adddelegation'
 
 let sampleRole = ['Trading User', 'Trading Support Analyst', 'Trading Supervisor']
 const roleFormat = (cell, row, enumObject, index) => {
@@ -25,6 +26,12 @@ const roleFormat = (cell, row, enumObject, index) => {
 
 	}
 	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={this.updateRoleInfo} />)
+}
+
+const getCheckboxFormat = (cell, row) => {
+	return (
+		<input type='checkbox' />
+	)
 }
 
 const roleVeiw = (cell, row, enumObject, index) => {
@@ -129,6 +136,10 @@ export default React.createClass({
 		return changeResult
 		// pass data to server
 	},
+	onAddDelegation (delegationShow) {
+		const delegation = delegationShow.getDelegation()
+		return delegation
+	},
 	render () {
 		if (!this.props.userDelegation) {
 			return this.renderNone()
@@ -153,23 +164,28 @@ export default React.createClass({
 	renderNormal (tableData) {
 		const { delegationUpdate } = this.props
 		return (
-			<div ref='root' className='user-delegation'>
+			<div ref='root' className='user-delegation mid-overlay'>
 				<div className='header'>
 					<h2>User Delegation</h2>
 					<div className={classNames('action', {hidden: !this.props.delegationUpdate})} onClick={() => { this.onAddClick(this.refs.addDelegation) }}>
 						+ Add Delegation
 					</div>
-					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => {}} confirmBtn='Add'>
-						<div>come soon</div>
+					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => { this.onAddDelegation(this.refs.delegationShow) }} confirmBtn='Add'>
+						<AddDelegation ref='delegationShow' />
 					</Popup>
 				</div>
-				<div className='content user-delegation-table' >
+				<div className='tableComponent-container content user-delegation-table' >
 					{delegationUpdate
 					? <TableComponent
-						selectRow={this.selectRowProp}
+						tableHeaderClass='table-header'
+						tableContainerClass='auditlog-table'
+						// selectRow={this.selectRowProp}
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
+						<TableHeaderColumn dataField='checkbox' dataAlign='center' dataFormat={getCheckboxFormat}>
+							<input type='checkbox' />
+						</TableHeaderColumn>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataFormat={this.roleFormat} dataAlign={'center'}>Delegate Role</TableHeaderColumn>
@@ -179,6 +195,8 @@ export default React.createClass({
 						<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>
 					</TableComponent>
 					: <TableComponent
+						tableHeaderClass='table-header'
+						tableContainerClass='auditlog-table'
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>

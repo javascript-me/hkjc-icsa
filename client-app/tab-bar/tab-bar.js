@@ -35,6 +35,6 @@ export default class TabBar extends React.Component {
 
 TabBar.propTypes = {
 	onChangeTab: React.PropTypes.func,
-	tabData: React.PropTypes.object,
+	tabData: React.PropTypes.array,
 	displayPosition: React.PropTypes.string
 }

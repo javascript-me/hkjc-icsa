@@ -6,7 +6,7 @@ let globalPopupCmp = null
 * showCustom (options)
 *							options {
 *								title: string required
-*								children: component instance required
+*								children: ReactElement required
 *								confirmBtn: string optional
 *								cancelBtn: string optional
 *								onConfirm: func optional
@@ -24,7 +24,7 @@ export default {
 	},
 	showMessageBox (msg, onConfirm, onCancel) {
 		const children = (
-			<div>{msg}</div>
+			<p>{msg}</p>
 		)
 
 		if (!onConfirm) {

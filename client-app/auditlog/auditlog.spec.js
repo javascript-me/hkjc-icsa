@@ -98,7 +98,7 @@ describe('<Audit /> component', () => {
 
 	it('will render table component initially', () => {
 		const auditlog = shallow(<Audit />)
-		const tableContainer = auditlog.find('.table-container')
+		const tableContainer = auditlog.find('.tableComponent-container')
 
 		expect(tableContainer.children()).to.have.length(1)
 	})
@@ -338,7 +338,7 @@ describe('<Audit /> component', () => {
 			const auditlog = shallow(<Audit />)
 			const originDateRange = auditlog.state('originDateRange')
 			const defaultDateFrom = originDateRange.dateTimeFrom
-			let changedDateFrom = Moment(defaultDateFrom).add('1', 'seconds')
+			let changedDateFrom = Moment(defaultDateFrom, 'DD MMM YYYY HH:mm').add('1', 'seconds')
 			let isDateRangeNotChanged
 
 			auditlog.instance().setFilters({

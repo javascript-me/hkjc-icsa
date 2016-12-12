@@ -1,7 +1,7 @@
-import TableComponent from './TableComponent';
-import TableHeaderColumn from './TableHeaderColumn';
+import TableComponent from './TableComponent'
+import TableHeaderColumn from './TableHeaderColumn'
 
 export {
   TableComponent,
   TableHeaderColumn
-};
+}
