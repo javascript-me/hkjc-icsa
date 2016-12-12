@@ -121,7 +121,7 @@ export default React.createClass({
 	renderNormal (tableData) {
 		const { delegationUpdate } = this.props
 		return (
-			<div ref='root' className='user-delegation'>
+			<div ref='root' className='user-delegation mid-overlay'>
 				<div className='header'>
 					<h2>User Delegation</h2>
 					<div className={classNames('action', {hidden: !this.props.delegationUpdate})} onClick={() => { this.onAddClick(this.refs.addDelegation) }}>
