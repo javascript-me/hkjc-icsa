@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="13px" viewBox="0 0 6 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="component-/-sprit-menu-/-hori-flyout" transform="translate(-487.000000, -14.000000)" fill="#305091">
+            <path d="M495.881882,17.6551518 C495.688165,17.4232703 495.345198,17.3919211 495.112806,17.5852977 L489.875111,21.9518603 L484.637417,17.5852977 C484.405536,17.3924323 484.061376,17.4239518 483.868341,17.6551518 C483.674964,17.8865222 483.706313,18.2311926 483.937854,18.4242284 L489.52533,23.0819633 C489.626533,23.1664697 489.750907,23.2087229 489.875111,23.2087229 C489.999486,23.2087229 490.12369,23.1664697 490.224893,23.0819633 L495.812369,18.4242284 C496.04391,18.2311926 496.075259,17.8866926 495.881882,17.6551518 L495.881882,17.6551518 Z" id="Shape" transform="translate(489.875111, 20.333612) rotate(-90.000000) translate(-489.875111, -20.333612) "></path>
+        </g>
+    </g>
+</svg>
