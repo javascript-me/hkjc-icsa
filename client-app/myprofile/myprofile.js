@@ -42,7 +42,21 @@ export default React.createClass({
 		})
 	},
 	onDeleteClick (delegationCmp) {
-		delegationCmp.onDeleteClick()
+		let ids = delegationCmp.getDeleteData()
+		if (ids.length > 0) {
+			PopupService.showMessageBox('Are you sure want to delete?', () => {
+				UserProfileService.deleteDelegation({
+					userID: this.userID,
+					delegationIds: ids
+				}).then((data) => {
+					if (data) {
+						this.getUserProfile()
+					}
+				})
+			})
+		} else {
+			PopupService.showMessageBox('You must select at least one delegation!')
+		}
 	},
 	render () {
 		return (

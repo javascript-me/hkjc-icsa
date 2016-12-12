@@ -241,4 +241,48 @@ router.post('/update', (req, res) => {
 	res.send(result)
 })
 
+/**
+ * @apiGroup UserProfile
+ * @api {POST} /userprofile/deleteDelegation delete user delegation
+ * @apiDescription delete user delegation
+ * @apiParam {String} userID user id
+ * @apiParam {String[]} delegationIds user delegation ids
+ * @apiParamExample {json} Request-Example:
+ * 		{
+ * 			"userID": "JC10001",
+ * 			"delegationIds": ["0001", "0002"]
+ * 		}
+ *
+ * @apiSuccess (Success) {String} msg success message
+ * @apiSuccessExample {json} Success-Response:
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"msg": "You have success delete the delegation!"
+ *		}
+ *
+ * @apiError (Error) {String} error  UserAccountNotFound
+ * @apiErrorExample {json} Error-Response:
+ *		HTTP/1.1 404 Not Found
+ *		{
+ *			"error": "The user you have updated is invalid."
+ *		}
+ */
+router.post('/deleteDelegation', (req, res) => {
+	const userID = req.body.userID
+	console.log(req.body)
+	const bOk = UserProfileUtil.deleteDelegation(accountProfiles, userID, req.body)
+	let result = {
+		msg: 'You have success delete the delegation!'
+	}
+
+	if (!bOk) {
+		res.status(404)
+		result = {
+			error: 'The user you have updated is invalid.'
+		}
+	}
+
+	res.send(result)
+})
+
 export default router
