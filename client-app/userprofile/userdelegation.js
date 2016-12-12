@@ -10,7 +10,7 @@ import {TableComponent, TableHeaderColumn} from '../table'
 
 let sampleRole = ['Trading User', 'Trading Support Analyst', 'Trading Supervisor']
 const roleFormat = (cell, row, enumObject, index) => {
-	let placeHolder = cell.map(item => item.delegatedRole).join(',')
+	let placeHolder = cell.map(item => item.delegatedRole).join(' ')
 	const options = sampleRole.map((item, idx) => ({label: item, value: item}))
 	const style = {
 		position: 'absulute',
@@ -19,12 +19,17 @@ const roleFormat = (cell, row, enumObject, index) => {
 		bottom: 0,
 		left: 0,
 		right: 0,
-		margin: 'auto'
+		margin: 'auto',
+		height:'30px'
 
 	}
 	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} />)
 }
 
+const roleVeiw = (cell, row, enumObject, index) => {
+	let text = cell.map((item) => (item.delegatedRole)).join(' ')
+	return text
+}
 export default React.createClass({
 	displayName: 'UserDelegation',
 	propTypes: {
@@ -124,7 +129,7 @@ export default React.createClass({
 				<div className='content user-delegation-table' >
 					{delegationUpdate
 					? <TableComponent
-						selectRow = {this.selectRowProp}
+						selectRow={this.selectRowProp}
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
@@ -142,7 +147,7 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataAlign={'center'}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataAlign={'center'} dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' >Date of Delegation From</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationTo' dataAlign='center'>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
