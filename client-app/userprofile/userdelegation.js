@@ -7,6 +7,7 @@ import Calendar from '../calendar'
 import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
 // import UserProfileService from '../userprofile/userprofile-service'
+import AddDelegation from './adddelegation'
 
 let sampleRole = ['Trading User', 'Trading Support Analyst', 'Trading Supervisor']
 const roleFormat = (cell, row, enumObject, index) => {
@@ -20,7 +21,7 @@ const roleFormat = (cell, row, enumObject, index) => {
 		left: 0,
 		right: 0,
 		margin: 'auto',
-		height:'30px'
+		height: '30px'
 
 	}
 	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} />)
@@ -83,6 +84,10 @@ export default React.createClass({
 
 	onUpdateClick () {
 	},
+	onAddDelegation (delegationShow) {
+		const delegation = delegationShow.getDelegation()
+		return delegation
+	},
 	render () {
 		if (!this.props.userDelegation) {
 			return this.renderNone()
@@ -122,8 +127,8 @@ export default React.createClass({
 					<div className={classNames('action', {hidden: !this.props.delegationUpdate})} onClick={() => { this.onAddClick(this.refs.addDelegation) }}>
 						+ Add Delegation
 					</div>
-					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => {}} confirmBtn='Add'>
-						<div>come soon</div>
+					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => { this.onAddDelegation(this.refs.delegationShow) }} confirmBtn='Add'>
+						<AddDelegation ref='delegationShow' />
 					</Popup>
 				</div>
 				<div className='content user-delegation-table' >
