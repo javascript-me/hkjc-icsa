@@ -11,6 +11,9 @@ const postUserProfile = (data) => {
 const getRoles = () => {
 	return $.get(config.url('api/roles/list'))
 }
+const postUserDelegation = (data) => {
+	return $.post(config.url('api/userprofile/update'), data)
+}
 
 export default {
 	async getUserProfile (userId) {

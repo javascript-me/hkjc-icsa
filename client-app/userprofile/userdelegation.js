@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import MutiSelect from '../muti-select'
 import Calendar from '../calendar'
+import _ from 'lodash'
 // import moment from 'moment'
 
 import Popup from '../popup'
@@ -20,10 +21,10 @@ const roleFormat = (cell, row, enumObject, index) => {
 		left: 0,
 		right: 0,
 		margin: 'auto',
-		height:'30px'
+		height: '30px'
 
 	}
-	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} />)
+	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={this.updateRoleInfo} />)
 }
 
 const roleVeiw = (cell, row, enumObject, index) => {
@@ -49,14 +50,47 @@ export default React.createClass({
 				if (typeof (value) !== 'string') {
 					time = value.format('DD MM YYYY')
 				}
-				const next = this.state.userDelegation
+				const next = _.cloneDeep(this.state.editUserDelegation)
 				next[index][field] = time
-				this.setState({userDelegation: next})
+				next[index].changeFlag = true
+				this.setState({editUserDelegation: next})
 			}
 			return (<Calendar value={row[field]} onChange={handleChang} />)
 		}
 
 		return calendarFormat
+	},
+	roleFormat  (cell, row, enumObject, index)  {
+		let placeHolder
+		if(cell && cell.length > 0) {
+			 placeHolder = cell.map(item => item.delegatedRole).join(' ')
+		} else {
+			placeHolder = 'select a role'
+		}
+	
+	const options = sampleRole.map((item, idx) => ({label: item, value: item}))
+	const style = {
+		position: 'absulute',
+		width: '90%',
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+		margin: 'auto',
+		height: '30px'
+
+	}
+	const next = _.cloneDeep(this.state.editUserDelegation)
+	const updateRoleInfo = (value) => {
+		let newRoles = _.map(value,(item) => ({delegatedRole:item}))
+		next[index].delegatedRoles = newRoles
+		next[index].changeFlag = true
+		this.setState({editUserDelegation:next})
+	}
+	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={updateRoleInfo} />)
+},
+	getLastData () {
+		return this.props.delegationUpdate ? this.state.editUserDelegation :  this.state.userDelegation
 	},
 
 	getInitialState () {
@@ -68,20 +102,32 @@ export default React.createClass({
 			// onSelect: onRowSelect,
 			// onSelectAll: onSelectAll
 		}
-		return {userDelegation: this.props.userDelegation}
+		const editUserDelegation = _.cloneDeep(this.props.userDelegation)
+		return {userDelegation: this.props.userDelegation, editUserDelegation}
 	},
 	onAddClick (popupCmp) {
 		popupCmp.show()
+		this.addNewRecord()
+	},
+	addNewRecord (user) {
+		let newUser = user || {userName:'New User',position:'new position'}
+		const newDelegate = Object.assign({},newUser,{delegateStatus:'pedding',secondaryApprover:'please select',changeFlag:true})
+		const  next = _.cloneDeep(this.state.editUserDelegation)
+		next.unshift(newDelegate)
+		this.setState({editUserDelegation:next})
 	},
 	onDeleteClick () {
 	},
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.userDelegation !== this.state.userDelegation) {
-			this.setState({userDelegation: nextProps.userDelegation})
+			this.setState({userDelegation: nextProps.userDelegation,editUserDelegation : _.cloneDeep(nextProps.userDelegation)})
 		}
 	},
 
 	onUpdateClick () {
+		const changeResult = _.filter(this.getLastData(),(item) => (item.changeFlag))
+		return changeResult
+		// pass data to server
 	},
 	render () {
 		if (!this.props.userDelegation) {
@@ -89,30 +135,21 @@ export default React.createClass({
 		// } else if (this.props.delegationUpdate) {
 		// 	return this.renderUpdate(this.props.userDelegation)
 		} else {
-			return this.renderNormal(this.state.userDelegation)
+			if(this.props.delegationUpdate) {
+				return this.renderNormal(this.state.editUserDelegation)
+			} else {
+				return this.renderNormal(this.state.userDelegation)
+			}
+			
 		}
 	},
+
 	renderNone () {
 		return (
 			<div ref='root' className='user-delegation' />
 		)
 	},
-	// renderNormal (tableData) {
-	// 	return (
-	// 		<div ref='root' className='user-delegation'>
-	// 			<div className='header'>
-	// 				<h2>User Delegation</h2>
-	// 			</div>
-	// 			<div className='content'>
-	// 				<TableComponent data={tableData} bodyStyle={{height: 'calc(100% - 42px)'}}>
-	// 						<TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
-	// 						<TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
-	// 						<TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
-	// 				</TableComponent>
-	// 			</div>
-	// 		</div>
-	// 	)
-	// },
+
 	renderNormal (tableData) {
 		const { delegationUpdate } = this.props
 		return (
@@ -135,7 +172,7 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormat} dataAlign={delegationUpdate ? 'left' : 'center'}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataFormat={this.roleFormat} dataAlign={'center'}>Delegate Role</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' dataFormat={this.getCalendarFormat('delegationFrom')} >Date of Delegation From</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationTo' dataAlign='center' dataFormat={this.getCalendarFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>

@@ -32,7 +32,8 @@ export default React.createClass({
 		})
 	},
 	onUpdateClick (delegationCmp) {
-		delegationCmp.onUpdateClick()
+		const result = delegationCmp.onUpdateClick()
+		console.log(result)
 	},
 	onCancelClick () {
 		PopupService.showMessageBox('Are you sure want to cancel?', () => {
