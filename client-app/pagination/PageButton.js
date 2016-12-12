@@ -1,37 +1,37 @@
-import React, { Component, PropTypes } from 'react';
-import classSet from 'classnames';
+import React, { PropTypes } from 'react'
+import classSet from 'classnames'
 
-class PageButton extends Component {
+const PageButton = React.createClass({
+	propTypes: {
+		changePage: PropTypes.func,
+		active: PropTypes.bool,
+		disable: PropTypes.bool,
+		hidden: PropTypes.bool,
+		children: PropTypes.node,
+		withoutLink: PropTypes.bool
+	},
 
-  constructor(props) {
-    super(props);
-  }
+	pageBtnClick: function (e) {
+		e.preventDefault()
+		this.props.changePage(e.currentTarget.textContent ? e.currentTarget.textContent : e.currentTarget.innerHTML)
+	},
 
-  pageBtnClick = e => {
-    e.preventDefault();
-    this.props.changePage(e.currentTarget.textContent);
-  }
+	render: function () {
+		const classes = classSet({
+			'active': this.props.active,
+			'disabled': this.props.disable,
+			'hidden': this.props.hidden,
+			'page-item': true
+		})
 
-  render() {
-    const classes = classSet({
-      'active': this.props.active,
-      'disabled': this.props.disable,
-      'hidden': this.props.hidden,
-      'page-item': true
-    });
-    return (
-      <li className={ classes }>
-        <a href='#' onClick={ this.pageBtnClick } className='page-link'>{ this.props.children }</a>
-      </li>
-    );
-  }
-}
-PageButton.propTypes = {
-  changePage: PropTypes.func,
-  active: PropTypes.bool,
-  disable: PropTypes.bool,
-  hidden: PropTypes.bool,
-  children: PropTypes.node
-};
+		const _render = () => { return { __html: this.props.children } }
+		const link = !this.props.withoutLink ? <a href='#' onClick={this.pageBtnClick} className='page-link' dangerouslySetInnerHTML={_render(this.props.children)} /> : <span dangerouslySetInnerHTML={_render(this.props.children)} />
+		return (
+			<li className={classes}>
+				{ link }
+			</li>
+		)
+	}
+})
 
-export default PageButton;
+export default PageButton

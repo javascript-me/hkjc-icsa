@@ -20,10 +20,16 @@ const roleFormat = (cell, row, enumObject, index) => {
 		left: 0,
 		right: 0,
 		margin: 'auto',
-		height:'30px'
+		height: '30px'
 
 	}
 	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} />)
+}
+
+const getCheckboxFormat = (cell, row) => {
+	return (
+		<input type='checkbox' />
+	)
 }
 
 const roleVeiw = (cell, row, enumObject, index) => {
@@ -126,13 +132,18 @@ export default React.createClass({
 						<div>come soon</div>
 					</Popup>
 				</div>
-				<div className='content user-delegation-table' >
+				<div className='tableComponent-container content user-delegation-table' >
 					{delegationUpdate
 					? <TableComponent
-						selectRow={this.selectRowProp}
+						tableHeaderClass='table-header'
+						tableContainerClass='auditlog-table'
+						// selectRow={this.selectRowProp}
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
+						<TableHeaderColumn dataField='checkbox' dataAlign='center' dataFormat={getCheckboxFormat}>
+							<input type='checkbox' />
+						</TableHeaderColumn>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormat} dataAlign={delegationUpdate ? 'left' : 'center'}>Delegate Role</TableHeaderColumn>
@@ -142,6 +153,8 @@ export default React.createClass({
 						<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>
 					</TableComponent>
 					: <TableComponent
+						tableHeaderClass='table-header'
+						tableContainerClass='auditlog-table'
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
