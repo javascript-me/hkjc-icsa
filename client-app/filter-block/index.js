@@ -25,7 +25,10 @@ export default class FilterBlock extends React.Component {
 }
 
 FilterBlock.propTypes = {
+	// The text will display in the page
 	dataText: React.PropTypes.string,
+	// The filter real data related
 	dataValue: React.PropTypes.object,
+	// The event which will be triggerd when click on this component
 	removeEvent: React.PropTypes.func
 }
