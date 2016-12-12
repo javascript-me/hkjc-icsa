@@ -392,22 +392,6 @@ export default React.createClass({
 		return filterBlockes
 	},
 
-	handleChange (name, value) {
-		console.log('In Auditlog change', name, value)
-	},
-
-	handleFilterReset: function() {
-		console.log('in auditlog reset')
-	},
-
-	/*
-	 * Sample of filters: 
-	 * { dateTimeFrom: '08 Dec 2016 23:59', type: 'Odds', eventLv1: 'some event' }
-	 */
-	handleFilterSubmit: function(filters) {
-		console.log('in auditlog submit', filters)
-	},
-
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 			'hover-enabled': !this.state.isShowingMoreFilter
@@ -474,10 +458,10 @@ export default React.createClass({
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<SearchEnquiryPanel setFilterEvent={this.setFilters} />
-								<FilterPanel onReset={this.handleFilterReset} onSubmit={this.handleFilterSubmit}>
+								<FilterPanel onSubmit={this.setFilters}>
 									<FilterPanelRow>
 										<FilterPanelColumn filterName="textField" filterTitle="Text Field" />
-										<FilterPanelColumn filterName="textDateTimeField" filterTitle="Text Date Time Field" filterValue={Moment('08 Dec 2016 23:59','DD MMM YYYY HH:mm')} ctrlType="calendar" />
+										<FilterPanelColumn filterName="textDateTimeField" filterTitle="Text Date Time Field" filterValue="08 Dec 2016 23:59" ctrlType="calendar" />
 										<FilterPanelColumn filterName="textSelectField" filterTitle="Text Select Field" ctrlType="select" dataSource={selectdata.typeValue} />
 									</FilterPanelRow>			
 								</FilterPanel>

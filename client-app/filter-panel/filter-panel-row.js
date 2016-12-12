@@ -6,11 +6,13 @@ export default React.createClass({
 	displayName: 'FilterPanelRow',
 	propTypes: {
 		changeFilter: React.PropTypes.func,
-		doPairingVerifyForFilter: React.PropTypes.func
+		doPairingVerifyForFilter: React.PropTypes.func,
+		registerColumnResetHandles: React.PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {
-			doPairingVerifyForFilter: emptyFn
+			doPairingVerifyForFilter: emptyFn,
+			registerColumnResetHandles: emptyFn
 		}
 	},
 	getInitialState () {
@@ -29,7 +31,8 @@ export default React.createClass({
 			return <div className='col-sm-3 pd-w10'>
 				{React.cloneElement(column, {
 					onChange: this.props.changeFilter,
-					doPairingVerify: this.props.doPairingVerifyForFilter
+					doPairingVerify: this.props.doPairingVerifyForFilter,
+					registerResetHandle: this.props.registerColumnResetHandles
 				})}
 			</div>
 		})

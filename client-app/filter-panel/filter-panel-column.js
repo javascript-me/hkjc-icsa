@@ -22,7 +22,8 @@ export default React.createClass({
 		dataSource: React.PropTypes.array,
 		ctrlType: React.PropTypes.oneOf(['textbox', 'select', 'multi-select', 'calendar']),
 		onChange: React.PropTypes.func,
-		doPairingVerify: React.PropTypes.func
+		doPairingVerify: React.PropTypes.func,
+		registerResetHandle: React.PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {
@@ -37,33 +38,44 @@ export default React.createClass({
 	getInitialState () {
 		return {
 			isValid: true,
-			displayValue: this.props.filterValue,
+			filterValue: this.props.filterValue,
 			submittedValue: ''
 		}
 	},
 	componentDidMount: function () {
-	},
+		let p = this.props
 
+		p.registerResetHandle(p.filterName, this.generateResetHandle())
+	},
 	componentWillUnmount: function () {
 
 	},
+	generateResetHandle: function() {
+		let defaultValue = this.props.filterValue
+
+		return () => {
+			this.setState({
+				filterValue: defaultValue
+			})
+		}
+	},
 	handleTextChange: function (e) {
 		this.setState({
-			displayValue: e.target.value
+			filterValue: e.target.value
 		})
 
 		this.handleChange(this.props.filterName, e.target.value)
 	},
 	handleDateChange: function (date) {
 		this.setState({
-			displayValue: date
+			filterValue: date.format('DD MMM YYYY HH:mm')
 		})
 
 		this.handleChange(this.props.filterName, date)
 	},
 	handleSelectChange: function (e) {
 		this.setState({
-			displayValue: e.target.value
+			filterValue: e.target.value
 		})
 
 		this.handleChange(this.props.filterName, e.target.value)
@@ -80,7 +92,7 @@ export default React.createClass({
 	verifyFilterValidation: function() {
 		let isValid = true
 		let filterName = this.props.filterName
-		let filterValue = this.state.displayValue
+		let filterValue = this.state.filterValue
 		let customVerification = this.props.customVerification
 		let pairingVerify = this.props.pairingVerify
 		let typeofCustomerVerify = Object.prototype.toString.call(customVerification)
@@ -129,12 +141,12 @@ export default React.createClass({
 		return <input type='text'
 			className='form-control'
 			placeholder='Type in keyword'
-			value={this.state.displayValue}
+			value={this.state.filterValue}
 			onChange={this.handleTextChange} />
 	},
 	getCalendarCtrl: function () {
 		return <Calendar
-			defaultValue={this.props.filterValue}
+			value={this.state.filterValue}
 			warning={!this.state.isValid}
 			onChange={this.handleDateChange} />
 	},
@@ -142,7 +154,7 @@ export default React.createClass({
 		return <SelectCom
 			key={this.props.filterName}
 			datas={this.props.dataSource}
-			selectedVal={this.state.displayValue}
+			selectedVal={this.state.filterValue}
 			handleVal={this.handleTextChange} />
 	},
 	render: function () {

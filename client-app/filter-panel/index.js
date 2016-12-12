@@ -18,7 +18,8 @@ export default React.createClass({
 		return {
 			hasClickedSubmit: false,
 			hasError: false,
-			filters: {}
+			filters: {},
+			filterResetEvents: []
 		}
 	},
 	componentDidMount: function () {
@@ -64,32 +65,17 @@ export default React.createClass({
 		return typeof filters[oneFilterName] !== 'undefined'
 	},
 	handleReset: function (e) {
-		console.log('in reset in panel')
-		let filters = this.state.filters
-
-		React.Children.forEach(this.props.children, this.iterationRows(this.resetFilterValue))
-
-		this.resetAllFilters()
-		this.forceUpdate(this.props.onReset)
+		this.triggerColumnResetHandles();
+		this.props.onReset();
 	},
-	resetAllFilters: function() {
-		let filters = this.state.filters
+	triggerColumnResetHandles: function() {
+		let resetHandles = this.state.filterResetEvents
 
-		for(let filterName in filters) {
-			filters[filterName].value = filters[filterName].defaultValue
-			filters[filterName].isValid = true
-		}
+		resetHandles.forEach(function(elem) {
+			let handle = elem.handle
 
-		this.setState({
-			filters: filters
+			handle()
 		})
-	},
-	resetFilterValue: function(columnComponent) {
-		let filters = this.state.filters
-		let filterNameInComponent = columnComponent.props.filterName
-
-		// TODO reset filter
-		columnComponent.props.filterValue = filters[filterNameInComponent].defaultValue
 	},
 	handleSubmit: function (e) {
 		let hasError
@@ -137,6 +123,18 @@ export default React.createClass({
 		}
 
 		return wrappedFilters
+	},
+	changeFilter: function(name, value, isValid) {
+		let filters = this.state.filters
+
+		filters[name] = {
+			value: value,
+			isValid: isValid
+		}
+
+		this.setState({
+			filters: filters
+		})
 	},
 	doPairingVerifyForFilter: function(srcFilterValue, pairingVerify) {
 		let isValid = true
@@ -186,16 +184,17 @@ export default React.createClass({
 
 		return isValid
 	},
-	changeFilter: function(name, value, isValid) {
-		let filters = this.state.filters
-
-		filters[name] = {
-			value: value,
-			isValid: isValid
+	registerColumnResetHandles: function(name, handle = emptyFn) {
+		let resetHandle = {
+			name: name,
+			handle: handle
 		}
+		let filterResetEvents = this.state.filterResetEvents
+
+		filterResetEvents.push(resetHandle)
 
 		this.setState({
-			filters: filters
+			filterResetEvents: filterResetEvents
 		})
 	},
 	renderTipsText: function () {
@@ -209,7 +208,8 @@ export default React.createClass({
 		let rows = React.Children.map(this.props.children,
 			(row) => React.cloneElement(row, {
 				changeFilter: this.changeFilter,
-				doPairingVerifyForFilter: this.doPairingVerifyForFilter
+				doPairingVerifyForFilter: this.doPairingVerifyForFilter,				
+				registerColumnResetHandles: this.registerColumnResetHandles
 			})
 		)
 
