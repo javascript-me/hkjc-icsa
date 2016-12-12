@@ -21,6 +21,7 @@ const Datetime = React.createClass({
 		timeConstraints: TYPES.object,
 		viewMode: TYPES.oneOf(['years', 'months', 'days']),
 		isValidDate: TYPES.func,
+		warning: TYPES.bool,
 		open: TYPES.bool,
 		strictParsing: TYPES.bool,
 		closeOnSelect: TYPES.bool,
@@ -385,9 +386,13 @@ const Datetime = React.createClass({
 
 		let content = this.state.selectedDate || this.props.value ? isValid : isEmpty
 
+		let inputGroupClassName = ''
+
 		if (this.props.input) {
+			inputGroupClassName = 'input-group ' + (this.props.warning ? 'warning' : '')
+
 			children = 	<div className='form-group calendar-group'>
-				<div key='open' className='input-group' onClick={this.openCalendar}>
+				<div key='open' className={inputGroupClassName} onClick={this.openCalendar}>
 					{content}
 					<span key='icon-open' className='input-group-addon'><i className='icon-date' /></span>
 				</div>
