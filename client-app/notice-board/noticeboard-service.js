@@ -31,27 +31,6 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 		} catch (failure) {
 		}
 	},
-	buildRequest () {
-		let profile = LoginService.getProfile() || {}
-		let requestData = {
-			username: profile.username
-		}
-
-		return requestData
-	},
-
-	emitChange () {
-		this.emit('change')
-	},
-
-	addChangeListener (callback) {
-		this.on('change', callback)
-	},
-
-	removeChangeListener (callback) {
-		this.removeListener('change', callback)
-	},
-	/**/
 	async getAllCategories () {
 		try {
 			let result = await this.sendRequestToGetList('api/notice-board/categories')
@@ -66,6 +45,24 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 			let result = await this.sendRequestToGetList('api/notice-board/competitions')
 			this.competitionsList = result
 			console.log(this.competitionsList)
+			this.emitChange()
+		} catch (failure) {
+		}
+	},
+	async getAllCountries () {
+		try {
+			let result = await this.sendRequestToGetList('api/notice-board/countries')
+			this.countriesList = result
+			console.log(this.countriesList)
+			this.emitChange()
+		} catch (failure) {
+		}
+	},
+	async getAllContinents () {
+		try {
+			let result = await this.sendRequestToGetList('api/notice-board/continents')
+			this.continentsList = result
+			console.log(this.continentsList)
 			this.emitChange()
 		} catch (failure) {
 		}
@@ -115,6 +112,28 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 		} catch (failure) {
 		}
 	},
+	buildRequest () {
+		let profile = LoginService.getProfile() || {}
+		let requestData = {
+			username: profile.username
+		}
+
+		return requestData
+	},
+
+	emitChange () {
+		this.emit('change')
+	},
+
+	addChangeListener (callback) {
+		this.on('change', callback)
+	},
+
+	removeChangeListener (callback) {
+		this.removeListener('change', callback)
+	},
+	/**/
+
 
 	sendRequestToGetList(requestURL){
 		return $.get(requestURL)

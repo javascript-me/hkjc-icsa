@@ -8,6 +8,9 @@ import PubSub from '../pubsub'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Moment from 'moment'
 import ClassNames from 'classnames'
+import FilterPanel from '../filter-panel'
+import FilterPanelRow from '../filter-panel/filter-panel-row'
+import FilterPanelColumn from '../filter-panel/filter-panel-column'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -45,7 +48,7 @@ export default React.createClass({
 		let originDateTimeTo = getOrginDateTimeTo()
 		return {
 			data: [],
-			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication \\ Noticeboard',
+			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication ',
 			exportFormat: 'pdf',
 			keyword: '',
 			isShowingMoreFilter: false,
@@ -68,7 +71,16 @@ export default React.createClass({
 				paginationSize: 7,
 				paginationClassContainer: 'text-center'
 			},
-			noticesList: []
+			noticesList: [],
+			categoriesList: [],
+			competitionsList:[],
+			continentsList:[],
+			countriesList:[],
+			inplaysList:[],
+			matchesList:[],
+			prioritiesList:[],
+			sportsList:[],
+			statusesList:[]
 		}
 
 
@@ -78,15 +90,28 @@ export default React.createClass({
 		NoticeboardService.addChangeListener(this.onChange)
 		/*Testing purpose*/
 		NoticeboardService.getAllCategories()
+		NoticeboardService.getAllCompetitions()
+		NoticeboardService.getAllContinents()
+		NoticeboardService.getAllCountries()
+		NoticeboardService.getAllInplays()
+		NoticeboardService.getAllMatches()
+		NoticeboardService.getAllPriorities()
+		NoticeboardService.getAllSports()
+		NoticeboardService.getAllStatuses()
 		NoticeboardService.addChangeListener(this.onChange)
+		document.addEventListener('click', this.pageClick, false)
+	},
+	pageClick: function (event) {
+		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
+			this.setState({isClickForSearching: false})
+			return
+		}
 
+		this.hideMoreFilter()
 	},
 	componentWillUnmount: function () {
 		NoticeboardService.removeChangeListener(this.onChange.bind(this))
 		document.removeEventListener('click', this.pageClick, false)
-	},
-	pageClick: function (event) {
-
 	},
 	onChange () {
 		this.setState({noticesList: NoticeboardService.noticesList})
@@ -152,8 +177,31 @@ export default React.createClass({
 			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH])
 		})
 	},
+	handleChange (name, value) {
+		console.log('In Auditlog change', name, value)
+	},
 
-
+	handleFilterReset: function() {
+		console.log('in auditlog reset')
+	},
+	handleFilterSubmit: function(filters) {
+		console.log('in auditlog submit', filters)
+	},
+	statusFormatter(cell, row) {
+		if (cell === 'Acknowledged')  return '<img src="notice-board/Tick.svg" />'
+		return '<img src="notice-board/Mail.svg" />'
+	},
+	priorityFormatter(cell, row) {
+		if (cell === 'Critical') return '<img src="notice-board/Critical.svg" />'
+		if (cell === 'High') return '<img src="notice-board/High.svg" />'
+		if (cell === 'Medium') return '<img src="notice-board/Medium.svg" />'
+		if (cell === 'Low') return '<img src="notice-board/Low.svg" />'
+	},
+	detailFormatter(cell, row){
+		console.log(cell)
+		if (row.priority === 'Critical') return  <span className='critical-message-detail'>{cell}</span>
+		return cell
+	},
 
 	render () {
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
@@ -164,7 +212,7 @@ export default React.createClass({
 			<div className='conatainer-alert '>
 				<div className='row page-header'>
 					<p className='hkjc-breadcrumb'>{this.state.pageTitle}</p>
-					<h1>Noticeboard</h1>
+					<h1>Noticeboard Monitor</h1>
 				</div>
 				<div className='row page-content'>
 					{/* Search Critiria Row */}
@@ -184,7 +232,35 @@ export default React.createClass({
 								</div>*/}
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
-								<SearchEnquiryPanel setFilterEvent={this.setFilters} />
+								{/*<SearchEnquiryPanel setFilterEvent={this.setFilters} />*/}
+								<FilterPanel onReset={this.handleFilterReset} onSubmit={this.handleFilterSubmit}>
+									<FilterPanelRow>
+										{/*<FilterPanelColumn filterName="alertName" filterTitle="Alert Name" onChange={this.handleChange}>
+										</FilterPanelColumn>*/}
+										<FilterPanelColumn filterName="priority" filterTitle="Priority" ctrlType="select" dataSource={NoticeboardService.prioritiesList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="distributionDateTimeFrom" filterTitle="Distribution Date & Time From" filterValue="08 Dec 2016 23:59" ctrlType="calendar" onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="distributionDateTimeTo" filterTitle="Distribution Date & Time To" filterValue="08 Dec 2016 23:59" ctrlType="calendar" onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="sportsType" filterTitle="Sports Type" ctrlType="select" dataSource={NoticeboardService.sportsList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="competition" filterTitle="Competition" ctrlType="select" dataSource={NoticeboardService.competitionsList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="match" filterTitle="Match (Race for HR)" ctrlType="select" dataSource={NoticeboardService.matchesList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="inPlay" filterTitle="In-Play" ctrlType="select" dataSource={NoticeboardService.inplaysList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="continent" filterTitle="Continent" ctrlType="select" dataSource={NoticeboardService.continentsList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="country" filterTitle="Country" ctrlType="select" dataSource={NoticeboardService.countriesList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="messageCategory" filterTitle="Category" ctrlType="select" dataSource={NoticeboardService.categoriesList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+										<FilterPanelColumn filterName="alertStatus" filterTitle="Alert Status" ctrlType="select" dataSource={NoticeboardService.statusesList} onChange={this.handleChange}>
+										</FilterPanelColumn>
+									</FilterPanelRow>
+								</FilterPanel>
 							</div>
 						</div>
 					</div>
@@ -193,14 +269,13 @@ export default React.createClass({
 					<div className='table-container '>
 						<TableComponent data={ NoticeboardService.noticesList } pagination={true} options={this.state.tableOptions} striped={true} keyField='id' tableHeaderClass="table-header" tableContainerClass="auditlog-table">
 							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
-							<TableHeaderColumn dataField='alert_status' dataSort={true}>Alert Status</TableHeaderColumn>
-							<TableHeaderColumn dataField='system_distribution_time' dataSort={true}>System Distribution Time</TableHeaderColumn>
-							<TableHeaderColumn dataField='message_category' dataSort={true}>Message Category</TableHeaderColumn>
+							<TableHeaderColumn dataField='priority' dataSort={true} dataFormat={ this.priorityFormatter }>Priority</TableHeaderColumn>
+							<TableHeaderColumn dataField='system_distribution_time' dataSort={true}> Distribution Date & Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_status' dataSort={true} dataFormat={ this.statusFormatter }>Status</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_category' dataSort={true}>Category</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_name' dataSort={true}>Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_detail' dataSort={true} dataFormat={ this.detailFormatter }>Detail</TableHeaderColumn>
 							<TableHeaderColumn dataField='recipient' dataSort={true}>Recipient</TableHeaderColumn>
-							<TableHeaderColumn dataField='alert_name' dataSort={true}>Alert Name</TableHeaderColumn>
-							<TableHeaderColumn dataField='priority' dataSort={true}>Priority</TableHeaderColumn>
-							<TableHeaderColumn dataField='message_detail' dataSort={true}>Message Detail</TableHeaderColumn>
-							<TableHeaderColumn dataField='assignee' dataSort={true}>Assignee</TableHeaderColumn>
 						</TableComponent>
 					</div>
 					<div className='vertical-gap'>

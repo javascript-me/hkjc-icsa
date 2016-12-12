@@ -185,63 +185,63 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
 router.get('/categories', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allCategories
+	let result = allCategories.categories
 	res.status(status)
 	res.send(result)
 })
 router.get('/competitions', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allCompetitions
+	let result = allCompetitions.competitions
 	res.status(status)
 	res.send(result)
 })
 router.get('/continents', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allContinents
+	let result = allContinents.continents
 	res.status(status)
 	res.send(result)
 })
 router.get('/countries', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allCountries
+	let result = allCountries.countries
 	res.status(status)
 	res.send(result)
 })
 router.get('/inplays', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allInplays
+	let result = allInplays.inplay
 	res.status(status)
 	res.send(result)
 })
 router.get('/matches', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allMatches
+	let result = allMatches.matches
 	res.status(status)
 	res.send(result)
 })
 router.get('/priorities', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allPriorities
+	let result = allPriorities.priorities
 	res.status(status)
 	res.send(result)
 })
 router.get('/sports', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allSports
+	let result = allSports.sports
 	res.status(status)
 	res.send(result)
 })
 router.get('/statuses', (req, res) => {
 	let data = []
 	let status = 200
-	let result = allStatuses
+	let result = allStatuses.status
 	res.status(status)
 	res.send(result)
 })

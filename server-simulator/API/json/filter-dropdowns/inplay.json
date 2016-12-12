@@ -1,19 +1,6 @@
 {
   "inplay" : [
-    {"id": 1, "value": "Auto Odds Change Trigger"},
-    {"id": 2, "value": "Bet Type and Feature"},
-    {"id": 3, "value": "Customer"},
-    {"id": 4, "value": "Data Dissemination"},
-    {"id": 5, "value": "Event"},
-    {"id": 6, "value": "Inbound Data"},
-    {"id": 7, "value": "Live Betting Algorithm Comprehensive Detail"},
-    {"id": 8, "value": "Odds"},
-    {"id": 9, "value": "Parameters and Configurations"},
-    {"id": 10, "value": "Pre-match Pricing Algorithm Comprehensive Detail"},
-    {"id": 11, "value": "Result"},
-    {"id": 12, "value": "Result Rectification / Adjustment"},
-    {"id": 13, "value": "Risk Limit"},
-    {"id": 14, "value": "Selling Control"},
-    {"id": 15, "value": "Settlement (Transaction)"}
+    {"id": 1, "value": "In-Play"},
+    {"id": 2, "value": "Non In-Play"}
   ]
 }
