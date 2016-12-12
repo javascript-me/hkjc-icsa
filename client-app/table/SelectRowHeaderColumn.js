@@ -11,6 +11,6 @@ class SelectRowHeaderColumn extends Component {
 	}
 }
 SelectRowHeaderColumn.propTypes = {
-	children: PropTypes.node
+	children: PropTypes.element
 }
 export default SelectRowHeaderColumn

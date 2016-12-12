@@ -31,7 +31,7 @@ ExpandComponent.propTypes = {
 	className: PropTypes.string,
 	isSelected: PropTypes.bool,
 	hidden: PropTypes.bool,
-	children: PropTypes.object,
+	children: PropTypes.element,
 	selectRow: PropTypes.object
 }
 

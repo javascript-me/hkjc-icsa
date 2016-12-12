@@ -84,10 +84,13 @@ TableColumn.propTypes = {
 	hidden: PropTypes.bool,
 	className: PropTypes.string,
 	columnTitle: PropTypes.string,
-	children: PropTypes.node,
+	children: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.element
+	]),
 	width: PropTypes.string,
 	onEdit: PropTypes.func,
-	cellEdit: PropTypes.element
+	cellEdit: PropTypes.object
 }
 
 TableColumn.defaultProps = {
