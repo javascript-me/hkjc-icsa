@@ -203,7 +203,7 @@ class TableComponent extends Component {
 	componentDidMount () {
 		this._adjustTable()
 		window.addEventListener('resize', this._adjustTable.bind(this))
-		this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader)
+		this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader.bind(this))
 	}
 
 	componentWillUnmount () {
@@ -778,7 +778,9 @@ class TableComponent extends Component {
 						firstPage={options.firstPage || Const.FIRST_PAGE}
 						lastPage={options.lastPage || Const.LAST_PAGE}
 						hideSizePerPage={options.hideSizePerPage}
-						paginationClassContainer={options.paginationClassContainer} />
+						paginationClassContainer={options.paginationClassContainer}
+						showMinimalView={options.showMinimalView}
+						hideDisable={options.hideDisable} />
 				</div>
 			)
 		}

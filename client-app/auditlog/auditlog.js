@@ -80,7 +80,6 @@ export default React.createClass({
 				defaultSortName: 'date_time',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
-				paginationSize: 7,
 				paginationClassContainer: 'text-center'
 			},
 			auditlogs: []
@@ -294,7 +293,7 @@ export default React.createClass({
 				<div>
 					<div className='tableComponent-container'>
 						<TableComponent data={AuditlogStore.auditlogs} pagination options={this.state.tableOptions} striped keyField='id'
-							tableHeaderClass='table-header' tableContainerClass='auditlog-table' >
+							tableHeaderClass='table-header' tableContainerClass='base-table' >
 							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
 							<TableHeaderColumn dataField='date_time' dataSort>Date/Time</TableHeaderColumn>
 							<TableHeaderColumn dataField='user_id' dataSort>User ID</TableHeaderColumn>
