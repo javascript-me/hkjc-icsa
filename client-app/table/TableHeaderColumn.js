@@ -225,7 +225,7 @@ TableHeaderColumn.propTypes = {
 	children: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.element
-	]),
+	])
 }
 
 TableHeaderColumn.defaultProps = {
