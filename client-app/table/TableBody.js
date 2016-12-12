@@ -328,8 +328,8 @@ TableBody.propTypes = {
 	expandComponent: PropTypes.func,
 	expandRowBgColor: PropTypes.string,
 	adjustHeaderWidth: PropTypes.func,
-	cellEdit: PropTypes.element,
-	selectRow: PropTypes.element,
+	cellEdit: PropTypes.object,
+	selectRow: PropTypes.object,
 	trClassName: PropTypes.string,
 	onRowMouseOut: PropTypes.func,
 	onRowMouseOver: PropTypes.func

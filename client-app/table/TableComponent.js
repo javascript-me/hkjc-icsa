@@ -202,7 +202,7 @@ class TableComponent extends Component {
 
 	componentDidMount () {
 		this._adjustTable()
-		window.addEventListener('resize', this._adjustTable)
+		window.addEventListener('resize', this._adjustTable.bind(this))
 		this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader)
 	}
 
@@ -1100,7 +1100,7 @@ TableComponent.propTypes = {
 	ignoreSinglePage: PropTypes.bool,
 	expandableRow: PropTypes.func,
 	expandComponent: PropTypes.func,
-	children: PropTypes.element,
+	children: PropTypes.array,
 	multiColumnSearch: PropTypes.bool
 }
 

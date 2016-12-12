@@ -76,7 +76,7 @@ TableHeader.propTypes = {
 	isSelectAll: PropTypes.oneOf([ true, 'indeterminate', false ]),
 	sortIndicator: PropTypes.bool,
 	customComponent: PropTypes.func,
-	children: PropTypes.element
+	children: PropTypes.array
 }
 
 export default TableHeader

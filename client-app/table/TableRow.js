@@ -92,8 +92,8 @@ TableRow.propTypes = {
 	onRowMouseOut: PropTypes.func,
 	onRowMouseOver: PropTypes.func,
 	unselectableRow: PropTypes.bool,
-	children: PropTypes.element,
-	selectRow: PropTypes.element,
+	children: PropTypes.oneOfType([ PropTypes.object, PropTypes.array, PropTypes.element ]),
+	selectRow: PropTypes.object,
 	className: PropTypes.string
 }
 TableRow.defaultProps = {
