@@ -7,12 +7,12 @@ export default React.createClass({
 	propTypes: {
 		changeFilter: React.PropTypes.func,
 		doPairingVerifyForFilter: React.PropTypes.func,
-		registerColumnResetHandles: React.PropTypes.func
+		registerColumnHandles: React.PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {
 			doPairingVerifyForFilter: emptyFn,
-			registerColumnResetHandles: emptyFn
+			registerColumnHandles: emptyFn
 		}
 	},
 	getInitialState () {
@@ -32,7 +32,7 @@ export default React.createClass({
 				{React.cloneElement(column, {
 					onChange: this.props.changeFilter,
 					doPairingVerify: this.props.doPairingVerifyForFilter,
-					registerResetHandle: this.props.registerColumnResetHandles
+					registerColumnHandles: this.props.registerColumnHandles
 				})}
 			</div>
 		})

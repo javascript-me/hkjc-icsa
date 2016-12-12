@@ -23,7 +23,7 @@ export default React.createClass({
 		ctrlType: React.PropTypes.oneOf(['textbox', 'select', 'multi-select', 'calendar']),
 		onChange: React.PropTypes.func,
 		doPairingVerify: React.PropTypes.func,
-		registerResetHandle: React.PropTypes.func
+		registerColumnHandles: React.PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {
@@ -32,12 +32,14 @@ export default React.createClass({
 			ctrlType: 'textbox',
 			pairingVerify: [],
 			onChange: emptyFn,
-			doPairingVerify: emptyFn
+			doPairingVerify: emptyFn,
+			registerColumnHandles: emptyFn
 		}
 	},
 	getInitialState () {
 		return {
 			isValid: true,
+			showWarning: false,
 			filterValue: this.props.filterValue,
 			submittedValue: ''
 		}
@@ -45,7 +47,7 @@ export default React.createClass({
 	componentDidMount: function () {
 		let p = this.props
 
-		p.registerResetHandle(p.filterName, this.generateResetHandle())
+		p.registerColumnHandles(p.filterName, this.generateResetHandle(), this.generateSetValidHandle(), this.generateShowErrorHandle())
 	},
 	componentWillUnmount: function () {
 
@@ -55,7 +57,23 @@ export default React.createClass({
 
 		return () => {
 			this.setState({
-				filterValue: defaultValue
+				filterValue: defaultValue,
+				isValid: true,
+				showWarning: false
+			})
+		}
+	},
+	generateSetValidHandle: function() {
+		return isValid => {
+			this.setState({
+				isValid: isValid
+			})
+		}
+	},
+	generateShowErrorHandle: function() {
+		return () => {
+			this.setState({
+				showWarning: true
 			})
 		}
 	},
@@ -83,7 +101,7 @@ export default React.createClass({
 		this.handleChange(this.props.filterName, e.target.value)
 	},
 	handleChange: function(name, value) {
-		let isValid = this.verifyFilterValidation()
+		let isValid = this.verifyFilterValidation(value)
 
 		this.setState({
 			isValid: isValid
@@ -91,10 +109,8 @@ export default React.createClass({
 
 		this.props.onChange(name, value, isValid)
 	},
-	verifyFilterValidation: function() {
+	verifyFilterValidation: function(filterValue) {
 		let isValid = true
-		let filterName = this.props.filterName
-		let filterValue = this.state.filterValue
 		let customVerification = this.props.customVerification
 		let pairingVerify = this.props.pairingVerify
 		let typeofCustomerVerify = Object.prototype.toString.call(customVerification)
@@ -106,7 +122,7 @@ export default React.createClass({
 		}
 
 		// Step 2 check column by props.customVerification
-		if(isValid && filterValue && typeofCustomerVerify !== 'undefined') {
+		if(isValid && filterValue && typeofCustomerVerify !== '[object Undefined]') {
 			if(typeofCustomerVerify === '[object Function]') {
 				isValid = customVerification(filterValue)
 			} else if(typeofCustomerVerify === '[object RegExp]') {
@@ -116,7 +132,7 @@ export default React.createClass({
 
 		// Step 3 check column by props.pairingVerify
 		if(isValid && filterValue && typeofPairingVerify === '[object Array]' && typeofPairingVerify.length) {
-			isValid = this.props.doPairingVerify(filterValue, pairingVerify)
+			isValid = this.props.doPairingVerify(filterValue, this.props.ctrlType, pairingVerify)
 		}
 
 		return isValid;
@@ -140,8 +156,10 @@ export default React.createClass({
 		return ctrl
 	},
 	getTextboxCtrl: function () {
+		let className = `form-control ${this.state.showWarning && !this.state.isValid ? 'has-error' : ''}`
+
 		return <input type='text'
-			className='form-control'
+			className={className}
 			placeholder='Type in keyword'
 			value={this.state.filterValue}
 			onChange={this.handleTextChange} />
@@ -149,7 +167,7 @@ export default React.createClass({
 	getCalendarCtrl: function () {
 		return <Calendar
 			value={this.state.filterValue}
-			warning={!this.state.isValid}
+			warning={this.state.showWarning && !this.state.isValid}
 			onChange={this.handleDateChange} />
 	},
 	getSelectCtrl: function () {
@@ -157,6 +175,7 @@ export default React.createClass({
 			key={this.props.filterName}
 			datas={this.props.dataSource}
 			selectedVal={this.state.filterValue}
+			warning={this.state.showWarning && !this.state.isValid}
 			handleVal={this.handleTextChange} />
 	},
 	render: function () {

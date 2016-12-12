@@ -1,10 +1,19 @@
 import React from 'react'
+import Moment from 'moment'
+import _ from 'underscore'
+import PubSub from '../pubsub'
 
 const emptyFn = () => {}
+let tokenTriggerSearch
+let tokenRemoveFilter
+let tokenResetFilters
 
 export default React.createClass({
 	displayName: 'FilterPanel',
 	propTypes: {
+		triggerSearchTopic: React.PropTypes.string, 
+		resetFiltersTopic: React.PropTypes.string,
+		removeOneFilterTopic: React.PropTypes.string,
 		onReset: React.PropTypes.func,
 		onSubmit: React.PropTypes.func
 	},
@@ -19,11 +28,20 @@ export default React.createClass({
 			hasClickedSubmit: false,
 			hasError: false,
 			filters: {},
-			filterResetEvents: [],
+			originFilters: {},
+			filterHandles: {},
 			columnCount: 0
 		}
 	},
 	componentDidMount: function () {
+		this.initialFiltersAndLayoutInfo()
+		this.initialComponentSubscription()
+	},
+
+	componentWillUnmount: function () {
+		this.clearComponentSubscriptionWhenUnmount()
+	},
+	initialFiltersAndLayoutInfo: function() {
 		let maxColumnCount = 0
 		let panelOperateFn = row => {
 			this.iterateChilren(row, this.getDefaultFilter)
@@ -35,9 +53,40 @@ export default React.createClass({
 			columnCount: maxColumnCount
 		})
 	},
+	initialComponentSubscription: function() {
+		tokenTriggerSearch = PubSub.subscribe(PubSub[this.props.triggerSearchTopic], () => {
+			this.handleSubmit()
+		})
 
-	componentWillUnmount: function () {
+		tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, publicFilters) => {
+			let filters = this.state.filters
+			let originFilters = this.state.originFilters
+			let filterHandles = this.state.filterHandles
+			let filterNames = publicFilters.name.split(',')
+			let resetHandle
 
+			filterNames.forEach((filterName) => {
+				filters[filterName] = originFilters[filterName]
+				resetHandle = filterHandles[filterName].reset
+
+				if(typeof resetHandle === 'function') {
+					resetHandle()
+				}
+			})
+
+			this.setState({
+				filters: filters
+			})
+		})
+
+		tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => {
+			this.handleReset()
+		})
+	},
+	clearComponentSubscriptionWhenUnmount: function() {
+		PubSub.unsubscribe(tokenTriggerSearch)
+		PubSub.unsubscribe(tokenRemoveFilter)
+		PubSub.unsubscribe(tokenResetFilters)
 	},
 	iterateChilren: function (parent, operationFn) {
 		React.Children.forEach(parent.props.children, operationFn)
@@ -49,8 +98,7 @@ export default React.createClass({
 
 		if(this.existsDuplicateFilterName(filters, filterName)) {
 			throw new Error(
-				'Duplicate filter name `' + filterName + '` supplied to' +
-				' filter-panel. Please keep every filter name is unique.'
+				`Duplicate filter name ${filterName} supplied to filter-panel. Please keep every filter name is unique.`
 			);
 		}
 
@@ -61,26 +109,23 @@ export default React.createClass({
 		}
 
 		this.setState({
-			filters: filters
+			filters: filters,
+			originFilters: _.clone(filters)
 		})
 	},
 	existsDuplicateFilterName: function(filters, oneFilterName) {
 		return typeof filters[oneFilterName] !== 'undefined'
 	},
-	handleReset: function (e) {
+	handleReset: function () {
 		this.triggerColumnResetHandles();
 		this.props.onReset();
-	},
-	triggerColumnResetHandles: function() {
-		let resetHandles = this.state.filterResetEvents
 
-		resetHandles.forEach(function(elem) {
-			let handle = elem.handle
-
-			handle()
+		this.setState({
+			filters: _.clone(this.state.originFilters),
+			hasError: false
 		})
 	},
-	handleSubmit: function (e) {
+	handleSubmit: function () {
 		let hasError
 		let wrappedFilterToSubmitFormat
 
@@ -94,7 +139,9 @@ export default React.createClass({
 			hasError: hasError
 		})
 
-		if (!hasError) {
+		if (hasError) {
+			this.triggerColumnShowWarningHandles()
+		} else {
 			// Step 3 if no error, call the onSubmit event and provide state.filters
 			wrappedFilterToSubmitFormat = this.wrapFilterToSubmitFormat()
 			this.props.onSubmit(wrappedFilterToSubmitFormat)			
@@ -122,10 +169,29 @@ export default React.createClass({
 		let wrappedFilters = {}
 
 		for(let filterName in filters) {
-			wrappedFilters[filterName] = filters[filterName].value
+			if(filters[filterName].value) {
+				wrappedFilters[filterName] = filters[filterName].value
+			}
 		}
 
 		return wrappedFilters
+	},
+	triggerColumnResetHandles: function() {
+		this.triggerColumnHandles('reset')
+	},	
+	triggerColumnShowWarningHandles: function() {
+		this.triggerColumnHandles('showWarning')
+	},
+	triggerColumnHandles: function(handleName) {
+		let filterHandles = this.state.filterHandles
+
+		for(let filterName in filterHandles) {
+			let handle = filterHandles[filterName][handleName]
+
+			if(typeof handle === 'function') {
+				handle()
+			}
+		}
 	},
 	changeFilter: function(name, value, isValid) {
 		let filters = this.state.filters
@@ -139,10 +205,11 @@ export default React.createClass({
 			filters: filters
 		})
 	},
-	doPairingVerifyForFilter: function(srcFilterValue, pairingVerify) {
+	doPairingVerifyForFilter: function(srcFilterValue, ctrlType, pairingVerify) {
 		let isValid = true
 		let operation
 		let partners
+		let me = this
 
 		if(pairingVerify && pairingVerify.length) {
 			pairingVerify.every(function(verifyRule, index) {
@@ -150,8 +217,7 @@ export default React.createClass({
 				partners = verifyRule.partners || []
 
 				partners.every(function(partner) {
-					isValid = isValid 
-						&& this.pairingVerifyWithOneAnotherFilter(srcFilterValue, operation, partner)
+					isValid = me.pairingVerifyWithOneAnotherFilter(ctrlType, srcFilterValue, operation, partner)
 
 					return isValid
 				})
@@ -161,43 +227,61 @@ export default React.createClass({
 
 		return isValid
 	},
-	pairingVerifyWithOneAnotherFilter: function(srcFilterValue, operation, destFilterName) {
+	pairingVerifyWithOneAnotherFilter: function(ctrlType, srcFilterValue, operation, destFilterName) {
 		let isValid = true
-		let destFilterValue = this.state.filters[destFilterName]
+		let destFilter = this.state.filters[destFilterName]
+		let destFilterHandles = this.state.filterHandles[destFilterName] || {}
+		let destFilterValue
+		let destSetValidHandle
+
+		if(!destFilter) {
+			throw new Error(
+				`In filter-panel component, could not find destination filter when doing pairing verify, the destination filter name is ${destFilterName}.`
+			);
+		}
+
+		destFilterValue = destFilter.value
+		destSetValidHandle = destFilterHandles.setValid
+
+		srcFilterValue = ctrlType === 'calendar' ? Moment(srcFilterValue, 'DD MMM YYYY HH:mm').valueOf() : srcFilterValue
+		destFilterValue = ctrlType === 'calendar' ? Moment(destFilterValue, 'DD MMM YYYY HH:mm').valueOf() : destFilterValue
 
 		switch(operation) {
 			case '>':
-				isValid = srcFilterValue > destFilterName
+				isValid = srcFilterValue > destFilterValue
 				break
 			case '>=':
-				isValid = srcFilterValue >= destFilterName
+				isValid = srcFilterValue >= destFilterValue
 				break
 			case '==':
-				isValid = srcFilterValue === destFilterName
+				isValid = srcFilterValue === destFilterValue
 				break
 			case '<=':
-				isValid = srcFilterValue <= destFilterName
+				isValid = srcFilterValue <= destFilterValue
 				break
 			case '<':
-				isValid = srcFilterValue < destFilterName
+				isValid = srcFilterValue < destFilterValue
 				break
 			default:
 				break
 		}
 
+		if(!isValid && typeof destSetValidHandle === 'function') {
+			destSetValidHandle(isValid)
+		}
+
 		return isValid
 	},
-	registerColumnResetHandles: function(name, handle = emptyFn) {
-		let resetHandle = {
-			name: name,
-			handle: handle
-		}
-		let filterResetEvents = this.state.filterResetEvents
+	registerColumnHandles: function(name, resetHandle = emptyFn, setValidHandle = emptyFn, showWarning = emptyFn) {
+		let filterHandles = this.state.filterHandles
 
-		filterResetEvents.push(resetHandle)
+		filterHandles[name] = filterHandles[name] || {}
+		filterHandles[name].reset = resetHandle
+		filterHandles[name].setValid = setValidHandle
+		filterHandles[name].showWarning = showWarning
 
 		this.setState({
-			filterResetEvents: filterResetEvents
+			filterHandles: filterHandles
 		})
 	},
 	renderTipsText: function () {
@@ -212,7 +296,7 @@ export default React.createClass({
 			(row) => React.cloneElement(row, {
 				changeFilter: this.changeFilter,
 				doPairingVerifyForFilter: this.doPairingVerifyForFilter,				
-				registerColumnResetHandles: this.registerColumnResetHandles
+				registerColumnHandles: this.registerColumnHandles
 			})
 		)
 
@@ -230,4 +314,3 @@ export default React.createClass({
 		</div>
 	}
 })
-
