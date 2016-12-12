@@ -124,6 +124,7 @@ export default React.createClass({
 				<div className='content user-delegation-table' >
 					{delegationUpdate
 					? <TableComponent
+						selectRow = {this.selectRowProp}
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
