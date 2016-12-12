@@ -392,6 +392,14 @@ export default React.createClass({
 		return filterBlockes
 	},
 
+	/*
+	 * Sample of filters: 
+	 * { dateTimeFrom: '08 Dec 2016 23:59', type: 'Odds', eventLv1: 'some event' }
+	 */
+	handleFilterSubmit: function(filters) {
+		console.log('in auditlog submit', filters)
+	},
+
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
 			'hover-enabled': !this.state.isShowingMoreFilter
@@ -463,7 +471,12 @@ export default React.createClass({
 										<FilterPanelColumn filterName="textField" filterTitle="Text Field" />
 										<FilterPanelColumn filterName="textDateTimeField" filterTitle="Text Date Time Field" filterValue="08 Dec 2016 23:59" ctrlType="calendar" />
 										<FilterPanelColumn filterName="textSelectField" filterTitle="Text Select Field" ctrlType="select" dataSource={selectdata.typeValue} />
-									</FilterPanelRow>			
+									</FilterPanelRow>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName="textField3" filterTitle="Text Field" />
+										<FilterPanelColumn filterName="textDateTimeField3" filterTitle="Text Date Time Field" filterValue="08 Dec 2016 23:59" ctrlType="calendar" />
+										<FilterPanelColumn filterName="textSelectField4" filterTitle="Text Select Field" ctrlType="select" dataSource={selectdata.typeValue} />
+									</FilterPanelRow>	
 								</FilterPanel>
 							</div>
 						</div>

@@ -67,11 +67,13 @@ export default React.createClass({
 		this.handleChange(this.props.filterName, e.target.value)
 	},
 	handleDateChange: function (date) {
+		let formattedDate = date.format('DD MMM YYYY HH:mm')
+
 		this.setState({
-			filterValue: date.format('DD MMM YYYY HH:mm')
+			filterValue: formattedDate
 		})
 
-		this.handleChange(this.props.filterName, date)
+		this.handleChange(this.props.filterName, formattedDate)
 	},
 	handleSelectChange: function (e) {
 		this.setState({

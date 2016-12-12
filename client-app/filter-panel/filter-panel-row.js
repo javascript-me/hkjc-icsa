@@ -28,7 +28,7 @@ export default React.createClass({
 	},
 	render: function () {
 		let filterColumns = React.Children.map(this.props.children, column => {
-			return <div className='col-sm-3 pd-w10'>
+			return <div className='pd-w10'>
 				{React.cloneElement(column, {
 					onChange: this.props.changeFilter,
 					doPairingVerify: this.props.doPairingVerifyForFilter,

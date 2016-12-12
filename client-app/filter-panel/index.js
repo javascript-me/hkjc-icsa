@@ -19,25 +19,28 @@ export default React.createClass({
 			hasClickedSubmit: false,
 			hasError: false,
 			filters: {},
-			filterResetEvents: []
+			filterResetEvents: [],
+			columnCount: 0
 		}
 	},
 	componentDidMount: function () {
-		React.Children.forEach(this.props.children, this.iterationRows(this.getDefaultFilter))
+		let maxColumnCount = 0
+		let panelOperateFn = row => {
+			this.iterateChilren(row, this.getDefaultFilter)
+			maxColumnCount = Math.max(maxColumnCount, row.props.children.length)
+		}
+
+		this.iterateChilren(this, panelOperateFn)
+		this.setState({
+			columnCount: maxColumnCount
+		})
 	},
 
 	componentWillUnmount: function () {
 
 	},
-	iterationRows: function (columnOperateFn) {
-		return row => { 
-			React.Children.forEach(row.props.children, this.iterationColumns(columnOperateFn)) 
-		}
-	},
-	iterationColumns: function (fn) {
-		return column => {
-			fn(column)
-		}		
+	iterateChilren: function (parent, operationFn) {
+		React.Children.forEach(parent.props.children, operationFn)
 	},
 	getDefaultFilter: function(column) {
 		let filters = this.state.filters
@@ -79,7 +82,7 @@ export default React.createClass({
 	},
 	handleSubmit: function (e) {
 		let hasError
-		let wrapFilterToSubmitFormat
+		let wrappedFilterToSubmitFormat
 
 		// Step 1 reset state.hasError and set hasClickedSubmit to true
 		this.preSubmit()
@@ -93,8 +96,8 @@ export default React.createClass({
 
 		if (!hasError) {
 			// Step 3 if no error, call the onSubmit event and provide state.filters
-			wrapFilterToSubmitFormat = this.wrapFilterToSubmitFormat()
-			this.props.onSubmit(wrapFilterToSubmitFormat)			
+			wrappedFilterToSubmitFormat = this.wrapFilterToSubmitFormat()
+			this.props.onSubmit(wrappedFilterToSubmitFormat)			
 		}
 	},
 	preSubmit: function () {
