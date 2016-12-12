@@ -222,7 +222,7 @@ export default React.createClass({
 	searchAuditlog: async function () {
 		this.setState({
 			selectedKeyword: this.state.keyword
-		}, function() {
+		}, function () {
 			let criteriaOption = this.getSearchCriterias()
 
 			// Get Table Data

@@ -86,7 +86,8 @@ TableColumn.propTypes = {
 	columnTitle: PropTypes.string,
 	children: PropTypes.oneOfType([
 		PropTypes.string,
-		PropTypes.element
+		PropTypes.array,
+		PropTypes.object
 	]),
 	width: PropTypes.string,
 	onEdit: PropTypes.func,

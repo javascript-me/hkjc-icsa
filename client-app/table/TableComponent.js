@@ -866,6 +866,10 @@ class TableComponent extends Component {
 
 	_getCellWidth (cell) {
 		// re-use canvas object for better performance
+		if (cell.textContent.trim() === '' && cell.innerHTML.indexOf('input')) {
+			return -34
+		}
+
 		const computedStyle = getComputedStyle(cell)
 		const font = `${computedStyle.fontSize} ${computedStyle.fontFamily}`
 
