@@ -17,23 +17,19 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		return $.post('api/auditlog/filterAuditlogs', requestData)
 	},
 
-	async searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
-		let requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
+	async searchAuditlogs (criteriaOption) {
+		let requestData = this.buildRequest(criteriaOption)
 
 		try {
 			let result = await this.sendRequest(requestData)
 
 			this.pageData = result.pageData
-			this.auditlogs = result.auditlogs
+			this.auditlogs = result
 			this.emitChange()
 		} catch (failure) {}
 	},
 
-	buildRequest (selectedPageNumber, sortingObject, criteriaOption) {
-		if (sortingObject) {
-			this._sortingObject = sortingObject
-		}
-
+	buildRequest (criteriaOption) {
 		if (criteriaOption) {
 			this._criteriaOption = criteriaOption
 		}
@@ -41,9 +37,6 @@ const AuditlogStore = assign({}, EventEmitter.prototype, {
 		let profile = LoginService.getProfile() || {}
 		let requestData = {
 			username: profile.username,
-			selectedPageNumber: selectedPageNumber,
-			sortingObjectFieldName: this._sortingObject.fieldName,
-			sortingObjectOrder: this._sortingObject.order,
 			betType: this._criteriaOption ? this._criteriaOption.betType : '',
 			keyword: this._criteriaOption ? this._criteriaOption.keyword : ''
 		}

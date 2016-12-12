@@ -160,6 +160,10 @@
         "tab"
       ],
       "no-tabs": "off",
+	  "react/jsx-no-bind": ["off", {
+		"allowArrowFunctions": true,
+		"allowBind": true
+	  }],
       "prefer-arrow-callback": "error",
       "react/jsx-indent": [
         2,
