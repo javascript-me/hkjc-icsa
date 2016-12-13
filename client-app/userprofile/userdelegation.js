@@ -48,7 +48,15 @@ export default React.createClass({
 			defaultSortName: 'userName',  // default sort column name
 			defaultSortOrder: 'desc' // default sort order
 		}
-		return {}
+		this.selectRowProp = {
+			mode: 'checkbox'
+			// clickToSelect: true,
+			// selected: [], // default select on table
+			// bgColor: 'rgb(238, 193, 213)',
+			// onSelect: onRowSelect,
+			// onSelectAll: onSelectAll
+		}
+		return {userDelegation: this.props.userDelegation}
 	},
 	getCheckboxFormat (cell, row) {
 		return (
@@ -70,18 +78,6 @@ export default React.createClass({
 		}
 
 		return calendarFormat
-	},
-
-	getInitialState () {
-		this.selectRowProp = {
-			mode: 'checkbox'
-			// clickToSelect: true,
-			// selected: [], // default select on table
-			// bgColor: 'rgb(238, 193, 213)',
-			// onSelect: onRowSelect,
-			// onSelectAll: onSelectAll
-		}
-		return {userDelegation: this.props.userDelegation}
 	},
 	onAddClick (popupCmp) {
 		popupCmp.show()
