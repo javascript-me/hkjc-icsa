@@ -189,6 +189,26 @@ router.get('/item', (req, res) => {
 	}
 })
 
+router.get('/getDelegation', (req, res) => {
+	let result = {}
+	let departmentData = {}
+	const userID = req.query.userID
+	let departmentId = _.find(accountProfiles, (baseItem, idx) => (userID === baseItem.userID)).departmentId
+	departmentData = _.filter(accountProfiles, (baseItem, idx) => (departmentId === baseItem.departmentId))
+
+	result = _.filter(basicUsers, (baseItem, index) => {
+		let isMyDepUser = false
+		_.each(departmentData, (item, index) => {
+			if (item.userID === baseItem.userID && baseItem.userID !== userID) {
+				isMyDepUser = true
+			}
+		})
+		return isMyDepUser
+	})
+
+	res.send(result)
+})
+
 /**
  * @apiGroup UserProfile
  * @api {POST} /userprofile/update update user profile by user id
