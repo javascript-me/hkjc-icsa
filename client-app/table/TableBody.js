@@ -259,7 +259,7 @@ class TableBody extends Component {
 
 	handleSelectRowColumChange (e, rowIndex) {
 		if (!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell) {
-			this.handleSelectRow.bind(this)(
+			this.handleSelectRow(
 				rowIndex + 1,
 				e.currentTarget.checked,
 				e
@@ -282,7 +282,7 @@ class TableBody extends Component {
 
 		if (this.props.selectRow.clickToSelectAndEditCell && this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
 			const selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) !== -1
-			this.handleSelectRow.bind(this)(rowIndex + 1, !selected, e)
+			this.handleSelectRow(rowIndex + 1, !selected, e)
 		}
 		this.setState(stateObj)
 	}
