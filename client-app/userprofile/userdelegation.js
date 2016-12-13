@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import MutiSelect from '../muti-select'
 import Calendar from '../calendar'
 import _ from 'lodash'
-import moment from 'moment'
+// import moment from 'moment'
 
 import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
@@ -11,22 +11,6 @@ import {TableComponent, TableHeaderColumn} from '../table'
 import AddDelegation from './adddelegation'
 
 let sampleRole = ['Trading User', 'Trading Support Analyst', 'Trading Supervisor']
-const roleFormat = (cell, row, enumObject, index) => {
-	let placeHolder = cell.map(item => item.delegatedRole).join(' ')
-	const options = sampleRole.map((item, idx) => ({label: item, value: item}))
-	const style = {
-		position: 'absulute',
-		width: '90%',
-		top: 0,
-		bottom: 0,
-		left: 0,
-		right: 0,
-		margin: 'auto',
-		height: '30px'
-
-	}
-	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={this.updateRoleInfo} />)
-}
 
 const getCheckboxFormat = (cell, row) => {
 	return (
@@ -35,7 +19,7 @@ const getCheckboxFormat = (cell, row) => {
 }
 
 const roleVeiw = (cell, row, enumObject, index) => {
-	let text = cell.map((item) => (item.delegatedRole)).join(' ')
+	let text = cell && cell.map((item) => (item.delegatedRole)).join(' ')
 	return text
 }
 export default React.createClass({
@@ -67,37 +51,36 @@ export default React.createClass({
 
 		return calendarFormat
 	},
-	roleFormat  (cell, row, enumObject, index)  {
+	roleFormat  (cell, row, enumObject, index) {
 		let placeHolder
-		if(cell && cell.length > 0) {
-			 placeHolder = cell.map(item => item.delegatedRole).join(' ')
+		if (cell && cell.length > 0) {
+			placeHolder = cell.map(item => item.delegatedRole).join(' ')
 		} else {
 			placeHolder = 'select a role'
 		}
-	
-	const options = sampleRole.map((item, idx) => ({label: item, value: item}))
-	const style = {
-		position: 'absulute',
-		width: '90%',
-		top: 0,
-		bottom: 0,
-		left: 0,
-		right: 0,
-		margin: 'auto',
-		height: '30px'
 
-	}
-	const next = _.cloneDeep(this.state.editUserDelegation)
-	const updateRoleInfo = (value) => {
-		let newRoles = _.map(value,(item) => ({delegatedRole:item}))
-		next[index].delegatedRoles = newRoles
-		next[index].changeFlag = true
-		this.setState({editUserDelegation:next})
-	}
-	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={updateRoleInfo} />)
-},
+		const options = sampleRole.map((item, idx) => ({label: item, value: item}))
+		const style = {
+			position: 'absulute',
+			width: '90%',
+			top: 0,
+			bottom: 0,
+			left: 0,
+			right: 0,
+			margin: 'auto',
+			height: '30px'
+		}
+		const next = _.cloneDeep(this.state.editUserDelegation)
+		const updateRoleInfo = (value) => {
+			let newRoles = _.map(value, (item) => ({delegatedRole: item}))
+			next[index].delegatedRoles = newRoles
+			next[index].changeFlag = true
+			this.setState({editUserDelegation: next})
+		}
+		return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={updateRoleInfo} />)
+	},
 	getLastData () {
-		return this.props.delegationUpdate ? this.state.editUserDelegation :  this.state.userDelegation
+		return this.props.delegationUpdate ? this.state.editUserDelegation : this.state.userDelegation
 	},
 
 	getInitialState () {
@@ -114,26 +97,25 @@ export default React.createClass({
 	},
 	onAddClick (popupCmp) {
 		popupCmp.show()
-		
 	},
 	addNewRecord (user) {
-		let newUser = user[0] || {userName:'New User',position:'new position'}
-		let newDelegationID = "Delegate"+(Math.random()*1000000)
-		const newDelegate = Object.assign({},newUser,{delegateStatus:'pedding',secondaryApprover:'please select',changeFlag:true})
-		const  next = _.cloneDeep(this.state.editUserDelegation)
+		let newUser = user[0] || {userName: 'New User', position: 'new position'}
+		let newDelegationID = 'Delegate' + (Math.random() * 1000000)
+		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'pedding', secondaryApprover: 'please select', delegationID: newDelegationID, changeFlag: true})
+		const next = _.cloneDeep(this.state.editUserDelegation)
 		next.unshift(newDelegate)
-		this.setState({editUserDelegation:next})
+		this.setState({editUserDelegation: next})
 	},
 	onDeleteClick () {
 	},
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.userDelegation !== this.state.userDelegation) {
-			this.setState({userDelegation: nextProps.userDelegation,editUserDelegation : _.cloneDeep(nextProps.userDelegation)})
+			this.setState({userDelegation: nextProps.userDelegation, editUserDelegation: _.cloneDeep(nextProps.userDelegation)})
 		}
 	},
 
 	onUpdateClick () {
-		const changeResult = _.filter(this.getLastData(),(item) => (item.changeFlag))
+		const changeResult = _.filter(this.getLastData(), (item) => (item.changeFlag))
 		return changeResult
 		// pass data to server
 	},
@@ -147,12 +129,11 @@ export default React.createClass({
 		// } else if (this.props.delegationUpdate) {
 		// 	return this.renderUpdate(this.props.userDelegation)
 		} else {
-			if(this.props.delegationUpdate) {
+			if (this.props.delegationUpdate) {
 				return this.renderNormal(this.state.editUserDelegation)
 			} else {
 				return this.renderNormal(this.state.userDelegation)
 			}
-			
 		}
 	},
 
