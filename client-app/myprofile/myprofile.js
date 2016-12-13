@@ -31,8 +31,25 @@ export default React.createClass({
 			delegationUpdate: true
 		})
 	},
-	onUpdateClick (delegationCmp) {
-		delegationCmp.onUpdateClick()
+	async onUpdateClick (delegationCmp) {
+		const result = delegationCmp.onUpdateClick()
+		result && result.forEach((item) => { item.changeFlag = null })
+		PopupService.showMessageBox('Are you sure want to update?', () => {
+
+		})
+		let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
+
+		if (UpdateFlag.status) {
+			PopupService.showMessageBox('Update sucess!', () => {
+				this.getUserProfile()
+			})
+		} else {
+			PopupService.showMessageBox('Update fail,please contact the administrator', () => {
+				this.setState({
+					delegationUpdate: false
+				})
+			})
+		}
 	},
 	onCancelClick () {
 		PopupService.showMessageBox('Are you sure want to cancel?', () => {

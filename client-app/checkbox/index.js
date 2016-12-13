@@ -4,7 +4,7 @@ class Checkbox extends Component {
 	componentDidMount () { this.update(this.props.checked) }
 	componentWillReceiveProps (props) { this.update(props.checked) }
 	update (checked) {
-		this.refs.check.indeterminate = checked === 'indeterminate'
+		this.refs.check.indeterminate = this.props.indeterminate
 	}
 	render () {
 		return (
@@ -18,8 +18,9 @@ class Checkbox extends Component {
 
 Checkbox.propTypes = {
 	onChange: PropTypes.func,
-	checked: PropTypes.bool,
-	classInput: PropTypes.number
+	checked: PropTypes.oneOf([ true, 'indeterminate', false ]),
+	classInput: PropTypes.number,
+	indeterminate: PropTypes.bool
 }
 
 export default Checkbox
