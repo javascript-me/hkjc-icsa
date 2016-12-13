@@ -336,8 +336,6 @@ export default React.createClass({
 	},
 
 	onRowClick(notice) {
-		console.log("=================>test")
-		console.log(notice)
 		this.setState(
 			{detail: {
 				id: notice.id,
