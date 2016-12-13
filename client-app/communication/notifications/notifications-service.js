@@ -9,6 +9,11 @@ const getNoticeBoardList = (data) => {
 	return $.get(url, data)
 }
 
+const getNoticeBoardListAndUpdateAcknowledgeStatusById = (data) => {
+	let url = config.url('api/notice-board/update-acknowledge-status/')
+	return $.post(url, data)
+}
+
 const getRemindCount = (data) => {
 	let url = config.url('api/notice-board/remind-count/')
 
@@ -29,6 +34,21 @@ export default {
 
 		try {
 			noticeBoardList = await getNoticeBoardList({username: username})
+			result = noticeBoardList
+		} catch (failure) {
+			// returns null on failure
+			result = null
+		}
+		return result
+	},
+
+	async getNoticesAndUpdateAcknowledgeStatusById (username, id, command) {
+		let result = null
+
+		try {
+			noticeBoardList = await getNoticeBoardListAndUpdateAcknowledgeStatusById(
+				{username: username, id: id, command: command}
+			)
 			result = noticeBoardList
 		} catch (failure) {
 			// returns null on failure
