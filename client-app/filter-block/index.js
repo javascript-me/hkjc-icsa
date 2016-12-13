@@ -10,19 +10,25 @@ export default class FilterBlock extends React.Component {
 	}
 
 	removeHandler () {
-		this.props.removeEvent(this.props.filter)
+		this.props.removeEvent(this.props.dataValue)
 	}
 
 	render () {
+		let filterText = this.props.dataText || this.props.dataValue.value
+
 		return (
 			<span className='filter-block' onClick={this.removeHandler}>
-				{this.props.filter.value}
+				{filterText}
 			</span>
         )
 	}
 }
 
 FilterBlock.propTypes = {
-	filter: React.PropTypes.object,
+	// The text will display in the page
+	dataText: React.PropTypes.string,
+	// The filter real data related
+	dataValue: React.PropTypes.object,
+	// The event which will be triggerd when click on this component
 	removeEvent: React.PropTypes.func
 }

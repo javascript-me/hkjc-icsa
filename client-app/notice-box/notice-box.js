@@ -1,14 +1,19 @@
 import React from 'react'
 import ClassNames from 'classnames'
-import Moment from 'moment'
+import DataFormatter from '../formatter/date-formatter'
 
 export default class NoticeBox extends React.Component {
+
+	constructor (props) {
+		super(props)
+		this.onItemClick = this.onItemClick.bind(this)
+	}
 
 	getPriorityImageSrc (priority) {
 		if (priority === 'Critical') return 'notice-board/Critical.svg'
 		if (priority === 'High') return 'notice-board/High.svg'
-		if (priority === 'Low') return 'notice-board/Low.svg'
 		if (priority === 'Medium') return 'notice-board/Medium.svg'
+		if (priority === 'Low') return 'notice-board/Low.svg'
 		return ''
 	}
 
@@ -22,15 +27,11 @@ export default class NoticeBox extends React.Component {
 	}
 
 	getListBoxClassName () {
-		if (this.props.displayPosition === 'bottom') {
-			return 'list-box'
-		}
-		return 'list-box' + '-' + 'right'
+		return this.props.displayPosition === 'bottom' ? 'list-box-bottom' : 'list-box-right'
 	}
 
 	getNoticeItemClassName (notice) {
 		let needBlink = this.checkNoticeIsImportant(notice)
-
 		return ClassNames(needBlink ? 'blink' : '')
 	}
 
@@ -42,12 +43,12 @@ export default class NoticeBox extends React.Component {
 		return ClassNames('notice-title', isAcknowledged === 'Acknowledged' ? '' : 'bold-text')
 	}
 
-	formatDistibutionTime (dateStr) {
-		return Moment(dateStr).format('DD MMM YYYY HH:mm:ss')
-	}
-
 	textEllipsisWhenOverflow (text) {
 		return text.length > 140 ? (text.substring(0, 140) + '...') : text
+	}
+
+	onItemClick (notice) {
+		this.props.onOpenDetail(notice)
 	}
 
 	render () {
@@ -56,15 +57,16 @@ export default class NoticeBox extends React.Component {
 				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.notices.map((notice, i) => {
-							var messageHTML = <li key={i} className={this.getNoticeTitle(notice.alert_status)}><div className='wrap-text'>{this.textEllipsisWhenOverflow(notice.message_detail)}</div></li>
-
-							return <li className={this.getNoticeItemClassName(notice)}>
+							return <li key={i} className={this.getNoticeItemClassName(notice)}>
 								<ul className='row'>
-									{this.props.displayPosition !== 'bottom' ? messageHTML : null}
+									<li className={this.getNoticeTitle(notice.alert_status)} onClick={() => this.onItemClick(notice)}>
+										<div className='wrap-text'>
+											{this.textEllipsisWhenOverflow(notice.message_detail)}
+										</div>
+									</li>
 									<li><img src={this.getPriorityImageSrc(notice.priority)} /></li>
-									<li className='notice-date'>{this.formatDistibutionTime(notice.system_distribution_time)}</li>
+									<li className='notice-date'>{DataFormatter.toDDMMMYYYHHMMSS(notice.system_distribution_time)}</li>
 									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
-									{this.props.displayPosition === 'bottom' ? messageHTML : null}
 								</ul>
 							</li>
 						})
@@ -76,7 +78,8 @@ export default class NoticeBox extends React.Component {
 }
 
 NoticeBox.propTypes = {
+	onOpenDetail: React.PropTypes.func,
 	visible: React.PropTypes.bool,
-	notices: React.PropTypes.object,
+	notices: React.PropTypes.array,
 	displayPosition: React.PropTypes.string
 }

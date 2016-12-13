@@ -7,8 +7,8 @@ import AuditlogStore from '../auditlog/auditlog-store'
 
 describe('<Paging />', () => {
 	it('onItemClick() should be call when user clicking page number', () => {
-		const onButtonClick = sinon.spy()
-		const wrapper = shallow(
+		let onButtonClick = sinon.spy()
+		let wrapper = shallow(
 			<Paging pageData={sampleData} onChangePage={onButtonClick} />
 		)
 
@@ -28,10 +28,15 @@ describe('<Paging />', () => {
 		itemToBeClicked.simulate('click', {target: {innerText: '<'}})
 		assert.equal(2, onButtonClick.callCount)
 		assert.equal('1', wrapper.instance().currentSelectedPageNumber)
+
+		let items = wrapper.find('.paging ul li')
+		assert.equal(10, items.length)
+
+		items.at(3).simulate('click', {target: {innerText: '3'}})
 	})
 
 	it('renders a paging div', () => {
-		const paging = shallow(<Paging pageData={sampleData} />)
+		let paging = shallow(<Paging pageData={sampleData} />)
 		expect(paging.find('div.paging')).to.have.length(1)
 		expect(paging.find('ul')).to.have.length(1)
 
@@ -40,7 +45,7 @@ describe('<Paging />', () => {
 	})
 
 	it('getUserSelectedPageNumber() should return correct selected page number', () => {
-		const instance = shallow(<Paging pageData={AuditlogStore.pageData} />).instance()
+		let instance = shallow(<Paging pageData={AuditlogStore.pageData} />).instance()
 
 		assert.equal(11, instance.getUserSelectedPageNumber(10, 11, PagingService.DEFAULT_TOTAL_PAGES))
 
@@ -53,7 +58,7 @@ describe('<Paging />', () => {
 	})
 
 	it('isValid() should return false if you are click < when you are already in page 1', () => {
-		const instance = shallow(<Paging pageData={AuditlogStore.pageData} />).instance()
+		let instance = shallow(<Paging pageData={AuditlogStore.pageData} />).instance()
 		assert.isNotOk(instance.isValid(1, '<', 100))
 		assert.isNotOk(instance.isValid(100, '>', 100))
 

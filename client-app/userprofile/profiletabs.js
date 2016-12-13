@@ -20,7 +20,7 @@ export default React.createClass({
 	},
 	getDefaultProps () {
 		return {
-			pageTitle: 'Home \\ Tool & Adminstration \\ User',
+			pageTitle: 'Home \\ Global Tools & Administration \\ User',
 			h1Title: 'User Account Profile'
 		}
 	},
@@ -42,7 +42,7 @@ export default React.createClass({
 		}
 		return (
 			<div ref='root' className='auditlog profile-tabs'>
-				<div ref='root' className='row page-header profile-header'>
+				<div className='row page-header profile-header'>
 					<p className='hkjc-breadcrumb'>{this.props.pageTitle}</p>
 					<h1>{this.props.h1Title}</h1>
 

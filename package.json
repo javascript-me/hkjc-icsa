@@ -96,7 +96,7 @@
     "lodash": "4.16.4",
     "minifyify": "7.3.3",
     "mocha": "3.1.2",
-    "moment": "2.15.1",
+    "moment": "2.17.1",
     "morgan": "1.7.0",
     "node-inspector": "0.12.8",
     "npm-run-all": "3.1.0",
@@ -159,6 +159,10 @@
         "tab"
       ],
       "no-tabs": "off",
+	  "react/jsx-no-bind": ["off", {
+		"allowArrowFunctions": true,
+		"allowBind": true
+	  }],
       "prefer-arrow-callback": "error",
       "react/jsx-indent": [
         2,
@@ -181,7 +185,10 @@
       "jsdom": false,
       "waitFor": false,
       "responseJson": false,
-      "rewire": false
+      "rewire": false,
+      "rewireKeyVal": false,
+      "rewireResponse": false,
+      "rewireService": false
     }
   },
   "browserify": {

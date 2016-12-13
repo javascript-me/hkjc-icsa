@@ -3,6 +3,13 @@ import classNames from 'classnames'
 
 import SearchContainer, {EDTYPES} from './searchcontainer'
 
+const WHICHTAB = {
+	football: 0,
+	basketball: 1,
+	horseracing: 2,
+	none: 3
+}
+
 export default React.createClass({
 	displayName: 'EventDirectory',
 	propTypes: {
@@ -10,55 +17,59 @@ export default React.createClass({
 	},
 	getInitialState () {
 		return {
+			curTabIndex: WHICHTAB.none,
 			showContent: false
 		}
 	},
 	componentDidMount () {
-		const dom = $('.nav-tabs li a', this.refs.root)
-		dom.click(this.handleTabClick)
-
 		const domLi = $('.nav-tabs li', this.refs.root)
 		if (domLi.tooltip) {
 			domLi.tooltip({trigger: 'hover', placement: 'bottom'})
 		}
 	},
-	handleTabClick (e) {
-		let showContent = false
-		let parent = $(e.target).parent()
-
-		if (parent.hasClass('active')) {
-			showContent = false
-			e.stopPropagation()
-			e.preventDefault()
-			parent.removeClass('active')
+	onTabClick (tabIndex) {
+		if (tabIndex === this.state.curTabIndex) {
+			this.setState({
+				curTabIndex: WHICHTAB.none,
+				showContent: false
+			})
 		} else {
-			showContent = true
-		}
-
-		if (showContent !== this.state.showContent) {
-			this.setState({showContent})
+			this.setState({
+				curTabIndex: tabIndex,
+				showContent: true
+			})
 		}
 	},
 	render () {
 		const contentClasses = classNames('tab-content', {hidden: !this.state.showContent})
+		const navClasses = {
+			football: classNames({ 'active': WHICHTAB.football === this.state.curTabIndex }),
+			basketball: classNames({ 'active': WHICHTAB.basketball === this.state.curTabIndex }),
+			horseracing: classNames({ 'active': WHICHTAB.horseracing === this.state.curTabIndex })
+		}
+		const panelClasses = {
+			football: classNames('tab-pane', { 'active': WHICHTAB.football === this.state.curTabIndex }),
+			basketball: classNames('tab-pane', { 'active': WHICHTAB.basketball === this.state.curTabIndex }),
+			horseracing: classNames('tab-pane', { 'active': WHICHTAB.horseracing === this.state.curTabIndex })
+		}
 		return (
 			<div ref='root' className={classNames('row-eventdirectory', {slim: this.props.slimMode})}>
-				<ul id='ed-nav-tabs' className='nav nav-tabs' role='tablist'>
-					<li role='presentation' title='Football'><a id='football-tab' href='#football-panel' role='tab' data-toggle='tab' /></li>
-					<li role='presentation' title='Basketball'><a id='basketball-tab' href='#basketball-panel' role='tab' data-toggle='tab' /></li>
-					<li role='presentation' title='Horse Racing'><a id='horseracing-tab' href='#horseracing-panel' role='tab' data-toggle='tab' /></li>
+				<ul id='ed-nav-tabs' className='nav nav-tabs'>
+					<li id='li-football' className={navClasses.football} title='Football' onClick={() => { this.onTabClick(WHICHTAB.football) }}><a id='football-tab' href='javascript:void(0)' /></li>
+					<li className={navClasses.basketball} title='Basketball' onClick={() => { this.onTabClick(WHICHTAB.basketball) }}><a id='basketball-tab' href='javascript:void(0)' /></li>
+					<li className={navClasses.horseracing} title='Horse Racing' onClick={() => { this.onTabClick(WHICHTAB.horseracing) }}><a id='horseracing-tab' href='javascript:void(0)' /></li>
 				</ul>
 
 				<div className={contentClasses}>
-					<div role='tabpanel' className='tab-pane' id='football-panel'>
+					<div className={panelClasses.football} id='football-panel'>
 						<div className='line' />
 						<SearchContainer type={EDTYPES.FOOTBAL} />
 					</div>
-					<div role='tabpanel' className='tab-pane' id='basketball-panel'>
+					<div className={panelClasses.basketball} id='basketball-panel'>
 						<div className='line' />
 						<SearchContainer type={EDTYPES.BASEKETBALL} />
 					</div>
-					<div role='tabpanel' className='tab-pane' id='horseracing-panel'>
+					<div className={panelClasses.horseracing} id='horseracing-panel'>
 						<div className='line' />
 						<SearchContainer type={EDTYPES.HORSERACING} />
 					</div>

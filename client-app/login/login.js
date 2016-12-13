@@ -42,7 +42,7 @@ export default React.createClass({
 						this.setState({locked: data.locked, title: 'Account Locked', showPopup: true, confirmBtn: 'Go to Login'})
 					}
 					if (data.expired) {
-						this.setState({expired: data.expired, title: 'Password Expried', showPopup: true, confirmBtn: 'Confirm'})
+						this.setState({expired: data.expired, title: 'Password Expired', showPopup: true, confirmBtn: 'Go to Login'})
 					}
 				}
 			} else {
@@ -60,7 +60,13 @@ export default React.createClass({
 			this.refs.submit.disabled = false
 		}
 		if (this.refs.password.value !== '') {
-			this.setState({showMaskPwd: true})
+			this.setState({showMaskPwd: true}, () => {
+				if (this.refs.password.type === 'password') {
+					this.refs.btn.text = 'show'
+				} else {
+					this.refs.btn.text = 'hide'
+				}
+			})
 		} else {
 			this.setState({showMaskPwd: false})
 		}
@@ -71,11 +77,6 @@ export default React.createClass({
 	typePwd (event) {
 		this.setState({password: event.target.value})
 	},
-	clearPassword (event) {
-		if (this.refs.password.value !== '') {
-			this.setState({password: '', showMaskPwd: false, disabled: false})
-		}
-	},
 	changeType () {
 		if (this.refs.password.type === 'password') {
 			this.refs.password.type = 'text'
@@ -85,6 +86,10 @@ export default React.createClass({
 			this.refs.btn.text = 'show'
 			this.refs.password.value.replace(/./g, '*')
 		}
+	},
+	onPasteHandler (e) {
+		e.preventDefault()
+		return false
 	},
 	gotoLogin () {
 		window.location.href = '/'
@@ -107,17 +112,18 @@ export default React.createClass({
 								</div>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='password'>Password</label>
-									<input ref='password' onFocus={this.clearPassword} value={this.state.password} type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
+									<input ref='password' value={this.state.password} type='password' onPaste={(e) => this.onPasteHandler(e)} onCopy={(e) => this.onPasteHandler(e)} className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
 									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }
-								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit} disabled={!this.state.disabled}>Login</button>
+								<button ref='submit' type='submit' className='btn btn-lg btn-primary' onClick={this.submit}>Log in</button>
 							</div>
 						</div>
 					</div>
 					<Overlay hideOnOverlayClicked ref='overlay' title={this.state.title} showCancel={this.state.showCancel} onConfirm={() => this.gotoLogin()} confirmBtn={this.state.confirmBtn}>
 						<p className='warning'>{this.state.msg}</p>
 					</Overlay>
+					<div className='mask' />
 				</div>
 			</div>
 			)

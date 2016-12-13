@@ -1,10 +1,10 @@
 import React from 'react'
 // import classnames from 'classnames'
-import TabularData from '../tabulardata/tabulardata'
-import Paging from '../paging/paging'
+import FilterBlock from '../filter-block'
+import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
 import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
-import AddingUserCmp from '../add-account'
+// import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
@@ -19,6 +19,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setMinutes(0)
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
+	dateTimeFrom.setFullYear(2015)
 	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
 }
 
@@ -29,49 +30,47 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setMinutes(59)
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
+	dateTimeTo.setFullYear(2018)
 	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 }
 
 export default React.createClass({
 	displayName: 'UserProfileList',
 
-	headers: [
-		{'id': 1, label: 'User Display Name', fieldName: 'displayName', sortingClass: 'down-arrow', addCheckBox: false},
-		{'id': 2, label: 'User ID', fieldName: 'userID', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 3, label: 'User Name', fieldName: 'firstName', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 4, label: 'Staff ID', fieldName: 'staffID', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 5, label: 'Position / Title', fieldName: 'position', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 6, label: 'User Roles', fieldName: 'assignedUserRoles', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 7, label: 'Account Status', fieldName: 'status', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 8, label: 'Date of Activation', fieldName: 'activationDate', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 9, label: 'Date of Inactivation', fieldName: 'deactivationDate', sortingClass: 'no-arrow', addCheckBox: false}
-	],
-
 	getInitialState () {
 		return {
-			pageTitle: 'Home \\ Tool & Administration \\ User',
+			pageTitle: 'Home \\ Global Tools & Administration \\ User',
+			editMode: false,
 			userprofiles: [],
 			isShowingMoreFilter: false,
 			addingUserStep: 0,
 			filterReflashFlag: true,
 			tokens: {
 				USERPROFILE_SEARCH: 'USERPROFILE_SEARCH',
-				AUDITLOG_SEARCH_BY_KEY_PRESS: 'AUDITLOG_SEARCH_BY_KEY_PRESS',
-				AUDITLOG_SEARCH_BY_REMOVE_FILTER: 'AUDITLOG_SEARCH_BY_REMOVE_FILTER'
+				USERPROFILE_SEARCH_BY_KEY_PRESS: 'USERPROFILE_SEARCH_BY_KEY_PRESS',
+				USERPROFILE_SEARCH_BY_REMOVE_FILTER: 'USERPROFILE_SEARCH_BY_REMOVE_FILTER'
 			},
 			keyword: '',
+			selectedKeyword: '',
 			selectedFilters: [{
 				name: 'dateTimeFrom',
 				value: getOrginDateTimeFrom()
 			}, {
 				name: 'dateTimeTo',
 				value: getOrginDateTimeTo()
-			}]
+			}],
+			tableOptions: {
+				defaultSortName: 'displayName',  // default sort column name
+				defaultSortOrder: 'desc', // default sort order
+				hideSizePerPage: true,
+				paginationClassContainer: 'text-center',
+				onRowClick: this.onClickRow
+			}
 		}
 	},
 
 	componentDidMount () {
-		let sortingObject = {fieldName: 'activationDate', order: 'DESCEND'}
+		let sortingObject = {fieldName: 'userID', order: 'DESCEND'}
 		// Get Table Data
 		UserStore.searchAuditlogs(1, sortingObject, null)
 		UserStore.addChangeListener(this.onChange)
@@ -80,12 +79,12 @@ export default React.createClass({
 			setTimeout(() => { this.setState({filterReflashFlag: true}) }, 0)
 		})
 		searchToken = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH], () => {
-			this.searchAuditlog()
+			this.searchUserProfileList()
 		})
 	},
 
 	componentWillUnmount: function () {
-		UserStore.removeChangeListener(this.onChange.bind(this))
+		UserStore.removeChangeListener(this.onChange)
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(reFlashToken)
 		PubSub.unsubscribe(searchToken)
@@ -95,7 +94,7 @@ export default React.createClass({
 		const hasData = UserStore.userProfiles.length > 0
 
 		UserStore.userProfiles.forEach((item) => {
-			let role = item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(',')
+			let role = item.assignedUserRoles ? item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(',') : ' '
 			item.assignedUserRoles = role
 		})
 
@@ -126,8 +125,63 @@ export default React.createClass({
 
 	handleKeywordPress: function (event) {
 		if (event.key === 'Enter') {
-			PubSub.publish(PubSub[this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS])
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS])
 		}
+	},
+
+	removeSearchCriteriaFilter: function (filter) {
+		const callback = () => {
+			this.setState({
+				isShowingMoreFilter: false
+			})
+
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER], filter)
+			PubSub.publish(PubSub[this.state.tokens.USERPROFILE_SEARCH])
+		}
+
+		switch (filter.name) {
+		case 'keyword':
+			this.removeKeywordFilter(filter, callback)
+			break
+		case 'dateTimeFrom':
+		case 'dateTimeTo':
+			this.removeDateRangeFilter(filter, callback)
+			break
+		default:
+			this.removeNormalFilter(filter, callback)
+			break
+		}
+	},
+	removeKeywordFilter: function (keyword, callback) {
+		this.setState({
+			keyword: '',
+			selectedKeyword: ''
+		}, callback)
+	},
+	removeDateRangeFilter: function (dateTime, callback) {
+		let selectedFilters = this.state.selectedFilters
+
+		selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeFrom()
+			} else if (filter.name === 'dateTimeTo' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeTo()
+			}
+		})
+
+		this.setState({
+			selectedFilters: selectedFilters
+		}, callback)
+	},
+	removeNormalFilter: function (filter, callback) {
+		let selectedFilters = this.state.selectedFilters
+		let filterIndex = selectedFilters.indexOf(filter)
+
+		selectedFilters.splice(filterIndex, 1)
+
+		this.setState({
+			selectedFilters: selectedFilters
+		}, callback)
 	},
 
 	setAddStep (step) {
@@ -140,17 +194,78 @@ export default React.createClass({
 		})
 	},
 
-	searchAuditlog: async function () {
+	searchUserProfileList: async function () {
 		let criteriaOption = this.getSearchCriterias()
+
+		this.setState({
+			selectedKeyword: this.state.keyword
+		})
+
 		// Get Table Data
 		UserStore.searchAuditlogs(1, null, criteriaOption)
 	},
 
 	getSearchCriterias: function () {
 		return {
-			keyword: this.state.keyword,
+			keyword: this.state.selectedKeyword,
 			filters: this.state.selectedFilters
 		}
+	},
+
+	generateFilterBlockesJsx: function (filters) {
+		const filterDisplayFormatting = (filter) => {
+			let filterDisplayName = filter.value
+
+			switch (filter.name) {
+			case 'keyword':
+				filterDisplayName = `${filter.name}: ${filter.value}`
+				break
+			case 'dateTimeFrom':
+				filterDisplayName = `From: ${filter.value}`
+				break
+			case 'dateTimeTo':
+				filterDisplayName = `To: ${filter.value}`
+				break
+			}
+
+			return filterDisplayName
+		}
+
+		let defaultDateTimeFrom = getOrginDateTimeFrom()
+		let defaultDateTimeTo = getOrginDateTimeTo()
+
+		let keywordFilter = {
+			name: 'keyword',
+			value: this.state.selectedKeyword
+		}
+		let dateFromFilter = filters.filter((f) => {
+			return f.name === 'dateTimeFrom'
+		})[0] || {}
+		let dateToFilter = filters.filter((f) => {
+			return f.name === 'dateTimeTo'
+		})[0] || {}
+		let filtersArrayWithoutDateRange = filters.filter((f) => {
+			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
+				return false
+			}
+			return true
+		})
+
+		let filtersArray = []
+			.concat(this.state.selectedKeyword ? keywordFilter : [])
+			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
+			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
+			.concat(filtersArrayWithoutDateRange)
+
+		let filterBlockes = filtersArray.map((f, index) => {
+			return <FilterBlock
+				key={index}
+				dataText={filterDisplayFormatting(f)}
+				dataValue={f}
+				removeEvent={this.removeSearchCriteriaFilter} />
+		}) || []
+
+		return filterBlockes
 	},
 
 	setFilters: function (filters) {
@@ -172,12 +287,26 @@ export default React.createClass({
 		})
 	},
 
+	setEditMode () {
+		this.setState({editMode: !this.state.editMode})
+	},
+
+	onClickRow (rowItem) {
+		if (rowItem.userID) {
+			location.href = '#/page/userprofile/' + rowItem.userID
+		}
+	},
+
 	render () {
 		// let moreFilterContianerClassName = classnames('more-filter-popup', {
 		// 	'active': this.state.isShowingMoreFilter
 		// })
+
+		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
+
+		// {this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
+
 		return <div className='row userlist-page'>
-			{this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
 			<div className='page-header'>
 				<p>{this.state.pageTitle}</p>
 				<h1>User Account Profile List</h1>
@@ -185,34 +314,51 @@ export default React.createClass({
 			<div className='page-content'>
 				<div className='content-header'>
 					<div className='content-header-left'>
-						<i className='icon icon-search' />
-						<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
-							onChange={this.handleKeywordChange}
-							onKeyPress={this.handleKeywordPress}
-							ref='keyword' />
-						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching}>
+						<div className='keyword-search'>
+							<i className='icon icon-search' />
+							<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
+								onChange={this.handleKeywordChange}
+								onKeyPress={this.handleKeywordPress}
+								ref='keyword' />
+						</div>
+						<div className='filter-block-container'>
+							{filterBlockes}
+						</div>
+						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
 							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
 						</div>
 					</div>
-					<div className='content-header-right' onClick={() => { this.setAddStep(1) }}>
-						add user
+					<div className='content-header-right add-user-btn' onClick={() => { this.setAddStep(1) }} style={{display: this.state.editMode ? 'block' : 'none'}}>
+						+ Add User
 					</div>
 				</div>
-				<div className='content-table'>
-					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} />
-				</div>
-				<div className='content-footer'>
-					<div className='content-footer-left'>
-						<button className='btn btn-primary btn-disable'>Delete</button>
-					</div>
-					<div className='content-footer-center'>
-						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
-					</div>
-					<div className='content-footer-right'>
-						<button className='btn btn-primary' onClick={this.onChange}>Update</button>
-					</div>
+				<div className='content-table tableComponent-container'>
+					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='user_id'
+						tableHeaderClass='table-header' tableContainerClass='base-table' selectRow={{ mode: 'checkbox' }}>
+						<TableHeaderColumn dataField='displayName' dataSort>User Display Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>
+						<TableHeaderColumn dataField='firstName' dataSort>User Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='staffID' dataSort>Staff ID</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='assignedUserRoles' dataSort>User Roles</TableHeaderColumn>
+						<TableHeaderColumn dataField='status' dataSort>Account Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='activationDate' dataSort>Date of Activation</TableHeaderColumn>
+						<TableHeaderColumn dataField='deactivationDate' dataSort>Date of Inactivation</TableHeaderColumn>
+					</TableComponent>
 				</div>
 			</div>
 		</div>
 	}
 })
+
+// <div className='content-footer'>
+// 	<div className='content-footer-left'>
+// 		<button className='btn btn-primary btn-disable'>Delete</button>
+// 	</div>
+// 	<div className='content-footer-right'>
+// 		{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+// 			: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+// 				<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+// 	}
+// 	</div>
+// </div>

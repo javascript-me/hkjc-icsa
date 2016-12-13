@@ -9,9 +9,9 @@ export default React.createClass({
 	handlerKeyUp (event) {
 		if (event.keyCode === 13) {
 			this.props.onSearch({
-				keyword: this.refs.search.value,
-				scenario: this.refs.scenario.value,
-				competition: this.refs.competition.value
+				keyword: this.refs.search ? this.refs.search.value : '',
+				scenario: this.refs.scenario ? this.refs.scenario.value : '',
+				competition: this.refs.competition ? this.refs.competition.value : ''
 			})
 		}
 	},
