@@ -24,7 +24,9 @@ export default {
 	},
 	showMessageBox (msg, onConfirm, onCancel) {
 		const children = (
-			<p>{msg}</p>
+			<div className="msg">
+				<p>{msg}</p>
+			</div>
 		)
 
 		if (!onConfirm) {
