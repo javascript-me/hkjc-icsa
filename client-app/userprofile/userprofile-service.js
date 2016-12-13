@@ -19,6 +19,9 @@ const postDeleteDelegation = (data) => {
 const getRoles = () => {
 	return $.get(config.url('api/roles/list'))
 }
+const postUserDelegation = (userId, data) => {
+	return $.post(config.url('api/userprofile/updateDelegation?userID=' + userId), data)
+}
 
 export default {
 	async getUserProfile (userId) {
@@ -48,6 +51,7 @@ export default {
 		}
 		return result
 	},
+
 	async deleteDelegation (data) {
 		let result = null
 		try {
@@ -65,5 +69,6 @@ export default {
 			// returns [] on failure
 		}
 		return result
-	}
+	},
+	postUserDelegation
 }
