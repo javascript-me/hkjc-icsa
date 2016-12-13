@@ -1,7 +1,7 @@
 import express from 'express'
 import moment from 'moment'
 import helper from './export_helper'
-import NoticeboardUtils from './notice-board-util'
+import NoticeBoardUtil from './notice-board-util'
 const router = express.Router()
 const jsonAlerts = require('../json/notice-alerts.json') || {}
 const jsonCriticalInformations = require('../json/notice-critical-informations.json') || {}
@@ -98,6 +98,43 @@ router.get('/', (req, res) => {
 	res.send(result)
 })
 
+router.post('/update-acknowledge-status', (req, res) => {
+	let userName = req.body.username
+	let id = req.body.id
+	let command = req.body.command
+
+	let cloneNotices = []
+	let status = null
+	let result = {}
+
+	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
+	if (!userName) {
+		status = 403
+		result = { error: 'Sorry we need your username to get notice data' }
+
+		res.status(status)
+		res.send(result)
+
+		return false
+	}
+
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonAlerts[userName], id, command)
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonCriticalInformations[userName], id, command)
+
+	// Step 2 get valid notices
+	cloneNotices = getRecentlySixMonthNoticesByUserName(jsonAlerts, jsonCriticalInformations, userName)
+
+	// Step 3 response the data result with http 200
+	status = 200
+	result = cloneNotices
+
+	//
+	result.id = id
+
+	res.status(status)
+	res.send(result)
+})
+
 /**
  * @api {GET} /notice-board/remind-count/ Get remind count
  * @apiGroup NoticeBoard
@@ -180,7 +217,7 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
 		cloneNotices = jsonAlerts[username]
 	}
 	let status = 200
-	const filteredNotices = NoticeboardUtils.doFilter(cloneNotices,
+	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
 		req.body.keyword,
 		req.body.priority,
 		req.body.sportsType,
@@ -195,7 +232,7 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
 		req.body.dateTimeTo
 	)
 	res.status(status)
-	res.send(NoticeboardUtils.doSorting(filteredNotices, 'date_time', 'DESCEND'))
+	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
 })
 
 router.get('/categories', (req, res) => {

@@ -170,7 +170,21 @@ function doFilter (notices, keyWord, priority, sportsType, competition, match, i
 	return result
 }
 
+function updateAcknowledgeStatusById (json, id, command) {
+	json.forEach((element) => {
+		if (element.id === id) {
+			if (command === 'Unacknowledge') {
+				element.alert_status = 'New'
+			}
+			if (command === 'Acknowledge') {
+				element.alert_status = 'Acknowledged'
+			}
+		}
+	})
+}
+
 export default {
 	doSorting: doSorting,
-	doFilter: doFilter
+	doFilter: doFilter,
+	updateAcknowledgeStatusById: updateAcknowledgeStatusById
 }
