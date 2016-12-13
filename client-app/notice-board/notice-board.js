@@ -370,7 +370,7 @@ export default React.createClass({
 		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 		return (
 
-			<div className='conatainer-alert '>
+			<div className='conatainer-alert noticeboard-popup-spestyle'>
 				<Popup hideOnOverlayClicked ref='detailPopup'
 					title={this.state.detail.alert_name}
 					showCancel={false}
