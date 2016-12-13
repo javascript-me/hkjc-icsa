@@ -2,7 +2,6 @@ import express from 'express'
 import UserProfileUtil from './userprofile-util'
 import _ from 'lodash'
 import UserProfileListUtil from './userprofilelist-util'
-import PagingService from '../auditlog/paging-service'
 
 const router = express.Router()
 
@@ -40,23 +39,11 @@ router.post('/outsidedata', (req, res) => {
  *
  */
 router.post('/list', (req, res) => {
-	let result = {}
-
 	let allUser = accountProfiles.map((item, index) => {
 		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
 		let newItem = Object.assign({}, user, item)
 		return newItem
 	})
-
-	// var filteredResult = UserProfileListUtil.doFilter(
-	// 	allUser,
-	// 	req.body.keyWord,
-	// 	req.body.position,
-	// 	req.body.userRole,
-	// 	req.body.status,
-	// 	req.body.dateTimeFrom,
-	// 	req.body.dateTimeTo
-	// )
 
 	var filteredResult = UserProfileListUtil.doFilter(
 		allUser,
@@ -68,22 +55,7 @@ router.post('/list', (req, res) => {
 		req.body.dateTimeTo
 	)
 
-	var filteredAuditlogs = filteredResult.slice(0)
-
-	var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
-
-	result.userProfiles = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
-
-	var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
-	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
-
-	// result.userProfiles = allUser
-	// result.pageData = {
-	// 	"pages": [],
-	// 	"totalPages": 1
-	// }
-
-	res.send(result)
+	res.send(filteredResult)
 })
 
 router.post('/add', (req, res) => {
