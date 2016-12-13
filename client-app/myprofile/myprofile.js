@@ -31,8 +31,64 @@ export default React.createClass({
 			delegationUpdate: true
 		})
 	},
-	onUpdateClick (delegationCmp) {
-		delegationCmp.onUpdateClick()
+	async onUpdateClick (delegationCmp) {
+		const result = delegationCmp.onUpdateClick()
+		if (!result || result.length === 0) {
+			return false
+		}
+		let errBox = {}
+		result.forEach((item, index) => {
+			if (!item.delegatedRoles || item.delegatedRoles.length === 0) {
+				errBox.roleErr = true
+				return false
+			}
+			if (!item.delegationTo) {
+				errBox.delegationToErr = true
+				return false
+			}
+			if (!item.delegationFrom) {
+				errBox.delegationFromErr = true
+				return false
+			}
+			if (item.delegationFrom <= item.delegationTo) {
+				errBox.smallerErr = true
+			}
+		})
+		switch (true) {
+		case (errBox.roleErr) : {
+			PopupService.showMessageBox('You must select a role', () => {})
+			return false
+		}
+		case (errBox.delegationToErr) : {
+			PopupService.showMessageBox('You must select  delegationTo date', () => {})
+			return false
+		}
+		case (errBox.delegationFromErr) : {
+			PopupService.showMessageBox('You must select  delegationFrom date', () => {})
+			return false
+		}
+		case (errBox.smallerErr) : {
+			PopupService.showMessageBox('delegationFrom date must larger then delegationTo date', () => {})
+			return false
+		}
+		default : break
+
+		}
+
+		result && result.forEach((item) => { item.changeFlag = null })
+		let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
+
+		if (UpdateFlag.status) {
+			PopupService.showMessageBox('Update sucess!', () => {
+				this.getUserProfile()
+			})
+		} else {
+			PopupService.showMessageBox('Update fail,please contact the administrator', () => {
+				this.setState({
+					delegationUpdate: false
+				})
+			})
+		}
 	},
 	onCancelClick () {
 		PopupService.showMessageBox('Are you sure want to cancel?', () => {
