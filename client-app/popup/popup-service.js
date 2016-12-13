@@ -24,7 +24,7 @@ export default {
 	},
 	showMessageBox (msg, onConfirm, onCancel) {
 		const children = (
-			<div className="msg">
+			<div className='msg'>
 				<p>{msg}</p>
 			</div>
 		)
