@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import _ from 'underscore'
 
-import UserProfileService from './userprofile-service'
+import UserProfileService from '../add-account/add-account-service.js'
 
 const TableHeader = (props) => (<thead className='table-header'>
 	<tr>
@@ -29,7 +29,7 @@ TableHeader.propTypes = {
 
 const TableRow = (props) => {
 	return (<tbody>
-		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'}>
+		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'} className={classNames({ activeLine: item.checked })}>
 			<td className='tr-header'><div className={classNames('my-checkbox', { checked: item.checked })} onClick={() => { props.handleItemClick(item) }} /></td>
 			{props.fields.map((rol, idx) => (<td key={rol}>{item[rol]}</td>))}
 		</tr>))}
@@ -46,11 +46,13 @@ TableRow.propTypes = {
 export { TableHeader, TableRow }
 
 const header = [
-	{label: 'User Role', field: 'roleName'}
+	{label: 'User Name', field: 'displayName'},
+	{label: 'User ID', field: 'userID'},
+	{label: 'Position/Title', field: 'position'}
 ]
 
 export default React.createClass({
-	displayName: 'RolesContainer',
+	displayName: 'UsersContainer',
 	propTypes: {
 		header: PropTypes.array,
 		inputSelected: PropTypes.array
@@ -65,18 +67,19 @@ export default React.createClass({
 		this.tableData = []
 		this.currentSortInfo = { index: 0, sortType: 'up' }
 		this.fields = _.map(this.props.header, item => item.field)
+		this.AddAccount = new UserProfileService()
 		return {
 			showItems: []
 		}
 	},
 	componentDidMount () {
-		this.getRoles()
+		this.getUsers()
 	},
-	getUpdateRoles () {
+	getDelegation () {
 		return this.tableData.filter((item) => {
 			return item.checked
 		}).map((item) => {
-			return item.roleName
+			return item
 		})
 	},
 	sortItemsByCheck (showItems) {
@@ -163,15 +166,15 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<div ref='root' className='roles-container'>
-				<div className='filter-cmp-container'>
+			<div ref='root' className='users-container filter-cmp-container'>
+				<div className=''>
 					<div className='body'>
 						<div className='serch-header'>
 							<input type='text' maxLength='100' placeholder='Search with keywords & filters' onChange={this.handleInputChange} />
 							<img className='search-icon' src='common/search.svg' />
 						</div>
 						<div className='content'>
-							<table className='table'>
+							<table className='table sm-table'>
 								<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} checkedAll={this.checkedAll} handleCheckAll={this.handleCheckAll} />
 								<TableRow data={this.state.showItems} fields={this.fields} handleItemClick={this.handleItemClick} />
 							</table>
@@ -181,10 +184,10 @@ export default React.createClass({
 			</div>
 		)
 	},
-	async getRoles () {
-		let roles = []
-		roles = await UserProfileService.getRoles()
-		this.tableData = roles
+	async getUsers () {
+		let users = []
+		users = await this.AddAccount.getAccountData()
+		this.tableData = users
 		this.tableData.forEach((item) => {
 			let obj = _.find(this.props.inputSelected, (selected) => {
 				return selected.assignedUserRole === item.roleName

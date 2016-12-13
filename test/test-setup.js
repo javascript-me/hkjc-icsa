@@ -45,3 +45,18 @@ global.rewire = (revert) => {
 		rewires.length = 0
 	}
 }
+global.rewireKeyVal = (target, key, val) => {
+	rewire(target.__set__(key, val))
+}
+global.rewireResponse = (target, key, response) => {
+	rewireKeyVal(target, key, () => {
+		return Promise.resolve(response)
+	})
+}
+global.rewireService = (target, service, func, response) => {
+	rewireKeyVal(target, service, {
+		[func]: () => {
+			return Promise.resolve(response)
+		}
+	})
+}

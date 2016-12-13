@@ -25,24 +25,20 @@ export default React.createClass({
 
 					<div className='row name'>
 						<div className='col col-xs-3'>User ID</div>
-						<div className='col col-xs-3'>Staff ID</div>
 						<div className='col col-xs-3'>Position / Title</div>
 						<div className='col col-xs-3'>Email Address</div>
 					</div>
 					<div className='row value'>
 						<div className='col col-xs-3'>{this.props.userBasic.userID}</div>
-						<div className='col col-xs-3'>{this.props.userBasic.staffID}</div>
 						<div className='col col-xs-3'>{this.props.userBasic.position}</div>
 						<div className='col col-xs-3'>{this.props.userBasic.emailAddress}</div>
 					</div>
 
 					<div className='row name'>
 						<div className='col col-xs-3'>Phone No.</div>
-						<div className='col col-xs-9'>Home Address</div>
 					</div>
 					<div className='row value margin0'>
 						<div className='col col-xs-3'>{this.props.userBasic.phoneNumber}</div>
-						<div className='col col-xs-9'>{this.props.userBasic.homeAddress}</div>
 					</div>
 				</div>
 			</div>
