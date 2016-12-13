@@ -50,11 +50,6 @@ export default React.createClass({
 		}
 		this.selectRowProp = {
 			mode: 'checkbox'
-			// clickToSelect: true,
-			// selected: [], // default select on table
-			// bgColor: 'rgb(238, 193, 213)',
-			// onSelect: onRowSelect,
-			// onSelectAll: onSelectAll
 		}
 		return {userDelegation: this.props.userDelegation}
 	},
@@ -83,13 +78,11 @@ export default React.createClass({
 		popupCmp.show()
 	},
 	getDeleteData () {
-		let ids = this.state.userDelegation.filter((item) => {
-			return item.checkbox
-		}).map((item) => {
-			return item.delegationID
-		})
-
-		return ids
+		if (this.refs.updateTableCmp) {
+			const selected = this.refs.updateTableCmp.store.getSelectedRowKeys()
+			return selected
+		}
+		return []
 	},
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.userDelegation !== this.state.userDelegation) {
@@ -106,8 +99,6 @@ export default React.createClass({
 	render () {
 		if (!this.props.userDelegation) {
 			return this.renderNone()
-		// } else if (this.props.delegationUpdate) {
-		// 	return this.renderUpdate(this.props.userDelegation)
 		} else {
 			return this.renderNormal(this.state.userDelegation)
 		}
@@ -117,22 +108,6 @@ export default React.createClass({
 			<div ref='root' className='user-delegation' />
 		)
 	},
-	// renderNormal (tableData) {
-	// 	return (
-	// 		<div ref='root' className='user-delegation'>
-	// 			<div className='header'>
-	// 				<h2>User Delegation</h2>
-	// 			</div>
-	// 			<div className='content'>
-	// 				<TableComponent data={tableData} bodyStyle={{height: 'calc(100% - 42px)'}}>
-	// 						<TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
-	// 						<TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
-	// 						<TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
-	// 				</TableComponent>
-	// 			</div>
-	// 		</div>
-	// 	)
-	// },
 	renderNormal (tableData) {
 		const { delegationUpdate } = this.props
 		return (
@@ -149,7 +124,9 @@ export default React.createClass({
 				<div className='tableComponent-container content user-delegation-table' >
 					{delegationUpdate
 					? <TableComponent
+						ref='updateTableCmp'
 						striped
+						keyField='delegationID'
 						tableHeaderClass='table-header'
 						tableContainerClass='base-table'
 						selectRow={this.selectRowProp}
@@ -157,7 +134,7 @@ export default React.createClass({
 						options={this.tableOptions}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
-						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
+						<TableHeaderColumn dataField='userName' dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormat} dataAlign={delegationUpdate ? 'left' : 'center'}>Delegate Role</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' dataFormat={this.getCalendarFormat('delegationFrom')} >Date of Delegation From</TableHeaderColumn>
@@ -167,13 +144,14 @@ export default React.createClass({
 					</TableComponent>
 					: <TableComponent
 						striped
+						keyField='delegationID'
 						tableHeaderClass='table-header'
 						tableContainerClass='base-table'
 						data={tableData}
 						options={this.tableOptions}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
-						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
+						<TableHeaderColumn dataField='userName' dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataAlign={'center'} dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' >Date of Delegation From</TableHeaderColumn>

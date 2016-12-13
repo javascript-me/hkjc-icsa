@@ -18,27 +18,64 @@
 		min-height: auto;
 		overflow: hidden;
 		border: none;
+	}
+
+	&.mid-overlay {
+		.popup-wrapper .popup-dialog {
+			top: 50%;
+			left: 50%;
+			margin-top: -268px;
+			margin-left: -302.5px;
+
+			.body {
+				padding: 16px;
+
+				.table.sm-table {
+					border: 0;
+					border-bottom: 1px solid #DDDDDD;
+
+					thead,
+					tbody > tr {
+						width: 572px;
+					}
+				}
+			}
+
+			.popup-actions a {
+				line-height: 26px;
+			}
+		}
+	}
+
+	.user-delegation-table {
+		position: relative;
+		overflow: inherit;
+		height: auto;
 
 		.react-bs-table-container {
 			height: 100%;
 
 			.react-bs-table {
 				margin: 0;
+
+				// .react-bs-container-header {
+				// }
+
+				.react-bs-container-body {
+					overflow: inherit;
+				}
+
+				.table {
+					> tbody {
+						> tr {
+							> td {
+								overflow: inherit;
+							}
+						}
+					}
+				}
 			}
 		}
-	}
-
-	.content.user-delegation-table {
-		overflow: inherit;
-		height: auto;
-
-		.react-bs-container-body {
-			overflow: inherit;
-		}
-	}
-
-	.user-delegation-table {
-		position: relative;
 
 		tbody tr td {
 			position: relative;
