@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Noticeboard Export</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica';
+            font-weight: 500;
+            font-size: 12px;
+            -webkit-print-color-adjust: exact;
+            box-sizing: border-box;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+            }
+
+            .col-md-4 {
+                float: left;
+                width: 32%;
+                padding: 5px;
+            }
+
+            .center {
+                text-align: center;
+            }
+
+            .right {
+                text-align: right;
+            }
+
+            .table { padding-left: 20px; width: 100%; margin-bottom: 12px; }
+            .table tr, .table tr td {
+                padding-left: 5px;
+                padding-top: 5px;
+                text-align: left;
+            }
+
+            .page {
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        .page.first {
+            border-left: 5px solid green;
+        }
+
+        .bottom {
+            position: absolute;
+            left: 5mm;
+            right: 5mm;
+            bottom: 5mm;
+        }
+    </style>
+</head>
+
+<body>
+
+<%= pageHeaders %>  
+
+<%= html %>
+    
+
+</body>
+
+</html>
