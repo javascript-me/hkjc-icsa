@@ -43,6 +43,13 @@ export default React.createClass({
 			delegationUpdate: false
 		}
 	},
+	getInitialState () {
+		this.tableOptions = {
+			defaultSortName: 'userName',  // default sort column name
+			defaultSortOrder: 'desc' // default sort order
+		}
+		return {}
+	},
 	getCheckboxFormat (cell, row) {
 		return (
 			<input type='checkbox' value={row.checkbox} onClick={() => { row.checkbox = !row.checkbox }} />
@@ -149,13 +156,11 @@ export default React.createClass({
 						striped
 						tableHeaderClass='table-header'
 						tableContainerClass='base-table'
-						// selectRow={this.selectRowProp}
+						selectRow={this.selectRowProp}
 						data={tableData}
+						options={this.tableOptions}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
-						<TableHeaderColumn dataField='checkbox' dataAlign='center' dataFormat={this.getCheckboxFormat}>
-							<input type='checkbox' />
-						</TableHeaderColumn>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormat} dataAlign={delegationUpdate ? 'left' : 'center'}>Delegate Role</TableHeaderColumn>
@@ -169,6 +174,7 @@ export default React.createClass({
 						tableHeaderClass='table-header'
 						tableContainerClass='base-table'
 						data={tableData}
+						options={this.tableOptions}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
