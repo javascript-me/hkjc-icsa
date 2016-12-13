@@ -64,7 +64,7 @@ export default class NoticeBox extends React.Component {
 											{this.textEllipsisWhenOverflow(notice.message_detail)}
 										</div>
 									</li>
-									<li><img src={this.getPriorityImageSrc(notice.priority)} /></li>
+									<li><img src={this.getPriorityImageSrc(notice.priority)} title={notice.priority} /></li>
 									<li className='notice-date'>{DataFormatter.toDDMMMYYYHHMMSS(notice.system_distribution_time)}</li>
 									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
 								</ul>
