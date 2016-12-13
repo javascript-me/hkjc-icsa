@@ -72,7 +72,8 @@ export default React.createClass({
 			this.userID = profile.userID
 		}
 		return {
-			showItems: []
+			showItems: [],
+			showTempItems: []
 		}
 	},
 	componentDidMount () {
@@ -147,6 +148,12 @@ export default React.createClass({
 		let showItems = this.filterItem(keyword, this.fields, this.tableData)
 		this.initCheckedAll(showItems)
 		this.setState({showItems})
+
+		if (keyword) {
+			this.setState({showTempItems: showItems})
+		} else {
+			this.setState({showTempItems: ''})
+		}
 	},
 	handleItemClick (item) {
 		this.tableData.forEach((baseitem) => {
@@ -169,7 +176,7 @@ export default React.createClass({
 						<div className='content'>
 							<table className='table sm-table'>
 								<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} checkedAll={this.checkedAll} />
-								<TableRow data={this.state.showItems} fields={this.fields} handleItemClick={this.handleItemClick} />
+								<TableRow data={this.state.showTempItems} fields={this.fields} handleItemClick={this.handleItemClick} />
 							</table>
 						</div>
 					</div>
