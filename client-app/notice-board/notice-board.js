@@ -72,7 +72,7 @@ export default React.createClass({
 			},
 			selectedFilters: getDefaultSelectedFilters(),
 			tableOptions: {
-				defaultSortName: 'priority',  // default sort column name
+				defaultSortName: 'system_distribution_time',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
 				paginationClassContainer: 'text-center',
@@ -321,18 +321,22 @@ export default React.createClass({
 		})
 	},
 	statusFormatter (cell, row) {
-		if (cell === 'Acknowledged') return '<img src="notice-board/Tick.svg" />'
-		return '<img src="notice-board/Mail.svg" />'
+		if (cell === 'Acknowledged') return '<span><img src="notice-board/Tick.svg" /></span>'
+		return '<span><img src="notice-board/Mail.svg" /></span>'
 	},
 	priorityFormatter (cell, row) {
-		if (cell === 'Critical') return '<img src="notice-board/Critical.svg" title="Critical" />'
-		if (cell === 'High') return '<img src="notice-board/High.svg" title="High" />'
-		if (cell === 'Medium') return '<img src="notice-board/Medium.svg" title="Medium" />'
-		if (cell === 'Low') return '<img src="notice-board/Low.svg" title="Low" />'
+		if (cell === 'Critical') return '<span><img src="notice-board/Critical.svg" title="Critical" /></span>'
+		if (cell === 'High') return '<span><img src="notice-board/High.svg" title="High" /></span>'
+		if (cell === 'Medium') return '<span><img src="notice-board/Medium.svg" title="Medium"/></span>'
+		if (cell === 'Low') return '<span><img src="notice-board/Low.svg" title="Low" /></span>'
 	},
 	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
-		return cell
+		return <span>{cell}</span>
+	},
+	alerNameFormatter (cell, row) {
+		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
+		return <span>{cell}</span>
 	},
 
 	onRowClick(notice) {
@@ -409,13 +413,13 @@ export default React.createClass({
 											ctrlType='select'
 											dataSource={NoticeboardService.prioritiesList} />
 										<FilterPanelColumn filterName='dateTimeFrom'
-											filterTitle='Distribution Date & Time From'
+											filterTitle='Distribution Time From'
 											filterValue={this.state.originDateRange.dateTimeFrom}
 											ctrlType='calendar'
 											isRequired
 											pairingVerify={[{operation: '<=', partners: ['dateTimeTo']}]} />
 										<FilterPanelColumn filterName='dateTimeTo'
-											filterTitle='Distribution Date & Time To'
+											filterTitle='Distribution Time To'
 											filterValue={this.state.originDateRange.dateTimeTo}
 											ctrlType='calendar'
 											isRequired
@@ -465,7 +469,7 @@ export default React.createClass({
 							<TableHeaderColumn dataField='system_distribution_time' dataSort> Distribution Date & Time</TableHeaderColumn>
 							<TableHeaderColumn dataField='alert_status' dataSort dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
-							<TableHeaderColumn dataField='alert_name' dataSort>Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_name' dataSort dataFormat={this.alerNameFormatter}>Name</TableHeaderColumn>
 							<TableHeaderColumn dataField='message_detail' dataSort
 								dataFormat={this.detailFormatter}>Detail</TableHeaderColumn>
 							<TableHeaderColumn dataField='recipient' dataSort>Recipient</TableHeaderColumn>
