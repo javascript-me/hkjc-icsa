@@ -1,8 +1,7 @@
 import React from 'react'
 // import classnames from 'classnames'
 import FilterBlock from '../filter-block'
-import TabularData from '../tabulardata/tabulardata'
-import Paging from '../paging/paging'
+import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
 import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
 // import AddingUserCmp from '../add-account'
@@ -38,18 +37,6 @@ const getOrginDateTimeTo = function () {
 export default React.createClass({
 	displayName: 'UserProfileList',
 
-	headers: [
-		{'id': 1, label: 'User Display Name', fieldName: 'displayName', sortingClass: 'down-arrow', addCheckBox: false},
-		{'id': 2, label: 'User ID', fieldName: 'userID', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 3, label: 'User Name', fieldName: 'firstName', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 4, label: 'Staff ID', fieldName: 'staffID', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 5, label: 'Position / Title', fieldName: 'position', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 6, label: 'User Roles', fieldName: 'assignedUserRoles', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 7, label: 'Account Status', fieldName: 'status', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 8, label: 'Date of Activation', fieldName: 'activationDate', sortingClass: 'no-arrow', addCheckBox: false},
-		{'id': 9, label: 'Date of Inactivation', fieldName: 'deactivationDate', sortingClass: 'no-arrow', addCheckBox: false}
-	],
-
 	getInitialState () {
 		return {
 			pageTitle: 'Home \\ Global Tools & Administration \\ User',
@@ -71,7 +58,14 @@ export default React.createClass({
 			}, {
 				name: 'dateTimeTo',
 				value: getOrginDateTimeTo()
-			}]
+			}],
+			tableOptions: {
+				defaultSortName: 'displayName',  // default sort column name
+				defaultSortOrder: 'desc', // default sort order
+				hideSizePerPage: true,
+				paginationClassContainer: 'text-center',
+				onRowClick: this.onClickRow
+			}
 		}
 	},
 
@@ -338,29 +332,33 @@ export default React.createClass({
 						+ Add User
 					</div>
 				</div>
-				<div className='content-table'>
-					<TabularData displayCheckBox headers={this.headers} dataCollection={this.state.userprofiles} onClickSorting={this.handleClickSorting} onClickRow={this.onClickRow} />
-				</div>
-				<div className='content-footer'>
-					<div className='content-footer-left' />
-					<div className='content-footer-center'>
-						<Paging pageData={UserStore.pageData} onChangePage={this.handleChangePage} />
-					</div>
-					<div className='content-footer-right' />
+				<div className='content-table tableComponent-container'>
+					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='user_id'
+						tableHeaderClass='table-header' tableContainerClass='base-table' selectRow={{ mode: 'checkbox' }}>
+						<TableHeaderColumn dataField='displayName' dataSort>User Display Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>
+						<TableHeaderColumn dataField='firstName' dataSort>User Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='staffID' dataSort>Staff ID</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='assignedUserRoles' dataSort>User Roles</TableHeaderColumn>
+						<TableHeaderColumn dataField='status' dataSort>Account Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='activationDate' dataSort>Date of Activation</TableHeaderColumn>
+						<TableHeaderColumn dataField='deactivationDate' dataSort>Date of Inactivation</TableHeaderColumn>
+					</TableComponent>
 				</div>
 			</div>
 		</div>
 	}
 })
 
-// <div className='content-footer-left'>
-// 	<button className='btn btn-primary btn-disable'>Delete</button>
-// </div>
-
-// <div className='content-footer-right'>
-// 	{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
-// 		: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
-// 			<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
-// }
-
+// <div className='content-footer'>
+// 	<div className='content-footer-left'>
+// 		<button className='btn btn-primary btn-disable'>Delete</button>
+// 	</div>
+// 	<div className='content-footer-right'>
+// 		{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+// 			: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+// 				<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+// 	}
+// 	</div>
 // </div>

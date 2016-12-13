@@ -8,7 +8,9 @@ export default class SelectCom extends React.Component {
 	}
 
 	render () {
-		return <select className='form-control' value={this.props.selectedVal} onChange={this.props.handleVal}>
+		let className = `form-control ${this.props.warning ? 'has-error' : ''}`
+
+		return <select className={className} value={this.props.selectedVal} onChange={this.props.handleVal}>
 			<option value=''>All</option>
 			{this.renderOptions()}
 		</select>
@@ -18,5 +20,6 @@ export default class SelectCom extends React.Component {
 SelectCom.propTypes = {
 	datas: React.PropTypes.array,
 	selectedVal: React.PropTypes.string,
-	handleVal: React.PropTypes.func
+	handleVal: React.PropTypes.func,
+	warning: React.PropTypes.bool
 }

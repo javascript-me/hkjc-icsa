@@ -143,7 +143,7 @@ export default React.createClass({
 					? <TableComponent
 						striped
 						tableHeaderClass='table-header'
-						tableContainerClass='auditlog-table'
+						tableContainerClass='base-table'
 						// selectRow={this.selectRowProp}
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
@@ -162,7 +162,7 @@ export default React.createClass({
 					: <TableComponent
 						striped
 						tableHeaderClass='table-header'
-						tableContainerClass='auditlog-table'
+						tableContainerClass='base-table'
 						data={tableData}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
