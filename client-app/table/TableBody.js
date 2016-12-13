@@ -296,7 +296,7 @@ class TableBody extends Component {
 
 	renderSelectRowColumn (selected, inputType, disabled, CustomComponent = null, rowIndex = null) {
 		return (
-			<TableColumn dataAlign='center'> {
+			<TableColumn dataAlign='center' className='selectRowColumn'>{
 				CustomComponent ? <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex).bind(this)} />
 								: <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex).bind(this)} />
 			}
