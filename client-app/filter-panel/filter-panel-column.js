@@ -1,6 +1,7 @@
 import React from 'react'
 import Calendar from '../calendar'
 import SelectCom from '../select/select'
+import MultiSelect from '../muti-select'
 
 const emptyFn = () => {}
 
@@ -100,6 +101,15 @@ export default React.createClass({
 
 		this.handleChange(this.props.filterName, e.target.value)
 	},
+	handleMultiSelectChange: function (value) {
+		let joinedValue = value.join()
+
+		this.setState({
+			filterValue: joinedValue
+		})
+
+		this.handleChange(this.props.filterName, joinedValue)
+	},
 	handleChange: function (name, value) {
 		let isValid = this.verifyFilterValidation(value)
 
@@ -150,6 +160,9 @@ export default React.createClass({
 		case 'select':
 			ctrl = this.getSelectCtrl()
 			break
+		case 'multi-select':
+			ctrl = this.getMultiSelectCtrl()
+			break
 		default:
 			break
 		}
@@ -177,6 +190,24 @@ export default React.createClass({
 			selectedVal={this.state.filterValue}
 			warning={this.state.showWarning && !this.state.isValid}
 			handleVal={this.handleTextChange} />
+	},
+	getMultiSelectCtrl: function () {
+		const style = {
+			width: '200px',
+			height: '30px'
+		}
+		let options = this.props.dataSource
+
+		// polyfill
+		options.forEach((elem) => {
+			elem.label = elem.value
+			elem.value = elem.id
+		})
+
+		return <MultiSelect
+			options={options}
+			style={style}
+			onChange={this.handleMultiSelectChange} />
 	},
 	render: function () {
 		return <div className='form-group'>

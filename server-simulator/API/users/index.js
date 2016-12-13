@@ -1,8 +1,10 @@
 import express from 'express'
+import _ from 'lodash'
 const router = express.Router()
 
 const users = require('../json/users.json')
 const tasks = require('../json/tasks.json')
+const basicUsers = require('../json/userProfile2.json')
 
 /**
  * @api {POST} /users/login Login
@@ -115,6 +117,13 @@ router.get('/getTasks', (req, res) => {
 	res.status(200)
 	let result = {}
 	result = tasks
+	res.send(result)
+})
+
+router.get('/getUserinfo', (req, res) => {
+	let result = {}
+	const userID = req.query.userID
+	result = _.find(basicUsers, (baseItem, idx) => (userID === baseItem.userID))
 	res.send(result)
 })
 

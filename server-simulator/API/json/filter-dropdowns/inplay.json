@@ -1,0 +1,6 @@
+{
+  "inplay" : [
+    {"id": 1, "value": "In-Play"},
+    {"id": 2, "value": "Non In-Play"}
+  ]
+}

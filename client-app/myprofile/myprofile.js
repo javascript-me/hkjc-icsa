@@ -92,7 +92,7 @@ export default React.createClass({
 		}
 	},
 	onCancelClick () {
-		PopupService.showMessageBox('Are you sure want to cancel?', () => {
+		PopupService.showMessageBox('Are you sure you want to cancel the current operation?', () => {
 			this.setState({
 				delegationUpdate: false
 			})
@@ -101,7 +101,7 @@ export default React.createClass({
 	onDeleteClick (delegationCmp) {
 		let ids = delegationCmp.getDeleteData()
 		if (ids.length > 0) {
-			PopupService.showMessageBox('Are you sure want to delete?', () => {
+			PopupService.showMessageBox('Are you sure you want delete the information?', () => {
 				UserProfileService.deleteDelegation({
 					userID: this.userID,
 					delegationIds: ids

@@ -13,6 +13,8 @@ import UserList from './userlist/userlist'
 import UserProfile from './userprofile/userprofile'
 import MyProfile from './myprofile/myprofile'
 
+import Noticeboard from './notice-board/notice-board'
+
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
 		replace('/')
@@ -39,6 +41,7 @@ const AppContainer = React.createClass({
 						<Route path='userlist' component={UserList} />
 						<Route path='userprofile/:userId' component={UserProfile} />
 						<Route path='myprofile' component={MyProfile} />
+						<Route path='noticeboard' component={Noticeboard} />
 					</Route>
 				</Router>
 
@@ -49,9 +52,6 @@ const AppContainer = React.createClass({
 })
 
 export default (target) => {
-	ReactDOM.render((
-		<AppContainer />
-		), target)
-
+	ReactDOM.render((<AppContainer />), target)
 	$.get(config.url('/api/config')).then(configOverride)
 }

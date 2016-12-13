@@ -30,8 +30,8 @@ export default React.createClass({
 	},
 	getInitialState () {
 		this.tableOptions = {
-			defaultSortName: 'userName',  // default sort column name
-			defaultSortOrder: 'desc' // default sort order
+			// defaultSortName: 'userName',  // default sort column name
+			// defaultSortOrder: 'desc' // default sort order
 		}
 		this.selectRowProp = {
 			mode: 'checkbox'
@@ -61,11 +61,18 @@ export default React.createClass({
 
 		return calendarFormat
 	},
-	errClassNameFormat (cell, row, rowIdx, colIdx) {
-		if(row.roleErr) {
-			return 'errCell'
-		}
+	geterrClassNameFormat (colField) {
+		const errClassNameFormat = (cell, row, rowIdx, colIdx) => {
+			switch(colField) {
+				case ('userRole') : { return row.roleErr? 'errCell': '' }
+				case ('delegationTo') : { return (row.delegationToErr || row.smallDateErr)? 'errCell': '' }
+				case ('delegationFrom') : { return (row.delegationFromErr || row.smallDateErr)? 'errCell': '' }
+				default : return ''
+			}
+	}
+		return errClassNameFormat
 	},
+	
 
 	roleFormat  (cell, row, enumObject, index) {
 		let placeHolder
@@ -111,8 +118,9 @@ export default React.createClass({
 		this.setState({editUserDelegation: next})
 	},
 	checkVaild () {
-		checkNoRoles(this.state.editUserDelegation)
+		checkDataVaild(this.state.editUserDelegation)
 		this.forceUpdate()
+		
 	},
 	getDeleteData () {
 		if (this.refs.updateTableCmp) {
@@ -181,9 +189,9 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataFormat={this.roleFormat} dataAlign={'center'} columnClassName={this.errClassNameFormat}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' dataFormat={this.getCalendarFormat('delegationFrom')} >Date of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' dataAlign='center' dataFormat={this.getCalendarFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataFormat={this.roleFormat} dataAlign={'center'} columnClassName={this.geterrClassNameFormat('userRole')}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Date of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' dataAlign='center' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
 						<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>
 					</TableComponent>
@@ -210,12 +218,27 @@ export default React.createClass({
 	}
 })
 
-const checkNoRoles = (nextState) => {
+const checkDataVaild = (nextState) => {
 	nextState.forEach((item) => {
 		if (item.changeFlag && (!item.delegatedRoles || (item.delegatedRoles.length === 0))) {
 			item.roleErr = true
 		} else {
 			item.roleErr = false
+		}
+		if (!item.delegationTo) {
+			item.delegationToErr = true
+		} else {
+			item.delegationToErr = false
+		}
+		if (!item.delegationFrom) {
+			item.delegationFromErr = true
+		} else {
+			item.delegationFromErr = false
+		}
+		if (item.delegationTo && item.delegationFrom && (item.delegationTo > item.delegationFrom)) {
+			item.smallDateErr = true
+		} else {
+			item.smallDateErr = false
 		}
 	})
 }
