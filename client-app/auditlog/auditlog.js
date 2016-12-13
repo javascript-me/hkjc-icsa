@@ -481,7 +481,7 @@ export default React.createClass({
 									<FilterPanelRow>
 										<FilterPanelColumn filterName='dateTimeGameStart' filterTitle='K.O Time / Game Start Time' ctrlType='calendar' />
 										<FilterPanelColumn filterName='userId' filterTitle='User ID' />
-										<FilterPanelColumn filterName='userRole' filterTitle='Type' ctrlType='select' dataSource={selectdata.userRole} />
+										<FilterPanelColumn filterName='userRole' filterTitle='User Role' ctrlType='select' dataSource={selectdata.userRole} />
 										<FilterPanelColumn filterName='systemFunc' filterTitle='System Function' ctrlType='select' dataSource={selectdata.systemFunc} />
 									</FilterPanelRow>
 									<FilterPanelRow>
