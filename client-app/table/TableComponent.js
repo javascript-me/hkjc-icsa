@@ -867,7 +867,7 @@ class TableComponent extends Component {
 	_getCellWidth (cell) {
 		// re-use canvas object for better performance
 		if (cell.textContent.trim() === '' && cell.innerHTML.indexOf('input')) {
-			return -34
+			return 17
 		}
 
 		const computedStyle = getComputedStyle(cell)
@@ -889,7 +889,7 @@ class TableComponent extends Component {
 			const row = tbody.childNodes[i]
 			for (let c = 0; c < row.childNodes.length; c++) {
 				const cell = row.childNodes[c]
-				const clength = this._getCellWidth(cell) + 64 // 60 for margin, 4 for borders
+				const clength = this._getCellWidth(cell) + 74 // 70 for margin, 4 for borders
 				rwidth[c] = clength > rwidth[c] ? Math.ceil(clength) : rwidth[c]
 			}
 
@@ -917,7 +917,7 @@ class TableComponent extends Component {
 			for (let i = 0; i < cells.length; i++) {
 				const cell = cells[i]
 				const computedStyle = getComputedStyle(cell)
-				const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 64 // 60 for margin, 4 for borders
+				const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 74 // 70 for margin, 4 for borders
 
 				let width = parseFloat(computedStyle.width.replace('px', ''))
 				if (this.isIE) {
@@ -931,8 +931,11 @@ class TableComponent extends Component {
 				if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
 					const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
 					width = bestWith > 480 ? 480 : bestWith
-					cell.width = width + lastPadding + 'px'
+				} else {
+					width = realWidth.columns[i]
 				}
+
+				cell.style.width = width + lastPadding + 'px'
 
 				const result = width + lastPadding + 'px'
 				header.childNodes[i].style.width = result
