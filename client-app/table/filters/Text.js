@@ -44,7 +44,7 @@ class TextFilter extends Component {
 		const { placeholder, columnName, defaultValue } = this.props
 		return (
 			<input ref='inputText' className='filter text-filter form-control' type='text' onChange={this.filter} placeholder={placeholder || `Enter ${columnName}...`}
-				defaultValue={defaultValue ? defaultValue : ''} />
+				defaultValue={defaultValue} />
 		)
 	}
 }

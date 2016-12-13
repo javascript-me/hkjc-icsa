@@ -3,7 +3,6 @@ import helper from './export_helper'
 import * as fs from 'fs'
 import moment from 'moment'
 import AuditlogsUtil from './auditlogs-util'
-import PagingService from './paging-service'
 
 const router = express.Router()
 const jsonObject = require('../json/auditlogs.json')

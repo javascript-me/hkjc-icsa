@@ -8,10 +8,10 @@ export default {
 			'dropup': order === Const.SORT_ASC
 		})
 		return (
-      <span className={orderClass}>
-        <span className='caret' style={{ margin: '10px 5px' }} />
-      </span>
-    )
+			<span className={orderClass}>
+				<span className='caret' style={{ margin: '10px 5px' }} />
+			</span>
+		)
 	},
 
 	getScrollBarWidth () {

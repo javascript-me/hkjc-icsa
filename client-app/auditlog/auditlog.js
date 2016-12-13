@@ -7,7 +7,6 @@ import FilterBlock from '../filter-block'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
-import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
 import Popup from '../popup'
 import ExportPopup from '../exportPopup'
 import AuditlogStore from './auditlog-store'
@@ -17,7 +16,6 @@ import {TableHeaderColumn, TableComponent} from '../table'
 import SearchEnquiryDataService from '../searchEnquiryPanel/searchEnquiryPanel-service'
 
 const selectdata = SearchEnquiryDataService.getData()
-
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -91,7 +89,6 @@ export default React.createClass({
 				defaultSortName: 'date_time',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
-				paginationSize: 7,
 				paginationClassContainer: 'text-center'
 			},
 			auditlogs: []
@@ -229,14 +226,14 @@ export default React.createClass({
 	},
 
 	searchAuditlog: async function () {
-		let criteriaOption = this.getSearchCriterias()
-
 		this.setState({
 			selectedKeyword: this.state.keyword
-		})
+		}, function () {
+			let criteriaOption = this.getSearchCriterias()
 
-		// Get Table Data
-		AuditlogStore.searchAuditlogs(criteriaOption)
+			// Get Table Data
+			AuditlogStore.searchAuditlogs(criteriaOption)
+		})
 	},
 
 	clickForSearching: function () {
@@ -410,7 +407,7 @@ export default React.createClass({
 				<div>
 					<div className='tableComponent-container'>
 						<TableComponent data={AuditlogStore.auditlogs} pagination options={this.state.tableOptions} striped keyField='id'
-							tableHeaderClass='table-header' tableContainerClass='auditlog-table' >
+							tableHeaderClass='table-header' tableContainerClass='base-table' >
 							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
 							<TableHeaderColumn dataField='date_time' dataSort>Date/Time</TableHeaderColumn>
 							<TableHeaderColumn dataField='user_id' dataSort>User ID</TableHeaderColumn>
@@ -473,16 +470,53 @@ export default React.createClass({
 								</div>
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
-								<SearchEnquiryPanel setFilterEvent={this.setFilters} />
-								<FilterPanel onReset={this.handleFilterReset} onSubmit={this.handleFilterSubmit}>
+								<FilterPanel
+									triggerSearchTopic={this.state.tokens.AUDITLOG_SEARCH_BY_KEY_PRESS}
+									resetFiltersTopic={this.state.tokens.AUDITLOG_SEARCH_BY_RESET_FILTERS}
+									removeOneFilterTopic={this.state.tokens.AUDITLOG_SEARCH_BY_REMOVE_FILTER}
+									onSubmit={this.setFilters}>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="textField" filterTitle="Text Field" onChange={this.handleChange}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="textDateTimeField" filterTitle="Text Date Time Field" filterValue="08 Dec 2016 23:59" ctrlType="calendar" onChange={this.handleChange}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="textSelectField" filterTitle="Text Select Field" ctrlType="select" dataSource={selectdata.typeValue} onChange={this.handleChange}>
-										</FilterPanelColumn>
-									</FilterPanelRow>									
+										<FilterPanelColumn filterName='dateTimeFrom'
+											filterTitle='Date Time From'
+											filterValue={this.state.originDateRange.dateTimeFrom}
+											ctrlType='calendar'
+											isRequired
+											pairingVerify={[{
+												operation: '<=',
+												partners: ['dateTimeTo']
+											}]} />
+										<FilterPanelColumn filterName='dateTimeTo'
+											filterTitle='Date Time To'
+											filterValue={this.state.originDateRange.dateTimeTo}
+											ctrlType='calendar'
+											isRequired
+											pairingVerify={[{
+												operation: '>=',
+												partners: ['dateTimeFrom']
+											}]} />
+										<FilterPanelColumn filterName='typeValue' filterTitle='Type' ctrlType='select' dataSource={selectdata.typeValue} />
+										<FilterPanelColumn filterName='backEndID' filterTitle='Back End ID' />
+									</FilterPanelRow>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName='frontEndID' filterTitle='Front End ID' />
+										<FilterPanelColumn filterName='eventLv1' filterTitle='Event Lv1' />
+										<FilterPanelColumn filterName='homeValue' filterTitle='Home' />
+										<FilterPanelColumn filterName='awayValue' filterTitle='Away' />
+									</FilterPanelRow>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName='dateTimeGameStart' filterTitle='K.O Time / Game Start Time' ctrlType='calendar' />
+										<FilterPanelColumn filterName='userId' filterTitle='User ID' />
+										<FilterPanelColumn filterName='userRole' filterTitle='Type' ctrlType='select' dataSource={selectdata.userRole} />
+										<FilterPanelColumn filterName='systemFunc' filterTitle='System Function' ctrlType='select' dataSource={selectdata.systemFunc} />
+									</FilterPanelRow>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName='betTypeFeature' filterTitle='Bet Type / Feature' ctrlType='select' dataSource={selectdata.betTypeFeature} />
+										<FilterPanelColumn filterName='device' filterTitle='Device' ctrlType='select' dataSource={selectdata.device} />
+										<FilterPanelColumn filterName='ipAddress'
+											filterTitle='IP Address'
+											customVerification={/^((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2})){2}(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|\d{1,2}))$/} />
+										<FilterPanelColumn filterName='errorCode' filterTitle='Error Code' />
+									</FilterPanelRow>
 								</FilterPanel>
 							</div>
 						</div>

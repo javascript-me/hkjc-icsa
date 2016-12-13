@@ -66,7 +66,9 @@ SelectFilter.propTypes = {
 	filterHandler: PropTypes.func.isRequired,
 	options: PropTypes.object.isRequired,
 	placeholder: PropTypes.string,
-	columnName: PropTypes.string
+	columnName: PropTypes.string,
+	defaultValue: PropTypes.string,
+	selectText: PropTypes.string
 }
 
 export default SelectFilter
