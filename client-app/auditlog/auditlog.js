@@ -292,7 +292,7 @@ export default React.createClass({
 		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
 	},
 
-	openPopup () {
+	openPopup: function () {
 		this.setState({ exportFormat: 'pdf' })// reset the format value
 		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
@@ -313,6 +313,14 @@ export default React.createClass({
 		this.setState({
 			auditlogs: AuditlogStore.auditlogs, hasData: hasData
 		})
+	},
+
+	handleChangePage: function (selectedPageNumber, sortingObject, criteriaOption) {
+		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
+	},
+
+	handleClickSorting: function (selectedPageNumber, sortingObject, criteriaOption) {
+		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	generateFilterBlockesJsx: function (filters) {
