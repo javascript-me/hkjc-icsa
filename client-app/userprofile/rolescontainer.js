@@ -43,6 +43,8 @@ TableRow.propTypes = {
 	fields: React.PropTypes.array
 }
 
+export { TableHeader, TableRow }
+
 const header = [
 	{label: 'User Role', field: 'roleName'}
 ]

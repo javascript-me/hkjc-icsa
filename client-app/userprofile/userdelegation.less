@@ -1,0 +1,87 @@
+.user-delegation {
+	flex: 1;
+
+	.header {
+		.action {
+			.icon {
+				margin-top: 2px;
+				width: 14px;
+				height: 14px;
+				background-image: url(icon/edit.svg);
+			}
+		}
+	}
+
+	.content {
+		padding: 0;
+		height: 231px;
+		min-height: auto;
+		overflow: hidden;
+		border: none;
+
+		.react-bs-table-container {
+			height: 100%;
+
+			.react-bs-table {
+				margin: 0;
+			}
+		}
+	}
+
+	&.mid-overlay {
+		.popup-wrapper .popup-dialog {
+			top: 50%;
+			left: 50%;
+			margin-top: -268px;
+			margin-left: -302.5px;
+
+			.body {
+				padding: 16px;
+
+				.table.sm-table {
+					border: 0;
+					border-bottom: 1px solid #DDDDDD;
+
+					thead,
+					tbody > tr {
+						width: 572px;
+					}
+				}
+			}
+
+			.popup-actions a {
+				line-height: 26px;
+			}
+		}
+	}
+
+	.content.user-delegation-table {
+		overflow: inherit;
+		height: auto;
+
+		.react-bs-container-body {
+			overflow: inherit;
+		}
+	}
+
+	.user-delegation-table {
+		position: relative;
+
+		tbody tr td {
+			position: relative;
+			overflow: visible;
+			vertical-align: middle;
+		}
+
+		.calendarTime-input,
+		.icon-time {
+			display: none;
+		}
+
+		.calendar .rdt .calendar-input {
+			width: 100%;
+			text-align: center;
+			height: 30px;
+		}
+	}
+}

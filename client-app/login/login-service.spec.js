@@ -85,4 +85,37 @@ describe('LoginService', () => {
 			LoginService.logout()
 		})
 	})
+	describe('#getTasks', () => {
+		it('returns the json file', () => {
+			const tasks = {a: {}}
+			rewire(LoginService.__set__('tasks', tasks))
+
+			const result = LoginService.getTasksNum()
+
+			rewire()
+			expect(result).to.be.not.equal(tasks)
+		})
+	})
+	describe('#getNoticeBoardSettings', async () => {
+		it('returns the json file', () => {
+			const notices = {a: {}}
+			rewire(LoginService.__set__('notices', notices))
+
+			const result = LoginService.getNoticeBoardSettings()
+
+			rewire()
+			expect(result).to.be.not.equal(notices)
+		})
+	})
+	describe('#updateProfile', () => {
+		it('returns cloned profile', () => {
+			const profile = {a: {}}
+			rewire(LoginService.__set__('profile', profile))
+
+			const result = LoginService.updateProfile()
+
+			rewire()
+			expect(result).to.be.not.equal(profile)
+		})
+	})
 })

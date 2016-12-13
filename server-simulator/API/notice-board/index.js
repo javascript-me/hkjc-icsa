@@ -132,4 +132,44 @@ router.get('/remind-count', (req, res) => {
 	res.send(result)
 })
 
+/**
+ * @api {GET} /notice-board/notice-tips/ Get remind count
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Get the new tasks count
+ *
+ * @apiParam {String} username Username of current user.
+ *
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		number   // Get the new tasks count
+ *
+ */
+router.get('/notice-tips', (req, res) => {
+	let userName = req.query.username
+	let status = null
+	let result = {count: 0}
+
+	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
+	if (!userName) {
+		status = 403
+		result = { error: 'Sorry we need your username to get notice data' }
+
+		res.status(status)
+		res.send(result)
+
+		return false
+	}
+
+	// Step 5 response the length result with http 200
+	status = 200
+	result = {
+		count: Math.round(Math.random() * 10)
+	}
+
+	res.status(status)
+	res.send(result)
+})
+
 export default router
