@@ -208,6 +208,26 @@ router.post('/updateDelegation', (req, res) => {
 	}
 })
 
+router.get('/getDelegation', (req, res) => {
+	let result = {}
+	let departmentData = {}
+	const userID = req.query.userID
+	let departmentId = _.find(accountProfiles, (baseItem, idx) => (userID === baseItem.userID)).departmentId
+	departmentData = _.filter(accountProfiles, (baseItem, idx) => (departmentId === baseItem.departmentId))
+
+	result = _.filter(basicUsers, (baseItem, index) => {
+		let isMyDepUser = false
+		_.each(departmentData, (item, index) => {
+			if (item.userID === baseItem.userID && baseItem.userID !== userID) {
+				isMyDepUser = true
+			}
+		})
+		return isMyDepUser
+	})
+
+	res.send(result)
+})
+
 /**
  * @apiGroup UserProfile
  * @api {POST} /userprofile/update update user profile by user id
@@ -251,6 +271,49 @@ router.post('/update', (req, res) => {
 	}
 
 	if (!bUpdate) {
+		res.status(404)
+		result = {
+			error: 'The user you have updated is invalid.'
+		}
+	}
+
+	res.send(result)
+})
+
+/**
+ * @apiGroup UserProfile
+ * @api {POST} /userprofile/deleteDelegation delete user delegation
+ * @apiDescription delete user delegation
+ * @apiParam {String} userID user id
+ * @apiParam {String[]} delegationIds user delegation ids
+ * @apiParamExample {json} Request-Example:
+ * 		{
+ * 			"userID": "JC10001",
+ * 			"delegationIds": ["0001", "0002"]
+ * 		}
+ *
+ * @apiSuccess (Success) {String} msg success message
+ * @apiSuccessExample {json} Success-Response:
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"msg": "You have success delete the delegation!"
+ *		}
+ *
+ * @apiError (Error) {String} error  UserAccountNotFound
+ * @apiErrorExample {json} Error-Response:
+ *		HTTP/1.1 404 Not Found
+ *		{
+ *			"error": "The user you have updated is invalid."
+ *		}
+ */
+router.post('/deleteDelegation', (req, res) => {
+	const userID = req.body.userID
+	const bOk = UserProfileUtil.deleteDelegation(accountProfiles, userID, req.body)
+	let result = {
+		msg: 'You have success delete the delegation!'
+	}
+
+	if (!bOk) {
 		res.status(404)
 		result = {
 			error: 'The user you have updated is invalid.'

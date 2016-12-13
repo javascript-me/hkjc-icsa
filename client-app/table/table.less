@@ -16,7 +16,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	padding: 0 30px;
+	padding: 0 30px 0 40px;
 	line-height: 40px;
 }
 
@@ -166,6 +166,10 @@
 	padding-right: 10px;
 }
 
+.react-bs-table .react-bs-container-body > table > tbody > tr > td.selectRowColumn {
+	padding: 0 !important;
+}
+
 .react-bs-table .react-bs-container-header .sort-column:hover .order,
 .react-bs-table .react-bs-container-header .sort-column .order .active {
 	visibility: visible;
@@ -297,9 +301,52 @@
 	animation-name: bounceOut;
 }
 
+//// Styles for the table
 .tableComponent-container {
 	min-height: 500px;
 	width: auto;
 	margin: 0 30px;
+
+	//Blue Style
+	.base-table {
+		font-family: Roboto-Regular;
+		font-size: 14px;
+		color: #305091;
+		border: 1px solid #305091;
+
+		th {
+			vertical-align: top;
+			background: #305091;
+			color: white;
+			font-weight: normal;
+			font-size: 14px;
+			border: none;
+			border-right: 1px solid #D8E1F3;
+			max-width: 480px;
+			overflow: hidden;
+
+			&:last-child {
+				border-right: none;
+			}
+		}
+
+		td {
+			border: none;
+			border-right: 1px solid #D8E1F3;
+			line-height: 40px;
+			max-width: 480px;
+			overflow: hidden;
+
+			&:last-child {
+				border-right: none;
+			}
+		}
+	}
 }
 
+.react-bs-table-no-data {
+	height: 400px;
+	vertical-align: middle !important;
+	font-size: 60px;
+	font-family: Roboto-Medium;
+}

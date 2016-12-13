@@ -22,3 +22,14 @@ it('itemUpdate() should return true or false', () => {
 	const bUpdateFalse = UserProfileUtil.itemUpdate(accountProfiles, 'JC10001xxxxx', {})
 	expect(bUpdateFalse).to.be.false
 })
+
+it('deleteDelegation() should return true or false', () => {
+	const bTrue = UserProfileUtil.deleteDelegation(accountProfiles, 'JC10001', {
+		'userID': 'JC10001',
+		'delegationIds': ['0001', '0002']
+	})
+	expect(bTrue).to.be.true
+
+	const bFalse = UserProfileUtil.deleteDelegation(accountProfiles, 'JC10001xxxxx', {})
+	expect(bFalse).to.be.false
+})
