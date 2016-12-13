@@ -178,7 +178,7 @@ export default React.createClass({
 
 	render () {
 		return (
-			<div>
+			<div className="noticeboard-popup-spestyle">
 				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
 					<NotificationsPopup onChange={this.onChangeSetting} />
 				</Popup>
