@@ -179,7 +179,7 @@ export default class SearchEnquiryPanel extends React.Component {
 
 	handleReset () {
 		let newState = Object.assign({}, originState)
-		newState.calendarVersion = ++this.state.calendarVersion
+		// newState.calendarVersion = ++this.state.calendarVersion
 		this.setState(newState)
 	}
 

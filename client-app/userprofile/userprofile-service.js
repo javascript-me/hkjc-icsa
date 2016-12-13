@@ -12,6 +12,10 @@ const postUserProfile = (data) => {
 	return $.post(config.url('api/userprofile/update'), data)
 }
 
+const postDeleteDelegation = (data) => {
+	return $.post(config.url('api/userprofile/deleteDelegation'), data)
+}
+
 const getRoles = () => {
 	return $.get(config.url('api/roles/list'))
 }
@@ -39,6 +43,15 @@ export default {
 		let result = null
 		try {
 			result = await postUserProfile(data)
+		} catch (failure) {
+			// returns null on failure
+		}
+		return result
+	},
+	async deleteDelegation (data) {
+		let result = null
+		try {
+			result = await postDeleteDelegation(data)
 		} catch (failure) {
 			// returns null on failure
 		}

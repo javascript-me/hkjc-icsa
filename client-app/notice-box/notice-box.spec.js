@@ -3,7 +3,6 @@ import {assert} from 'chai'
 import ClassNames from 'classnames'
 import {shallow} from 'enzyme'
 import NoticeBox from './notice-box'
-// import Moment from 'moment'
 
 it('ClassNames should return concat string', () => {
 	assert.equal(2, 2)
@@ -87,4 +86,3 @@ describe('<NoticeBox>', () => {
 		assert.equal('wrap-text', message.props.children.props.className)
 	})
 })
-

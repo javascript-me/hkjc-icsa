@@ -27,12 +27,6 @@ const roleFormat = (cell, row, enumObject, index) => {
 	return (<MutiSelect placeHolder={placeHolder} options={options} style={style} />)
 }
 
-const getCheckboxFormat = (cell, row) => {
-	return (
-		<input type='checkbox' />
-	)
-}
-
 const roleVeiw = (cell, row, enumObject, index) => {
 	let text = cell.map((item) => (item.delegatedRole)).join(' ')
 	return text
@@ -48,6 +42,26 @@ export default React.createClass({
 			userDelegation: null,
 			delegationUpdate: false
 		}
+	},
+	getInitialState () {
+		this.tableOptions = {
+			defaultSortName: 'userName',  // default sort column name
+			defaultSortOrder: 'desc' // default sort order
+		}
+		this.selectRowProp = {
+			mode: 'checkbox'
+			// clickToSelect: true,
+			// selected: [], // default select on table
+			// bgColor: 'rgb(238, 193, 213)',
+			// onSelect: onRowSelect,
+			// onSelectAll: onSelectAll
+		}
+		return {userDelegation: this.props.userDelegation}
+	},
+	getCheckboxFormat (cell, row) {
+		return (
+			<input type='checkbox' value={row.checkbox} onClick={() => { row.checkbox = !row.checkbox }} />
+		)
 	},
 	getCalendarFormat (field) {
 		const calendarFormat = (cell, row, enumObject, index) => {
@@ -65,22 +79,17 @@ export default React.createClass({
 
 		return calendarFormat
 	},
-
-	getInitialState () {
-		this.selectRowProp = {
-			mode: 'checkbox'
-			// clickToSelect: true,
-			// selected: [], // default select on table
-			// bgColor: 'rgb(238, 193, 213)',
-			// onSelect: onRowSelect,
-			// onSelectAll: onSelectAll
-		}
-		return {userDelegation: this.props.userDelegation}
-	},
 	onAddClick (popupCmp) {
 		popupCmp.show()
 	},
-	onDeleteClick () {
+	getDeleteData () {
+		let ids = this.state.userDelegation.filter((item) => {
+			return item.checkbox
+		}).map((item) => {
+			return item.delegationID
+		})
+
+		return ids
 	},
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.userDelegation !== this.state.userDelegation) {
@@ -140,15 +149,14 @@ export default React.createClass({
 				<div className='tableComponent-container content user-delegation-table' >
 					{delegationUpdate
 					? <TableComponent
+						striped
 						tableHeaderClass='table-header'
-						tableContainerClass='auditlog-table'
-						// selectRow={this.selectRowProp}
+						tableContainerClass='base-table'
+						selectRow={this.selectRowProp}
 						data={tableData}
+						options={this.tableOptions}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
-						<TableHeaderColumn dataField='checkbox' dataAlign='center' dataFormat={getCheckboxFormat}>
-							<input type='checkbox' />
-						</TableHeaderColumn>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataFormat={roleFormat} dataAlign={delegationUpdate ? 'left' : 'center'}>Delegate Role</TableHeaderColumn>
@@ -158,9 +166,11 @@ export default React.createClass({
 						<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>
 					</TableComponent>
 					: <TableComponent
+						striped
 						tableHeaderClass='table-header'
-						tableContainerClass='auditlog-table'
+						tableContainerClass='base-table'
 						data={tableData}
+						options={this.tableOptions}
 						bodyStyle={{height: 'calc(100% - 42px)'}}
 					>
 						<TableHeaderColumn dataField='userName' isKey dataSort dataAlign='center' >Username</TableHeaderColumn>

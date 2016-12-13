@@ -203,24 +203,24 @@ class PaginationList extends Component {
 		let pages
 		let endPage = this.totalPages
 		if (endPage <= 0) return []
-		let startPage = this.props.currPage < 6 ? 1 : this.props.currPage - 2
 
-		endPage = this.props.currPage < 6 ? 6 : this.props.currPage + 2
+		let startPage = this.totalPages <= (this.props.paginationSize + 2) ? 1 : Math.max(this.props.currPage - Math.floor(this.props.paginationSize / 2), this.props.pageStartIndex)
+		endPage = this.totalPages <= (this.props.paginationSize + 2) ? endPage : startPage + this.props.paginationSize - 1
+
+		if (this.props.currPage <= this.props.paginationSize) {
+			startPage = 1
+			endPage = this.props.paginationSize + 1
+		}
 
 		if (endPage > this.lastPage) {
 			endPage = this.lastPage
-			startPage = endPage - this.props.paginationSize + 2
-		} else if (this.props.currPage > (this.lastPage - 5)) {
-			endPage = this.lastPage
-			startPage = this.lastPage - 5
+			startPage = Math.max(endPage - this.props.paginationSize, 1)
+		} else if (endPage === this.lastPage) {
+			startPage = Math.max(endPage - this.props.paginationSize, 1)
 		}
 
-		if (this.props.paginationSize === this.totalPages) {
-			startPage = 1
-			endPage = this.totalPages
-			pages = [ this.props.prePage ]
-		} else if (startPage !== this.props.pageStartIndex && this.totalPages > this.props.paginationSize) {
-			pages = [ this.props.prePage, '1', '...' ]
+		if (this.totalPages > this.props.paginationSize && this.props.currPage > this.props.paginationSize) {
+			pages = startPage > 1 ? [ this.props.prePage, '1', '...' ] : [ this.props.prePage ]
 		} else if (this.totalPages > 1) {
 			pages = [ this.props.prePage ]
 		} else {
@@ -235,7 +235,7 @@ class PaginationList extends Component {
 			pages.push('...')
 			pages.push(this.lastPage)
 			pages.push(this.props.nextPage)
-		} else if (endPage === this.lastPage) {
+		} else if (endPage === this.lastPage && endPage > startPage) {
 			pages.push(this.props.nextPage)
 		}
 
