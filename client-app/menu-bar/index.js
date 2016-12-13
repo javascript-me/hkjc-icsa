@@ -121,7 +121,7 @@ class MenuBar extends Component {
 			getTipsCountPromise(userProfile.username).then((data) => {
 				self.setState({tipsNum: data})
 			})
-		}, 9000)
+		}, 900000)
 
 		loginChangeToken = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
 			self.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: userProfile})

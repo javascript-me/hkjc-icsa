@@ -33,10 +33,49 @@ export default React.createClass({
 	},
 	async onUpdateClick (delegationCmp) {
 		const result = delegationCmp.onUpdateClick()
-		result && result.forEach((item) => { item.changeFlag = null })
-		PopupService.showMessageBox('Are you sure want to update?', () => {
-
+		if (!result || result.length === 0) {
+			return false
+		}
+		let errBox = {}
+		result.forEach((item, index) => {
+			if (!item.delegatedRoles || item.delegatedRoles.length === 0) {
+				errBox.roleErr = true
+				return false
+			}
+			if (!item.delegationTo) {
+				errBox.delegationToErr = true
+				return false
+			}
+			if (!item.delegationFrom) {
+				errBox.delegationFromErr = true
+				return false
+			}
+			if (item.delegationFrom <= item.delegationTo) {
+				errBox.smallerErr = true
+			}
 		})
+		switch (true) {
+		case (errBox.roleErr) : {
+			PopupService.showMessageBox('You must select a role', () => {})
+			return false
+		}
+		case (errBox.delegationToErr) : {
+			PopupService.showMessageBox('You must select  delegationTo date', () => {})
+			return false
+		}
+		case (errBox.delegationFromErr) : {
+			PopupService.showMessageBox('You must select  delegationFrom date', () => {})
+			return false
+		}
+		case (errBox.smallerErr) : {
+			PopupService.showMessageBox('delegationFrom date must larger then delegationTo date', () => {})
+			return false
+		}
+		default : break
+
+		}
+
+		result && result.forEach((item) => { item.changeFlag = null })
 		let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
 
 		if (UpdateFlag.status) {
@@ -52,7 +91,7 @@ export default React.createClass({
 		}
 	},
 	onCancelClick () {
-		PopupService.showMessageBox('Are you sure want to cancel?', () => {
+		PopupService.showMessageBox('Are you sure you want to cancel the current operation?', () => {
 			this.setState({
 				delegationUpdate: false
 			})
@@ -61,7 +100,7 @@ export default React.createClass({
 	onDeleteClick (delegationCmp) {
 		let ids = delegationCmp.getDeleteData()
 		if (ids.length > 0) {
-			PopupService.showMessageBox('Are you sure want to delete?', () => {
+			PopupService.showMessageBox('Are you sure you want delete the information?', () => {
 				UserProfileService.deleteDelegation({
 					userID: this.userID,
 					delegationIds: ids
@@ -107,6 +146,7 @@ export default React.createClass({
 		const userProfile = await UserProfileService.getUserProfile(this.userID)
 		if (userProfile) {
 			this.setState({
+				delegationUpdate: false,
 				userBasic: userProfile.user,
 				userAccount: userProfile.account,
 				userDelegation: userProfile.account.delegationList,
