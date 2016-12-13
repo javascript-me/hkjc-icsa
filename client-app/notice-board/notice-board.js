@@ -1,219 +1,437 @@
 import React from 'react'
+import ExportService from '../auditlog/export-service'
 import Popup from '../popup'
-import NoticeboardPopup from '../notice-board-popup'
-import LoginService from '../login/login-service'
-import NoticeBox from '../notice-box/notice-box'
-import TabBar from '../tab-bar/tab-bar'
-import NoticeBoardService from './notice-board-service'
-import NoticeDetail from '../notice-detail/notice-detail'
+import ExportPopup from '../exportPopup'
+import NoticeboardService from './noticeboard-service'
+import {TableHeaderColumn, TableComponent} from '../table'
+import PubSub from '../pubsub'
+import Moment from 'moment'
+import ClassNames from 'classnames'
+import FilterPanel from '../filter-panel'
+import FilterPanelRow from '../filter-panel/filter-panel-row'
+import FilterPanelColumn from '../filter-panel/filter-panel-column'
+import FilterBlock from '../filter-block'
 
-const getAllNoticesPromise = async (username) => {
-	let notices = null
-
-	try {
-		notices = await NoticeBoardService.getNotices(username)
-	} catch (ex) {
-
-	}
-
-	return notices
-}
-const updateUserNoticeBoardSettingsPromise = async (username, display) => {
-	let userProfile = null
-
-	try {
-		userProfile = await LoginService.updateNoticeBoardSettings(username, display)
-	} catch (ex) {
-
-	}
-
-	return userProfile
+const getOrginDateTimeFrom = function () {
+	let dateTimeFrom = new Date()
+	dateTimeFrom.setDate(dateTimeFrom.getDate() - 60)
+	dateTimeFrom.setHours(0)
+	dateTimeFrom.setMinutes(0)
+	dateTimeFrom.setSeconds(0)
+	dateTimeFrom.setMilliseconds(0)
+	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
 }
 
+const getOrginDateTimeTo = function () {
+	let dateTimeTo = new Date()
+	dateTimeTo.setHours(23)
+	dateTimeTo.setMinutes(59)
+	dateTimeTo.setSeconds(59)
+	dateTimeTo.setMilliseconds(0)
+	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+}
+const getDefaultSelectedFilters = () => {
+	return [{
+		name: 'dateTimeFrom',
+		value: getOrginDateTimeFrom()
+	}, {
+		name: 'dateTimeTo',
+		value: getOrginDateTimeTo()
+	}]
+}
+const doExport = async(format, filters) => {
+	const file = ExportService.getNoticeboardFileURL(format, filters)
+	if (file) {
+		window.open(file, '_blank')
+	}
+}
+let token = null
 export default React.createClass({
 	propTypes: {
-		isSlim: React.PropTypes.bool
+		someThing: React.PropTypes.bool
 	},
-
 	getInitialState () {
 		return {
-			displaySettings: 'bottom',
-			selectedSettings: '',
-
-			allNoticesVisible: true,
-			unreadNoticesVisible: false,
-
-			noticeBoxData: {
-				allNotices: [],
-				unreadNotices: []
+			data: [],
+			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication ',
+			exportFormat: 'pdf',
+			keyword: '',
+			selectedKeyword: '',
+			isShowingMoreFilter: false,
+			isClickForSearching: false,
+			tokens: {
+				NOTICEBOARD_SEARCH_BY_KEY_PRESS: 'NOTICEBOARD_SEARCH_BY_KEY_PRESS',
+				NOTICEBOARD_SEARCH: 'NOTICEBOARD_SEARCH',
+				NOTICEBOARD_SEARCH_BY_REMOVE_FILTER: 'NOTICEBOARD_SEARCH_BY_REMOVE_FILTER',
+				NOTICEBOARD_SEARCH_BY_RESET_FILTERS: 'NOTICEBOARD_SEARCH_BY_RESET_FILTERS'
 			},
-
-			tabData: [
-				{label: 'All', isOn: true},
-				{label: 'Unread', isOn: false}
-			],
-
-			detail: {
-				id: '',
-				message_detail: '',
-				alert_status: '',
-				message_category: '',
-				system_distribution_time: '',
-				priority: ''
-			}
+			originDateRange: {
+				dateTimeFrom: getOrginDateTimeFrom(),
+				dateTimeTo: getOrginDateTimeTo()
+			},
+			selectedFilters: getDefaultSelectedFilters(),
+			tableOptions: {
+				defaultSortName: 'priority',  // default sort column name
+				defaultSortOrder: 'desc', // default sort order
+				hideSizePerPage: true,
+				paginationClassContainer: 'text-center'
+			},
+			noticesList: [],
+			categoriesList: [],
+			competitionsList: [],
+			continentsList: [],
+			countriesList: [],
+			inplaysList: [],
+			matchesList: [],
+			prioritiesList: [],
+			sportsList: [],
+			statusesList: []
 		}
 	},
 	componentDidMount: function async () {
-		let userProfile = LoginService.getProfile()
-		let noticePromise = getAllNoticesPromise(userProfile.username)
-		let allNotices
-		let unreadNotices
-		let self = this
-
-		self.setState({
-			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
+		let criteriaOption = this.getSearchCriterias()
+		NoticeboardService.filterNoticeBoardTableData(criteriaOption)
+		NoticeboardService.addChangeListener(this.onChange)
+		/* All dropdownas data */
+		NoticeboardService.getAllCategories()
+		NoticeboardService.getAllCompetitions()
+		NoticeboardService.getAllContinents()
+		NoticeboardService.getAllCountries()
+		NoticeboardService.getAllInplays()
+		NoticeboardService.getAllMatches()
+		NoticeboardService.getAllPriorities()
+		NoticeboardService.getAllSports()
+		NoticeboardService.getAllStatuses()
+		NoticeboardService.addChangeListener(this.onChange)
+		token = PubSub.subscribe(PubSub[this.state.tokens.NOTICEBOARD_SEARCH], () => {
+			this.searchNoticeboard()
 		})
-
-		noticePromise.then((notices) => {
-			allNotices = notices || []
-
-			unreadNotices = allNotices.filter((notice) => {
-				return notice.alert_status === 'New'
-			})
-
-			self.setState({
-				noticeBoxData: {
-					allNotices: allNotices,
-					unreadNotices: unreadNotices
-				}
-			})
+		document.addEventListener('click', this.pageClick, false)
+	},
+	searchNoticeboard: async function () {
+		this.setState({
+			selectedKeyword: this.state.keyword
+		}, function () {
+			let criteriaOption = this.getSearchCriterias()
+			// Get Table Data
+			NoticeboardService.filterNoticeBoardTableData(criteriaOption)
 		})
+	},
+	getSearchCriterias: function () {
+		return {
+			keyword: this.state.selectedKeyword,
+			filters: this.state.selectedFilters
+		}
+	},
+	pageClick: function (event) {
+		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
+			this.setState({isClickForSearching: false})
+			return
+		}
+		this.hideMoreFilter()
+	},
+	componentWillUnmount: function () {
+		NoticeboardService.removeChangeListener(this.onChange.bind(this))
+		document.removeEventListener('click', this.pageClick, false)
+		PubSub.unsubscribe(token)
+	},
+	onChange () {
+		this.setState({noticesList: NoticeboardService.noticesList})
 	},
 	openPopup () {
-		this.refs.noticeboardPopup.show()
+		this.setState({exportFormat: 'pdf'})// reset the format value
+		this.refs.exportPopup.show()
 	},
-	applySettings () {
-		let self = this
-		let userProfile = LoginService.getProfile()
-		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
-		let userNoticeboardSettings = null
-		settingPromise.then((userProfile) => {
-			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-			self.updateSet(userNoticeboardSettings.display)
+	export () {
+		const filters = {
+			username: 'allgood',
+			selectedPageNumber: 1,
+			sortingObjectFieldName: 'date_time',
+			sortingObjectOrder: 'DESCEND',
+			betType: 'football',
+			keyword: '',
+			dateTimeFrom: '09 Oct 2016 00:00',
+			dateTimeTo: '08 Dec 2016 23:59'
+		}
+		doExport(this.state.exportFormat, filters)
+	},
+	onChangeFormat (format) {
+		this.setState({exportFormat: format})
+	},
+	showMoreFilter: function (event) {
+		this.clickForSearching()
+
+		this.setState({
+			isShowingMoreFilter: true
 		})
 	},
-	updateSet (setting) {
-		this.setState({displaySettings: setting})
+	clickForSearching: function () {
+		this.setState({
+			isClickForSearching: true
+		})
 	},
-	onChangeSetting (setting) {
-		this.setState({selectedSettings: setting})
-	},
+	handleKeywordChange: function (event) {
+		var newKeyword = event.target.value
 
-	getClassName () {
-		if (this.state.displaySettings === 'right') {
-			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
-		} else {
-			return 'bottom-noticeboard-container'
-		}
+		this.setState({
+			keyword: newKeyword
+		})
 	},
-	changeTab (key) {
-		if (key === 'All') {
-			this.setState({
-				allNoticesVisible: true,
-				unreadNoticesVisible: false
-			})
-		}
-		if (key === 'Unread') {
-			this.setState({
-				allNoticesVisible: false,
-				unreadNoticesVisible: true
-			})
+	generateFilterBlockesJsx: function (filters) {
+		const filterDisplayFormatting = (filter) => {
+			return filter.name === 'keyword'
+				? `${filter.name}: ${filter.value}`
+				: filter.value
 		}
 
-		this.state.tabData.forEach((item) => {
-			if (item.label === key) {
-				item.isOn = true
-			} else {
-				item.isOn = false
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
+		let keywordFilter = {
+			name: 'keyword',
+			value: this.state.selectedKeyword
+		}
+		let dateFromFilter = filters.filter((f) => {
+			return f.name === 'dateTimeFrom'
+		})[0] || {}
+		let dateToFilter = filters.filter((f) => {
+			return f.name === 'dateTimeTo'
+		})[0] || {}
+		let dateRangeFilter = {
+			name: 'dateTimeFrom,dateTimeTo',
+			value: `${dateFromFilter.value} - ${dateToFilter.value}`
+		}
+		let filtersArrayWithoutDateRange = filters.filter((f) => {
+			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
+				return false
+			}
+			return true
+		})
+
+		let filtersArray = []
+			.concat(this.state.selectedKeyword ? keywordFilter : [])
+			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
+			.concat(filtersArrayWithoutDateRange)
+
+		let filterBlockes = filtersArray.map((f, index) => {
+			return <FilterBlock
+				key={index}
+				dataText={filterDisplayFormatting(f)}
+				dataValue={f}
+				removeEvent={this.removeSearchCriteriaFilter} />
+		}) || []
+
+		return filterBlockes
+	},
+	removeSearchCriteriaFilter: function (filter) {
+		const callback = () => {
+			this.setState({
+				isShowingMoreFilter: false
+			})
+			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH_BY_REMOVE_FILTER], filter)
+			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH])
+		}
+		switch (filter.name) {
+		case 'keyword':
+			this.removeKeywordFilter(filter, callback)
+			break
+		case 'dateTimeFrom,dateTimeTo':
+			this.removeDateRangeFilter(filter, callback)
+			break
+		default:
+			this.removeNormalFilter(filter, callback)
+			break
+		}
+	},
+	removeNormalFilter: function (filter, callback) {
+		let selectedFilters = this.state.selectedFilters
+		let filterIndex = selectedFilters.indexOf(filter)
+		selectedFilters.splice(filterIndex, 1)
+		this.setState({
+			selectedFilters: selectedFilters
+		}, callback)
+	},
+	removeDateRangeFilter: function (dateRange, callback) {
+		let selectedFilters = this.state.selectedFilters
+		let originDateRange = this.state.originDateRange
+		selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom') {
+				filter.value = originDateRange.dateTimeFrom
+			} else if (filter.name === 'dateTimeTo') {
+				filter.value = originDateRange.dateTimeTo
 			}
 		})
+		this.setState({
+			selectedFilters: selectedFilters
+		}, callback)
 	},
-	clearselectedSettings () {
-		this.setState({selectedSettings: ''})
+	removeKeywordFilter: function (keyword, callback) {
+		this.setState({
+			keyword: '',
+			selectedKeyword: ''
+		}, callback)
 	},
-	getHeadTitle () {
-		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
-			return e.priority === 'Critical' || e.priority === 'High'
+	checkIsDateRangeNotChanged: function () {
+		let filters = this.state.selectedFilters
+		let originDateRange = this.state.originDateRange
+		let dateTimeFrom
+		let dateTimeTo
+		for (var i in filters) {
+			if (filters[i].name === 'dateTimeFrom') {
+				dateTimeFrom = filters[i].value
+			} else if (filters[i].name === 'dateTimeTo') {
+				dateTimeTo = filters[i].value
+			}
+		}
+		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
+	},
+	handleKeywordPress: function (event) {
+		if (event.key === 'Enter') {
+			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH_BY_KEY_PRESS])
+		}
+	},
+	hideMoreFilter: function () {
+		this.setState({
+			isShowingMoreFilter: false
 		})
-		return 'Noticeboard ' + this.state.noticeBoxData.unreadNotices.length + '(' + criticalOrHighNotices.length + ')'
 	},
+	setFilters: function (filters) {
+		this.hideMoreFilter()
+		let newFilters = []
 
-	openDetail (notice) {
-		this.setState(
-			{detail: {
-				id: notice.id,
-				alert_name: notice.alert_name,
-				message_detail: notice.message_detail,
-				alert_status: notice.alert_status,
-				message_category: notice.message_category,
-				system_distribution_time: notice.system_distribution_time,
-				priority: notice.priority
-			}})
+		for (let attr in filters) {
+			newFilters.push({
+				'name': attr,
+				'value': filters[attr]
+			})
+		}
 
-		this.refs.detailPopup.show()
+		this.setState({
+			selectedFilters: newFilters
+		}, () => {
+			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH])
+		})
 	},
-
-	getConfirmButtonLabel (alertStatus) {
-		if (alertStatus === 'New') return 'Acknowledge'
-		return 'Unacknowledge'
+	statusFormatter (cell, row) {
+		if (cell === 'Acknowledged') return '<img src="notice-board/Tick.svg" />'
+		return '<img src="notice-board/Mail.svg" />'
 	},
-
-	getPriorityColor (priority) {
-		if (priority === 'Critical') return '#EF0000'
-		if (priority === 'High') return '#FF6320'
-		if (priority === 'Medium') return '#FFA400'
-		if (priority === 'Low') return '#9BC14D'
-		return ''
+	priorityFormatter (cell, row) {
+		if (cell === 'Critical') return '<img src="notice-board/Critical.svg" />'
+		if (cell === 'High') return '<img src="notice-board/High.svg" />'
+		if (cell === 'Medium') return '<img src="notice-board/Medium.svg" />'
+		if (cell === 'Low') return '<img src="notice-board/Low.svg" />'
+	},
+	detailFormatter (cell, row) {
+		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
+		return cell
 	},
 
 	render () {
+		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
+			'active': this.state.isShowingMoreFilter
+		})
+		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 		return (
-			<div>
-				<Popup hideOnOverlayClicked ref='noticeboardPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
-					<NoticeboardPopup onChange={this.onChangeSetting} />
-				</Popup>
 
-				<Popup hideOnOverlayClicked ref='detailPopup'
-					title={this.state.detail.alert_name}
-					showCancel={false}
-					showCloseIcon
-					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
-					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
-					headerColor={this.getPriorityColor(this.state.detail.priority)}>
-					<NoticeDetail alert_status={this.state.detail.alert_status}
-						message_category={this.state.detail.message_category}
-						system_distribution_time={this.state.detail.system_distribution_time}
-						message_detail={this.state.detail.message_detail} />
-				</Popup>
+			<div className='conatainer-alert '>
+				<div className='row page-header'>
+					<p className='hkjc-breadcrumb'>{this.state.pageTitle}</p>
+					<h1>Noticeboard Monitor</h1>
+				</div>
+				<div className='row page-content'>
+					{/* Search Critiria Row */}
+					<div className='col-md-12'>
+						<div className='search-criteria-container'>
+							<div className='search-criteria-container-row'>
+								<div className='keyword-container'>
+									<input type='text' placeholder='Search with keywords & filters' value={this.state.keyword} onClick={this.showMoreFilter} onChange={this.handleKeywordChange} onKeyPress={this.handleKeywordPress} ref='keyword' />
+								</div>
+								<div className='filter-block-container'>
+									{filterBlockes}
+								</div>
+							</div>
+							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
+								<FilterPanel triggerSearchTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_KEY_PRESS}
+									resetFiltersTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_RESET_FILTERS}
+									removeOneFilterTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_REMOVE_FILTER}
+									onSubmit={this.setFilters}>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName='priority' filterTitle='Priority'
+											ctrlType='select'
+											dataSource={NoticeboardService.prioritiesList} />
+										<FilterPanelColumn filterName='dateTimeFrom'
+											filterTitle='Distribution Date & Time From'
+											filterValue={this.state.originDateRange.dateTimeFrom}
+											ctrlType='calendar'
+											isRequired
+											pairingVerify={[{operation: '<=', partners: ['dateTimeTo']}]} />
+										<FilterPanelColumn filterName='dateTimeTo'
+											filterTitle='Distribution Date & Time To'
+											filterValue={this.state.originDateRange.dateTimeTo}
+											ctrlType='calendar'
+											isRequired
+											pairingVerify={[{operation: '>=', partners: ['dateTimeFrom']}]} />
 
-				<div className={this.getClassName()}>
-					<div className='header-container'>
-						<div className='pull-right'>
-							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>
-							<span className='noticeboard-settings-container'><i className=''><img src='icon/Setting.svg' onClick={this.openPopup} /></i></span>
-						</div>
-						<div className='container-title'>
-							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>{this.getHeadTitle()}</span>
+										<FilterPanelColumn filterName='sportsType' filterTitle='Sports Type'
+											ctrlType='select' dataSource={NoticeboardService.sportsList} />
+									</FilterPanelRow>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName='competition' filterTitle='Competition'
+											ctrlType='select'
+											dataSource={NoticeboardService.competitionsList} />
+										<FilterPanelColumn filterName='match' filterTitle='Match (Race for HR)'
+											ctrlType='select'
+											dataSource={NoticeboardService.matchesList} />
+										<FilterPanelColumn filterName='inPlay' filterTitle='In-Play' ctrlType='select'
+											dataSource={NoticeboardService.inplaysList} />
+										<FilterPanelColumn filterName='continent' filterTitle='Continent'
+											ctrlType='select'
+											dataSource={NoticeboardService.continentsList} />
+									</FilterPanelRow>
+									<FilterPanelRow>
+										<FilterPanelColumn filterName='country' filterTitle='Country' ctrlType='select'
+											dataSource={NoticeboardService.countriesList} />
+										<FilterPanelColumn filterName='messageCategory' filterTitle='Category'
+											ctrlType='select'
+											dataSource={NoticeboardService.categoriesList} />
+										<FilterPanelColumn filterName='alertStatus' filterTitle='Alert Status'
+											ctrlType='select'
+											dataSource={NoticeboardService.statusesList} />
+									</FilterPanelRow>
+
+								</FilterPanel>
+							</div>
 						</div>
 					</div>
-					<div className='messages-container'>
-						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} />
+				</div>
+				<div>
+					<div className='tableComponent-container'>
+						<TableComponent data={NoticeboardService.noticesList} pagination
+							options={this.state.tableOptions}
+							striped keyField='id' tableHeaderClass='table-header'
+							tableContainerClass='base-table'>
+							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
+							<TableHeaderColumn dataField='priority' dataSort
+								dataFormat={this.priorityFormatter}>Priority</TableHeaderColumn>
+							<TableHeaderColumn dataField='system_distribution_time' dataSort> Distribution Date & Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_status' dataSort dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_name' dataSort>Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_detail' dataSort
+								dataFormat={this.detailFormatter}>Detail</TableHeaderColumn>
+							<TableHeaderColumn dataField='recipient' dataSort>Recipient</TableHeaderColumn>
+						</TableComponent>
+					</div>
+					<div className='vertical-gap'>
+						<div className='pull-right'>
+							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
+							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
+								<ExportPopup onChange={this.onChangeFormat} />
+							</Popup>
+						</div>
 					</div>
 				</div>
 			</div>
+
 		)
 	}
 })

@@ -174,8 +174,8 @@ class TableBody extends Component {
 
 		if (isSelectRowDefined) {
 			const style = {
-				width: 30,
-				minWidth: 30
+				width: 91,
+				minWidth: 91
 			}
 			if (!this.props.selectRow.hideSelectColumn) {
 				selectRowHeader = (<col style={style} key={-1} />)

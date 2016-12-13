@@ -61,7 +61,6 @@ export default React.createClass({
 
 		return calendarFormat
 	},
-
 	roleFormat  (cell, row, enumObject, index) {
 		let placeHolder
 		if (cell && (cell.length > 0)) {
