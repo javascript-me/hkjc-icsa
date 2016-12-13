@@ -4,8 +4,7 @@ class Checkbox extends Component {
 	componentDidMount () { this.update(this.props.checked) }
 	componentWillReceiveProps (props) { this.update(props.checked) }
 	update (checked) {
-		if(this.props.indeterminate)
-			this.refs.check.indeterminate = this.props.indeterminate
+		this.refs.check.indeterminate = this.props.indeterminate
 	}
 	render () {
 		return (
