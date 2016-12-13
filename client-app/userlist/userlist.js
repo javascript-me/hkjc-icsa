@@ -332,17 +332,17 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table tableComponent-container'>
-					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='user_id'
+					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='userID'
 						tableHeaderClass='table-header' tableContainerClass='base-table' selectRow={{ mode: 'checkbox' }}>
-						<TableHeaderColumn dataField='displayName' dataSort>User Display Name</TableHeaderColumn>
-						<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='firstName' dataSort>User Name</TableHeaderColumn>
-						<TableHeaderColumn dataField='staffID' dataSort>Staff ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='assignedUserRoles' dataSort>User Roles</TableHeaderColumn>
-						<TableHeaderColumn dataField='status' dataSort>Account Status</TableHeaderColumn>
-						<TableHeaderColumn dataField='activationDate' dataSort>Date of Activation</TableHeaderColumn>
-						<TableHeaderColumn dataField='deactivationDate' dataSort>Date of Inactivation</TableHeaderColumn>
+						<TableHeaderColumn dataField='displayName' dataSort={true}>User Display Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='userID' dataSort={true}>User ID</TableHeaderColumn>
+						<TableHeaderColumn dataField='firstName' dataSort={true}>User Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='staffID' dataSort={true}>Staff ID</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort={true}>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='assignedUserRoles' dataSort={true}>User Roles</TableHeaderColumn>
+						<TableHeaderColumn dataField='status' dataSort={true}>Account Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='activationDate' dataSort={true}>Date of Activation</TableHeaderColumn>
+						<TableHeaderColumn dataField='deactivationDate' dataSort={true}>Date of Inactivation</TableHeaderColumn>
 					</TableComponent>
 				</div>
 				<div className='content-footer'>
