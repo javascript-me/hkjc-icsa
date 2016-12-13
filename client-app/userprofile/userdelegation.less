@@ -62,6 +62,8 @@
 				// }
 
 				.react-bs-container-body {
+					// overflow-x: auto;
+					// overflow-y: inherit;
 					overflow: inherit;
 				}
 
@@ -70,6 +72,10 @@
 						> tr {
 							> td {
 								overflow: inherit;
+
+								&.react-bs-table-no-data {
+									height: 200px;
+								}
 							}
 						}
 					}
