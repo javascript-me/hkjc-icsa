@@ -37,6 +37,7 @@ export default React.createClass({
 			return false
 		}
 		let errBox = {}
+		delegationCmp.checkVaild()
 		result.forEach((item, index) => {
 			if (!item.delegatedRoles || item.delegatedRoles.length === 0) {
 				errBox.roleErr = true
@@ -50,7 +51,7 @@ export default React.createClass({
 				errBox.delegationFromErr = true
 				return false
 			}
-			if (item.delegationFrom <= item.delegationTo) {
+			if (item.delegationFrom > item.delegationTo) {
 				errBox.smallerErr = true
 			}
 		})

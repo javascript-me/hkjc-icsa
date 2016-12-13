@@ -61,6 +61,11 @@ export default React.createClass({
 
 		return calendarFormat
 	},
+	errClassNameFormat (cell, row, rowIdx, colIdx) {
+		if(row.roleErr) {
+			return 'errCell'
+		}
+	},
 
 	roleFormat  (cell, row, enumObject, index) {
 		let placeHolder
@@ -80,15 +85,13 @@ export default React.createClass({
 			right: 0,
 			margin: 'auto',
 			height: '30px',
-			backgroundColor: row.roleErr ? 'red' : '#FFF'
+			// backgroundColor: row.roleErr ? 'red' : '#FFF'
 		}
 		const next = _.cloneDeep(this.state.editUserDelegation)
 		const updateRoleInfo = (value) => {
 			let newRoles = _.map(value, (item) => ({delegatedRole: item}))
 			next[index].delegatedRoles = newRoles
 			next[index].changeFlag = true
-			checkNoRoles(next)
-
 			this.setState({editUserDelegation: next})
 		}
 		return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={updateRoleInfo} />)
@@ -101,13 +104,16 @@ export default React.createClass({
 	},
 	addNewRecord (user) {
 		let newUser = user || {userName: 'New User', position: 'new position'}
-		let newDelegationID = 'Delegate' + (Math.random() * 1000000)
+		let newDelegationID = 'Delegate' + Math.floor((Math.random() * 1000000))
 		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'pedding', secondaryApprover: 'please select', delegationID: newDelegationID, changeFlag: true})
 		const next = _.cloneDeep(this.state.editUserDelegation)
 		next.unshift(newDelegate)
 		this.setState({editUserDelegation: next})
 	},
-
+	checkVaild () {
+		checkNoRoles(this.state.editUserDelegation)
+		this.forceUpdate()
+	},
 	getDeleteData () {
 		if (this.refs.updateTableCmp) {
 			const selected = this.refs.updateTableCmp.store.getSelectedRowKeys()
@@ -175,7 +181,7 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataFormat={this.roleFormat} dataAlign={'center'}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataFormat={this.roleFormat} dataAlign={'center'} columnClassName={this.errClassNameFormat}>Delegate Role</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' dataFormat={this.getCalendarFormat('delegationFrom')} >Date of Delegation From</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationTo' dataAlign='center' dataFormat={this.getCalendarFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
