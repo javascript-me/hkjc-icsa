@@ -11,6 +11,7 @@ import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import FilterBlock from '../filter-block'
+import NoticeDetail from '../notice-detail/notice-detail'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -74,18 +75,27 @@ export default React.createClass({
 				defaultSortName: 'system_distribution_time',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
-				paginationClassContainer: 'text-center'
+				paginationClassContainer: 'text-center',
+				onRowClick: this.onRowClick.bind(this)
 			},
 			noticesList: [],
 			categoriesList: [],
-			competitionsList: [],
-			continentsList: [],
-			countriesList: [],
-			inplaysList: [],
-			matchesList: [],
-			prioritiesList: [],
-			sportsList: [],
-			statusesList: []
+			competitionsList:[],
+			continentsList:[],
+			countriesList:[],
+			inplaysList:[],
+			matchesList:[],
+			prioritiesList:[],
+			sportsList:[],
+			statusesList:[],
+			detail: {
+				id: '',
+				message_detail: '',
+				alert_status: '',
+				message_category: '',
+				system_distribution_time: '',
+				priority: ''
+			}
 		}
 	},
 	componentDidMount: function async () {
@@ -315,10 +325,10 @@ export default React.createClass({
 		return '<span><img src="notice-board/Mail.svg" /></span>'
 	},
 	priorityFormatter (cell, row) {
-		if (cell === 'Critical') return '<span><img src="notice-board/Critical.svg" /></span>'
-		if (cell === 'High') return '<span><img src="notice-board/High.svg" /></span>'
-		if (cell === 'Medium') return '<span><img src="notice-board/Medium.svg" /></span>'
-		if (cell === 'Low') return '<span><img src="notice-board/Low.svg" /></span>'
+		if (cell === 'Critical') return '<span><img src="notice-board/Critical.svg" title="Critical" /></span>'
+		if (cell === 'High') return '<span><img src="notice-board/High.svg" title="High" /></span>'
+		if (cell === 'Medium') return '<span><img src="notice-board/Medium.svg" title="Medium"/></span>'
+		if (cell === 'Low') return '<span><img src="notice-board/Low.svg" title="Low" /></span>'
 	},
 	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
@@ -329,6 +339,34 @@ export default React.createClass({
 		return <span>{cell}</span>
 	},
 
+	onRowClick(notice) {
+		this.setState(
+			{detail: {
+				id: notice.id,
+				alert_name: notice.alert_name,
+				message_detail: notice.message_detail,
+				alert_status: notice.alert_status,
+				message_category: notice.message_category,
+				system_distribution_time: notice.system_distribution_time,
+				priority: notice.priority
+			}})
+
+		this.refs.detailPopup.show()
+	},
+
+	getConfirmButtonLabel (alertStatus) {
+		if (alertStatus === 'New') return 'Acknowledge'
+		return 'Unacknowledge'
+	},
+
+	getPriorityColor (priority) {
+		if (priority === 'Critical') return '#EF0000'
+		if (priority === 'High') return '#FF6320'
+		if (priority === 'Medium') return '#FFA400'
+		if (priority === 'Low') return '#9BC14D'
+		return ''
+	},
+
 	render () {
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
@@ -336,7 +374,19 @@ export default React.createClass({
 		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 		return (
 
-			<div className='conatainer-alert '>
+			<div className='conatainer-alert noticeboard-popup-spestyle'>
+				<Popup hideOnOverlayClicked ref='detailPopup'
+					title={this.state.detail.alert_name}
+					showCancel={false}
+					showCloseIcon
+					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
+					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
+					headerColor={this.getPriorityColor(this.state.detail.priority)}>
+					<NoticeDetail alert_status={this.state.detail.alert_status}
+						message_category={this.state.detail.message_category}
+						system_distribution_time={this.state.detail.system_distribution_time}
+						message_detail={this.state.detail.message_detail} />
+				</Popup>
 				<div className='row page-header'>
 					<p className='hkjc-breadcrumb'>{this.state.pageTitle}</p>
 					<h1>Noticeboard Monitor</h1>

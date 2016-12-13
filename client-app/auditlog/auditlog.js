@@ -111,7 +111,7 @@ export default React.createClass({
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(token)
 
-		AuditlogStore.removeChangeListener(this.onChange.bind(this))
+		AuditlogStore.removeChangeListener(this.onChange)
 		document.removeEventListener('click', this.pageClick, false)
 	},
 

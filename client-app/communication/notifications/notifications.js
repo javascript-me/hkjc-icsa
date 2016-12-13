@@ -30,6 +30,18 @@ const updateUserNoticeBoardSettingsPromise = async (username, display) => {
 	return userProfile
 }
 
+const updateAcknowledgeStatusById = async (username, id, command) => {
+	let notices = null
+
+	try {
+		notices = await NotificationService.getNoticesAndUpdateAcknowledgeStatusById(username, id, command)
+	} catch (ex) {
+
+	}
+
+	return notices
+}
+
 export default React.createClass({
 	propTypes: {
 		isSlim: React.PropTypes.bool
@@ -163,7 +175,7 @@ export default React.createClass({
 		this.refs.detailPopup.show()
 	},
 
-	getConfirmButtonLabel (alertStatus) {
+	getCommand (alertStatus) {
 		if (alertStatus === 'New') return 'Acknowledge'
 		return 'Unacknowledge'
 	},
@@ -176,9 +188,41 @@ export default React.createClass({
 		return ''
 	},
 
+	doAcknowledgement (id, alertStatus) {
+		let userProfile = LoginService.getProfile()
+		let noticePromise = updateAcknowledgeStatusById(
+			userProfile.username,
+			id,
+			this.getCommand(alertStatus)
+		)
+
+		let allNotices
+		let unreadNotices
+		let self = this
+
+		self.setState({
+			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
+		})
+
+		noticePromise.then((notices) => {
+			allNotices = notices || []
+
+			unreadNotices = allNotices.filter((notice) => {
+				return notice.alert_status === 'New'
+			})
+
+			self.setState({
+				noticeBoxData: {
+					allNotices: allNotices,
+					unreadNotices: unreadNotices
+				}
+			})
+		})
+	},
+
 	render () {
 		return (
-			<div>
+			<div className="noticeboard-popup-spestyle">
 				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
 					<NotificationsPopup onChange={this.onChangeSetting} />
 				</Popup>
@@ -187,9 +231,10 @@ export default React.createClass({
 					title={this.state.detail.alert_name}
 					showCancel={false}
 					showCloseIcon
-					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
+					confirmBtn={this.getCommand(this.state.detail.alert_status)}
 					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
-					headerColor={this.getPriorityColor(this.state.detail.priority)}>
+					headerColor={this.getPriorityColor(this.state.detail.priority)}
+					onConfirm={() => { this.doAcknowledgement(this.state.detail.id, this.state.detail.alert_status) }}>
 					<NoticeDetail alert_status={this.state.detail.alert_status}
 						message_category={this.state.detail.message_category}
 						system_distribution_time={this.state.detail.system_distribution_time}
@@ -209,8 +254,8 @@ export default React.createClass({
 					</div>
 					<div className='messages-container'>
 						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} />
+						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
 					</div>
 				</div>
 			</div>
