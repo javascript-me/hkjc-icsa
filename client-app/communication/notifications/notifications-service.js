@@ -16,6 +16,13 @@ const getRemindCount = (data) => {
 	return $.get(url, data)
 }
 
+const getTipsNum = (data) => {
+	let url = config.url('api/notice-board/notice-tips/')
+
+	data.temp = Math.random()
+	return $.get(url, data)
+}
+
 export default {
 	async getNotices (username) {
 		let result = null
@@ -42,5 +49,19 @@ export default {
 			noticeCount = 0
 		}
 		return noticeCount
+	},
+
+	async getTipsNum (username) {
+		let responseData = null
+		let tipsCount = 0
+
+		try {
+			responseData = await getTipsNum({username: username})
+			tipsCount = responseData.count || 0
+		} catch (failure) {
+			// returns null on failure
+			tipsCount = 0
+		}
+		return tipsCount
 	}
 }

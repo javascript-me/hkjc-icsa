@@ -2,12 +2,13 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import _ from 'underscore'
 import Moment from 'moment'
-import DateTime from '../dateTime/dateTime'
+import Calendar from '../calendar'
 import Popup from '../popup'
 import RolesContainer from './rolescontainer'
+import RolesPermission from './rolespermission'
 
 function isValidDateTime (str) {
-	let bRet = Moment(str, 'DD MMM YYYY', true).isValid()
+	let bRet = Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
 	return bRet
 }
 
@@ -17,9 +18,9 @@ function formatDateTime (time, inverse) {
 	}
 
 	if (inverse) {
-		return Moment(time, 'DD MMM YYYY').format('DD/MM/YYYY')
+		return Moment(time, 'DD MMM YYYY HH:mm').format('DD/MM/YYYY')
 	} else {
-		return Moment(time, 'DD/MM/YYYY').format('DD MMM YYYY')
+		return Moment(time, 'DD/MM/YYYY').format('DD MMM YYYY HH:mm')
 	}
 }
 
@@ -89,11 +90,14 @@ export default React.createClass({
 		}
 		return retStr
 	},
-	onEditRoleClick () {
-		this.refs.editRole.show()
+	onEditRoleClick (editRole) {
+		editRole.show()
 	},
-	onEditRoleUpdate (userAccount) {
-		const roles = this.refs.rolesCmp.getUpdateRoles()
+	onRoleShowClick (roleDetail) {
+		roleDetail.show()
+	},
+	onEditRoleUpdate (userAccount, rolesCmp) {
+		const roles = rolesCmp.getUpdateRoles()
 		const oldUserRoles = this.props.userAccount.assignedUserRoles.filter((item) => {
 			let bRet = true
 			let found = -1
@@ -135,12 +139,12 @@ export default React.createClass({
 		this.userAccount.status = event.target.value
 		this.forceUpdate()
 	},
-	onActivationDateChange (event) {
-		this.userAccountEx.activationDate = event.target.value
+	onActivationDateChange (date) {
+		this.userAccountEx.activationDate = date.format('DD MMM YYYY HH:mm')
 		this.forceUpdate()
 	},
-	onDeactivationDateChange (event) {
-		this.userAccountEx.deactivationDate = event.target.value
+	onDeactivationDateChange (date) {
+		this.userAccountEx.deactivationDate = date.format('DD MMM YYYY HH:mm')
 		this.forceUpdate()
 	},
 	renderTipsText () {
@@ -158,8 +162,11 @@ export default React.createClass({
 			return (
 				<div className='role-wrapper'>
 					{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
-						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})}>{role.assignedUserRole}</div>
+						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})} onClick={() => { this.onRoleShowClick(this.refs.rolesDetail) }}>{role.assignedUserRole}</div>
 					))}
+					<Popup hideOnOverlayClicked className='permission' ref='rolesDetail' title='Admin Roles & Permission' showCancel={false} confirmBtn='Close'>
+						<RolesPermission ref='rolesShow' inputSelected={userAccount.assignedUserRoles} />
+					</Popup>
 				</div>
 			)
 		}
@@ -178,10 +185,10 @@ export default React.createClass({
 			<div ref='root' className='account-information'>
 				<div className='header'>
 					<h2>Account Information</h2>
-					<div className='action' onClick={this.onEditRoleClick}>
+					<div className='action' onClick={() => { this.onEditRoleClick(this.refs.editRole) }}>
 						<span className='icon pull-left' /> Edit User Role
 					</div>
-					<Popup hideOnOverlayClicked ref='editRole' title='Edit User Role / Privilege' onConfirm={() => { this.onEditRoleUpdate(userAccount) }} confirmBtn='Update'>
+					<Popup hideOnOverlayClicked ref='editRole' title='Edit User Role / Privilege' onConfirm={() => { this.onEditRoleUpdate(userAccount, this.refs.rolesCmp) }} confirmBtn='Update'>
 						<RolesContainer ref='rolesCmp' inputSelected={userAccount.assignedUserRoles} />
 					</Popup>
 				</div>
@@ -208,12 +215,15 @@ export default React.createClass({
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
 						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
-					<div className='row value'>
+					<div className='row value roles-detail'>
 						<div className='col col-xs-6 roles'>
 							{this.renderUserRoles(userAccount)}
 						</div>
-						<div className={classNames('col col-xs-6', {'has-error': !isValidDateTime(this.userAccountEx.activationDate)})}>
-							<DateTime inputFor='' disabled={userAccount.status !== 'Active'} dateTime={this.userAccountEx.activationDate} handleVal={this.onActivationDateChange} />
+						<div className='col col-xs-6'>
+							<Calendar
+								value={this.userAccountEx.activationDate}
+								warning={!isValidDateTime(this.userAccountEx.activationDate)}
+								onChange={this.onActivationDateChange} />
 						</div>
 					</div>
 
@@ -223,8 +233,11 @@ export default React.createClass({
 					</div>
 					<div className='row value margin0'>
 						<div className='col col-xs-6' />
-						<div className={classNames('col col-xs-6', {'has-error': !isValidDateTime(this.userAccountEx.deactivationDate)})}>
-							<DateTime inputFor='' dateTime={this.userAccountEx.deactivationDate} handleVal={this.onDeactivationDateChange} />
+						<div className='col col-xs-6'>
+							<Calendar
+								value={this.userAccountEx.deactivationDate}
+								warning={!isValidDateTime(this.userAccountEx.deactivationDate)}
+								onChange={this.onDeactivationDateChange} />
 						</div>
 					</div>
 
@@ -253,8 +266,8 @@ export default React.createClass({
 						<div className='col col-xs-6'>Assigned User Role / Privilege</div>
 						<div className='col col-xs-6'>Date of Activation</div>
 					</div>
-					<div className='row value'>
-						<div className='col col-xs-6 roles'>
+					<div className='row value roles-detail'>
+						<div className='col col-xs-6 roles '>
 							{this.renderUserRoles(userAccount)}
 						</div>
 						<div className='col col-xs-6'>{formatTime(userAccount.activationDate)}</div>
@@ -291,7 +304,7 @@ export default React.createClass({
 					<div className='row name'>
 						<div className='col col-xs-12'>Assigned User Role / Privilege</div>
 					</div>
-					<div className='row value'>
+					<div className='row value roles-detail'>
 						<div className='col col-xs-12 roles'>
 							{this.renderUserRoles(userAccount)}
 						</div>

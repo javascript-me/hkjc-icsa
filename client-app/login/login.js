@@ -30,7 +30,6 @@ export default React.createClass({
 		if ($('input[type=password]').value !== '' && $('input[type=text]').value !== '') {
 			this.setState({disabled: true})
 		}
-		this.refs.submit.disabled = true
 	},
 	submit () {
 		doSubmit(this.refs.username.value, this.refs.password.value).then((data) => {
@@ -43,7 +42,7 @@ export default React.createClass({
 						this.setState({locked: data.locked, title: 'Account Locked', showPopup: true, confirmBtn: 'Go to Login'})
 					}
 					if (data.expired) {
-						this.setState({expired: data.expired, title: 'Password Expried', showPopup: true, confirmBtn: 'Confirm'})
+						this.setState({expired: data.expired, title: 'Password Expired', showPopup: true, confirmBtn: 'Go to Login'})
 					}
 				}
 			} else {
@@ -88,6 +87,10 @@ export default React.createClass({
 			this.refs.password.value.replace(/./g, '*')
 		}
 	},
+	onPasteHandler (e) {
+		e.preventDefault()
+		return false
+	},
 	gotoLogin () {
 		window.location.href = '/'
 	},
@@ -109,7 +112,7 @@ export default React.createClass({
 								</div>
 								<div className='form-group form-group-lg'>
 									<label htmlFor='password'>Password</label>
-									<input ref='password' value={this.state.password} type='password' className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
+									<input ref='password' value={this.state.password} type='password' onPaste={(e) => this.onPasteHandler(e)} onCopy={(e) => this.onPasteHandler(e)} className='form-control' id='login-password' placeholder='Password' onKeyUp={this.handleKeyUp} onChange={this.typePwd} />
 									{this.state.showMaskPwd ? <a ref='btn' className='switch' href='javascript:void(0);' onClick={this.changeType}>show</a> : null}
 								</div>
 								{ !this.state.showPopup ? <p className='error'>{this.state.msg}</p> : null }

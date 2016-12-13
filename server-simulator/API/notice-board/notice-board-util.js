@@ -1,7 +1,4 @@
-const pageSize = 10
-
-
-function ascendSort(key) {
+function ascendSort (key) {
 	return function (a, b) {
 		if (a[key] > b[key]) return 1
 		if (a[key] < b[key]) return -1
@@ -9,7 +6,7 @@ function ascendSort(key) {
 	}
 }
 
-function descendSort(key) {
+function descendSort (key) {
 	return function (a, b) {
 		if (a[key] > b[key]) return -1
 		if (a[key] < b[key]) return 1
@@ -18,7 +15,7 @@ function descendSort(key) {
 }
 
 // TODO: refactor to use Moment library.
-function parseToMonthIndex(monthName) {
+function parseToMonthIndex (monthName) {
 	if (monthName === 'January' || monthName === 'Jan') return 0
 	if (monthName === 'February' || monthName === 'Feb') return 1
 	if (monthName === 'March' || monthName === 'Mar') return 2
@@ -34,7 +31,7 @@ function parseToMonthIndex(monthName) {
 	return -1
 }
 
-function parseToDate(value) {
+function parseToDate (value) {
 	var parts = value.split(' ')
 
 	var date = parts[0]
@@ -55,7 +52,7 @@ function parseToDate(value) {
 	return new Date(year, monthIndex, date, hour, minute, second)
 }
 
-function compareDate(value0, value1) {
+function compareDate (value0, value1) {
 	var time0 = parseToDate(value0).getTime()
 	var time1 = parseToDate(value1).getTime()
 
@@ -64,14 +61,14 @@ function compareDate(value0, value1) {
 	return 0
 }
 
-function ascendDateSort(a, b) {
+function ascendDateSort (a, b) {
 	return compareDate(a['system_distribution_time'], b['system_distribution_time'])
 }
 
-function descendDateSort(a, b) {
+function descendDateSort (a, b) {
 	return compareDate(b['system_distribution_time'], a['system_distribution_time'])
 }
-function doSorting(notices, fieldName, order) {
+function doSorting (notices, fieldName, order) {
 	var descendSortFunction
 	var ascendSortFunction
 
@@ -89,7 +86,7 @@ function doSorting(notices, fieldName, order) {
 	return notices
 }
 
-function doFilter(notices, keyWord, priority, sportsType, competition, match, inPlay, continent, country, messageCategory, alertStatus, dateTimeFrom, dateTimeTo) {
+function doFilter (notices, keyWord, priority, sportsType, competition, match, inPlay, continent, country, messageCategory, alertStatus, dateTimeFrom, dateTimeTo) {
 	keyWord = keyWord || ''
 	priority = priority || 'All'
 	sportsType = sportsType || 'All'
@@ -111,7 +108,8 @@ function doFilter(notices, keyWord, priority, sportsType, competition, match, in
 		const messageCategory = al.message_category ? al.message_category.toLowerCase() : ''
 
 		return priority === keyWord.toLowerCase() ||
-			sportsType === keyWord.toLowerCase()
+			sportsType === keyWord.toLowerCase() ||
+			messageCategory === keyWord.toLowerCase()
 	}) : result
 
 	if (priority !== 'All') {
@@ -171,7 +169,6 @@ function doFilter(notices, keyWord, priority, sportsType, competition, match, in
 
 	return result
 }
-
 
 export default {
 	doSorting: doSorting,

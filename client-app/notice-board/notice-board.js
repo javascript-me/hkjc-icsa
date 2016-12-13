@@ -39,20 +39,18 @@ const getDefaultSelectedFilters = () => {
 		value: getOrginDateTimeTo()
 	}]
 }
-let token = null
 const doExport = async(format, filters) => {
 	const file = ExportService.getNoticeboardFileURL(format, filters)
 	if (file) {
 		window.open(file, '_blank')
 	}
 }
+let token = null
 export default React.createClass({
 	propTypes: {
 		someThing: React.PropTypes.bool
 	},
 	getInitialState () {
-		let originDateTimeFrom = getOrginDateTimeFrom()
-		let originDateTimeTo = getOrginDateTimeTo()
 		return {
 			data: [],
 			pageTitle: 'Home \\ Global Tools & Adminstration \\ Communication ',
@@ -90,11 +88,11 @@ export default React.createClass({
 			statusesList: []
 		}
 	},
-	componentDidMount: function async() {
+	componentDidMount: function async () {
 		let criteriaOption = this.getSearchCriterias()
 		NoticeboardService.filterNoticeBoardTableData(criteriaOption)
 		NoticeboardService.addChangeListener(this.onChange)
-		/*All dropdownas data*/
+		/* All dropdownas data */
 		NoticeboardService.getAllCategories()
 		NoticeboardService.getAllCompetitions()
 		NoticeboardService.getAllContinents()
@@ -135,6 +133,7 @@ export default React.createClass({
 	componentWillUnmount: function () {
 		NoticeboardService.removeChangeListener(this.onChange.bind(this))
 		document.removeEventListener('click', this.pageClick, false)
+		PubSub.unsubscribe(token)
 	},
 	onChange () {
 		this.setState({noticesList: NoticeboardService.noticesList})
@@ -145,14 +144,14 @@ export default React.createClass({
 	},
 	export () {
 		const filters = {
-			username: "allgood",
+			username: 'allgood',
 			selectedPageNumber: 1,
-			sortingObjectFieldName: "date_time",
-			sortingObjectOrder: "DESCEND",
-			betType: "football",
-			keyword: "",
-			dateTimeFrom: "09 Oct 2016 00:00",
-			dateTimeTo: "08 Dec 2016 23:59"
+			sortingObjectFieldName: 'date_time',
+			sortingObjectOrder: 'DESCEND',
+			betType: 'football',
+			keyword: '',
+			dateTimeFrom: '09 Oct 2016 00:00',
+			dateTimeTo: '08 Dec 2016 23:59'
 		}
 		doExport(this.state.exportFormat, filters)
 	},
@@ -191,11 +190,11 @@ export default React.createClass({
 			value: this.state.selectedKeyword
 		}
 		let dateFromFilter = filters.filter((f) => {
-				return f.name === 'dateTimeFrom'
-			})[0] || {}
+			return f.name === 'dateTimeFrom'
+		})[0] || {}
 		let dateToFilter = filters.filter((f) => {
-				return f.name === 'dateTimeTo'
-			})[0] || {}
+			return f.name === 'dateTimeTo'
+		})[0] || {}
 		let dateRangeFilter = {
 			name: 'dateTimeFrom,dateTimeTo',
 			value: `${dateFromFilter.value} - ${dateToFilter.value}`
@@ -213,12 +212,12 @@ export default React.createClass({
 			.concat(filtersArrayWithoutDateRange)
 
 		let filterBlockes = filtersArray.map((f, index) => {
-				return <FilterBlock
-					key={index}
-					dataText={filterDisplayFormatting(f)}
-					dataValue={f}
-					removeEvent={this.removeSearchCriteriaFilter}/>
-			}) || []
+			return <FilterBlock
+				key={index}
+				dataText={filterDisplayFormatting(f)}
+				dataValue={f}
+				removeEvent={this.removeSearchCriteriaFilter} />
+		}) || []
 
 		return filterBlockes
 	},
@@ -231,15 +230,15 @@ export default React.createClass({
 			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH])
 		}
 		switch (filter.name) {
-			case 'keyword':
-				this.removeKeywordFilter(filter, callback)
-				break
-			case 'dateTimeFrom,dateTimeTo':
-				this.removeDateRangeFilter(filter, callback)
-				break
-			default:
-				this.removeNormalFilter(filter, callback)
-				break
+		case 'keyword':
+			this.removeKeywordFilter(filter, callback)
+			break
+		case 'dateTimeFrom,dateTimeTo':
+			this.removeDateRangeFilter(filter, callback)
+			break
+		default:
+			this.removeNormalFilter(filter, callback)
+			break
 		}
 	},
 	removeNormalFilter: function (filter, callback) {
@@ -311,17 +310,17 @@ export default React.createClass({
 			PubSub.publish(PubSub[this.state.tokens.NOTICEBOARD_SEARCH])
 		})
 	},
-	statusFormatter(cell, row) {
-		if (cell === 'Acknowledged')  return '<img src="notice-board/Tick.svg" />'
+	statusFormatter (cell, row) {
+		if (cell === 'Acknowledged') return '<img src="notice-board/Tick.svg" />'
 		return '<img src="notice-board/Mail.svg" />'
 	},
-	priorityFormatter(cell, row) {
+	priorityFormatter (cell, row) {
 		if (cell === 'Critical') return '<img src="notice-board/Critical.svg" />'
 		if (cell === 'High') return '<img src="notice-board/High.svg" />'
 		if (cell === 'Medium') return '<img src="notice-board/Medium.svg" />'
 		if (cell === 'Low') return '<img src="notice-board/Low.svg" />'
 	},
-	detailFormatter(cell, row){
+	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
 		return cell
 	},
@@ -344,12 +343,7 @@ export default React.createClass({
 						<div className='search-criteria-container'>
 							<div className='search-criteria-container-row'>
 								<div className='keyword-container'>
-									<input type='text' placeholder='Search with keywords & filters'
-										   value={this.state.keyword}
-										   onClick={this.showMoreFilter}
-										   onChange={this.handleKeywordChange}
-										   onKeyPress={this.handleKeywordPress}
-										   ref='keyword'/>
+									<input type='text' placeholder='Search with keywords & filters' value={this.state.keyword} onClick={this.showMoreFilter} onChange={this.handleKeywordChange} onKeyPress={this.handleKeywordPress} ref='keyword' />
 								</div>
 								<div className='filter-block-container'>
 									{filterBlockes}
@@ -357,66 +351,51 @@ export default React.createClass({
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<FilterPanel triggerSearchTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_KEY_PRESS}
-											 resetFiltersTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_RESET_FILTERS}
-											 removeOneFilterTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_REMOVE_FILTER}
-											 onSubmit={this.setFilters}>
+									resetFiltersTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_RESET_FILTERS}
+									removeOneFilterTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_REMOVE_FILTER}
+									onSubmit={this.setFilters}>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="priority" filterTitle="Priority"
-														   ctrlType="multi-select"
-														   dataSource={NoticeboardService.prioritiesList}>
-										</FilterPanelColumn>
+										<FilterPanelColumn filterName='priority' filterTitle='Priority'
+											ctrlType='select'
+											dataSource={NoticeboardService.prioritiesList} />
 										<FilterPanelColumn filterName='dateTimeFrom'
-														   filterTitle='Distribution Date & Time From'
-														   filterValue={this.state.originDateRange.dateTimeFrom}
-														   ctrlType='calendar'
-														   isRequired
-														   pairingVerify={[{
-															   operation: '<=',
-															   partners: ['dateTimeTo']
-														   }]}/>
+											filterTitle='Distribution Date & Time From'
+											filterValue={this.state.originDateRange.dateTimeFrom}
+											ctrlType='calendar'
+											isRequired
+											pairingVerify={[{operation: '<=', partners: ['dateTimeTo']}]} />
 										<FilterPanelColumn filterName='dateTimeTo'
-														   filterTitle='Distribution Date & Time To'
-														   filterValue={this.state.originDateRange.dateTimeTo}
-														   ctrlType='calendar'
-														   isRequired
-														   pairingVerify={[{
-															   operation: '>=',
-															   partners: ['dateTimeFrom']
-														   }]}/>
+											filterTitle='Distribution Date & Time To'
+											filterValue={this.state.originDateRange.dateTimeTo}
+											ctrlType='calendar'
+											isRequired
+											pairingVerify={[{operation: '>=', partners: ['dateTimeFrom']}]} />
 
-										<FilterPanelColumn filterName="sportsType" filterTitle="Sports Type"
-														   ctrlType="multi-select" dataSource={NoticeboardService.sportsList}>
-										</FilterPanelColumn>
+										<FilterPanelColumn filterName='sportsType' filterTitle='Sports Type'
+											ctrlType='select' dataSource={NoticeboardService.sportsList} />
 									</FilterPanelRow>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="competition" filterTitle="Competition"
-														   ctrlType="multi-select"
-														   dataSource={NoticeboardService.competitionsList}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="match" filterTitle="Match (Race for HR)"
-														   ctrlType="multi-select"
-														   dataSource={NoticeboardService.matchesList}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="inPlay" filterTitle="In-Play" ctrlType="multi-select"
-														   dataSource={NoticeboardService.inplaysList}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="continent" filterTitle="Continent"
-														   ctrlType="multi-select"
-														   dataSource={NoticeboardService.continentsList}>
-										</FilterPanelColumn>
+										<FilterPanelColumn filterName='competition' filterTitle='Competition'
+											ctrlType='select'
+											dataSource={NoticeboardService.competitionsList} />
+										<FilterPanelColumn filterName='match' filterTitle='Match (Race for HR)'
+											ctrlType='select'
+											dataSource={NoticeboardService.matchesList} />
+										<FilterPanelColumn filterName='inPlay' filterTitle='In-Play' ctrlType='select'
+											dataSource={NoticeboardService.inplaysList} />
+										<FilterPanelColumn filterName='continent' filterTitle='Continent'
+											ctrlType='select'
+											dataSource={NoticeboardService.continentsList} />
 									</FilterPanelRow>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName="country" filterTitle="Country" ctrlType="multi-select"
-														   dataSource={NoticeboardService.countriesList}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="messageCategory" filterTitle="Category"
-														   ctrlType="multi-select"
-														   dataSource={NoticeboardService.categoriesList}>
-										</FilterPanelColumn>
-										<FilterPanelColumn filterName="alertStatus" filterTitle="Alert Status"
-														   ctrlType="multi-select"
-														   dataSource={NoticeboardService.statusesList}>
-										</FilterPanelColumn>
+										<FilterPanelColumn filterName='country' filterTitle='Country' ctrlType='select'
+											dataSource={NoticeboardService.countriesList} />
+										<FilterPanelColumn filterName='messageCategory' filterTitle='Category'
+											ctrlType='select'
+											dataSource={NoticeboardService.categoriesList} />
+										<FilterPanelColumn filterName='alertStatus' filterTitle='Alert Status'
+											ctrlType='select'
+											dataSource={NoticeboardService.statusesList} />
 									</FilterPanelRow>
 
 								</FilterPanel>
@@ -426,30 +405,27 @@ export default React.createClass({
 				</div>
 				<div>
 					<div className='tableComponent-container'>
-						<TableComponent data={ NoticeboardService.noticesList } pagination={true}
-										options={this.state.tableOptions}
-										striped={true} keyField='id' tableHeaderClass="table-header"
-										tableContainerClass='base-table'>
+						<TableComponent data={NoticeboardService.noticesList} pagination
+							options={this.state.tableOptions}
+							striped keyField='id' tableHeaderClass='table-header'
+							tableContainerClass='base-table'>
 							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
-							<TableHeaderColumn dataField='priority' dataSort={true}
-											   dataFormat={ this.priorityFormatter }>Priority</TableHeaderColumn>
-							<TableHeaderColumn dataField='system_distribution_time' dataSort={true}> Distribution Date &
-								Time</TableHeaderColumn>
-							<TableHeaderColumn dataField='alert_status' dataSort={true}
-											   dataFormat={ this.statusFormatter }>Status</TableHeaderColumn>
-							<TableHeaderColumn dataField='message_category' dataSort={true}>Category</TableHeaderColumn>
-							<TableHeaderColumn dataField='alert_name' dataSort={true}>Name</TableHeaderColumn>
-							<TableHeaderColumn dataField='message_detail' dataSort={true}
-											   dataFormat={ this.detailFormatter }>Detail</TableHeaderColumn>
-							<TableHeaderColumn dataField='recipient' dataSort={true}>Recipient</TableHeaderColumn>
+							<TableHeaderColumn dataField='priority' dataSort
+								dataFormat={this.priorityFormatter}>Priority</TableHeaderColumn>
+							<TableHeaderColumn dataField='system_distribution_time' dataSort> Distribution Date & Time</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_status' dataSort dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
+							<TableHeaderColumn dataField='alert_name' dataSort>Name</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_detail' dataSort
+								dataFormat={this.detailFormatter}>Detail</TableHeaderColumn>
+							<TableHeaderColumn dataField='recipient' dataSort>Recipient</TableHeaderColumn>
 						</TableComponent>
 					</div>
 					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
-							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export'
-								   onConfirm={this.export}>
-								<ExportPopup onChange={this.onChangeFormat}/>
+							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
+								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>
 						</div>
 					</div>

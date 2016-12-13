@@ -154,20 +154,20 @@ router.get('/export', (req, res) => {
 	let statusCode = 200
 	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
 	switch (type.toLowerCase()) {
-		case 'pdf':
-			res.sendfile('server-simulator/API/notice-board/output.pdf')
+	case 'pdf':
+		res.sendfile('server-simulator/API/notice-board/output.pdf')
 
-			break
-		case 'csv':
-			result = helper.toCSV(result)
-			res.writeHead(statusCode, {
-				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=NoticeBoardReport_' + dateFilename + '.csv'
-			})
-			res.end(result)
-			break
-		default:
-			break
+		break
+	case 'csv':
+		result = helper.toCSV(result)
+		res.writeHead(statusCode, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=NoticeBoardReport_' + dateFilename + '.csv'
+		})
+		res.end(result)
+		break
+	default:
+		break
 	}
 })
 
@@ -179,9 +179,7 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
 	} else {
 		cloneNotices = jsonAlerts[username]
 	}
-	let data = []
 	let status = 200
-	console.log("In API===>" + cloneNotices)
 	const filteredNotices = NoticeboardUtils.doFilter(cloneNotices,
 		req.body.keyword,
 		req.body.priority,
@@ -198,69 +196,98 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
 	)
 	res.status(status)
 	res.send(NoticeboardUtils.doSorting(filteredNotices, 'date_time', 'DESCEND'))
-
 })
 
 router.get('/categories', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allCategories.categories
 	res.status(status)
 	res.send(result)
 })
 router.get('/competitions', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allCompetitions.competitions
 	res.status(status)
 	res.send(result)
 })
 router.get('/continents', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allContinents.continents
 	res.status(status)
 	res.send(result)
 })
 router.get('/countries', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allCountries.countries
 	res.status(status)
 	res.send(result)
 })
 router.get('/inplays', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allInplays.inplay
 	res.status(status)
 	res.send(result)
 })
 router.get('/matches', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allMatches.matches
 	res.status(status)
 	res.send(result)
 })
 router.get('/priorities', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allPriorities.priorities
 	res.status(status)
 	res.send(result)
 })
 router.get('/sports', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allSports.sports
 	res.status(status)
 	res.send(result)
 })
 router.get('/statuses', (req, res) => {
-	let data = []
 	let status = 200
 	let result = allStatuses.status
+	res.status(status)
+	res.send(result)
+})
+/**
+ * @api {GET} /notice-board/notice-tips/ Get remind count
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Get the new tasks count
+ *
+ * @apiParam {String} username Username of current user.
+ *
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		number   // Get the new tasks count
+ *
+ */
+router.get('/notice-tips', (req, res) => {
+	let userName = req.query.username
+	let status = null
+	let result = {count: 0}
+
+	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
+	if (!userName) {
+		status = 403
+		result = { error: 'Sorry we need your username to get notice data' }
+
+		res.status(status)
+		res.send(result)
+
+		return false
+	}
+
+	// Step 5 response the length result with http 200
+	status = 200
+	result = {
+		count: Math.round(Math.random() * 10)
+	}
+
 	res.status(status)
 	res.send(result)
 })

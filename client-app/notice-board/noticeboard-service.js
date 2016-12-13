@@ -72,7 +72,7 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 		} catch (failure) {
 		}
 	},
-	async getAllMatches() {
+	async getAllMatches () {
 		try {
 			let result = await this.sendRequestToGetList('api/notice-board/matches')
 			this.matchesList = result
@@ -140,7 +140,7 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 		this.removeListener('change', callback)
 	},
 
-	sendRequestToGetList(requestURL){
+	sendRequestToGetList (requestURL) {
 		return $.get(requestURL)
 	}
 
