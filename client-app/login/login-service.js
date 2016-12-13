@@ -11,6 +11,10 @@ const getProfile = () => {
 	return _.clone(profile)
 }
 
+const getUserinfo = (userId) => {
+	return $.get('api/users/getUserinfo?userID=' + userId)
+}
+
 const getTasksNum = (data) => {
 	return $.get('api/users/getTasks', data)
 }
@@ -36,6 +40,15 @@ export default {
 	},
 	getProfile () {
 		return getProfile()
+	},
+	async getUserinfo (userId) {
+		let result = null
+		try {
+			result = await getUserinfo(userId)
+		} catch (failure) {
+			// returns null on failure
+		}
+		return result
 	},
 	getNoticeBoardSettings (profile) {
 		profile = profile || getProfile()
