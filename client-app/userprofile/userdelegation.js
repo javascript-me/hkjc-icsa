@@ -44,7 +44,7 @@ export default React.createClass({
 	},
 	getCheckboxFormat (cell, row) {
 		return (
-			<input type='checkbox' value={row.checkbox} onClick={() => {row.checkbox = !row.checkbox}} />
+			<input type='checkbox' value={row.checkbox} onClick={() => { row.checkbox = !row.checkbox }} />
 		)
 	},
 	getCalendarFormat (field) {

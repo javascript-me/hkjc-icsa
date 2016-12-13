@@ -269,7 +269,6 @@ router.post('/update', (req, res) => {
  */
 router.post('/deleteDelegation', (req, res) => {
 	const userID = req.body.userID
-	console.log(req.body)
 	const bOk = UserProfileUtil.deleteDelegation(accountProfiles, userID, req.body)
 	let result = {
 		msg: 'You have success delete the delegation!'
