@@ -259,11 +259,11 @@ class TableBody extends Component {
 
 	handleSelectRowColumChange (e, rowIndex) {
 		if (!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell) {
-			this.handleSelectRow(
+			this.handleSelectRow.bind(this)(
 				rowIndex + 1,
 				e.currentTarget.checked,
 				e
-			).bind(this)
+			)
 		}
 	}
 
@@ -282,7 +282,7 @@ class TableBody extends Component {
 
 		if (this.props.selectRow.clickToSelectAndEditCell && this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
 			const selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) !== -1
-			this.handleSelectRow(rowIndex + 1, !selected, e).bind(this)
+			this.handleSelectRow.bind(this)(rowIndex + 1, !selected, e)
 		}
 		this.setState(stateObj)
 	}
@@ -297,8 +297,8 @@ class TableBody extends Component {
 	renderSelectRowColumn (selected, inputType, disabled, CustomComponent = null, rowIndex = null) {
 		return (
 			<TableColumn dataAlign='center' className='selectRowColumn'>{
-				CustomComponent ? <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex).bind(this)} />
-								: <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex).bind(this)} />
+				CustomComponent ? <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
+								: <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
 			}
 			</TableColumn>
 		)

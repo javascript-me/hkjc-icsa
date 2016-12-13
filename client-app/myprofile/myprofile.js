@@ -146,6 +146,7 @@ export default React.createClass({
 		const userProfile = await UserProfileService.getUserProfile(this.userID)
 		if (userProfile) {
 			this.setState({
+				delegationUpdate: false,
 				userBasic: userProfile.user,
 				userAccount: userProfile.account,
 				userDelegation: userProfile.account.delegationList,
