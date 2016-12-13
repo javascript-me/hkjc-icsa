@@ -1,0 +1,21 @@
+{
+  "categories" : [
+    {"id": 1, "value": "Event Information"},
+    {"id": 2, "value": "Selling Controls"},
+    {"id": 3, "value": "Odds Generation and Update (before the first Start Sell)"},
+    {"id": 4, "value": "Odds Generation and Update (since the first Start Sell)"},
+    {"id": 5, "value": "Result - including Event and Bet Type (Non-In-Play)"},
+    {"id": 6, "value": "Result - including Event and Bet Type (In-Play)"},
+    {"id": 7, "value": "Result Rectification"},
+    {"id": 8, "value": "Payout"},
+    {"id": 9, "value": "Refund"},
+    {"id": 10, "value": "Transaction Adjustment (including Stop Pay)"},
+    {"id": 11, "value": "Position Limit"},
+    {"id": 12, "value": "MNL (Maximum Net Loss Limit) of Specific Bet Type"},
+    {"id": 13, "value": "Specific Event Exposure"},
+    {"id": 14, "value": "Specific All-up Combination Exposure"},
+    {"id": 15, "value": "Risk Limit Alerts"},
+    {"id": 15, "value": "Parameters"},
+    {"id": 15, "value": "Critical Information"}
+  ]
+}
