@@ -56,7 +56,7 @@ export default React.createClass({
 		if (cell && cell.length > 0) {
 			placeHolder = cell.map(item => item.delegatedRole).join(' ')
 		} else {
-			placeHolder = 'select a role'
+			placeHolder = 'Select Role'
 		}
 
 		const options = sampleRole.map((item, idx) => ({label: item, value: item}))
@@ -68,13 +68,15 @@ export default React.createClass({
 			left: 0,
 			right: 0,
 			margin: 'auto',
-			height: '30px'
+			height: '30px',
+			backgroundColor: row.roleErr ?'red':'#FFF'
 		}
 		const next = _.cloneDeep(this.state.editUserDelegation)
 		const updateRoleInfo = (value) => {
 			let newRoles = _.map(value, (item) => ({delegatedRole: item}))
 			next[index].delegatedRoles = newRoles
 			next[index].changeFlag = true
+			checkNoRoles(next)
 			this.setState({editUserDelegation: next})
 		}
 		return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={updateRoleInfo} />)
@@ -195,4 +197,16 @@ export default React.createClass({
 		)
 	}
 })
+
+const checkNoRoles = (nextState) => {
+		nextState.forEach((item) => {
+		if(item.changeFlag && !item.delegatedRoles && (item.delegatedRoles.length === 0)) {
+			item.roleErr = true
+			
+		} else {
+			item.roleErr = false
+			
+		}
+	})
+}
 
