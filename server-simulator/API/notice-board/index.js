@@ -1,9 +1,19 @@
 import express from 'express'
 import moment from 'moment'
-
+import helper from './export_helper'
+import NoticeBoardUtil from './notice-board-util'
 const router = express.Router()
 const jsonAlerts = require('../json/notice-alerts.json') || {}
 const jsonCriticalInformations = require('../json/notice-critical-informations.json') || {}
+const allCategories = require('../json/filter-dropdowns/categories.json')
+const allCompetitions = require('../json/filter-dropdowns/competitions.json')
+const allContinents = require('../json/filter-dropdowns/continents.json')
+const allCountries = require('../json/filter-dropdowns/countries.json')
+const allInplays = require('../json/filter-dropdowns/inplay.json')
+const allMatches = require('../json/filter-dropdowns/matches.json')
+const allPriorities = require('../json/filter-dropdowns/priorities.json')
+const allSports = require('../json/filter-dropdowns/sports.json')
+const allStatuses = require('../json/filter-dropdowns/status.json')
 
 const getRecentlySixMonthNoticesByUserName = (alerts, criticalInformations, userName) => {
 	let cloneNotices = []
@@ -54,10 +64,10 @@ const checkNoticeIsImportant = (notice) => {
  *
  * @apiSuccess (Success) {String} username allgood
  * @apiSuccessExample Success response
- *		HTTP/1.1 200 OK
- *		[
- *			// alerts and critical informations array
- *		]
+ *        HTTP/1.1 200 OK
+ *        [
+ *            // alerts and critical informations array
+ *        ]
  *
  */
 router.get('/', (req, res) => {
@@ -69,7 +79,7 @@ router.get('/', (req, res) => {
 	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
 	if (!userName) {
 		status = 403
-		result = { error: 'Sorry we need your username to get notice data' }
+		result = {error: 'Sorry we need your username to get notice data'}
 
 		res.status(status)
 		res.send(result)
@@ -88,6 +98,43 @@ router.get('/', (req, res) => {
 	res.send(result)
 })
 
+router.post('/update-acknowledge-status', (req, res) => {
+	let userName = req.body.username
+	let id = req.body.id
+	let command = req.body.command
+
+	let cloneNotices = []
+	let status = null
+	let result = {}
+
+	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
+	if (!userName) {
+		status = 403
+		result = { error: 'Sorry we need your username to get notice data' }
+
+		res.status(status)
+		res.send(result)
+
+		return false
+	}
+
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonAlerts[userName], id, command)
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonCriticalInformations[userName], id, command)
+
+	// Step 2 get valid notices
+	cloneNotices = getRecentlySixMonthNoticesByUserName(jsonAlerts, jsonCriticalInformations, userName)
+
+	// Step 3 response the data result with http 200
+	status = 200
+	result = cloneNotices
+
+	//
+	result.id = id
+
+	res.status(status)
+	res.send(result)
+})
+
 /**
  * @api {GET} /notice-board/remind-count/ Get remind count
  * @apiGroup NoticeBoard
@@ -98,8 +145,8 @@ router.get('/', (req, res) => {
  *
  * @apiSuccess (Success) {String} username allgood
  * @apiSuccessExample Success response
- *		HTTP/1.1 200 OK
- *		number   // Unread and high or critical priority notices count
+ *        HTTP/1.1 200 OK
+ *        number   // Unread and high or critical priority notices count
  *
  */
 router.get('/remind-count', (req, res) => {
@@ -111,7 +158,7 @@ router.get('/remind-count', (req, res) => {
 	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
 	if (!userName) {
 		status = 403
-		result = { error: 'Sorry we need your username to get notice data' }
+		result = {error: 'Sorry we need your username to get notice data'}
 
 		res.status(status)
 		res.send(result)
@@ -132,6 +179,116 @@ router.get('/remind-count', (req, res) => {
 	res.send(result)
 })
 
+router.get('/export', (req, res) => {
+	const type = req.params.type || req.query.type
+	const json = req.params.json || req.query.json
+	const filters = json ? JSON.parse(decodeURIComponent(json)) : {}
+	let data = []
+	if (filters.username === 'allgood') {
+		data = jsonAlerts[filters.username]
+	}
+	let result = data
+	let statusCode = 200
+	let dateFilename = moment(new Date()).format('DDMMYYHHmmSS')
+	switch (type.toLowerCase()) {
+	case 'pdf':
+		res.sendfile('server-simulator/API/notice-board/output.pdf')
+
+		break
+	case 'csv':
+		result = helper.toCSV(result)
+		res.writeHead(statusCode, {
+			'Content-Type': 'application/octet-stream',
+			'Content-Disposition': 'attachment; filename=NoticeBoardReport_' + dateFilename + '.csv'
+		})
+		res.end(result)
+		break
+	default:
+		break
+	}
+})
+
+router.post('/filterNoticeBoardTableData', (req, res) => {
+	let cloneNotices
+	const username = req.body.username
+	if (req.body.username === 'allgood') {
+		cloneNotices = jsonAlerts[username]
+	} else {
+		cloneNotices = jsonAlerts[username]
+	}
+	let status = 200
+	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
+		req.body.keyword,
+		req.body.priority,
+		req.body.sportsType,
+		req.body.competition,
+		req.body.match,
+		req.body.inPlay,
+		req.body.continent,
+		req.body.country,
+		req.body.messageCategory,
+		req.body.alertStatus,
+		req.body.dateTimeFrom,
+		req.body.dateTimeTo
+	)
+	res.status(status)
+	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
+})
+
+router.get('/categories', (req, res) => {
+	let status = 200
+	let result = allCategories.categories
+	res.status(status)
+	res.send(result)
+})
+router.get('/competitions', (req, res) => {
+	let status = 200
+	let result = allCompetitions.competitions
+	res.status(status)
+	res.send(result)
+})
+router.get('/continents', (req, res) => {
+	let status = 200
+	let result = allContinents.continents
+	res.status(status)
+	res.send(result)
+})
+router.get('/countries', (req, res) => {
+	let status = 200
+	let result = allCountries.countries
+	res.status(status)
+	res.send(result)
+})
+router.get('/inplays', (req, res) => {
+	let status = 200
+	let result = allInplays.inplay
+	res.status(status)
+	res.send(result)
+})
+router.get('/matches', (req, res) => {
+	let status = 200
+	let result = allMatches.matches
+	res.status(status)
+	res.send(result)
+})
+router.get('/priorities', (req, res) => {
+	let status = 200
+	let result = allPriorities.priorities
+	res.status(status)
+	res.send(result)
+})
+router.get('/sports', (req, res) => {
+	let status = 200
+	let result = allSports.sports
+	res.status(status)
+	res.send(result)
+})
+router.get('/statuses', (req, res) => {
+	let status = 200
+	let result = allStatuses.status
+	res.status(status)
+	res.send(result)
+})
 /**
  * @api {GET} /notice-board/notice-tips/ Get remind count
  * @apiGroup NoticeBoard
