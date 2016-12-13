@@ -1,363 +1,438 @@
-[{
-  "roleId": "001",
-  "roleName": "Trading Solutions Analyst",
-  "functionNames": [{
-    "functionName": "Event Template - Data Feed Rating - Fixture Before Start Sell",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Event Template - General & Structure Setting",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "Yes"
-  }]
-}, {
-  "roleId": "002",
-  "roleName": "Trading Supervisor",
-  "functionNames": [{
-    "functionName": "Event Template - Bet Type Preference, Expected Business Start Sell Time & Odds Submission Deadline",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Event Template",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "003",
-  "roleName": "Trading Support",
-  "functionNames": [{
-    "functionName": "Communication Management",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Bet Type Management",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "004",
-  "roleName": "Trading Support Analyst",
-  "functionNames": [{
-    "functionName": "Communication Management",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Bet Type Management",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "005",
-  "roleName": "Trading User Administrator",
-  "functionNames": [{
-    "functionName": "Communication Management",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Bet Type Management",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "006",
-  "roleName": "BOCC Part-Time",
-  "functionNames": [{
-    "functionName": "Event Profile - Event Calendar, Profile & History ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "PMU Bet Type Management",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Selling Control & Status Enquiry",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "007",
-  "roleName": "BOCC Supervisor",
-  "functionNames": [{
-    "functionName": "Selling Control & Status Enquiry",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Selling Control - Start Sell",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Selling Control - Stop Sell",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "008",
-  "roleName": "BOCC Manager",
-  "functionNames": [{
-    "functionName": "Selling Control - Channels Business Hours",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "Selling Control - Start Sell",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "009",
-  "roleName": "Finance Compliance Officer",
-  "functionNames": [{
-    "functionName": "IP Trader Assignment",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "IP Trader Assignment - Trader View",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "010",
-  "roleName": "Finance Compliance Manager",
-  "functionNames": [{
-    "functionName": "IP Trader Assignment",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "IP Trader Assignment - Trader View",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "011",
-  "roleName": "Finance Compliance Controller",
-  "functionNames": [{
-    "functionName": "IP Trader Assignment",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "IP Trader Assignment - Trader View",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "012",
-  "roleName": "Finance Compliance User Administrator",
-  "functionNames": [{
-    "functionName": "User Account Profile - My Delegation",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }, {
-    "functionName": "User Account Profile - My Message Subscription ",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "013",
-  "roleName": "Marketing Manager",
-  "functionNames": [{
-    "functionName": "Dashboard - General",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Event Directory - General",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "014",
-  "roleName": "PA Manager",
-  "functionNames": [{
-    "functionName": "Top & Side Navigation Bar ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Reports",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Template ",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "015",
-  "roleName": "Claim Manager",
-  "functionNames": [{
-    "functionName": "Top & Side Navigation Bar ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Reports",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Template ",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "016",
-  "roleName": "Customer Care Manager",
-  "functionNames": [{
-    "functionName": "Top & Side Navigation Bar ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Reports",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Template ",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "017",
-  "roleName": "Audit Manager",
-  "functionNames": [{
-    "functionName": "Top & Side Navigation Bar ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Reports",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Template ",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "018",
-  "roleName": "Director of Group Treasury",
-  "functionNames": [{
-    "functionName": "Top & Side Navigation Bar ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Reports",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Template ",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "019",
-  "roleName": "Trader",
-  "functionNames": [{
-    "functionName": "Top & Side Navigation Bar ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }]
-}, {
-  "roleId": "020",
-  "roleName": "IT Operation Manager",
-  "functionNames": [{
-    "functionName": "Top & Side Navigation Bar ",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Reports",
-    "create": "No",
-    "read": "Yes",
-    "update": "No",
-    "delete": "No"
-  }, {
-    "functionName": "Advance Analytics - Template ",
-    "create": "Yes",
-    "read": "Yes",
-    "update": "Yes",
-    "delete": "No"
-  }]
-}]
+[
+	{
+		"roleId": "001",
+		"roleName": "Trading Solutions Analyst",
+		"functionNames": [
+			{
+				"functionName": "Event Template - Data Feed Rating - Fixture Before Start Sell",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Event Template - General & Structure Setting",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "Yes"
+			}
+		]
+	},
+	{
+		"roleId": "002",
+		"roleName": "Trading Supervisor",
+		"functionNames": [
+			{
+				"functionName": "Event Template - Bet Type Preference, Expected Business Start Sell Time & Odds Submission Deadline",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Event Template",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "003",
+		"roleName": "Trading Support",
+		"functionNames": [
+			{
+				"functionName": "Communication Management",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Bet Type Management",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "004",
+		"roleName": "Trading Support Analyst",
+		"functionNames": [
+			{
+				"functionName": "Communication Management",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Bet Type Management",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "005",
+		"roleName": "Trading User Administrator",
+		"functionNames": [
+			{
+				"functionName": "Communication Management",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Bet Type Management",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "006",
+		"roleName": "BOCC Part-Time",
+		"functionNames": [
+			{
+				"functionName": "Event Profile - Event Calendar, Profile & History ",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "PMU Bet Type Management",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Selling Control & Status Enquiry",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "007",
+		"roleName": "BOCC Supervisor",
+		"functionNames": [
+			{
+				"functionName": "Selling Control & Status Enquiry",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Selling Control - Start Sell",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Selling Control - Stop Sell",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "008",
+		"roleName": "BOCC Manager",
+		"functionNames": [
+			{
+				"functionName": "Selling Control - Channels Business Hours",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "Selling Control - Start Sell",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "009",
+		"roleName": "Finance Compliance Officer",
+		"functionNames": [
+			{
+				"functionName": "IP Trader Assignment",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "IP Trader Assignment - Trader View",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "010",
+		"roleName": "Finance Compliance Manager",
+		"functionNames": [
+			{
+				"functionName": "IP Trader Assignment",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "IP Trader Assignment - Trader View",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "011",
+		"roleName": "Finance Compliance Controller",
+		"functionNames": [
+			{
+				"functionName": "IP Trader Assignment",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "IP Trader Assignment - Trader View",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "012",
+		"roleName": "Finance Compliance User Administrator",
+		"functionNames": [
+			{
+				"functionName": "User Account Profile - My Delegation",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			},
+			{
+				"functionName": "User Account Profile - My Message Subscription ",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "013",
+		"roleName": "Marketing Manager",
+		"functionNames": [
+			{
+				"functionName": "Dashboard - General",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Event Directory - General",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "014",
+		"roleName": "PA Manager",
+		"functionNames": [
+			{
+				"functionName": "Top & Side Navigation Bar ",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Reports",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Template ",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "015",
+		"roleName": "Claim Manager",
+		"functionNames": [
+			{
+				"functionName": "Top & Side Navigation Bar ",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Reports",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Template ",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "016",
+		"roleName": "Customer Care Manager",
+		"functionNames": [
+			{
+				"functionName": "Top & Side Navigation Bar ",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Reports",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Template ",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "017",
+		"roleName": "Audit Manager",
+		"functionNames": [
+			{
+				"functionName": "Top & Side Navigation Bar ",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Reports",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Template ",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "018",
+		"roleName": "Director of Group Treasury",
+		"functionNames": [
+			{
+				"functionName": "Top & Side Navigation Bar ",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Reports",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Template ",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	},
+	{
+		"roleId": "019",
+		"roleName": "IT Operation Manager",
+		"functionNames": [
+			{
+				"functionName": "Top & Side Navigation Bar ",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Reports",
+				"create": "No",
+				"read": "Yes",
+				"update": "No",
+				"delete": "No"
+			},
+			{
+				"functionName": "Advance Analytics - Template ",
+				"create": "Yes",
+				"read": "Yes",
+				"update": "Yes",
+				"delete": "No"
+			}
+		]
+	}
+]
