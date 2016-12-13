@@ -4,7 +4,7 @@ import FilterBlock from '../filter-block'
 import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
 import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
-import AddingUserCmp from '../add-account'
+// import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
@@ -304,8 +304,9 @@ export default React.createClass({
 
 		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
 
+		// {this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
+
 		return <div className='row userlist-page'>
-			{this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
 			<div className='page-header'>
 				<p>{this.state.pageTitle}</p>
 				<h1>User Account Profile List</h1>
@@ -346,18 +347,22 @@ export default React.createClass({
 					</TableComponent>
 				</div>
 				<div className='content-footer'>
-					<div className='content-footer-left'>
-						<button className='btn btn-primary btn-disable'>Delete</button>
-					</div>
-					<div className='content-footer-right'>
-						{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
-							: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
-								<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
-					}
-
-					</div>
+					<div className='content-footer-left' />
+					<div className='content-footer-right' />
 				</div>
 			</div>
 		</div>
 	}
 })
+
+// <div className='content-footer-left'>
+// 	<button className='btn btn-primary btn-disable'>Delete</button>
+// </div>
+
+// <div className='content-footer-right'>
+// 	{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+// 		: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+// 			<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+// }
+
+// </div>

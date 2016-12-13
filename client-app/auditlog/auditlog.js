@@ -13,9 +13,9 @@ import AuditlogStore from './auditlog-store'
 import ExportService from './export-service'
 import {TableHeaderColumn, TableComponent} from '../table'
 
-import SearchEnquiryDataService from '../searchEnquiryPanel/searchEnquiryPanel-service'
+import AuditlogService from './auditlog-service'
 
-const selectdata = SearchEnquiryDataService.getData()
+const selectdata = AuditlogService.getSelectDataSources()
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
