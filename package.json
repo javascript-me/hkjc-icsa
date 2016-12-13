@@ -185,7 +185,10 @@
       "jsdom": false,
       "waitFor": false,
       "responseJson": false,
-      "rewire": false
+      "rewire": false,
+      "rewireKeyVal": false,
+      "rewireResponse": false,
+      "rewireService": false
     }
   },
   "browserify": {

@@ -15,8 +15,7 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<div className="container-actions">
-			</div>
+			<div className='container-actions' />
 		)
 	}
 })

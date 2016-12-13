@@ -15,8 +15,7 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<div className="container-broadcast">
-			</div>
+			<div className='container-broadcast' />
 		)
 	}
 })
