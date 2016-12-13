@@ -11,8 +11,8 @@ const postUserProfile = (data) => {
 const getRoles = () => {
 	return $.get(config.url('api/roles/list'))
 }
-const postUserDelegation = (userId,data) => {
-	return $.post(config.url('api/userprofile/updateDelegation?userID='+userId), data)
+const postUserDelegation = (userId, data) => {
+	return $.post(config.url('api/userprofile/updateDelegation?userID=' + userId), data)
 }
 
 export default {
@@ -34,10 +34,10 @@ export default {
 		}
 		return result
 	},
-	async updateUserDelegation (userId,data) {
+	async updateUserDelegation (userId, data) {
 		let result = null
 		try {
-			result = await postUserProfile(userId,data)
+			result = await postUserProfile(userId, data)
 		} catch (failure) {
 			// returns null on failure
 		}

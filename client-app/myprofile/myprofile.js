@@ -33,12 +33,22 @@ export default React.createClass({
 	},
 	async onUpdateClick (delegationCmp) {
 		const result = delegationCmp.onUpdateClick()
-		
-		let UpdateFlag = await UserProfileService.postUserDelegation(this.userID,{delegationList:result})
-		
+		result && result.forEach((item) => { item.changeFlag = null })
+		PopupService.showMessageBox('Are you sure want to update?', () => {
+
+		})
+		let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
+
 		if (UpdateFlag.status) {
-			this.getUserProfile()
-			
+			PopupService.showMessageBox('Update sucess!', () => {
+				this.getUserProfile()
+			})
+		} else {
+			PopupService.showMessageBox('Update fail,please contact the administrator', () => {
+				this.setState({
+					delegationUpdate: false
+				})
+			})
 		}
 	},
 	onCancelClick () {
