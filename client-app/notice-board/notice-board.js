@@ -2,7 +2,7 @@ import React from 'react'
 import ExportService from '../auditlog/export-service'
 import Popup from '../popup'
 import ExportPopup from '../exportPopup'
-import NoticeboardService from './noticeboard-page-service'
+import NoticeboardService from './noticeboard-service'
 import {TableHeaderColumn, TableComponent} from '../table'
 import PubSub from '../pubsub'
 import SearchEnquiryPanel from '../searchEnquiryPanel/searchEnquiryPanel'
@@ -65,10 +65,9 @@ export default React.createClass({
 				value: originDateTimeTo
 			}],
 			tableOptions: {
-				defaultSortName: 'Alert Status',  // default sort column name
+				defaultSortName: 'priority',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
-				paginationSize: 7,
 				paginationClassContainer: 'text-center'
 			},
 			noticesList: [],
@@ -232,7 +231,6 @@ export default React.createClass({
 								</div>*/}
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
-								{/*<SearchEnquiryPanel setFilterEvent={this.setFilters} />*/}
 								<FilterPanel onReset={this.handleFilterReset} onSubmit={this.handleFilterSubmit}>
 									<FilterPanelRow>
 										{/*<FilterPanelColumn filterName="alertName" filterTitle="Alert Name" onChange={this.handleChange}>
@@ -266,8 +264,9 @@ export default React.createClass({
 					</div>
 				</div>
 				<div>
-					<div className='table-container '>
-						<TableComponent data={ NoticeboardService.noticesList } pagination={true} options={this.state.tableOptions} striped={true} keyField='id' tableHeaderClass="table-header" tableContainerClass="auditlog-table">
+					<div className='tableComponent-container'>
+						<TableComponent data={ NoticeboardService.noticesList } pagination={true} options={this.state.tableOptions}
+										striped={true} keyField='id' tableHeaderClass="table-header" tableContainerClass='base-table'>
 							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
 							<TableHeaderColumn dataField='priority' dataSort={true} dataFormat={ this.priorityFormatter }>Priority</TableHeaderColumn>
 							<TableHeaderColumn dataField='system_distribution_time' dataSort={true}> Distribution Date & Time</TableHeaderColumn>
@@ -281,7 +280,7 @@ export default React.createClass({
 					<div className='vertical-gap'>
 						<div className='pull-right'>
 							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
-							<Popup hideOnOverlayClicked ref='exportPopup' title='Audit Trail Export' onConfirm={this.export} >
+							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export} >
 								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>
 							{/*Export popup will go here...*/}

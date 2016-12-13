@@ -5,7 +5,7 @@ import LoginService from '../../login/login-service'
 import NoticeBox from '../../notice-box/notice-box'
 import TabBar from '../../tab-bar/tab-bar'
 import NotificationService from './notifications-service'
-import NoticeDetail from '../notice-detail/notice-detail'
+import NoticeDetail from '../../notice-detail/notice-detail'
 
 const getAllNoticesPromise = async (username) => {
 	let notices = null
