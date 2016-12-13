@@ -1,13 +1,10 @@
 import express from 'express'
 import moment from 'moment'
 import helper from './export_helper'
-import AuditlogsUtil from '../auditlog/auditlogs-util'
-const jsonObject = require('../json/auditlogs.json')
-
+import NoticeboardUtils from './notice-board-util'
 const router = express.Router()
 const jsonAlerts = require('../json/notice-alerts.json') || {}
 const jsonCriticalInformations = require('../json/notice-critical-informations.json') || {}
-/*Filter panel dropdowns*/
 const allCategories = require('../json/filter-dropdowns/categories.json')
 const allCompetitions = require('../json/filter-dropdowns/competitions.json')
 const allContinents = require('../json/filter-dropdowns/continents.json')
@@ -67,10 +64,10 @@ const checkNoticeIsImportant = (notice) => {
  *
  * @apiSuccess (Success) {String} username allgood
  * @apiSuccessExample Success response
- *		HTTP/1.1 200 OK
- *		[
- *			// alerts and critical informations array
- *		]
+ *        HTTP/1.1 200 OK
+ *        [
+ *            // alerts and critical informations array
+ *        ]
  *
  */
 router.get('/', (req, res) => {
@@ -82,7 +79,7 @@ router.get('/', (req, res) => {
 	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
 	if (!userName) {
 		status = 403
-		result = { error: 'Sorry we need your username to get notice data' }
+		result = {error: 'Sorry we need your username to get notice data'}
 
 		res.status(status)
 		res.send(result)
@@ -111,8 +108,8 @@ router.get('/', (req, res) => {
  *
  * @apiSuccess (Success) {String} username allgood
  * @apiSuccessExample Success response
- *		HTTP/1.1 200 OK
- *		number   // Unread and high or critical priority notices count
+ *        HTTP/1.1 200 OK
+ *        number   // Unread and high or critical priority notices count
  *
  */
 router.get('/remind-count', (req, res) => {
@@ -124,7 +121,7 @@ router.get('/remind-count', (req, res) => {
 	// Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
 	if (!userName) {
 		status = 403
-		result = { error: 'Sorry we need your username to get notice data' }
+		result = {error: 'Sorry we need your username to get notice data'}
 
 		res.status(status)
 		res.send(result)
@@ -165,7 +162,8 @@ router.get('/export', (req, res) => {
 			result = helper.toCSV(result)
 			res.writeHead(statusCode, {
 				'Content-Type': 'application/octet-stream',
-				'Content-Disposition': 'attachment; filename=NoticeBoardReport_' + dateFilename + '.csv'})
+				'Content-Disposition': 'attachment; filename=NoticeBoardReport_' + dateFilename + '.csv'
+			})
 			res.end(result)
 			break
 		default:
@@ -174,12 +172,33 @@ router.get('/export', (req, res) => {
 })
 
 router.post('/filterNoticeBoardTableData', (req, res) => {
-	const username =  req.body.username
+	let cloneNotices
+	const username = req.body.username
+	if (req.body.username === 'allgood') {
+		cloneNotices = jsonAlerts[username]
+	} else {
+		cloneNotices = jsonAlerts[username]
+	}
 	let data = []
 	let status = 200
-	let result = jsonAlerts[username]
+	console.log("In API===>" + cloneNotices)
+	const filteredNotices = NoticeboardUtils.doFilter(cloneNotices,
+		req.body.keyword,
+		req.body.priority,
+		req.body.sportsType,
+		req.body.competition,
+		req.body.match,
+		req.body.inPlay,
+		req.body.continent,
+		req.body.country,
+		req.body.messageCategory,
+		req.body.alertStatus,
+		req.body.dateTimeFrom,
+		req.body.dateTimeTo
+	)
 	res.status(status)
-	res.send(result)
+	res.send(NoticeboardUtils.doSorting(filteredNotices, 'date_time', 'DESCEND'))
+
 })
 
 router.get('/categories', (req, res) => {
