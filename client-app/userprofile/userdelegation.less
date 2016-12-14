@@ -58,18 +58,15 @@
 			.react-bs-table {
 				margin: 0;
 
-				// .react-bs-container-header {
-				// }
-
-				.react-bs-container-body {
-					overflow: inherit;
-				}
-
 				.table {
 					> tbody {
 						> tr {
 							> td {
 								overflow: inherit;
+
+								&.react-bs-table-no-data {
+									height: 200px;
+								}
 							}
 						}
 					}

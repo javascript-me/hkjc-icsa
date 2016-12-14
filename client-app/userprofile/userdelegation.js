@@ -82,8 +82,9 @@ export default React.createClass({
 			selectedOption = options.map(selectItem => {
 				let isIn = false
 				cell.forEach((cellItem) => {
-					if (cellItem.delegatedRole === selectItem) {
-						return true
+					console.log(cell,cellItem.delegatedRole,selectItem.value)
+					if (cellItem.delegatedRole === selectItem.value) {
+						return isIn = true
 					} 
 
 				})
@@ -92,6 +93,7 @@ export default React.createClass({
 		} else {
 			selectedOption = []
 		}
+		console.log(selectedOption)
 		const style = {
 			position: 'absulute',
 			width: '90%',
