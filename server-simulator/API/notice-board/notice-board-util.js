@@ -116,11 +116,10 @@ function doFilter (notices, keyWord, priority, sportsType, competition, match, i
 		const Recipient = al.recipient ? al.recipient.toLowerCase() : ''
 		return priority === keyWord.toLowerCase() ||
 			sportsType === keyWord.toLowerCase() ||
-			messageCategory === keyWord.toLowerCase()||
+			messageCategory === keyWord.toLowerCase() ||
 			alertName === keyWord.toLowerCase() ||
 			Recipient === keyWord.toLowerCase()
 	}) : result
-
 
 	if (priority !== 'All') {
 		result = result.filter((al) => {
