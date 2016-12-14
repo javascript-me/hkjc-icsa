@@ -54,8 +54,8 @@ describe('<NoticeBox>', () => {
 		assert.equal(1, onOpenDetail.callCount)
 	})
 
-/*	it('Id can be send when onOpenDetail event is triggered', (done) => {
-		let inputNotice = {id: '0001'}
+	it('Id can be send when onOpenDetail event is triggered', (done) => {
+		let inputNotice = {id: 'A0'}
 
 		let wrapper = shallow(<NoticeBox notices={allNotices} onOpenDetail={
 			(notice) => {
@@ -64,7 +64,7 @@ describe('<NoticeBox>', () => {
 			}
 		} />)
 		wrapper.find('.notice-title').first().simulate('click', inputNotice)
-	}) */
+	})
 
 	it('Test more classNames', () => {
 		let wrapper = shallow(<NoticeBox notices={allNotices} />)
@@ -82,7 +82,7 @@ describe('<NoticeBox>', () => {
 		let message = row[0]
 		assert.equal('notice-title bold-text', message.props.className)
 
-		assert.equal('Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.', message.props.children.props.children)
+		assert.ok(message.props.children.props.children.length > 0)
 		assert.equal('wrap-text', message.props.children.props.className)
 	})
 })

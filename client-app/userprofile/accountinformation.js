@@ -51,17 +51,15 @@ export default React.createClass({
 			title: ''
 		}
 	},
-	componentWillReceiveProps (nextProps) {
-		if (!_.isEqual(nextProps.userAccount, this.props.userAccount)) {
-			this._cloneData(nextProps.userAccount)
-		}
-	},
 	_cloneData (userAccount) {
 		this.userAccount = _.clone(userAccount)
 		this.userAccountEx = {
 			activationDate: formatDateTime(this.userAccount.activationDate),
 			deactivationDate: formatDateTime(this.userAccount.deactivationDate)
 		}
+		this.resetDataHighlight()
+	},
+	resetDataHighlight () {
 		this.highlightIndex = 100000
 	},
 	resetData () {

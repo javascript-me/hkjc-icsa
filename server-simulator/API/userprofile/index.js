@@ -2,7 +2,6 @@ import express from 'express'
 import UserProfileUtil from './userprofile-util'
 import _ from 'lodash'
 import UserProfileListUtil from './userprofilelist-util'
-import PagingService from '../auditlog/paging-service'
 
 const router = express.Router()
 
@@ -40,23 +39,11 @@ router.post('/outsidedata', (req, res) => {
  *
  */
 router.post('/list', (req, res) => {
-	let result = {}
-
 	let allUser = accountProfiles.map((item, index) => {
 		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
 		let newItem = Object.assign({}, user, item)
 		return newItem
 	})
-
-	// var filteredResult = UserProfileListUtil.doFilter(
-	// 	allUser,
-	// 	req.body.keyWord,
-	// 	req.body.position,
-	// 	req.body.userRole,
-	// 	req.body.status,
-	// 	req.body.dateTimeFrom,
-	// 	req.body.dateTimeTo
-	// )
 
 	var filteredResult = UserProfileListUtil.doFilter(
 		allUser,
@@ -68,22 +55,7 @@ router.post('/list', (req, res) => {
 		req.body.dateTimeTo
 	)
 
-	var filteredAuditlogs = filteredResult.slice(0)
-
-	var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
-
-	result.userProfiles = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
-
-	var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
-	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
-
-	// result.userProfiles = allUser
-	// result.pageData = {
-	// 	"pages": [],
-	// 	"totalPages": 1
-	// }
-
-	res.send(result)
+	res.send(filteredResult)
 })
 
 router.post('/add', (req, res) => {
@@ -112,14 +84,14 @@ router.post('/add', (req, res) => {
 
 /**
  * @apiGroup UserProfile
- * @api {GET} /userprofile/item user profile by user id
+ * @api {POST} /userprofile/item user profile by user id
  * @apiDescription return user profile by user id
- * @apiExample {curl} Example usage:
- *		curl -i http://localhost/userprofile/item?userID=JC10001
  *
  * @apiParam {String} userID user id
  * @apiParamExample {json} Request-Example:
- * 		?userID=JC10001
+ * 		{
+ * 			"userID": "JC10001"
+ * 		}
  *
  * @apiSuccess (Success) {Object} user user basic infomation
  * @apiSuccess (Success) {String} user.id user index
@@ -178,8 +150,8 @@ router.post('/add', (req, res) => {
  *			"error": "UserAccountNotFound"
  *		}
  */
-router.get('/item', (req, res) => {
-	const userID = req.query.userID
+router.post('/item', (req, res) => {
+	const userID = req.body.userID
 	const result = UserProfileUtil.itemFilter(basicUsers, accountProfiles, userID)
 	if (result === null) {
 		res.status(404)
