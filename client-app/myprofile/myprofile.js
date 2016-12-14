@@ -125,7 +125,7 @@ export default React.createClass({
 
 						<AccountInformation userAccount={this.state.userAccount} updateMode={false} showDate={false} />
 
-						<UserDelegation ref='delegationCmp' userDelegation={this.state.userDelegation} delegationUpdate={this.state.delegationUpdate} />
+						<UserDelegation ref='delegationCmp' userDelegation={this.state.userDelegation} delegationUpdate={this.state.delegationUpdate} myAccountProfile={this.state.userAccount} />
 
 						<ProfileButtons>
 							{this.state.delegationUpdate && (<button className='btn btn-danger' onClick={() => { this.onDeleteClick(this.refs.delegationCmp) }}>Delete</button>)}

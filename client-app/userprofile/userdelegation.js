@@ -10,8 +10,6 @@ import {TableComponent, TableHeaderColumn} from '../table'
 // import UserProfileService from '../userprofile/userprofile-service'
 import AddDelegation from './adddelegation'
 
-let sampleRole = ['Trading User', 'Trading Support Analyst', 'Trading Supervisor']
-
 const roleVeiw = (cell, row, enumObject, index) => {
 	let text = cell && cell.map((item) => (item.delegatedRole)).join(' ')
 	return text
@@ -20,7 +18,8 @@ export default React.createClass({
 	displayName: 'UserDelegation',
 	propTypes: {
 		userDelegation: PropTypes.array,
-		delegationUpdate: PropTypes.bool
+		delegationUpdate: PropTypes.bool,
+		myAccountProfile: PropTypes.object
 	},
 	getDefaultProps () {
 		return {
@@ -74,10 +73,19 @@ export default React.createClass({
 	},
 
 	roleFormat  (cell, row, enumObject, index) {
+		let userRoles = this.props.myAccountProfile && this.props.myAccountProfile.assignedUserRoles || []
 		let placeHolder = 'Select Role'
 		let selectedOption
 
-		const options = sampleRole.map((item, idx) => ({label: item, value: item}))
+		let options = userRoles && userRoles.map((item, idx) => ({label: item.assignedUserRole, value: item.assignedUserRole}))
+
+		options = options.length && options.filter((item) => {
+			if (item.value.toLowerCase().indexOf('admin') > -1) {
+				return false
+			}
+			return true
+		})
+
 		if (cell && (cell.length > 0)) {
 			selectedOption = options.map(selectItem => {
 				let isIn = false
