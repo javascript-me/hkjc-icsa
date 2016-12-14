@@ -74,14 +74,24 @@ export default React.createClass({
 	},
 
 	roleFormat  (cell, row, enumObject, index) {
-		let placeHolder
-		if (cell && (cell.length > 0)) {
-			placeHolder = cell.map(item => item.delegatedRole).join(' ')
-		} else {
-			placeHolder = 'Select Role'
-		}
-
+		let placeHolder = 'Select Role'
+		let selectedOption
+		
 		const options = sampleRole.map((item, idx) => ({label: item, value: item}))
+		if (cell && (cell.length > 0)) {
+			selectedOption = options.map(selectItem => {
+				let isIn = false
+				cell.forEach((cellItem) => {
+					if (cellItem.delegatedRole === selectItem) {
+						return true
+					} 
+
+				})
+				return isIn
+			})
+		} else {
+			selectedOption = []
+		}
 		const style = {
 			position: 'absulute',
 			width: '90%',
@@ -100,7 +110,7 @@ export default React.createClass({
 			next[index].changeFlag = true
 			this.setState({editUserDelegation: next})
 		}
-		return (<MutiSelect placeHolder={placeHolder} options={options} style={style} onChange={updateRoleInfo} />)
+		return (<MutiSelect placeHolder={placeHolder} selectedOptions={selectedOption} options={options} style={style} onChange={updateRoleInfo} />)
 	},
 	getLastData () {
 		return this.props.delegationUpdate ? this.state.editUserDelegation : this.state.userDelegation
