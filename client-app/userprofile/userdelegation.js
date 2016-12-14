@@ -82,18 +82,16 @@ export default React.createClass({
 			selectedOption = options.map(selectItem => {
 				let isIn = false
 				cell.forEach((cellItem) => {
-					console.log(cell,cellItem.delegatedRole,selectItem.value)
 					if (cellItem.delegatedRole === selectItem.value) {
-						return isIn = true
+						isIn = selectItem
 					} 
 
 				})
 				return isIn
-			})
+			}).filter(item => item)
 		} else {
 			selectedOption = []
 		}
-		console.log(selectedOption)
 		const style = {
 			position: 'absulute',
 			width: '90%',
@@ -107,7 +105,7 @@ export default React.createClass({
 		}
 		const next = _.cloneDeep(this.state.editUserDelegation)
 		const updateRoleInfo = (value) => {
-			let newRoles = _.map(value, (item) => ({delegatedRole: item}))
+			let newRoles = _.map(value, (item) => ({delegatedRole: item.value}))
 			next[index].delegatedRoles = newRoles
 			next[index].changeFlag = true
 			this.setState({editUserDelegation: next})
@@ -183,6 +181,7 @@ export default React.createClass({
 					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => { this.onAddDelegation(this.refs.delegationShow) }} confirmBtn='Add'>
 						<AddDelegation ref='delegationShow' />
 					</Popup>
+					<MutiSelect options={[{label:1,value:1},{label:2,value:2},{label:3,value:3}]} placeHolder={'select'} selectedOptions={[{value:2,label:2}]}/>
 				</div>
 				<div className='tableComponent-container content user-delegation-table' >
 					{delegationUpdate
