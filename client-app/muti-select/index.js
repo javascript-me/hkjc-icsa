@@ -102,8 +102,8 @@ class MutiSelect extends Component {
 		let selectText = this.getSelectText(changedOptions)
 
 		this.setState({
-			selectedOptionIndex: changedOptions, 
-			isAll: this.isAllSelected(changedOptions, this.props.options), 
+			selectedOptionIndex: changedOptions,
+			isAll: this.isAllSelected(changedOptions, this.props.options),
 			selectText: selectText
 		}, this.onchange)
 	}
@@ -118,8 +118,8 @@ class MutiSelect extends Component {
 		let changedText = this.state.isAll ? this.props.placeHolder || defaultSelectText : 'All'
 		this.setState({selectedOptionIndex: changedOptions, isAll: !this.state.isAll, selectText: changedText}, this.onchange)
 	}
-	isAllSelected(selectedOptionIndex, sourceOptions) {
-		return selectedOptionIndex.filter(item =>{
+	isAllSelected (selectedOptionIndex, sourceOptions) {
+		return selectedOptionIndex.filter(item => {
 			return item === true
 		}).length === sourceOptions.length
 	}
