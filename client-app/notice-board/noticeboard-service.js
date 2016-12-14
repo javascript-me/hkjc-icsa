@@ -160,9 +160,6 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 			requestData.id = id
 			requestData.command = command
 
-			// let noticeBoardList = await this.getNoticeBoardListAndUpdateAcknowledgeStatusById(
-			// 	{username: username, id: id, command: command}
-			// )
 			let noticeBoardList = await this.getNoticeBoardListAndUpdateAcknowledgeStatusById(
 				requestData
 			)
@@ -171,12 +168,7 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 			this.emitChange()
 		} catch (failure) {
 			// returns null on failure
-			// result = null
 		}
-
-		// this.noticesList = noticeBoardList
-		// this.emitChange()
-		// return result
 	}
 
 })
