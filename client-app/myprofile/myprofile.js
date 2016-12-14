@@ -143,7 +143,7 @@ export default React.createClass({
 		)
 	},
 	async getUserProfile () {
-		const userProfile = await UserProfileService.getUserProfile(this.userID)
+		const userProfile = await UserProfileService.getUserProfile({userID: this.userID})
 		if (userProfile) {
 			this.setState({
 				delegationUpdate: false,
