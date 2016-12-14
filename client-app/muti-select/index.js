@@ -2,14 +2,16 @@ import React, {Component} from 'react'
 import classnames from 'classnames'
 import _ from 'lodash'
 
+const defaultSelectText = 'Please Select ...'
+
 class MutiSelect extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
 			isFocus: false,
 			isAll: false,
-			selectText: this.props.placeHolder || '请选择',
-			selectedOption: this.props.options ? _.fill(Array(this.props.options.length), false) : []
+			selectText: this.props.placeHolder || defaultSelectText,
+			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions)
 		}
 		this.onchange = this.onchange.bind(this)
 		this.pageClick = this.pageClick.bind(this)
@@ -24,8 +26,8 @@ class MutiSelect extends Component {
 						<input type='checkbox' checked={this.state.isAll} />
 						All
 					</div>
-					{options && options.map((item, idx) => (<div key={item.label} className={classnames('option', {selected: this.state.selectedOption[idx]})} onClick={() => { this.handleOptionselect(idx) }}>
-						<input type='checkbox' checked={this.state.selectedOption[idx]} />
+					{options && options.map((item, idx) => (<div key={item.label} className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})} onClick={() => { this.handleOptionselect(idx) }}>
+						<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
 						{item.label}
 					</div>))}
 				</div>
@@ -37,6 +39,27 @@ class MutiSelect extends Component {
 	}
 	componentWillUnmont () {
 		document.removeEventListener('click', this.pageClick, false)
+	}
+	getInputSelectedOptionIndex (selectedOptionsInput) {
+		let selectedOptionIndex = _.fill(Array(this.props.options.length), false)
+
+		if (selectedOptionsInput && selectedOptionsInput.length) {
+			selectedOptionsInput.forEach(function (selectedOption) {
+				this.props.options.forEach((dataSourceOption, index) => {
+					if (dataSourceOption.value === selectedOption.value) {
+						selectedOptionIndex[index] = true
+					}
+				})
+			})
+		}
+
+		return selectedOptionIndex
+	}
+	setValue (selectedOptions) {
+		this.setState({
+			selectedOptionIndex: this.getInputSelectedOptionIndex(selectedOptions),
+			selectText: this.getSelectText(selectedOptions)
+		})
 	}
 	pageClick (e) {
 		var source = e.target
@@ -56,25 +79,38 @@ class MutiSelect extends Component {
 		this.setState({isFocus: !this.state.isFocus})
 	}
 	handleOptionselect (idx) {
-		let chagedOptions = this.state.selectedOption.map((item, index) => (index === idx ? !item : item))
-		let selectText = chagedOptions.map((item, index) => (item ? this.props.options[index].label : null)).join(' ')
-		selectText = selectText.trim() === '' ? (this.props.placeHolder || '请选择') : selectText
-		this.setState({selectedOption: chagedOptions, isAll: false, selectText: selectText}, this.onchange)
+		let changedOptions = this.state.selectedOptionIndex
+
+		changedOptions[idx] = !changedOptions[idx]
+
+		let selectText = this.getSelectText(changedOptions)
+
+		this.setState({selectedOptionIndex: changedOptions, isAll: false, selectText: selectText}, this.onchange)
+	}
+	getSelectText (selectedOptions) {
+		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null)).join(' ')
+		selectText = selectText.trim() === '' ? (this.props.placeHolder || defaultSelectText) : selectText
+
+		return selectText
 	}
 	toggleAll () {
-		let chagedOptions = _.fill(Array(this.props.options.length), !this.state.isAll)
-		let changedText = this.state.isAll ? this.props.placeHolder || '请选择' : 'All'
-		this.setState({selectedOption: chagedOptions, isAll: !this.state.isAll, selectText: changedText}, this.onchange)
+		let changedOptions = _.fill(Array(this.props.options.length), !this.state.isAll)
+		let changedText = this.state.isAll ? this.props.placeHolder || defaultSelectText : 'All'
+		this.setState({selectedOptionIndex: changedOptions, isAll: !this.state.isAll, selectText: changedText}, this.onchange)
 	}
 	onchange () {
-		const result = []
-		_.forEach(this.state.selectedOption, (item, idx) => { item && result.push(this.props.options[idx].value) })
+		let result = []
+		_.forEach(this.state.selectedOptionIndex, (item, idx) => {
+			item && result.push(this.props.options[idx])
+		})
+
 		this.props.onChange && this.props.onChange(result)
 	}
 }
 
 MutiSelect.propTypes = {
-	options: React.PropTypes.array, // like [{label:'aaa',value:1},{label:'bbb',value:2}]
+	options: React.PropTypes.array.isRequired, // like [{label:'aaa',value:1},{label:'bbb',value:2}]
+	selectedOptions: React.PropTypes.array, // like [true, false, true, false], each 'true' element means the corresponding option is selected
 	placeHolder: React.PropTypes.string,
 	onChange: React.PropTypes.func, // like (result) => {dosth(result)} ,result is array of selected option's value [val1,val2...]
 	style: React.PropTypes.object // object custom the width and height...
