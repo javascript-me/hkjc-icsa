@@ -4,9 +4,9 @@ import _ from 'underscore'
 import PubSub from '../pubsub'
 
 const emptyFn = () => {}
-let tokenTriggerSearch
-let tokenRemoveFilter
-let tokenResetFilters
+let tokenTriggerSearch = null
+let tokenRemoveFilter = null
+let tokenResetFilters = null
 
 export default React.createClass({
 	displayName: 'FilterPanel',
@@ -55,43 +55,49 @@ export default React.createClass({
 		})
 	},
 	initialComponentSubscription: function () {
-		tokenTriggerSearch = PubSub.subscribe(PubSub[this.props.triggerSearchTopic], () => {
-			this.handleSubmit()
-		})
-
-		tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, publicFilters) => {
-			let filters = this.state.filters
-			let originFilters = this.state.originFilters
-			let filterHandles = this.state.filterHandles
-			let filterNames = publicFilters.name.split(',')
-			let resetHandle
-
-			filterNames.forEach((filterName) => {
-				if (!filters[filterName]) {
-					return false
-				}
-
-				filters[filterName] = originFilters[filterName]
-				resetHandle = filterHandles[filterName] ? filterHandles[filterName].reset : undefined
-
-				if (typeof resetHandle === 'function') {
-					resetHandle()
-				}
+		if(this.props.triggerSearchTopic) {
+			tokenTriggerSearch = PubSub.subscribe(PubSub[this.props.triggerSearchTopic], () => {
+				this.handleSubmit()
 			})
+		}
 
-			this.setState({
-				filters: filters
+		if(this.props.removeOneFilterTopic) {
+			tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, publicFilters) => {
+				let filters = this.state.filters
+				let originFilters = this.state.originFilters
+				let filterHandles = this.state.filterHandles
+				let filterNames = publicFilters.name.split(',')
+				let resetHandle
+
+				filterNames.forEach((filterName) => {
+					if (!filters[filterName]) {
+						return false
+					}
+
+					filters[filterName] = originFilters[filterName]
+					resetHandle = filterHandles[filterName] ? filterHandles[filterName].reset : undefined
+
+					if (typeof resetHandle === 'function') {
+						resetHandle()
+					}
+				})
+
+				this.setState({
+					filters: filters
+				})
 			})
-		})
+		}
 
-		tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => {
-			this.handleReset()
-		})
+		if(this.props.resetFiltersTopic) {
+			tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => {
+				this.handleReset()
+			})
+		}
 	},
 	clearComponentSubscriptionWhenUnmount: function () {
-		PubSub.unsubscribe(tokenTriggerSearch)
-		PubSub.unsubscribe(tokenRemoveFilter)
-		PubSub.unsubscribe(tokenResetFilters)
+		tokenTriggerSearch && PubSub.unsubscribe(tokenTriggerSearch)
+		tokenRemoveFilter && PubSub.unsubscribe(tokenRemoveFilter)
+		tokenResetFilters && PubSub.unsubscribe(tokenResetFilters)
 	},
 	iterateChilren: function (parent, operationFn) {
 		React.Children.forEach(parent.props.children, operationFn)
