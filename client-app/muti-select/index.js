@@ -40,12 +40,28 @@ class MutiSelect extends Component {
 	componentWillUnmont () {
 		document.removeEventListener('click', this.pageClick, false)
 	}
+	componentWillReceiveProps (nextProps) {
+		let currentProps = this.props
+		let selectedOptions
+
+		if(_.isEqual(currentProps, nextProps)) {
+			return false
+		}
+
+		selectedOptions = nextProps.selectedOptions
+
+		this.setState({
+			selectedOptionIndex: this.getInputSelectedOptionIndex(selectedOptions),
+			selectText: this.getSelectText(selectedOptions)
+		})
+	}
 	getInputSelectedOptionIndex (selectedOptionsInput) {
+		let me = this
 		let selectedOptionIndex = _.fill(Array(this.props.options.length), false)
 
 		if (selectedOptionsInput && selectedOptionsInput.length) {
 			selectedOptionsInput.forEach(function (selectedOption) {
-				this.props.options.forEach((dataSourceOption, index) => {
+				me.props.options.forEach((dataSourceOption, index) => {
 					if (dataSourceOption.value === selectedOption.value) {
 						selectedOptionIndex[index] = true
 					}
@@ -54,12 +70,6 @@ class MutiSelect extends Component {
 		}
 
 		return selectedOptionIndex
-	}
-	setValue (selectedOptions) {
-		this.setState({
-			selectedOptionIndex: this.getInputSelectedOptionIndex(selectedOptions),
-			selectText: this.getSelectText(selectedOptions)
-		})
 	}
 	pageClick (e) {
 		var source = e.target

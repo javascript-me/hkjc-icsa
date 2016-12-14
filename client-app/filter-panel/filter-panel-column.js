@@ -68,10 +68,6 @@ export default React.createClass({
 				isValid: true,
 				showWarning: false
 			})
-
-			if (this.props.ctrlType === 'multi-select') {
-				this.refs.ctrl.setValue([])
-			}
 		}
 	},
 	generateSetValidHandle: function () {
