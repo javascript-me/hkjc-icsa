@@ -2,6 +2,6 @@
   "sports" : [
     {"id": 1, "value": "Football"},
     {"id": 2, "value": "Basketball"},
-    {"id": 3, "value": "Horse Ricing"}
+    {"id": 3, "value": "Horse Racing"}
   ]
 }
