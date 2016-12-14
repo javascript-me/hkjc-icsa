@@ -169,10 +169,12 @@ export default React.createClass({
 			filters: returnFilters
 		}
 	},
-	combineAttributesFromObjectArray: function (arr, attrName) {
+	combineAttributesFromObjectArray: function (arr, attrName, sperate) {
+		sperate = sperate || ','
+
 		return arr.map((elem) => {
 			return elem[attrName] || ''
-		}).join()
+		}).join(sperate)
 	},
 	pageClick: function (event) {
 		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
@@ -237,31 +239,31 @@ export default React.createClass({
 				filterDisplayText = `${filter.name}: ${filter.value}`
 				break
 			case 'priority':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'sportsType':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'competition':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'match':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'inPlay':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'continent':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'country':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'messageCategory':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'alertStatus':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			default:
 				filterDisplayText = filter.value

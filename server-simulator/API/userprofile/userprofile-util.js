@@ -37,7 +37,7 @@ function itemUpdate (accountProfiles, userID, newObj) {
 		}
 
 		if (newObj.assignedUserRoles !== undefined) {
-			account.assignedUserRoles = newObj.assignedUserRoles
+			account.assignedUserRoles = JSON.parse(newObj.assignedUserRoles)
 		}
 
 		if (newObj.activationDate !== undefined) {

@@ -84,14 +84,14 @@ router.post('/add', (req, res) => {
 
 /**
  * @apiGroup UserProfile
- * @api {GET} /userprofile/item user profile by user id
+ * @api {POST} /userprofile/item user profile by user id
  * @apiDescription return user profile by user id
- * @apiExample {curl} Example usage:
- *		curl -i http://localhost/userprofile/item?userID=JC10001
  *
  * @apiParam {String} userID user id
  * @apiParamExample {json} Request-Example:
- * 		?userID=JC10001
+ * 		{
+ * 			"userID": "JC10001"
+ * 		}
  *
  * @apiSuccess (Success) {Object} user user basic infomation
  * @apiSuccess (Success) {String} user.id user index
@@ -150,8 +150,8 @@ router.post('/add', (req, res) => {
  *			"error": "UserAccountNotFound"
  *		}
  */
-router.get('/item', (req, res) => {
-	const userID = req.query.userID
+router.post('/item', (req, res) => {
+	const userID = req.body.userID
 	const result = UserProfileUtil.itemFilter(basicUsers, accountProfiles, userID)
 	if (result === null) {
 		res.status(404)
