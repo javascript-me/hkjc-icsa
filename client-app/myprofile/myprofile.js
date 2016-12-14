@@ -111,7 +111,7 @@ export default React.createClass({
 				})
 			})
 		} else {
-			PopupService.showMessageBox('You must select at least one delegation!')
+			PopupService.showErrorBox('You must select at least one delegation!')
 		}
 	},
 	render () {

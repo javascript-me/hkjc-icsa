@@ -207,7 +207,7 @@ class TableComponent extends Component {
 	}
 
 	componentWillUnmount () {
-		window.removeEventListener('resize', this._adjustTable)
+		window.removeEventListener('resize', this._adjustTable.bind(this))
 		this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader)
 		if (this.filter) {
 			this.filter.removeAllListeners('onFilterChange')

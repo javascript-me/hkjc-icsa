@@ -8,7 +8,7 @@ const getDelegations = (userId) => {
 	return $.get(config.url('api/userprofile/getDelegation?userID=' + userId))
 }
 
-const postUserProfile = (data) => {
+const postUpdateUserProfile = (data) => {
 	return $.post(config.url('api/userprofile/update'), data)
 }
 
@@ -45,7 +45,7 @@ export default {
 	async updateUserProfile (data) {
 		let result = null
 		try {
-			result = await postUserProfile(data)
+			result = await postUpdateUserProfile(data)
 		} catch (failure) {
 			// returns null on failure
 		}

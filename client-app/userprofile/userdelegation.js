@@ -127,7 +127,9 @@ export default React.createClass({
 	},
 	onAddDelegation (delegationShow) {
 		const delegation = delegationShow.getDelegation()
-		this.addNewRecord(delegation)
+		if (delegation) {
+			this.addNewRecord(delegation)
+		}
 	},
 	render () {
 		if (!this.props.userDelegation) {
