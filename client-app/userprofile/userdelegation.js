@@ -76,7 +76,7 @@ export default React.createClass({
 	roleFormat  (cell, row, enumObject, index) {
 		let placeHolder = 'Select Role'
 		let selectedOption
-		
+
 		const options = sampleRole.map((item, idx) => ({label: item, value: item}))
 		if (cell && (cell.length > 0)) {
 			selectedOption = options.map(selectItem => {
@@ -84,8 +84,7 @@ export default React.createClass({
 				cell.forEach((cellItem) => {
 					if (cellItem.delegatedRole === selectItem.value) {
 						isIn = selectItem
-					} 
-
+					}
 				})
 				return isIn
 			}).filter(item => item)
@@ -181,7 +180,7 @@ export default React.createClass({
 					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => { this.onAddDelegation(this.refs.delegationShow) }} confirmBtn='Add'>
 						<AddDelegation ref='delegationShow' />
 					</Popup>
-					<MutiSelect options={[{label:1,value:1},{label:2,value:2},{label:3,value:3}]} placeHolder={'select'} selectedOptions={[{value:2,label:2}]}/>
+					<MutiSelect options={[{label: 1, value: 1}, {label: 2, value: 2}, {label: 3, value: 3}]} placeHolder={'select'} selectedOptions={[{value: 2, label: 2}]} />
 				</div>
 				<div className='tableComponent-container content user-delegation-table' >
 					{delegationUpdate
