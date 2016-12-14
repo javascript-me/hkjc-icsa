@@ -96,7 +96,9 @@ class MenuBar extends Component {
 						<i className='icon-notification tips'>
 							<img src='icon/icon-action.svg' />
 							{
-								<span className='message-count'>{this.state.tipsNum}</span>
+								this.state.tipsNum > 0
+								? <span className='message-count'>{this.state.tipsNum}</span>
+								: ''
 							}
 						</i>
 					</div>
@@ -114,13 +116,13 @@ class MenuBar extends Component {
 		let userProfile = LoginService.getProfile()
 		let userName = userProfile.username
 
-		this.updateNoticeRemindCount(userName, self);
+		this.updateNoticeRemindCount(userName, self)
 
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
 				self.setState({tipsNum: data})
 			})
-		}, 900000)
+		}, 30000)
 
 		loginChangeToken = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
 			self.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: userProfile})
@@ -131,7 +133,7 @@ class MenuBar extends Component {
 		})
 	}
 
-	updateNoticeRemindCount(userName, self) {
+	updateNoticeRemindCount (userName, self) {
 		getNoticeCountPromise(userName).then((noticeRemindCount) => {
 			self.setState({noticeRemindCount: noticeRemindCount})
 		})
