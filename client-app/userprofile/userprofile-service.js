@@ -1,14 +1,14 @@
 import config from '../config'
 
-const getUserProfile = (userId) => {
-	return $.get(config.url('api/userprofile/item?userID=' + userId))
+const postUserProfile = (data) => {
+	return $.post(config.url('api/userprofile/item'), data)
 }
 
 const getDelegations = (userId) => {
 	return $.get(config.url('api/userprofile/getDelegation?userID=' + userId))
 }
 
-const postUserProfile = (data) => {
+const postUpdateUserProfile = (data) => {
 	return $.post(config.url('api/userprofile/update'), data)
 }
 
@@ -24,10 +24,10 @@ const postUserDelegation = (userId, data) => {
 }
 
 export default {
-	async getUserProfile (userId) {
+	async getUserProfile (data) {
 		let result = null
 		try {
-			result = await getUserProfile(userId)
+			result = await postUserProfile(data)
 		} catch (failure) {
 			// returns null on failure
 		}
@@ -45,7 +45,7 @@ export default {
 	async updateUserProfile (data) {
 		let result = null
 		try {
-			result = await postUserProfile(data)
+			result = await postUpdateUserProfile(data)
 		} catch (failure) {
 			// returns null on failure
 		}

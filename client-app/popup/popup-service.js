@@ -9,6 +9,7 @@ let globalPopupCmp = null
 *								children: ReactElement required
 *								confirmBtn: string optional
 *								cancelBtn: string optional
+*								showCancel: bool optional
 *								onConfirm: func optional
 *								onCancel: func optional
 *							}
@@ -44,6 +45,22 @@ export default {
 			onCancel
 		})
 	},
-	showErrorBox () {
+	showErrorBox (msg, onConfirm) {
+		const children = (
+			<div className='msg msgErr'>
+				<p>{msg}</p>
+			</div>
+		)
+
+		if (!onConfirm) {
+			onConfirm = () => {}
+		}
+
+		this.showCustom({
+			title: 'Error',
+			children,
+			showCancel: false,
+			onConfirm
+		})
 	}
 }
