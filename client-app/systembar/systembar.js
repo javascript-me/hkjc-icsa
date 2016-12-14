@@ -27,7 +27,12 @@ export default class Systembar extends React.Component {
 			info: LoginService.getProfile(),
 			showOther: true,
 			taskNum: 0,
-			text: ''
+			text: '',
+			userinfo: {}
+		}
+		this.userID = ''
+		if (this.state.info) {
+			this.userID = this.state.info.userID
 		}
 
 		getClock().then((data) => { this.setState({date: Number(data)}) }, () => { this.setState({date: NaN}) })
@@ -38,6 +43,7 @@ export default class Systembar extends React.Component {
 		return preStateCopy
 	}
 	componentDidMount () {
+		this.getUserinfo()
 		this.interval = setInterval(() => {
 			this.setState((preState) => { return this.tick(preState) })
 		}, 1000)
@@ -92,7 +98,7 @@ export default class Systembar extends React.Component {
 				{ this.state.showPopup ? <Popup date={this.state.date} hideClock={() => this.hideClock()} /> : null }
 				<div className='username' id='dropdownMenu1'>
 					<span className='hello'>
-						<img src='icon/Shape.svg' />Hello, {this.state.info.username}
+						<img src='icon/Shape.svg' />Hello, {this.state.userinfo.displayName}
 					</span>
 					<ul className='dropdown-menu'>
 						<li><a href='#/page/myprofile'>My Profile</a></li>
@@ -105,5 +111,10 @@ export default class Systembar extends React.Component {
 				</Overlay>
 			</div>
 			)
+	}
+	async getUserinfo () {
+		let userinfo = []
+		userinfo = await LoginService.getUserinfo(this.userID)
+		this.setState({userinfo})
 	}
 }

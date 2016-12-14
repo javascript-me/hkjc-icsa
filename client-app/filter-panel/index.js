@@ -67,8 +67,12 @@ export default React.createClass({
 			let resetHandle
 
 			filterNames.forEach((filterName) => {
+				if (!filters[filterName]) {
+					return false
+				}
+
 				filters[filterName] = originFilters[filterName]
-				resetHandle = filterHandles[filterName].reset
+				resetHandle = filterHandles[filterName] ? filterHandles[filterName].reset : undefined
 
 				if (typeof resetHandle === 'function') {
 					resetHandle()

@@ -70,9 +70,8 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		let sortingObject = {fieldName: 'userID', order: 'DESCEND'}
 		// Get Table Data
-		UserStore.searchAuditlogs(1, sortingObject, null)
+		UserStore.searchUsers(null)
 		UserStore.addChangeListener(this.onChange)
 		reFlashToken = PubSub.subscribe(PubSub.FliterRefreshEvent, () => {
 			this.setState({filterReflashFlag: false})
@@ -101,14 +100,6 @@ export default React.createClass({
 		this.setState({
 			userprofiles: UserStore.userProfiles, hasData: hasData
 		})
-	},
-
-	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
-		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
-	},
-
-	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
-		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	showMoreFilter () {
@@ -202,7 +193,7 @@ export default React.createClass({
 		})
 
 		// Get Table Data
-		UserStore.searchAuditlogs(1, null, criteriaOption)
+		UserStore.searchUsers(criteriaOption)
 	},
 
 	getSearchCriterias: function () {
