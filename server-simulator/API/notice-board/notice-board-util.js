@@ -135,13 +135,13 @@ function doFilter (notices, keyWord, priority, sportsType, competition, match, i
 
 	if (competition !== 'All') {
 		result = result.filter((al) => {
-			return (competition.indexOf(al.competition) >= 0)
+			return (competition.indexOf(al.event_level1) >= 0)
 		})
 	}
 
 	if (match !== 'All') {
 		result = result.filter((al) => {
-			return (match.indexOf(al.match) >= 0)
+			return (match.indexOf(al.event_level2) >= 0)
 		})
 	}
 
