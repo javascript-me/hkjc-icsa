@@ -219,6 +219,7 @@ export default React.createClass({
 						</div>
 						<div className='col col-xs-6'>
 							<Calendar
+								disabled={userAccount.status !== 'Active'}
 								value={this.userAccountEx.activationDate}
 								warning={!isValidDateTime(this.userAccountEx.activationDate)}
 								onChange={this.onActivationDateChange} />
