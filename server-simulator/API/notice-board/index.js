@@ -135,6 +135,78 @@ router.post('/update-acknowledge-status', (req, res) => {
 	res.send(result)
 })
 
+router.post('/update-table-acknowledge-status', (req, res) => {
+	// let userName = req.body.username
+	// let id = req.body.id
+	// let command = req.body.command
+	//
+	// let cloneNotices = []
+	// let status = null
+	// let result = {}
+	//
+	// // Step 1 check userName exits or not, if not, response error with http 403, otherwise, go ahead
+	// if (!userName) {
+	// 	status = 403
+	// 	result = { error: 'Sorry we need your username to get notice data' }
+	//
+	// 	res.status(status)
+	// 	res.send(result)
+	//
+	// 	return false
+	// }
+	//
+	// NoticeBoardUtil.updateAcknowledgeStatusById(jsonAlerts[userName], id, command)
+	// NoticeBoardUtil.updateAcknowledgeStatusById(jsonCriticalInformations[userName], id, command)
+	//
+	// // Step 2 get valid notices
+	// cloneNotices = getRecentlySixMonthNoticesByUserName(jsonAlerts, jsonCriticalInformations, userName)
+	//
+	// // Step 3 response the data result with http 200
+	// status = 200
+	// result = cloneNotices
+	//
+	// //
+	// result.id = id
+	//
+	// res.status(status)
+	// res.send(result)
+
+
+
+//
+	let id = req.body.id
+	let command = req.body.command
+
+	let cloneNotices
+	const username = req.body.username
+
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonAlerts[username], id, command)
+
+	if (req.body.username === 'allgood') {
+		cloneNotices = jsonAlerts[username]
+	} else {
+		cloneNotices = jsonAlerts[username]
+	}
+	let status = 200
+	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
+		req.body.keyword,
+		req.body.priority,
+		req.body.sportsType,
+		req.body.competition,
+		req.body.match,
+		req.body.inPlay,
+		req.body.continent,
+		req.body.country,
+		req.body.messageCategory,
+		req.body.alertStatus,
+		req.body.dateTimeFrom,
+		req.body.dateTimeTo
+	)
+	res.status(status)
+	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
+
+})
+
 /**
  * @api {GET} /notice-board/remind-count/ Get remind count
  * @apiGroup NoticeBoard
