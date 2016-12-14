@@ -12,6 +12,8 @@ import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import FilterBlock from '../filter-block'
 import NoticeDetail from '../notice-detail/notice-detail'
+import NotificationService from './noticeboard-service'
+import LoginService from '../login/login-service'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -441,6 +443,19 @@ export default React.createClass({
 		return ''
 	},
 
+	getCommand (alertStatus) {
+		if (alertStatus === 'New') return 'Acknowledge'
+		return 'Unacknowledge'
+	},
+
+	doAcknowledgement (id, alertStatus) {
+		let userProfile = LoginService.getProfile()
+
+		let criteriaOption = this.getSearchCriterias()
+
+		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
+	},
+
 	render () {
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
@@ -453,9 +468,10 @@ export default React.createClass({
 					title={this.state.detail.alert_name}
 					showCancel={false}
 					showCloseIcon
-					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
+					confirmBtn={this.getCommand(this.state.detail.alert_status)}
 					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
-					headerColor={this.getPriorityColor(this.state.detail.priority)}>
+					headerColor={this.getPriorityColor(this.state.detail.priority)}
+					onConfirm={() => { this.doAcknowledgement(this.state.detail.id, this.state.detail.alert_status) }}>
 					<NoticeDetail alert_status={this.state.detail.alert_status}
 						message_category={this.state.detail.message_category}
 						system_distribution_time={this.state.detail.system_distribution_time}

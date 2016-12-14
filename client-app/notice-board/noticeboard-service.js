@@ -17,6 +17,7 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 	sendRequest (requestData) {
 		return $.post('api/notice-board/filterNoticeBoardTableData', requestData)
 	},
+
 	async filterNoticeBoardTableData (criteriaOption) {
 		let requestData = this.buildRequest(criteriaOption)
 		try {
@@ -142,9 +143,34 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 
 	sendRequestToGetList (requestURL) {
 		return $.get(requestURL)
+	},
+
+	getNoticeBoardListAndUpdateAcknowledgeStatusById (data) {
+		return $.post('api/notice-board/update-table-acknowledge-status', data)
+	},
+
+	async getNoticesAndUpdateAcknowledgeStatusById (criteriaOption, username, id, command) {
+		// let result = null
+		console.log("username+id+command")
+		console.log(username + " | " + id + " | " + command)
+		try {
+
+			let requestData = this.buildRequest(criteriaOption)
+
+			requestData.id = id
+			requestData.command = command
+
+			let noticeBoardList = await this.getNoticeBoardListAndUpdateAcknowledgeStatusById(
+				requestData
+			)
+
+			this.noticesList = noticeBoardList
+			this.emitChange()
+		} catch (failure) {
+			// returns null on failure
+		}
 	}
 
 })
 
 export default NoticeboardService
-
