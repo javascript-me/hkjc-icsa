@@ -113,7 +113,7 @@ export default React.createClass({
 				})
 			})
 		} else {
-			PopupService.showMessageBox('You must select at least one delegation!')
+			PopupService.showErrorBox('You must select at least one delegation!')
 		}
 	},
 	render () {
@@ -145,7 +145,7 @@ export default React.createClass({
 		)
 	},
 	async getUserProfile () {
-		const userProfile = await UserProfileService.getUserProfile(this.userID)
+		const userProfile = await UserProfileService.getUserProfile({userID: this.userID})
 		if (userProfile) {
 			this.setState({
 				delegationUpdate: false,

@@ -4,7 +4,7 @@ describe('UserProfileService', () => {
 	describe('#getUserProfile', () => {
 		it('returns user profile', async () => {
 			const response = {}
-			rewire(UserProfileService.__set__('getUserProfile', () => {
+			rewire(UserProfileService.__set__('postUserProfile', () => {
 				return Promise.resolve(response)
 			}))
 
