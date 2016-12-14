@@ -1,8 +1,8 @@
 {
   "competitions" : [
-    {"id": 1, "value": "Premier League"},
-    {"id": 2, "value": "FA Cup"},
-    {"id": 3, "value": "League Cup"},
-    {"id": 4, "value": "Championship"}
+    {"id": "Premier League", "value": "Premier League"},
+    {"id": "FA Cup", "value": "FA Cup"},
+    {"id": "League Cup", "value": "League Cup"},
+    {"id": "Championship", "value": "Championship"}
   ]
 }
