@@ -1,6 +1,6 @@
 {
   "inplay" : [
-    {"id": "In-Play", "value": "In-Play"},
-    {"id": "Non In-Play", "value": "Non In-Play"}
+    {"id": "In-play", "value": "In-play"},
+    {"id": "Non In-play", "value": "Non In-play"}
   ]
 }
