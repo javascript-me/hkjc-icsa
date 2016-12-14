@@ -182,7 +182,6 @@ export default React.createClass({
 					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => { this.onAddDelegation(this.refs.delegationShow) }} confirmBtn='Add'>
 						<AddDelegation ref='delegationShow' />
 					</Popup>
-					<MutiSelect options={[{label: 1, value: 1}, {label: 2, value: 2}, {label: 3, value: 3}]} placeHolder={'select'} selectedOptions={[{value: 2, label: 2}]} />
 				</div>
 				<div className='tableComponent-container content user-delegation-table' >
 					{delegationUpdate
@@ -195,7 +194,7 @@ export default React.createClass({
 						selectRow={this.selectRowProp}
 						data={tableData}
 						options={this.tableOptions}
-						bodyStyle={{height: 'calc(100% - 42px)'}}
+
 					>
 						<TableHeaderColumn dataField='userName' dataSort dataAlign='center' >Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
