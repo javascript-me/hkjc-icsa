@@ -138,32 +138,23 @@ export default React.createClass({
 			filter = filters[filterIndex]
 			if (filter.name === 'priority') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'sportsType') {
+			} else if (filter.name === 'sportsType') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'competition') {
+			} else if (filter.name === 'competition') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'match') {
+			} else if (filter.name === 'match') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'inPlay') {
+			} else if (filter.name === 'inPlay') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'continent') {
+			} else if (filter.name === 'continent') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'country') {
+			} else if (filter.name === 'country') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'messageCategory') {
+			} else if (filter.name === 'messageCategory') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else if (filter.name === 'alertStatus') {
+			} else if (filter.name === 'alertStatus') {
 				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
-			}
-			else {
+			} else {
 				returnFilterValue = filter.value
 			}
 			returnFilters.push({
