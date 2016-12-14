@@ -563,7 +563,7 @@
 		{
 			"alert_name": "Alert1",
 			"priority": "High",
-			"alert_status": "Unacknowledged",
+			"alert_status": "New",
 			"message_category": "Risk Limit Alerts",
 			"system_distribution_time": "09 December 2016 09:13:30",
 			"message_detail": "Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.",
@@ -581,7 +581,7 @@
 		{
 			"alert_name": "Alert",
 			"priority": "Critical",
-			"alert_status": "Unacknowledged",
+			"alert_status": "New",
 			"message_category": "Risk Limit Alerts",
 			"system_distribution_time": "09 December 2016 09:13:30",
 			"message_detail": "Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.",
@@ -635,7 +635,7 @@
 		{
 			"alert_name": "Alert",
 			"priority": "Critical",
-			"alert_status": "Unacknowledged",
+			"alert_status": "New",
 			"message_category": "Risk Limit Alerts",
 			"system_distribution_time": "09 December 2016 09:13:30",
 			"message_detail": "Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.",
@@ -671,7 +671,7 @@
 		{
 			"alert_name": "Alert",
 			"priority": "High",
-			"alert_status": "Unacknowledged",
+			"alert_status": "New",
 			"message_category": "Risk Limit Alerts",
 			"system_distribution_time": "09 December 2016 09:13:30",
 			"message_detail": "Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.",
@@ -707,7 +707,7 @@
 		{
 			"alert_name": "Alert Name",
 			"priority": "Low",
-			"alert_status": "Unacknowledged",
+			"alert_status": "New",
 			"message_category": "Risk Limit Alerts",
 			"system_distribution_time": "09 December 2016 09:13:30",
 			"message_detail": "Aenean commodo ligula eget dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Quisque rutrum.",
