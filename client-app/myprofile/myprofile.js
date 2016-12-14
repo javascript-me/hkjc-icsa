@@ -70,7 +70,7 @@ export default React.createClass({
 			return false
 		}
 		case (errBox.smallerErr) : {
-			PopupService.showMessageBox('delegationFrom date must larger then delegationTo date', () => {})
+			PopupService.showMessageBox('delegationTo date must larger then delegationFrom date', () => {})
 			return false
 		}
 		default : break
