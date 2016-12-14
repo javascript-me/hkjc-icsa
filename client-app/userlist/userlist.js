@@ -6,14 +6,13 @@ import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
-import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
 // import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
-import SearchEnquiryDataService from '../account-list-filter/searchEnquiryPanel-service'
+import UserListService from './userlist-service'
 
-const selectdata = SearchEnquiryDataService.getData()
+const selectdata = UserListService.getSelectDataSources()
 
 let reFlashToken = null
 let searchToken = null
@@ -339,11 +338,11 @@ export default React.createClass({
 									<FilterPanelColumn filterName='dateTimeFrom'
 										filterTitle='Date of Activation'
 										filterValue={defaultDateFrom}
-										ctrlType='calendar'/>
+										ctrlType='calendar' />
 									<FilterPanelColumn filterName='dateTimeTo'
 										filterTitle='Date of Inactivation'
 										filterValue={defaultDateTo}
-										ctrlType='calendar'/>
+										ctrlType='calendar' />
 								</FilterPanelRow>
 							</FilterPanel>
 						</div>

@@ -55,13 +55,13 @@ export default React.createClass({
 		})
 	},
 	initialComponentSubscription: function () {
-		if(this.props.triggerSearchTopic) {
+		if (this.props.triggerSearchTopic) {
 			tokenTriggerSearch = PubSub.subscribe(PubSub[this.props.triggerSearchTopic], () => {
 				this.handleSubmit()
 			})
 		}
 
-		if(this.props.removeOneFilterTopic) {
+		if (this.props.removeOneFilterTopic) {
 			tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, publicFilters) => {
 				let filters = this.state.filters
 				let originFilters = this.state.originFilters
@@ -88,7 +88,7 @@ export default React.createClass({
 			})
 		}
 
-		if(this.props.resetFiltersTopic) {
+		if (this.props.resetFiltersTopic) {
 			tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => {
 				this.handleReset()
 			})
