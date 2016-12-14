@@ -116,7 +116,7 @@ class MenuBar extends Component {
 		let userProfile = LoginService.getProfile()
 		let userName = userProfile.username
 
-		this.updateNoticeRemindCount(userName, self);
+		this.updateNoticeRemindCount(userName, self)
 
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
@@ -133,7 +133,7 @@ class MenuBar extends Component {
 		})
 	}
 
-	updateNoticeRemindCount(userName, self) {
+	updateNoticeRemindCount (userName, self) {
 		getNoticeCountPromise(userName).then((noticeRemindCount) => {
 			self.setState({noticeRemindCount: noticeRemindCount})
 		})
