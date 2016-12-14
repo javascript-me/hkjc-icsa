@@ -12,7 +12,6 @@ import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import FilterBlock from '../filter-block'
 import NoticeDetail from '../notice-detail/notice-detail'
-import NotificationService from './noticeboard-service'
 import LoginService from '../login/login-service'
 
 const getOrginDateTimeFrom = function () {

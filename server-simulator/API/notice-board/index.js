@@ -166,7 +166,6 @@ router.post('/update-table-acknowledge-status', (req, res) => {
 	)
 	res.status(status)
 	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
-
 })
 
 /**
