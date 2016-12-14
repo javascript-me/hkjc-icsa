@@ -207,7 +207,7 @@ class TableComponent extends Component {
 	}
 
 	componentWillUnmount () {
-		window.removeEventListener('resize', this._adjustTable)
+		window.removeEventListener('resize', this._adjustTable.bind(this))
 		this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader)
 		if (this.filter) {
 			this.filter.removeAllListeners('onFilterChange')
@@ -904,6 +904,9 @@ class TableComponent extends Component {
 	}
 
 	_adjustHeaderWidth () {
+		if (!this.refs) {
+			debugger
+		}
 		const header = this.refs.header.refs.header
 		const headerContainer = this.refs.header.refs.container
 		const tbody = this.refs.body.refs.tbody
