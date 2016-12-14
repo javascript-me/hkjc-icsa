@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import LoginService from '../login/login-service'
 import {PopupService} from '../popup'
 import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
+import {campareTime} from '../userprofile/userdelegation.js'
 
 export default React.createClass({
 	displayName: 'MyProfile',
@@ -51,7 +52,7 @@ export default React.createClass({
 				errBox.delegationFromErr = true
 				return false
 			}
-			if (item.delegationFrom > item.delegationTo) {
+			if (campareTime(item.delegationFrom ,item.delegationTo) > 0) {
 				errBox.smallerErr = true
 			}
 		})

@@ -3,12 +3,14 @@ import classNames from 'classnames'
 import MutiSelect from '../muti-select'
 import Calendar from '../calendar'
 import _ from 'lodash'
-// import moment from 'moment'
+import moment from 'moment'
 
 import Popup from '../popup'
 import {TableComponent, TableHeaderColumn} from '../table'
 // import UserProfileService from '../userprofile/userprofile-service'
 import AddDelegation from './adddelegation'
+
+
 
 let sampleRole = ['Trading User', 'Trading Support Analyst', 'Trading Supervisor']
 
@@ -49,8 +51,8 @@ export default React.createClass({
 			const handleChang = (value) => {
 				let time = value
 				if (typeof (value) !== 'string') {
-					time = value.format('DD MM YYYY')
-				}
+					time = moment(value).format('DD/MM/YYYY')
+				} 
 				const next = _.cloneDeep(this.state.editUserDelegation)
 				next[index][field] = time
 				next[index].changeFlag = true
@@ -223,23 +225,34 @@ const checkDataVaild = (nextState) => {
 		if (item.changeFlag && (!item.delegatedRoles || (item.delegatedRoles.length === 0))) {
 			item.roleErr = true
 		} else {
-			item.roleErr = false
+			item.roleErr = null
 		}
 		if (!item.delegationTo) {
 			item.delegationToErr = true
 		} else {
-			item.delegationToErr = false
+			item.delegationToErr = null
 		}
 		if (!item.delegationFrom) {
 			item.delegationFromErr = true
+			
 		} else {
-			item.delegationFromErr = false
+			item.delegationFromErr = null
 		}
-		if (item.delegationTo && item.delegationFrom && (item.delegationTo > item.delegationFrom)) {
+		if (item.delegationTo && item.delegationFrom && (campareTime(item.delegationTo,item.delegationFrom) < 0 )) {
 			item.smallDateErr = true
 		} else {
-			item.smallDateErr = false
+			item.smallDateErr = null
 		}
 	})
 }
+
+export function campareTime (v1,v2) {
+	let s1 = v1.split('/')
+	let s2 = v2.split('/')
+	let t1 = new Date()
+	let t2 = new Date()
+	t1.setFullYear(s1[2],+s1[1]-1,s1[0])
+	t2.setFullYear(s2[2],+s2[1]-1,s2[0])
+	return (t1.getTime() -t2.getTime())
+} 
 
