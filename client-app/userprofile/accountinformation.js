@@ -47,11 +47,8 @@ export default React.createClass({
 	},
 	getInitialState () {
 		this._cloneData(this.props.userAccount)
-		return {}
-	},
-	componentWillReceiveProps (nextProps) {
-		if (!_.isEqual(nextProps.userAccount, this.props.userAccount)) {
-			this._cloneData(nextProps.userAccount)
+		return {
+			title: ''
 		}
 	},
 	_cloneData (userAccount) {
@@ -60,6 +57,9 @@ export default React.createClass({
 			activationDate: formatDateTime(this.userAccount.activationDate),
 			deactivationDate: formatDateTime(this.userAccount.deactivationDate)
 		}
+		this.resetDataHighlight()
+	},
+	resetDataHighlight () {
 		this.highlightIndex = 100000
 	},
 	resetData () {
@@ -93,8 +93,9 @@ export default React.createClass({
 	onEditRoleClick (editRole) {
 		editRole.show()
 	},
-	onRoleShowClick (roleDetail) {
+	onRoleShowClick (roleDetail, title) {
 		roleDetail.show()
+		this.setState({title: title})
 	},
 	onEditRoleUpdate (userAccount, rolesCmp) {
 		const roles = rolesCmp.getUpdateRoles()
@@ -162,9 +163,9 @@ export default React.createClass({
 			return (
 				<div className='role-wrapper'>
 					{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
-						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})} onClick={() => { this.onRoleShowClick(this.refs.rolesDetail) }}>{role.assignedUserRole}</div>
+						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})} onClick={() => { this.onRoleShowClick(this.refs.rolesDetail, role.assignedUserRole) }}>{role.assignedUserRole}</div>
 					))}
-					<Popup hideOnOverlayClicked className='permission' ref='rolesDetail' title='Admin Roles & Permission' showCancel={false} confirmBtn='Close'>
+					<Popup hideOnOverlayClicked className='permission' ref='rolesDetail' title={this.state.title} showCancel={false} confirmBtn='Close'>
 						<RolesPermission ref='rolesShow' inputSelected={userAccount.assignedUserRoles} />
 					</Popup>
 				</div>
