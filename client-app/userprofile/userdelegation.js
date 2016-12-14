@@ -10,8 +10,6 @@ import {TableComponent, TableHeaderColumn} from '../table'
 // import UserProfileService from '../userprofile/userprofile-service'
 import AddDelegation from './adddelegation'
 
-
-
 let sampleRole = ['Trading User', 'Trading Support Analyst', 'Trading Supervisor']
 
 const roleVeiw = (cell, row, enumObject, index) => {
@@ -52,7 +50,7 @@ export default React.createClass({
 				let time = value
 				if (typeof (value) !== 'string') {
 					time = moment(value).format('DD/MM/YYYY')
-				} 
+				}
 				const next = _.cloneDeep(this.state.editUserDelegation)
 				next[index][field] = time
 				next[index].changeFlag = true
@@ -65,16 +63,15 @@ export default React.createClass({
 	},
 	geterrClassNameFormat (colField) {
 		const errClassNameFormat = (cell, row, rowIdx, colIdx) => {
-			switch(colField) {
-				case ('userRole') : { return row.roleErr? 'errCell': '' }
-				case ('delegationTo') : { return (row.delegationToErr || row.smallDateErr)? 'errCell': '' }
-				case ('delegationFrom') : { return (row.delegationFromErr || row.smallDateErr)? 'errCell': '' }
-				default : return ''
+			switch (colField) {
+			case ('userRole') : { return row.roleErr ? 'errCell' : '' }
+			case ('delegationTo') : { return (row.delegationToErr || row.smallDateErr) ? 'errCell' : '' }
+			case ('delegationFrom') : { return (row.delegationFromErr || row.smallDateErr) ? 'errCell' : '' }
+			default : return ''
 			}
-	}
+		}
 		return errClassNameFormat
 	},
-	
 
 	roleFormat  (cell, row, enumObject, index) {
 		let placeHolder
@@ -93,7 +90,7 @@ export default React.createClass({
 			left: 0,
 			right: 0,
 			margin: 'auto',
-			height: '30px',
+			height: '30px'
 			// backgroundColor: row.roleErr ? 'red' : '#FFF'
 		}
 		const next = _.cloneDeep(this.state.editUserDelegation)
@@ -122,7 +119,6 @@ export default React.createClass({
 	checkVaild () {
 		checkDataVaild(this.state.editUserDelegation)
 		this.forceUpdate()
-		
 	},
 	getDeleteData () {
 		if (this.refs.updateTableCmp) {
@@ -234,11 +230,10 @@ const checkDataVaild = (nextState) => {
 		}
 		if (!item.delegationFrom) {
 			item.delegationFromErr = true
-			
 		} else {
 			item.delegationFromErr = null
 		}
-		if (item.delegationTo && item.delegationFrom && (campareTime(item.delegationTo,item.delegationFrom) < 0 )) {
+		if (item.delegationTo && item.delegationFrom && (campareTime(item.delegationTo, item.delegationFrom) < 0)) {
 			item.smallDateErr = true
 		} else {
 			item.smallDateErr = null
@@ -246,13 +241,13 @@ const checkDataVaild = (nextState) => {
 	})
 }
 
-export function campareTime (v1,v2) {
+export function campareTime (v1, v2) {
 	let s1 = v1.split('/')
 	let s2 = v2.split('/')
 	let t1 = new Date()
 	let t2 = new Date()
-	t1.setFullYear(s1[2],+s1[1]-1,s1[0])
-	t2.setFullYear(s2[2],+s2[1]-1,s2[0])
-	return (t1.getTime() -t2.getTime())
-} 
+	t1.setFullYear(s1[2], +s1[1] - 1, s1[0])
+	t2.setFullYear(s2[2], +s2[1] - 1, s2[0])
+	return (t1.getTime() - t2.getTime())
+}
 

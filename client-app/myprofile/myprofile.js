@@ -52,7 +52,7 @@ export default React.createClass({
 				errBox.delegationFromErr = true
 				return false
 			}
-			if (campareTime(item.delegationFrom ,item.delegationTo) > 0) {
+			if (campareTime(item.delegationFrom, item.delegationTo) > 0) {
 				errBox.smallerErr = true
 			}
 		})
