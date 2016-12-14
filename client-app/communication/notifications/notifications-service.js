@@ -1,4 +1,4 @@
-import config from '../config'
+import config from '../../config'
 
 let noticeBoardList = null
 
@@ -7,6 +7,11 @@ const getNoticeBoardList = (data) => {
 
 	data.temp = Math.random()
 	return $.get(url, data)
+}
+
+const getNoticeBoardListAndUpdateAcknowledgeStatusById = (data) => {
+	let url = config.url('api/notice-board/update-acknowledge-status/')
+	return $.post(url, data)
 }
 
 const getRemindCount = (data) => {
@@ -29,6 +34,21 @@ export default {
 
 		try {
 			noticeBoardList = await getNoticeBoardList({username: username})
+			result = noticeBoardList
+		} catch (failure) {
+			// returns null on failure
+			result = null
+		}
+		return result
+	},
+
+	async getNoticesAndUpdateAcknowledgeStatusById (username, id, command) {
+		let result = null
+
+		try {
+			noticeBoardList = await getNoticeBoardListAndUpdateAcknowledgeStatusById(
+				{username: username, id: id, command: command}
+			)
 			result = noticeBoardList
 		} catch (failure) {
 			// returns null on failure

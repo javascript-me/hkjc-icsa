@@ -283,8 +283,8 @@ export default React.createClass({
 	},
 
 	onClickRow (rowItem) {
-		if (rowItem.user_id) {
-			location.href = '#/page/userprofile/' + rowItem.user_id
+		if (rowItem.userID) {
+			location.href = '#/page/userprofile/' + rowItem.userID
 		}
 	},
 
@@ -337,23 +337,19 @@ export default React.createClass({
 						<TableHeaderColumn dataField='deactivationDate' dataSort>Date of Inactivation</TableHeaderColumn>
 					</TableComponent>
 				</div>
-				<div className='content-footer'>
-					<div className='content-footer-left' />
-					<div className='content-footer-right' />
-				</div>
 			</div>
 		</div>
 	}
 })
 
-// <div className='content-footer-left'>
-// 	<button className='btn btn-primary btn-disable'>Delete</button>
-// </div>
-
-// <div className='content-footer-right'>
-// 	{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
-// 		: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
-// 			<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
-// }
-
+// <div className='content-footer'>
+// 	<div className='content-footer-left'>
+// 		<button className='btn btn-primary btn-disable'>Delete</button>
+// 	</div>
+// 	<div className='content-footer-right'>
+// 		{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+// 			: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+// 				<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+// 	}
+// 	</div>
 // </div>

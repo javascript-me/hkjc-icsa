@@ -366,7 +366,8 @@ const menuList1 = [
 				text: 'Communication',
 				subMenu: [
 					{
-						text: 'Noticeboard'
+						text: 'Noticeboard',
+						link: '/page/noticeboard'
 					},
 					{
 						text: 'Noticeboard Monitor'
@@ -832,7 +833,8 @@ const menuList2 = [
 				text: 'Communication',
 				subMenu: [
 					{
-						text: 'Noticeboard'
+						text: 'Noticeboard',
+						link: '/page/noticeboard'
 					},
 					{
 						text: 'Noticeboard Monitor'

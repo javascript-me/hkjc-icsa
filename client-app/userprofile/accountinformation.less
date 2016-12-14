@@ -112,8 +112,8 @@
 	.roles-detail .popup-wrapper .popup-dialog {
 		width: 748px;
 		height: 332px;
-		margin-left: -374px;
-		margin-top: -166px;
+		margin-left: 0;
+		margin-top: 0;
 
 		.popup-content {
 			padding: 0 14px;
@@ -197,6 +197,31 @@
 					background-image: url(icon/cross.svg);
 				}
 			}
+
+			&.tr-header.first-child {
+				text-align: center !important;
+				padding: 0 !important;
+
+				> label {
+					width: 18px;
+					height: 18px;
+					vertical-align: middle;
+					background: #FFFFFF;
+					border: 1px solid #305091;
+					border-radius: 2px;
+					margin: 0;
+
+					&.checked {
+						background-image: url(icon/tick-checked.svg);
+						background-repeat: no-repeat;
+						background-position: center center;
+					}
+				}
+
+				> input {
+					display: none;
+				}
+			}
 		}
 	}
 }
@@ -220,5 +245,28 @@
 
 	.popup-button.confirm {
 		margin-right: 0;
+	}
+}
+
+.mid-overlay {
+	.popup-wrapper .popup-dialog {
+		.body {
+			padding: 16px;
+
+			.table.sm-table {
+				border: 0;
+				border-bottom: 1px solid #DDDDDD;
+
+				thead,
+				tbody > tr {
+					width: 572px;
+				}
+			}
+		}
+
+		.popup-actions a {
+			line-height: 26px;
+			min-width: 80px;
+		}
 	}
 }

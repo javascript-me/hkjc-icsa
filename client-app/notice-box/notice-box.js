@@ -6,7 +6,8 @@ export default class NoticeBox extends React.Component {
 
 	constructor (props) {
 		super(props)
-		this.onItemClick = this.onItemClick.bind(this)
+		this.openNoticeDetail = this.openNoticeDetail.bind(this)
+		this.doAcknowledgement = this.doAcknowledgement.bind(this)
 	}
 
 	getPriorityImageSrc (priority) {
@@ -47,8 +48,12 @@ export default class NoticeBox extends React.Component {
 		return text.length > 140 ? (text.substring(0, 140) + '...') : text
 	}
 
-	onItemClick (notice) {
+	openNoticeDetail (notice) {
 		this.props.onOpenDetail(notice)
+	}
+
+	doAcknowledgement (id, alertStatus) {
+		this.props.onDoAcknowledgement(id, alertStatus)
 	}
 
 	render () {
@@ -59,14 +64,14 @@ export default class NoticeBox extends React.Component {
 						this.props.notices.map((notice, i) => {
 							return <li key={i} className={this.getNoticeItemClassName(notice)}>
 								<ul className='row'>
-									<li className={this.getNoticeTitle(notice.alert_status)} onClick={() => this.onItemClick(notice)}>
+									<li className={this.getNoticeTitle(notice.alert_status)} onClick={() => this.openNoticeDetail(notice)}>
 										<div className='wrap-text'>
 											{this.textEllipsisWhenOverflow(notice.message_detail)}
 										</div>
 									</li>
-									<li><img src={this.getPriorityImageSrc(notice.priority)} /></li>
+									<li><img src={this.getPriorityImageSrc(notice.priority)} title={notice.priority} /></li>
 									<li className='notice-date'>{DataFormatter.toDDMMMYYYHHMMSS(notice.system_distribution_time)}</li>
-									<li className='pull-right'><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
+									<li className='pull-right use-pointer-cursor' onClick={() => this.doAcknowledgement(notice.id, notice.alert_status)}><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
 								</ul>
 							</li>
 						})
@@ -79,6 +84,7 @@ export default class NoticeBox extends React.Component {
 
 NoticeBox.propTypes = {
 	onOpenDetail: React.PropTypes.func,
+	onDoAcknowledgement: React.PropTypes.func,
 	visible: React.PropTypes.bool,
 	notices: React.PropTypes.array,
 	displayPosition: React.PropTypes.string

@@ -2,13 +2,12 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import _ from 'underscore'
 
-import UserProfileService from '../add-account/add-account-service.js'
+import UserProfileService from './userprofile-service.js'
+import LoginService from '../login/login-service'
 
 const TableHeader = (props) => (<thead className='table-header'>
 	<tr>
-		<th className='th-header'>
-			<div className={classNames('my-checkbox', { checked: props.checkedAll })} onClick={() => { props.handleCheckAll() }} />
-		</th>
+		<th className='th-header' />
 		{props.header && props.header.map((item, idx) => (
 			<th key={item.label} onClick={(e) => { props.handleSort(idx) }}
 				className={classNames('sort-icon', {
@@ -22,15 +21,16 @@ const TableHeader = (props) => (<thead className='table-header'>
 TableHeader.propTypes = {
 	header: React.PropTypes.array,
 	handleSort: React.PropTypes.func,
-	sortInfo: React.PropTypes.object,
-	checkedAll: React.PropTypes.bool,
-	handleCheckAll: React.PropTypes.func
+	sortInfo: React.PropTypes.object
 }
 
 const TableRow = (props) => {
 	return (<tbody>
 		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'} className={classNames({ activeLine: item.checked })}>
-			<td className='tr-header'><div className={classNames('my-checkbox', { checked: item.checked })} onClick={() => { props.handleItemClick(item) }} /></td>
+			<td className='tr-header first-child'>
+				<input id={'radio' + idx} type='radio' name='checkbox' onClick={() => { props.handleItemClick(item) }} defaultChecked={item.checked} />
+				<label htmlFor={'radio' + idx} className={classNames({ checked: item.checked })} />
+			</td>
 			{props.fields.map((rol, idx) => (<td key={rol}>{item[rol]}</td>))}
 		</tr>))}
 
@@ -63,24 +63,27 @@ export default React.createClass({
 		}
 	},
 	getInitialState () {
-		this.checkedAll = false
 		this.tableData = []
 		this.currentSortInfo = { index: 0, sortType: 'up' }
 		this.fields = _.map(this.props.header, item => item.field)
-		this.AddAccount = new UserProfileService()
+		let profile = LoginService.getProfile()
+		this.userID = ''
+		if (profile) {
+			this.userID = profile.userID
+		}
 		return {
-			showItems: []
+			showItems: [],
+			showTempItems: []
 		}
 	},
 	componentDidMount () {
 		this.getUsers()
 	},
 	getDelegation () {
-		return this.tableData.filter((item) => {
+		let result = this.tableData.find((item) => {
 			return item.checked
-		}).map((item) => {
-			return item
 		})
+		return result
 	},
 	sortItemsByCheck (showItems) {
 		let checkedArray = []
@@ -145,22 +148,19 @@ export default React.createClass({
 		let showItems = this.filterItem(keyword, this.fields, this.tableData)
 		this.initCheckedAll(showItems)
 		this.setState({showItems})
-	},
-	handleCheckAll () {
-		this.checkedAll = !this.checkedAll
-		if (this.checkedAll) {
-			this.state.showItems.forEach((item) => {
-				item.checked = true
-			})
-			this.setState({ showItems: this.state.showItems })
+
+		if (keyword) {
+			this.setState({showTempItems: showItems})
 		} else {
-			this.state.showItems.forEach((item) => {
-				item.checked = false
-			})
-			this.setState({ showItems: this.state.showItems })
+			this.setState({showTempItems: ''})
 		}
 	},
 	handleItemClick (item) {
+		this.tableData.forEach((baseitem) => {
+			if (item !== baseitem) {
+				baseitem.checked = false
+			}
+		})
 		item.checked = !item.checked
 		this.forceUpdate()
 	},
@@ -175,8 +175,8 @@ export default React.createClass({
 						</div>
 						<div className='content'>
 							<table className='table sm-table'>
-								<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} checkedAll={this.checkedAll} handleCheckAll={this.handleCheckAll} />
-								<TableRow data={this.state.showItems} fields={this.fields} handleItemClick={this.handleItemClick} />
+								<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} checkedAll={this.checkedAll} />
+								<TableRow data={this.state.showTempItems} fields={this.fields} handleItemClick={this.handleItemClick} />
 							</table>
 						</div>
 					</div>
@@ -186,7 +186,7 @@ export default React.createClass({
 	},
 	async getUsers () {
 		let users = []
-		users = await this.AddAccount.getAccountData()
+		users = await UserProfileService.getDelegations(this.userID)
 		this.tableData = users
 		this.tableData.forEach((item) => {
 			let obj = _.find(this.props.inputSelected, (selected) => {
