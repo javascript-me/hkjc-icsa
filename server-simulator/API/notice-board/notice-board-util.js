@@ -86,7 +86,7 @@ function doSorting (notices, fieldName, order) {
 	return notices
 }
 
-function doFilter (notices, keyWord, priority, sportsType, competition, match, inPlay, continent, country, messageCategory, alertStatus, dateTimeFrom, dateTimeTo) {
+function doFilter (notices, keyWord, priority, sportsType, competition, match, inPlay, continent, country, messageCategory, alertStatus, dateTimeFrom, dateTimeTo, recipientValue) {
 	keyWord = keyWord || ''
 	priority = priority || 'All'
 	sportsType = sportsType || 'All'
@@ -99,66 +99,75 @@ function doFilter (notices, keyWord, priority, sportsType, competition, match, i
 	country = country || 'All'
 	messageCategory = messageCategory || 'All'
 	alertStatus = alertStatus || 'All'
+	recipientValue = recipientValue || ''
 
 	let result = notices
+
+	result = recipientValue ? notices.filter((al) => {
+		const recipient = al.recipient ? al.recipient.toLowerCase() : ''
+		return recipient === recipientValue.toLowerCase()
+	}) : result
 
 	result = keyWord ? notices.filter((al) => {
 		const priority = al.priority ? al.priority.toLowerCase() : ''
 		const sportsType = al.sports_type ? al.sports_type.toLowerCase() : ''
 		const messageCategory = al.message_category ? al.message_category.toLowerCase() : ''
-
+		const alertName = al.alert_name ? al.alert_name.toLowerCase() : ''
+		const recipient = al.recipient ? al.recipient.toLowerCase() : ''
 		return priority === keyWord.toLowerCase() ||
 			sportsType === keyWord.toLowerCase() ||
-			messageCategory === keyWord.toLowerCase()
+			messageCategory === keyWord.toLowerCase() ||
+			alertName === keyWord.toLowerCase() ||
+			recipient === keyWord.toLowerCase()
 	}) : result
 
 	if (priority !== 'All') {
 		result = result.filter((al) => {
-			return (al.priority === priority)
+			return (priority.indexOf(al.priority) >= 0)
 		})
 	}
 
 	if (sportsType !== 'All') {
 		result = result.filter((al) => {
-			return (al.sports_type === sportsType)
+			return (sportsType.indexOf(al.sports_type) >= 0)
 		})
 	}
 
 	if (competition !== 'All') {
 		result = result.filter((al) => {
-			return (al.competition === competition)
+			return (competition.indexOf(al.competition) >= 0)
 		})
 	}
 
 	if (match !== 'All') {
 		result = result.filter((al) => {
-			return (al.match === match)
+			return (match.indexOf(al.match) >= 0)
 		})
 	}
 
 	if (inPlay !== 'All') {
 		result = result.filter((al) => {
-			return (al.inplay === inPlay)
+			return (inPlay.indexOf(al.inplay) >= 0)
 		})
 	}
 	if (continent !== 'All') {
 		result = result.filter((al) => {
-			return (al.continent === continent)
+			return (continent.indexOf(al.continent) >= 0)
 		})
 	}
 	if (country !== 'All') {
 		result = result.filter((al) => {
-			return (al.country === country)
+			return (country.indexOf(al.country) >= 0)
 		})
 	}
 	if (messageCategory !== 'All') {
 		result = result.filter((al) => {
-			return (al.message_category === messageCategory)
+			return (messageCategory.indexOf(al.message_category) >= 0)
 		})
 	}
 	if (alertStatus !== 'All') {
 		result = result.filter((al) => {
-			return (al.alert_status === alertStatus)
+			return (alertStatus.indexOf(al.alert_status) >= 0)
 		})
 	}
 

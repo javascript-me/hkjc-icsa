@@ -106,6 +106,7 @@ export default class Popup extends React.Component {
 
 		let confirmBtn = this.custom.confirmBtn ? this.custom.confirmBtn : this.props.confirmBtn
 		let cancelBtn = this.custom.cancelBtn ? this.custom.cancelBtn : this.props.cancelBtn
+		let showCancel = this.custom.showCancel !== undefined ? this.custom.showCancel : this.props.showCancel
 
 		if (this.props.showOverlay) {
 			overlay = (<div className='popup-overlay' onClick={() => this.onOverlayClicked()} />)
@@ -119,7 +120,7 @@ export default class Popup extends React.Component {
 		if (this.props.showConfirm) {
 			confirm = (<a role='button' className='pull-right btn popup-button confirm' onClick={() => this.onConfirm()}> {confirmBtn} </a>)
 		}
-		if (this.props.showCancel) {
+		if (showCancel) {
 			cancel = (<a role='button' className='pull-right btn popup-button cancel' onClick={() => this.onCancel()}> {cancelBtn} </a>)
 		}
 		if (this.props.showCloseIcon) {

@@ -41,6 +41,7 @@ export default React.createClass({
 		this.getUserProfile()
 	},
 	onEditClick () {
+		this.refs.accountCmp && this.refs.accountCmp.resetData()
 		this.setState({accountUpdate: true})
 	},
 	onResetClick () {
@@ -59,11 +60,12 @@ export default React.createClass({
 					'userID': data.userID,
 					'displayName': data.displayName,
 					'status': data.status,
-					'assignedUserRoles': data.assignedUserRoles,
+					'assignedUserRoles': JSON.stringify(data.assignedUserRoles),
 					'activationDate': data.activationDate,
 					'deactivationDate': data.deactivationDate
 				}).then((data) => {
 					if (data) {
+						this.refs.accountCmp.resetDataHighlight()
 						this.getUserProfile()
 					}
 				})

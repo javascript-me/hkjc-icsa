@@ -229,7 +229,8 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
 		req.body.messageCategory,
 		req.body.alertStatus,
 		req.body.dateTimeFrom,
-		req.body.dateTimeTo
+		req.body.dateTimeTo,
+		req.body.recipient
 	)
 	res.status(status)
 	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
