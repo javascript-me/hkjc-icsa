@@ -7,9 +7,13 @@ import Popup from '../popup'
 import RolesContainer from './rolescontainer'
 import RolesPermission from './rolespermission'
 
-function isValidDateTime (str) {
-	let bRet = Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
-	return bRet
+// function isValidDateTime (str) {
+// 	let bRet = Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
+// 	return bRet
+// }
+
+function isAfter (time1, time2) {
+	return Moment(time1, 'DD MMM YYYY HH:mm', true).isAfter(Moment(time2, 'DD MMM YYYY HH:mm', true))
 }
 
 function formatDateTime (time, inverse) {
@@ -70,7 +74,7 @@ export default React.createClass({
 		return this.userAccount
 	},
 	hasDataError (userAccount) {
-		return !userAccount.displayName || !isValidDateTime(this.userAccountEx.activationDate) || !isValidDateTime(this.userAccountEx.deactivationDate)
+		return !userAccount.displayName || !this.isDateValid(userAccount)
 	},
 	verifyData () {
 		let hasDataError = this.hasDataError(this.userAccount)
@@ -145,10 +149,23 @@ export default React.createClass({
 		this.userAccountEx.deactivationDate = date.format('DD MMM YYYY HH:mm')
 		this.forceUpdate()
 	},
+	isDateValid (userAccount) {
+		// isValidDateTime(this.userAccountEx.activationDate)
+		if (userAccount.status !== 'Active') {
+			return true
+		}
+		if (isAfter(this.userAccountEx.activationDate, this.userAccountEx.deactivationDate)) {
+			return false
+		}
+		return true
+	},
 	renderTipsText () {
 		let hasDataError = this.hasDataError(this.userAccount)
+		let bDateOk = this.isDateValid(this.userAccount)
 		if (hasDataError) {
-			return <div className='color-red'>Invalid fields are highlighted in red</div>
+			return <div className='color-red'>
+				{bDateOk ? 'Invalid fields are highlighted in red' : 'Activation must be earlier than Inactivation.'}
+			</div>
 		} else {
 			return ''
 		}
@@ -221,7 +238,7 @@ export default React.createClass({
 							<Calendar
 								disabled={userAccount.status !== 'Active'}
 								value={this.userAccountEx.activationDate}
-								warning={!isValidDateTime(this.userAccountEx.activationDate)}
+								warning={!this.isDateValid(userAccount)}
 								onChange={this.onActivationDateChange} />
 						</div>
 					</div>
@@ -235,7 +252,7 @@ export default React.createClass({
 						<div className='col col-xs-6'>
 							<Calendar
 								value={this.userAccountEx.deactivationDate}
-								warning={!isValidDateTime(this.userAccountEx.deactivationDate)}
+								warning={!this.isDateValid(userAccount)}
 								onChange={this.onDeactivationDateChange} />
 						</div>
 					</div>
