@@ -1,12 +1,18 @@
 import React from 'react'
 // import classnames from 'classnames'
 import FilterBlock from '../filter-block'
+import FilterPanel from '../filter-panel'
+import FilterPanelRow from '../filter-panel/filter-panel-row'
+import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
-import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
 // import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
+
+import UserListService from './userlist-service'
+
+const selectdata = UserListService.getSelectDataSources()
 
 let reFlashToken = null
 let searchToken = null
@@ -34,6 +40,9 @@ const getOrginDateTimeTo = function () {
 	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 }
 
+const defaultDateFrom = getOrginDateTimeFrom()
+const defaultDateTo = getOrginDateTimeTo()
+
 export default React.createClass({
 	displayName: 'UserProfileList',
 
@@ -54,10 +63,10 @@ export default React.createClass({
 			selectedKeyword: '',
 			selectedFilters: [{
 				name: 'dateTimeFrom',
-				value: getOrginDateTimeFrom()
+				value: defaultDateFrom
 			}, {
 				name: 'dateTimeTo',
-				value: getOrginDateTimeTo()
+				value: defaultDateTo
 			}],
 			tableOptions: {
 				defaultSortName: 'displayName',  // default sort column name
@@ -316,7 +325,26 @@ export default React.createClass({
 							{filterBlockes}
 						</div>
 						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
-							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
+							<FilterPanel
+								triggerSearchTopic={this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS}
+								removeOneFilterTopic={this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER}
+								onSubmit={this.setFilters}>
+								<FilterPanelRow>
+									<FilterPanelColumn filterName='position' filterTitle='Position / Title' ctrlType='select' dataSource={selectdata.position} />
+									<FilterPanelColumn filterName='userRole' filterTitle='User Roles' ctrlType='select' dataSource={selectdata.userRole} />
+									<FilterPanelColumn filterName='accountStatus' filterTitle='Account status' ctrlType='select' dataSource={selectdata.accountStatus} />
+								</FilterPanelRow>
+								<FilterPanelRow>
+									<FilterPanelColumn filterName='dateTimeFrom'
+										filterTitle='Date of Activation'
+										filterValue={defaultDateFrom}
+										ctrlType='calendar' />
+									<FilterPanelColumn filterName='dateTimeTo'
+										filterTitle='Date of Inactivation'
+										filterValue={defaultDateTo}
+										ctrlType='calendar' />
+								</FilterPanelRow>
+							</FilterPanel>
 						</div>
 					</div>
 					<div className='content-header-right add-user-btn' onClick={() => { this.setAddStep(1) }} style={{display: this.state.editMode ? 'block' : 'none'}}>
