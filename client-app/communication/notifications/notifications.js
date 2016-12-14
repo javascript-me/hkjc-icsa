@@ -6,6 +6,7 @@ import NoticeBox from '../../notice-box/notice-box'
 import TabBar from '../../tab-bar/tab-bar'
 import NotificationService from './notifications-service'
 import NoticeDetail from '../../notice-detail/notice-detail'
+import PubSub from '../../pubsub'
 
 const getAllNoticesPromise = async (username) => {
 	let notices = null
@@ -217,6 +218,8 @@ export default React.createClass({
 					unreadNotices: unreadNotices
 				}
 			})
+
+			PubSub.publish(PubSub['REFRESH_NOTICES'])
 		})
 	},
 
