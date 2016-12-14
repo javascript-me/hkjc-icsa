@@ -40,8 +40,7 @@ export default React.createClass({
 		return {
 			isValid: true,
 			showWarning: false,
-			filterValue: this.getDefaultStateFilterValue(),
-			submittedValue: ''
+			filterValue: this.getDefaultStateFilterValue()
 		}
 	},
 	componentDidMount: function () {
@@ -218,7 +217,7 @@ export default React.createClass({
 	},
 	render: function () {
 		return <div className='form-group'>
-			<label>{this.props.filterTitle} {this.props.isRequired ? <span>*</span> : ''}</label>
+			<label className='column-title'>{this.props.filterTitle} {this.props.isRequired ? <span className='required'>*</span> : ''}</label>
 			{this.getCtrl()}
 		</div>
 	}
