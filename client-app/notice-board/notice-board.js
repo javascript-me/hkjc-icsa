@@ -128,10 +128,50 @@ export default React.createClass({
 		})
 	},
 	getSearchCriterias: function () {
+		let self = this
+		let filters = this.state.selectedFilters
+		let filter
+		let filterIndex
+		let returnFilters = []
+		let returnFilterValue
+		for (filterIndex in filters) {
+			filter = filters[filterIndex]
+			if (filter.name === 'priority') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'sportsType') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'competition') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'match') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'inPlay') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'continent') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'country') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'messageCategory') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'alertStatus') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else {
+				returnFilterValue = filter.value
+			}
+			returnFilters.push({
+				name: filter.name,
+				value: returnFilterValue
+			})
+		}
+
 		return {
 			keyword: this.state.selectedKeyword,
-			filters: this.state.selectedFilters
+			filters: returnFilters
 		}
+	},
+	combineAttributesFromObjectArray: function (arr, attrName) {
+		return arr.map((elem) => {
+			return elem[attrName] || ''
+		}).join()
 	},
 	pageClick: function (event) {
 		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
@@ -189,11 +229,45 @@ export default React.createClass({
 	},
 	generateFilterBlockesJsx: function (filters) {
 		const filterDisplayFormatting = (filter) => {
-			return filter.name === 'keyword'
-				? `${filter.name}: ${filter.value}`
-				: filter.value
-		}
+			let filterDisplayText
 
+			switch (filter.name) {
+			case 'keyword':
+				filterDisplayText = `${filter.name}: ${filter.value}`
+				break
+			case 'priority':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'sportsType':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'competition':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'match':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'inPlay':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'continent':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'country':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'messageCategory':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			case 'alertStatus':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				break
+			default:
+				filterDisplayText = filter.value
+				break
+			}
+			return filterDisplayText
+		}
 		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
 		let keywordFilter = {
 			name: 'keyword',
@@ -410,7 +484,7 @@ export default React.createClass({
 									onSubmit={this.setFilters}>
 									<FilterPanelRow>
 										<FilterPanelColumn filterName='priority' filterTitle='Priority'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.prioritiesList} />
 										<FilterPanelColumn filterName='dateTimeFrom'
 											filterTitle='Distribution Time From'
@@ -424,31 +498,30 @@ export default React.createClass({
 											ctrlType='calendar'
 											isRequired
 											pairingVerify={[{operation: '>=', partners: ['dateTimeFrom']}]} />
-
 										<FilterPanelColumn filterName='sportsType' filterTitle='Sports Type'
-											ctrlType='select' dataSource={NoticeboardService.sportsList} />
+											ctrlType='multi-select' dataSource={NoticeboardService.sportsList} />
 									</FilterPanelRow>
 									<FilterPanelRow>
 										<FilterPanelColumn filterName='competition' filterTitle='Competition'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.competitionsList} />
 										<FilterPanelColumn filterName='match' filterTitle='Match (Race for HR)'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.matchesList} />
-										<FilterPanelColumn filterName='inPlay' filterTitle='In-Play' ctrlType='select'
+										<FilterPanelColumn filterName='inPlay' filterTitle='In-Play' ctrlType='multi-select'
 											dataSource={NoticeboardService.inplaysList} />
 										<FilterPanelColumn filterName='continent' filterTitle='Continent'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.continentsList} />
 									</FilterPanelRow>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName='country' filterTitle='Country' ctrlType='select'
+										<FilterPanelColumn filterName='country' filterTitle='Country' ctrlType='multi-select'
 											dataSource={NoticeboardService.countriesList} />
 										<FilterPanelColumn filterName='messageCategory' filterTitle='Category'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.categoriesList} />
 										<FilterPanelColumn filterName='alertStatus' filterTitle='Alert Status'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.statusesList} />
 										<FilterPanelColumn filterName='recipient' filterTitle='Recipient' />
 									</FilterPanelRow>
