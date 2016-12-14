@@ -18,14 +18,6 @@
 		min-height: auto;
 		overflow: hidden;
 		border: none;
-
-		.react-bs-table-container {
-			height: 100%;
-
-			.react-bs-table {
-				margin: 0;
-			}
-		}
 	}
 
 	&.mid-overlay {
@@ -55,17 +47,32 @@
 		}
 	}
 
-	.content.user-delegation-table {
+	.user-delegation-table {
+		position: relative;
 		overflow: inherit;
 		height: auto;
 
-		.react-bs-container-body {
-			overflow: inherit;
-		}
-	}
+		.react-bs-table-container {
+			height: 100%;
 
-	.user-delegation-table {
-		position: relative;
+			.react-bs-table {
+				margin: 0;
+
+				.table {
+					> tbody {
+						> tr {
+							> td {
+								overflow: inherit;
+
+								&.react-bs-table-no-data {
+									height: 200px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 
 		tbody tr td {
 			position: relative;

@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 function itemFilter (basicUsers, accountProfiles, userID) {
 	let accounts = accountProfiles.filter((item) => {
 		return item.userID === userID
@@ -50,7 +52,28 @@ function itemUpdate (accountProfiles, userID, newObj) {
 	}
 }
 
+function deleteDelegation (accountProfiles, userID, body) {
+	const accounts = accountProfiles.filter((item) => {
+		return item.userID === userID
+	})
+
+	if (accounts.length === 0) {
+		return false
+	} else {
+		const account = accounts[0]
+		const delegationIds = body.delegationIds
+
+		account.delegationList = account.delegationList.filter((item) => {
+			let id = item.delegationID
+			return _.indexOf(delegationIds, id) === -1
+		})
+
+		return true
+	}
+}
+
 export default {
 	itemFilter,
-	itemUpdate
+	itemUpdate,
+	deleteDelegation
 }

@@ -907,6 +907,7 @@ class TableComponent extends Component {
 		const header = this.refs.header.refs.header
 		const headerContainer = this.refs.header.refs.container
 		const tbody = this.refs.body.refs.tbody
+		const theader = this.refs.body.refs.header
 		const firstRow = tbody.childNodes[0]
 		const isScroll = headerContainer.offsetWidth !== tbody.parentNode.offsetWidth
 		const scrollBarWidth = isScroll ? Util.getScrollBarWidth() : 0
@@ -915,24 +916,30 @@ class TableComponent extends Component {
 			const cells = firstRow.childNodes
 			const realWidth = this._getRealWidth()
 			for (let i = 0; i < cells.length; i++) {
+				let width = 0
 				const cell = cells[i]
-				const computedStyle = getComputedStyle(cell)
-				const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 74 // 70 for margin, 4 for borders
-
-				let width = parseFloat(computedStyle.width.replace('px', ''))
-				if (this.isIE) {
-					const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''))
-					const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''))
-					const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''))
-					const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''))
-					width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth
-				}
 				const lastPadding = (cells.length - 1 === i ? scrollBarWidth : 0)
-				if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
-					const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
-					width = bestWith > 480 ? 480 : bestWith
+
+				if (theader.childNodes[i].style.width !== '') {
+					width = parseFloat(theader.childNodes[i].style.width.replace('px', ''))
 				} else {
-					width = realWidth.columns[i]
+					const computedStyle = getComputedStyle(cell)
+					const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 74 // 70 for margin, 4 for borders
+					width = parseFloat(computedStyle.width.replace('px', ''))
+					if (this.isIE) {
+						const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''))
+						const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''))
+						const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''))
+						const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''))
+						width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth
+					}
+
+					if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
+						const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
+						width = bestWith > 480 ? 480 : bestWith
+					} else {
+						width = realWidth.columns[i]
+					}
 				}
 
 				cell.style.width = width + lastPadding + 'px'
