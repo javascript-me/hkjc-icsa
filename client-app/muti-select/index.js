@@ -44,7 +44,7 @@ class MutiSelect extends Component {
 		let currentProps = this.props
 		let selectedOptions
 
-		if(_.isEqual(currentProps, nextProps)) {
+		if (_.isEqual(currentProps, nextProps)) {
 			return false
 		}
 
@@ -60,7 +60,7 @@ class MutiSelect extends Component {
 		let selectedOptionIndex = _.fill(Array(this.props.options.length), false)
 
 		if (selectedOptionsInput && selectedOptionsInput.length) {
-			selectedOptionsInput.forEach(function (selectedOption) {
+			selectedOptionsInput.forEach((selectedOption) => {
 				me.props.options.forEach((dataSourceOption, index) => {
 					if (dataSourceOption.value === selectedOption.value) {
 						selectedOptionIndex[index] = true

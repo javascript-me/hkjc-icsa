@@ -80,14 +80,14 @@ export default React.createClass({
 			},
 			noticesList: [],
 			categoriesList: [],
-			competitionsList:[],
-			continentsList:[],
-			countriesList:[],
-			inplaysList:[],
-			matchesList:[],
-			prioritiesList:[],
-			sportsList:[],
-			statusesList:[],
+			competitionsList: [],
+			continentsList: [],
+			countriesList: [],
+			inplaysList: [],
+			matchesList: [],
+			prioritiesList: [],
+			sportsList: [],
+			statusesList: [],
 			detail: {
 				id: '',
 				message_detail: '',
@@ -339,7 +339,7 @@ export default React.createClass({
 		return <span>{cell}</span>
 	},
 
-	onRowClick(notice) {
+	onRowClick (notice) {
 		this.setState(
 			{detail: {
 				id: notice.id,
