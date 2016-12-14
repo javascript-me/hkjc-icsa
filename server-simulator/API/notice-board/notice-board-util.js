@@ -86,7 +86,7 @@ function doSorting (notices, fieldName, order) {
 	return notices
 }
 
-function doFilter (notices, keyWord, priority, sportsType, competition, match, inPlay, continent, country, messageCategory, alertStatus, dateTimeFrom, dateTimeTo) {
+function doFilter (notices, keyWord, priority, sportsType, competition, match, inPlay, continent, country, messageCategory, alertStatus, dateTimeFrom, dateTimeTo, recipientValue) {
 	keyWord = keyWord || ''
 	priority = priority || 'All'
 	sportsType = sportsType || 'All'
@@ -99,17 +99,26 @@ function doFilter (notices, keyWord, priority, sportsType, competition, match, i
 	country = country || 'All'
 	messageCategory = messageCategory || 'All'
 	alertStatus = alertStatus || 'All'
+	recipientValue = recipientValue || ''
 
 	let result = notices
+
+	result = recipientValue ? notices.filter((al) => {
+		const Recipient = al.recipient ? al.recipient.toLowerCase() : ''
+		return Recipient === recipientValue.toLowerCase()
+	}) : result
 
 	result = keyWord ? notices.filter((al) => {
 		const priority = al.priority ? al.priority.toLowerCase() : ''
 		const sportsType = al.sports_type ? al.sports_type.toLowerCase() : ''
 		const messageCategory = al.message_category ? al.message_category.toLowerCase() : ''
-
+		const alertName = al.alert_name ? al.alert_name.toLowerCase() : ''
+		const Recipient = al.recipient ? al.recipient.toLowerCase() : ''
 		return priority === keyWord.toLowerCase() ||
 			sportsType === keyWord.toLowerCase() ||
-			messageCategory === keyWord.toLowerCase()
+			messageCategory === keyWord.toLowerCase() ||
+			alertName === keyWord.toLowerCase() ||
+			Recipient === keyWord.toLowerCase()
 	}) : result
 
 	if (priority !== 'All') {
