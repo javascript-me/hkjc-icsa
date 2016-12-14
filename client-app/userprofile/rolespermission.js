@@ -31,7 +31,7 @@ TableRow.propTypes = {
 export { TableHeader, TableRow }
 
 const header = [
-	{label: 'Functions', field: 'functionName'},
+	{label: 'User Permission', field: 'functionName'},
 	{label: 'Create', field: 'create'},
 	{label: 'Read', field: 'read'},
 	{label: 'Update', field: 'update'},

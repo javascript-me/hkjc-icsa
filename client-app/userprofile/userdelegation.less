@@ -14,7 +14,7 @@
 
 	.content {
 		padding: 0;
-		height: 231px;
+		height: 400px;
 		min-height: auto;
 		overflow: hidden;
 		border: none;
@@ -41,6 +41,8 @@
 
 			.popup-actions a {
 				line-height: 26px;
+				width: 100px;
+				height: 40px;
 			}
 		}
 	}
@@ -76,6 +78,10 @@
 			position: relative;
 			overflow: visible;
 			vertical-align: middle;
+
+			&.errCell {
+				box-shadow: 0 0 5px 3px rgba(255, 128, 128, 0.7);
+			}
 		}
 
 		.calendarTime-input,
