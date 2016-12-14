@@ -48,7 +48,7 @@ export { TableHeader, TableRow }
 const header = [
 	{label: 'User Name', field: 'displayName'},
 	{label: 'User ID', field: 'userID'},
-	{label: 'Position/Title', field: 'position'}
+	{label: 'Position / Title', field: 'position'}
 ]
 
 export default React.createClass({
