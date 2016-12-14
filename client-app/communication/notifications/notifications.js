@@ -6,6 +6,7 @@ import NoticeBox from '../../notice-box/notice-box'
 import TabBar from '../../tab-bar/tab-bar'
 import NotificationService from './notifications-service'
 import NoticeDetail from '../../notice-detail/notice-detail'
+import PubSub from '../../pubsub'
 
 const getAllNoticesPromise = async (username) => {
 	let notices = null
@@ -217,12 +218,14 @@ export default React.createClass({
 					unreadNotices: unreadNotices
 				}
 			})
+
+			PubSub.publish(PubSub['REFRESH_NOTICES'])
 		})
 	},
 
 	render () {
 		return (
-			<div className="noticeboard-popup-spestyle">
+			<div className='noticeboard-popup-spestyle'>
 				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
 					<NotificationsPopup onChange={this.onChangeSetting} />
 				</Popup>
@@ -244,8 +247,8 @@ export default React.createClass({
 				<div className={this.getClassName()}>
 					<div className='header-container'>
 						<div className='pull-right'>
-							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>
-							<span className='noticeboard-settings-container'><i className=''><img src='icon/Setting.svg' onClick={this.openPopup} /></i></span>
+							<span className='noticeboard-list-container'><a href={"/#/page/noticeboard"}><img src='icon/list.svg' /></a></span>
+							<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
 						</div>
 						<div className='container-title'>
 							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>

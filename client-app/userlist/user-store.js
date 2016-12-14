@@ -26,23 +26,18 @@ const UserStore = assign({}, EventEmitter.prototype, {
 		return $.post('api/userprofile/list', requestData)
 	},
 
-	async searchAuditlogs (selectedPageNumber, sortingObject, criteriaOption) {
-		let requestData = this.buildRequest(selectedPageNumber, sortingObject, criteriaOption)
+	async searchUsers (criteriaOption) {
+		let requestData = this.buildRequest(criteriaOption)
 
 		try {
 			let result = await this.sendRequest(requestData)
 
-			this.pageData = result.pageData
-			this.userProfiles = result.userProfiles
+			this.userProfiles = result
 			this.emitChange()
 		} catch (failure) {}
 	},
 
-	buildRequest (selectedPageNumber, sortingObject, criteriaOption) {
-		if (sortingObject) {
-			this._sortingObject = sortingObject
-		}
-
+	buildRequest (criteriaOption) {
 		if (criteriaOption) {
 			this._criteriaOption = criteriaOption
 		}
@@ -50,9 +45,6 @@ const UserStore = assign({}, EventEmitter.prototype, {
 		let profile = LoginService.getProfile() || {}
 		let requestData = {
 			username: profile.username,
-			selectedPageNumber: selectedPageNumber,
-			sortingObjectFieldName: this._sortingObject.fieldName,
-			sortingObjectOrder: this._sortingObject.order,
 			keyword: this._criteriaOption ? this._criteriaOption.keyword : ''
 		}
 

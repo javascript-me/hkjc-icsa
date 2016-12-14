@@ -28,7 +28,6 @@ export default React.createClass({
 	},
 	getDefaultProps: function () {
 		return {
-			filterValue: '',
 			isRequired: false,
 			ctrlType: 'textbox',
 			pairingVerify: [],
@@ -37,12 +36,11 @@ export default React.createClass({
 			registerColumnHandles: emptyFn
 		}
 	},
-	getInitialState () {
+	getInitialState: function () {
 		return {
 			isValid: true,
 			showWarning: false,
-			filterValue: this.props.filterValue,
-			submittedValue: ''
+			filterValue: this.getDefaultStateFilterValue()
 		}
 	},
 	componentDidMount: function () {
@@ -53,8 +51,15 @@ export default React.createClass({
 	componentWillUnmount: function () {
 
 	},
+	getDefaultStateFilterValue: function () {
+		if (this.props.ctrlType === 'multi-select') {
+			return this.props.filterValue || []
+		} else {
+			return this.props.filterValue || ''
+		}
+	},
 	generateResetHandle: function () {
-		let defaultValue = this.props.filterValue
+		let defaultValue = this.getDefaultStateFilterValue()
 
 		return () => {
 			this.setState({
@@ -102,13 +107,11 @@ export default React.createClass({
 		this.handleChange(this.props.filterName, e.target.value)
 	},
 	handleMultiSelectChange: function (value) {
-		let joinedValue = value.join()
-
 		this.setState({
-			filterValue: joinedValue
+			filterValue: value
 		})
 
-		this.handleChange(this.props.filterName, joinedValue)
+		this.handleChange(this.props.filterName, value)
 	},
 	handleChange: function (name, value) {
 		let isValid = this.verifyFilterValidation(value)
@@ -196,22 +199,25 @@ export default React.createClass({
 			width: '200px',
 			height: '30px'
 		}
-		let options = this.props.dataSource
+		let options = []
 
-		// polyfill
-		options.forEach((elem) => {
-			elem.label = elem.value
-			elem.value = elem.id
+		this.props.dataSource.forEach((elem) => {
+			options.push({
+				label: elem.value,
+				value: elem.id
+			})
 		})
 
 		return <MultiSelect
+			ref='ctrl'
 			options={options}
 			style={style}
+			selectedOptions={this.state.filterValue}
 			onChange={this.handleMultiSelectChange} />
 	},
 	render: function () {
 		return <div className='form-group'>
-			<label>{this.props.filterTitle} {this.props.isRequired ? <span>*</span> : ''}</label>
+			<label className='column-title'>{this.props.filterTitle} {this.props.isRequired ? <span className='required'>*</span> : ''}</label>
 			{this.getCtrl()}
 		</div>
 	}

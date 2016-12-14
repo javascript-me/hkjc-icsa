@@ -2,7 +2,6 @@ import express from 'express'
 import UserProfileUtil from './userprofile-util'
 import _ from 'lodash'
 import UserProfileListUtil from './userprofilelist-util'
-import PagingService from '../auditlog/paging-service'
 
 const router = express.Router()
 
@@ -40,23 +39,11 @@ router.post('/outsidedata', (req, res) => {
  *
  */
 router.post('/list', (req, res) => {
-	let result = {}
-
 	let allUser = accountProfiles.map((item, index) => {
 		let user = _.find(basicUsers, (baseItem, idx) => (item.userID === baseItem.userID))
 		let newItem = Object.assign({}, user, item)
 		return newItem
 	})
-
-	// var filteredResult = UserProfileListUtil.doFilter(
-	// 	allUser,
-	// 	req.body.keyWord,
-	// 	req.body.position,
-	// 	req.body.userRole,
-	// 	req.body.status,
-	// 	req.body.dateTimeFrom,
-	// 	req.body.dateTimeTo
-	// )
 
 	var filteredResult = UserProfileListUtil.doFilter(
 		allUser,
@@ -68,22 +55,7 @@ router.post('/list', (req, res) => {
 		req.body.dateTimeTo
 	)
 
-	var filteredAuditlogs = filteredResult.slice(0)
-
-	var sortedAuditlogs = UserProfileListUtil.doSorting(filteredAuditlogs, req.body.sortingObjectFieldName, req.body.sortingObjectOrder)
-
-	result.userProfiles = UserProfileListUtil.getAuditlogsFragmentByPageNumber(sortedAuditlogs, Number(req.body.selectedPageNumber))
-
-	var pagingService = new PagingService(UserProfileListUtil.getTotalPages(sortedAuditlogs.length))
-	result.pageData = pagingService.getDataByPageNumber(Number(req.body.selectedPageNumber))
-
-	// result.userProfiles = allUser
-	// result.pageData = {
-	// 	"pages": [],
-	// 	"totalPages": 1
-	// }
-
-	res.send(result)
+	res.send(filteredResult)
 })
 
 router.post('/add', (req, res) => {
@@ -208,6 +180,26 @@ router.post('/updateDelegation', (req, res) => {
 	}
 })
 
+router.get('/getDelegation', (req, res) => {
+	let result = {}
+	let departmentData = {}
+	const userID = req.query.userID
+	let departmentId = _.find(accountProfiles, (baseItem, idx) => (userID === baseItem.userID)).departmentId
+	departmentData = _.filter(accountProfiles, (baseItem, idx) => (departmentId === baseItem.departmentId))
+
+	result = _.filter(basicUsers, (baseItem, index) => {
+		let isMyDepUser = false
+		_.each(departmentData, (item, index) => {
+			if (item.userID === baseItem.userID && baseItem.userID !== userID) {
+				isMyDepUser = true
+			}
+		})
+		return isMyDepUser
+	})
+
+	res.send(result)
+})
+
 /**
  * @apiGroup UserProfile
  * @api {POST} /userprofile/update update user profile by user id
@@ -251,6 +243,49 @@ router.post('/update', (req, res) => {
 	}
 
 	if (!bUpdate) {
+		res.status(404)
+		result = {
+			error: 'The user you have updated is invalid.'
+		}
+	}
+
+	res.send(result)
+})
+
+/**
+ * @apiGroup UserProfile
+ * @api {POST} /userprofile/deleteDelegation delete user delegation
+ * @apiDescription delete user delegation
+ * @apiParam {String} userID user id
+ * @apiParam {String[]} delegationIds user delegation ids
+ * @apiParamExample {json} Request-Example:
+ * 		{
+ * 			"userID": "JC10001",
+ * 			"delegationIds": ["0001", "0002"]
+ * 		}
+ *
+ * @apiSuccess (Success) {String} msg success message
+ * @apiSuccessExample {json} Success-Response:
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"msg": "You have success delete the delegation!"
+ *		}
+ *
+ * @apiError (Error) {String} error  UserAccountNotFound
+ * @apiErrorExample {json} Error-Response:
+ *		HTTP/1.1 404 Not Found
+ *		{
+ *			"error": "The user you have updated is invalid."
+ *		}
+ */
+router.post('/deleteDelegation', (req, res) => {
+	const userID = req.body.userID
+	const bOk = UserProfileUtil.deleteDelegation(accountProfiles, userID, req.body)
+	let result = {
+		msg: 'You have success delete the delegation!'
+	}
+
+	if (!bOk) {
 		res.status(404)
 		result = {
 			error: 'The user you have updated is invalid.'

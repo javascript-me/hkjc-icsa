@@ -282,7 +282,7 @@ class TableBody extends Component {
 
 		if (this.props.selectRow.clickToSelectAndEditCell && this.props.cellEdit.mode !== Const.CELL_EDIT_DBCLICK) {
 			const selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) !== -1
-			this.handleSelectRow(rowIndex + 1, !selected, e).bind(this)
+			this.handleSelectRow(rowIndex + 1, !selected, e)
 		}
 		this.setState(stateObj)
 	}
