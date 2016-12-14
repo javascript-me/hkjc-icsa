@@ -9,6 +9,7 @@ import Notifications from '../communication/notifications/notifications'
 import NotificationsService from '../communication/notifications/notifications-service'
 
 let loginChangeToken = null
+let refreshNoticesToken = null
 
 const getNoticeCountPromise = async (username) => {
 	let count = 0
@@ -111,25 +112,34 @@ class MenuBar extends Component {
 	componentDidMount () {
 		let self = this
 		let userProfile = LoginService.getProfile()
-		let noticePromise = getNoticeCountPromise(userProfile.username)
+		let userName = userProfile.username
 
-		noticePromise.then((noticeRemindCount) => {
-			self.setState({noticeRemindCount: noticeRemindCount})
-		})
+		this.updateNoticeRemindCount(userName, self);
 
 		this.interval = setInterval(() => {
-			getTipsCountPromise(userProfile.username).then((data) => {
+			getTipsCountPromise(userName).then((data) => {
 				self.setState({tipsNum: data})
 			})
-		}, 9000)
+		}, 900000)
 
 		loginChangeToken = PubSub.subscribe(PubSub.LOGIN_CHANGE, () => {
 			self.setState({menuBarShouldShow: LoginService.hasProfile(), userProfile: userProfile})
+		})
+
+		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
+			this.updateNoticeRemindCount(userName, self)
+		})
+	}
+
+	updateNoticeRemindCount(userName, self) {
+		getNoticeCountPromise(userName).then((noticeRemindCount) => {
+			self.setState({noticeRemindCount: noticeRemindCount})
 		})
 	}
 
 	componentWillUnmount () {
 		PubSub.unsubscribe(loginChangeToken)
+		PubSub.unsubscribe(refreshNoticesToken)
 		this.interval = clearInterval(this.interval)
 	}
 

@@ -1,12 +1,18 @@
 import React from 'react'
 // import classnames from 'classnames'
 import FilterBlock from '../filter-block'
+import FilterPanel from '../filter-panel'
+import FilterPanelRow from '../filter-panel/filter-panel-row'
+import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
-import SearchEnquiryPanel from '../account-list-filter/searchEnquiryPanel'
 // import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
+
+import UserListService from './userlist-service'
+
+const selectdata = UserListService.getSelectDataSources()
 
 let reFlashToken = null
 let searchToken = null
@@ -34,6 +40,9 @@ const getOrginDateTimeTo = function () {
 	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
 }
 
+const defaultDateFrom = getOrginDateTimeFrom()
+const defaultDateTo = getOrginDateTimeTo()
+
 export default React.createClass({
 	displayName: 'UserProfileList',
 
@@ -54,10 +63,10 @@ export default React.createClass({
 			selectedKeyword: '',
 			selectedFilters: [{
 				name: 'dateTimeFrom',
-				value: getOrginDateTimeFrom()
+				value: defaultDateFrom
 			}, {
 				name: 'dateTimeTo',
-				value: getOrginDateTimeTo()
+				value: defaultDateTo
 			}],
 			tableOptions: {
 				defaultSortName: 'displayName',  // default sort column name
@@ -70,9 +79,8 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		let sortingObject = {fieldName: 'userID', order: 'DESCEND'}
 		// Get Table Data
-		UserStore.searchAuditlogs(1, sortingObject, null)
+		UserStore.searchUsers(null)
 		UserStore.addChangeListener(this.onChange)
 		reFlashToken = PubSub.subscribe(PubSub.FliterRefreshEvent, () => {
 			this.setState({filterReflashFlag: false})
@@ -101,14 +109,6 @@ export default React.createClass({
 		this.setState({
 			userprofiles: UserStore.userProfiles, hasData: hasData
 		})
-	},
-
-	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
-		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
-	},
-
-	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
-		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	showMoreFilter () {
@@ -202,7 +202,7 @@ export default React.createClass({
 		})
 
 		// Get Table Data
-		UserStore.searchAuditlogs(1, null, criteriaOption)
+		UserStore.searchUsers(criteriaOption)
 	},
 
 	getSearchCriterias: function () {
@@ -292,8 +292,8 @@ export default React.createClass({
 	},
 
 	onClickRow (rowItem) {
-		if (rowItem.user_id) {
-			location.href = '#/page/userprofile/' + rowItem.user_id
+		if (rowItem.userID) {
+			location.href = '#/page/userprofile/' + rowItem.userID
 		}
 	},
 
@@ -325,7 +325,26 @@ export default React.createClass({
 							{filterBlockes}
 						</div>
 						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
-							<SearchEnquiryPanel setFilterEvent={this.setFilters} />
+							<FilterPanel
+								triggerSearchTopic={this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS}
+								removeOneFilterTopic={this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER}
+								onSubmit={this.setFilters}>
+								<FilterPanelRow>
+									<FilterPanelColumn filterName='position' filterTitle='Position / Title' ctrlType='select' dataSource={selectdata.position} />
+									<FilterPanelColumn filterName='userRole' filterTitle='User Roles' ctrlType='select' dataSource={selectdata.userRole} />
+									<FilterPanelColumn filterName='accountStatus' filterTitle='Account status' ctrlType='select' dataSource={selectdata.accountStatus} />
+								</FilterPanelRow>
+								<FilterPanelRow>
+									<FilterPanelColumn filterName='dateTimeFrom'
+										filterTitle='Date of Activation'
+										filterValue={defaultDateFrom}
+										ctrlType='calendar' />
+									<FilterPanelColumn filterName='dateTimeTo'
+										filterTitle='Date of Inactivation'
+										filterValue={defaultDateTo}
+										ctrlType='calendar' />
+								</FilterPanelRow>
+							</FilterPanel>
 						</div>
 					</div>
 					<div className='content-header-right add-user-btn' onClick={() => { this.setAddStep(1) }} style={{display: this.state.editMode ? 'block' : 'none'}}>
@@ -346,23 +365,19 @@ export default React.createClass({
 						<TableHeaderColumn dataField='deactivationDate' dataSort>Date of Inactivation</TableHeaderColumn>
 					</TableComponent>
 				</div>
-				<div className='content-footer'>
-					<div className='content-footer-left' />
-					<div className='content-footer-right' />
-				</div>
 			</div>
 		</div>
 	}
 })
 
-// <div className='content-footer-left'>
-// 	<button className='btn btn-primary btn-disable'>Delete</button>
-// </div>
-
-// <div className='content-footer-right'>
-// 	{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
-// 		: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
-// 			<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
-// }
-
+// <div className='content-footer'>
+// 	<div className='content-footer-left'>
+// 		<button className='btn btn-primary btn-disable'>Delete</button>
+// 	</div>
+// 	<div className='content-footer-right'>
+// 		{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+// 			: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+// 				<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+// 	}
+// 	</div>
 // </div>

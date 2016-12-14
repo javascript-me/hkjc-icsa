@@ -44,7 +44,7 @@ export default React.createClass({
 		this.setState({accountUpdate: true})
 	},
 	onResetClick () {
-		PopupService.showMessageBox('Are you sure want to reset?', () => {
+		PopupService.showMessageBox('Are you sure you want to discard your inputted information?', () => {
 			this.refs.accountCmp.resetData()
 		})
 	},
@@ -53,7 +53,7 @@ export default React.createClass({
 			// console.log(this.refs.accountCmp.getData())
 			// this.setState({accountUpdate: false})
 
-			PopupService.showMessageBox('Are you sure want to update?', () => {
+			PopupService.showMessageBox('Are you sure you want to proceed the operation?', () => {
 				const data = this.refs.accountCmp.getData()
 				UserProfileService.updateUserProfile({
 					'userID': data.userID,
@@ -71,7 +71,7 @@ export default React.createClass({
 		}
 	},
 	onCancelClick () {
-		PopupService.showMessageBox('Are you sure want to give up your input.', () => {
+		PopupService.showMessageBox('Are you sure you want to cancel the current operation?', () => {
 			this.setState({accountUpdate: false})
 		})
 	},
