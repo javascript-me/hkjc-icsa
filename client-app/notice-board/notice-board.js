@@ -12,7 +12,6 @@ import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import FilterBlock from '../filter-block'
 import NoticeDetail from '../notice-detail/notice-detail'
-import NotificationService from './noticeboard-service'
 import LoginService from '../login/login-service'
 
 const getOrginDateTimeFrom = function () {
@@ -397,14 +396,14 @@ export default React.createClass({
 		})
 	},
 	statusFormatter (cell, row) {
-		if (cell === 'Acknowledged') return <img src="notice-board/Tick.svg" />
-		return <img src="notice-board/Mail.svg" />
+		if (cell === 'Acknowledged') return <img src='notice-board/Tick.svg' />
+		return <img src='notice-board/Mail.svg' />
 	},
 	priorityFormatter (cell, row) {
-		if (cell === 'Critical') return <img src="notice-board/Critical.svg" title="Critical" />
-		if (cell === 'High') return <img src="notice-board/High.svg" title="High" />
-		if (cell === 'Medium') return <img src="notice-board/Medium.svg" title="Medium"/>
-		if (cell === 'Low') return <img src="notice-board/Low.svg" title="Low" />
+		if (cell === 'Critical') return <img src='notice-board/Critical.svg' title='Critical' />
+		if (cell === 'High') return <img src='notice-board/High.svg' title='High' />
+		if (cell === 'Medium') return <img src='notice-board/Medium.svg' title='Medium' />
+		if (cell === 'Low') return <img src='notice-board/Low.svg' title='Low' />
 	},
 	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
