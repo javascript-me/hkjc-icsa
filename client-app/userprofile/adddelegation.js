@@ -112,6 +112,7 @@ export default React.createClass({
 		}
 		let showItems = this.doSort(index, this.state.showItems)
 		this.setState({ showItems: this.sortItemsByCheck(showItems) })
+		this.setState({ showTempItems: this.sortItemsByCheck(showItems) })
 	},
 	filterItem (keyword, fields, items) {
 		let showItems = _.filter(items, (item, idx) => {
