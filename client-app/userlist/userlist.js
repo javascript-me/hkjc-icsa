@@ -70,9 +70,8 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		let sortingObject = {fieldName: 'userID', order: 'DESCEND'}
 		// Get Table Data
-		UserStore.searchAuditlogs(1, sortingObject, null)
+		UserStore.searchUsers(null)
 		UserStore.addChangeListener(this.onChange)
 		reFlashToken = PubSub.subscribe(PubSub.FliterRefreshEvent, () => {
 			this.setState({filterReflashFlag: false})
@@ -101,14 +100,6 @@ export default React.createClass({
 		this.setState({
 			userprofiles: UserStore.userProfiles, hasData: hasData
 		})
-	},
-
-	handleChangePage (selectedPageNumber, sortingObject, criteriaOption) {
-		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
-	},
-
-	handleClickSorting  (selectedPageNumber, sortingObject, criteriaOption) {
-		UserStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	showMoreFilter () {
@@ -202,7 +193,7 @@ export default React.createClass({
 		})
 
 		// Get Table Data
-		UserStore.searchAuditlogs(1, null, criteriaOption)
+		UserStore.searchUsers(criteriaOption)
 	},
 
 	getSearchCriterias: function () {
@@ -292,8 +283,8 @@ export default React.createClass({
 	},
 
 	onClickRow (rowItem) {
-		if (rowItem.user_id) {
-			location.href = '#/page/userprofile/' + rowItem.user_id
+		if (rowItem.userID) {
+			location.href = '#/page/userprofile/' + rowItem.userID
 		}
 	},
 
@@ -346,23 +337,19 @@ export default React.createClass({
 						<TableHeaderColumn dataField='deactivationDate' dataSort>Date of Inactivation</TableHeaderColumn>
 					</TableComponent>
 				</div>
-				<div className='content-footer'>
-					<div className='content-footer-left' />
-					<div className='content-footer-right' />
-				</div>
 			</div>
 		</div>
 	}
 })
 
-// <div className='content-footer-left'>
-// 	<button className='btn btn-primary btn-disable'>Delete</button>
-// </div>
-
-// <div className='content-footer-right'>
-// 	{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
-// 		: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
-// 			<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
-// }
-
+// <div className='content-footer'>
+// 	<div className='content-footer-left'>
+// 		<button className='btn btn-primary btn-disable'>Delete</button>
+// 	</div>
+// 	<div className='content-footer-right'>
+// 		{!this.state.editMode ? <button className='btn btn-primary' onClick={this.setEditMode}>Edit</button>
+// 			: (<div><button className='btn btn-cancle' onClick={this.setEditMode}>Cancel</button>
+// 				<button className='btn btn-primary' onClick={this.onChange}>Update</button></div>)
+// 	}
+// 	</div>
 // </div>

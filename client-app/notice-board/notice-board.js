@@ -450,8 +450,7 @@ export default React.createClass({
 										<FilterPanelColumn filterName='alertStatus' filterTitle='Alert Status'
 											ctrlType='select'
 											dataSource={NoticeboardService.statusesList} />
-										<FilterPanelColumn filterName="recipient" filterTitle="Recipient">
-										</FilterPanelColumn>
+										<FilterPanelColumn filterName='recipient' filterTitle='Recipient' />
 									</FilterPanelRow>
 
 								</FilterPanel>

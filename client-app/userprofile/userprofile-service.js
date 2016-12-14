@@ -4,8 +4,16 @@ const getUserProfile = (userId) => {
 	return $.get(config.url('api/userprofile/item?userID=' + userId))
 }
 
+const getDelegations = (userId) => {
+	return $.get(config.url('api/userprofile/getDelegation?userID=' + userId))
+}
+
 const postUserProfile = (data) => {
 	return $.post(config.url('api/userprofile/update'), data)
+}
+
+const postDeleteDelegation = (data) => {
+	return $.post(config.url('api/userprofile/deleteDelegation'), data)
 }
 
 const getRoles = () => {
@@ -25,6 +33,15 @@ export default {
 		}
 		return result
 	},
+	async getDelegations (userId) {
+		let result = null
+		try {
+			result = await getDelegations(userId)
+		} catch (failure) {
+			// returns null on failure
+		}
+		return result
+	},
 	async updateUserProfile (data) {
 		let result = null
 		try {
@@ -34,10 +51,11 @@ export default {
 		}
 		return result
 	},
-	async updateUserDelegation (userId, data) {
+
+	async deleteDelegation (data) {
 		let result = null
 		try {
-			result = await postUserProfile(userId, data)
+			result = await postDeleteDelegation(data)
 		} catch (failure) {
 			// returns null on failure
 		}
