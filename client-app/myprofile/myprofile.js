@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import LoginService from '../login/login-service'
 import {PopupService} from '../popup'
 import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
+import {campareTime} from '../userprofile/userdelegation.js'
 
 export default React.createClass({
 	displayName: 'MyProfile',
@@ -27,6 +28,7 @@ export default React.createClass({
 		this.getUserProfile()
 	},
 	onEditClick () {
+		this.refs.delegationCmp.resetDelegtionData()
 		this.setState({
 			delegationUpdate: true
 		})
@@ -37,6 +39,7 @@ export default React.createClass({
 			return false
 		}
 		let errBox = {}
+		delegationCmp.checkVaild()
 		result.forEach((item, index) => {
 			if (!item.delegatedRoles || item.delegatedRoles.length === 0) {
 				errBox.roleErr = true
@@ -50,7 +53,7 @@ export default React.createClass({
 				errBox.delegationFromErr = true
 				return false
 			}
-			if (item.delegationFrom <= item.delegationTo) {
+			if (campareTime(item.delegationFrom, item.delegationTo) > 0) {
 				errBox.smallerErr = true
 			}
 		})
@@ -68,7 +71,7 @@ export default React.createClass({
 			return false
 		}
 		case (errBox.smallerErr) : {
-			PopupService.showMessageBox('delegationFrom date must larger then delegationTo date', () => {})
+			PopupService.showMessageBox('delegationTo date must larger then delegationFrom date', () => {})
 			return false
 		}
 		default : break
@@ -123,7 +126,7 @@ export default React.createClass({
 
 						<AccountInformation userAccount={this.state.userAccount} updateMode={false} showDate={false} />
 
-						<UserDelegation ref='delegationCmp' userDelegation={this.state.userDelegation} delegationUpdate={this.state.delegationUpdate} />
+						<UserDelegation ref='delegationCmp' userDelegation={this.state.userDelegation} delegationUpdate={this.state.delegationUpdate} myAccountProfile={this.state.userAccount} />
 
 						<ProfileButtons>
 							{this.state.delegationUpdate && (<button className='btn btn-danger' onClick={() => { this.onDeleteClick(this.refs.delegationCmp) }}>Delete</button>)}
@@ -143,7 +146,7 @@ export default React.createClass({
 		)
 	},
 	async getUserProfile () {
-		const userProfile = await UserProfileService.getUserProfile(this.userID)
+		const userProfile = await UserProfileService.getUserProfile({userID: this.userID})
 		if (userProfile) {
 			this.setState({
 				delegationUpdate: false,

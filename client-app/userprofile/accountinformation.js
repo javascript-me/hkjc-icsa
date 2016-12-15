@@ -7,9 +7,13 @@ import Popup from '../popup'
 import RolesContainer from './rolescontainer'
 import RolesPermission from './rolespermission'
 
-function isValidDateTime (str) {
-	let bRet = Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
-	return bRet
+// function isValidDateTime (str) {
+// 	let bRet = Moment(str, 'DD MMM YYYY HH:mm', true).isValid()
+// 	return bRet
+// }
+
+function isAfter (time1, time2) {
+	return Moment(time1, 'DD MMM YYYY HH:mm', true).isAfter(Moment(time2, 'DD MMM YYYY HH:mm', true))
 }
 
 function formatDateTime (time, inverse) {
@@ -47,7 +51,9 @@ export default React.createClass({
 	},
 	getInitialState () {
 		this._cloneData(this.props.userAccount)
-		return {}
+		return {
+			title: ''
+		}
 	},
 	_cloneData (userAccount) {
 		this.userAccount = _.clone(userAccount)
@@ -70,7 +76,7 @@ export default React.createClass({
 		return this.userAccount
 	},
 	hasDataError (userAccount) {
-		return !userAccount.displayName || !isValidDateTime(this.userAccountEx.activationDate) || !isValidDateTime(this.userAccountEx.deactivationDate)
+		return !userAccount.displayName || !this.isDateValid(userAccount)
 	},
 	verifyData () {
 		let hasDataError = this.hasDataError(this.userAccount)
@@ -91,8 +97,9 @@ export default React.createClass({
 	onEditRoleClick (editRole) {
 		editRole.show()
 	},
-	onRoleShowClick (roleDetail) {
+	onRoleShowClick (roleDetail, title) {
 		roleDetail.show()
+		this.setState({title: title})
 	},
 	onEditRoleUpdate (userAccount, rolesCmp) {
 		const roles = rolesCmp.getUpdateRoles()
@@ -145,10 +152,23 @@ export default React.createClass({
 		this.userAccountEx.deactivationDate = date.format('DD MMM YYYY HH:mm')
 		this.forceUpdate()
 	},
+	isDateValid (userAccount) {
+		// isValidDateTime(this.userAccountEx.activationDate)
+		if (userAccount.status !== 'Active') {
+			return true
+		}
+		if (isAfter(this.userAccountEx.activationDate, this.userAccountEx.deactivationDate)) {
+			return false
+		}
+		return true
+	},
 	renderTipsText () {
 		let hasDataError = this.hasDataError(this.userAccount)
+		let bDateOk = this.isDateValid(this.userAccount)
 		if (hasDataError) {
-			return <div className='color-red'>Invalid fields are highlighted in red</div>
+			return <div className='color-red'>
+				{bDateOk ? 'Invalid fields are highlighted in red' : 'Activation must be earlier than Inactivation.'}
+			</div>
 		} else {
 			return ''
 		}
@@ -160,9 +180,9 @@ export default React.createClass({
 			return (
 				<div className='role-wrapper'>
 					{userAccount.assignedUserRoles && userAccount.assignedUserRoles.map((role, index) => (
-						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})} onClick={() => { this.onRoleShowClick(this.refs.rolesDetail) }}>{role.assignedUserRole}</div>
+						<div key={index} className={classNames('role', {'highlight': index >= this.highlightIndex})} onClick={() => { this.onRoleShowClick(this.refs.rolesDetail, role.assignedUserRole) }}>{role.assignedUserRole}</div>
 					))}
-					<Popup hideOnOverlayClicked className='permission' ref='rolesDetail' title='Admin Roles & Permission' showCancel={false} confirmBtn='Close'>
+					<Popup hideOnOverlayClicked className='permission' ref='rolesDetail' title={this.state.title} showCancel={false} confirmBtn='Close'>
 						<RolesPermission ref='rolesShow' inputSelected={userAccount.assignedUserRoles} />
 					</Popup>
 				</div>
@@ -219,8 +239,9 @@ export default React.createClass({
 						</div>
 						<div className='col col-xs-6'>
 							<Calendar
+								disabled={userAccount.status !== 'Active'}
 								value={this.userAccountEx.activationDate}
-								warning={!isValidDateTime(this.userAccountEx.activationDate)}
+								warning={!this.isDateValid(userAccount)}
 								onChange={this.onActivationDateChange} />
 						</div>
 					</div>
@@ -234,7 +255,7 @@ export default React.createClass({
 						<div className='col col-xs-6'>
 							<Calendar
 								value={this.userAccountEx.deactivationDate}
-								warning={!isValidDateTime(this.userAccountEx.deactivationDate)}
+								warning={!this.isDateValid(userAccount)}
 								onChange={this.onDeactivationDateChange} />
 						</div>
 					</div>

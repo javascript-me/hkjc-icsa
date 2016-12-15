@@ -48,7 +48,7 @@ export { TableHeader, TableRow }
 const header = [
 	{label: 'User Name', field: 'displayName'},
 	{label: 'User ID', field: 'userID'},
-	{label: 'Position/Title', field: 'position'}
+	{label: 'Position / Title', field: 'position'}
 ]
 
 export default React.createClass({
@@ -112,6 +112,7 @@ export default React.createClass({
 		}
 		let showItems = this.doSort(index, this.state.showItems)
 		this.setState({ showItems: this.sortItemsByCheck(showItems) })
+		this.setState({ showTempItems: this.sortItemsByCheck(showItems) })
 	},
 	filterItem (keyword, fields, items) {
 		let showItems = _.filter(items, (item, idx) => {
