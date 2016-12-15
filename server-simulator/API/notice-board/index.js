@@ -143,12 +143,9 @@ router.post('/update-table-acknowledge-status', (req, res) => {
 	const username = req.body.username
 
 	NoticeBoardUtil.updateAcknowledgeStatusById(jsonAlerts[username], id, command)
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonCriticalInformations[username], id, command)
+	cloneNotices = getRecentlySixMonthNoticesByUserName(jsonAlerts, jsonCriticalInformations, username)
 
-	if (req.body.username === 'allgood') {
-		cloneNotices = jsonAlerts[username]
-	} else {
-		cloneNotices = jsonAlerts[username]
-	}
 	let status = 200
 	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
 		req.body.keyword,
