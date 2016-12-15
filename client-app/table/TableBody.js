@@ -82,11 +82,12 @@ class TableBody extends Component {
 						if (!React.isValidElement(formattedValue)) {
 							columnChild = <div dangerouslySetInnerHTML={{ __html: formattedValue }} />
 						} else {
-							columnChild = formattedValue
-							columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null
+							columnChild = formattedValue || this.props.nullValue
+							columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : this.props.nullValue
 						}
 					} else {
-						columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null
+						columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : this.props.nullValue
+						columnChild = columnChild || this.props.nullValue
 					}
 					return (
 						<TableColumn key={i}
@@ -332,6 +333,11 @@ TableBody.propTypes = {
 	selectRow: PropTypes.object,
 	trClassName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]), // replace the propTypes.string
 	onRowMouseOut: PropTypes.func,
-	onRowMouseOver: PropTypes.func
+	onRowMouseOver: PropTypes.func,
+	nullValue: PropTypes.string
 }
+TableBody.defaultProps = {
+	nullValue: 'N/A'
+}
+
 export default TableBody

@@ -21,7 +21,7 @@ class TableComponent extends Component {
 		if (Util.canUseDOM()) {
 			this.isIE = document.documentMode
 		}
-		this.store = new TableDataStore(this.props.data.slice())
+		this.store = new TableDataStore(this.props.data ? this.props.data.slice() : [])
 
 		this.initTable(this.props)
 
@@ -875,9 +875,13 @@ class TableComponent extends Component {
 
 		const canvas = this._getCellWidth.canvas || (this._getCellWidth.canvas = document.createElement('canvas'))
 		const context = canvas.getContext('2d')
-		context.font = font
-		var metrics = context.measureText(cell.textContent)
-		return metrics.width
+		if (context) {
+			context.font = font
+			var metrics = context.measureText(cell.textContent)
+			return metrics.width
+		}
+
+		return computedStyle.scrollWith
 	}
 
 	_getRealWidth () {
@@ -924,7 +928,7 @@ class TableComponent extends Component {
 					width = parseFloat(theader.childNodes[i].style.width.replace('px', ''))
 				} else {
 					const computedStyle = getComputedStyle(cell)
-					const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 74 // 70 for margin, 4 for borders
+					const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 64 // 70 for margin, 4 for borders
 					width = parseFloat(computedStyle.width.replace('px', ''))
 					if (this.isIE) {
 						const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''))
@@ -950,9 +954,14 @@ class TableComponent extends Component {
 			}
 		} else {
 			React.Children.forEach(this.props.children, (child, i) => {
+				const cell = header.childNodes[i]
 				if (child.props.width) {
-					header.childNodes[i].style.width = `${child.props.width}px`
-					header.childNodes[i].style.minWidth = `${child.props.width}px`
+					cell.style.width = `${child.props.width}px`
+					cell.style.minWidth = cell.style.width
+				} else {
+					const thWidth = Math.ceil(this._getCellWidth(cell)) + 64
+					cell.style.width = `${thWidth}px`
+					cell.style.minWidth = `${thWidth}px`
 				}
 			})
 		}
