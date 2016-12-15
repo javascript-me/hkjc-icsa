@@ -1,9 +1,9 @@
 {
   "continents" : [
-    {"id": 1, "value": "Europe"},
-    {"id": 2, "value": "Asia"},
-    {"id": 3, "value": "South America"},
-    {"id": 4, "value": "North America"},
-    {"id": 5, "value": "Africa"}
+    {"id": "Europe", "value": "Europe"},
+    {"id": "Asia", "value": "Asia"},
+    {"id": "South America", "value": "South America"},
+    {"id": "North America", "value": "North America"},
+    {"id": "Africa", "value": "Africa"}
   ]
 }

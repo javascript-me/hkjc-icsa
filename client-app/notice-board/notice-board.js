@@ -12,6 +12,7 @@ import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import FilterBlock from '../filter-block'
 import NoticeDetail from '../notice-detail/notice-detail'
+import LoginService from '../login/login-service'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -47,6 +48,7 @@ const doExport = async(format, filters) => {
 	}
 }
 let token = null
+let refreshNoticesToken = null
 export default React.createClass({
 	propTypes: {
 		someThing: React.PropTypes.bool
@@ -60,6 +62,7 @@ export default React.createClass({
 			selectedKeyword: '',
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
+			hasData: false,
 			tokens: {
 				NOTICEBOARD_SEARCH_BY_KEY_PRESS: 'NOTICEBOARD_SEARCH_BY_KEY_PRESS',
 				NOTICEBOARD_SEARCH: 'NOTICEBOARD_SEARCH',
@@ -116,6 +119,9 @@ export default React.createClass({
 		token = PubSub.subscribe(PubSub[this.state.tokens.NOTICEBOARD_SEARCH], () => {
 			this.searchNoticeboard()
 		})
+		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
+			this.searchNoticeboard()
+		})
 		document.addEventListener('click', this.pageClick, false)
 	},
 	searchNoticeboard: async function () {
@@ -128,10 +134,52 @@ export default React.createClass({
 		})
 	},
 	getSearchCriterias: function () {
+		let self = this
+		let filters = this.state.selectedFilters
+		let filter
+		let filterIndex
+		let returnFilters = []
+		let returnFilterValue
+		for (filterIndex in filters) {
+			filter = filters[filterIndex]
+			if (filter.name === 'priority') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'sportsType') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'competition') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'match') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'inPlay') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'continent') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'country') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'messageCategory') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else if (filter.name === 'alertStatus') {
+				returnFilterValue = self.combineAttributesFromObjectArray(filter.value, 'value')
+			} else {
+				returnFilterValue = filter.value
+			}
+			returnFilters.push({
+				name: filter.name,
+				value: returnFilterValue
+			})
+		}
+
 		return {
 			keyword: this.state.selectedKeyword,
-			filters: this.state.selectedFilters
+			filters: returnFilters
 		}
+	},
+	combineAttributesFromObjectArray: function (arr, attrName, sperate) {
+		sperate = sperate || ','
+
+		return arr.map((elem) => {
+			return elem[attrName] || ''
+		}).join(sperate)
 	},
 	pageClick: function (event) {
 		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
@@ -144,13 +192,17 @@ export default React.createClass({
 		NoticeboardService.removeChangeListener(this.onChange.bind(this))
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(token)
+		PubSub.unsubscribe(refreshNoticesToken)
 	},
 	onChange () {
-		this.setState({noticesList: NoticeboardService.noticesList})
+		const hasData = NoticeboardService.noticesList.length > 0
+		this.setState({
+			noticesList: NoticeboardService.noticesList, hasData: hasData
+		})
 	},
 	openPopup () {
 		this.setState({exportFormat: 'pdf'})// reset the format value
-		this.refs.exportPopup.show()
+		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 	export () {
 		const filters = {
@@ -189,38 +241,76 @@ export default React.createClass({
 	},
 	generateFilterBlockesJsx: function (filters) {
 		const filterDisplayFormatting = (filter) => {
-			return filter.name === 'keyword'
-				? `${filter.name}: ${filter.value}`
-				: filter.value
-		}
+			let filterDisplayText
 
-		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
+			switch (filter.name) {
+			case 'keyword':
+				filterDisplayText = `${filter.name}: ${filter.value}`
+				break
+			case 'dateTimeFrom':
+				filterDisplayText = `From: ${filter.value}`
+				break
+			case 'dateTimeTo':
+				filterDisplayText = `To: ${filter.value}`
+				break
+			case 'priority':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'sportsType':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'competition':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'match':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'inPlay':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'continent':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'country':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'messageCategory':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			case 'alertStatus':
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
+				break
+			default:
+				filterDisplayText = filter.value
+				break
+			}
+			return filterDisplayText
+		}
 		let keywordFilter = {
 			name: 'keyword',
 			value: this.state.selectedKeyword
 		}
+		let defaultDateTimeFrom = getOrginDateTimeFrom()
+		let defaultDateTimeTo = getOrginDateTimeTo()
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
 		})[0] || {}
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
 		})[0] || {}
-		let dateRangeFilter = {
-			name: 'dateTimeFrom,dateTimeTo',
-			value: `${dateFromFilter.value} - ${dateToFilter.value}`
-		}
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
+			} else if (f.value.length > 0) { // To avoid blank <FilterBlock>
+				return true
 			}
-			return true
 		})
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
-			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
+			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
+			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
-
 		let filterBlockes = filtersArray.map((f, index) => {
 			return <FilterBlock
 				key={index}
@@ -243,7 +333,8 @@ export default React.createClass({
 		case 'keyword':
 			this.removeKeywordFilter(filter, callback)
 			break
-		case 'dateTimeFrom,dateTimeTo':
+		case 'dateTimeFrom':
+		case 'dateTimeTo':
 			this.removeDateRangeFilter(filter, callback)
 			break
 		default:
@@ -259,16 +350,17 @@ export default React.createClass({
 			selectedFilters: selectedFilters
 		}, callback)
 	},
-	removeDateRangeFilter: function (dateRange, callback) {
+	removeDateRangeFilter: function (dateTime, callback) {
 		let selectedFilters = this.state.selectedFilters
-		let originDateRange = this.state.originDateRange
+
 		selectedFilters.forEach((filter) => {
-			if (filter.name === 'dateTimeFrom') {
-				filter.value = originDateRange.dateTimeFrom
-			} else if (filter.name === 'dateTimeTo') {
-				filter.value = originDateRange.dateTimeTo
+			if (filter.name === 'dateTimeFrom' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeFrom()
+			} else if (filter.name === 'dateTimeTo' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeTo()
 			}
 		})
+
 		this.setState({
 			selectedFilters: selectedFilters
 		}, callback)
@@ -321,14 +413,14 @@ export default React.createClass({
 		})
 	},
 	statusFormatter (cell, row) {
-		if (cell === 'Acknowledged') return '<span><img src="notice-board/Tick.svg" /></span>'
-		return '<span><img src="notice-board/Mail.svg" /></span>'
+		if (cell === 'Acknowledged') return <img src='notice-board/Tick.svg' />
+		return <img src='notice-board/Mail.svg' />
 	},
 	priorityFormatter (cell, row) {
-		if (cell === 'Critical') return '<span><img src="notice-board/Critical.svg" title="Critical" /></span>'
-		if (cell === 'High') return '<span><img src="notice-board/High.svg" title="High" /></span>'
-		if (cell === 'Medium') return '<span><img src="notice-board/Medium.svg" title="Medium"/></span>'
-		if (cell === 'Low') return '<span><img src="notice-board/Low.svg" title="Low" /></span>'
+		if (cell === 'Critical') return <img src='notice-board/Critical.svg' title='Critical' />
+		if (cell === 'High') return <img src='notice-board/High.svg' title='High' />
+		if (cell === 'Medium') return <img src='notice-board/Medium.svg' title='Medium' />
+		if (cell === 'Low') return <img src='notice-board/Low.svg' title='Low' />
 	},
 	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
@@ -367,6 +459,19 @@ export default React.createClass({
 		return ''
 	},
 
+	getCommand (alertStatus) {
+		if (alertStatus === 'New') return 'Acknowledge'
+		return 'Unacknowledge'
+	},
+
+	doAcknowledgement (id, alertStatus) {
+		let userProfile = LoginService.getProfile()
+
+		let criteriaOption = this.getSearchCriterias()
+
+		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
+	},
+
 	render () {
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
@@ -379,9 +484,10 @@ export default React.createClass({
 					title={this.state.detail.alert_name}
 					showCancel={false}
 					showCloseIcon
-					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
+					confirmBtn={this.getCommand(this.state.detail.alert_status)}
 					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
-					headerColor={this.getPriorityColor(this.state.detail.priority)}>
+					headerColor={this.getPriorityColor(this.state.detail.priority)}
+					onConfirm={() => { this.doAcknowledgement(this.state.detail.id, this.state.detail.alert_status) }}>
 					<NoticeDetail alert_status={this.state.detail.alert_status}
 						message_category={this.state.detail.message_category}
 						system_distribution_time={this.state.detail.system_distribution_time}
@@ -410,45 +516,42 @@ export default React.createClass({
 									onSubmit={this.setFilters}>
 									<FilterPanelRow>
 										<FilterPanelColumn filterName='priority' filterTitle='Priority'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.prioritiesList} />
 										<FilterPanelColumn filterName='dateTimeFrom'
 											filterTitle='Distribution Time From'
 											filterValue={this.state.originDateRange.dateTimeFrom}
 											ctrlType='calendar'
-											isRequired
 											pairingVerify={[{operation: '<=', partners: ['dateTimeTo']}]} />
 										<FilterPanelColumn filterName='dateTimeTo'
 											filterTitle='Distribution Time To'
 											filterValue={this.state.originDateRange.dateTimeTo}
 											ctrlType='calendar'
-											isRequired
 											pairingVerify={[{operation: '>=', partners: ['dateTimeFrom']}]} />
-
 										<FilterPanelColumn filterName='sportsType' filterTitle='Sports Type'
-											ctrlType='select' dataSource={NoticeboardService.sportsList} />
+											ctrlType='multi-select' dataSource={NoticeboardService.sportsList} />
 									</FilterPanelRow>
 									<FilterPanelRow>
 										<FilterPanelColumn filterName='competition' filterTitle='Competition'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.competitionsList} />
 										<FilterPanelColumn filterName='match' filterTitle='Match (Race for HR)'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.matchesList} />
-										<FilterPanelColumn filterName='inPlay' filterTitle='In-Play' ctrlType='select'
+										<FilterPanelColumn filterName='inPlay' filterTitle='In-Play' ctrlType='multi-select'
 											dataSource={NoticeboardService.inplaysList} />
 										<FilterPanelColumn filterName='continent' filterTitle='Continent'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.continentsList} />
 									</FilterPanelRow>
 									<FilterPanelRow>
-										<FilterPanelColumn filterName='country' filterTitle='Country' ctrlType='select'
+										<FilterPanelColumn filterName='country' filterTitle='Country' ctrlType='multi-select'
 											dataSource={NoticeboardService.countriesList} />
 										<FilterPanelColumn filterName='messageCategory' filterTitle='Category'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.categoriesList} />
 										<FilterPanelColumn filterName='alertStatus' filterTitle='Alert Status'
-											ctrlType='select'
+											ctrlType='multi-select'
 											dataSource={NoticeboardService.statusesList} />
 										<FilterPanelColumn filterName='recipient' filterTitle='Recipient' />
 									</FilterPanelRow>
@@ -469,16 +572,16 @@ export default React.createClass({
 								dataFormat={this.priorityFormatter}>Priority</TableHeaderColumn>
 							<TableHeaderColumn dataField='system_distribution_time' dataSort> Distribution Date & Time</TableHeaderColumn>
 							<TableHeaderColumn dataField='alert_status' dataSort dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
-							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 							<TableHeaderColumn dataField='alert_name' dataSort dataFormat={this.alerNameFormatter}>Name</TableHeaderColumn>
 							<TableHeaderColumn dataField='message_detail' dataSort
 								dataFormat={this.detailFormatter}>Detail</TableHeaderColumn>
 							<TableHeaderColumn dataField='recipient' dataSort>Recipient</TableHeaderColumn>
+							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
 					<div className='vertical-gap'>
 						<div className='pull-right'>
-							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
+							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
 								<ExportPopup onChange={this.onChangeFormat} />
 							</Popup>

@@ -135,6 +135,39 @@ router.post('/update-acknowledge-status', (req, res) => {
 	res.send(result)
 })
 
+router.post('/update-table-acknowledge-status', (req, res) => {
+	let id = req.body.id
+	let command = req.body.command
+
+	let cloneNotices
+	const username = req.body.username
+
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonAlerts[username], id, command)
+
+	if (req.body.username === 'allgood') {
+		cloneNotices = jsonAlerts[username]
+	} else {
+		cloneNotices = jsonAlerts[username]
+	}
+	let status = 200
+	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
+		req.body.keyword,
+		req.body.priority,
+		req.body.sportsType,
+		req.body.competition,
+		req.body.match,
+		req.body.inPlay,
+		req.body.continent,
+		req.body.country,
+		req.body.messageCategory,
+		req.body.alertStatus,
+		req.body.dateTimeFrom,
+		req.body.dateTimeTo
+	)
+	res.status(status)
+	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
+})
+
 /**
  * @api {GET} /notice-board/remind-count/ Get remind count
  * @apiGroup NoticeBoard
@@ -209,13 +242,10 @@ router.get('/export', (req, res) => {
 })
 
 router.post('/filterNoticeBoardTableData', (req, res) => {
-	let cloneNotices
 	const username = req.body.username
-	if (req.body.username === 'allgood') {
-		cloneNotices = jsonAlerts[username]
-	} else {
-		cloneNotices = jsonAlerts[username]
-	}
+	let alerts = jsonAlerts[username]
+	let criticalAlerts = jsonCriticalInformations[username]
+	let cloneNotices = [].concat(alerts, criticalAlerts)
 	let status = 200
 	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
 		req.body.keyword,

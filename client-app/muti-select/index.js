@@ -10,7 +10,7 @@ class MutiSelect extends Component {
 		this.state = {
 			isFocus: false,
 			isAll: false,
-			selectText: this.props.placeHolder || defaultSelectText,
+			selectText: (this.props.selectedOptions && this.props.selectedOptions.length) ? this.getSelectText(this.props.selectedOptions) : (this.props.placeHolder || defaultSelectText),
 			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions)
 		}
 		this.onchange = this.onchange.bind(this)
@@ -26,10 +26,14 @@ class MutiSelect extends Component {
 						<input type='checkbox' checked={this.state.isAll} />
 						All
 					</div>
-					{options && options.map((item, idx) => (<div key={item.label} className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})} onClick={() => { this.handleOptionselect(idx) }}>
-						<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
-						{item.label}
-					</div>))}
+					{options && options.map((item, idx) => (
+						<div key={item.label}
+							className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})}
+							onClick={() => { this.handleOptionselect(idx) }}>
+							<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
+							{item.label}
+						</div>))
+					}
 				</div>
 			</div>
 		)
@@ -42,17 +46,19 @@ class MutiSelect extends Component {
 	}
 	componentWillReceiveProps (nextProps) {
 		let currentProps = this.props
-		let selectedOptions
+		let selectedOptions = nextProps.selectedOptions
+		let selectedOptionsIndex
 
 		if (_.isEqual(currentProps, nextProps)) {
 			return false
 		}
 
-		selectedOptions = nextProps.selectedOptions
+		selectedOptionsIndex = this.getInputSelectedOptionIndex(selectedOptions)
 
 		this.setState({
-			selectedOptionIndex: this.getInputSelectedOptionIndex(selectedOptions),
-			selectText: this.getSelectText(selectedOptions)
+			selectedOptionIndex: selectedOptionsIndex,
+			selectText: this.getSelectText(selectedOptions),
+			isAll: this.isAllSelected(selectedOptionsIndex, nextProps.options)
 		})
 	}
 	getInputSelectedOptionIndex (selectedOptionsInput) {
@@ -95,7 +101,11 @@ class MutiSelect extends Component {
 
 		let selectText = this.getSelectText(changedOptions)
 
-		this.setState({selectedOptionIndex: changedOptions, isAll: false, selectText: selectText}, this.onchange)
+		this.setState({
+			selectedOptionIndex: changedOptions,
+			isAll: this.isAllSelected(changedOptions, this.props.options),
+			selectText: selectText
+		}, this.onchange)
 	}
 	getSelectText (selectedOptions) {
 		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null)).join(' ')
@@ -107,6 +117,11 @@ class MutiSelect extends Component {
 		let changedOptions = _.fill(Array(this.props.options.length), !this.state.isAll)
 		let changedText = this.state.isAll ? this.props.placeHolder || defaultSelectText : 'All'
 		this.setState({selectedOptionIndex: changedOptions, isAll: !this.state.isAll, selectText: changedText}, this.onchange)
+	}
+	isAllSelected (selectedOptionIndex, sourceOptions) {
+		return selectedOptionIndex.filter(item => {
+			return item === true
+		}).length === sourceOptions.length
 	}
 	onchange () {
 		let result = []

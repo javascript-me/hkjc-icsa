@@ -4,9 +4,9 @@ import _ from 'underscore'
 import PubSub from '../pubsub'
 
 const emptyFn = () => {}
-let tokenTriggerSearch
-let tokenRemoveFilter
-let tokenResetFilters
+let tokenTriggerSearch = null
+let tokenRemoveFilter = null
+let tokenResetFilters = null
 
 export default React.createClass({
 	displayName: 'FilterPanel',
@@ -31,7 +31,8 @@ export default React.createClass({
 			filters: {},
 			originFilters: {},
 			filterHandles: {},
-			columnCount: 0
+			columnCount: 0,
+			existRequiredColumn: false
 		}
 	},
 	componentDidMount: function () {
@@ -45,7 +46,7 @@ export default React.createClass({
 	initialFiltersAndLayoutInfo: function () {
 		let maxColumnCount = 0
 		let panelOperateFn = row => {
-			this.iterateChilren(row, this.getDefaultFilter)
+			this.iterateChilren(row, this.getDefaultFilterInfo)
 			maxColumnCount = Math.max(maxColumnCount, row.props.children.length)
 		}
 
@@ -55,51 +56,58 @@ export default React.createClass({
 		})
 	},
 	initialComponentSubscription: function () {
-		tokenTriggerSearch = PubSub.subscribe(PubSub[this.props.triggerSearchTopic], () => {
-			this.handleSubmit()
-		})
-
-		tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, publicFilters) => {
-			let filters = this.state.filters
-			let originFilters = this.state.originFilters
-			let filterHandles = this.state.filterHandles
-			let filterNames = publicFilters.name.split(',')
-			let resetHandle
-
-			filterNames.forEach((filterName) => {
-				if (!filters[filterName]) {
-					return false
-				}
-
-				filters[filterName] = originFilters[filterName]
-				resetHandle = filterHandles[filterName] ? filterHandles[filterName].reset : undefined
-
-				if (typeof resetHandle === 'function') {
-					resetHandle()
-				}
+		if (this.props.triggerSearchTopic) {
+			tokenTriggerSearch = PubSub.subscribe(PubSub[this.props.triggerSearchTopic], () => {
+				this.handleSubmit()
 			})
+		}
 
-			this.setState({
-				filters: filters
+		if (this.props.removeOneFilterTopic) {
+			tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, publicFilters) => {
+				let filters = this.state.filters
+				let originFilters = this.state.originFilters
+				let filterHandles = this.state.filterHandles
+				let filterNames = publicFilters.name.split(',')
+				let resetHandle
+
+				filterNames.forEach((filterName) => {
+					if (!filters[filterName]) {
+						return false
+					}
+
+					filters[filterName] = originFilters[filterName]
+					resetHandle = filterHandles[filterName] ? filterHandles[filterName].reset : undefined
+
+					if (typeof resetHandle === 'function') {
+						resetHandle()
+					}
+				})
+
+				this.setState({
+					filters: filters
+				})
 			})
-		})
+		}
 
-		tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => {
-			this.handleReset()
-		})
+		if (this.props.resetFiltersTopic) {
+			tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => {
+				this.handleReset()
+			})
+		}
 	},
 	clearComponentSubscriptionWhenUnmount: function () {
-		PubSub.unsubscribe(tokenTriggerSearch)
-		PubSub.unsubscribe(tokenRemoveFilter)
-		PubSub.unsubscribe(tokenResetFilters)
+		tokenTriggerSearch && PubSub.unsubscribe(tokenTriggerSearch)
+		tokenRemoveFilter && PubSub.unsubscribe(tokenRemoveFilter)
+		tokenResetFilters && PubSub.unsubscribe(tokenResetFilters)
 	},
 	iterateChilren: function (parent, operationFn) {
 		React.Children.forEach(parent.props.children, operationFn)
 	},
-	getDefaultFilter: function (column) {
+	getDefaultFilterInfo: function (column) {
 		let filters = this.state.filters
 		let filterName = column.props.filterName
 		let filterValue = column.props.filterValue
+		let isRequired = column.props.isRequired
 
 		if (this.existsDuplicateFilterName(filters, filterName)) {
 			throw new Error(
@@ -117,6 +125,17 @@ export default React.createClass({
 			filters: filters,
 			originFilters: _.clone(filters)
 		})
+
+		if(isRequired) {
+			this.setExistRequiredColumn()
+		}
+	},
+	setExistRequiredColumn() {
+		if(!this.state.existRequiredColumn) {
+			this.setState({
+				existRequiredColumn: true
+			})
+		}
 	},
 	existsDuplicateFilterName: function (filters, oneFilterName) {
 		return typeof filters[oneFilterName] !== 'undefined'
@@ -293,7 +312,9 @@ export default React.createClass({
 		if (this.state.hasError) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
-			return <span className='color-blue'>* These fields are mandatory</span>
+			return this.state.existRequiredColumn 
+				? <span className='color-blue'>* These fields are mandatory</span> 
+				: ''
 		}
 	},
 	render: function () {
