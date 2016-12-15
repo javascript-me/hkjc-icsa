@@ -43,6 +43,7 @@ const updateAcknowledgeStatusById = async (username, id, command) => {
 	return notices
 }
 
+let refreshNoticesToken = null
 export default React.createClass({
 	propTypes: {
 		isSlim: React.PropTypes.bool
@@ -101,7 +102,14 @@ export default React.createClass({
 				}
 			})
 		})
+		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
+			this.doAcknowledgement()
+		})
 	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(refreshNoticesToken)
+	},
+
 	openPopup () {
 		this.refs.notificationsPopup.show()
 	},
