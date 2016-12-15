@@ -10,7 +10,7 @@ class MutiSelect extends Component {
 		this.state = {
 			isFocus: false,
 			isAll: false,
-			selectText: this.props.placeHolder || defaultSelectText,
+			selectText: (this.props.selectedOptions && this.props.selectedOptions.length) ? this.getSelectText(this.props.selectedOptions) : (this.props.placeHolder || defaultSelectText),
 			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions)
 		}
 		this.onchange = this.onchange.bind(this)
@@ -26,10 +26,14 @@ class MutiSelect extends Component {
 						<input type='checkbox' checked={this.state.isAll} />
 						All
 					</div>
-					{options && options.map((item, idx) => (<div key={item.label} className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})} onClick={() => { this.handleOptionselect(idx) }}>
-						<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
-						{item.label}
-					</div>))}
+					{options && options.map((item, idx) => (
+						<div key={item.label}
+							className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})}
+							onClick={() => { this.handleOptionselect(idx) }}>
+							<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
+							{item.label}
+						</div>))
+					}
 				</div>
 			</div>
 		)

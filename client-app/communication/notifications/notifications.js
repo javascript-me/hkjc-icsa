@@ -247,8 +247,8 @@ export default React.createClass({
 				<div className={this.getClassName()}>
 					<div className='header-container'>
 						<div className='pull-right'>
-							<span className='noticeboard-list-container'><i className=''><img src='icon/list.svg' /></i></span>
-							<span className='noticeboard-settings-container'><i className=''><img src='icon/Setting.svg' onClick={this.openPopup} /></i></span>
+							<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+							<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
 						</div>
 						<div className='container-title'>
 							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>

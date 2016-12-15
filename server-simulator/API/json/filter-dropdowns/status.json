@@ -1,6 +1,6 @@
 {
   "status" : [
     {"id": "Acknowledged", "value": "Acknowledged"},
-    {"id": "Unacknowledged", "value": "Unacknowledged"}
+    {"id": "New", "value": "New"}
   ]
 }
