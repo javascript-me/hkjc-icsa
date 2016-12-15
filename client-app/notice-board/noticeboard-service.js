@@ -150,9 +150,6 @@ const NoticeboardService = assign({}, EventEmitter.prototype, {
 	},
 
 	async getNoticesAndUpdateAcknowledgeStatusById (criteriaOption, username, id, command) {
-		// let result = null
-		console.log('username+id+command')
-		console.log(username + ' | ' + id + ' | ' + command)
 		try {
 			let requestData = this.buildRequest(criteriaOption)
 

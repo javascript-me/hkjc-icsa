@@ -12,7 +12,6 @@ import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import FilterBlock from '../filter-block'
 import NoticeDetail from '../notice-detail/notice-detail'
-import NotificationService from './noticeboard-service'
 import LoginService from '../login/login-service'
 
 const getOrginDateTimeFrom = function () {
@@ -290,15 +289,15 @@ export default React.createClass({
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
+			} else if (f.value.length > 0) { // To avoid blank <FilterBlock>
+				return true
 			}
-			return true
 		})
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
 			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
 			.concat(filtersArrayWithoutDateRange)
-
 		let filterBlockes = filtersArray.map((f, index) => {
 			return <FilterBlock
 				key={index}
@@ -567,13 +566,11 @@ export default React.createClass({
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
-					<div className='vertical-gap'>
-						<div className='pull-right'>
-							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
-							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
-								<ExportPopup onChange={this.onChangeFormat} />
-							</Popup>
-						</div>
+					<div className='pull-right'>
+						<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
+						<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
+							<ExportPopup onChange={this.onChangeFormat} />
+						</Popup>
 					</div>
 				</div>
 			</div>
