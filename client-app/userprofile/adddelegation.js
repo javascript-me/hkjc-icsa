@@ -110,9 +110,11 @@ export default React.createClass({
 			index,
 			sortType: this.currentSortInfo.sortType === 'down' ? 'up' : 'down'
 		}
-		let showItems = this.doSort(index, this.state.showItems)
-		this.setState({ showItems: this.sortItemsByCheck(showItems) })
-		this.setState({ showTempItems: this.sortItemsByCheck(showItems) })
+		if (this.state.showTempItems.length !== 0) {
+			let showItems = this.doSort(index, this.state.showItems)
+			this.setState({ showItems: this.sortItemsByCheck(showItems) })
+			this.setState({ showTempItems: this.sortItemsByCheck(showItems) })
+		}
 	},
 	filterItem (keyword, fields, items) {
 		let showItems = _.filter(items, (item, idx) => {
