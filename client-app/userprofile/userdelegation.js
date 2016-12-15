@@ -47,7 +47,7 @@ export default React.createClass({
 		const calendarFormat = (cell, row, enumObject, index) => {
 			let time = cell
 
-			if (cell.indexOf('/') > 0) {
+			if (cell && cell.indexOf('/') > 0) {
 				time = moment(cell, 'DD/MM/YYYY').format('D MMM, YYYY')
 			}
 			const handleChang = (value) => {
@@ -132,7 +132,7 @@ export default React.createClass({
 	addNewRecord (user) {
 		let newUser = user || {userName: 'New User', position: 'new position'}
 		let newDelegationID = 'Delegate' + Math.floor((Math.random() * 1000000))
-		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'pedding', secondaryApprover: 'please select', delegationID: newDelegationID, changeFlag: true})
+		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'pedding', delegationID: newDelegationID, changeFlag: true})
 		const next = _.cloneDeep(this.state.editUserDelegation)
 		newDelegate.isNewRecord = true
 		next.unshift(newDelegate)
