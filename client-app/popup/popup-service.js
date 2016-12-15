@@ -45,7 +45,7 @@ export default {
 			onCancel
 		})
 	},
-	showSuggestBox (title,msg, onConfirm) {
+	showSuggestBox (title, msg, onConfirm) {
 		const children = (
 			<div className='msg'>
 				<p>{msg}</p>

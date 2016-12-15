@@ -158,7 +158,7 @@ export default React.createClass({
 	},
 	resetDelegtionData () {
 		const newEditDelegationData = _.cloneDeep(this.state.userDelegation)
-		this.setState({editUserDelegation:newEditDelegationData})
+		this.setState({editUserDelegation: newEditDelegationData})
 	},
 
 	onAddDelegation (delegationShow) {
@@ -220,7 +220,7 @@ export default React.createClass({
 						<TableHeaderColumn dataField='delegationFrom' width='250' dataAlign='center' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Date of Delegation From</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationTo' width='250' dataAlign='center' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
-						{/*<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>*/}
+						{/* <TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn> */}
 					</TableComponent>
 					: <TableComponent
 						striped
@@ -237,7 +237,7 @@ export default React.createClass({
 						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' >Date of Delegation From</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegationTo' dataAlign='center'>Date of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
-						{/*<TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn>*/}
+						{/* <TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn> */}
 					</TableComponent>}
 				</div>
 			</div>

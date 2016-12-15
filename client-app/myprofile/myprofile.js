@@ -59,44 +59,43 @@ export default React.createClass({
 		})
 		switch (true) {
 		case (errBox.roleErr) : {
-			PopupService.showSuggestBox('Warnning','You must select a role', () => {})
+			PopupService.showSuggestBox('Warnning', 'You must select a role', () => {})
 			return false
 		}
 		case (errBox.delegationToErr) : {
-			PopupService.showSuggestBox('Warnning','You must select  delegationTo date', () => {})
+			PopupService.showSuggestBox('Warnning', 'You must select  delegationTo date', () => {})
 			return false
 		}
 		case (errBox.delegationFromErr) : {
-			PopupService.showSuggestBox('Warnning','You must select  delegationFrom date', () => {})
+			PopupService.showSuggestBox('Warnning', 'You must select  delegationFrom date', () => {})
 			return false
 		}
 		case (errBox.smallerErr) : {
-			PopupService.showSuggestBox('Warnning','delegationTo date must larger then delegationFrom date', () => {})
+			PopupService.showSuggestBox('Warnning', 'delegationTo date must larger then delegationFrom date', () => {})
 			return false
 		}
 		default : break
 
 		}
-		PopupService.showMessageBox('Are you sure to update?', async () =>{
-			result && result.forEach((item) => { 
+		PopupService.showMessageBox('Are you sure to update?', async () => {
+			result && result.forEach((item) => {
 				item.changeFlag = null
 				item.isNewRecord = null
-			 })
+			})
 			let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
 
 			if (UpdateFlag.status) {
-				PopupService.showSuggestBox('Success','Update sucess!', () => {
+				PopupService.showSuggestBox('Success', 'Update sucess!', () => {
 					this.getUserProfile()
 				})
 			} else {
-				PopupService.showSuggestBox('Error','Update fail,please contact the administrator', () => {
+				PopupService.showSuggestBox('Error', 'Update fail,please contact the administrator', () => {
 					this.setState({
 						delegationUpdate: false
 					})
 				})
 			}
 		})
-		
 	},
 	onCancelClick () {
 		PopupService.showMessageBox('Are you sure you want to cancel the current operation?', () => {
@@ -119,7 +118,7 @@ export default React.createClass({
 				})
 			})
 		} else {
-			PopupService.showSuggestBox('Error','You must select at least one delegation!')
+			PopupService.showSuggestBox('Error', 'You must select at least one delegation!')
 		}
 	},
 	render () {
