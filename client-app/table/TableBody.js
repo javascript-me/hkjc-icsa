@@ -330,7 +330,7 @@ TableBody.propTypes = {
 	adjustHeaderWidth: PropTypes.func,
 	cellEdit: PropTypes.object,
 	selectRow: PropTypes.object,
-	trClassName: PropTypes.string,
+	trClassName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]), // replace the propTypes.string
 	onRowMouseOut: PropTypes.func,
 	onRowMouseOver: PropTypes.func
 }
