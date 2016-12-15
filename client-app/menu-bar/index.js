@@ -131,6 +131,9 @@ class MenuBar extends Component {
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
 			this.updateNoticeRemindCount(userName, self)
 		})
+		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_TABLENOTICES, () => {
+			this.updateNoticeRemindCount(userName, self)
+		})
 	}
 
 	updateNoticeRemindCount (userName, self) {

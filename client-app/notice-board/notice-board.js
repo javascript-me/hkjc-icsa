@@ -413,14 +413,14 @@ export default React.createClass({
 		})
 	},
 	statusFormatter (cell, row) {
-		if (cell === 'Acknowledged') return <img src='notice-board/Tick.svg' />
-		return <img src='notice-board/Mail.svg' />
+		if (cell === 'Acknowledged') return <span><img src='notice-board/Tick.svg' /></span>
+		return <span><img src='notice-board/Mail.svg' /></span>
 	},
 	priorityFormatter (cell, row) {
-		if (cell === 'Critical') return <img src='notice-board/Critical.svg' title='Critical' />
-		if (cell === 'High') return <img src='notice-board/High.svg' title='High' />
-		if (cell === 'Medium') return <img src='notice-board/Medium.svg' title='Medium' />
-		if (cell === 'Low') return <img src='notice-board/Low.svg' title='Low' />
+		if (cell === 'Critical') return <span><img src='notice-board/Critical.svg' title='Critical' /></span>
+		if (cell === 'High') return <span><img src='notice-board/High.svg' title='High' /></span>
+		if (cell === 'Medium') return <span><img src='notice-board/Medium.svg' title='Medium' /></span>
+		if (cell === 'Low') return <span><img src='notice-board/Low.svg' title='Low' /></span>
 	},
 	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
@@ -466,10 +466,10 @@ export default React.createClass({
 
 	doAcknowledgement (id, alertStatus) {
 		let userProfile = LoginService.getProfile()
-
 		let criteriaOption = this.getSearchCriterias()
 
 		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
+		PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 	},
 
 	render () {
