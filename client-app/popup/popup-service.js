@@ -45,9 +45,9 @@ export default {
 			onCancel
 		})
 	},
-	showErrorBox (msg, onConfirm) {
+	showSuggestBox (title, msg, onConfirm) {
 		const children = (
-			<div className='msg msgErr'>
+			<div className='msg'>
 				<p>{msg}</p>
 			</div>
 		)
@@ -57,7 +57,7 @@ export default {
 		}
 
 		this.showCustom({
-			title: 'Error',
+			title: title,
 			children,
 			showCancel: false,
 			onConfirm

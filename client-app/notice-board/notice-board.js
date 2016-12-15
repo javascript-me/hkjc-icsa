@@ -12,6 +12,7 @@ import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import FilterBlock from '../filter-block'
 import NoticeDetail from '../notice-detail/notice-detail'
+import LoginService from '../login/login-service'
 
 const getOrginDateTimeFrom = function () {
 	let dateTimeFrom = new Date()
@@ -168,10 +169,12 @@ export default React.createClass({
 			filters: returnFilters
 		}
 	},
-	combineAttributesFromObjectArray: function (arr, attrName) {
+	combineAttributesFromObjectArray: function (arr, attrName, sperate) {
+		sperate = sperate || ','
+
 		return arr.map((elem) => {
 			return elem[attrName] || ''
-		}).join()
+		}).join(sperate)
 	},
 	pageClick: function (event) {
 		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
@@ -236,31 +239,31 @@ export default React.createClass({
 				filterDisplayText = `${filter.name}: ${filter.value}`
 				break
 			case 'priority':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'sportsType':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'competition':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'match':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'inPlay':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'continent':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'country':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'messageCategory':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			case 'alertStatus':
-				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label')
+				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
 			default:
 				filterDisplayText = filter.value
@@ -286,15 +289,15 @@ export default React.createClass({
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
+			} else if (f.value.length > 0) { // To avoid blank <FilterBlock>
+				return true
 			}
-			return true
 		})
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
 			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
 			.concat(filtersArrayWithoutDateRange)
-
 		let filterBlockes = filtersArray.map((f, index) => {
 			return <FilterBlock
 				key={index}
@@ -441,6 +444,19 @@ export default React.createClass({
 		return ''
 	},
 
+	getCommand (alertStatus) {
+		if (alertStatus === 'New') return 'Acknowledge'
+		return 'Unacknowledge'
+	},
+
+	doAcknowledgement (id, alertStatus) {
+		let userProfile = LoginService.getProfile()
+
+		let criteriaOption = this.getSearchCriterias()
+
+		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
+	},
+
 	render () {
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
@@ -453,9 +469,10 @@ export default React.createClass({
 					title={this.state.detail.alert_name}
 					showCancel={false}
 					showCloseIcon
-					confirmBtn={this.getConfirmButtonLabel(this.state.detail.alert_status)}
+					confirmBtn={this.getCommand(this.state.detail.alert_status)}
 					popupDialogBorderColor={this.getPriorityColor(this.state.detail.priority)}
-					headerColor={this.getPriorityColor(this.state.detail.priority)}>
+					headerColor={this.getPriorityColor(this.state.detail.priority)}
+					onConfirm={() => { this.doAcknowledgement(this.state.detail.id, this.state.detail.alert_status) }}>
 					<NoticeDetail alert_status={this.state.detail.alert_status}
 						message_category={this.state.detail.message_category}
 						system_distribution_time={this.state.detail.system_distribution_time}
@@ -549,13 +566,11 @@ export default React.createClass({
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
-					<div className='vertical-gap'>
-						<div className='pull-right'>
-							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
-							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
-								<ExportPopup onChange={this.onChangeFormat} />
-							</Popup>
-						</div>
+					<div className='pull-right'>
+						<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
+						<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
+							<ExportPopup onChange={this.onChangeFormat} />
+						</Popup>
 					</div>
 				</div>
 			</div>

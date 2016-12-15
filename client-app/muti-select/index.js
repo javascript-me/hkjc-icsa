@@ -23,14 +23,14 @@ class MutiSelect extends Component {
 				<div className='show-box' onClick={() => { this.toggleFocus() }}>{this.state.selectText}</div>
 				<div className='muti-select-content' style={{display: this.state.isFocus ? 'block' : 'none'}}>
 					<div onClick={() => { this.toggleAll() }} className='option'>
-						<input type='checkbox' checked={this.state.isAll} />
+						<div className={classnames('input-check', {checked: this.state.isAll})} />
 						All
 					</div>
 					{options && options.map((item, idx) => (
 						<div key={item.label}
 							className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})}
 							onClick={() => { this.handleOptionselect(idx) }}>
-							<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
+							<div className={classnames('input-check', {checked: this.state.selectedOptionIndex[idx]})} />
 							{item.label}
 						</div>))
 					}
@@ -46,17 +46,19 @@ class MutiSelect extends Component {
 	}
 	componentWillReceiveProps (nextProps) {
 		let currentProps = this.props
-		let selectedOptions
+		let selectedOptions = nextProps.selectedOptions
+		let selectedOptionsIndex
 
 		if (_.isEqual(currentProps, nextProps)) {
 			return false
 		}
 
-		selectedOptions = nextProps.selectedOptions
+		selectedOptionsIndex = this.getInputSelectedOptionIndex(selectedOptions)
 
 		this.setState({
-			selectedOptionIndex: this.getInputSelectedOptionIndex(selectedOptions),
-			selectText: this.getSelectText(selectedOptions)
+			selectedOptionIndex: selectedOptionsIndex,
+			selectText: this.getSelectText(selectedOptions),
+			isAll: this.isAllSelected(selectedOptionsIndex, nextProps.options)
 		})
 	}
 	getInputSelectedOptionIndex (selectedOptionsInput) {
@@ -99,10 +101,15 @@ class MutiSelect extends Component {
 
 		let selectText = this.getSelectText(changedOptions)
 
-		this.setState({selectedOptionIndex: changedOptions, isAll: false, selectText: selectText}, this.onchange)
+		this.setState({
+			selectedOptionIndex: changedOptions,
+			isAll: this.isAllSelected(changedOptions, this.props.options),
+			selectText: selectText
+		}, this.onchange)
 	}
 	getSelectText (selectedOptions) {
-		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null)).join(' ')
+		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null))
+		.filter(item => item).join(', ')
 		selectText = selectText.trim() === '' ? (this.props.placeHolder || defaultSelectText) : selectText
 
 		return selectText
@@ -111,6 +118,11 @@ class MutiSelect extends Component {
 		let changedOptions = _.fill(Array(this.props.options.length), !this.state.isAll)
 		let changedText = this.state.isAll ? this.props.placeHolder || defaultSelectText : 'All'
 		this.setState({selectedOptionIndex: changedOptions, isAll: !this.state.isAll, selectText: changedText}, this.onchange)
+	}
+	isAllSelected (selectedOptionIndex, sourceOptions) {
+		return selectedOptionIndex.filter(item => {
+			return item === true
+		}).length === sourceOptions.length
 	}
 	onchange () {
 		let result = []
