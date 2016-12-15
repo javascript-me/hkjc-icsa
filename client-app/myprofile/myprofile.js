@@ -85,7 +85,7 @@ export default React.createClass({
 			let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
 
 			if (UpdateFlag.status) {
-				PopupService.showSuggestBox('Success', 'Update sucess!', () => {
+				PopupService.showSuggestBox('Success', 'The operation has been proceeded successfully!', () => {
 					this.getUserProfile()
 				})
 			} else {
