@@ -187,6 +187,13 @@ export default React.createClass({
 		let result = row.isNewRecord ? 'new-record' : ''
 		return result
 	},
+	sortByDate (a, b, order, sortField, sortFuncExtraData) {
+		if (campareTime(a[sortField], b[sortField]) > 0) {
+			return order === 'desc' ? 0 : 1
+		} else {
+			return order === 'desc' ? 1 : 0
+		}
+	},
 	renderNone () {
 		return (
 			<div ref='root' className='user-delegation' />
@@ -235,9 +242,9 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort>Position Title</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataSort dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' dataSort>Time of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' dataSort>Time of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataSort dataFormat={roleVeiw} >Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataSort sortFunc={this.sortByDate}>Time of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' dataSort sortFunc={this.sortByDate}>Time of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataSort>Delegation Status</TableHeaderColumn>
 					</TableComponent>}
 				</div>
