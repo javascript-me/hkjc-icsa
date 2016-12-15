@@ -62,6 +62,7 @@ export default React.createClass({
 			selectedKeyword: '',
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
+			hasData: false,
 			tokens: {
 				NOTICEBOARD_SEARCH_BY_KEY_PRESS: 'NOTICEBOARD_SEARCH_BY_KEY_PRESS',
 				NOTICEBOARD_SEARCH: 'NOTICEBOARD_SEARCH',
@@ -194,11 +195,14 @@ export default React.createClass({
 		PubSub.unsubscribe(refreshNoticesToken)
 	},
 	onChange () {
-		this.setState({noticesList: NoticeboardService.noticesList})
+		const hasData = NoticeboardService.noticesList.length > 0
+		this.setState({
+			noticesList: NoticeboardService.noticesList, hasData: hasData
+		})
 	},
 	openPopup () {
 		this.setState({exportFormat: 'pdf'})// reset the format value
-		this.refs.exportPopup.show()
+		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 	export () {
 		const filters = {
@@ -243,6 +247,12 @@ export default React.createClass({
 			case 'keyword':
 				filterDisplayText = `${filter.name}: ${filter.value}`
 				break
+			case 'dateTimeFrom':
+				filterDisplayText = `From: ${filter.value}`
+				break
+			case 'dateTimeTo':
+				filterDisplayText = `To: ${filter.value}`
+				break
 			case 'priority':
 				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
@@ -276,21 +286,18 @@ export default React.createClass({
 			}
 			return filterDisplayText
 		}
-		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
 		let keywordFilter = {
 			name: 'keyword',
 			value: this.state.selectedKeyword
 		}
+		let defaultDateTimeFrom = getOrginDateTimeFrom()
+		let defaultDateTimeTo = getOrginDateTimeTo()
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
 		})[0] || {}
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
 		})[0] || {}
-		let dateRangeFilter = {
-			name: 'dateTimeFrom,dateTimeTo',
-			value: `${dateFromFilter.value} - ${dateToFilter.value}`
-		}
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
@@ -301,7 +308,8 @@ export default React.createClass({
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
-			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
+			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
+			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
 		let filterBlockes = filtersArray.map((f, index) => {
 			return <FilterBlock
@@ -325,7 +333,8 @@ export default React.createClass({
 		case 'keyword':
 			this.removeKeywordFilter(filter, callback)
 			break
-		case 'dateTimeFrom,dateTimeTo':
+		case 'dateTimeFrom':
+		case 'dateTimeTo':
 			this.removeDateRangeFilter(filter, callback)
 			break
 		default:
@@ -341,16 +350,17 @@ export default React.createClass({
 			selectedFilters: selectedFilters
 		}, callback)
 	},
-	removeDateRangeFilter: function (dateRange, callback) {
+	removeDateRangeFilter: function (dateTime, callback) {
 		let selectedFilters = this.state.selectedFilters
-		let originDateRange = this.state.originDateRange
+
 		selectedFilters.forEach((filter) => {
-			if (filter.name === 'dateTimeFrom') {
-				filter.value = originDateRange.dateTimeFrom
-			} else if (filter.name === 'dateTimeTo') {
-				filter.value = originDateRange.dateTimeTo
+			if (filter.name === 'dateTimeFrom' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeFrom()
+			} else if (filter.name === 'dateTimeTo' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeTo()
 			}
 		})
+
 		this.setState({
 			selectedFilters: selectedFilters
 		}, callback)
@@ -512,13 +522,11 @@ export default React.createClass({
 											filterTitle='Distribution Time From'
 											filterValue={this.state.originDateRange.dateTimeFrom}
 											ctrlType='calendar'
-											isRequired
 											pairingVerify={[{operation: '<=', partners: ['dateTimeTo']}]} />
 										<FilterPanelColumn filterName='dateTimeTo'
 											filterTitle='Distribution Time To'
 											filterValue={this.state.originDateRange.dateTimeTo}
 											ctrlType='calendar'
-											isRequired
 											pairingVerify={[{operation: '>=', partners: ['dateTimeFrom']}]} />
 										<FilterPanelColumn filterName='sportsType' filterTitle='Sports Type'
 											ctrlType='multi-select' dataSource={NoticeboardService.sportsList} />
@@ -571,11 +579,13 @@ export default React.createClass({
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
-					<div className='pull-right'>
-						<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
-						<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
-							<ExportPopup onChange={this.onChangeFormat} />
-						</Popup>
+					<div className='vertical-gap'>
+						<div className='pull-right'>
+							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
+							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
+								<ExportPopup onChange={this.onChangeFormat} />
+							</Popup>
+						</div>
 					</div>
 				</div>
 			</div>
