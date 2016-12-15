@@ -352,7 +352,7 @@ export default React.createClass({
 				</div>
 				<div className='content-table tableComponent-container'>
 					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='userID'
-						tableHeaderClass='table-header' tableContainerClass='base-table' selectRow={{ mode: 'checkbox' }}>
+						tableHeaderClass='table-header' tableContainerClass='base-table' >
 						<TableHeaderColumn dataField='displayName' dataSort>User Display Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='firstName' dataSort>User Name</TableHeaderColumn>

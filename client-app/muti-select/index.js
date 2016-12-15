@@ -23,14 +23,14 @@ class MutiSelect extends Component {
 				<div className='show-box' onClick={() => { this.toggleFocus() }}>{this.state.selectText}</div>
 				<div className='muti-select-content' style={{display: this.state.isFocus ? 'block' : 'none'}}>
 					<div onClick={() => { this.toggleAll() }} className='option'>
-						<input type='checkbox' checked={this.state.isAll} />
+						<div className={classnames('input-check', {checked: this.state.isAll})} />
 						All
 					</div>
 					{options && options.map((item, idx) => (
 						<div key={item.label}
 							className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})}
 							onClick={() => { this.handleOptionselect(idx) }}>
-							<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
+							<div className={classnames('input-check', {checked: this.state.selectedOptionIndex[idx]})} />
 							{item.label}
 						</div>))
 					}
@@ -108,7 +108,8 @@ class MutiSelect extends Component {
 		}, this.onchange)
 	}
 	getSelectText (selectedOptions) {
-		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null)).join(' ')
+		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null))
+		.filter(item => item).join(', ')
 		selectText = selectText.trim() === '' ? (this.props.placeHolder || defaultSelectText) : selectText
 
 		return selectText

@@ -122,6 +122,7 @@
 	font-size: 14px;
 	color: #4A4A4A;
 	line-height: 40px;
+	margin-bottom: 0;
 
 	> thead {
 		background-color: #7C8DAF;
@@ -228,6 +229,19 @@
 		padding-left: 23px;
 	}
 
+	.table.sm-table tbody > tr > td {
+		color: @hkjcDarkerBlue;
+
+		&.no-result {
+			padding: 0;
+			border: 0;
+			text-align: center;
+			height: 238px;
+			font-family: Roboto-Medium;
+			font-size: 14px;
+		}
+	}
+
 	.users-container .content {
 		width: 576px;
 	}
@@ -244,7 +258,7 @@
 
 			.table.sm-table {
 				border: 0;
-				border-bottom: 1px solid #DDDDDD;
+				height: 100%;
 
 				thead,
 				tbody > tr {

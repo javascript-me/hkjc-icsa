@@ -26,7 +26,7 @@ TableHeader.propTypes = {
 
 const TableRow = (props) => {
 	return (<tbody>
-		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'} className={classNames({ activeLine: item.checked })}>
+		{props.data.length === 0 ? <tr><td className='no-result' colSpan='4'>No result found.</td></tr> : props.data && props.data.map((item, idx) => (<tr key={idx + 'row'} className={classNames({ activeLine: item.checked })}>
 			<td className='tr-header first-child'>
 				<input id={'radio' + idx} type='radio' name='checkbox' onClick={() => { props.handleItemClick(item) }} defaultChecked={item.checked} />
 				<label htmlFor={'radio' + idx} className={classNames({ checked: item.checked })} />
