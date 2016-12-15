@@ -139,9 +139,9 @@ describe('Table', () => {
 		expect(table.find('.react-bs-table-container').children()).to.have.length(2)
 		expect(table.find('.react-bs-table').children()).to.have.length(2)
 		expect(table.find('.react-bs-select-all')).to.have.length(1)
-		table.find('.react-bs-select-all').simulate('change', {target: {checked: true}})
+		table.find('.react-bs-select-all').simulate('click', {target: {checked: true}})
 		expect(mockSelectAll.callCount).to.be.equals(1)
-		table.find('.react-bs-select-all').simulate('change', {target: {checked: false}})
+		table.find('.react-bs-select-all').simulate('click', {target: {checked: false}})
 		expect(mockSelectAll.callCount).to.be.equals(2)
 	})
 
