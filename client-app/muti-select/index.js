@@ -108,7 +108,8 @@ class MutiSelect extends Component {
 		}, this.onchange)
 	}
 	getSelectText (selectedOptions) {
-		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null)).join(' ')
+		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null))
+		.filter(item => item).join(', ')
 		selectText = selectText.trim() === '' ? (this.props.placeHolder || defaultSelectText) : selectText
 
 		return selectText
