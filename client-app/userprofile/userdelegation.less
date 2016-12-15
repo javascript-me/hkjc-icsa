@@ -104,10 +104,31 @@
 			display: none;
 		}
 
-		.calendar .rdt .calendar-input {
-			width: 100%;
-			text-align: center;
-			height: 30px;
+		.calendar {
+			.rdt {
+				.calendar-group {
+					.input-group {
+						width: 200px;
+						line-height: 30px;
+						text-align: center;
+
+						.calendar-input {
+							width: 100%;
+							text-align: center;
+							height: 30px;
+							line-height: 0;
+						}
+					}
+				}
+
+				.rdtPicker {
+					.rdtDays {
+						.rdtSwitch {
+							width: 136px;
+						}
+					}
+				}
+			}
 		}
 	}
 }

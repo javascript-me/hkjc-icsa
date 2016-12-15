@@ -71,13 +71,13 @@ export default React.createClass({
 			return false
 		}
 		case (errBox.smallerErr) : {
-			PopupService.showSuggestBox('Warnning', 'delegationTo date must larger then delegationFrom date', () => {})
+			PopupService.showSuggestBox('Warnning', '"The time of Delegation To" should not be earlier than the "Time of Delegation From"', () => {})
 			return false
 		}
 		default : break
 
 		}
-		PopupService.showMessageBox('Are you sure to update?', async () => {
+		PopupService.showMessageBox('Are you sure you want to proceed the operation?', async () => {
 			result && result.forEach((item) => {
 				item.changeFlag = null
 				item.isNewRecord = null
@@ -85,7 +85,7 @@ export default React.createClass({
 			let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
 
 			if (UpdateFlag.status) {
-				PopupService.showSuggestBox('Success', 'Update sucess!', () => {
+				PopupService.showSuggestBox('Success', 'The operation has been proceeded successfully!', () => {
 					this.getUserProfile()
 				})
 			} else {

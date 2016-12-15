@@ -48,14 +48,15 @@ export default React.createClass({
 			let time = cell
 
 			if (cell && cell.indexOf('/') > 0) {
-				time = moment(cell, 'DD/MM/YYYY').format('D MMM, YYYY')
+				time = moment(cell, 'DD/MM/YYYY').format('DD MMM YYYY HH:mm')
 			}
 			const handleChang = (value) => {
+				let timeOrigin
 				if (typeof (value) !== 'string') {
-					time = moment(value).format('DD/MM/YYYY')
+					timeOrigin = moment(value).format('DD/MM/YYYY')
 				}
 				const next = _.cloneDeep(this.state.editUserDelegation)
-				next[index][field] = time
+				next[index][field] = timeOrigin
 				next[index].changeFlag = true
 				this.setState({editUserDelegation: next})
 			}
@@ -110,7 +111,7 @@ export default React.createClass({
 			bottom: 0,
 			left: 0,
 			right: 0,
-			margin: 'auto',
+			// margin: 'auto',
 			height: '30px'
 			// backgroundColor: row.roleErr ? 'red' : '#FFF'
 		}
@@ -186,6 +187,13 @@ export default React.createClass({
 		let result = row.isNewRecord ? 'new-record' : ''
 		return result
 	},
+	sortByDate (a, b, order, sortField, sortFuncExtraData) {
+		if (campareTime(a[sortField], b[sortField]) > 0) {
+			return order === 'desc' ? 0 : 1
+		} else {
+			return order === 'desc' ? 1 : 0
+		}
+	},
 	renderNone () {
 		return (
 			<div ref='root' className='user-delegation' />
@@ -219,9 +227,9 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort>Position Title</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' width='250' className='column-header' dataFormat={this.roleFormat} columnClassName={this.geterrClassNameFormat('userRole')}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Time of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Time of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' width='180' className='column-header' dataFormat={this.roleFormat} columnClassName={this.geterrClassNameFormat('userRole')}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' width='180' className='column-header' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Time of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' width='180' className='column-header' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Time of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' className='column-header'>Delegation Status</TableHeaderColumn>
 					</TableComponent>
 					: <TableComponent
@@ -234,9 +242,9 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort>Position Title</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataSort dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' dataSort>Time of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' dataSort>Time of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataSort dataFormat={roleVeiw} >Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataSort sortFunc={this.sortByDate}>Time of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' dataSort sortFunc={this.sortByDate}>Time of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataSort>Delegation Status</TableHeaderColumn>
 					</TableComponent>}
 				</div>
