@@ -187,13 +187,11 @@ export default React.createClass({
 		return result
 	},
 	sortByDate (a, b, order, sortField, sortFuncExtraData) {
-		
-		if (campareTime(a[sortField],b[sortField]) > 0) {
+		if (campareTime(a[sortField], b[sortField]) > 0) {
 			return order === 'desc' ? 0 : 1
 		} else {
 			return order === 'desc' ? 1 : 0
 		}
-		
 	},
 	renderNone () {
 		return (
@@ -225,8 +223,6 @@ export default React.createClass({
 						data={tableData}
 						options={this.tableOptions}
 						trClassName={this.highLightNew}
-						
-
 
 					>
 						<TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
