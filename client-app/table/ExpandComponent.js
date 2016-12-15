@@ -26,7 +26,7 @@ class ExpandComponent extends Component {
 
 ExpandComponent.propTypes = {
 	bgColor: PropTypes.string,
-	colSpan: PropTypes.string,
+	colSpan: PropTypes.number,
 	width: PropTypes.string,
 	className: PropTypes.string,
 	isSelected: PropTypes.bool,
