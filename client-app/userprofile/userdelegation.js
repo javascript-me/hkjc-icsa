@@ -214,15 +214,12 @@ export default React.createClass({
 						trClassName={this.highLightNew}
 
 					>
-
-						<TableHeaderColumn dataField='userName' dataSort dataAlign='center' >Username</TableHeaderColumn>
-						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' width='250' dataFormat={this.roleFormat} dataAlign={'center'} columnClassName={this.geterrClassNameFormat('userRole')}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' width='250' dataAlign='center' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Date of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' width='250' dataAlign='center' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
-						{/* <TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn> */}
-
+						<TableHeaderColumn dataField='userName' dataSort>Username</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' width='250' className='column-header' dataFormat={this.roleFormat} columnClassName={this.geterrClassNameFormat('userRole')}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Date of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegateStatus' className='column-header'>Delegation Status</TableHeaderColumn>
 					</TableComponent>
 					: <TableComponent
 						striped
@@ -232,15 +229,12 @@ export default React.createClass({
 						data={tableData}
 						options={this.tableOptions}
 					>
-
-						<TableHeaderColumn dataField='userName' dataSort dataAlign='center' >Username</TableHeaderColumn>
-						<TableHeaderColumn dataField='position' dataSort dataAlign='center'>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' dataAlign={'center'} dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' dataAlign='center' >Date of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' dataAlign='center'>Date of Delegation To</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegateStatus' dataAlign='center'>Delegation Status</TableHeaderColumn>
-						{/* <TableHeaderColumn dataField='secondaryApprover' dataAlign='center'>Secondary Approver</TableHeaderColumn> */}
-
+						<TableHeaderColumn dataField='userName' dataSort>Username</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataSort dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataSort>Date of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' dataSort>Date of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegateStatus' dataSort>Delegation Status</TableHeaderColumn>
 					</TableComponent>}
 				</div>
 			</div>
