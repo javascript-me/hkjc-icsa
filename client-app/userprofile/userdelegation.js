@@ -45,8 +45,12 @@ export default React.createClass({
 	},
 	getCalendarFormat (field) {
 		const calendarFormat = (cell, row, enumObject, index) => {
+			let time = cell
+
+			if (cell.indexOf('/') > 0) {
+				time = moment(cell, 'DD/MM/YYYY').format('D MMM, YYYY')
+			}
 			const handleChang = (value) => {
-				let time = value
 				if (typeof (value) !== 'string') {
 					time = moment(value).format('DD/MM/YYYY')
 				}
@@ -55,7 +59,7 @@ export default React.createClass({
 				next[index].changeFlag = true
 				this.setState({editUserDelegation: next})
 			}
-			return (<Calendar value={row[field]} onChange={handleChang} />)
+			return (<Calendar value={time} onChange={handleChang} />)
 		}
 
 		return calendarFormat
@@ -214,11 +218,11 @@ export default React.createClass({
 						trClassName={this.highLightNew}
 
 					>
-						<TableHeaderColumn dataField='userName' dataSort>Username</TableHeaderColumn>
-						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort>Position Title</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' width='250' className='column-header' dataFormat={this.roleFormat} columnClassName={this.geterrClassNameFormat('userRole')}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Date of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Date of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationFrom')} columnClassName={this.geterrClassNameFormat('delegationFrom')}>Time of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' width='250' className='column-header' dataFormat={this.getCalendarFormat('delegationTo')} columnClassName={this.geterrClassNameFormat('delegationTo')}>Time of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' className='column-header'>Delegation Status</TableHeaderColumn>
 					</TableComponent>
 					: <TableComponent
@@ -229,11 +233,11 @@ export default React.createClass({
 						data={tableData}
 						options={this.tableOptions}
 					>
-						<TableHeaderColumn dataField='userName' dataSort>Username</TableHeaderColumn>
-						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
+						<TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
+						<TableHeaderColumn dataField='position' dataSort>Position Title</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegatedRoles' dataSort dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' dataSort>Date of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' dataSort>Date of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataSort>Time of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' dataSort>Time of Delegation To</TableHeaderColumn>
 						<TableHeaderColumn dataField='delegateStatus' dataSort>Delegation Status</TableHeaderColumn>
 					</TableComponent>}
 				</div>
