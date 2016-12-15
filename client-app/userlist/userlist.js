@@ -102,7 +102,7 @@ export default React.createClass({
 		const hasData = UserStore.userProfiles.length > 0
 
 		UserStore.userProfiles.forEach((item) => {
-			let role = item.assignedUserRoles ? item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(',') : ' '
+			let role = item.assignedUserRoles ? item.assignedUserRoles.map((item) => (item.assignedUserRole)).join(', ') : ' '
 			item.assignedUserRoles = role
 		})
 

@@ -466,10 +466,10 @@ export default React.createClass({
 
 	doAcknowledgement (id, alertStatus) {
 		let userProfile = LoginService.getProfile()
-
 		let criteriaOption = this.getSearchCriterias()
 
 		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
+		PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 	},
 
 	render () {
