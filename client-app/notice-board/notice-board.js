@@ -62,6 +62,7 @@ export default React.createClass({
 			selectedKeyword: '',
 			isShowingMoreFilter: false,
 			isClickForSearching: false,
+			hasData: false,
 			tokens: {
 				NOTICEBOARD_SEARCH_BY_KEY_PRESS: 'NOTICEBOARD_SEARCH_BY_KEY_PRESS',
 				NOTICEBOARD_SEARCH: 'NOTICEBOARD_SEARCH',
@@ -194,11 +195,14 @@ export default React.createClass({
 		PubSub.unsubscribe(refreshNoticesToken)
 	},
 	onChange () {
-		this.setState({noticesList: NoticeboardService.noticesList})
+		const hasData = NoticeboardService.noticesList.length > 0
+		this.setState({
+			noticesList: NoticeboardService.noticesList, hasData: hasData
+		})
 	},
 	openPopup () {
 		this.setState({exportFormat: 'pdf'})// reset the format value
-		this.refs.exportPopup.show()
+		this.state.hasData ? this.refs.exportPopup.show() : null
 	},
 	export () {
 		const filters = {
@@ -571,11 +575,13 @@ export default React.createClass({
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
-					<div className='pull-right'>
-						<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
-						<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
-							<ExportPopup onChange={this.onChangeFormat} />
-						</Popup>
+					<div className='vertical-gap'>
+						<div className='pull-right'>
+							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
+							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
+								<ExportPopup onChange={this.onChangeFormat} />
+							</Popup>
+						</div>
 					</div>
 				</div>
 			</div>
