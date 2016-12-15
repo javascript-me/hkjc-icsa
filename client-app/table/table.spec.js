@@ -159,4 +159,29 @@ describe('Table', () => {
 		expect(table.find('.react-bs-table').children()).to.have.length(2)
 		expect(table.find('.react-bs-container-body tr td div').last().text()).to.be.equals('Adult')
 	})
+
+	it('Render with Events', () => {
+		const rowClick = sinon.spy()
+		const rowDClick = sinon.spy()
+
+		const options = {
+			onRowClick: rowClick,
+			onRowDoubleClick: rowDClick
+		}
+		const table = mount(
+			<TableComponent data={data} keyField='user' pagination options={options}>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='age'>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-table-container').children()).to.have.length(2)
+		expect(table.find('.react-bs-table').children()).to.have.length(2)
+		table.find('.react-bs-container-body tr').last().simulate('click')
+		expect(rowClick.callCount).to.be.equals(1)
+		table.find('.react-bs-container-body tr').last().simulate('dblclick')
+		expect(rowDClick.callCount).to.be.equals(1)
+		expect(rowClick.callCount).to.be.equals(1)
+	})
 })
