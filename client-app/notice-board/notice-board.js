@@ -48,6 +48,7 @@ const doExport = async(format, filters) => {
 	}
 }
 let token = null
+let refreshNoticesToken = null
 export default React.createClass({
 	propTypes: {
 		someThing: React.PropTypes.bool
@@ -115,6 +116,9 @@ export default React.createClass({
 		NoticeboardService.getAllStatuses()
 		NoticeboardService.addChangeListener(this.onChange)
 		token = PubSub.subscribe(PubSub[this.state.tokens.NOTICEBOARD_SEARCH], () => {
+			this.searchNoticeboard()
+		})
+		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
 			this.searchNoticeboard()
 		})
 		document.addEventListener('click', this.pageClick, false)
@@ -187,6 +191,7 @@ export default React.createClass({
 		NoticeboardService.removeChangeListener(this.onChange.bind(this))
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(token)
+		PubSub.unsubscribe(refreshNoticesToken)
 	},
 	onChange () {
 		this.setState({noticesList: NoticeboardService.noticesList})
