@@ -102,22 +102,25 @@ export default React.createClass({
 				}
 			})
 		})
+
+		let _self = this
+
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_TABLENOTICES, () => {
 			let userProfileData = LoginService.getProfile()
 			let noticePromiseSub = getAllNoticesPromise(userProfileData.username)
 
 			let allNoticesSub
 			let unreadNoticesSub
-			let _self = this
+			// let _self = this
 
 			_self.setState({
-				displaySettings: userProfile.noticeboardSettings.display || 'bottom'
+				displaySettings: userProfileData.noticeboardSettings.display || 'bottom'
 			})
 
 			noticePromiseSub.then((notices) => {
 				allNoticesSub = notices || []
 
-				unreadNoticesSub = allNotices.filter((notice) => {
+				unreadNoticesSub = allNoticesSub.filter((notice) => {
 					return notice.alert_status === 'New'
 				})
 
