@@ -216,7 +216,6 @@ export default React.createClass({
 						data={tableData}
 						options={this.tableOptions}
 						trClassName={this.highLightNew}
-
 					>
 						<TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort>Position Title</TableHeaderColumn>
