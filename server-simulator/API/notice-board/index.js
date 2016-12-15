@@ -209,13 +209,16 @@ router.get('/export', (req, res) => {
 })
 
 router.post('/filterNoticeBoardTableData', (req, res) => {
-	let cloneNotices
 	const username = req.body.username
-	if (req.body.username === 'allgood') {
-		cloneNotices = jsonAlerts[username]
+	let alerts = jsonAlerts[username]
+	let criticalAlerts = jsonCriticalInformations[username]
+	let cloneNotices = [].concat(alerts, criticalAlerts)
+
+	/* if (req.body.username === 'allgood') {
+		cloneNotices = allData[username]
 	} else {
-		cloneNotices = jsonAlerts[username]
-	}
+		cloneNotices = allData[username]
+	} */
 	let status = 200
 	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
 		req.body.keyword,

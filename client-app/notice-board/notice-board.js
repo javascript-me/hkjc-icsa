@@ -286,15 +286,15 @@ export default React.createClass({
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
+			} else if (f.value.length > 0) { // To avoid blank <FilterBlock>
+				return true
 			}
-			return true
 		})
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
 			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
 			.concat(filtersArrayWithoutDateRange)
-
 		let filterBlockes = filtersArray.map((f, index) => {
 			return <FilterBlock
 				key={index}
@@ -395,14 +395,14 @@ export default React.createClass({
 		})
 	},
 	statusFormatter (cell, row) {
-		if (cell === 'Acknowledged') return <img src="notice-board/Tick.svg" />
-		return <img src="notice-board/Mail.svg" />
+		if (cell === 'Acknowledged') return <img src='notice-board/Tick.svg' />
+		return <img src='notice-board/Mail.svg' />
 	},
 	priorityFormatter (cell, row) {
-		if (cell === 'Critical') return <img src="notice-board/Critical.svg" title="Critical" />
-		if (cell === 'High') return <img src="notice-board/High.svg" title="High" />
-		if (cell === 'Medium') return <img src="notice-board/Medium.svg" title="Medium"/>
-		if (cell === 'Low') return <img src="notice-board/Low.svg" title="Low" />
+		if (cell === 'Critical') return <img src='notice-board/Critical.svg' title='Critical' />
+		if (cell === 'High') return <img src='notice-board/High.svg' title='High' />
+		if (cell === 'Medium') return <img src='notice-board/Medium.svg' title='Medium' />
+		if (cell === 'Low') return <img src='notice-board/Low.svg' title='Low' />
 	},
 	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
@@ -549,13 +549,11 @@ export default React.createClass({
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
-					<div className='vertical-gap'>
-						<div className='pull-right'>
-							<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
-							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
-								<ExportPopup onChange={this.onChangeFormat} />
-							</Popup>
-						</div>
+					<div className='pull-right'>
+						<button className='btn btn-primary pull-right' onClick={this.openPopup}>Export</button>
+						<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
+							<ExportPopup onChange={this.onChangeFormat} />
+						</Popup>
 					</div>
 				</div>
 			</div>
