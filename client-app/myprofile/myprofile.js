@@ -34,7 +34,7 @@ export default React.createClass({
 		})
 	},
 	async onUpdateClick (delegationCmp) {
-		const result = delegationCmp.onUpdateClick()
+		const result = delegationCmp.getChangeResult()
 		if (!result || result.length === 0) {
 			return false
 		}
@@ -107,19 +107,29 @@ export default React.createClass({
 	onDeleteClick (delegationCmp) {
 		let ids = delegationCmp.getDeleteData()
 		if (ids.length > 0) {
-			PopupService.showMessageBox('Are you sure you want delete the information?', () => {
-				UserProfileService.deleteDelegation({
-					userID: this.userID,
-					delegationIds: ids
-				}).then((data) => {
-					if (data) {
-						this.getUserProfile()
-					}
+			const result = delegationCmp.getChangeResult()
+			if (!result || result.length === 0) {
+				PopupService.showMessageBox('Are you sure you want to delete the information?', () => {
+					this.deleteUserDelegation(ids)
 				})
-			})
+			} else {
+				PopupService.showMessageBox('Information is updated, are you sure you want to delete the information?', () => {
+					this.deleteUserDelegation(ids)
+				})
+			}
 		} else {
 			PopupService.showSuggestBox('Error', 'You must select at least one delegation!')
 		}
+	},
+	deleteUserDelegation (ids) {
+		UserProfileService.deleteDelegation({
+			userID: this.userID,
+			delegationIds: ids
+		}).then((data) => {
+			if (data) {
+				this.getUserProfile()
+			}
+		})
 	},
 	render () {
 		return (

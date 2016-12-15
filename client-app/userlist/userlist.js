@@ -195,14 +195,13 @@ export default React.createClass({
 	},
 
 	searchUserProfileList: async function () {
-		let criteriaOption = this.getSearchCriterias()
-
 		this.setState({
 			selectedKeyword: this.state.keyword
+		}, () => {
+			let criteriaOption = this.getSearchCriterias()
+			// Get Table Data
+			UserStore.searchUsers(criteriaOption)
 		})
-
-		// Get Table Data
-		UserStore.searchUsers(criteriaOption)
 	},
 
 	getSearchCriterias: function () {
