@@ -28,6 +28,7 @@ export default React.createClass({
 		this.getUserProfile()
 	},
 	onEditClick () {
+		this.refs.delegationCmp.resetDelegtionData()
 		this.setState({
 			delegationUpdate: true
 		})

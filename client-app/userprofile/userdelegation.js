@@ -155,6 +155,11 @@ export default React.createClass({
 		return changeResult
 		// pass data to server
 	},
+	resetDelegtionData () {
+		const newEditDelegationData = _.cloneDeep(this.state.userDelegation)
+		this.setState({editUserDelegation:newEditDelegationData})
+	},
+
 	onAddDelegation (delegationShow) {
 		const delegation = delegationShow.getDelegation()
 		if (delegation) {
