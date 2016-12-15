@@ -103,15 +103,13 @@ export default React.createClass({
 			})
 		})
 
-		let _self = this
-
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_TABLENOTICES, () => {
 			let userProfileData = LoginService.getProfile()
 			let noticePromiseSub = getAllNoticesPromise(userProfileData.username)
 
 			let allNoticesSub
 			let unreadNoticesSub
-			// let _self = this
+			let _self = this
 
 			_self.setState({
 				displaySettings: userProfileData.noticeboardSettings.display || 'bottom'
