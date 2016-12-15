@@ -52,7 +52,7 @@ class TableHeader extends Component {
 		} else if (this.props.rowSelectType === Const.ROW_SELECT_MULTI) {
 			return (
 				<SelectRowHeaderColumn>
-					<div onClick={() => { this.props.onSelectAllRow({currentTarget: {checked: !(this.props.isSelectAll === true)}}) }} className={classSet('input-check', {checked: this.props.isSelectAll === true})} />
+					<div onClick={() => { this.props.onSelectAllRow({currentTarget: {checked: !(this.props.isSelectAll === true)}}) }} className={classSet('react-bs-select-all input-check', {checked: this.props.isSelectAll === true})} />
 				</SelectRowHeaderColumn>
 			)
 		} else {

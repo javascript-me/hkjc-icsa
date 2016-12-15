@@ -46,15 +46,14 @@ export default React.createClass({
 	getCalendarFormat (field) {
 		const calendarFormat = (cell, row, enumObject, index) => {
 			let time = cell
-			
-			if(cell.indexOf('/') > 0) {
-				time = moment(cell,'DD/MM/YYYY').format('D MMM, YYYY')
+
+			if (cell.indexOf('/') > 0) {
+				time = moment(cell, 'DD/MM/YYYY').format('D MMM, YYYY')
 			}
 			const handleChang = (value) => {
-				
 				if (typeof (value) !== 'string') {
 					time = moment(value).format('DD/MM/YYYY')
-				} 
+				}
 				const next = _.cloneDeep(this.state.editUserDelegation)
 				next[index][field] = time
 				next[index].changeFlag = true
