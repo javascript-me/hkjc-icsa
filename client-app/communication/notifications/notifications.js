@@ -43,6 +43,7 @@ const updateAcknowledgeStatusById = async (username, id, command) => {
 	return notices
 }
 
+let refreshNoticesToken = null
 export default React.createClass({
 	propTypes: {
 		isSlim: React.PropTypes.bool
@@ -101,7 +102,39 @@ export default React.createClass({
 				}
 			})
 		})
+
+		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_TABLENOTICES, () => {
+			let userProfileData = LoginService.getProfile()
+			let noticePromiseSub = getAllNoticesPromise(userProfileData.username)
+
+			let allNoticesSub
+			let unreadNoticesSub
+			let _self = this
+
+			_self.setState({
+				displaySettings: userProfileData.noticeboardSettings.display || 'bottom'
+			})
+
+			noticePromiseSub.then((notices) => {
+				allNoticesSub = notices || []
+
+				unreadNoticesSub = allNoticesSub.filter((notice) => {
+					return notice.alert_status === 'New'
+				})
+
+				_self.setState({
+					noticeBoxData: {
+						allNotices: allNoticesSub,
+						unreadNotices: unreadNoticesSub
+					}
+				})
+			})
+		})
 	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(refreshNoticesToken)
+	},
+
 	openPopup () {
 		this.refs.notificationsPopup.show()
 	},
