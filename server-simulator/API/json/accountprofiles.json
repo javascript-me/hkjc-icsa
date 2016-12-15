@@ -118,12 +118,6 @@
 						"message": "K.O. / Start Time Update"
 					},
 					{
-						"message": "Venue Update"
-					},
-					{
-						"message": "Void Event"
-					},
-					{
 						"message": "Concluded Event"
 					}
 				]
@@ -133,9 +127,6 @@
 				"subscribedMessages": [
 					{
 						"message": "Participant Scratch"
-					},
-					{
-						"message": "K.O. / Start Time Update"
 					},
 					{
 						"message": "Venue Update"
@@ -161,9 +152,6 @@
 						"message": "Venue Update"
 					},
 					{
-						"message": "Void Event"
-					},
-					{
 						"message": "Concluded Event"
 					}
 				]
@@ -173,6 +161,12 @@
 				"subscribedMessages": [
 					{
 						"message": "Participant Scratch"
+					},
+					{
+						"message": "K.O. / Start Time Update"
+					},
+					{
+						"message": "Venue Update"
 					},
 					{
 						"message": "K.O. / Start Time Update"
