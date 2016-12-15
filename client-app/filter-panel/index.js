@@ -31,7 +31,8 @@ export default React.createClass({
 			filters: {},
 			originFilters: {},
 			filterHandles: {},
-			columnCount: 0
+			columnCount: 0,
+			existRequiredColumn: false
 		}
 	},
 	componentDidMount: function () {
@@ -45,7 +46,7 @@ export default React.createClass({
 	initialFiltersAndLayoutInfo: function () {
 		let maxColumnCount = 0
 		let panelOperateFn = row => {
-			this.iterateChilren(row, this.getDefaultFilter)
+			this.iterateChilren(row, this.getDefaultFilterInfo)
 			maxColumnCount = Math.max(maxColumnCount, row.props.children.length)
 		}
 
@@ -102,10 +103,11 @@ export default React.createClass({
 	iterateChilren: function (parent, operationFn) {
 		React.Children.forEach(parent.props.children, operationFn)
 	},
-	getDefaultFilter: function (column) {
+	getDefaultFilterInfo: function (column) {
 		let filters = this.state.filters
 		let filterName = column.props.filterName
 		let filterValue = column.props.filterValue
+		let isRequired = column.props.isRequired
 
 		if (this.existsDuplicateFilterName(filters, filterName)) {
 			throw new Error(
@@ -123,6 +125,17 @@ export default React.createClass({
 			filters: filters,
 			originFilters: _.clone(filters)
 		})
+
+		if (isRequired) {
+			this.setExistRequiredColumn()
+		}
+	},
+	setExistRequiredColumn () {
+		if (!this.state.existRequiredColumn) {
+			this.setState({
+				existRequiredColumn: true
+			})
+		}
 	},
 	existsDuplicateFilterName: function (filters, oneFilterName) {
 		return typeof filters[oneFilterName] !== 'undefined'
@@ -299,7 +312,9 @@ export default React.createClass({
 		if (this.state.hasError) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
-			return <span className='color-blue'>* These fields are mandatory</span>
+			return this.state.existRequiredColumn
+				? <span className='color-blue'>* These fields are mandatory</span>
+				: ''
 		}
 	},
 	render: function () {

@@ -82,11 +82,12 @@ class TableBody extends Component {
 						if (!React.isValidElement(formattedValue)) {
 							columnChild = <div dangerouslySetInnerHTML={{ __html: formattedValue }} />
 						} else {
-							columnChild = formattedValue
-							columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null
+							columnChild = formattedValue || this.props.nullValue
+							columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : this.props.nullValue
 						}
 					} else {
-						columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null
+						columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : this.props.nullValue
+						columnChild = columnChild || this.props.nullValue
 					}
 					return (
 						<TableColumn key={i}
@@ -295,11 +296,18 @@ class TableBody extends Component {
 	}
 
 	renderSelectRowColumn (selected, inputType, disabled, CustomComponent = null, rowIndex = null) {
+		let inputComp
+		if (CustomComponent) {
+			inputComp = <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
+		} else if (inputType === 'checkbox') {
+			inputComp = <div className={classSet('input-check', {checked: selected, disabled})} onClick={() => { this.handleSelectRowColumChange({currentTarget: {checked: !selected}}, rowIndex) }} />
+		} else {
+			inputComp = <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
+		}
+
 		return (
-			<TableColumn dataAlign='center' className='selectRowColumn'>{
-				CustomComponent ? <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
-								: <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
-			}
+			<TableColumn dataAlign='center' className='selectRowColumn'>
+				{inputComp}
 			</TableColumn>
 		)
 	}
@@ -332,6 +340,11 @@ TableBody.propTypes = {
 	selectRow: PropTypes.object,
 	trClassName: PropTypes.oneOfType([ PropTypes.string, PropTypes.func ]), // replace the propTypes.string
 	onRowMouseOut: PropTypes.func,
-	onRowMouseOver: PropTypes.func
+	onRowMouseOver: PropTypes.func,
+	nullValue: PropTypes.string
 }
+TableBody.defaultProps = {
+	nullValue: 'N/A'
+}
+
 export default TableBody

@@ -118,7 +118,7 @@ export default React.createClass({
 				})
 			}
 		} else {
-			PopupService.showSuggestBox('Error', 'You must select at least one delegation!')
+			PopupService.showSuggestBox('Warnning', 'You must select at least one delegation!')
 		}
 	},
 	deleteUserDelegation (ids) {
