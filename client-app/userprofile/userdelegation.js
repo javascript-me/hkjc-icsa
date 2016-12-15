@@ -11,7 +11,7 @@ import {TableComponent, TableHeaderColumn} from '../table'
 import AddDelegation from './adddelegation'
 
 const roleVeiw = (cell, row, enumObject, index) => {
-	let text = cell && cell.map((item) => (item.delegatedRole)).join(' ')
+	let text = cell && cell.map((item) => (item.delegatedRole)).join(', ')
 	return text
 }
 export default React.createClass({
@@ -226,10 +226,10 @@ export default React.createClass({
 					>
 						<TableHeaderColumn dataField='userName' dataSort>Username</TableHeaderColumn>
 						<TableHeaderColumn dataField='position' dataSort>Position</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegatedRoles' className='column-header' dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationFrom' className='column-header'>Date of Delegation From</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegationTo' className='column-header'>Date of Delegation To</TableHeaderColumn>
-						<TableHeaderColumn dataField='delegateStatus' className='column-header'>Delegation Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegatedRoles' dataSort dataFormat={roleVeiw}>Delegate Role</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationFrom' dataSort>Date of Delegation From</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegationTo' dataSort>Date of Delegation To</TableHeaderColumn>
+						<TableHeaderColumn dataField='delegateStatus' dataSort>Delegation Status</TableHeaderColumn>
 					</TableComponent>}
 				</div>
 			</div>
