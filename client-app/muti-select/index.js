@@ -11,10 +11,10 @@ class MutiSelect extends Component {
 			isFocus: false,
 			isAll: false,
 			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions),
-			selectText: (this.props.selectedOptions && this.props.selectedOptions.length) ? 
-			this.getSelectText(this.getInputSelectedOptionIndex(this.props.selectedOptions)) 
+			selectText: (this.props.selectedOptions && this.props.selectedOptions.length)
+			? this.getSelectText(this.getInputSelectedOptionIndex(this.props.selectedOptions))
 			: (this.props.placeHolder || defaultSelectText)
-			
+
 		}
 		this.onchange = this.onchange.bind(this)
 		this.pageClick = this.pageClick.bind(this)
@@ -114,7 +114,7 @@ class MutiSelect extends Component {
 		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null))
 		.filter(item => item).join(', ')
 		selectText = selectText.trim() === '' ? (this.props.placeHolder || defaultSelectText) : selectText
-		
+
 		return selectText
 	}
 	toggleAll () {

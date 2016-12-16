@@ -47,10 +47,10 @@ export default {
 	},
 	showSuggestBox (type, msg, onConfirm) {
 		let isSelectOption = {}
-		switch(type) {
-			case ('warnning') : { isSelectOption = {title: 'Warnning',textClass:'msg msgErr'} } break
-			case ('error') : { isSelectOption = {title: 'Error',textClass:'msg msgErr'} } break
-			case ('success') : { isSelectOption = {title: 'Success',textClass:'msg'} } break
+		switch (type) {
+		case ('warnning') : { isSelectOption = {title: 'Warnning', textClass: 'msg msgErr'} } break
+		case ('error') : { isSelectOption = {title: 'Error', textClass: 'msg msgErr'} } break
+		case ('success') : { isSelectOption = {title: 'Success', textClass: 'msg'} } break
 		}
 		const children = (
 			<div className={isSelectOption.textClass}>
