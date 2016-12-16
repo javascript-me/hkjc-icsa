@@ -59,19 +59,19 @@ export default React.createClass({
 		})
 		switch (true) {
 		case (errBox.roleErr) : {
-			PopupService.showSuggestBox('Warnning', 'You must select a role', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select a role', () => {})
 			return false
 		}
 		case (errBox.delegationToErr) : {
-			PopupService.showSuggestBox('Warnning', 'You must select  delegationTo date', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select  delegationTo date', () => {})
 			return false
 		}
 		case (errBox.delegationFromErr) : {
-			PopupService.showSuggestBox('Warnning', 'You must select  delegationFrom date', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select  delegationFrom date', () => {})
 			return false
 		}
 		case (errBox.smallerErr) : {
-			PopupService.showSuggestBox('Warnning', '"The time of Delegation To" should not be earlier than the "Time of Delegation From"', () => {})
+			PopupService.showSuggestBox('warnning', '"The time of Delegation To" should not be earlier than the "Time of Delegation From"', () => {})
 			return false
 		}
 		default : break
@@ -85,11 +85,11 @@ export default React.createClass({
 			let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
 
 			if (UpdateFlag.status) {
-				PopupService.showSuggestBox('Success', 'The operation has been proceeded successfully!', () => {
+				PopupService.showSuggestBox('success', 'The operation has been proceeded successfully!', () => {
 					this.getUserProfile()
 				})
 			} else {
-				PopupService.showSuggestBox('Error', 'Update fail,please contact the administrator', () => {
+				PopupService.showSuggestBox('error', 'Update fail,please contact the administrator', () => {
 					this.setState({
 						delegationUpdate: false
 					})
@@ -118,7 +118,7 @@ export default React.createClass({
 				})
 			}
 		} else {
-			PopupService.showSuggestBox('Warnning', 'You must select at least one delegation!')
+			PopupService.showSuggestBox('warnning', 'You must select at least one delegation!')
 		}
 	},
 	deleteUserDelegation (ids) {

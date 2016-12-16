@@ -133,7 +133,7 @@ export default React.createClass({
 	addNewRecord (user) {
 		let newUser = user || {userName: 'New User', position: 'new position'}
 		let newDelegationID = 'Delegate' + Math.floor((Math.random() * 1000000))
-		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'pedding', delegationID: newDelegationID, changeFlag: true})
+		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'Pending', delegationID: newDelegationID, changeFlag: true})
 		const next = _.cloneDeep(this.state.editUserDelegation)
 		newDelegate.isNewRecord = true
 		next.unshift(newDelegate)
