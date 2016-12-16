@@ -112,14 +112,15 @@ class NumberFilter extends Component {
 	render () {
 		const selectClass = classSet('select-filter', 'number-filter-input', 'form-control', { 'placeholder-selected': this.state.isPlaceholderSelected })
 		const defaultNumber = (this.props.defaultValue) ? this.props.defaultValue.number : ''
-		const renderOptions = (
-			<select ref='numberFilter' className={selectClass} onChange={this.onChangeNumberSet} defaultValue={defaultNumber}>
-				{ this.getNumberOptions() }
-			</select>
-		)
 
 		const inputText = <input ref='numberFilter' type='number' className='number-filter-input form-control' placeholder={this.props.placeholder || `Enter ${this.props.columnName}...`}
 			onChange={this.onChangeNumber} defaultValue={defaultNumber} />
+
+		const renderOptions = (this.props.options) ? (
+			<select ref='numberFilter' className={selectClass} onChange={this.onChangeNumberSet} defaultValue={defaultNumber}>
+				{ this.getNumberOptions() }
+			</select>
+		) : null
 
 		return (
 			<div className='filter number-filter'>
@@ -129,7 +130,7 @@ class NumberFilter extends Component {
 					defaultValue={(this.props.defaultValue) ? this.props.defaultValue.comparator : ''}>
 					{ this.getComparatorOptions() }
 				</select>
-				{ (this.props.options) ? renderOptions : inputText }
+				{ renderOptions || inputText }
 			</div>
 		)
 	}
