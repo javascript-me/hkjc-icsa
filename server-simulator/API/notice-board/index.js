@@ -99,7 +99,7 @@ router.get('/', (req, res) => {
 })
 
 /**
- * @api {POST} /notice-board/ Get notice board data with updating notice status by id
+ * @api {POST} /notice-board/update-acknowledge-status/ Get notice board data with updating notice status by id
  * @apiGroup NoticeBoard
 
  * @apiDescription Mock API for getting alerts and critical information results for notice board,
