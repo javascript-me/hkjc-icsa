@@ -83,10 +83,10 @@ class TableBody extends Component {
 							columnChild = <div dangerouslySetInnerHTML={{ __html: formattedValue }} />
 						} else {
 							columnChild = formattedValue || this.props.nullValue
-							columnTitle = column.columnTitle && formattedValue
+							columnTitle = column.columnTitle && formattedValue ? formattedValue : null
 						}
 					} else {
-						columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : this.props.nullValue
+						columnTitle = column.columnTitle && fieldValue ? fieldValue : null
 						columnChild = columnChild || this.props.nullValue
 					}
 					return (
