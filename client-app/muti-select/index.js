@@ -10,8 +10,11 @@ class MutiSelect extends Component {
 		this.state = {
 			isFocus: false,
 			isAll: false,
-			selectText: (this.props.selectedOptions && this.props.selectedOptions.length) ? this.getSelectText(this.props.selectedOptions) : (this.props.placeHolder || defaultSelectText),
-			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions)
+			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions),
+			selectText: (this.props.selectedOptions && this.props.selectedOptions.length) ? 
+			this.getSelectText(this.getInputSelectedOptionIndex(this.props.selectedOptions)) 
+			: (this.props.placeHolder || defaultSelectText)
+			
 		}
 		this.onchange = this.onchange.bind(this)
 		this.pageClick = this.pageClick.bind(this)
@@ -57,7 +60,7 @@ class MutiSelect extends Component {
 
 		this.setState({
 			selectedOptionIndex: selectedOptionsIndex,
-			selectText: this.getSelectText(selectedOptions),
+			selectText: this.getSelectText(selectedOptionsIndex),
 			isAll: this.isAllSelected(selectedOptionsIndex, nextProps.options)
 		})
 	}
@@ -111,7 +114,7 @@ class MutiSelect extends Component {
 		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null))
 		.filter(item => item).join(', ')
 		selectText = selectText.trim() === '' ? (this.props.placeHolder || defaultSelectText) : selectText
-
+		
 		return selectText
 	}
 	toggleAll () {
@@ -136,7 +139,7 @@ class MutiSelect extends Component {
 
 MutiSelect.propTypes = {
 	options: React.PropTypes.array.isRequired, // like [{label:'aaa',value:1},{label:'bbb',value:2}]
-	selectedOptions: React.PropTypes.array, // like [true, false, true, false], each 'true' element means the corresponding option is selected
+	selectedOptions: React.PropTypes.array, // like [{op1},{op2},{op3}]
 	placeHolder: React.PropTypes.string,
 	onChange: React.PropTypes.func, // like (result) => {dosth(result)} ,result is array of selected option's value [val1,val2...]
 	style: React.PropTypes.object // object custom the width and height...
