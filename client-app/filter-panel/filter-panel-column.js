@@ -38,7 +38,7 @@ export default React.createClass({
 	},
 	getInitialState: function () {
 		return {
-			isValid: true,
+			isValid: this.initialIsValid(),
 			showWarning: false,
 			filterValue: this.getDefaultStateFilterValue()
 		}
@@ -50,6 +50,11 @@ export default React.createClass({
 	},
 	componentWillUnmount: function () {
 
+	},	
+	initialIsValid: function() {
+		let isValid = this.verifyFilterValidation(this.props.filterValue)
+
+		return isValid
 	},
 	getDefaultStateFilterValue: function () {
 		if (this.props.ctrlType === 'multi-select') {
@@ -144,7 +149,7 @@ export default React.createClass({
 		}
 
 		// Step 3 check column by props.pairingVerify
-		if (isValid && filterValue && typeofPairingVerify === '[object Array]' && typeofPairingVerify.length) {
+		if (isValid && filterValue && typeofPairingVerify === '[object Array]' && pairingVerify.length) {
 			isValid = this.props.doPairingVerify(filterValue, this.props.ctrlType, pairingVerify)
 		}
 
