@@ -64,15 +64,15 @@ export default React.createClass({
 			return false
 		}
 		case (errBox.delegationToErr) : {
-			PopupService.showSuggestBox('warnning', 'You must select  delegationTo date', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select "The time of Delegation To"', () => {})
 			return false
 		}
 		case (errBox.delegationFromErr) : {
-			PopupService.showSuggestBox('warnning', 'You must select  delegationFrom date', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select "Time of Delegation From"', () => {})
 			return false
 		}
 		case (errBox.smallerErr) : {
-			PopupService.showSuggestBox('warnning', '"The time of Delegation To" should not be earlier than the "Time of Delegation From"', () => {})
+			PopupService.showSuggestBox('warnning', 'The "Time of Delegation To" should not be earlier than the "Time of Delegation From"', () => {})
 			return false
 		}
 		default : break
