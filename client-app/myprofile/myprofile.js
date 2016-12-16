@@ -17,6 +17,7 @@ export default React.createClass({
 		}
 		this.h1Title = 'My Profile'
 		return {
+			bAdmin: false,
 			delegationUpdate: false,
 			userBasic: {},
 			userAccount: {},
@@ -132,6 +133,7 @@ export default React.createClass({
 		})
 	},
 	render () {
+		let showEditBtn = this.state.bAdmin && !this.state.delegationUpdate
 		return (
 			<div ref='root' className='my-profile'>
 				<ProfileTabs h1Title={this.h1Title}>
@@ -144,7 +146,7 @@ export default React.createClass({
 
 						<ProfileButtons>
 							{this.state.delegationUpdate && (<button className='btn btn-danger' onClick={() => { this.onDeleteClick(this.refs.delegationCmp) }}>Delete</button>)}
-							{!this.state.delegationUpdate && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
+							{showEditBtn && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
 							{this.state.delegationUpdate && (<button className='btn btn-primary pull-right' onClick={() => { this.onUpdateClick(this.refs.delegationCmp) }}>Update</button>)}
 							{this.state.delegationUpdate && (<button className='btn btn-cancle pull-right' onClick={this.onCancelClick}>Cancel</button>)}
 						</ProfileButtons>
@@ -162,11 +164,18 @@ export default React.createClass({
 	async getUserProfile () {
 		const userProfile = await UserProfileService.getUserProfile({userID: this.userID})
 		if (userProfile) {
+			let bAdmin = false
+			userProfile.account.assignedUserRoles.forEach((item) => {
+				if (item.assignedUserRole.indexOf('Administrator') > -1) {
+					bAdmin = true
+				}
+			})
 			this.setState({
+				bAdmin,
 				delegationUpdate: false,
 				userBasic: userProfile.user,
 				userAccount: userProfile.account,
-				userDelegation: userProfile.account.delegationList,
+				userDelegation: bAdmin ? userProfile.account.delegationList : null,
 				userSubscription: userProfile.account.subscribedCategoryMessages
 			})
 		}
