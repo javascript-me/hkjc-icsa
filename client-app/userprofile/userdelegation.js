@@ -133,7 +133,7 @@ export default React.createClass({
 	addNewRecord (user) {
 		let newUser = user || {userName: 'New User', position: 'new position'}
 		let newDelegationID = 'Delegate' + Math.floor((Math.random() * 1000000))
-		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'pedding', delegationID: newDelegationID, changeFlag: true})
+		const newDelegate = Object.assign({}, newUser, {userName: newUser.displayName}, {delegateStatus: 'Pending', delegationID: newDelegationID, changeFlag: true})
 		const next = _.cloneDeep(this.state.editUserDelegation)
 		newDelegate.isNewRecord = true
 		next.unshift(newDelegate)
@@ -170,6 +170,8 @@ export default React.createClass({
 		const delegation = delegationShow.getDelegation()
 		if (delegation) {
 			this.addNewRecord(delegation)
+		} else {
+			this.onAddClick(this.refs.warning)
 		}
 	},
 	render () {
@@ -202,7 +204,7 @@ export default React.createClass({
 	renderNormal (tableData) {
 		const { delegationUpdate } = this.props
 		return (
-			<div ref='root' className='user-delegation mid-overlay' style={{width: '600px'}}>
+			<div ref='root' className='user-delegation mid-overlay'>
 				<div className='header'>
 					<h2>User Delegation</h2>
 					<div className={classNames('action', {hidden: !this.props.delegationUpdate})} onClick={() => { this.onAddClick(this.refs.addDelegation) }}>
@@ -210,6 +212,11 @@ export default React.createClass({
 					</div>
 					<Popup hideOnOverlayClicked ref='addDelegation' title='Add Delegation' onConfirm={() => { this.onAddDelegation(this.refs.delegationShow) }} confirmBtn='Add'>
 						<AddDelegation ref='delegationShow' />
+					</Popup>
+					<Popup hideOnOverlayClicked ref='warning' title='Warning' showCancel={false} confirmBtn='Ok'>
+						<div className='comments'>
+							<p className='warning'>You haven't added a user. Please select one.</p>
+						</div>
 					</Popup>
 				</div>
 				<div className='tableComponent-container content user-delegation-table' >
