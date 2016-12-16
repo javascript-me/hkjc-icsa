@@ -3,10 +3,11 @@ import { mount, shallow } from 'enzyme'
 import { TableHeaderColumn, TableComponent } from './'
 import chai from 'chai'
 import chaiEnzyme from 'chai-enzyme'
+import moment from 'moment'
 
 chai.use(chaiEnzyme()) // Note the invocation at the en
 
-const data = [ {user: '1', name: '1', age: 5, expand: [1, 2, 3, 4]}, {user: '2', name: '2', age: 6, expand: [1, 2, 3, 4]} ]
+const data = [ {user: '1', name: '1', age: 5, date: moment(), expand: [1, 2, 3, 4]}, {user: '2', name: '2', age: 6, expand: [1, 2, 3, 4], date: moment()} ]
 describe('Table', () => {
 	// To allow the functions adjustWidth, adjustHeight
 	global.getComputedStyle = function () { return { scrollWidth: 100, width: '100px', fontSize: '14px', fontFamily: 'Roboto Regular' } }
@@ -58,6 +59,35 @@ describe('Table', () => {
 			lastPage: 'Last', // Last page button text
 			// hideSizePerPage: true, // You can hide the dropdown for sizePerPage
 			onPageChange: onChange
+		}
+
+		const table = mount(
+			<TableComponent data={data} keyField='user' pagination options={options}>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='age'>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-table-container').children()).to.have.length(2)
+		expect(table.find('.react-bs-table').children()).to.have.length(2)
+
+		table.find('.react-bs-table-pagination .pagination .page-link').first().simulate('click')
+		expect(onChange.callCount).to.be.equals(1)
+	})
+
+	it('Render with Normal Pagination', () => {
+		const onChange = sinon.spy()
+		const options = {
+			page: 2,  // which page you want to show as default
+			sizePerPage: 1,  // the pagination bar size.
+			prePage: 'Prev', // Previous page button text
+			nextPage: 'Next', // Next page button text
+			firstPage: 'First', // First page button text
+			lastPage: 'Last', // Last page button text
+			// hideSizePerPage: true, // You can hide the dropdown for sizePerPage
+			onPageChange: onChange,
+			showMinimalView: false
 		}
 
 		const table = mount(
@@ -177,6 +207,60 @@ describe('Table', () => {
 		expect(table.find('.react-bs-table-container').children()).to.have.length(2)
 		expect(table.find('.react-bs-table').children()).to.have.length(2)
 		expect(table.find('.react-bs-container-body tr td div').last().text()).to.be.equals('Adult')
+	})
+
+	it('Render with Filter Type Text/Number', () => {
+		const table = mount(
+			<TableComponent data={data} hover keyField='user' pagination>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name' filter={{ type: 'TextFilter', defaultValue: '1' }}>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='age' filter={{ type: 'NumberFilter', numberComparators: [ '=', '>', '<=' ] }}>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-table-container').children()).to.have.length(2)
+		expect(table.find('.react-bs-table').children()).to.have.length(2)
+		expect(table.find('.react-bs-container-header input.text-filter')).to.have.length(1)
+		expect(table.find('.react-bs-container-header input.text-filter')).to.have.value('1')
+		expect(table.find('.react-bs-container-header .number-filter-comparator')).to.have.length(1)
+		expect(table.find('.react-bs-container-header .number-filter-input')).to.have.length(1)
+		expect(table.find('.react-bs-container-body tr')).to.have.length(1)
+	})
+
+	it('Render with Filter Type Date/Regex with Moment', () => {
+		const dateParse = (cell, row) => { return row.date.format('YYYY-MM-DD') }
+		const table = mount(
+			<TableComponent data={data} hover keyField='user' pagination>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name' filter={{ type: 'RegexFilter', defaultValue: '1' }}>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='date' dataFormat={dateParse} filter={{ type: 'DateFilter' }}>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-table-container').children()).to.have.length(2)
+		expect(table.find('.react-bs-table').children()).to.have.length(2)
+		expect(table.find('.react-bs-container-header input.date-filter-input')).to.have.length(1)
+		expect(table.find('.react-bs-container-header select.date-filter-comparator')).to.have.length(1)
+		expect(table.find('.react-bs-container-header .text-filter')).to.have.length(1)
+		expect(table.find('.react-bs-container-header .text-filter')).to.have.value('1')
+		expect(table.find('.react-bs-container-body tr')).to.have.length(1)
+	})
+
+	it('Render with ColumnFilter', () => {
+		const selectRowProp = {
+			mode: 'checkbox'
+		}
+		const table = mount(
+			<TableComponent data={data} hover keyField='user' pagination columnFilter selectRow={selectRowProp}>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='age'>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-table-container').children()).to.have.length(3)
+		expect(table.find('.react-bs-table').children()).to.have.length(2)
+		expect(table.find('.react-bs-table-container table.table .th-inner')).to.have.length(3)
 	})
 
 	it('Render with Specific With', () => {
