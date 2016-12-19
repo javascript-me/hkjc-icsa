@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import LoginService from '../login/login-service'
 import {PopupService} from '../popup'
 import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
@@ -6,9 +6,6 @@ import {campareTime} from '../userprofile/userdelegation.js'
 
 export default React.createClass({
 	displayName: 'MyProfile',
-	propTypes: {
-		someProp: PropTypes.bool
-	},
 	getInitialState () {
 		let profile = LoginService.getProfile()
 		this.userID = ''
