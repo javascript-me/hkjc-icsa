@@ -48,7 +48,7 @@ export default React.createClass({
 		let panelOperateFn = row => {
 			this.iterateChilren(row, this.getDefaultFilterInfo)
 
-			maxColumnCount = Math.max(maxColumnCount, row.props.children.length)
+			maxColumnCount = Math.max(maxColumnCount, row.props.children.length || 0)
 		}
 
 		this.iterateChilren(this, panelOperateFn)
