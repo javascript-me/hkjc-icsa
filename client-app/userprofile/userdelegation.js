@@ -38,11 +38,6 @@ export default React.createClass({
 		const editUserDelegation = _.cloneDeep(this.props.userDelegation)
 		return {userDelegation: this.props.userDelegation, editUserDelegation}
 	},
-	getCheckboxFormat (cell, row) {
-		return (
-			<input type='checkbox' value={row.checkbox} onClick={() => { row.checkbox = !row.checkbox }} />
-		)
-	},
 	getCalendarFormat (field) {
 		const calendarFormat = (cell, row, enumObject, index) => {
 			let time = cell
