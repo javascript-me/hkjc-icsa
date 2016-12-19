@@ -162,6 +162,21 @@ export default React.createClass({
 			return 'bottom-noticeboard-container'
 		}
 	},
+
+	getBroadcastClassName () {
+		if (this.state.displaySettings === 'right') {
+			return 'right-broadcast-container'
+		}
+		return 'bottom-broadcast-container'
+	},
+
+	getNoticeAndBroadcastClassName () {
+		if (this.state.displaySettings === 'right') {
+			return 'right-notice-and-broadcast'
+		}
+		return 'bottom-notice-and-broadcast'
+	},
+
 	changeTab (key) {
 		if (key === 'All') {
 			this.setState({
@@ -277,21 +292,37 @@ export default React.createClass({
 						message_detail={this.state.detail.message_detail} />
 				</Popup>
 
-				<div className={this.getClassName()}>
-					<div className='header-container'>
-						<div className='pull-right'>
-							<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-							<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+				<div className={this.getNoticeAndBroadcastClassName()}>
+					<div className={this.getClassName()}>
+						<div className='header-container'>
+							<div className='pull-right'>
+								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+							</div>
+							<div className='container-title'>
+								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+								<span className='header-title'>{this.getHeadTitle()}</span>
+							</div>
 						</div>
-						<div className='container-title'>
-							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>{this.getHeadTitle()}</span>
+						<div className='messages-container'>
+							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
+							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
 						</div>
 					</div>
-					<div className='messages-container'>
-						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+
+					<div className={this.getBroadcastClassName()}>
+						<div className='header-container'>
+							<div className='pull-right'>
+								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+							</div>
+							<div className='container-title'>
+								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+								<span className='header-title'>{'Broadcast'}</span>
+							</div>
+						</div>
+						<div className='messages-container' />
 					</div>
 				</div>
 			</div>
