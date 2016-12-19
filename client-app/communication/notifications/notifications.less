@@ -1,10 +1,22 @@
-.bottom-noticeboard-container {
+.bottom-notice-and-broadcast {
 	position: absolute;
+	bottom: 0;
 	width: 100%;
-	bottom: 1px;
-	min-width: 750px;
 	z-index: @communicationPanel;
+	min-width: 1500px;
+}
 
+.right-notice-and-broadcast {
+	width: 288px;
+	position: fixed;
+	bottom: 0;
+	top: 103px; /*Height of Systembar + height of Menubar*/
+	right: 0;
+	z-index: @communicationPanel;
+}
+
+.bottom-noticeboard-container,
+.bottom-broadcast-container {
 	.header-container {
 		width: 100%;
 		height: 40px;
@@ -53,18 +65,13 @@
 	}
 }
 
-.top-gap {
-	top: 81px !important;
+.bottom-noticeboard-container {
+	width: 50%;
+	float: left;
 }
 
-.right-noticeboard-container {
-	width: 288px;
-	position: fixed;
-	bottom: 0;
-	top: 103px; /*Height of Systembar + height of Menubar*/
-	right: 0;
-	z-index: @communicationPanel;
-
+.right-noticeboard-container,
+.right-broadcast-container {
 	.header-container {
 		width: 100%;
 		height: 40px;
@@ -104,5 +111,26 @@
 		width: 100%;
 		height: 100%;
 		background: #FFFFFF;
+
+		.list-box-right {
+			bottom: 50%;
+		}
 	}
+}
+
+.right-noticeboard-container {
+	height: 50%;
+}
+
+.bottom-broadcast-container {
+	width: 50%;
+	float: right;
+}
+
+.right-broadcast-container {
+	height: 50%;
+}
+
+.top-gap {
+	top: 81px !important;
 }
