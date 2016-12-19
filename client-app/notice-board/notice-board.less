@@ -17,7 +17,11 @@
 
 	.btn-primary {
 		font-size: 16px;
-		padding: 8px 24px;
+		background-image: none;
+		min-width: 100px;
+		padding-right: 20px;
+		padding-left: 20px;
+		height: 40px;
 
 		&.disabled {
 			opacity: 1;
@@ -197,26 +201,16 @@
 }
 
 .noticeboard-popup-spestyle {
-	.popup-wrapper {
-		.popup-dialog {
-			.panel-body {
-				padding: 0 15px 30px;
-				background-color: #F8F8F8;
-			}
-
-			.popup-actions {
-				padding: 0 30px;
-
-				.popup-button {
-					margin-right: 0;
-					padding: 0 12px;
-					line-height: 40px;
-				}
-			}
+	.notice-detail-box {
+		.detail-labels {
+			margin: -15px -15px 0 -15px;
+			width: auto;
 		}
+	}
 
-		.close-icon-span {
-			margin-right: 5px;
+	.close-icon-span {
+		.close-icon {
+			padding: 0;
 		}
 	}
 }
