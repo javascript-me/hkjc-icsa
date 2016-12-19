@@ -45,9 +45,15 @@ export default {
 			onCancel
 		})
 	},
-	showSuggestBox (title, msg, onConfirm) {
+	showSuggestBox (type, msg, onConfirm) {
+		let isSelectOption = {}
+		switch (type) {
+		case ('warnning') : { isSelectOption = {title: 'Warnning', textClass: 'msg msgErr'} } break
+		case ('error') : { isSelectOption = {title: 'Error', textClass: 'msg msgErr'} } break
+		case ('success') : { isSelectOption = {title: 'Success', textClass: 'msg'} } break
+		}
 		const children = (
-			<div className='msg'>
+			<div className={isSelectOption.textClass}>
 				<p>{msg}</p>
 			</div>
 		)
@@ -57,7 +63,8 @@ export default {
 		}
 
 		this.showCustom({
-			title: title,
+			title: isSelectOption.title,
+			confirmBtn: 'Close',
 			children,
 			showCancel: false,
 			onConfirm
