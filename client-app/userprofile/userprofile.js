@@ -50,7 +50,7 @@ export default React.createClass({
 		})
 	},
 	onUpdateClick () {
-		if (this.refs.accountCmp.verifyData()) {
+		if (this.refs.accountCmp && this.refs.accountCmp.verifyData()) {
 			// console.log(this.refs.accountCmp.getData())
 			// this.setState({accountUpdate: false})
 
@@ -89,10 +89,10 @@ export default React.createClass({
 						<UserDelegation userDelegation={this.state.userDelegation} delegationUpdate={false} />
 
 						<ProfileButtons>
-							{this.state.accountUpdate && (<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>)}
-							{!this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
-							{this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onUpdateClick}>Update</button>)}
-							{this.state.accountUpdate && (<button className='btn btn-cancle pull-right' onClick={this.onCancelClick}>Cancel</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-danger profile-btn-reset' onClick={this.onResetClick}>Reset</button>)}
+							{!this.state.accountUpdate && (<button className='btn btn-primary pull-right profile-btn-edit' onClick={this.onEditClick}>Edit</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-primary pull-right profile-btn-update' onClick={this.onUpdateClick}>Update</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-cancle pull-right profile-btn-cancel' onClick={this.onCancelClick}>Cancel</button>)}
 						</ProfileButtons>
 					</ProfileContainer>
 

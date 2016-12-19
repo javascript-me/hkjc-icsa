@@ -20,6 +20,9 @@ export default {
 		globalPopupCmp = popupCmp
 	},
 	showCustom (options) {
+		if (!globalPopupCmp) {
+			return
+		}
 		globalPopupCmp.setCustom(options)
 		globalPopupCmp.show()
 	},
