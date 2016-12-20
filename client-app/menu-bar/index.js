@@ -41,7 +41,6 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
-		this.toggleActions = this.toggleActions.bind(this)
 		this.updateNoticeboardVisible = this.updateNoticeboardVisible.bind(this)
 		this.updateBroadcastVisible = this.updateBroadcastVisible.bind(this)
 		this.updateTaskVisible = this.updateTaskVisible.bind(this)
@@ -69,14 +68,6 @@ class MenuBar extends Component {
 
 	updateTaskVisible () {
 		this.setState({taskVisible: !this.state.taskVisible})
-	}
-
-	toggleActions () {
-		if (this.state.toggleActions) {
-			this.setState({ toggleActions: false })
-		} else {
-			this.setState({ toggleActions: true })
-		}
 	}
 
 	render () {
@@ -122,12 +113,7 @@ class MenuBar extends Component {
 									: ''
 							}
 						</i>
-<<<<<<< HEAD
-						<i className='icon-notification tips' onClick={this.toggleActions}>
-=======
-
 						<i className='icon-notification tips' onClick={this.updateTaskVisible}>
->>>>>>> db83aaaef92a92ca5fb84521431ea8e1dd3175fc
 							<img src='icon/icon-action.svg' />
 							{
 								this.state.tipsNum > 0
@@ -137,16 +123,11 @@ class MenuBar extends Component {
 						</i>
 					</div>
 				</div>
-<<<<<<< HEAD
-				{ this.state.showHideNotifications ? <Notifications isSlim={this.state.slimMode} /> : null }
-				{ this.state.toggleActions ? <Actions isSlim={this.state.slimMode} /> : null }
-=======
 				<Notifications isSlim={this.state.slimMode}
 					noticeboardVisible={this.state.noticeboardVisible}
 					broadcastVisible={this.state.broadcastVisible}
 					taskVisible={this.state.taskVisible}
 				/>
->>>>>>> db83aaaef92a92ca5fb84521431ea8e1dd3175fc
 			</div>)
 	}
 
