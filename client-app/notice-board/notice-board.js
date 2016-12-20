@@ -247,6 +247,12 @@ export default React.createClass({
 			case 'keyword':
 				filterDisplayText = `${filter.name}: ${filter.value}`
 				break
+			case 'dateTimeFrom':
+				filterDisplayText = `From: ${filter.value}`
+				break
+			case 'dateTimeTo':
+				filterDisplayText = `To: ${filter.value}`
+				break
 			case 'priority':
 				filterDisplayText = this.combineAttributesFromObjectArray(filter.value, 'label', ', ')
 				break
@@ -280,21 +286,18 @@ export default React.createClass({
 			}
 			return filterDisplayText
 		}
-		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
 		let keywordFilter = {
 			name: 'keyword',
 			value: this.state.selectedKeyword
 		}
+		let defaultDateTimeFrom = getOrginDateTimeFrom()
+		let defaultDateTimeTo = getOrginDateTimeTo()
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
 		})[0] || {}
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
 		})[0] || {}
-		let dateRangeFilter = {
-			name: 'dateTimeFrom,dateTimeTo',
-			value: `${dateFromFilter.value} - ${dateToFilter.value}`
-		}
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
@@ -305,7 +308,8 @@ export default React.createClass({
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
-			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
+			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
+			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
 		let filterBlockes = filtersArray.map((f, index) => {
 			return <FilterBlock
@@ -329,7 +333,8 @@ export default React.createClass({
 		case 'keyword':
 			this.removeKeywordFilter(filter, callback)
 			break
-		case 'dateTimeFrom,dateTimeTo':
+		case 'dateTimeFrom':
+		case 'dateTimeTo':
 			this.removeDateRangeFilter(filter, callback)
 			break
 		default:
@@ -345,16 +350,17 @@ export default React.createClass({
 			selectedFilters: selectedFilters
 		}, callback)
 	},
-	removeDateRangeFilter: function (dateRange, callback) {
+	removeDateRangeFilter: function (dateTime, callback) {
 		let selectedFilters = this.state.selectedFilters
-		let originDateRange = this.state.originDateRange
+
 		selectedFilters.forEach((filter) => {
-			if (filter.name === 'dateTimeFrom') {
-				filter.value = originDateRange.dateTimeFrom
-			} else if (filter.name === 'dateTimeTo') {
-				filter.value = originDateRange.dateTimeTo
+			if (filter.name === 'dateTimeFrom' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeFrom()
+			} else if (filter.name === 'dateTimeTo' && filter.name === dateTime.name) {
+				filter.value = getOrginDateTimeTo()
 			}
 		})
+
 		this.setState({
 			selectedFilters: selectedFilters
 		}, callback)
@@ -407,14 +413,14 @@ export default React.createClass({
 		})
 	},
 	statusFormatter (cell, row) {
-		if (cell === 'Acknowledged') return <img src='notice-board/Tick.svg' />
-		return <img src='notice-board/Mail.svg' />
+		if (cell === 'Acknowledged') return <span><img src='notice-board/Tick.svg' /></span>
+		return <span><img src='notice-board/Mail.svg' /></span>
 	},
 	priorityFormatter (cell, row) {
-		if (cell === 'Critical') return <img src='notice-board/Critical.svg' title='Critical' />
-		if (cell === 'High') return <img src='notice-board/High.svg' title='High' />
-		if (cell === 'Medium') return <img src='notice-board/Medium.svg' title='Medium' />
-		if (cell === 'Low') return <img src='notice-board/Low.svg' title='Low' />
+		if (cell === 'Critical') return <span><img src='notice-board/Critical.svg' title='Critical' /></span>
+		if (cell === 'High') return <span><img src='notice-board/High.svg' title='High' /></span>
+		if (cell === 'Medium') return <span><img src='notice-board/Medium.svg' title='Medium' /></span>
+		if (cell === 'Low') return <span><img src='notice-board/Low.svg' title='Low' /></span>
 	},
 	detailFormatter (cell, row) {
 		if (row.priority === 'Critical') return <span className='critical-message-detail'>{cell}</span>
@@ -460,10 +466,10 @@ export default React.createClass({
 
 	doAcknowledgement (id, alertStatus) {
 		let userProfile = LoginService.getProfile()
-
 		let criteriaOption = this.getSearchCriterias()
 
 		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
+		PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 	},
 
 	render () {
@@ -516,13 +522,11 @@ export default React.createClass({
 											filterTitle='Distribution Time From'
 											filterValue={this.state.originDateRange.dateTimeFrom}
 											ctrlType='calendar'
-											isRequired
 											pairingVerify={[{operation: '<=', partners: ['dateTimeTo']}]} />
 										<FilterPanelColumn filterName='dateTimeTo'
 											filterTitle='Distribution Time To'
 											filterValue={this.state.originDateRange.dateTimeTo}
 											ctrlType='calendar'
-											isRequired
 											pairingVerify={[{operation: '>=', partners: ['dateTimeFrom']}]} />
 										<FilterPanelColumn filterName='sportsType' filterTitle='Sports Type'
 											ctrlType='multi-select' dataSource={NoticeboardService.sportsList} />

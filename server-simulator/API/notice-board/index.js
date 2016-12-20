@@ -98,6 +98,28 @@ router.get('/', (req, res) => {
 	res.send(result)
 })
 
+/**
+ * @api {POST} /notice-board/update-acknowledge-status/ Get notice board data with updating notice status by id
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API for getting alerts and critical information results for notice board,
+ * before sending response, we will also update notice status by given id.
+ *
+ * @apiParam {String} username Username of current user.
+ * @apiParam {String} id Unique id of notice.
+ * @apiParam {String} command Action need to take. It will be either "Acknowledge" or "Unacknowledge".
+ *
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} id A1
+ * @apiSuccess (Success) {String} command Acknowledge
+ *
+ * @apiSuccessExample Success response
+ *        HTTP/1.1 200 OK
+ *        [
+ *            // alerts and critical informations array
+ *        ]
+ *
+ */
 router.post('/update-acknowledge-status', (req, res) => {
 	let userName = req.body.username
 	let id = req.body.id
@@ -143,12 +165,9 @@ router.post('/update-table-acknowledge-status', (req, res) => {
 	const username = req.body.username
 
 	NoticeBoardUtil.updateAcknowledgeStatusById(jsonAlerts[username], id, command)
+	NoticeBoardUtil.updateAcknowledgeStatusById(jsonCriticalInformations[username], id, command)
+	cloneNotices = getRecentlySixMonthNoticesByUserName(jsonAlerts, jsonCriticalInformations, username)
 
-	if (req.body.username === 'allgood') {
-		cloneNotices = jsonAlerts[username]
-	} else {
-		cloneNotices = jsonAlerts[username]
-	}
 	let status = 200
 	const filteredNotices = NoticeBoardUtil.doFilter(cloneNotices,
 		req.body.keyword,
