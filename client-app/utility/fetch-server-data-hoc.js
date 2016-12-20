@@ -7,7 +7,7 @@ const FetchServerDataHoc = (FetchApi, mapDataToProps) => (Cmp) => {
 	let getDataFunc
 	type = type === 'post' ? 'post' : 'get'
 	switch (type) {
-	case ('post') : getDataFunc = Fetch(url, {method: 'POST', body: data}); break
+	case ('post') : getDataFunc = () => Fetch(url, {method: 'POST', body: data}); break
 	case ('get') : getDataFunc = () => Fetch(url); break
 	default : break
 	}
