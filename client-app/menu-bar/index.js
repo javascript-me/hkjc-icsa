@@ -7,6 +7,8 @@ import menuData from './menuBarData.js'
 import EventDirectory from '../eventdirectory/eventdirectory'
 import Notifications from '../communication/notifications/notifications'
 import NotificationsService from '../communication/notifications/notifications-service'
+import Actions from '../communication/actions/actions'
+import ActionsService from '../communication/actions/actions-service'
 
 let loginChangeToken = null
 let refreshNoticesToken = null
@@ -40,6 +42,7 @@ class MenuBar extends Component {
 		super(props)
 		this.displayName = 'Menu-Bar'
 		this.showHideNotifications = this.showHideNotifications.bind(this)
+		this.toggleActions = this.toggleActions.bind(this)
 		this.state = {
 			slimMode: false,
 			showNotifications: false,
@@ -55,6 +58,14 @@ class MenuBar extends Component {
 			this.setState({ showHideNotifications: false })
 		} else {
 			this.setState({ showHideNotifications: true })
+		}
+	}
+
+	toggleActions () {
+		if (this.state.toggleActions) {
+			this.setState({ toggleActions: false })
+		} else {
+			this.setState({ toggleActions: true })
 		}
 	}
 
@@ -93,7 +104,7 @@ class MenuBar extends Component {
 							}
 
 						</i>
-						<i className='icon-notification tips'>
+						<i className='icon-notification tips' onClick={this.toggleActions}>
 							<img src='icon/icon-action.svg' />
 							{
 								this.state.tipsNum > 0
@@ -104,6 +115,7 @@ class MenuBar extends Component {
 					</div>
 				</div>
 				{ this.state.showHideNotifications ? <Notifications isSlim={this.state.slimMode} /> : null }
+				{ this.state.toggleActions ? <Actions isSlim={this.state.slimMode} /> : null }
 			</div>)
 	}
 
