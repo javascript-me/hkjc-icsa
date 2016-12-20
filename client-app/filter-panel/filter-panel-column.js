@@ -38,20 +38,25 @@ export default React.createClass({
 	},
 	getInitialState: function () {
 		return {
-			isValid: this.initialIsValid(),
+			isValid: true,
 			showWarning: false,
-			filterValue: this.getDefaultStateFilterValue()
+			filterValue: undefined
 		}
 	},
 	componentDidMount: function () {
 		let p = this.props
 
+		this.setState({
+			isValid: this.initialIsValid(),
+			filterValue: this.getDefaultStateFilterValue()
+		})
+
 		p.registerColumnHandles(p.filterName, this.generateResetHandle(), this.generateSetValidHandle(), this.generateShowErrorHandle())
 	},
 	componentWillUnmount: function () {
 
-	},	
-	initialIsValid: function() {
+	},
+	initialIsValid: function () {
 		let isValid = this.verifyFilterValidation(this.props.filterValue)
 
 		return isValid

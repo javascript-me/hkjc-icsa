@@ -2,7 +2,6 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 
 import Calendar from '../calendar'
-import SelectCom from '../select/select'
 import MultiSelect from '../muti-select'
 
 import FilterPanelColumn from './filter-panel-column'
@@ -36,7 +35,7 @@ describe('<FilterPanelColumn /> component', () => {
 
 	describe('check default value of state,', () => {
 		it('when props.ctrlType is blank', () => {
-			const textboxFilterPanelColumn = shallow(<FilterPanelColumn filterName='filter1' filterTitle='Filter 1' />)
+			const textboxFilterPanelColumn = mount(<FilterPanelColumn filterName='filter1' filterTitle='Filter 1' />)
 
 			expect(textboxFilterPanelColumn.state('isValid')).to.be.true
 			expect(textboxFilterPanelColumn.state('showWarning')).to.be.false
@@ -44,7 +43,7 @@ describe('<FilterPanelColumn /> component', () => {
 		})
 
 		it('when props.ctrlType is "multi-select"', () => {
-			const multiSelectFilterPanelColumn = shallow(<FilterPanelColumn filterName='filter2' filterTitle='Filter 2' ctrlType='multi-select' dataSource={selectDataSource} />)
+			const multiSelectFilterPanelColumn = mount(<FilterPanelColumn filterName='filter2' filterTitle='Filter 2' ctrlType='multi-select' dataSource={selectDataSource} />)
 
 			expect(multiSelectFilterPanelColumn.instance().props.ctrlType).to.equal('multi-select')
 			expect(multiSelectFilterPanelColumn.state('filterValue')).to.deep.equal([])
@@ -56,7 +55,7 @@ describe('<FilterPanelColumn /> component', () => {
 			const inputFilterName = 'filter1'
 			const inputFilterTitle = 'Filter 1'
 			const inputFilterValue = 'filter value 1'
-			const filterPanelColumn = shallow(<FilterPanelColumn filterName={inputFilterName} filterTitle={inputFilterTitle} filterValue={inputFilterValue} />)
+			const filterPanelColumn = mount(<FilterPanelColumn filterName={inputFilterName} filterTitle={inputFilterTitle} filterValue={inputFilterValue} />)
 			const filterTitleLabel = filterPanelColumn.find('div.form-group label.column-title')
 			const filterTitleDisplay = filterTitleLabel.text()
 			const filterPanelColumnInstance = filterPanelColumn.instance()
@@ -86,11 +85,11 @@ describe('<FilterPanelColumn /> component', () => {
 		}
 		const inputFilterName = 'filter1'
 		const inputFilterTitle = 'Filter 1'
-		const inputFilterValue = 'filter value 1'		
+		const inputFilterValue = 'filter value 1'
 
 		it('initial by input properties', () => {
 			registedInfoCache = {}
-			
+
 			const filterPanelColumn = mount(<FilterPanelColumn
 				filterName={inputFilterName}
 				filterTitle={inputFilterTitle}
@@ -104,7 +103,7 @@ describe('<FilterPanelColumn /> component', () => {
 
 		it('state.isValid will change after trigger setValid handle which registed outside', () => {
 			registedInfoCache = {}
-			
+
 			const filterPanelColumn = mount(<FilterPanelColumn
 				filterName={inputFilterName}
 				filterTitle={inputFilterTitle}
@@ -120,7 +119,7 @@ describe('<FilterPanelColumn /> component', () => {
 
 		it('state.showWarning will be true after trigger showError handle which registed outside', () => {
 			registedInfoCache = {}
-			
+
 			const filterPanelColumn = mount(<FilterPanelColumn
 				filterName={inputFilterName}
 				filterTitle={inputFilterTitle}
@@ -133,7 +132,7 @@ describe('<FilterPanelColumn /> component', () => {
 
 		it('state will reset as props.filterValue after trigger reset handle which registed outside', () => {
 			registedInfoCache = {}
-			
+
 			let newFilterValue = 'new filter value 1'
 			const filterPanelColumn = mount(<FilterPanelColumn
 				filterName={inputFilterName}
@@ -176,8 +175,6 @@ describe('<FilterPanelColumn /> component', () => {
 			expect(filterPanelColumnInstance.props.ctrlType).to.equal('textbox')
 			expect(filterPanelColumn.find('input[type="text"]')).to.have.length(1)
 			expect(filterPanelColumn.find('input[type="text"]').prop('value')).to.equal(filterValue)
-
-
 		})
 
 		it('when props.ctrlType is select', () => {
@@ -188,7 +185,7 @@ describe('<FilterPanelColumn /> component', () => {
 			expect(filterPanelColumnInstance.props.ctrlType).to.equal('select')
 			expect(filterPanelColumn.find('select')).to.have.length(1)
 			expect(filterPanelColumn.find('select option')).to.have.length(selectDataSource.length + 1)
-			expect(filterPanelColumn.find('select').prop('value')).to.equal(filterValue)			
+			expect(filterPanelColumn.find('select').prop('value')).to.equal(filterValue)
 		})
 
 		it('when props.ctrlType is multi-select', () => {
@@ -239,7 +236,7 @@ describe('<FilterPanelColumn /> component', () => {
 			}
 			const changeHandle = sinon.spy()
 			const filterPanelColumn = mount(<FilterPanelColumn filterName={filterName} filterTitle='Filter 1' filterValue={filterValue} onChange={changeHandle} />)
-			
+
 			filterPanelColumn.find('input').simulate('change', e)
 
 			expect(filterPanelColumn.state('filterValue')).to.equal(changedFilterValue)
@@ -257,14 +254,14 @@ describe('<FilterPanelColumn /> component', () => {
 				}
 			}
 			const changeHandle = sinon.spy()
-			const filterPanelColumn = mount(<FilterPanelColumn 
-				filterName={filterName} 
-				filterTitle='Filter 1' 
-				ctrlType='select' 
-				filterValue={filterValue} 
-				onChange={changeHandle} 
+			const filterPanelColumn = mount(<FilterPanelColumn
+				filterName={filterName}
+				filterTitle='Filter 1'
+				ctrlType='select'
+				filterValue={filterValue}
+				onChange={changeHandle}
 				dataSource={selectDataSource} />)
-			
+
 			filterPanelColumn.find('select').simulate('change', e)
 
 			expect(filterPanelColumn.state('filterValue')).to.equal(changedFilterValue)
@@ -284,14 +281,14 @@ describe('<FilterPanelColumn /> component', () => {
 			}]
 			let allSelectedOptions = filterValue.concat(selectedFilterValue)
 			const changeHandle = sinon.spy()
-			const filterPanelColumn = mount(<FilterPanelColumn 
-				filterName={filterName} 
-				filterTitle='Filter 1' 
-				ctrlType='multi-select' 
-				dataSource={selectDataSource} 
-				filterValue={filterValue} 
+			const filterPanelColumn = mount(<FilterPanelColumn
+				filterName={filterName}
+				filterTitle='Filter 1'
+				ctrlType='multi-select'
+				dataSource={selectDataSource}
+				filterValue={filterValue}
 				onChange={changeHandle} />)
-			
+
 			filterPanelColumn.find('div.option').last().simulate('click')
 
 			expect(filterPanelColumn.state('filterValue')).to.deep.equal(allSelectedOptions)
@@ -302,14 +299,13 @@ describe('<FilterPanelColumn /> component', () => {
 		it('when props.ctrlType is calendar', () => {
 			jsdom()
 			let filterValue = '05 Oct 2016 00:00'
-			let firstDayOfCurrentCalendar = '28 Sep 2016 00:00'
 			const changeHandle = sinon.spy()
-			const filterPanelColumn = mount(<FilterPanelColumn 
-				filterName='filter1' 
-				filterTitle='Filter 1' 
-				ctrlType='calendar' 
-				filterValue={filterValue} 
-				onChange={changeHandle}/>)
+			const filterPanelColumn = mount(<FilterPanelColumn
+				filterName='filter1'
+				filterTitle='Filter 1'
+				ctrlType='calendar'
+				filterValue={filterValue}
+				onChange={changeHandle} />)
 			const calendar = filterPanelColumn.find(Calendar)
 
 			calendar.find('.input-group').simulate('click')
@@ -337,10 +333,10 @@ describe('<FilterPanelColumn /> component', () => {
 				}
 			}
 			let customReg = /^valid$/
-			const filterPanelColumn = mount(<FilterPanelColumn 
-				filterName={filterName} 
-				filterTitle='Filter 1' 
-				filterValue={filterValue} 
+			const filterPanelColumn = mount(<FilterPanelColumn
+				filterName={filterName}
+				filterTitle='Filter 1'
+				filterValue={filterValue}
 				customVerification={customReg} />)
 
 			expect(filterPanelColumn.state('isValid')).to.be.false
@@ -370,10 +366,10 @@ describe('<FilterPanelColumn /> component', () => {
 			let customVerifyFunc = filterValue => {
 				return filterValue === 'valid'
 			}
-			const filterPanelColumn = mount(<FilterPanelColumn 
-				filterName={filterName} 
-				filterTitle='Filter 1' 
-				filterValue={filterValue} 
+			const filterPanelColumn = mount(<FilterPanelColumn
+				filterName={filterName}
+				filterTitle='Filter 1'
+				filterValue={filterValue}
 				customVerification={customVerifyFunc} />)
 
 			expect(filterPanelColumn.state('isValid')).to.be.true
@@ -426,40 +422,39 @@ describe('<FilterPanelColumn /> component', () => {
 			}]
 			const doPairingVerifyFunc = (filterValue, ctrlType, pairingVerify) => {
 				let isValid = true
-				let me = this
 				let operation
 				let partners
 
-				if(!pairingVerify || !pairingVerify.length) {
-					return isValid;
+				if (!pairingVerify || !pairingVerify.length) {
+					return isValid
 				}
 
 				pairingVerifyCount = pairingVerify.length
 
-				pairingVerify.every(function(verify) {
+				pairingVerify.every((verify) => {
 					operation = verify.operation
 					partners = verify.partners
 
-					partners.every(function(partner) {
+					partners.every((partner) => {
 						switch (operation) {
-							case '>':
-								isValid = filterValue > partnersValue[partner]
-								break
-							case '>=':
-								isValid = filterValue >= partnersValue[partner]
-								break
-							case '==':
-								isValid = filterValue == partnersValue[partner]
-								break
-							case '<=':
-								isValid = filterValue <= partnersValue[partner]
+						case '>':
+							isValid = filterValue > partnersValue[partner]
+							break
+						case '>=':
+							isValid = filterValue >= partnersValue[partner]
+							break
+						case '==':
+							isValid = filterValue === partnersValue[partner]
+							break
+						case '<=':
+							isValid = filterValue <= partnersValue[partner]
 
-								break
-							case '<':
-								isValid = filterValue < partnersValue[partner]
-								break
-							default:
-								break
+							break
+						case '<':
+							isValid = filterValue < partnersValue[partner]
+							break
+						default:
+							break
 						}
 
 						return isValid
@@ -470,10 +465,10 @@ describe('<FilterPanelColumn /> component', () => {
 
 				return isValid
 			}
-			const filterPanelColumn = mount(<FilterPanelColumn 
-				filterName={filterName} 
-				filterTitle='Filter 1' 
-				filterValue={filterValue} 
+			const filterPanelColumn = mount(<FilterPanelColumn
+				filterName={filterName}
+				filterTitle='Filter 1'
+				filterValue={filterValue}
 				pairingVerify={pairingVerifySetting}
 				doPairingVerify={doPairingVerifyFunc} />)
 

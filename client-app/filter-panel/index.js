@@ -35,9 +35,13 @@ export default React.createClass({
 			existRequiredColumn: false
 		}
 	},
-	componentDidMount: function () {
+
+	componentWillMount: function () {
 		this.initialFiltersAndLayoutInfo()
 		this.initialComponentSubscription()
+	},
+
+	componentDidMount: function () {
 	},
 
 	componentWillUnmount: function () {
@@ -127,12 +131,12 @@ export default React.createClass({
 			originFilters: _.clone(filters)
 		})
 
-		if(isRequired) {
+		if (isRequired) {
 			this.setExistRequiredColumn()
 		}
 	},
-	setExistRequiredColumn() {
-		if(!this.state.existRequiredColumn) {
+	setExistRequiredColumn () {
+		if (!this.state.existRequiredColumn) {
 			this.setState({
 				existRequiredColumn: true
 			})
@@ -291,7 +295,7 @@ export default React.createClass({
 			break
 		}
 
-		if (!isValid && typeof destSetValidHandle === 'function') {
+		if (typeof destSetValidHandle === 'function') {
 			destSetValidHandle(isValid)
 		}
 
@@ -313,8 +317,8 @@ export default React.createClass({
 		if (this.state.hasError) {
 			return <span className='color-red'>* Invalid fields are highlighted in red</span>
 		} else {
-			return this.state.existRequiredColumn 
-				? <span className='color-blue'>* These fields are mandatory</span> 
+			return this.state.existRequiredColumn
+				? <span className='color-blue'>* These fields are mandatory</span>
 				: ''
 		}
 	},
