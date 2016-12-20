@@ -25,7 +25,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setMinutes(0)
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
-	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeFrom)
 }
 
 const getOrginDateTimeTo = function () {
@@ -35,7 +35,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setMinutes(59)
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
-	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeTo)
 }
 
 const getDefaultSelectedFilters = () => {
@@ -125,10 +125,26 @@ export default React.createClass({
 	},
 
 	getSearchCriterias: function () {
+		let returnFilters = []
+		let filterValue
+
+		this.state.selectedFilters.forEach(function(filter) {
+			if(filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo') {
+				filterValue = filter.value.format('DD MMM YYYY HH:mm')
+			} else {
+				filterValue = filter.value
+			}
+
+			returnFilters.push({
+				name: filter.name,
+				value: filterValue
+			})
+		})
+
 		return {
 			betType: this.state.betType,
 			keyword: this.state.selectedKeyword,
-			filters: this.state.selectedFilters
+			filters: returnFilters
 		}
 	},
 
@@ -260,6 +276,7 @@ export default React.createClass({
 		this.hideMoreFilter()
 
 		let newFilters = []
+		let newFilterValue
 
 		for (let attr in filters) {
 			newFilters.push({
@@ -275,8 +292,7 @@ export default React.createClass({
 		})
 	},
 
-	checkIsDateRangeNotChanged: function () {
-		let filters = this.state.selectedFilters
+	checkIsDateRangeNotChanged: function (filters) {
 		let originDateRange = this.state.originDateRange
 		let dateTimeFrom
 		let dateTimeTo
@@ -289,7 +305,7 @@ export default React.createClass({
 			}
 		}
 
-		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
+		return dateTimeFrom.isSame(originDateRange.dateTimeFrom) && dateTimeTo.isSame(originDateRange.dateTimeTo)
 	},
 
 	openPopup: function () {
@@ -330,7 +346,7 @@ export default React.createClass({
 				: filter.value
 		}
 
-		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged(filters)
 		let keywordFilter = {
 			name: 'keyword',
 			value: this.state.selectedKeyword
@@ -343,7 +359,7 @@ export default React.createClass({
 		})[0] || {}
 		let dateRangeFilter = {
 			name: 'dateTimeFrom,dateTimeTo',
-			value: `${dateFromFilter.value} - ${dateToFilter.value}`
+			value: `${dateFromFilter.value.format('DD MMM YYYY HH:mm')} - ${dateToFilter.value.format('DD MMM YYYY HH:mm')}`
 		}
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
