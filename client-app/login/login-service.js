@@ -2,7 +2,7 @@ import _ from 'underscore'
 import PubSub from '../pubsub'
 import Session from '../session'
 
-let profile = Session.getProfile();
+let profile = Session.getProfile()
 
 const postLogin = (data) => {
 	return $.post('api/users/login', data)
