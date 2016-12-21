@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
@@ -291,14 +291,14 @@ describe('<Audit /> component', () => {
 
 			stateDateTimeFrom = auditlog.state('selectedFilters').filter((f) => {
 				return f.name === 'dateTimeFrom'
-			})[0] || {}
+			})[0] || null
 
 			stateDateTimeTo = auditlog.state('selectedFilters').filter((f) => {
 				return f.name === 'dateTimeTo'
-			})[0] || {}
+			})[0] || null
 
-			expect(stateDateTimeFrom.value.isSame(auditlog.state('originDateRange').dateTimeFrom)).to.be.true
-			expect(stateDateTimeTo.value.isSame(auditlog.state('originDateRange').dateTimeTo)).to.be.true
+			expect(!stateDateTimeFrom || stateDateTimeFrom.value.isSame(auditlog.state('originDateRange').dateTimeFrom)).to.be.true
+			expect(!stateDateTimeTo || stateDateTimeTo.value.isSame(auditlog.state('originDateRange').dateTimeTo)).to.be.true
 		})
 
 		it('will return the exact filter in state.selectedFilters', () => {
@@ -336,7 +336,7 @@ describe('<Audit /> component', () => {
 			const auditlog = shallow(<Audit />)
 			const originDateRange = auditlog.state('originDateRange')
 			const defaultDateFrom = originDateRange.dateTimeFrom
-			let changedDateFrom = defaultDateFrom.add('1', 'seconds')
+			let changedDateFrom = Moment(defaultDateFrom).add('1', 'seconds')
 			let isDateRangeNotChanged
 
 			auditlog.instance().setFilters({
@@ -344,7 +344,6 @@ describe('<Audit /> component', () => {
 			})
 
 			isDateRangeNotChanged = auditlog.instance().checkIsDateRangeNotChanged(auditlog.state('selectedFilters'))
-
 			expect(isDateRangeNotChanged).to.be.false
 		})
 	})

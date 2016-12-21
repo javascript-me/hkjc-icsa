@@ -255,10 +255,10 @@ export default React.createClass({
 		}
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
-		})[0] || {}
+		})[0] || null
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
-		})[0] || {}
+		})[0] || null
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
@@ -268,8 +268,8 @@ export default React.createClass({
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
-			.concat(dateFromFilter.value.isSame(defaultDateTimeFrom) ? [] : [dateFromFilter])
-			.concat(dateToFilter.value.isSame(defaultDateTimeTo) ? [] : [dateToFilter])
+			.concat((!dateFromFilter || dateFromFilter.value.isSame(defaultDateTimeFrom)) ? [] : [dateFromFilter])
+			.concat((!dateToFilter || dateToFilter.value.isSame(defaultDateTimeTo)) ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
 
 		let filterBlockes = filtersArray.map((f, index) => {
