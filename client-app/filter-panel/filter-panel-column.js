@@ -100,12 +100,10 @@ export default React.createClass({
 		// If origin typeof filterValue is string, should transform the date into string type and post to handleChange
 		if (typeof this.props.filterValue === 'string') {
 			formattedDate = date.format('DD MMM YYYY HH:mm')
-		}
-		else if (this.props.filterValue instanceof Moment) {
+		} else if (this.props.filterValue instanceof Moment) {
 			// If origin typeof filterValue is Moment, just post parameter date to handleChange
 			formattedDate = date
-		}
-		else {
+		} else {
 			formattedDate = date
 		}
 

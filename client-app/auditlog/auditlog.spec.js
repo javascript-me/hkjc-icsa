@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
@@ -209,15 +209,13 @@ describe('<Audit /> component', () => {
 	})
 
 	describe('#getSearchCriterias()', () => {
-		it('return value will equals attributes in state', () => {
+		it('return value will partial equals attributes in state', () => {
 			const auditlog = shallow(<Audit />)
 			let searchCriterias = auditlog.instance().getSearchCriterias()
 
-			expect(searchCriterias).to.deep.equal({
-				betType: auditlog.state('betType'),
-				keyword: auditlog.state('keyword'),
-				filters: auditlog.state('selectedFilters')
-			})
+			expect(searchCriterias.betType).to.equal(auditlog.state('betType'))
+			expect(searchCriterias.keyword).to.equal(auditlog.state('keyword'))
+			expect(searchCriterias.filters).to.not.deep.equal(auditlog.state('selectedFilters'))
 		})
 	})
 
@@ -283,10 +281,10 @@ describe('<Audit /> component', () => {
 			auditlog.setState({
 				selectedFilters: [{
 					name: 'dateTimeFrom',
-					value: '05 Oct 2016 00:00'
+					value: Moment('05 Oct 2016 00:00', 'DD MMM YYYY HH:mm')
 				}, {
 					name: 'dateTimeTo',
-					value: '07 Dec 2016 23:59'
+					value: Moment('07 Dec 2016 23:59', 'DD MMM YYYY HH:mm')
 				}]
 			})
 			auditlog.instance().removeSearchCriteriaFilter(filter)
@@ -299,8 +297,8 @@ describe('<Audit /> component', () => {
 				return f.name === 'dateTimeTo'
 			})[0] || {}
 
-			expect(stateDateTimeFrom.value).to.equal(auditlog.state('originDateRange').dateTimeFrom)
-			expect(stateDateTimeTo.value).to.equal(auditlog.state('originDateRange').dateTimeTo)
+			expect(stateDateTimeFrom.value.isSame(auditlog.state('originDateRange').dateTimeFrom)).to.be.true
+			expect(stateDateTimeTo.value.isSame(auditlog.state('originDateRange').dateTimeTo)).to.be.true
 		})
 
 		it('will return the exact filter in state.selectedFilters', () => {
@@ -327,9 +325,9 @@ describe('<Audit /> component', () => {
 	})
 
 	describe('#checkIsDateRangeNotChanged()', () => {
-		it('returns false initial', () => {
+		it('returns true initial', () => {
 			const auditlog = shallow(<Audit />)
-			const isDateRangeNotChanged = auditlog.instance().checkIsDateRangeNotChanged()
+			const isDateRangeNotChanged = auditlog.instance().checkIsDateRangeNotChanged(auditlog.state('selectedFilters'))
 
 			expect(isDateRangeNotChanged).to.be.true
 		})
@@ -338,14 +336,14 @@ describe('<Audit /> component', () => {
 			const auditlog = shallow(<Audit />)
 			const originDateRange = auditlog.state('originDateRange')
 			const defaultDateFrom = originDateRange.dateTimeFrom
-			let changedDateFrom = Moment(defaultDateFrom, 'DD MMM YYYY HH:mm').add('1', 'seconds')
+			let changedDateFrom = defaultDateFrom.add('1', 'seconds')
 			let isDateRangeNotChanged
 
 			auditlog.instance().setFilters({
 				dateTimeFrom: changedDateFrom
 			})
 
-			isDateRangeNotChanged = auditlog.instance().checkIsDateRangeNotChanged()
+			isDateRangeNotChanged = auditlog.instance().checkIsDateRangeNotChanged(auditlog.state('selectedFilters'))
 
 			expect(isDateRangeNotChanged).to.be.false
 		})

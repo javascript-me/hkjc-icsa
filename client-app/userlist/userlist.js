@@ -26,7 +26,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
 	dateTimeFrom.setFullYear(2015)
-	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeFrom)
 }
 
 const getOrginDateTimeTo = function () {
@@ -37,7 +37,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
 	dateTimeTo.setFullYear(2018)
-	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeTo)
 }
 
 const defaultDateFrom = getOrginDateTimeFrom()
@@ -205,9 +205,25 @@ export default React.createClass({
 	},
 
 	getSearchCriterias: function () {
+		let returnFilters = []
+		let filterValue
+
+		this.state.selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo') {
+				filterValue = filter.value.format('DD MMM YYYY HH:mm')
+			} else {
+				filterValue = filter.value
+			}
+
+			returnFilters.push({
+				name: filter.name,
+				value: filterValue
+			})
+		})
+
 		return {
 			keyword: this.state.selectedKeyword,
-			filters: this.state.selectedFilters
+			filters: returnFilters
 		}
 	},
 
@@ -220,10 +236,10 @@ export default React.createClass({
 				filterDisplayName = `${filter.name}: ${filter.value}`
 				break
 			case 'dateTimeFrom':
-				filterDisplayName = `From: ${filter.value}`
+				filterDisplayName = `From: ${filter.value.format('DD MMM YYYY HH:mm')}`
 				break
 			case 'dateTimeTo':
-				filterDisplayName = `To: ${filter.value}`
+				filterDisplayName = `To: ${filter.value.format('DD MMM YYYY HH:mm')}`
 				break
 			}
 
@@ -252,8 +268,8 @@ export default React.createClass({
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
-			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
-			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
+			.concat(dateFromFilter.value.isSame(defaultDateTimeFrom) ? [] : [dateFromFilter])
+			.concat(dateToFilter.value.isSame(defaultDateTimeTo) ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
 
 		let filterBlockes = filtersArray.map((f, index) => {
@@ -297,13 +313,7 @@ export default React.createClass({
 	},
 
 	render () {
-		// let moreFilterContianerClassName = classnames('more-filter-popup', {
-		// 	'active': this.state.isShowingMoreFilter
-		// })
-
 		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
-
-		// {this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
 
 		return <div className='row userlist-page'>
 			<div className='page-header'>

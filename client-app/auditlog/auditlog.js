@@ -128,8 +128,8 @@ export default React.createClass({
 		let returnFilters = []
 		let filterValue
 
-		this.state.selectedFilters.forEach(function(filter) {
-			if(filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo') {
+		this.state.selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo') {
 				filterValue = filter.value.format('DD MMM YYYY HH:mm')
 			} else {
 				filterValue = filter.value
@@ -276,7 +276,6 @@ export default React.createClass({
 		this.hideMoreFilter()
 
 		let newFilters = []
-		let newFilterValue
 
 		for (let attr in filters) {
 			newFilters.push({
@@ -305,7 +304,8 @@ export default React.createClass({
 			}
 		}
 
-		return dateTimeFrom.isSame(originDateRange.dateTimeFrom) && dateTimeTo.isSame(originDateRange.dateTimeTo)
+		return (!dateTimeFrom || dateTimeFrom.isSame(originDateRange.dateTimeFrom)) &&
+			(!dateTimeTo || dateTimeTo.isSame(originDateRange.dateTimeTo))
 	},
 
 	openPopup: function () {
@@ -353,13 +353,16 @@ export default React.createClass({
 		}
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
-		})[0] || {}
+		})[0] || null
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
-		})[0] || {}
+		})[0] || null
+
+		let formattedDateFrom = dateFromFilter ? dateFromFilter.value.format('DD MMM YYYY HH:mm') : ''
+		let formattedDateTo = dateToFilter ? dateToFilter.value.format('DD MMM YYYY HH:mm') : ''
 		let dateRangeFilter = {
 			name: 'dateTimeFrom,dateTimeTo',
-			value: `${dateFromFilter.value.format('DD MMM YYYY HH:mm')} - ${dateToFilter.value.format('DD MMM YYYY HH:mm')}`
+			value: `${formattedDateFrom} - ${formattedDateTo}`
 		}
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
