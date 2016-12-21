@@ -1,4 +1,5 @@
 import React from 'react'
+import Moment from 'moment'
 import Calendar from '../calendar'
 import SelectCom from '../select/select'
 import MultiSelect from '../muti-select'
@@ -100,8 +101,21 @@ export default React.createClass({
 
 		this.handleChange(this.props.filterName, e.target.value)
 	},
+	/*
+		@date {Moment} The new value provide by Calendar Component.
+	*/
 	handleDateChange: function (date) {
-		let formattedDate = date.format('DD MMM YYYY HH:mm')
+		let formattedDate
+
+		// If origin typeof filterValue is string, should transform the date into string type and post to handleChange
+		if (typeof this.props.filterValue === 'string') {
+			formattedDate = date.format('DD MMM YYYY HH:mm')
+		} else if (this.props.filterValue instanceof Moment) {
+			// If origin typeof filterValue is Moment, just post parameter date to handleChange
+			formattedDate = date
+		} else {
+			formattedDate = date
+		}
 
 		this.setState({
 			filterValue: formattedDate
