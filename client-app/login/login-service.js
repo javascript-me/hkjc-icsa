@@ -24,6 +24,10 @@ const postUpdateNoticeBoardSettings = (data) => {
 	return $.post('api/users/updateNoticeBoardDisplaySettings', data)
 }
 
+const postUpdateTaskSettings = (data) => {
+	return $.post('api/users/updateTaskDisplaySettings', data)
+}
+
 export default {
 	hasProfile () {
 		return !!profile
@@ -54,9 +58,13 @@ export default {
 	},
 	getNoticeBoardSettings (profile) {
 		profile = profile || getProfile()
-
 		return (profile && profile.noticeboardSettings) ? profile.noticeboardSettings : {}
 	},
+	getTaskSettings (profile) {
+		profile = profile || getProfile()
+		return (profile && profile.taskSettings) ? profile.taskSettings : {}
+	},
+
 	async updateNoticeBoardSettings (username, display) {
 		let result = null
 		try {
@@ -67,6 +75,18 @@ export default {
 		}
 		return result
 	},
+
+	async updateTaskSettings (username, display) {
+		let result = null
+		try {
+			profile = await postUpdateTaskSettings({username, display})
+			result = getProfile()
+		} catch (failure) {
+
+		}
+		return result
+	},
+
 	logout () {
 		profile = null
 		Session.setProfile(null)

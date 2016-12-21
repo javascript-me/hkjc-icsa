@@ -1,28 +1,27 @@
 import React from 'react'
-import LoginService from '../login/login-service'
-const settings = { BOTTOM: 'bottom', RIGHT: 'right' }
+
+const positions = { BOTTOM: 'bottom', RIGHT: 'right' }
+
 export default React.createClass({
-	displayName: 'NoticeboardPopup',
+
 	propTypes: {
-		onChange: React.PropTypes.func
+		onChange: React.PropTypes.func,
+		setting: React.PropTypes.string
 	},
-	getInitialState () {
-		return {setting: LoginService.getNoticeBoardSettings().display}
-	},
-	onSettingChange (e) {},
+
 	changeSetting (e) {
-		this.setState({ setting: e.currentTarget.attributes['value'].nodeValue })
 		if (this.props.onChange) {
 			this.props.onChange(e.currentTarget.attributes['value'].nodeValue)
 		}
 	},
+
 	render () {
 		return (
 			<div className='noticeboard-content'>
 				<div className='panel-position-header setting-label'>Panel Position</div>
 				<div className='pull-left bottom-radio-container'>
-					<span className='radio-inline' onClick={this.changeSetting} value={settings.BOTTOM}>
-						<input id='bottom' name='setting' type='radio' value={settings.BOTTOM} checked={this.state.setting === settings.BOTTOM} />
+					<span className='radio-inline' onClick={this.changeSetting} value={positions.BOTTOM}>
+						<input id='bottom' name='setting' type='radio' value={positions.BOTTOM} checked={this.props.setting === positions.BOTTOM} />
 						Bottom
 					</span>
 					<div className='style-div'>
@@ -33,8 +32,8 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='pull-right right-radio-container'>
-					<span className='radio-inline' onClick={this.changeSetting} value={settings.RIGHT}>
-						<input id='righ' name='setting' type='radio' value={settings.RIGHT} checked={this.state.setting === settings.RIGHT} />
+					<span className='radio-inline' onClick={this.changeSetting} value={positions.RIGHT}>
+						<input id='righ' name='setting' type='radio' value={positions.RIGHT} checked={this.props.setting === positions.RIGHT} />
 						Right
 					</span>
 					<div className='style-div'>

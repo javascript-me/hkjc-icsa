@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="card-/-task_high" transform="translate(-16.000000, -71.000000)">
+            <g id="noticeboard-/-high-priority">
+                <g id="Group-2" transform="translate(16.000000, 71.000000)">
+                    <polygon id="Triangle-2" fill="#FFB205" points="7.5 0 15 15 0 15"></polygon>
+                    <text id="!" font-family="Roboto-Bold, Roboto" font-size="12" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="6" y="14">!</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
