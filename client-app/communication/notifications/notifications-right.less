@@ -1,0 +1,84 @@
+@communicationPanelWidth: 288px;
+@slimMenuHeight: 81px;
+@normalMenuHeight: 103px;
+
+.vertical-two-panels {
+	position: fixed;
+	top: @normalMenuHeight;
+	right: 0;
+	z-index: @communicationLayer;
+}
+
+.right-noticeboard-container,
+.right-broadcast-container,
+.right-task-container {
+	width: @communicationPanelWidth;
+
+	.header-container {
+		width: 100%;
+		height: 40px;
+		background: #305091;
+
+		div {
+			span {
+				padding-right: 5px;
+			}
+		}
+
+		.container-title {
+			.header-title {
+				font-family: Roboto-Medium;
+				font-size: 14px;
+				color: #FFFFFF;
+				line-height: 18px;
+			}
+		}
+
+		.noticeboard-icon-container {
+			padding: 10px;
+			display: inline-block;
+		}
+
+		.noticeboard-list-container {
+			display: inline-block;
+		}
+
+		.noticeboard-settings-container {
+			padding: 10px 25px 1px 5px;
+			display: inline-block;
+		}
+	}
+
+	.messages-container {
+		width: 100%;
+		background: #FFFFFF;
+	}
+}
+
+.right-noticeboard-container,
+.right-broadcast-container {
+	position: relative;
+}
+
+.right-task-container {
+	position: fixed;
+	top: @normalMenuHeight;
+	right: 0;
+	z-index: @communicationLayer;
+}
+
+.right-task-panel-gap {
+	right: @communicationPanelWidth;
+}
+
+.slim-gap {
+	top: @slimMenuHeight !important;
+}
+
+.half-height {
+	height: 50%;
+}
+
+.full-height {
+	height: 100%;
+}
