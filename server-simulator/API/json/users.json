@@ -13,6 +13,9 @@
 			},
 			"noticeboardSettings": {
 				"display": "bottom"
+			},
+			"taskSettings": {
+				"display": "bottom"
 			}
 		}
 	},
@@ -29,6 +32,9 @@
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
 			"noticeboardSettings": {
+				"display": "right"
+			},
+			"taskSettings": {
 				"display": "right"
 			}
 		}
@@ -92,6 +98,9 @@
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
 			"noticeboardSettings": {
+				"display": "right"
+			},
+			"taskSettings": {
 				"display": "right"
 			}
 		}
