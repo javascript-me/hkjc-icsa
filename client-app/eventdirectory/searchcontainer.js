@@ -49,7 +49,7 @@ export default React.createClass({
 	async getResult (service, searchParam) {
 		const result = await service.getEventDirectoryResult(searchParam)
 		if (result) {
-			this.setState({result: result.result})
+			this.setState({result})
 		}
 	}
 })
