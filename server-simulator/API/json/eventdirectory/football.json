@@ -1,0 +1,528 @@
+{
+	"events": [
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "Assigned",
+			"alert0": true,
+			"t1": "MUN",
+			"t1Tip": "Manchester United",
+			"t2": "EVE",
+			"t2Tip": "Everton"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "Major",
+			"t1": "CRY",
+			"t1Tip": "Crystal Palace",
+			"t2": "CHE",
+			"t2Tip": "Chelsea"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "EVE",
+			"t1Tip": "Everton",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "Assigned",
+			"alert0": true,
+			"t1": "MUN",
+			"t1Tip": "Manchester United",
+			"t2": "CRY",
+			"t2Tip": "Crystal Palace"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "SOU",
+			"t2Tip": "Southampton"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "LIV",
+			"t2Tip": "Liverpool"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "Defined",
+			"alert0": true,
+			"t1": "SOU",
+			"t1Tip": "Southampton",
+			"t2": "LIV",
+			"t2Tip": "Liverpool"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "Defined",
+			"alert0": true,
+			"t1": "SOU",
+			"t1Tip": "Southampton",
+			"t2": "LIV",
+			"t2Tip": "Liverpool"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "FA Cup"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "FA Cup"
+			},
+			"status": "In-Play",
+			"t1": "MUN",
+			"t1Tip": "Manchester United",
+			"t2": "EVE",
+			"t2Tip": "Everton"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "FA Cup"
+			},
+			"status": "In-Play",
+			"t1": "CRY",
+			"t1Tip": "Crystal Palace",
+			"t2": "CHE",
+			"t2Tip": "Chelsea"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "FA Cup"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League Cup"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League Cup"
+			},
+			"status": "In-Play",
+			"t1": "MUN",
+			"t1Tip": "Manchester United",
+			"t2": "EVE",
+			"t2Tip": "Everton"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League Cup"
+			},
+			"status": "In-Play",
+			"t1": "CRY",
+			"t1Tip": "Crystal Palace",
+			"t2": "CHE",
+			"t2Tip": "Chelsea"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League Cup"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League Cup"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Championship"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Championship"
+			},
+			"status": "In-Play",
+			"t1": "MUN",
+			"t1Tip": "Manchester United",
+			"t2": "EVE",
+			"t2Tip": "Everton"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Championship"
+			},
+			"status": "In-Play",
+			"t1": "CRY",
+			"t1Tip": "Crystal Palace",
+			"t2": "CHE",
+			"t2Tip": "Chelsea"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "Championship"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League 1"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League 1"
+			},
+			"status": "In-Play",
+			"t1": "MUN",
+			"t1Tip": "Manchester United",
+			"t2": "EVE",
+			"t2Tip": "Everton"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League 1"
+			},
+			"status": "In-Play",
+			"t1": "CRY",
+			"t1Tip": "Crystal Palace",
+			"t2": "CHE",
+			"t2Tip": "Chelsea"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League 2"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League 2"
+			},
+			"status": "In-Play",
+			"t1": "MUN",
+			"t1Tip": "Manchester United",
+			"t2": "EVE",
+			"t2Tip": "Everton"
+		},
+		{
+			"level1Info": {
+				"name": "England"
+			},
+			"level2Info": {
+				"name": "League 2"
+			},
+			"status": "In-Play",
+			"t1": "CRY",
+			"t1Tip": "Crystal Palace",
+			"t2": "CHE",
+			"t2Tip": "Chelsea"
+		},
+		{
+			"level1Info": {
+				"name": "Spain"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "Spain"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "Spain"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "Spain"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "SOU",
+			"t1Tip": "Southampton",
+			"t2": "LIV",
+			"t2Tip": "Liverpool"
+		},
+		{
+			"level1Info": {
+				"name": "Germany"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "Germany"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "Germany"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "SOU",
+			"t1Tip": "Southampton",
+			"t2": "LIV",
+			"t2Tip": "Liverpool"
+		},
+		{
+			"level1Info": {
+				"name": "Italy"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "Italy"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "Italy"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "SOU",
+			"t1Tip": "Southampton",
+			"t2": "LIV",
+			"t2Tip": "Liverpool"
+		},
+		{
+			"level1Info": {
+				"name": "France"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "ARS",
+			"t1Tip": "Arsenal",
+			"t2": "ASV",
+			"t2Tip": "Aston Villa"
+		},
+		{
+			"level1Info": {
+				"name": "France"
+			},
+			"level2Info": {
+				"name": "Premier League"
+			},
+			"status": "In-Play",
+			"t1": "SOU",
+			"t1Tip": "Southampton",
+			"t2": "LIV",
+			"t2Tip": "Liverpool"
+		}
+	]
+}
