@@ -21,12 +21,12 @@ global.jsdom() // When I (binghu) removed this invoke from my test file, I found
 // emulate sessionStorage, cause it's not done in the jsdom
 window.localStorage = window.sessionStorage = {
 	getItem: function (key) {
-		return this[key];
+		return this[key]
 	},
 	setItem: function (key, value) {
-		this[key] = value;
+		this[key] = value
 	}
-};
+}
 
 global.waitFor = (fn) => {
 	return async (done) => {

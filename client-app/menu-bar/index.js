@@ -7,8 +7,6 @@ import menuData from './menuBarData.js'
 import EventDirectory from '../eventdirectory/eventdirectory'
 import Notifications from '../communication/notifications/notifications'
 import NotificationsService from '../communication/notifications/notifications-service'
-import Actions from '../communication/actions/actions'
-import ActionsService from '../communication/actions/actions-service'
 
 let loginChangeToken = null
 let refreshNoticesToken = null
