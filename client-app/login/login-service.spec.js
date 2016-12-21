@@ -10,8 +10,8 @@ const user = {
 describe('LoginService', () => {
 	// reset profile in the session before every test
 	beforeEach(() => {
-		Session.setProfile(null);
-	});
+		Session.setProfile(null)
+	})
 
 	describe('#getProfile', () => {
 		it('returns cloned profile', () => {
@@ -68,7 +68,7 @@ describe('LoginService', () => {
 
 			rewire()
 
-			expect(Session.getProfile()).to.be.null;
+			expect(Session.getProfile()).to.be.null
 			expect(result).to.be.null
 		})
 	})
