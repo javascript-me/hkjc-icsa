@@ -89,7 +89,7 @@ function footballFilter (football, param) {
 	}
 	// console.log(util.inspect(results, { showHidden: true, depth: 3 }))
 
-	if (match === 'None') {
+	if (match === 'None' && !keyword) {
 		results = events
 	}
 
