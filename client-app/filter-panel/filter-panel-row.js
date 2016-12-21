@@ -8,7 +8,7 @@ export default React.createClass({
 		changeFilter: React.PropTypes.func,
 		doPairingVerifyForFilter: React.PropTypes.func,
 		registerColumnHandles: React.PropTypes.func,
-		children: React.PropTypes.arrayOf(React.PropTypes.node).isRequired
+		children: React.PropTypes.arrayOf(React.PropTypes.node)
 	},
 	getDefaultProps: function () {
 		return {
@@ -28,7 +28,7 @@ export default React.createClass({
 
 	},
 	render: function () {
-		let filterColumns = React.Children.map(this.props.children, (column, index) => {
+		let filterColumns = this.props.children ? React.Children.map(this.props.children, (column, index) => {
 			return <div className='pd-w10'>
 				{React.cloneElement(column, {
 					key: index,
@@ -37,7 +37,7 @@ export default React.createClass({
 					registerColumnHandles: this.props.registerColumnHandles
 				})}
 			</div>
-		})
+		}) : ''
 
 		return <div className='row mg-w010'>
 			{filterColumns}
