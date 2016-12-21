@@ -421,62 +421,6 @@ export default React.createClass({
 						system_distribution_time={this.state.detail.system_distribution_time}
 						message_detail={this.state.detail.message_detail} />
 				</Popup>
-				<div className={this.getCommunicationPanelClassName()}>
-					<div className={this.getNoticeboardClassName()}>
-						<div className='header-container'>
-							<div className='pull-right'>
-								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
-							</div>
-							<div className='container-title'>
-								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-								<span className='header-title'>{this.getHeadTitle()}</span>
-							</div>
-						</div>
-						<div className='messages-container'>
-							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-						</div>
-					</div>
-
-					<div className={this.getBroadcastClassName()}>
-						<div className='header-container'>
-							<div className='pull-right'>
-								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
-							</div>
-							<div className='container-title'>
-								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-								<span className='header-title'>{'Broadcast'}</span>
-							</div>
-						</div>
-						<div className='messages-container'>
-							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-						</div>
-					</div>
-
-					<div className={this.getTaskClassName()}>
-						<div className='header-container'>
-							<div className='pull-right'>
-								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
-							</div>
-							<div className='container-title'>
-								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-								<span className='header-title'>{'Task'}</span>
-							</div>
-						</div>
-						<div className='messages-container colour-container'>
-							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-						</div>
-					</div>
-
-				</div>
 				{this.state.displaySettings === 'right' ? complexBox : simpleBox}
 			</div>
 		)
