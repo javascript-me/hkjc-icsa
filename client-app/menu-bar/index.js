@@ -39,23 +39,34 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
-		this.showHideNotifications = this.showHideNotifications.bind(this)
+		this.updateNoticeboardVisible = this.updateNoticeboardVisible.bind(this)
+		this.updateBroadcastVisible = this.updateBroadcastVisible.bind(this)
+		this.updateTaskVisible = this.updateTaskVisible.bind(this)
+
 		this.state = {
 			slimMode: false,
 			showNotifications: false,
 			menuBarShouldShow: LoginService.hasProfile(),
 			userProfile: LoginService.getProfile(),
 			noticeRemindCount: 0,
-			tipsNum: 0
+			tipsNum: 0,
+
+			noticeboardVisible: false,
+			broadcastVisible: false,
+			taskVisible: false
 		}
 	}
 
-	showHideNotifications () {
-		if (this.state.showHideNotifications) {
-			this.setState({ showHideNotifications: false })
-		} else {
-			this.setState({ showHideNotifications: true })
-		}
+	updateNoticeboardVisible () {
+		this.setState({noticeboardVisible: !this.state.noticeboardVisible})
+	}
+
+	updateBroadcastVisible () {
+		this.setState({broadcastVisible: !this.state.broadcastVisible})
+	}
+
+	updateTaskVisible () {
+		this.setState({taskVisible: !this.state.taskVisible})
 	}
 
 	render () {
@@ -84,16 +95,25 @@ class MenuBar extends Component {
 					</div>
 					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
 					<div className='message'>
-						<i className='icon-notification ' onClick={this.showHideNotifications}>
+						<i className='icon-notification ' onClick={this.updateNoticeboardVisible}>
 							<img src='icon/notification.svg' />
 							{
 								this.state.noticeRemindCount > 0
 								? <span className='message-count'>{this.state.noticeRemindCount}</span>
 								: ''
 							}
-
 						</i>
-						<i className='icon-notification tips'>
+
+						<i className='icon-notification ' onClick={this.updateBroadcastVisible}>
+							<img src='icon/notification.svg' />
+							{
+								this.state.noticeRemindCount > 0
+									? <span className='message-count'>{this.state.noticeRemindCount}</span>
+									: ''
+							}
+						</i>
+
+						<i className='icon-notification tips' onClick={this.updateTaskVisible}>
 							<img src='icon/icon-action.svg' />
 							{
 								this.state.tipsNum > 0
@@ -103,7 +123,11 @@ class MenuBar extends Component {
 						</i>
 					</div>
 				</div>
-				{ this.state.showHideNotifications ? <Notifications isSlim={this.state.slimMode} /> : null }
+				<Notifications isSlim={this.state.slimMode}
+					noticeboardVisible={this.state.noticeboardVisible}
+					broadcastVisible={this.state.broadcastVisible}
+					taskVisible={this.state.taskVisible}
+				/>
 			</div>)
 	}
 
