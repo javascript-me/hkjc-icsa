@@ -1,4 +1,5 @@
 import LoginService from './login-service'
+import Session from '../session'
 import PubSub from '../pubsub'
 
 const user = {
@@ -7,6 +8,11 @@ const user = {
 }
 
 describe('LoginService', () => {
+	// reset profile in the session before every test
+	beforeEach(() => {
+		Session.setProfile(null);
+	});
+
 	describe('#getProfile', () => {
 		it('returns cloned profile', () => {
 			const profile = {a: {}}
@@ -30,7 +36,7 @@ describe('LoginService', () => {
 	})
 
 	describe('#doLogin', () => {
-		it('returns the profile on success and triggers event', async () => {
+		it('returns the profile on success, saves profile to session and triggers event', async () => {
 			const response = {
 				randomProfile: new Date().toString()
 			}
@@ -47,11 +53,12 @@ describe('LoginService', () => {
 			const result = await LoginService.doLogin(user.username, user.password)
 
 			rewire()
+			expect(Session.getProfile()).to.be.deep.equal(result)
 			expect(result).to.be.deep.equal(response)
 			return done
 		})
 
-		it('returns null on failure without event', async () => {
+		it('returns null on failure without event, no profile in the session', async () => {
 			rewire(LoginService.__set__('postLogin', () => {
 				return Promise.reject({})
 			}))
@@ -60,12 +67,14 @@ describe('LoginService', () => {
 			const result = await LoginService.doLogin(user.username, user.password)
 
 			rewire()
+
+			expect(Session.getProfile()).to.be.null;
 			expect(result).to.be.null
 		})
 	})
 
 	describe('#logout', () => {
-		it('returns null profile', () => {
+		it('returns null profile, no profile in the session', () => {
 			const profile = {a: {}}
 			rewire(LoginService.__set__('profile', profile))
 
@@ -73,6 +82,8 @@ describe('LoginService', () => {
 			const result = LoginService.getProfile()
 
 			rewire()
+
+			expect(Session.getProfile()).to.be.null
 			expect(result).to.be.null
 		})
 
@@ -105,17 +116,6 @@ describe('LoginService', () => {
 
 			rewire()
 			expect(result).to.be.not.equal(notices)
-		})
-	})
-	describe('#updateProfile', () => {
-		it('returns cloned profile', () => {
-			const profile = {a: {}}
-			rewire(LoginService.__set__('profile', profile))
-
-			const result = LoginService.updateProfile()
-
-			rewire()
-			expect(result).to.be.not.equal(profile)
 		})
 	})
 })
