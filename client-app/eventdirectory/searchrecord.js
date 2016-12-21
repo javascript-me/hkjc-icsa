@@ -10,20 +10,23 @@ export default React.createClass({
 		$('[title]', this.refs.root).tooltip({trigger: 'hover'})
 	},
 	render () {
-		if (!this.props.record.status) {
-			this.props.record.status = 'available'
-		}
-		const statusClasses = classNames('ed-record-icon', {['inplay-' + this.props.record.status]: true})
+		let record = this.props.record
+		const statusClasses = classNames('ed-record-icon', {
+			'inplay-available': record.status === 'Assigned',
+			'inplay-in-progress': record.status === 'In-Play',
+			'inplay-pending': record.status === 'Pre-Event',
+			'inplay-stopped': record.status === 'Prelim' || record.status === 'Defined' || record.status === 'Major'
+		})
 		return (
 			<div ref='root' className='ed-record'>
-				<span className={statusClasses} title={this.props.record.status} />
+				<span className={statusClasses} title={record.status} />
 				<span className='ed-record-text'>
-					<span className={this.props.record.active === 1 ? 'active' : ''} title={this.props.record.t1Tip}>{this.props.record.t1}</span> vs <span className={this.props.record.active === 2 ? 'active' : ''} title={this.props.record.t2Tip}>{this.props.record.t2}</span>
+					<span className={record.active === 1 ? 'active' : ''} title={record.t1Tip}>{record.t1}</span> vs <span className={record.active === 2 ? 'active' : ''} title={record.t2Tip}>{record.t2}</span>
 				</span>
 				<span className='ed-record-icon func-e' title='FEMO/EMOTR' />
 				<span className='ed-record-icon func-cc' title='Customer Category Adjustment' />
 				<span className='ed-record-icon func-10' title='Allowable Investment to 10k' />
-				<span className={this.props.record.alert0 ? 'ed-record-icon alert-0' : 'ed-record-icon alert-1'} title='One-sided Booking' />
+				<span className={record.alert0 ? 'ed-record-icon alert-0' : 'ed-record-icon alert-1'} title='One-sided Booking' />
 			</div>
 			)
 	}
