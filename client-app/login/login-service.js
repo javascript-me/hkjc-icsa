@@ -1,7 +1,8 @@
 import _ from 'underscore'
 import PubSub from '../pubsub'
+import Session from '../session'
 
-let profile = null
+let profile = Session.getProfile()
 
 const postLogin = (data) => {
 	return $.post('api/users/login', data)
@@ -32,6 +33,7 @@ export default {
 		try {
 			profile = await postLogin({username, password})
 			result = getProfile()
+			Session.setProfile(result)
 			PubSub.publish(PubSub.LOGIN_CHANGE)
 		} catch (failure) {
 			// returns null on failure
@@ -67,6 +69,7 @@ export default {
 	},
 	logout () {
 		profile = null
+		Session.setProfile(null)
 		PubSub.publish(PubSub.LOGIN_CHANGE)
 	},
 	getTasksNum () {
@@ -78,8 +81,5 @@ export default {
 			if (!auth) break // TODO
 		}
 		return result
-	},
-	updateProfile () {
-		getProfile()
 	}
 }

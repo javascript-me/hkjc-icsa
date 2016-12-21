@@ -7,46 +7,41 @@ import TabBar from '../../tab-bar/tab-bar'
 import NotificationService from './notifications-service'
 import NoticeDetail from '../../notice-detail/notice-detail'
 import PubSub from '../../pubsub'
+import ClassNames from 'classnames'
 
 const getAllNoticesPromise = async (username) => {
 	let notices = null
-
 	try {
 		notices = await NotificationService.getNotices(username)
 	} catch (ex) {
-
 	}
-
 	return notices
 }
 const updateUserNoticeBoardSettingsPromise = async (username, display) => {
 	let userProfile = null
-
 	try {
 		userProfile = await LoginService.updateNoticeBoardSettings(username, display)
 	} catch (ex) {
-
 	}
-
 	return userProfile
 }
 
 const updateAcknowledgeStatusById = async (username, id, command) => {
 	let notices = null
-
 	try {
 		notices = await NotificationService.getNoticesAndUpdateAcknowledgeStatusById(username, id, command)
 	} catch (ex) {
-
 	}
-
 	return notices
 }
 
 let refreshNoticesToken = null
 export default React.createClass({
 	propTypes: {
-		isSlim: React.PropTypes.bool
+		isSlim: React.PropTypes.bool,
+		noticeboardVisible: React.PropTypes.string,
+		broadcastVisible: React.PropTypes.string,
+		taskVisible: React.PropTypes.string
 	},
 
 	getInitialState () {
@@ -155,13 +150,63 @@ export default React.createClass({
 		this.setState({selectedSettings: setting})
 	},
 
-	getClassName () {
+	getCommunicationPanelClassName () {
 		if (this.state.displaySettings === 'right') {
-			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
-		} else {
-			return 'bottom-noticeboard-container'
+			return ClassNames(
+				'right-communication-panel',
+				this.props.isSlim ? 'top-gap' : ''
+			)
 		}
+		return 'bottom-communication-panel'
 	},
+
+	getNoticeboardClassName () {
+		if (this.state.displaySettings === 'right') {
+			return ClassNames(
+				'right-noticeboard-container',
+				this.props.noticeboardVisible ? '' : 'hidden',
+				this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-height' : 'full-height',
+				this.props.taskVisible ? 'right-task-panel-gap' : ''
+			)
+		}
+		return ClassNames(
+			'bottom-noticeboard-container',
+			this.props.noticeboardVisible ? '' : 'hidden',
+			this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-width' : 'full-width'
+		)
+	},
+
+	getBroadcastClassName () {
+		if (this.state.displaySettings === 'right') {
+			return ClassNames(
+				'right-broadcast-container',
+				this.props.broadcastVisible ? '' : 'hidden',
+				this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-height' : 'full-height',
+				this.props.taskVisible ? 'right-task-panel-gap' : ''
+			)
+		}
+		return ClassNames(
+			'bottom-broadcast-container',
+			this.props.broadcastVisible ? '' : 'hidden',
+			this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-width' : 'full-width'
+		)
+	},
+
+	getTaskClassName () {
+		if (this.state.displaySettings === 'right') {
+			return ClassNames(
+				'right-task-container',
+				this.props.taskVisible ? '' : 'hidden',
+				'full-height'
+			)
+		}
+		return ClassNames(
+			'bottom-task-container',
+			this.props.taskVisible ? '' : 'hidden',
+			'full-width'
+		)
+	},
+
 	changeTab (key) {
 		if (key === 'All') {
 			this.setState({
@@ -277,22 +322,61 @@ export default React.createClass({
 						message_detail={this.state.detail.message_detail} />
 				</Popup>
 
-				<div className={this.getClassName()}>
-					<div className='header-container'>
-						<div className='pull-right'>
-							<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-							<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+				<div className={this.getCommunicationPanelClassName()}>
+					<div className={this.getNoticeboardClassName()}>
+						<div className='header-container'>
+							<div className='pull-right'>
+								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+							</div>
+							<div className='container-title'>
+								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+								<span className='header-title'>{this.getHeadTitle()}</span>
+							</div>
 						</div>
-						<div className='container-title'>
-							<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-							<span className='header-title'>{this.getHeadTitle()}</span>
+						<div className='messages-container'>
+							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
+							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
 						</div>
 					</div>
-					<div className='messages-container'>
-						<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-						<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-						<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+
+					<div className={this.getBroadcastClassName()}>
+						<div className='header-container'>
+							<div className='pull-right'>
+								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+							</div>
+							<div className='container-title'>
+								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+								<span className='header-title'>{'Broadcast'}</span>
+							</div>
+						</div>
+						<div className='messages-container'>
+							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
+							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+						</div>
 					</div>
+
+					<div className={this.getTaskClassName()}>
+						<div className='header-container'>
+							<div className='pull-right'>
+								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+							</div>
+							<div className='container-title'>
+								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+								<span className='header-title'>{'Task'}</span>
+							</div>
+						</div>
+						<div className='messages-container colour-container'>
+							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
+							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+						</div>
+					</div>
+
 				</div>
 			</div>
 		)
