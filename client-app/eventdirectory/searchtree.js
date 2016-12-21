@@ -11,7 +11,7 @@ export default React.createClass({
 		return (
 			<span>
 				{level2.name}
-				<span className='badge'>{level2.competitions.length}</span>
+				<span className='badge'>{level2.records.length}</span>
 			</span>
 		)
 	},
@@ -22,16 +22,18 @@ export default React.createClass({
 			)
 		}
 
-		if (this.props.result.length === 0) {
+		let dataArray = this.props.result.data
+
+		if (dataArray.length === 0) {
 			return (
 				<div className='ed-tree ed-no-result'>No Events Found</div>
 			)
 		}
 
-		const beL1 = this.props.result[0].defaultActiveKey === '-1'
+		const beL1 = this.props.result.match !== 'L3'
 		let defaultActiveKey = []
 		if (beL1) {
-			this.props.result.forEach((level1, index) => defaultActiveKey.push(index + ''))
+			dataArray.forEach((level1, index) => defaultActiveKey.push(index + ''))
 		} else {
 			defaultActiveKey.push('0')
 		}
@@ -39,12 +41,12 @@ export default React.createClass({
 		return (
 			<div rel='root' className='ed-tree'>
 				<Collapse accordion={false} defaultActiveKey={defaultActiveKey} className='level1'>
-					{this.props.result.map((level1, index) => (
+					{dataArray.map((level1, index) => (
 						<Panel key={index} header={level1.name}>
 							<Collapse accordion={false} defaultActiveKey={beL1 ? [] : ['0']} className='level2'>
 								{level1.children.map((level2, index) => (
 									<Panel key={index} header={this.renderLevel2Header(level2)}>
-										{level2.competitions.map((competition, index) => (<SearchRecord key={index} record={competition} />))}
+										{level2.records.map((competition, index) => (<SearchRecord key={index} record={competition} />))}
 									</Panel>
 								))}
 							</Collapse>
