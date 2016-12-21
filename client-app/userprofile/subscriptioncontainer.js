@@ -1,13 +1,16 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
+import _ from 'underscore'
 
 export default React.createClass({
 	displayName: 'SubscriptionContainer',
 	propTypes: {
+		update: PropTypes.bool,
 		userSubscription: PropTypes.array,
 		children: PropTypes.any
 	},
 	getInitialState () {
+		this.cloneData()
 		return {
 			curIndex: 0
 		}
@@ -15,9 +18,19 @@ export default React.createClass({
 	onClickCatogory (index) {
 		this.setState({curIndex: index})
 	},
+	cloneData () {
+		this.userSubscription = _.clone(this.props.userSubscription)
+	},
+	resetData () {
+		this.cloneData()
+		this.forceUpdate()
+	},
 	render () {
+		let bUpdate = this.props.update
+		let userSubscription = bUpdate ? this.userSubscription : this.props.userSubscription
+
 		const profileButtons = this.props.children
-		const category = this.props.userSubscription.map((item, index) => {
+		const category = userSubscription.map((item, index) => {
 			return (
 				<div key={index} className={classNames('item', {active: index === this.state.curIndex})} onClick={() => { this.onClickCatogory(index) }}>
 					{item.messageCatogory}
@@ -25,11 +38,18 @@ export default React.createClass({
 				</div>
 			)
 		})
-		const messages = this.props.userSubscription.length > 0 ? this.props.userSubscription[this.state.curIndex].subscribedMessages.map((item, index) => {
-			return (
-				<div key={index} className='item'>{item.message}</div>
-			)
-		}) : ''
+
+		const subscribedMessages = userSubscription.length > 0 ? userSubscription[this.state.curIndex].subscribedMessages : []
+		let messages
+		if (bUpdate) {
+			messages = subscribedMessages.filter(item => item.subscribed).map((item, index) => {
+				return <div key={index} className='item'>{item.message}</div>
+			})
+		} else {
+			messages = subscribedMessages.filter(item => item.subscribed).map((item, index) => {
+				return <div key={index} className='item'>{item.message}</div>
+			})
+		}
 
 		return (
 			<div ref='root' className='subscription-container'>

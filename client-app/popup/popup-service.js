@@ -16,6 +16,11 @@ let globalPopupCmp = null
 */
 
 export default {
+	cancelMesg: 'Are you sure you want to cancel the current operation?',
+	updateMesg: 'Are you sure you want to cancel the current operation?',
+	resetMesg: 'Are you sure you want to cancel the current operation?',
+	deleteMesg: 'Are you sure you want to delete the information?',
+
 	init (popupCmp) {
 		globalPopupCmp = popupCmp
 	},

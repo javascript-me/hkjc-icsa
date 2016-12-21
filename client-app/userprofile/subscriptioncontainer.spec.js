@@ -29,8 +29,13 @@ const userSubscription = [
 ]
 
 describe('<SubscriptionContainer />', () => {
-	it('renders a SubscriptionContainer div', () => {
+	it('render normal', () => {
 		const wrapper = shallow(<SubscriptionContainer userSubscription={userSubscription}><div /></SubscriptionContainer>)
+		expect(wrapper.find('div.subscription-container')).to.have.length(1)
+	})
+
+	it('render update', () => {
+		const wrapper = shallow(<SubscriptionContainer userSubscription={userSubscription} update><div /></SubscriptionContainer>)
 		expect(wrapper.find('div.subscription-container')).to.have.length(1)
 	})
 })
