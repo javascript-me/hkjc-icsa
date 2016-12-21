@@ -14,19 +14,20 @@ global.jsdom = (body = '') => { // TODO FIXME (AVOID!!!)
 	global.document = jsdom.jsdom(arguments)
 	global.window = document.defaultView
 	global.$ = global.jQuery = require('jquery')
+
+    // emulate local/sessionStorage, cause it's not done in the jsdom
+	global.window.localStorage = global.window.sessionStorage = {
+		getItem: function (key) {
+			return this[key]
+		},
+		setItem: function (key, value) {
+			this[key] = value
+		}
+	}
 	return document
 }
 
 global.jsdom() // When I (binghu) removed this invoke from my test file, I found some other test need $, so I had to add this code. Pls fix me
-// emulate sessionStorage, cause it's not done in the jsdom
-window.localStorage = window.sessionStorage = {
-	getItem: function (key) {
-		return this[key];
-	},
-	setItem: function (key, value) {
-		this[key] = value;
-	}
-};
 
 global.waitFor = (fn) => {
 	return async (done) => {
