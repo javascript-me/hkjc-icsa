@@ -21,7 +21,7 @@ export default React.createClass({
 	},
 
 	propTypes: {
-		type: PropTypes.oneOf(['top', 'body', 'bottom', 'filter']),
+		typeLayer: PropTypes.oneOf(['top', 'body', 'bottom', 'filter']),
 		columns: PropTypes.oneOf([1,2,3,4,5,6]),
 		onMounted: PropTypes.func,
 		children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
@@ -32,4 +32,4 @@ export default React.createClass({
 		columns: 6
 	}
 	
-}
+})

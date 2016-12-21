@@ -1,33 +1,34 @@
 import assign from 'object-assign'
 import {EventEmitter} from 'events'
 import LoginService from '../login/login-service'
+import config from '../config'
 
 const API = assign({}, EventEmitter.prototype, {
 
-	async request (method, endpoint, params) {
+	async request (method, endpoint, params={}, extra={}) {
 		try {
 			let result = $.ajax({
 				method: method,
-				url: endpoint,
+				url: config.url(endpoint),
 				data: params
 			})
 
-			this.emitChange(null, result)
+			this.emitChange(null, result, extra)
 		} catch (failure) {
-			this.emitChange(failure, null)
+			this.emitChange(failure, null, extra)
 		}
 	},
 
-	emitChange (error, promise) {
-		this.emit('change', error, promise)
+	emitChange (error, promise, extra) {
+		this.emit('change', error, promise, extra)
 	},
 
-	addChangeListener (callback) {
-		this.on('change', callback)
+	addListener (event, callback) {
+		this.on(event, callback)
 	},
 
-	removeChangeListener (callback) {
-		this.removeListener('change', callback)
+	unsubscribeListener (event, callback) {
+		this.removeListener(event, callback)
 	}
 
 })

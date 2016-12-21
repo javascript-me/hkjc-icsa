@@ -1,5 +1,5 @@
-import PageComponent from './page-component'
-import PageLayer from './page-layer'
+import PageComponent from './page'
+import PageLayer from './layer'
 
 export {
   PageComponent,

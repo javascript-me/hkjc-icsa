@@ -14,6 +14,8 @@ import APIconfig from './API/config'
 import config from './config'
 import clock from './API/clock'
 import baseUserProfile from './API/basicalUser'
+import broadcast from './API/broadcast'
+
 const server = express.Router()
 server.use('/eventdirectory/', eventdirectory)
 server.use('/users/', users)
@@ -24,6 +26,7 @@ server.use('/userprofile/', userprofile)
 server.use('/roles/', roles)
 server.use('/config/', APIconfig)
 server.use('/basicusers/', baseUserProfile)
+server.use('/broadcast/', broadcast)
 
 const app = express()
 app.use(

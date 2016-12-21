@@ -1,7 +1,7 @@
-import { React, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import moment from 'moment'
 import ClassNames from 'classnames'
-import BetType from '../betType'
+import BetType from '../bet-type'
 import FilterBlock from '../filter-block'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
@@ -9,17 +9,12 @@ import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import Popup from '../popup'
 import ExportPopup from '../exportPopup'
 import API from '../api-service'
-import ExportService from './export-service'
+import ExportService from '../auditlog/export-service'
 import {TableHeaderColumn, TableComponent} from '../table'
 
-const getDefaultSelectedFilters = () => {
-	return [{
-		name: 'dateTimeFrom',
-		value: moment().subtract(60, "days").format('DD MMM YYYY HH:mm')
-	}, {
-		name: 'dateTimeTo',
-		value:moment().format('DD MMM YYYY HH:mm')
-	}]
+const originDateRange = {
+	dateTimeFrom: moment().subtract(60, "days").set({ hour: 0, minute: 0 }).format('DD MMM YYYY HH:mm'),
+	dateTimeTo: moment().set({ hour: 23, minute: 59 }).format('DD MMM YYYY HH:mm')
 }
 
 const doExport = async (format, filters) => {
@@ -30,96 +25,118 @@ const doExport = async (format, filters) => {
 }
 
 export default React.createClass({
-	displayName: this.props.pageTitle || 'Page Component',
+	displayName: 'Page Component',
 
 	getInitialState () {
 		this.initPage(this.props)
 
 		return {
+			data: [],
 			hasData: false,
 			exportFormat: 'pdf',
 			betTypes: ['football', 'basketball', 'horse-racing'],
 			betType: 'football',
 			keyword: '',
 			selectedKeyword: '',
-			originDateRange: {
-				dateTimeFrom: moment().subtract(60, "days").format('DD MMM YYYY HH:mm'),
-				dateTimeTo: moment().format('DD MMM YYYY HH:mm')
-			},
-			selectedFilters: getDefaultSelectedFilters(),
+			selectedFilters: this.getDefaultSelectedFilters(),
 			isShowingMoreFilter: false,
 			isClickForSearching: false
 		}
 	},
 
-	initPage: function(props) {
-		props.children.map(layer => {
-			switch(layer.props.type){
-				case 'top':
-					this.top = layer;
-				break;
-				case 'body':
-					this.body = <div className='tableComponent-container'>
-						<TableComponent data={}} {...props.table}>
-							{
-								this.cols = []
-								this.filterCols = []
-								layer.props.children.map(column => {
-									this.cols.push(<TableHeaderColumn {...column.props}>{column.props.children}</TableHeaderColumn>)
-									if(column.props.isFilter) {
-										const title = typeOf column.props.children === 'string' ? column.props.children : column.props.dataField
-										if(column.props.dateRange) {
-											const filters = [ <FilterPanelColumn filterName={this.props.options.dateRange.fieldFrom}
-												filterTitle={this.props.options.dateRange.fieldFromTitle}
-												filterValue={}
-												ctrlType='calendar'
-												isRequired={column.props.isRequired}
-												pairingVerify={[{
-												operation: '<=',
-												partners: [this.props.options.dateRange.fieldTo]
-												}]} /> ,
-												<FilterPanelColumn filterName={this.props.options.dateRange.fieldTo}
-													filterTitle={this.props.options.dateRange.fieldToTitle}
-													filterValue={}
-													ctrlType='calendar'
-													isRequired={column.props.isRequired}
-													pairingVerify={[{
-														operation: '<=',
-														partners: [this.props.options.dateRange.fieldFrom]
-													}]} />
-											]
-											//Added the default date range elements
-											filters.map(item => this.filterCols.push(item))
-
-										} else {
-											this.filterCols.push(<FilterPanelColumn filterName={column.props.dataField} filterTitle={title} {...column.props.filterOptions} />)
-										}
-									}
-								})
-							}
-						</TableComponent>
-					</div>
-
-				break;
-				case 'bottom':
-					this.bottom = layer;
-				break;
-			}
-		})	
+	getDefaultSelectedFilters () {
+		return [{
+			name: this.props.options.dateRange.fieldFrom,
+			value: originDateRange.dateTimeFrom
+		}, {
+			name: this.props.options.dateRange.fieldTo,
+			value: originDateRange.dateTimeTo
+		}]
 	},
 
-	componentDidMount: function () {
-		let criteriaOption = this.getSearchCriterias()
+	initPage: function(props) {
+		if(!props.children) {
+			throw new Error('Page Component needs to have Childrens to define the content') 
+		}
 
-		// Get Table Data
-		API.addChangeListener(this.onChange)
-		API.request(this.props.options.table.method, this.props.options.table.endpoint, criteriaOption)
+		if(typeof props.children === "object") {
+			React.Children.forEach(props.children, layer => {
+				this.renderLayer(layer)
+			})		
+		} else {
+			this.renderLayer(props.children)
+		}
+		
+	},
 
+	renderLayer: function(layer) {
+		switch(layer.props.typeLayer){
+			case 'top':
+				this.top = layer;
+			break;
+			case 'body':
+				this.cols = []
+				this.filterCols = []
+
+				if(typeof layer.props.children === "object") {
+					layer.props.children.map((column, i) => {
+						this.renderColumn(column, i)
+					}, this)
+				} else {
+					this.renderColumn(this.props.children, 1)
+				}
+
+			break;
+			case 'bottom':
+				this.bottom = layer;
+			break;
+		}
+	},
+
+	renderColumn: function (column, i) {
+		this.cols.push(<TableHeaderColumn key={`column${i}`} {...column.props}>{column.props.children}</TableHeaderColumn>)
+		if(column.props.isFilter) {
+			const title = typeof column.props.children === 'string' ? column.props.children : column.props.dataField
+			if(column.props.dateRange) {
+				const filters = [ <FilterPanelColumn key='dateRange1' filterName={this.props.options.dateRange.fieldFrom}
+					filterTitle={this.props.options.dateRange.fieldFromTitle}
+					filterValue={originDateRange.dateTimeFrom}
+					ctrlType='calendar'
+					isRequired={column.props.isRequired}
+					pairingVerify={[{
+					operation: '<=',
+					partners: [this.props.options.dateRange.fieldTo]
+					}]} /> ,
+					<FilterPanelColumn key='dateRange2' filterName={this.props.options.dateRange.fieldTo}
+						filterTitle={this.props.options.dateRange.fieldToTitle}
+						filterValue={originDateRange.dateTimeTo}
+						ctrlType='calendar'
+						isRequired={column.props.isRequired}
+						pairingVerify={[{
+							operation: '>=',
+							partners: [this.props.options.dateRange.fieldFrom]
+						}]} />
+				]
+				//Added the default date range elements
+				filters.map(item => this.filterCols.push(item))
+
+			} else {
+				this.filterCols.push(<FilterPanelColumn key={`filter${i}`} filterName={column.props.dataField} filterTitle={title} {...column.props.filterOptions} />)
+			}
+		}
+	},
+
+	componentWillMount: function () {
 		document.addEventListener('click', this.pageClick, false)
+
+		let criteriaOption = this.getSearchCriterias()
+		
+		if(this.props.onSearch) {
+			this.props.onSearch(criteriaOption)
+		}
 	},
 
 	componentWillUnmount: function () {
-		AuditlogStore.removeChangeListener(this.onChange)
 		document.removeEventListener('click', this.pageClick, false)
 	},
 
@@ -154,7 +171,7 @@ export default React.createClass({
 			betType: betType,
 			keyword: '',
 			selectedKeyword: '',
-			selectedFilters: getDefaultSelectedFilters(),
+			selectedFilters: this.getDefaultSelectedFilters(),
 			isShowingMoreFilter: false
 		})
 	},
@@ -177,14 +194,14 @@ export default React.createClass({
 				isShowingMoreFilter: false
 			})
 
-			this.searchAuditlog()
+			this.props.onSearch(this.state.selectedFilters)
 		}
 
 		switch (filter.name) {
 		case 'keyword':
 			this.removeKeywordFilter(filter, callback)
 			break
-		case 'dateTimeFrom,dateTimeTo':
+		case `${this.props.options.dateRange.fieldFrom},${this.props.options.dateRange.fieldTo}`:
 			this.removeDateRangeFilter(filter, callback)
 			break
 		default:
@@ -202,12 +219,11 @@ export default React.createClass({
 
 	removeDateRangeFilter: function (dateRange, callback) {
 		let selectedFilters = this.state.selectedFilters
-		let originDateRange = this.state.originDateRange
 
 		selectedFilters.forEach((filter) => {
-			if (filter.name === 'dateTimeFrom') {
+			if (filter.name === `${this.props.options.dateRange.fieldFrom}`) {
 				filter.value = originDateRange.dateTimeFrom
-			} else if (filter.name === 'dateTimeTo') {
+			} else if (filter.name === `${this.props.options.dateRange.fieldTo}`) {
 				filter.value = originDateRange.dateTimeTo
 			}
 		})
@@ -226,17 +242,6 @@ export default React.createClass({
 		this.setState({
 			selectedFilters: selectedFilters
 		}, callback)
-	},
-
-	searchAuditlog: async function () {
-		this.setState({
-			selectedKeyword: this.state.keyword
-		}, function () {
-			let criteriaOption = this.getSearchCriterias()
-
-			// Get Table Data
-			AuditlogStore.searchAuditlogs(criteriaOption)
-		})
 	},
 
 	clickForSearching: function () {
@@ -274,20 +279,21 @@ export default React.createClass({
 		this.setState({
 			selectedFilters: newFilters
 		}, () => {
-			this.searchAuditlog()
+			if(this.props.onSearch) {
+				this.props.onSearch(newFilters)
+			}
 		})
 	},
 
 	checkIsDateRangeNotChanged: function () {
 		let filters = this.state.selectedFilters
-		let originDateRange = this.state.originDateRange
 		let dateTimeFrom
 		let dateTimeTo
 
 		for (var i in filters) {
-			if (filters[i].name === 'dateTimeFrom') {
+			if (filters[i].name === this.props.options.dateRange.fieldFrom) {
 				dateTimeFrom = filters[i].value
-			} else if (filters[i].name === 'dateTimeTo') {
+			} else if (filters[i].name === this.props.options.dateRange.fieldTo) {
 				dateTimeTo = filters[i].value
 			}
 		}
@@ -302,28 +308,13 @@ export default React.createClass({
 
 	export: function () {
 		let criteriaOption = this.getSearchCriterias()
-		const filters = AuditlogStore.buildRequest(criteriaOption)
+		const filters = API.buildRequest(criteriaOption)
 
 		doExport(this.state.exportFormat, filters)
 	},
 
 	onChangeFormat: function (format) {
 		this.setState({ exportFormat: format })
-	},
-
-	onChange: function () {
-		const hasData = AuditlogStore.auditlogs.length > 0
-		this.setState({
-			auditlogs: AuditlogStore.auditlogs, hasData: hasData
-		})
-	},
-
-	handleChangePage: function (selectedPageNumber, sortingObject, criteriaOption) {
-		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
-	},
-
-	handleClickSorting: function (selectedPageNumber, sortingObject, criteriaOption) {
-		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
 	generateFilterBlockesJsx: function (filters) {
@@ -339,17 +330,17 @@ export default React.createClass({
 			value: this.state.selectedKeyword
 		}
 		let dateFromFilter = filters.filter((f) => {
-			return f.name === 'dateTimeFrom'
+			return f.name === this.props.options.dateRange.fieldFrom
 		})[0] || {}
 		let dateToFilter = filters.filter((f) => {
-			return f.name === 'dateTimeTo'
+			return f.name === this.props.options.dateRange.fieldTo
 		})[0] || {}
 		let dateRangeFilter = {
-			name: 'dateTimeFrom,dateTimeTo',
+			name: `${this.props.options.dateRange.fieldFrom},${this.props.options.dateRange.fieldTo}`,
 			value: `${dateFromFilter.value} - ${dateToFilter.value}`
 		}
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
-			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
+			if (f.name === this.props.options.dateRange.fieldFrom || f.name === this.props.options.dateRange.fieldTo) {
 				return false
 			}
 			return true
@@ -387,12 +378,17 @@ export default React.createClass({
 		})
 		
 		let activeContent
-
 		if (this.state.betType === 'football') {
 			activeContent =
 				<div>
 					<div className='row'>
-						{ this.body }
+						<div className='tableComponent-container'>
+							<TableComponent key="table" data={this.props.tableData} {...this.props.options.table}>
+								{
+									this.cols
+								}
+							</TableComponent>
+						</div>
 					</div>
 					<div className='row'>
 						{ this.bottom }
@@ -402,7 +398,9 @@ export default React.createClass({
 			activeContent = <div className='nopage'>Coming Soon</div>
 		}
 
-		const topClass = this.top.columns ? `col-md-${12 - this.top.columns}` : 'col-md-12'
+		const topClass = this.top && this.top.props.columns ? `col-md-${12 - this.top.props.columns}` : 'col-md-12'
+		const topElement = this.top && this.top.props.columns ? <div className={ `col-md-${this.top.props.columns}` }>{ this.top }</div> : null
+		const addBetType = this.props.betType ? <div className={betTypesContainerClassName}>{betTypes}</div> : null
 		return (
 			<div className={this.props.pageClassName}>
 				<div className='row page-header'>
@@ -414,9 +412,7 @@ export default React.createClass({
 					<div className={topClass}>
 						<div className='search-criteria-container'>
 							<div className='search-criteria-container-row'>
-								<div className={betTypesContainerClassName}>
-									{betTypes}
-								</div>
+								{ addBetType }
 								<div className='keyword-container'>
 									<input type='text' placeholder='Search with keywords & filters'
 										value={this.state.keyword}
@@ -430,40 +426,37 @@ export default React.createClass({
 								</div>
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
-								<FilterPanel
-									triggerSearchTopic={}
-									resetFiltersTopic={}
-									removeOneFilterTopic={}
-									onSubmit={this.setFilters}>
-										{
-											this.generateFilterRows()
-										}
-								</FilterPanel>
+								<FilterPanel key="filterPanel" onSubmit={this.setFilters}>{ this.filterCols ? this.generateFilterRows() : null }</FilterPanel>
 							{ /* 
-								Agregue la tabla, el filterPanel y el panel del top
-								falta agregar el panel del bottom y verificar que este generando bien
+								
 								Enlazar los llamados al API, Los Selects, los eventos del Pub usados por el filterPanel
 								Y crear las funciones para recolectar informacion de los componentes. 
+								
 							*/ }
 							</div>
 						</div>
 					</div>
+					{ topElement }
 				</div>
 				{/* Active Content */}
 				{ activeContent }
 				{/* End Active Content */}
+
 			</div>
 			)
 	},
 
 	generateFilterRows : function() {
 		let rows = []
-		const nuRows = Math.Ceil(this.filterCols.length / 4)
+		const nuRows = Math.ceil(this.filterCols.length / this.props.filtersPerRow)
+
 		let start = 0
+		let end = start + this.props.filtersPerRow
 
 		for (let i = 1; i <= nuRows; i++) {
-			rows.push(<FilterPanelRow>{ this.filterCols.slice(start, 4) }</FilterPanelRow>)
-			start += 4
+			rows.push(<FilterPanelRow key={`FilterRow${i}`}>{ this.filterCols.slice(start, end) }</FilterPanelRow>)
+			start += this.props.filtersPerRow
+			end += this.props.filtersPerRow
 		}
 		
 		return rows
@@ -473,21 +466,24 @@ export default React.createClass({
 		pageTitle: PropTypes.string,
 		pageBreadcrum: PropTypes.string,
 		pageClassName: PropTypes.string,
-		options: {
-			table: {
-				method: PropTypes.string,
-				endpoint: PropTypes.string,
-				options: PropTypes.object
-			},
-			dateRange: {
-				active: PropTypes.bool,
+		filtersPerRow: PropTypes.number,
+		tableData: PropTypes.array,
+		options:  PropTypes.shape({
+			table:  PropTypes.object,
+			dateRange:  PropTypes.shape({
 				fieldTo: PropTypes.string,
 				fieldToTitle: PropTypes.string,
 				fieldFrom: PropTypes.string,
 				fieldFromTitle: PropTypes.string
-			}
-		},
+			})
+		}),
 		children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
 		
-	}
+	},
+
+	getDefaultProps: function() {
+		return {
+			filtersPerRow: 4
+		}
+	},
 })

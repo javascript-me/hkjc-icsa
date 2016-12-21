@@ -4,7 +4,19 @@
 		"DASHBOARD_EXTRA": false,
 		"API_BASE_URI": "http://localhost",
 	    "API_BASE_PORT": 8282,
-	    "API_URL": "http://localhost:8282"
+	    "API_URL": "http://localhost:8282",
+		"API_BROADCAST_SEARCH": {
+			"method": "GET",
+			"endpoint": "api/broadcast/search"
+		},
+		"API_BROADCAST_CATEGORIES": {
+			"method": "GET",
+			"endpoint": "api/broadcast/categories"
+		},
+		"API_BROADCAST_INPLAY": {
+			"method": "GET",
+			"endpoint": "api/broadcast/inplay"
+		}
 	},
 	"override": {
 		"localhost|127.0.0.1": {
