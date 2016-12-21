@@ -12,6 +12,15 @@ it('footballFilter', () => {
 	let result
 
 	result = EventDirectoryUtil.footballFilter(football, {
+		keyword: '',
+		eventType: '',
+		from: '',
+		to: ''
+	})
+	expect(result.match === 'None').to.be.true
+	expect(result.data.length > 0).to.be.true
+
+	result = EventDirectoryUtil.footballFilter(football, {
 		keyword: 'England',
 		eventType: '',
 		from: '',
@@ -34,6 +43,15 @@ it('footballFilter', () => {
 		to: ''
 	})
 	expect(result.match === 'L3').to.be.true
+
+	result = EventDirectoryUtil.footballFilter(football, {
+		keyword: 'xxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyy',
+		eventType: '',
+		from: '',
+		to: ''
+	})
+	expect(result.match === 'None').to.be.true
+	expect(result.data.length === 0).to.be.true
 
 	result = EventDirectoryUtil.footballFilter(football, {
 		keyword: '',
