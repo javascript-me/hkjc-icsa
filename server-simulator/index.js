@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import eventdirectory from './API/eventdirectory'
 import users from './API/users'
 import auditlog from './API/auditlog'
-
+import actions from './API/actions'
 import noticeBoard from './API/notice-board'
 import userprofile from './API/userprofile'
 import roles from './API/roles'
@@ -21,6 +21,7 @@ server.use('/clock/', clock)
 server.use('/auditlog/', auditlog)
 server.use('/notice-board/', noticeBoard)
 server.use('/userprofile/', userprofile)
+server.use('/actions/', actions)
 server.use('/roles/', roles)
 server.use('/config/', APIconfig)
 server.use('/basicusers/', baseUserProfile)
