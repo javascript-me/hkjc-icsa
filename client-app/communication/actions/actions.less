@@ -1,9 +1,73 @@
 .messages-container.colour-container {
-	.notice-box ul.list-box-right li ul.row {
-		font-family: Roboto-Regular;
-		color: #FFFFFF;
+	overflow: hidden;
 
-		> li.notice-title.bold-text {
+	.notice-box {
+		overflow-x: auto;
+
+		ul.list-box-bottom {
+			display: inline-block;
+			width: auto;
+			white-space: nowrap;
+			margin: 0;
+
+			> li {
+				display: inline-block;
+				vertical-align: top;
+
+				ul.row > li {
+					i {
+						display: inline-block;
+						width: 15px;
+						height: 15px;
+						position: relative;
+						top: 4px;
+					}
+
+					&.notice-title {
+						margin: 0;
+
+						.wrap-text {
+							white-space: initial;
+							margin: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.notice-box ul li ul.row {
+		font-family: 'Roboto-Regular';
+		color: #FFFFFF;
+		width: 264px;
+		height: 104px;
+		list-style-type: none;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 10px;
+		padding: 10px;
+		background: #EEF1F8;
+		border-radius: 6px;
+
+		> li {
+			&.notice-date {
+				display: none;
+			}
+
+			i.Critical {
+				background: url(notice-board/actions-critical.svg) center center no-repeat;
+			}
+
+			i.Low,
+			i.Medium,
+			i.High {
+				display: none;
+			}
+		}
+
+		> li.notice-title.bold-text,
+		> li.notice-title {
+			font-family: 'Roboto-Regular';
 			color: #FFFFFF;
 		}
 

@@ -54,12 +54,17 @@
 			.item.active {
 				background-color: #FCF6C8;
 			}
+
+			.item.changed {
+				font-family: Roboto-BlackItalic;
+			}
 		}
 
 		.col-message {
 			overflow-y: auto;
 
 			.item {
+				user-select: none;
 				border-bottom: 1px solid #ACB8D1;
 				padding-left: 50px;
 				height: 40px;
@@ -67,6 +72,14 @@
 				font-size: 14px;
 				color: #4A4A4A;
 				line-height: 40px;
+
+				> .input-check {
+					margin-right: 9px;
+				}
+			}
+
+			.item.changed {
+				font-family: Roboto-BoldItalic;
 			}
 		}
 	}
