@@ -22,7 +22,7 @@ class TaskDetailBox extends Component {
 
 	render () {
 		let isSuppervicer = true
-		const { priority, taskTitle, taskDetail, status, taskType, taskBtnText, taskLink, approveFunc, taskExcFunc, category, receivedTime, targetTime, lockStatus } = sampleTask
+		const { priority, taskTitle, taskDetail, status, taskType, taskBtnText, approveFunc, taskExcFunc, category, receivedTime, targetTime, lockStatus } = sampleTask
 		let color = this.getTitleColor(priority)
 		let diffentOptions = {}
 		if (taskType === 'aproveTask') {
