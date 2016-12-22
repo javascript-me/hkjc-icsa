@@ -197,11 +197,10 @@ export default React.createClass({
 		let changeData = this.refs.subscriptionCmp.getChangedData()
 		if (!changeData) {
 			PopupService.showSuggestBox('warnning', 'Nothing changed!', () => {})
-			return 
+			return
 		}
 
 		PopupService.showMessageBox(PopupService.updateMesg, async () => {
-
 			let updateResult = await UserProfileService.updateUserProfile({
 				'userID': this.userID,
 				'subscribedCategoryMessages': JSON.stringify(changeData)
