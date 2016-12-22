@@ -51,9 +51,6 @@ export default React.createClass({
 	},
 	onUpdateClick () {
 		if (this.refs.accountCmp && this.refs.accountCmp.verifyData()) {
-			// console.log(this.refs.accountCmp.getData())
-			// this.setState({accountUpdate: false})
-
 			PopupService.showMessageBox(PopupService.updateMesg, () => {
 				const data = this.refs.accountCmp.getData()
 				UserProfileService.updateUserProfile({

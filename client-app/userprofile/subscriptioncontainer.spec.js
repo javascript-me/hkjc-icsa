@@ -8,9 +8,11 @@ const userSubscription = [
 		'messageCatogory': 'Payout',
 		'subscribedMessages': [
 			{
+				'subscribed': true,
 				'message': 'Participant Scratch'
 			},
 			{
+				'subscribed': false,
 				'message': 'Concluded Event'
 			}
 		]
@@ -19,9 +21,11 @@ const userSubscription = [
 		'messageCatogory': 'Refund',
 		'subscribedMessages': [
 			{
+				'subscribed': false,
 				'message': 'Participant Scratch'
 			},
 			{
+				'subscribed': true,
 				'message': 'Concluded Event'
 			}
 		]
@@ -32,6 +36,8 @@ describe('<SubscriptionContainer />', () => {
 	it('render normal', () => {
 		const wrapper = shallow(<SubscriptionContainer userSubscription={userSubscription}><div /></SubscriptionContainer>)
 		expect(wrapper.find('div.subscription-container')).to.have.length(1)
+		expect(wrapper.find('.col-category .item.changed')).to.have.length(0)
+		expect(wrapper.find('.col-message .item.changed')).to.have.length(0)
 	})
 
 	it('render update', () => {

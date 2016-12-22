@@ -69,7 +69,7 @@ export default React.createClass({
 		const profileButtons = this.props.children
 		const categorys = userSubscription.map((category, index) => {
 			return (
-				<div key={index} className={classNames('item', {active: index === this.state.curIndex, changed: checkChanged(category)})} onClick={() => { this.onClickCatogory(index) }}>
+				<div key={index} className={classNames('item', {active: index === this.state.curIndex, changed: bUpdate && checkChanged(category)})} onClick={() => { this.onClickCatogory(index) }}>
 					{category.messageCatogory}
 					<i className='arrow pull-right' />
 				</div>

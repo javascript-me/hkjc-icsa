@@ -194,7 +194,29 @@ export default React.createClass({
 		})
 	},
 	onSubscriptionUpdateClick () {
-		PopupService.showMessageBox(PopupService.updateMesg, () => {
+		let changeData = this.refs.subscriptionCmp.getChangedData()
+		if (!changeData) {
+			PopupService.showSuggestBox('warnning', 'Nothing changed!', () => {})
+			return 
+		}
+
+		PopupService.showMessageBox(PopupService.updateMesg, async () => {
+
+			let updateResult = await UserProfileService.updateUserProfile({
+				'userID': this.userID,
+				'subscribedCategoryMessages': JSON.stringify(changeData)
+			})
+			if (!updateResult) return
+
+			let userProfileResult = await UserProfileService.getUserProfile({
+				userID: this.userID
+			})
+			if (!userProfileResult) return
+
+			this.setState({
+				subscriptionUpdate: false,
+				userSubscription: userProfileResult.account.subscribedCategoryMessages
+			})
 		})
 	},
 	onSubscriptionCancelClick () {
