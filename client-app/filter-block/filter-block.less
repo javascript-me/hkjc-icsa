@@ -1,17 +1,26 @@
 .filter-block-container {
-	align-items: center;
+	align-items: flex-start;
 	display: flex;
 	flex: 1 0 0;
 	flex-direction: row;
 	flex-wrap: wrap;
 	height: 40px;
-	justify-content: flex-start;
+	justify-content: space-between;
 	margin-left: 6px;
-	margin-top: -5px;
-	overflow: hidden;
+
+	&.loading {
+		opacity: 0;
+	}
+}
+
+.pure-filter-block {
+    display: flex;
+    flex-wrap: wrap;
+    height: 40px;
+    overflow: hidden;
 
 	&.short {
-		flex-basis: calc(100% - 60px)
+		flex-basis: calc(~'100% - 90px')
 	}
 }
 
@@ -26,7 +35,7 @@
 	font-family: Roboto-Medium;
 	font-size: 14px;
 	height: 30px;
-	margin: 10px;
+	margin: 5px 10px;
 	padding: 6px 25px 6px 10px;
 	position: relative;
 
@@ -45,14 +54,25 @@
 	}
 }
 
+.show-more-ctrl-panel {
+	align-items: flex-end;
+	display: flex;
+	flex-direction: column;
+	height: 40px;
+	overflow: visible;
+	width: 60px;
+}
+
 .btn-show-more-filter {
 	background-color: transparent;
 	color: rgba(48, 80, 145, 1);
-	height: 30px;
+	cursor: pointer;
+	display: block;
+	height: 25px;
 	font-family: Roboto-Medium;
 	font-size: 14px;
-	margin: 10px;
-	padding: 6px 25px 6px 10px;
+	margin: 5px 10px;
+	padding: 5px;
 	position: relative;
 
 	&.showing::after {
@@ -63,13 +83,61 @@
 		background-image: url(common/arrow_down.svg);
 		background-position: center center;
 		background-repeat: no-repeat;
-		background-size: 9px 9px;
+		background-size: 8px 5px;
 		content: "";
 		cursor: pointer;
 		height: 30px;
 		position: absolute;
-		right: 9px;
+		right: -10px;
 		top: 0;
 		width: 9px;
+	}
+}
+
+.more-filters-panel {
+	background: #FFFFFF;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.20);
+	padding: 10px 20px;
+	width: 205px;
+
+	ul {
+		margin: 0;
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			position: relative;
+
+			span {
+				color: #25417A;
+				display: block;
+				font-family: Roboto-Regular;
+				font-size: 14px;
+				letter-spacing: 0;
+				line-height: 26px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				width: 146px;
+			}
+
+			.icon-more-filter-close {
+				background-image: url(common/blue-cross.svg);
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: 9px 9px;
+				content: "";
+				cursor: pointer;
+				height: 26px;
+				position: absolute;
+				right: -10px;
+				top: 0;
+				width: 9px;
+
+				&:hover {
+					background-image: url(common/green-cross.svg);
+				}
+			}
+		}
 	}
 }
