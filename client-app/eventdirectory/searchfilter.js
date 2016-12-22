@@ -20,16 +20,17 @@ export default React.createClass({
 		}
 
 		text = text.toLowerCase();
-		// requirement: maximum 6 matches to display
-		return this.items.filter(i => i.text.toLowerCase().indexOf(text) === 0).slice(0,6);
+		return this.items.filter(i => i.text.toLowerCase().indexOf(text) === 0);
 	},
 	render () {
 		return (
 			<div rel='root' className='ed-filter'>
                 <div id='ed-search' className='form-group'>
-                    <AutoComplete className="form-control search-input"
+                    <AutoComplete displayName="AutoComplete"
+						          className="form-control search-input"
 								  itemClassName="search-autocomplete-item"
 								  placeholder="Search"
+								  maxResults={6}
 								  noSuggestionsText="No Results"
 								  onItemSelected={this.onSearchItemSelected}
 								  onItemsRequested={this.onSearchItemsRequested} />

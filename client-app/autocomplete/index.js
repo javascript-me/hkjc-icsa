@@ -3,11 +3,33 @@ import Autosuggest from 'react-autosuggest/dist'
 
 export default class AutoComplete extends React.Component {
     propTypes: {
+        /**
+         * Will be called whenever a item from the autocompletion list is selected either by mouse click or keyboard Enter hit
+         */
         onItemSelected: PropTypes.func.isRequired,
+        /**
+         * NOTE: async!
+         *
+         * Will be called whenever items for autocompletion are needed (e.g. when input text changes).
+         * Expects an array of objects {value,text} as the result
+         */
         onItemsRequested: PropTypes.func.isRequired,
+        /**
+         * Text to display in the input field
+         */
         placeholder: PropTypes.string,
+        /**
+         * Css class for an autocomplete list item
+         */
         itemClassName: PropTypes.string,
-        noSuggestionsText: PropTypes.string
+        /**
+         * Text to display when there're no matching autocompletion items found (onItemsRequested returned [])
+         */
+        noSuggestionsText: PropTypes.string,
+        /**
+         * Maximum number of autocompletion items to display
+         */
+        maxResults: PropTypes.number
     };
 
     constructor(props) {
@@ -18,7 +40,6 @@ export default class AutoComplete extends React.Component {
             value: '',
             suggestions: [],
             inputClassName: props.className,
-            loading: false,
             noSuggestions: false
         };
     };
@@ -38,13 +59,12 @@ export default class AutoComplete extends React.Component {
     onSuggestionsFetchRequested = async ({ value }) => {
         if (this.lastResult.value === value) return this.lastResult.items;
 
-        this.setState({loading: true});
         let items = await this.props.onItemsRequested(value);
 
+        items = items.slice(0, this.props.maxResults);
         this.lastResult = {value, items};
 
         this.setState({
-            loading: false,
             suggestions: items,
             noSuggestions: !items.length
         });
@@ -69,7 +89,7 @@ export default class AutoComplete extends React.Component {
         return (
             <div>
                 <Autosuggest
-                    suggestions={this.state.suggestions || []}
+                    suggestions={this.state.suggestions}
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                     onSuggestionSelected={this.onSuggestionSelected}
@@ -80,10 +100,16 @@ export default class AutoComplete extends React.Component {
                 />
                 { this.state.noSuggestions &&
                     <div className="no-suggestions-container">
-                        <div className={this.props.itemClassName + " no-suggestions"}>{this.props.noSuggestionsText || 'No Results'}</div>
+                        <div className={this.props.itemClassName + " no-suggestions"}>{this.props.noSuggestionsText}</div>
                     </div>
                 }
             </div>
         );
     }
 }
+
+AutoComplete.defaultProps = {
+    placeholder: 'Search',
+    noSuggestionsText: 'No Results',
+    maxResults: 10
+};
