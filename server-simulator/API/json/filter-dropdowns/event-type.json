@@ -1,0 +1,27 @@
+[
+	{
+		"label":"Assigned",
+		"value":"Assigned"
+	},
+	{
+		"label":"In-Play",
+		"value":"In-Play"
+	},
+	{
+		"label":"Pre-Event",
+		"value":"Pre-Event"
+	},
+	{
+		"label":"Prelim",
+		"value":"Prelim"
+	},
+	{
+		"label":"Defined",
+		"value":"Defined"
+	},
+	{
+		"label":"Major",
+		"value":"Major"
+	}
+
+]
