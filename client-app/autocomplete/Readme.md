@@ -1,0 +1,1 @@
+This is lite wrapper over https://github.com/moroshko/react-autosuggest. 

@@ -48,6 +48,10 @@ function itemUpdate (accountProfiles, userID, newObj) {
 			account.deactivationDate = newObj.deactivationDate
 		}
 
+		if (newObj.subscribedCategoryMessages !== undefined) {
+			account.subscribedCategoryMessages = JSON.parse(newObj.subscribedCategoryMessages)
+		}
+
 		return true
 	}
 }
