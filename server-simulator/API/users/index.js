@@ -104,6 +104,22 @@ router.post('/updateNoticeBoardDisplaySettings', (req, res) => {
 		res.send(userProfile)
 	}
 })
+
+router.post('/updateTaskDisplaySettings', (req, res) => {
+	if (req.body.display !== '') {
+		const display = req.body.display
+		const username = req.body.username
+		var user = users[username]
+		let status = 200
+		var userProfile = user.profile
+		if (userProfile.taskSettings.display !== display) {
+			userProfile.taskSettings.display = display
+		}
+		res.status(status)
+		res.send(userProfile)
+	}
+})
+
 router.post('/getNoticeBoardDisplaySettings', (req, res) => {
 	const username = req.body.username
 	var user = users[username]
