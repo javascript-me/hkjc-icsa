@@ -379,9 +379,9 @@ export default React.createClass({
 				</div>
 			</div>
 			<div className='messages-container colour-container'>
-				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettingsForTaskPanel} />
-				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettingsForTaskPanel} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettingsForTaskPanel} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.taskPanelPosition} />
+				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.taskPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.taskPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
 			</div>
 		</div>
 
