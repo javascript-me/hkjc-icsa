@@ -20,12 +20,12 @@ const getTasksNum = (data) => {
 	return $.get('api/users/getTasks', data)
 }
 
-const postUpdateNoticeBoardSettings = (data) => {
-	return $.post('api/users/updateNoticeBoardDisplaySettings', data)
+const postUpdateNoticeboardAndBroadcastSetting = (data) => {
+	return $.post('api/users/updateNoticeboardAndBroadcastSetting', data)
 }
 
-const postUpdateTaskSettings = (data) => {
-	return $.post('api/users/updateTaskDisplaySettings', data)
+const postUpdateTaskSetting = (data) => {
+	return $.post('api/users/updateTaskSetting', data)
 }
 
 export default {
@@ -56,19 +56,20 @@ export default {
 		}
 		return result
 	},
-	getNoticeBoardSettings (profile) {
+	getNoticeboardAndBroadcastSetting (profile) {
 		profile = profile || getProfile()
 		return (profile && profile.noticeboardSettings) ? profile.noticeboardSettings : {}
 	},
-	getTaskSettings (profile) {
+	getTaskSetting (profile) {
 		profile = profile || getProfile()
 		return (profile && profile.taskSettings) ? profile.taskSettings : {}
 	},
 
-	async updateNoticeBoardSettings (username, display) {
+	async updateNoticeboardAndBroadcastSetting (username, position) {
 		let result = null
 		try {
-			profile = await postUpdateNoticeBoardSettings({username, display})
+			profile = await postUpdateNoticeboardAndBroadcastSetting({username, position})
+			Session.setProfile(profile)
 			result = getProfile()
 		} catch (failure) {
 
@@ -76,10 +77,11 @@ export default {
 		return result
 	},
 
-	async updateTaskSettings (username, display) {
+	async updateTaskSetting (username, position) {
 		let result = null
 		try {
-			profile = await postUpdateTaskSettings({username, display})
+			profile = await postUpdateTaskSetting({username, position})
+			Session.setProfile(profile)
 			result = getProfile()
 		} catch (failure) {
 
