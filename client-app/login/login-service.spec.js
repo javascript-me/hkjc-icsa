@@ -107,12 +107,12 @@ describe('LoginService', () => {
 			expect(result).to.be.not.equal(tasks)
 		})
 	})
-	describe('#getNoticeBoardSettings', async () => {
+	describe('#getNoticeboardAndBroadcastSetting', async () => {
 		it('returns the json file', () => {
 			const notices = {a: {}}
 			rewire(LoginService.__set__('notices', notices))
 
-			const result = LoginService.getNoticeBoardSettings()
+			const result = LoginService.getNoticeboardAndBroadcastSetting()
 
 			rewire()
 			expect(result).to.be.not.equal(notices)
