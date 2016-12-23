@@ -4,7 +4,37 @@
 		"DASHBOARD_EXTRA": false,
 		"API_BASE_URI": "http://localhost",
 	    "API_BASE_PORT": 8282,
-	    "API_URL": "http://localhost:8282"
+	    "API_URL": "http://localhost:8282",
+		"API_BROADCAST_SEARCH": {
+			"method": "POST",
+			"endpoint": "api/broadcast/search"
+		},
+		"API_BROADCAST_CATEGORIES": {
+			"method": "GET",
+			"endpoint": "api/notice-board/categories"
+		},
+		"API_BROADCAST_INPLAY": {
+			"method": "GET",
+			"endpoint": "api/notice-board/inplays"
+		},
+		"API_BROADCAST_CONTINENTS": {
+			"method": "GET",
+			"endpoint": "api/notice-board/continents"
+		},
+		"API_BROADCAST_COUNTRIES": {
+			"method": "GET",
+			"endpoint": "api/notice-board/countries"
+		},
+		"API_BROADCAST_MATCHES": {
+			"method": "GET",
+			"endpoint": "api/notice-board/matches"
+		},"API_BROADCAST_SPORTS": {
+			"method": "GET",
+			"endpoint": "api/notice-board/sports"
+		},"API_BROADCAST_COMPETITIONS": {
+			"method": "GET",
+			"endpoint": "api/notice-board/competitions"
+		}
 	},
 	"override": {
 		"localhost|127.0.0.1": {

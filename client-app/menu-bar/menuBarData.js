@@ -374,7 +374,8 @@ const menuList1 = [
 						link: '/page/noticeboard'
 					},
 					{
-						text: 'Broadcast Message'
+						text: 'Broadcast Message',
+						link: '/page/broadcast'
 					},
 					{
 						text: 'Broadcast Message History'
@@ -400,7 +401,8 @@ const menuList1 = [
 				text: 'Contingency Control',
 				subMenu: [
 					{
-						text: 'Contingency Stop Sell'
+						text: 'Contingency Stop Sell',
+						link: '/page/contigency'
 					}
 				]
 			},
@@ -843,7 +845,8 @@ const menuList2 = [
 						link: '/page/noticeboard'
 					},
 					{
-						text: 'Broadcast Message'
+						text: 'Broadcast Message',
+						link: '/page/broadcast'
 					},
 					{
 						text: 'Broadcast Message History'
@@ -869,7 +872,8 @@ const menuList2 = [
 				text: 'Contingency Control',
 				subMenu: [
 					{
-						text: 'Contingency Stop Sell'
+						text: 'Contingency Stop Sell',
+						link: '/page/contigency'
 					}
 				]
 			},

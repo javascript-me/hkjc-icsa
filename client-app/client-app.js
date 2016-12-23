@@ -13,8 +13,9 @@ import ActionMonitor from './action-monitor/action-monitor'
 import UserList from './userlist/userlist'
 import UserProfile from './userprofile/userprofile'
 import MyProfile from './myprofile/myprofile'
-
+import Broadcast from './broadcast'
 import Noticeboard from './notice-board/notice-board'
+import ContigencyControl from './contigency-control/contigency-control'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -44,6 +45,8 @@ const AppContainer = React.createClass({
 						<Route path='userprofile/:userId' component={UserProfile} />
 						<Route path='myprofile' component={MyProfile} />
 						<Route path='noticeboard' component={Noticeboard} />
+						<Route path='broadcast' component={Broadcast} />
+						<Route path='contigency' component={ContigencyControl} />
 					</Route>
 				</Router>
 
