@@ -1,0 +1,29 @@
+.react-autosuggest__container,
+.no-suggestions-container {
+	position: relative;
+
+	.react-autosuggest__suggestions-container,
+	.no-suggestions {
+		z-index: 2;
+		position: absolute;
+		width: 100%;
+
+		.react-autosuggest__suggestions-list {
+			list-style: none;
+			padding: 0;
+
+			.react-autosuggest__suggestion {
+				width: 100%;
+				cursor: pointer;
+			}
+
+			.react-autosuggest__suggestion--focused {
+				/* style for focused item should go here */
+			}
+		}
+	}
+}
+
+.react-autosuggest__container--open {
+	z-index: 2;
+}

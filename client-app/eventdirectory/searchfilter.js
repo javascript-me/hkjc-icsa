@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+
 import MultiSelect from '../muti-select'
 import Calender from '../calendar'
 import classnames from 'classnames'
@@ -16,20 +17,29 @@ const mapDataToOption = (data) => {
 
 const MultiSelect_Competition = util.FetchServerDataHoc({url:'api/eventdirectory/competition'},mapDataToOption)(MultiSelect)
 
+import AutoComplete from '../autocomplete'
+import EventDirectoryService from './eventdirectory-service'
+
+
 export default React.createClass({
 	displayName: 'SearchFilter',
 	propTypes: {
-		onSearch: PropTypes.func.isRequired,
 		filter: PropTypes.object
 	},
-	handlerKeyUp (event) {
-		if (event.keyCode === 13) {
-			this.props.onSearch({
-				keyword: this.refs.search ? this.refs.search.value : '',
-				scenario: this.refs.scenario ? this.refs.scenario.value : '',
-				competition: this.refs.competition ? this.refs.competition.value : ''
-			})
+	onSearchItemSelected(item) {
+		this.selectedItem = item;
+	},
+	async onSearchItemsRequested(text) {
+		if (!text) return [];
+
+		if (!this.items) {
+			this.items = await EventDirectoryService.getFootballAutosuggestions();
+			this.items.sort((a,b) => a.localeCompare(b)); // in asc
+			this.items = this.items.map((text, value) => ({text, value}));
 		}
+
+		text = text.toLowerCase();
+		return this.items.filter(i => i.text.toLowerCase().indexOf(text) === 0);
 	},
 
 	getInitialState () {
@@ -46,7 +56,6 @@ export default React.createClass({
 		let nextEnquiry = _.cloneDeep(this.state.searchEnquiry)
 		nextEnquiry[field] = value
 		this.setState({searchEnquiry:nextEnquiry})
-		console.log(nextEnquiry)
 	},
 
 	getChangeHandler (field) {
@@ -68,9 +77,16 @@ export default React.createClass({
 	render () {
 		return (
 			<div rel='root' className='ed-filter'>
-				<div id='ed-search' className='form-group'>
-					<input id='ed-filter-keyword' ref='search' type='text' className='form-control' onKeyUp={this.handlerKeyUp} placeholder='Search' />
-				</div>
+                <div id='ed-search' className='form-group'>
+                    <AutoComplete displayName="AutoComplete"
+						          className="form-control search-input"
+								  itemClassName="search-autocomplete-item"
+								  placeholder="Search"
+								  maxResults={6}
+								  noSuggestionsText="No Results"
+								  onItemSelected={this.onSearchItemSelected}
+								  onItemsRequested={this.onSearchItemsRequested} />
+                </div>
 
 				<div id='ed-advanced' className='form-group' onClick={this.toggleFilterShowState}>
 					<label>Advanced Filters<span className={'caret ' + (this.state.showFilter? 'caret-up':'caret-down')} /></label>
