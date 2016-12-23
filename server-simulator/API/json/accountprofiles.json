@@ -92,18 +92,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -112,12 +117,15 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -126,15 +134,19 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -143,15 +155,19 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -160,24 +176,31 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -186,18 +209,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -206,18 +234,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -226,18 +259,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -267,18 +305,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -287,18 +330,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -307,18 +355,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -327,18 +380,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -347,18 +405,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -367,18 +430,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -387,18 +455,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -407,18 +480,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -448,18 +526,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -468,18 +551,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -488,18 +576,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -508,18 +601,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -528,18 +626,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -548,18 +651,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -568,18 +676,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -588,18 +701,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -629,18 +747,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -649,18 +772,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -669,18 +797,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -689,18 +822,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -709,18 +847,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -729,18 +872,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -749,18 +897,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -769,18 +922,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -810,18 +968,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -830,18 +993,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -850,18 +1018,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -870,18 +1043,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -890,18 +1068,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -910,18 +1093,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -930,18 +1118,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -950,18 +1143,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -991,18 +1189,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1011,18 +1214,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1031,18 +1239,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1051,18 +1264,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1071,18 +1289,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1091,18 +1314,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1111,18 +1339,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1131,18 +1364,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1191,18 +1429,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1211,18 +1454,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1231,18 +1479,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1251,18 +1504,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1271,18 +1529,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1291,18 +1554,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1311,18 +1579,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1331,18 +1604,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1372,18 +1650,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1392,18 +1675,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1412,18 +1700,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1432,18 +1725,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1452,18 +1750,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1472,18 +1775,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1492,18 +1800,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1512,18 +1825,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1553,18 +1871,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1573,18 +1896,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1593,18 +1921,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1613,18 +1946,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1633,18 +1971,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1653,18 +1996,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1673,18 +2021,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1693,18 +2046,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1734,18 +2092,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1754,18 +2117,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1774,18 +2142,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1794,18 +2167,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1814,18 +2192,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1834,18 +2217,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1854,18 +2242,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1874,18 +2267,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1915,18 +2313,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1935,18 +2338,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1955,18 +2363,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1975,18 +2388,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -1995,18 +2413,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2015,18 +2438,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2035,18 +2463,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2055,18 +2488,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2096,18 +2534,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2116,18 +2559,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2136,18 +2584,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2156,18 +2609,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2176,18 +2634,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2196,18 +2659,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2216,18 +2684,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2236,18 +2709,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2277,18 +2755,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2297,18 +2780,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2317,18 +2805,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2337,18 +2830,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2357,18 +2855,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2377,18 +2880,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2397,18 +2905,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2417,18 +2930,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2498,18 +3016,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2518,18 +3041,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2538,18 +3066,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2558,18 +3091,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2578,18 +3116,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2598,18 +3141,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2618,18 +3166,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2638,18 +3191,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2679,18 +3237,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2699,18 +3262,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2719,18 +3287,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2739,18 +3312,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2759,18 +3337,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2779,18 +3362,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2799,18 +3387,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2819,18 +3412,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2860,18 +3458,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2880,18 +3483,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2900,18 +3508,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2920,18 +3533,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2940,18 +3558,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2960,18 +3583,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -2980,18 +3608,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3000,18 +3633,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3041,18 +3679,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3061,18 +3704,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3081,18 +3729,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3101,18 +3754,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3121,18 +3779,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3141,18 +3804,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3161,18 +3829,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3181,18 +3854,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3222,18 +3900,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3242,18 +3925,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3262,18 +3950,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3282,18 +3975,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3302,18 +4000,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3322,18 +4025,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3342,18 +4050,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3362,18 +4075,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3403,18 +4121,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3423,18 +4146,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3443,18 +4171,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3463,18 +4196,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3483,18 +4221,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3503,18 +4246,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3523,18 +4271,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3543,18 +4296,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3584,18 +4342,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3604,18 +4367,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3624,18 +4392,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3644,18 +4417,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3664,18 +4442,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3684,18 +4467,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3704,18 +4492,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3724,18 +4517,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3765,18 +4563,23 @@
 				"messageCatogory": "Event Information",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3785,18 +4588,23 @@
 				"messageCatogory": "Selling Control",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3805,18 +4613,23 @@
 				"messageCatogory": "Odds Generation & Update (Before the first Start Sell)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3825,18 +4638,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3845,18 +4663,23 @@
 				"messageCatogory": "Results - Including Event & Bet Type (Non-In-Play)",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3865,18 +4688,23 @@
 				"messageCatogory": "Results Rectification",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3885,18 +4713,23 @@
 				"messageCatogory": "Payout",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]
@@ -3905,18 +4738,23 @@
 				"messageCatogory": "Refund",
 				"subscribedMessages": [
 					{
+						"subscribed": true,
 						"message": "Participant Scratch"
 					},
 					{
+						"subscribed": true,
 						"message": "K.O. / Start Time Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Venue Update"
 					},
 					{
+						"subscribed": true,
 						"message": "Void Event"
 					},
 					{
+						"subscribed": true,
 						"message": "Concluded Event"
 					}
 				]

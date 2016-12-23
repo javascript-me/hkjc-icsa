@@ -73,10 +73,22 @@ global.rewireResponse = (target, key, response) => {
 		return Promise.resolve(response)
 	})
 }
+global.rewireReject = (target, key, reason) => {
+	rewireKeyVal(target, key, () => {
+		return Promise.reject(reason)
+	})
+}
 global.rewireService = (target, service, func, response) => {
 	rewireKeyVal(target, service, {
 		[func]: () => {
 			return Promise.resolve(response)
+		}
+	})
+}
+global.rewireServiceReject = (target, service, func, reason) => {
+	rewireKeyVal(target, service, {
+		[func]: () => {
+			return Promise.resolve(reason)
 		}
 	})
 }
