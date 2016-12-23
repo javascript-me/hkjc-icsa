@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import LoginService from '../login/login-service'
+import { AsyncRequest } from '../utility'
 import { TableComponent, TableHeaderColumn } from '../table'
 
 export default React.createClass({
@@ -19,6 +21,24 @@ export default React.createClass({
 		}
 	},
 	componentDidMount () {
+		let profile = LoginService.getProfile()
+		this.userID = ''
+		if (profile) {
+			this.userID = profile.userID
+		}
+
+		this.getActionList()
+	},
+	getActionList () {
+		AsyncRequest.postData(AsyncRequest.urls.ACTIONS_LIST, {
+			userID: this.userID
+		}).then((result) => {
+			if (result.data) {
+				this.setState({
+					data: result.data
+				})
+			}
+		})
 	},
 	onRowClick () {
 	},
