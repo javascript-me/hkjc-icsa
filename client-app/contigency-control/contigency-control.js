@@ -96,13 +96,7 @@ export default React.createClass({
 	},
 
 	confirmClickHandler: function () {
-		if (this.state.stopSellFixedODDSBackground === SELECTED_COLOR) {
-			this.changeBGAllFixedOdds(DISABLED_COLOR)
-			this.changeBGFixedFootBall(DISABLED_COLOR)
-			this.changeBGFixedBasketBall(DISABLED_COLOR)
-			this.changeBGFixedHorseRacing(DISABLED_COLOR)
-			this.setState({showTimeFixedOddsStopAll: 'block'})
-		} else if (this.state.stopSellAllBackground === SELECTED_COLOR) {
+		if (this.state.stopSellAllBackground === SELECTED_COLOR) {
 			this.changeBGStopSellAll(DISABLED_COLOR)
 			this.changeBGAllFixedOdds(DISABLED_COLOR)
 			this.changeBGFixedFootBall(DISABLED_COLOR)
@@ -110,6 +104,12 @@ export default React.createClass({
 			this.changeBGFixedHorseRacing(DISABLED_COLOR)
 			this.changeBGPariMutuel(DISABLED_COLOR)
 			this.setState({showTimeStopAll: 'block'})
+		} else if (this.state.stopSellFixedODDSBackground === SELECTED_COLOR) {
+			this.changeBGAllFixedOdds(DISABLED_COLOR)
+			this.changeBGFixedFootBall(DISABLED_COLOR)
+			this.changeBGFixedBasketBall(DISABLED_COLOR)
+			this.changeBGFixedHorseRacing(DISABLED_COLOR)
+			this.setState({showTimeFixedOddsStopAll: 'block'})
 		} else if (this.state.fixedOddFootBallBackground === SELECTED_COLOR) {
 			this.changeBGFixedFootBall(DISABLED_COLOR)
 			this.setState({showTimeFootBall: 'block'})
@@ -206,7 +206,7 @@ export default React.createClass({
 							<ContigencyButton background={this.state.stopSellAllBackground} width='278px' height='120px'
 								topText='STOP SELL'
 								middleText='' bottomText='ALL' topLabelStyle='28px' bottomLabelStyle='40px'
-								topLabelLineHeight='30px' bottomLabelLineHeight='47px' opacity="1.0" />
+								topLabelLineHeight='30px' bottomLabelLineHeight='47px' opacity='1.0' />
 						</div>
 					</div>
 					<div className='col-md-12'>
