@@ -58,6 +58,7 @@ export default React.createClass({
 				USERPROFILE_SEARCH_BY_REMOVE_FILTER: 'USERPROFILE_SEARCH_BY_REMOVE_FILTER'
 			},
 			keyword: '',
+			isSearching: false,
 			selectedKeyword: '',
 			selectedFilters: [{
 				name: 'dateTimeFrom',
@@ -87,6 +88,7 @@ export default React.createClass({
 		searchToken = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH], () => {
 			this.searchUserProfileList()
 		})
+		document.addEventListener('click', this.pageClick, false)
 	},
 
 	componentWillUnmount: function () {
@@ -108,9 +110,27 @@ export default React.createClass({
 			userprofiles: UserStore.userProfiles, hasData: hasData
 		})
 	},
+	pageClick: function (event) {
+		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
+			this.setState({isClickForSearching: false})
+			return
+		}
+
+		this.hideMoreFilter()
+	},
+
+	clickForSearching: function () {
+		this.setState({
+			isClickForSearching: true
+		})
+	},
 
 	showMoreFilter () {
-		this.setState({isShowingMoreFilter: !this.state.isShowingMoreFilter})
+		this.clickForSearching()
+
+		this.setState({
+			isShowingMoreFilter: true
+		})
 	},
 
 	handleKeywordChange: function (event) {
@@ -321,13 +341,13 @@ export default React.createClass({
 					<div className='content-header-left'>
 						<div className='keyword-search'>
 							<i className='icon icon-search' />
-							<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
+							<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords' value={this.state.keyword}
 								onChange={this.handleKeywordChange}
 								onKeyPress={this.handleKeywordPress}
 								ref='keyword' />
 						</div>
 						<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
-						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
+						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel' ref='searchPannel'>
 							<FilterPanel
 								triggerSearchTopic={this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS}
 								removeOneFilterTopic={this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER}
@@ -356,7 +376,7 @@ export default React.createClass({
 				</div>
 				<div className='content-table tableComponent-container'>
 					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='userID'
-						tableHeaderClass='table-header' tableContainerClass='base-table' selectRow={{ mode: 'checkbox' }}>
+						tableHeaderClass='table-header' tableContainerClass='base-table' >
 						<TableHeaderColumn dataField='displayName' dataSort>User Display Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='firstName' dataSort>User Name</TableHeaderColumn>

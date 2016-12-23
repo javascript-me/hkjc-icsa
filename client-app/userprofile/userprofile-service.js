@@ -51,7 +51,6 @@ export default {
 		}
 		return result
 	},
-
 	async deleteDelegation (data) {
 		let result = null
 		try {

@@ -39,6 +39,10 @@
 				}
 			}
 
+			.comments {
+				padding: 0 11px;
+			}
+
 			.popup-actions a {
 				line-height: 26px;
 				width: 100px;
@@ -52,11 +56,19 @@
 		overflow: inherit;
 		height: auto;
 
+		.column-header {
+			padding-left: 30px !important;
+		}
+
 		.react-bs-table-container {
 			height: 100%;
 
 			.react-bs-table {
 				margin: 0;
+
+				.react-bs-container-body {
+					overflow: inherit;
+				}
 
 				.table {
 					> tbody {
@@ -80,8 +92,15 @@
 			vertical-align: middle;
 
 			&.errCell {
-				box-shadow: 0 0 5px 3px rgba(255, 128, 128, 0.7);
+				.show-box,
+				.input-group {
+					border: 1px solid red;
+				}
 			}
+		}
+
+		tbody .new-record {
+			background-color: #FCF6C8;
 		}
 
 		.calendarTime-input,
@@ -89,10 +108,31 @@
 			display: none;
 		}
 
-		.calendar .rdt .calendar-input {
-			width: 100%;
-			text-align: center;
-			height: 30px;
+		.calendar {
+			.rdt {
+				.calendar-group {
+					.input-group {
+						width: 200px;
+						line-height: 30px;
+						text-align: center;
+
+						.calendar-input {
+							width: 100%;
+							text-align: center;
+							height: 30px;
+							line-height: 0;
+						}
+					}
+				}
+
+				.rdtPicker {
+					.rdtDays {
+						.rdtSwitch {
+							width: 136px;
+						}
+					}
+				}
+			}
 		}
 	}
 }

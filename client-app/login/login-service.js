@@ -1,7 +1,8 @@
 import _ from 'underscore'
 import PubSub from '../pubsub'
+import Session from '../session'
 
-let profile = null
+let profile = Session.getProfile()
 
 const postLogin = (data) => {
 	return $.post('api/users/login', data)
@@ -23,6 +24,10 @@ const postUpdateNoticeBoardSettings = (data) => {
 	return $.post('api/users/updateNoticeBoardDisplaySettings', data)
 }
 
+const postUpdateTaskSettings = (data) => {
+	return $.post('api/users/updateTaskDisplaySettings', data)
+}
+
 export default {
 	hasProfile () {
 		return !!profile
@@ -32,6 +37,7 @@ export default {
 		try {
 			profile = await postLogin({username, password})
 			result = getProfile()
+			Session.setProfile(result)
 			PubSub.publish(PubSub.LOGIN_CHANGE)
 		} catch (failure) {
 			// returns null on failure
@@ -52,9 +58,13 @@ export default {
 	},
 	getNoticeBoardSettings (profile) {
 		profile = profile || getProfile()
-
 		return (profile && profile.noticeboardSettings) ? profile.noticeboardSettings : {}
 	},
+	getTaskSettings (profile) {
+		profile = profile || getProfile()
+		return (profile && profile.taskSettings) ? profile.taskSettings : {}
+	},
+
 	async updateNoticeBoardSettings (username, display) {
 		let result = null
 		try {
@@ -65,8 +75,21 @@ export default {
 		}
 		return result
 	},
+
+	async updateTaskSettings (username, display) {
+		let result = null
+		try {
+			profile = await postUpdateTaskSettings({username, display})
+			result = getProfile()
+		} catch (failure) {
+
+		}
+		return result
+	},
+
 	logout () {
 		profile = null
+		Session.setProfile(null)
 		PubSub.publish(PubSub.LOGIN_CHANGE)
 	},
 	getTasksNum () {
@@ -78,8 +101,5 @@ export default {
 			if (!auth) break // TODO
 		}
 		return result
-	},
-	updateProfile () {
-		getProfile()
 	}
 }
