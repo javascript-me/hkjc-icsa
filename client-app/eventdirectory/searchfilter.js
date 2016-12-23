@@ -7,34 +7,34 @@ export default React.createClass({
 	propTypes: {
 		filter: PropTypes.object
 	},
-	onSearchItemSelected(item) {
-		this.selectedItem = item;
+	onSearchItemSelected (item) {
+		this.selectedItem = item
 	},
-	async onSearchItemsRequested(text) {
-		if (!text) return [];
+	async onSearchItemsRequested (text) {
+		if (!text) return []
 
 		if (!this.items) {
-			this.items = await EventDirectoryService.getFootballAutosuggestions();
-			this.items.sort((a,b) => a.localeCompare(b)); // in asc
-			this.items = this.items.map((text, value) => ({text, value}));
+			this.items = await EventDirectoryService.getFootballAutosuggestions()
+			this.items.sort((a, b) => a.localeCompare(b)) // in asc
+			this.items = this.items.map((text, value) => ({text, value}))
 		}
 
-		text = text.toLowerCase();
-		return this.items.filter(i => i.text.toLowerCase().indexOf(text) === 0);
+		text = text.toLowerCase()
+		return this.items.filter(i => i.text.toLowerCase().indexOf(text) === 0)
 	},
 	render () {
 		return (
 			<div rel='root' className='ed-filter'>
-                <div id='ed-search' className='form-group'>
-                    <AutoComplete displayName="AutoComplete"
-						          className="form-control search-input"
-								  itemClassName="search-autocomplete-item"
-								  placeholder="Search"
-								  maxResults={6}
-								  noSuggestionsText="No Results"
-								  onItemSelected={this.onSearchItemSelected}
-								  onItemsRequested={this.onSearchItemsRequested} />
-                </div>
+				<div id='ed-search' className='form-group'>
+					<AutoComplete displayName='AutoComplete'
+						className='form-control search-input'
+						itemClassName='search-autocomplete-item'
+						placeholder='Search'
+						maxResults={6}
+						noSuggestionsText='No Results'
+						onItemSelected={this.onSearchItemSelected}
+						onItemsRequested={this.onSearchItemsRequested} />
+				</div>
 
 				<div id='ed-advanced' className='form-group'>
 					<label>Advanced Filters<span className='caret caret-up' /></label>
