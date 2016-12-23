@@ -1,17 +1,16 @@
 import React from 'react'
-
-const positions = { BOTTOM: 'bottom', RIGHT: 'right' }
+import PanelPosition from '../communication/notifications/panel-position'
 
 export default React.createClass({
 
 	propTypes: {
-		onChange: React.PropTypes.func,
+		onChangePosition: React.PropTypes.func,
 		setting: React.PropTypes.string
 	},
 
-	changeSetting (e) {
-		if (this.props.onChange) {
-			this.props.onChange(e.currentTarget.attributes['value'].nodeValue)
+	changePosition (e) {
+		if (this.props.onChangePosition) {
+			this.props.onChangePosition(e.currentTarget.attributes['value'].nodeValue)
 		}
 	},
 
@@ -20,8 +19,8 @@ export default React.createClass({
 			<div className='noticeboard-content'>
 				<div className='panel-position-header setting-label'>Panel Position</div>
 				<div className='pull-left bottom-radio-container'>
-					<span className='radio-inline' onClick={this.changeSetting} value={positions.BOTTOM}>
-						<input id='bottom' name='setting' type='radio' value={positions.BOTTOM} checked={this.props.setting === positions.BOTTOM} />
+					<span className='radio-inline' onClick={this.changePosition} value={PanelPosition.BOTTOM}>
+						<input id='bottom' name='setting' type='radio' value={PanelPosition.BOTTOM} readOnly='readOnly' checked={this.props.setting === PanelPosition.BOTTOM} />
 						Bottom
 					</span>
 					<div className='style-div'>
@@ -32,8 +31,8 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='pull-right right-radio-container'>
-					<span className='radio-inline' onClick={this.changeSetting} value={positions.RIGHT}>
-						<input id='righ' name='setting' type='radio' value={positions.RIGHT} checked={this.props.setting === positions.RIGHT} />
+					<span className='radio-inline' onClick={this.changePosition} value={PanelPosition.RIGHT}>
+						<input id='righ' name='setting' type='radio' value={PanelPosition.RIGHT} readOnly='readOnly' checked={this.props.setting === PanelPosition.RIGHT} />
 						Right
 					</span>
 					<div className='style-div'>

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import classnames from 'classnames'
 import PopupService from './popup-service'
 
 export {
@@ -115,13 +115,13 @@ export default class Popup extends React.Component {
 			footer = (<div className='panel-footer' />)
 		}
 		if (this.props.showOther) {
-			other = (<a role='button' className='pull-left btn popup-button other' onClick={() => this.onOther()}>{this.props.otherBtn}</a>)
+			other = (<a role='button' className={classnames('pull-left', 'btn', 'popup-button', 'other', {disabled: this.props.otherBtnDisabled})} onClick={() => !this.props.otherBtnDisabled && this.onOther()}>{this.props.otherBtn}</a>)
 		}
 		if (this.props.showConfirm) {
-			confirm = (<a role='button' className='pull-right btn popup-button confirm' onClick={() => this.onConfirm()}> {confirmBtn} </a>)
+			confirm = (<a role='button' className={classnames('pull-right', 'btn', 'popup-button', 'confirm', {disabled: this.props.confirmBtnDisabled})} onClick={() => !this.props.confirmBtnDisabled && this.onConfirm()}> {confirmBtn} </a>)
 		}
 		if (showCancel) {
-			cancel = (<a role='button' className='pull-right btn popup-button cancel' onClick={() => this.onCancel()}> {cancelBtn} </a>)
+			cancel = (<a role='button' className={classnames('pull-right', 'btn', 'popup-button', 'cancel', {disabled: this.props.cancelBtnDisabled})} onClick={() => !this.props.cancelBtnDisabled && this.onCancel()}> {cancelBtn} </a>)
 		}
 		if (this.props.showCloseIcon) {
 			closeIcon = (<span className='close-icon-span'><img className='close-icon' src={'common/close-cross.svg'} onClick={() => this.onCancel()} /></span>)
@@ -167,6 +167,9 @@ Popup.sharedPropTypes = {
 	showOverlay: React.PropTypes.bool,
 	showConfirm: React.PropTypes.bool,
 	showCancel: React.PropTypes.bool,
+	otherBtnDisabled: React.PropTypes.bool,
+	cancelBtnDisabled: React.PropTypes.bool,
+	confirmBtnDisabled: React.PropTypes.bool,
 	title: React.PropTypes.string,
 	confirmBtn: React.PropTypes.string,
 	cancelBtn: React.PropTypes.string,

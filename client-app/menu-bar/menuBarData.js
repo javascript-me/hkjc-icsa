@@ -392,6 +392,7 @@ const menuList1 = [
 						text: 'Action'
 					},
 					{
+						link: '/page/actionmonitor',
 						text: 'Action Monitor'
 					}
 				]
@@ -862,6 +863,7 @@ const menuList2 = [
 						text: 'Action'
 					},
 					{
+						link: '/page/actionmonitor',
 						text: 'Action Monitor'
 					}
 				]

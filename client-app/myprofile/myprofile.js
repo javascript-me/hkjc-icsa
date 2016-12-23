@@ -15,6 +15,7 @@ export default React.createClass({
 		this.h1Title = 'My Profile'
 		return {
 			bAdmin: false,
+			subscriptionUpdate: false,
 			delegationUpdate: false,
 			userBasic: {},
 			userAccount: {},
@@ -75,7 +76,7 @@ export default React.createClass({
 		default : break
 
 		}
-		PopupService.showMessageBox('Are you sure you want to proceed the operation?', async () => {
+		PopupService.showMessageBox(PopupService.updateMesg, async () => {
 			result && result.forEach((item) => {
 				item.changeFlag = null
 				item.isNewRecord = null
@@ -96,7 +97,7 @@ export default React.createClass({
 		})
 	},
 	onCancelClick () {
-		PopupService.showMessageBox('Are you sure you want to cancel the current operation?', () => {
+		PopupService.showMessageBox(PopupService.cancelMesg, () => {
 			this.setState({
 				delegationUpdate: false
 			})
@@ -107,7 +108,7 @@ export default React.createClass({
 		if (ids.length > 0) {
 			const result = delegationCmp.getChangeResult()
 			if (!result || result.length === 0) {
-				PopupService.showMessageBox('Are you sure you want to delete the information?', () => {
+				PopupService.showMessageBox(PopupService.deleteMesg, () => {
 					this.deleteUserDelegation(ids)
 				})
 			} else {
@@ -149,9 +150,13 @@ export default React.createClass({
 						</ProfileButtons>
 					</ProfileContainer>
 
-					<SubscriptionContainer userSubscription={this.state.userSubscription}>
+					<SubscriptionContainer ref='subscriptionCmp' userSubscription={this.state.userSubscription} update={this.state.subscriptionUpdate}>
 						<ProfileButtons>
-							<button className='btn btn-primary pull-right' onClick={() => {}}>Edit</button>
+							{!this.state.subscriptionUpdate && <button className='btn btn-primary pull-right' onClick={this.onSubscriptionEditClick}>Edit</button>}
+
+							{this.state.subscriptionUpdate && <button className='btn btn-danger' onClick={this.onSubscriptionResetClick}>Reset</button>}
+							{this.state.subscriptionUpdate && <button className='btn btn-primary pull-right' onClick={this.onSubscriptionUpdateClick}>Update</button>}
+							{this.state.subscriptionUpdate && <button className='btn btn-cancle pull-right' onClick={this.onSubscriptionCancelClick}>Cancel</button>}
 						</ProfileButtons>
 					</SubscriptionContainer>
 				</ProfileTabs>
@@ -176,5 +181,48 @@ export default React.createClass({
 				userSubscription: userProfile.account.subscribedCategoryMessages
 			})
 		}
+	},
+	onSubscriptionEditClick () {
+		this.refs.subscriptionCmp.cloneData()
+		this.setState({
+			subscriptionUpdate: true
+		})
+	},
+	onSubscriptionResetClick () {
+		PopupService.showMessageBox(PopupService.resetMesg, () => {
+			this.refs.subscriptionCmp.resetData()
+		})
+	},
+	onSubscriptionUpdateClick () {
+		let changeData = this.refs.subscriptionCmp.getChangedData()
+		if (!changeData) {
+			PopupService.showSuggestBox('warnning', 'Nothing changed!', () => {})
+			return
+		}
+
+		PopupService.showMessageBox(PopupService.updateMesg, async () => {
+			let updateResult = await UserProfileService.updateUserProfile({
+				'userID': this.userID,
+				'subscribedCategoryMessages': JSON.stringify(changeData)
+			})
+			if (!updateResult) return
+
+			let userProfileResult = await UserProfileService.getUserProfile({
+				userID: this.userID
+			})
+			if (!userProfileResult) return
+
+			this.setState({
+				subscriptionUpdate: false,
+				userSubscription: userProfileResult.account.subscribedCategoryMessages
+			})
+		})
+	},
+	onSubscriptionCancelClick () {
+		PopupService.showMessageBox(PopupService.cancelMesg, () => {
+			this.setState({
+				subscriptionUpdate: false
+			})
+		})
 	}
 })
