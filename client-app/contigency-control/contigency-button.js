@@ -19,7 +19,8 @@ export default React.createClass({
 					}}>{this.props.middleText}</span>
 					<span className='text-button fade-text' style={{
 						'font-size': this.props.bottomLabelStyle,
-						'line-height': this.props.bottomLabelLineHeight
+						'line-height': this.props.bottomLabelLineHeight,
+						'opacity': this.props.opacity
 					}}>{this.props.bottomText}</span>
 				</div>
 			</div>
@@ -38,6 +39,7 @@ export default React.createClass({
 		topTextClass: React.PropTypes.string,
 		middleTextClass: React.PropTypes.string,
 		bottomTextClass: React.PropTypes.string,
-		background: React.PropTypes.string
+		background: React.PropTypes.string,
+		opacity: React.PropTypes.string
 	}
 })

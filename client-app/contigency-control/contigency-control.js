@@ -206,7 +206,7 @@ export default React.createClass({
 							<ContigencyButton background={this.state.stopSellAllBackground} width='278px' height='120px'
 								topText='STOP SELL'
 								middleText='' bottomText='ALL' topLabelStyle='28px' bottomLabelStyle='40px'
-								topLabelLineHeight='30px' bottomLabelLineHeight='47px' />
+								topLabelLineHeight='30px' bottomLabelLineHeight='47px' opacity="1.0" />
 						</div>
 					</div>
 					<div className='col-md-12'>
