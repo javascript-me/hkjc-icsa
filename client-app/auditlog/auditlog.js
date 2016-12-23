@@ -184,7 +184,6 @@ export default React.createClass({
 	},
 
 	removeSearchCriteriaFilter: function (filter) {
-		console.log('in auditlog remove filter', filter)
 		const callback = () => {
 			this.setState({
 				isShowingMoreFilter: false
@@ -391,7 +390,7 @@ export default React.createClass({
 				value: f
 			}
 		})
-		
+
 		return formattedFilters
 	},
 	render: function () {

@@ -1,5 +1,4 @@
 import React from 'react'
-import ClassNames from 'classnames'
 
 const emptyFn = () => {}
 
@@ -12,12 +11,11 @@ export default React.createClass({
 		// The filter real data related
 		dataValue: React.PropTypes.object,
 		// The event which will be triggerd when click on this component
-		onRemove: React.PropTypes.func
+		removeEvent: React.PropTypes.func
 	},
 	getDefaultProps: function () {
 		return {
-			filters: [],
-			onRemove: emptyFn
+			removeEvent: emptyFn
 		}
 	},
 
@@ -26,13 +24,13 @@ export default React.createClass({
 		}
 	},
 	removeHandler: function () {
-		this.props.onRemove(this.props.dataValue)
+		this.props.removeEvent(this.props.dataValue)
 	},
-	render: function() {
+	render: function () {
 		return <li>
 			<span>{this.props.dataText}</span>
-			<i className="icon-more-filter-close"
-				onClick={this.removeHandler}></i>
+			<i className='icon-more-filter-close'
+				onClick={this.removeHandler} />
 		</li>
 	}
 })

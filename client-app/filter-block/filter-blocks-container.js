@@ -25,18 +25,20 @@ export default React.createClass({
 			isLoading: true,
 			doesAnyFiltersOverflow: false,
 			showingMore: false,
-			overflowFilters: []
+			overflowFilters: [],
+			clickingOnMoreFilterPanel: false
 		}
 	},
 	componentWillMount: function () {
 
 	},
 	componentDidMount: function () {
-
+		document.addEventListener('click', this.pageClickedOrResized, false)
+		window.addEventListener('resize', this.pageClickedOrResized, false)
 	},
 	componentWillUpdate: function (nextProps, nextState) {
 		let currentProps = this.props
-		
+
 		if (_.isEqual(currentProps, nextProps)) {
 			return false
 		}
@@ -48,39 +50,54 @@ export default React.createClass({
 	componentDidUpdate: function (prevProps, prevState) {
 		let me = this
 		let currentProps = me.props
+		let overflowFilters
 
-		
 		if (_.isEqual(currentProps, prevProps)) {
 			return false
 		}
 
-		this.refreshOverflowFilters(function() {
-			me.setState({
-				isLoading: false
-			})
+		overflowFilters = this.getRefreshedOverflowFilters()
+
+		this.setState({
+			overflowFilters: overflowFilters,
+			doesAnyFiltersOverflow: overflowFilters.length > 0,
+			isLoading: false
 		})
 	},
 	componentWillUnmount: function () {
-
+		document.removeEventListener('click', this.pageClickedOrResized, false)
+		window.removeEventListener('resize', this.pageClickedOrResized, false)
 	},
-	refreshOverflowFilters: function(callback) {
+	getRefreshedOverflowFilters: function () {
 		let me = this
 		let pureFilters = this.refs.pureFilterBlocksContainer
 		let filterCount = pureFilters.children.length
-		let firstFilter = pureFilters.firstChild
-		let firstFilterOffset = firstFilter.offsetTop
 		let overflowFilters = []
+		let firstFilter
+		let firstFilterOffset
 
-		Array.prototype.forEach.call(pureFilters.children, function(filterDOM, i) {
+		if(!filterCount) {
+			return overflowFilters
+		}
+
+		firstFilter = pureFilters.firstChild
+		firstFilterOffset = firstFilter.offsetTop
+		
+		Array.prototype.forEach.call(pureFilters.children, (filterDOM, i) => {
 			if (filterDOM.offsetTop > firstFilterOffset) {
 				overflowFilters.push(me.props.filters[i])
 			}
 		})
 
-		this.setState({
-			overflowFilters: overflowFilters,
-			doesAnyFiltersOverflow: overflowFilters.length > 0
-		}, callback)
+		return overflowFilters
+	},
+	pageClickedOrResized: function (event) {
+		if (this.state.clickingOnMoreFilterPanel) {
+			this.setState({clickingOnMoreFilterPanel: false})
+			return
+		}
+
+		this.hideMoreFilterPanel()
 	},
 	getFilterBlocks: function (filters, onRemoveOneFilter) {
 		return filters.map((f, index) => {
@@ -91,18 +108,28 @@ export default React.createClass({
 				removeEvent={onRemoveOneFilter} />
 		}) || []
 	},
-	getOverflowFilters: function(filters, onRemoveOneFilter) {
+	getOverflowFilters: function (filters, onRemoveOneFilter) {
 		return Array.prototype.map.call(filters, (f, index) => {
-			return <OverflowFilter 
+			return <OverflowFilter
 				key={index}
 				dataText={f.text}
 				dataValue={f.value}
 				removeEvent={onRemoveOneFilter} />
 		})
 	},
-	toggleMoreFilterPanel: function() {
+	toggleMoreFilterPanel: function () {
 		this.setState({
 			showingMore: !this.state.showingMore
+		})
+	},
+	hideMoreFilterPanel: function () {
+		this.setState({
+			showingMore: false
+		})
+	},
+	clickOnMoreFilterPanel: function (event) {
+		this.setState({
+			clickingOnMoreFilterPanel: true
 		})
 	},
 	render: function () {
@@ -117,24 +144,23 @@ export default React.createClass({
 		let overflowFilters = this.getOverflowFilters(this.state.overflowFilters, this.props.onRemoveOneFilter)
 
 		return <div className={contianerClassName}>
-				<div className={pureFilterBlocksClassName} ref="pureFilterBlocksContainer">
+				<div className={pureFilterBlocksClassName} ref='pureFilterBlocksContainer'>
 					{filterBlocks}
-				</div>				
-				{ this.state.doesAnyFiltersOverflow ? 
-					<div className='show-more-ctrl-panel'>
+				</div>
+				{ this.state.doesAnyFiltersOverflow ?
+					<div className='show-more-ctrl-panel' onClick={this.clickOnMoreFilterPanel}>
 						<span className={showMoreBtnClassName} onClick={this.toggleMoreFilterPanel}>
 							More
 						</span>
 						{ this.state.showingMore ?
-							<div className="more-filters-panel">
+							<div className='more-filters-panel'>
 								<ul>{overflowFilters}</ul>
 							</div>
-							: '' 
+							: ''
 						}
 					</div>
 					: ''
 				}
 			</div>
-			
 	}
 })

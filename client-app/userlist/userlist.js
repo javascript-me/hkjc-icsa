@@ -1,12 +1,10 @@
 import React from 'react'
-// import classnames from 'classnames'
-import FilterBlock from '../filter-block'
+import FilterBlocksContainer from '../filter-block/filter-blocks-container'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
-// import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
@@ -227,7 +225,7 @@ export default React.createClass({
 		}
 	},
 
-	generateFilterBlockesJsx: function (filters) {
+	getFormattedFilters: function (filters) {
 		const filterDisplayFormatting = (filter) => {
 			let filterDisplayName = filter.value
 
@@ -271,16 +269,14 @@ export default React.createClass({
 			.concat((!dateFromFilter || dateFromFilter.value.isSame(defaultDateTimeFrom)) ? [] : [dateFromFilter])
 			.concat((!dateToFilter || dateToFilter.value.isSame(defaultDateTimeTo)) ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
-
-		let filterBlockes = filtersArray.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				dataText={filterDisplayFormatting(f)}
-				dataValue={f}
-				removeEvent={this.removeSearchCriteriaFilter} />
-		}) || []
-
-		return filterBlockes
+		let formattedFilters = filtersArray.map((f, index) => {
+			return {
+				text: filterDisplayFormatting(f),
+				value: f
+			}
+		})
+		
+		return formattedFilters
 	},
 
 	setFilters: function (filters) {
@@ -313,7 +309,7 @@ export default React.createClass({
 	},
 
 	render () {
-		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
+		let formattedFilters = this.getFormattedFilters(this.state.selectedFilters)
 
 		return <div className='row userlist-page'>
 			<div className='page-header'>
@@ -330,9 +326,7 @@ export default React.createClass({
 								onKeyPress={this.handleKeywordPress}
 								ref='keyword' />
 						</div>
-						<div className='filter-block-container'>
-							{filterBlockes}
-						</div>
+						<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
 						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
 							<FilterPanel
 								triggerSearchTopic={this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS}
