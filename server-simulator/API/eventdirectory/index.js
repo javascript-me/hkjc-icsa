@@ -43,7 +43,7 @@ router.get('/eventType', (req, res) => {
 })
 router.get('/competition', (req, res) => {
 	let status = 200
-	let result = competition
+	let result = competition.competitions
 	res.status(status)
 	res.send(result)
 })
