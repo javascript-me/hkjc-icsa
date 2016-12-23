@@ -50,25 +50,18 @@ export default React.createClass({
 	componentDidUpdate: function (prevProps, prevState) {
 		let me = this
 		let currentProps = me.props
-		let overflowFilters
 
 		if (_.isEqual(currentProps, prevProps)) {
 			return false
 		}
 
-		overflowFilters = this.getRefreshedOverflowFilters()
-
-		this.setState({
-			overflowFilters: overflowFilters,
-			doesAnyFiltersOverflow: overflowFilters.length > 0,
-			isLoading: false
-		})
+		this.refreshedOverflowFilters()
 	},
 	componentWillUnmount: function () {
 		document.removeEventListener('click', this.pageClickedOrResized, false)
 		window.removeEventListener('resize', this.pageClickedOrResized, false)
 	},
-	getRefreshedOverflowFilters: function () {
+	refreshedOverflowFilters: function () {
 		let me = this
 		let pureFilters = this.refs.pureFilterBlocksContainer
 		let filterCount = pureFilters.children.length
@@ -76,20 +69,22 @@ export default React.createClass({
 		let firstFilter
 		let firstFilterOffset
 
-		if(!filterCount) {
-			return overflowFilters
+		if (filterCount) {
+			firstFilter = pureFilters.firstChild
+			firstFilterOffset = firstFilter.offsetTop
+
+			Array.prototype.forEach.call(pureFilters.children, (filterDOM, i) => {
+				if (filterDOM.offsetTop > firstFilterOffset) {
+					overflowFilters.push(me.props.filters[i])
+				}
+			})
 		}
 
-		firstFilter = pureFilters.firstChild
-		firstFilterOffset = firstFilter.offsetTop
-		
-		Array.prototype.forEach.call(pureFilters.children, (filterDOM, i) => {
-			if (filterDOM.offsetTop > firstFilterOffset) {
-				overflowFilters.push(me.props.filters[i])
-			}
+		this.setState({
+			overflowFilters: overflowFilters,
+			doesAnyFiltersOverflow: overflowFilters.length > 0,
+			isLoading: false
 		})
-
-		return overflowFilters
 	},
 	pageClickedOrResized: function (event) {
 		if (this.state.clickingOnMoreFilterPanel) {
@@ -144,23 +139,23 @@ export default React.createClass({
 		let overflowFilters = this.getOverflowFilters(this.state.overflowFilters, this.props.onRemoveOneFilter)
 
 		return <div className={contianerClassName}>
-				<div className={pureFilterBlocksClassName} ref='pureFilterBlocksContainer'>
-					{filterBlocks}
-				</div>
-				{ this.state.doesAnyFiltersOverflow ?
-					<div className='show-more-ctrl-panel' onClick={this.clickOnMoreFilterPanel}>
-						<span className={showMoreBtnClassName} onClick={this.toggleMoreFilterPanel}>
-							More
-						</span>
-						{ this.state.showingMore ?
-							<div className='more-filters-panel'>
-								<ul>{overflowFilters}</ul>
-							</div>
-							: ''
-						}
-					</div>
-					: ''
-				}
+			<div className={pureFilterBlocksClassName} ref='pureFilterBlocksContainer'>
+				{filterBlocks}
 			</div>
+			{ this.state.doesAnyFiltersOverflow
+				? <div className='show-more-ctrl-panel' onClick={this.clickOnMoreFilterPanel}>
+					<span className={showMoreBtnClassName} onClick={this.toggleMoreFilterPanel}>
+						More
+					</span>
+					{ this.state.showingMore
+						? <div className='more-filters-panel'>
+							<ul>{overflowFilters}</ul>
+						</div>
+						: ''
+					}
+				</div>
+				: ''
+			}
+		</div>
 	}
 })

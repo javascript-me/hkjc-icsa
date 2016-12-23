@@ -275,7 +275,7 @@ export default React.createClass({
 				value: f
 			}
 		})
-		
+
 		return formattedFilters
 	},
 
