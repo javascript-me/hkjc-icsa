@@ -374,7 +374,8 @@ const menuList1 = [
 						link: '/page/noticeboard'
 					},
 					{
-						text: 'Broadcast Message'
+						text: 'Broadcast Message',
+						link: '/page/broadcast'
 					},
 					{
 						text: 'Broadcast Message History'
@@ -843,7 +844,8 @@ const menuList2 = [
 						link: '/page/noticeboard'
 					},
 					{
-						text: 'Broadcast Message'
+						text: 'Broadcast Message',
+						link: '/page/broadcast'
 					},
 					{
 						text: 'Broadcast Message History'
