@@ -127,7 +127,6 @@ export class TableDataStore {
 
 	sort (order, sortField) {
 		this.setSortInfo(order, sortField)
-
 		if (!this.colInfos[sortField]) {
 			return this
 		}

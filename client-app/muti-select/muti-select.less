@@ -17,6 +17,7 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+		background-color: #FFFFFF;
 
 		&::after {
 			content: '';
@@ -42,7 +43,7 @@
 		border-radius: 0 0 2px 2px;
 		z-index: 1000;
 		max-height: 245px;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 
 	.option {
@@ -56,11 +57,8 @@
 			background-color: #F8F9FB;
 		}
 
-		input {
-			margin: 0 13px 0 10px;
-			width: 18px;
-			height: 18px;
-			vertical-align: -2px;
+		.input-check {
+			margin: 0 10px;
 		}
 
 		&:hover,

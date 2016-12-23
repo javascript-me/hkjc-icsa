@@ -16,6 +16,7 @@ const Datetime = React.createClass({
 		onBlur: TYPES.func,
 		onChange: TYPES.func,
 		locale: TYPES.string,
+		disabled: TYPES.bool,
 		input: TYPES.bool,
 		inputProps: TYPES.object,
 		timeConstraints: TYPES.object,
@@ -63,6 +64,7 @@ const Datetime = React.createClass({
 			className: '',
 			defaultValue: '',
 			inputProps: {},
+			disabled: false,
 			input: true,
 			onFocus: nof,
 			onBlur: nof,
@@ -328,7 +330,7 @@ const Datetime = React.createClass({
 	},
 
 	openCalendar: function () {
-		if (!this.state.open) {
+		if (!this.state.open && !this.props.disabled) {
 			this.props.onFocus()
 			this.setState({ open: true })
 		}
@@ -377,9 +379,9 @@ const Datetime = React.createClass({
 		let children = []
 
 		let isValid =  	[
-			<input key='i' type='text' className='form-control calendar-input' readOnly value={this.state.inputValue} {...this.props.inputProps} />,
+			<input key='i' type='text' className='form-control calendar-input' readOnly disabled={this.props.disabled} value={this.state.inputValue} {...this.props.inputProps} />,
 			<span key='sicon-time' className='input-group-addon time'><i className='icon-time' /></span>,
-			<input key='t' type='text' className='form-control calendarTime-input' readOnly value={this.state.timeValue} {...this.props.inputProps} />
+			<input key='t' type='text' className='form-control calendarTime-input' readOnly disabled={this.props.disabled} value={this.state.timeValue} {...this.props.inputProps} />
 		]
 
 		let isEmpty = <span key='empty-title' className='title'> Select Time </span>
@@ -389,7 +391,7 @@ const Datetime = React.createClass({
 		let inputGroupClassName = ''
 
 		if (this.props.input) {
-			inputGroupClassName = 'input-group ' + (this.props.warning ? 'warning' : '')
+			inputGroupClassName = 'input-group ' + (this.props.warning ? 'warning' : '') + (this.props.disabled ? 'disabled' : '')
 
 			children = 	<div className='form-group calendar-group'>
 				<div key='open' className={inputGroupClassName} onClick={this.openCalendar}>

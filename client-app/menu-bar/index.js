@@ -42,7 +42,6 @@ class MenuBar extends Component {
 		this.updateNoticeboardVisible = this.updateNoticeboardVisible.bind(this)
 		this.updateBroadcastVisible = this.updateBroadcastVisible.bind(this)
 		this.updateTaskVisible = this.updateTaskVisible.bind(this)
-
 		this.state = {
 			slimMode: false,
 			showNotifications: false,
@@ -112,7 +111,6 @@ class MenuBar extends Component {
 									: ''
 							}
 						</i>
-
 						<i className='icon-notification tips' onClick={this.updateTaskVisible}>
 							<img src='icon/icon-action.svg' />
 							{

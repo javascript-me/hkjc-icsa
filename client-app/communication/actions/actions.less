@@ -1,0 +1,44 @@
+.messages-container.colour-container {
+	.notice-box ul.list-box-right li ul.row {
+		font-family: 'Roboto-Regular';
+		color: #FFFFFF;
+
+		> li {
+			&.notice-date {
+				display: none;
+			}
+
+			i.Critical {
+				background: url(notice-board/actions-critical.svg) center center no-repeat;
+			}
+
+			i.Low,
+			i.Medium,
+			i.High {
+				display: none;
+			}
+		}
+
+		> li.notice-title.bold-text,
+		> li.notice-title {
+			font-family: 'Roboto-Regular';
+			color: #FFFFFF;
+		}
+
+		&.Medium {
+			background: #FF8F00;
+		}
+
+		&.High {
+			background: #FF433E;
+		}
+
+		&.Critical {
+			background: #D3221B;
+		}
+
+		&.Low {
+			background: #85B612;
+		}
+	}
+}

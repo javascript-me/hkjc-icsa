@@ -1,49 +1,36 @@
 import express from 'express'
+
 import EventDirectoryUtil from './event-directory-util'
+const football = require('../json/eventdirectory/football.json').events
+
 const router = express.Router()
 
-const eventdirectory = require('../json/eventdirectory.json')
-
 /**
- * @api {POST} /eventdirectory/ Eventdirectory search result
+ * @api {POST} /eventdirectory/search/football Eventdirectory search result
  * @apiGroup EventDirectory
 
- * @apiDescription Eventdirectory search result.
+ * @apiDescription Eventdirectory search result
  *
- * @apiParam {String} keyword Search keyword.
- * @apiParam {String} [scenario] Scenario filter.
- * @apiParam {String} [competition] Competition filter.
-
- * @apiSuccess (Success) {String} status In-Play and selling status
- * @apiSuccess (Success) {String} t1 Home team short name
- * @apiSuccess (Success) {String} t1Tip Home team full name
- * @apiSuccess (Success) {String} t2 Away team short name
- * @apiSuccess (Success) {String} t2Tip Away team full name
- * @apiSuccessExample Success response
- *		HTTP/1.1 200 OK
- *		{
- *			"result": [{
- *				"name": "England",
- *				"children": [{
- *					"name": "Premier League",
- *					"competitions": [{
- *						"status": "available",
- *						"t1": "ARS",
- *						"t1Tip": "Arsenal",
- *						"t2": "ASV",
- *						"t2Tip": "Aston Villa"
- *					}]
- *				}]
- *			}]
- *		}
- *
+ * @apiParam {String} keyword Search keyword
+ * @apiParam {String} [eventType] Event Type
+ * @apiParam {String} [from] Kick Off Time From
+ * @apiParam {String} [to] Kick Off Time To
+ * @apiParamExample {json} Request-Example:
+ * 		{
+ * 			"keyword": "England",
+ * 			"eventType": "Assigned,In-Play,Pre-Event",
+ * 			"from": "16/09/2016 10:00",
+ * 			"to": "26/09/2016 10:00"
+ * 		}
  */
-router.post('/', (req, res) => {
-	const keyword = req.body.keyword
-	let result = {}
-	result.result = EventDirectoryUtil.doFilter(eventdirectory, keyword)
-
+router.post('/search/football', (req, res) => {
+	let result = EventDirectoryUtil.footballFilter(football, req.body)
 	res.send(result)
+})
+
+router.get('/autosugestion/football', (req, res) => {
+	let allKeyWord = EventDirectoryUtil.footballAllKeyWord(football)
+	res.send(allKeyWord)
 })
 
 export default router

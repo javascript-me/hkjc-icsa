@@ -1,14 +1,14 @@
 import config from '../config'
 
 const postSearch = (data) => {
-	return $.post(config.url('api/eventdirectory'), data)
+	return $.post(config.url('api/eventdirectory/search/football'), data)
 }
 
 export default {
 	async getEventDirectoryFilter () {
 		let result = {
 			scenario: {
-				options: ['All', 'Assigned', 'In-Play', 'Archive', 'Today', 'Pre-Event', 'Prelim', 'Defined', 'Major'],
+				options: ['All', 'Assigned', 'In-Play', 'Pre-Event', 'Prelim', 'Defined', 'Major'],
 				default: 'Assigned'
 			},
 			competition: {
