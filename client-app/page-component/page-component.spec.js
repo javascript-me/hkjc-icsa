@@ -8,6 +8,7 @@ import { TableHeaderColumn } from '../table'
 chai.use(chaiEnzyme()) // Note the invocation at the en
 
 const data = [ {id: 1, distribution_date: '28 Oct 2016 15:00:15', name: 'Name', category: 'Sports', detail: 'This is a detail'}, {id: 1, distribution_date: '28 Oct 2016 15:00:15', name: 'Name', category: 'Sports', detail: 'This is a detail'} ]
+
 describe('Page Componente', () => {
 	// To allow the functions adjustWidth, adjustHeight
 	global.getComputedStyle = function () { return { scrollWidth: 100, width: '100px', fontSize: '14px', fontFamily: 'Roboto Regular' } }

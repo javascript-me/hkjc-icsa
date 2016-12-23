@@ -31,5 +31,4 @@ export default React.createClass({
 		className: 'col-md-6',
 		columns: 6
 	}
-
 })

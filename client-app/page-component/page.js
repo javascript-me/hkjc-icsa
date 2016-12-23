@@ -387,6 +387,7 @@ export default React.createClass({
 			activeContent =
 				<div>
 					<div className='row'>
+
 						<div className='tableComponent-container col-md-12'>
 							<TableComponent key='table' data={this.props.tableData} {...this.props.options.table}>
 								{
@@ -407,6 +408,7 @@ export default React.createClass({
 		const topElement = this.top && this.top.props.columns ? <div className={`col-md-${this.top.props.columns}`}>{ this.top }</div> : null
 		const addBetType = this.props.betType ? <div className={betTypesContainerClassName}>{betTypes}</div> : null
 		const border = this.props.betType ? null : {borderLeft: '1px solid #305091'}
+
 		return (
 			<div className={this.props.pageClassName}>
 				<div className='row page-header'>

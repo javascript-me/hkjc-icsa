@@ -44,4 +44,3 @@ router.post('/search', (req, res) => {
 	res.send({ data: result, betType: req.body.betType, keyword: req.body.keyword, dateTimeFrom: req.body.dateTimeFrom, dateTimeTo: req.body.dateTimeTo })
 })
 
-export default router

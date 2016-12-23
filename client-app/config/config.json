@@ -35,7 +35,6 @@
 			"method": "GET",
 			"endpoint": "api/notice-board/competitions"
 		}
-
 	},
 	"override": {
 		"localhost|127.0.0.1": {

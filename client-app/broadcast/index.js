@@ -4,8 +4,8 @@ import { PageComponent, PageLayer } from '../Page-component'
 import config from '../config'
 import API from '../api-service'
 
-// Options array for the Page-Component
 const SEARCH_API = config.get('API_BROADCAST_SEARCH')
+// Options array for the Page-Component
 const options = {
 	table: {
 		method: SEARCH_API.method,
