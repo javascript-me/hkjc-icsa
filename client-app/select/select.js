@@ -12,7 +12,7 @@ export default class SelectCom extends React.Component {
 
 		return <select className={className} value={this.props.selectedVal} onChange={this.props.handleVal}>
 			<option value=''>All</option>
-			{this.renderOptions()}
+			{ this.props.datas ? this.renderOptions() : null }
 		</select>
 	}
 }

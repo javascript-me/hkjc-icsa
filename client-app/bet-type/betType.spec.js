@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import BetType from './betType'
+import BetType from './'
 
 const selectedBetTypeOfCaller = 'football'
 const defaultBetType = 'football'
