@@ -71,17 +71,18 @@ export default React.createClass({
 	},
 	async getRoles () {
 		let roles = []
+		let func = []
 		roles = await UserProfileService.getRoles()
 		this.tableData = roles
 		this.tableData.forEach((item) => {
 			_.find(this.props.inputSelected, (selected) => {
 				if (selected.assignedUserRole === item.roleName) {
-					this.tableData = item
+					func = item
+					return item
 				}
 			})
 		})
-
-		let showItems = this.tableData.functionNames
+		let showItems = func.functionNames
 		this.setState({showItems})
 	}
 })

@@ -57,7 +57,7 @@
 	.calendar-group.form-group {
 		margin-bottom: 0;
 
-		.form-control[readonly] {
+		.form-control[readonly]:not([disabled]) {
 			background: #FFFFFF;
 		}
 
@@ -87,6 +87,17 @@
 
 			&.warning {
 				border: 1px solid red;
+			}
+
+			&.disabled {
+				.form-control {
+					cursor: default;
+				}
+
+				.input-group-addon {
+					cursor: default;
+					background-color: #EEEEEE;
+				}
 			}
 		}
 	}

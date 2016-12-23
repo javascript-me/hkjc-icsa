@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import LoginService from '../login/login-service'
 import {PopupService} from '../popup'
 import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
@@ -6,9 +6,6 @@ import {campareTime} from '../userprofile/userdelegation.js'
 
 export default React.createClass({
 	displayName: 'MyProfile',
-	propTypes: {
-		someProp: PropTypes.bool
-	},
 	getInitialState () {
 		let profile = LoginService.getProfile()
 		this.userID = ''
@@ -17,6 +14,7 @@ export default React.createClass({
 		}
 		this.h1Title = 'My Profile'
 		return {
+			bAdmin: false,
 			delegationUpdate: false,
 			userBasic: {},
 			userAccount: {},
@@ -28,12 +26,13 @@ export default React.createClass({
 		this.getUserProfile()
 	},
 	onEditClick () {
+		this.refs.delegationCmp.resetDelegtionData()
 		this.setState({
 			delegationUpdate: true
 		})
 	},
 	async onUpdateClick (delegationCmp) {
-		const result = delegationCmp.onUpdateClick()
+		const result = delegationCmp.getChangeResult()
 		if (!result || result.length === 0) {
 			return false
 		}
@@ -58,39 +57,43 @@ export default React.createClass({
 		})
 		switch (true) {
 		case (errBox.roleErr) : {
-			PopupService.showMessageBox('You must select a role', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select a role', () => {})
 			return false
 		}
 		case (errBox.delegationToErr) : {
-			PopupService.showMessageBox('You must select  delegationTo date', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select "The time of Delegation To"', () => {})
 			return false
 		}
 		case (errBox.delegationFromErr) : {
-			PopupService.showMessageBox('You must select  delegationFrom date', () => {})
+			PopupService.showSuggestBox('warnning', 'You must select "Time of Delegation From"', () => {})
 			return false
 		}
 		case (errBox.smallerErr) : {
-			PopupService.showMessageBox('delegationTo date must larger then delegationFrom date', () => {})
+			PopupService.showSuggestBox('warnning', 'The "Time of Delegation To" should not be earlier than the "Time of Delegation From"', () => {})
 			return false
 		}
 		default : break
 
 		}
-
-		result && result.forEach((item) => { item.changeFlag = null })
-		let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
-
-		if (UpdateFlag.status) {
-			PopupService.showMessageBox('Update sucess!', () => {
-				this.getUserProfile()
+		PopupService.showMessageBox('Are you sure you want to proceed the operation?', async () => {
+			result && result.forEach((item) => {
+				item.changeFlag = null
+				item.isNewRecord = null
 			})
-		} else {
-			PopupService.showMessageBox('Update fail,please contact the administrator', () => {
-				this.setState({
-					delegationUpdate: false
+			let UpdateFlag = await UserProfileService.postUserDelegation(this.userID, {delegationList: result})
+
+			if (UpdateFlag.status) {
+				PopupService.showSuggestBox('success', 'The operation has been proceeded successfully!', () => {
+					this.getUserProfile()
 				})
-			})
-		}
+			} else {
+				PopupService.showSuggestBox('error', 'Update fail,please contact the administrator', () => {
+					this.setState({
+						delegationUpdate: false
+					})
+				})
+			}
+		})
 	},
 	onCancelClick () {
 		PopupService.showMessageBox('Are you sure you want to cancel the current operation?', () => {
@@ -102,21 +105,32 @@ export default React.createClass({
 	onDeleteClick (delegationCmp) {
 		let ids = delegationCmp.getDeleteData()
 		if (ids.length > 0) {
-			PopupService.showMessageBox('Are you sure you want delete the information?', () => {
-				UserProfileService.deleteDelegation({
-					userID: this.userID,
-					delegationIds: ids
-				}).then((data) => {
-					if (data) {
-						this.getUserProfile()
-					}
+			const result = delegationCmp.getChangeResult()
+			if (!result || result.length === 0) {
+				PopupService.showMessageBox('Are you sure you want to delete the information?', () => {
+					this.deleteUserDelegation(ids)
 				})
-			})
+			} else {
+				PopupService.showMessageBox('Information is updated, are you sure you want to delete the information?', () => {
+					this.deleteUserDelegation(ids)
+				})
+			}
 		} else {
-			PopupService.showErrorBox('You must select at least one delegation!')
+			PopupService.showSuggestBox('warnning', 'You must select at least one delegation!')
 		}
 	},
+	deleteUserDelegation (ids) {
+		UserProfileService.deleteDelegation({
+			userID: this.userID,
+			delegationIds: ids
+		}).then((data) => {
+			if (data) {
+				this.getUserProfile()
+			}
+		})
+	},
 	render () {
+		let showEditBtn = this.state.bAdmin && !this.state.delegationUpdate
 		return (
 			<div ref='root' className='my-profile'>
 				<ProfileTabs h1Title={this.h1Title}>
@@ -129,7 +143,7 @@ export default React.createClass({
 
 						<ProfileButtons>
 							{this.state.delegationUpdate && (<button className='btn btn-danger' onClick={() => { this.onDeleteClick(this.refs.delegationCmp) }}>Delete</button>)}
-							{!this.state.delegationUpdate && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
+							{showEditBtn && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
 							{this.state.delegationUpdate && (<button className='btn btn-primary pull-right' onClick={() => { this.onUpdateClick(this.refs.delegationCmp) }}>Update</button>)}
 							{this.state.delegationUpdate && (<button className='btn btn-cancle pull-right' onClick={this.onCancelClick}>Cancel</button>)}
 						</ProfileButtons>
@@ -147,11 +161,18 @@ export default React.createClass({
 	async getUserProfile () {
 		const userProfile = await UserProfileService.getUserProfile({userID: this.userID})
 		if (userProfile) {
+			let bAdmin = false
+			userProfile.account.assignedUserRoles.forEach((item) => {
+				if (item.assignedUserRole.indexOf('Administrator') > -1) {
+					bAdmin = true
+				}
+			})
 			this.setState({
+				bAdmin,
 				delegationUpdate: false,
 				userBasic: userProfile.user,
 				userAccount: userProfile.account,
-				userDelegation: userProfile.account.delegationList,
+				userDelegation: bAdmin ? userProfile.account.delegationList : null,
 				userSubscription: userProfile.account.subscribedCategoryMessages
 			})
 		}
