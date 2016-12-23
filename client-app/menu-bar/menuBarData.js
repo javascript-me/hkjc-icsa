@@ -400,7 +400,8 @@ const menuList1 = [
 				text: 'Contingency Control',
 				subMenu: [
 					{
-						text: 'Contingency Stop Sell'
+						text: 'Contingency Stop Sell',
+						link: '/page/contigency'
 					}
 				]
 			},
@@ -869,7 +870,8 @@ const menuList2 = [
 				text: 'Contingency Control',
 				subMenu: [
 					{
-						text: 'Contingency Stop Sell'
+						text: 'Contingency Stop Sell',
+						link: '/page/contigency'
 					}
 				]
 			},

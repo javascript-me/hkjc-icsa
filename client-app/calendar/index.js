@@ -26,7 +26,7 @@ const Datetime = React.createClass({
 		strictParsing: TYPES.bool,
 		closeOnSelect: TYPES.bool,
 		closeOnTab: TYPES.bool,
-		value: TYPES.string,
+		value: TYPES.oneOfType([TYPES.string, TYPES.instanceOf(moment)]),
 		dateFormat: TYPES.string,
 		timeFormat: TYPES.string,
 		className: TYPES.string

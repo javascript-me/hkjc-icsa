@@ -35,9 +35,13 @@ export default React.createClass({
 			existRequiredColumn: false
 		}
 	},
-	componentDidMount: function () {
+
+	componentWillMount: function () {
 		this.initialFiltersAndLayoutInfo()
 		this.initialComponentSubscription()
+	},
+
+	componentDidMount: function () {
 	},
 
 	componentWillUnmount: function () {
@@ -47,7 +51,8 @@ export default React.createClass({
 		let maxColumnCount = 0
 		let panelOperateFn = row => {
 			this.iterateChilren(row, this.getDefaultFilterInfo)
-			maxColumnCount = Math.max(maxColumnCount, row.props.children.length)
+
+			maxColumnCount = Math.max(maxColumnCount, row.props.children.length || 0)
 		}
 
 		this.iterateChilren(this, panelOperateFn)
@@ -289,7 +294,7 @@ export default React.createClass({
 			break
 		}
 
-		if (!isValid && typeof destSetValidHandle === 'function') {
+		if (typeof destSetValidHandle === 'function') {
 			destSetValidHandle(isValid)
 		}
 
