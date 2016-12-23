@@ -1,6 +1,6 @@
 import React from 'react'
 import {TableHeaderColumn} from '../table'
-import { PageComponent, PageLayer } from '../Page-component'
+import { PageComponent, PageLayer } from '../page-component'
 import config from '../config'
 import API from '../api-service'
 
