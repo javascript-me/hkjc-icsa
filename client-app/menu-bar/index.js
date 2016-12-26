@@ -187,10 +187,10 @@ class MenuBar extends Component {
 					let audioElement = document.createElement('audio')
 					audioElement.setAttribute('src', 'common/sound.mp3')
 					audioElement.setAttribute('autoplay', 'autoplay')
-					audioElement.addEventListener('ended', function () {
-						start ++
+					audioElement.addEventListener('ended', () => {
+						start++
 						if (start !== ringsNum) {
-							setTimeout(function () { audioElement.play() }, 100)
+							setTimeout(() => { audioElement.play() }, 100)
 						}
 					})
 				} else {
