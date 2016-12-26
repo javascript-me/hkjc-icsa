@@ -110,25 +110,25 @@ export default React.createClass({
 			this.changeBGFixedBasketBall(DISABLED_COLOR)
 			this.changeBGFixedHorseRacing(DISABLED_COLOR)
 			this.changeBGPariMutuel(DISABLED_COLOR)
-			this.setState({showTimeStopAll: 'block', stopAllTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({showTimeStopAll: 'block', stopAllTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
 		} else if (this.state.stopSellFixedODDSBackground === SELECTED_COLOR) {
 			this.changeBGAllFixedOdds(DISABLED_COLOR)
 			this.changeBGFixedFootBall(DISABLED_COLOR)
 			this.changeBGFixedBasketBall(DISABLED_COLOR)
 			this.changeBGFixedHorseRacing(DISABLED_COLOR)
-			this.setState({showTimeFixedOddsStopAll: 'block', stopAllFixedTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({showTimeFixedOddsStopAll: 'block', stopAllFixedTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
 		} else if (this.state.fixedOddFootBallBackground === SELECTED_COLOR) {
 			this.changeBGFixedFootBall(DISABLED_COLOR)
-			this.setState({showTimeFootBall: 'block', stopFixedFootBallTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({showTimeFootBall: 'block', stopFixedFootBallTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
 		} else if (this.state.fixedOddBasketBallBackground === SELECTED_COLOR) {
 			this.changeBGFixedBasketBall(DISABLED_COLOR)
-			this.setState({showTimeBasketBall: 'block', stopFixedBasketBallTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({showTimeBasketBall: 'block', stopFixedBasketBallTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
 		} else if (this.state.fixedOddHorseRacingBackground === SELECTED_COLOR) {
 			this.changeBGFixedHorseRacing(DISABLED_COLOR)
-			this.setState({showTimeHorseRacing: 'block', stopFixedHorseRacingTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({showTimeHorseRacing: 'block', stopFixedHorseRacingTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
 		} else if (this.state.stopSelPariMutuelBackground === SELECTED_COLOR) {
 			this.changeBGPariMutuel(DISABLED_COLOR)
-			this.setState({showTimePariMutuel: 'block', stopPariMutuelTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({showTimePariMutuel: 'block', stopPariMutuelTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
 		}
 		this.setState({
 			showProceedPopup: 'none',
@@ -136,11 +136,11 @@ export default React.createClass({
 		})
 		if (((this.state.fixedOddFootBallBackground === DISABLED_COLOR || this.state.fixedOddFootBallBackground === SELECTED_COLOR) && (this.state.fixedOddBasketBallBackground === DISABLED_COLOR || this.state.fixedOddBasketBallBackground === SELECTED_COLOR) && (this.state.fixedOddHorseRacingBackground === DISABLED_COLOR || this.state.fixedOddHorseRacingBackground === SELECTED_COLOR))) {
 			this.changeBGAllFixedOdds(DISABLED_COLOR)
-			this.setState({showTimeFixedOddsStopAll: 'block', stopAllFixedTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss'), showTimeFootBall: 'none', showTimeBasketBall: 'none', showTimeHorseRacing: 'none'})
+			this.setState({showTimeFixedOddsStopAll: 'block', stopAllFixedTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss'), showTimeFootBall: 'none', showTimeBasketBall: 'none', showTimeHorseRacing: 'none'})
 		}
 		if (((this.state.stopSelPariMutuelBackground === DISABLED_COLOR || this.state.stopSelPariMutuelBackground === SELECTED_COLOR) && (this.state.stopSellFixedODDSBackground === DISABLED_COLOR || this.state.stopSellFixedODDSBackground === SELECTED_COLOR || this.state.stopSellFixedODDSBackground === ENABLED_COLOR) && (this.state.fixedOddFootBallBackground === DISABLED_COLOR || this.state.fixedOddFootBallBackground === SELECTED_COLOR) && (this.state.fixedOddBasketBallBackground === DISABLED_COLOR || this.state.fixedOddBasketBallBackground === SELECTED_COLOR) && (this.state.fixedOddHorseRacingBackground === DISABLED_COLOR || this.state.fixedOddHorseRacingBackground === SELECTED_COLOR))) {
 			this.changeBGStopSellAll(DISABLED_COLOR)
-			this.setState({showTimeStopAll: 'block', stopAllTime:Moment(new Date()).format('DD MMM YYYY HH:mm:ss'), showTimeFixedOddsStopAll: 'none', showTimeFootBall: 'none', showTimeBasketBall: 'none', showTimeHorseRacing: 'none', showTimePariMutuel: 'none'})
+			this.setState({showTimeStopAll: 'block', stopAllTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss'), showTimeFixedOddsStopAll: 'none', showTimeFootBall: 'none', showTimeBasketBall: 'none', showTimeHorseRacing: 'none', showTimePariMutuel: 'none'})
 		}
 	},
 
@@ -211,9 +211,9 @@ export default React.createClass({
 					<div className='col-md-12'>
 						<div onClick={this.stopSellAllClickHandler}>
 							<ContigencyButton background={this.state.stopSellAllBackground} width='278px' height='120px'
-											  topText='STOP SELL'
-											  middleText='' bottomText='ALL' topLabelStyle='28px' bottomLabelStyle='40px'
-											  topLabelLineHeight='30px' bottomLabelLineHeight='47px' opacity='1.0' />
+								topText='STOP SELL'
+								middleText='' bottomText='ALL' topLabelStyle='28px' bottomLabelStyle='40px'
+								topLabelLineHeight='30px' bottomLabelLineHeight='47px' opacity='1.0' />
 						</div>
 					</div>
 					<div className='col-md-12'>
@@ -228,10 +228,10 @@ export default React.createClass({
 					<div className='col-md-3 container-stop-sell-all-sports'>
 						<div onClick={this.stopSellAllFixedOddsClickHandler}>
 							<ContigencyButton background={this.state.stopSellFixedODDSBackground} width='234px' height='109px'
-											  topText='STOP SELL'
-											  middleText='ALL FIXED ODDS' bottomText='' topLabelStyle='20px'
-											  bottomLabelStyle='23px'
-											  topLabelLineHeight='30px' bottomLabelLineHeight='27px' />
+								topText='STOP SELL'
+								middleText='ALL FIXED ODDS' bottomText='' topLabelStyle='20px'
+								bottomLabelStyle='23px'
+								topLabelLineHeight='30px' bottomLabelLineHeight='27px' />
 						</div>
 						<span className='sub-title'>
 							All Fixed Odds Sports and Fixed Odds Horse Racing
@@ -243,10 +243,10 @@ export default React.createClass({
 						<span className='container-icon'><img src='icon/football.svg' /></span>
 						<div onClick={this.fixedOddFootBallClickHandler}>
 							<ContigencyButton background={this.state.fixedOddFootBallBackground} width='215px' height='97px'
-											  topText='STOP SELL'
-											  middleText='ALL FIXED ODDS' bottomText='FOOTBALL' topLabelStyle='20px'
-											  bottomLabelStyle='14px' topLabelLineHeight='24px'
-											  bottomLabelLineHeight='' />
+								topText='STOP SELL'
+								middleText='ALL FIXED ODDS' bottomText='FOOTBALL' topLabelStyle='20px'
+								bottomLabelStyle='14px' topLabelLineHeight='24px'
+								bottomLabelLineHeight='' />
 						</div>
 						<span className='sub-title'>
 							All Fixed Odds Football bet types
@@ -254,10 +254,10 @@ export default React.createClass({
 						<span className='stopped-at' style={{'display': this.state.showTimeFootBall}}>Stopped at {this.state.stopFixedFootBallTime}</span>
 						<div onClick={this.pariMutuelClickHandler}>
 							<ContigencyButton background={this.state.stopSelPariMutuelBackground} width='215px' height='97px'
-											  topText='STOP SELL'
-											  middleText='ALL Pari-Mutuel' bottomText='FOOTBALL' topLabelStyle='20px'
-											  bottomLabelStyle='14px' topLabelLineHeight='24px'
-											  bottomLabelLineHeight='' />
+								topText='STOP SELL'
+								middleText='ALL Pari-Mutuel' bottomText='FOOTBALL' topLabelStyle='20px'
+								bottomLabelStyle='14px' topLabelLineHeight='24px'
+								bottomLabelLineHeight='' />
 						</div>
 						<span className='sub-title'>
 						All Pari-Mutuel Football bet types
@@ -269,10 +269,10 @@ export default React.createClass({
 						<span className='container-icon'><img src='icon/basketball.svg' /></span>
 						<div onClick={this.fixedOddBasketBallClickHandler}>
 							<ContigencyButton background={this.state.fixedOddBasketBallBackground} width='215px' height='95px'
-											  topText='STOP SELL'
-											  middleText='ALL FIXED ODDS' bottomText='BASKETBALL' topLabelStyle='20px'
-											  bottomLabelStyle='14px' topLabelLineHeight='24px'
-											  bottomLabelLineHeight='' />
+								topText='STOP SELL'
+								middleText='ALL FIXED ODDS' bottomText='BASKETBALL' topLabelStyle='20px'
+								bottomLabelStyle='14px' topLabelLineHeight='24px'
+								bottomLabelLineHeight='' />
 						</div>
 						<span className='sub-title'>
 							All Fixed Odds Basketball bet types
@@ -284,10 +284,10 @@ export default React.createClass({
 						<span className='container-icon'><img src='icon/horseracing.svg' /></span>
 						<div onClick={this.fixedOddHorseClickHandler}>
 							<ContigencyButton background={this.state.fixedOddHorseRacingBackground} width='215px' height='96px'
-											  topText='STOP SELL'
-											  middleText='ALL FIXED ODDS' bottomText='HORSE RACING' topLabelStyle='20px'
-											  bottomLabelStyle='14px' topLabelLineHeight='24px'
-											  bottomLabelLineHeight='' />
+								topText='STOP SELL'
+								middleText='ALL FIXED ODDS' bottomText='HORSE RACING' topLabelStyle='20px'
+								bottomLabelStyle='14px' topLabelLineHeight='24px'
+								bottomLabelLineHeight='' />
 						</div>
 						<span className='sub-title'>
 							All Fixed Odds Horse Racing Bet types
@@ -297,7 +297,7 @@ export default React.createClass({
 				</div>
 				<Popup ref='contigencyPopup' title='Contigency' onCancel={this.closePopUp} onConfirm={this.confirmClickHandler}>
 					<ContigencyPopup popupParagraph1={this.state.paragraphOne}
-									 popupParagraph2={this.state.paragraphTwo} />
+						popupParagraph2={this.state.paragraphTwo} />
 				</Popup>
 				<div className='container-proceed-popup' style={{'display': this.state.showProceedPopup}}>
 					<div className='col-md-12'>
