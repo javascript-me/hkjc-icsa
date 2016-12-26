@@ -4,6 +4,7 @@ import MultiSelect from '../muti-select'
 import Calender from '../calendar'
 import classnames from 'classnames'
 import _ from 'lodash'
+import moment from 'moment'
 import * as util from '../utility'
 
 const MultiSelect_Event = util.FetchServerDataHoc({url:'api/eventdirectory/eventType'},
@@ -46,7 +47,7 @@ export default React.createClass({
 		return (
 			{
 				showFilter: false,
-				reflashFlag: true,
+				hasFilter: false,
 				searchEnquiry: {}
 			}
 		)
@@ -55,7 +56,7 @@ export default React.createClass({
 	handleFilterChange (field,value) {
 		let nextEnquiry = _.cloneDeep(this.state.searchEnquiry)
 		nextEnquiry[field] = value
-		this.setState({searchEnquiry:nextEnquiry})
+		this.setState({searchEnquiry:nextEnquiry,hasFilter:true})
 	},
 
 	getChangeHandler (field) {
@@ -69,9 +70,41 @@ export default React.createClass({
 	},
 
 	resetEnquiry () {
-		this.setState({searchEnquiry: {},reflashFlag: false},() => {
-			console.log(this.state.searchEnquiry.dataFrom)
-			this.setState({reflashFlag: true})})
+		this.setState({searchEnquiry: {},hasFilter:false})
+	},
+
+	getSearchEnquiry () {
+		let resultEnquiry = {}
+		let searchEnquiry = this.state.searchEnquiry
+		searchEnquiry.dateFrom && (resultEnquiry.dateFrom = searchEnquiry.dateFrom.format('DD MMM YYYY HH:mm'))
+		searchEnquiry.dateTo && (resultEnquiry.dateFrom = searchEnquiry.dateTo.format('DD MMM YYYY HH:mm'))
+		if (searchEnquiry.eventType && searchEnquiry.eventType.length) {
+			resultEnquiry.eventType = searchEnquiry.eventType.map(item => item.value)
+		}
+		if (searchEnquiry.competition && searchEnquiry.competition.length) {
+			resultEnquiry.competition = searchEnquiry.competition.map(item => item.value)
+		}
+		resultEnquiry.keyword = this.refs.autoSuggestion.getValue()
+		return resultEnquiry
+
+	},
+
+	onSearch () {
+		const resultEnquiry = this.getSearchEnquiry()
+		console.log(resultEnquiry)
+	},
+
+	setToday () {
+		let todayStart = new Date()
+		let todayEnd = new Date()
+		todayStart.setHours(0)
+		todayStart.setMinutes(0)
+		todayEnd.setHours(23)
+		todayEnd.setMinutes(59)
+		let nextEnquiry = _.cloneDeep(this.state.searchEnquiry)
+		nextEnquiry.dateFrom = moment(todayStart).format('DD MMM YYYY HH:mm')
+		nextEnquiry.dateTo = moment(todayEnd).format('DD MMM YYYY HH:mm')
+		this.setState({searchEnquiry:nextEnquiry,hasFilter:true})
 	},
 
 	render () {
@@ -83,14 +116,15 @@ export default React.createClass({
 								  itemClassName="search-autocomplete-item"
 								  placeholder="Search"
 								  maxResults={6}
+								  onChange={this.handleKeywordChange}
 								  noSuggestionsText="No Results"
 								  onItemSelected={this.onSearchItemSelected}
-								  onItemsRequested={this.onSearchItemsRequested} />
+								  onItemsRequested={this.onSearchItemsRequested} ref="autoSuggestion"/>
                 </div>
 
 				<div id='ed-advanced' className='form-group' onClick={this.toggleFilterShowState}>
 					<label>Advanced Filters<span className={'caret ' + (this.state.showFilter? 'caret-up':'caret-down')} /></label>
-					<div className="filterIcon"></div>
+					<div className="filterIcon" style={{display:this.state.hasFilter?'block':'none'}}></div>
 				</div>
 
 				
@@ -115,25 +149,25 @@ export default React.createClass({
 
 					<div className='form-group'>
 						<label>Kick Off Time From</label>
-						{this.state.reflashFlag && <Calender onChange={this.getChangeHandler('dateFrom')}
-						value={this.state.searchEnquiry.dataFrom}
-						/>}
+						<Calender onChange={this.getChangeHandler('dateFrom')}
+						value={this.state.searchEnquiry.dateFrom}
+						/>
 					</div>
 
 					<div className='form-group'>
 						<label>Kick Off Time To</label>
-						{this.state.reflashFlag && <Calender onChange={this.getChangeHandler('dateTo')}
-						value={this.state.searchEnquiry.dataTo}
-						/>}
+						<Calender onChange={this.getChangeHandler('dateTo')}
+						value={this.state.searchEnquiry.dateTo}
+						/>
 					</div>
 
-					<div className="todayIcon">
+					<div className="todayIcon" onClick={this.setToday}>
 						<span className="clockIcon"></span>
 						<span>Today</span>
 					</div>
 
 					<div className="action-part">
-						<button className="button pull-right primany">Search</button>
+						<button className="button pull-right primany" onClick={this.onSearch}>Search</button>
 						<button className="button pull-right blank" onClick={this.resetEnquiry}>Reset</button>
 					</div>
 				</div>

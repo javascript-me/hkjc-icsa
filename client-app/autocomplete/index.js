@@ -42,6 +42,7 @@ export default class AutoComplete extends React.Component {
             inputClassName: props.className,
             noSuggestions: false
         };
+		this.getValue = this.getValue.bind(this);
     };
 
     onChange = (event, {newValue}) => {
@@ -55,6 +56,10 @@ export default class AutoComplete extends React.Component {
         this.setState({selectedItem: suggestion, noSuggestions: false});
         this.props.onItemSelected(suggestion);
     };
+
+	getValue () {
+		return this.state.value
+	}
 
     onSuggestionsFetchRequested = async ({ value }) => {
         if (this.lastResult.value === value) return this.lastResult.items;
