@@ -12,10 +12,10 @@
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
 			"noticeboardSettings": {
-				"display": "bottom"
+				"position": "bottom"
 			},
 			"taskSettings": {
-				"display": "bottom"
+				"position": "bottom"
 			}
 		}
 	},
@@ -32,10 +32,10 @@
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
 			"noticeboardSettings": {
-				"display": "right"
+				"position": "right"
 			},
 			"taskSettings": {
-				"display": "right"
+				"position": "right"
 			}
 		}
 	},
@@ -50,6 +50,12 @@
 				"login.*": "*",
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
+			},
+			"noticeboardSettings": {
+				"position": "right"
+			},
+			"taskSettings": {
+				"position": "right"
 			}
 		}
 	},
@@ -65,6 +71,12 @@
 				"login.*": "*",
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
+			},
+			"noticeboardSettings": {
+				"position": "right"
+			},
+			"taskSettings": {
+				"position": "right"
 			}
 		}
 	},
@@ -80,6 +92,12 @@
 				"login.*": "*",
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
+			},
+			"noticeboardSettings": {
+				"position": "right"
+			},
+			"taskSettings": {
+				"position": "right"
 			}
 		}
 	},
@@ -98,10 +116,10 @@
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
 			"noticeboardSettings": {
-				"display": "right"
+				"position": "right"
 			},
 			"taskSettings": {
-				"display": "right"
+				"position": "right"
 			}
 		}
 	},
