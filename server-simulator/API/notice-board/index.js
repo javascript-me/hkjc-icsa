@@ -157,6 +157,27 @@ router.post('/update-acknowledge-status', (req, res) => {
 	res.send(result)
 })
 
+/**
+ * @api {POST} /notice-board/update-table-acknowledge-status/ noticeboard table updating notice status
+ * @apiGroup NoticeBoard
+
+ * @apiDescription when click 'Acknowledge/Unacknowledge' button, the status willl be update in the noticeboard table.
+ *
+ * @apiParam {String} username Username of current user.
+ * @apiParam {String} id Unique id of notice.
+ * @apiParam {String} command Action need to take. It will be either "Acknowledge" or "Unacknowledge".
+ *
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} id A1
+ * @apiSuccess (Success) {String} command Acknowledge
+ *
+ * @apiSuccessExample Success response
+ *        HTTP/1.1 200 OK
+ *        [
+ *            // alerts and critical informations array
+ *        ]
+ *
+ */
 router.post('/update-table-acknowledge-status', (req, res) => {
 	let id = req.body.id
 	let command = req.body.command
@@ -185,6 +206,66 @@ router.post('/update-table-acknowledge-status', (req, res) => {
 	)
 	res.status(status)
 	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
+})
+
+/**
+ * @api {post} /notice-board/add-noticeboard-data Add New noticeboard data
+ * @apiGroup NoticeBoard
+
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"alert_name": "Test Name",
+ *			"priority": "Critical",
+ *			"alert_status": "New",
+ *			"message_category": "Test Information",
+ *			"system_distribution_time": ,
+ *			"message_detail": "Test Message Detail",
+ *			"assignee": "Trading Manager",
+ *			"time_range": "",
+ *			"sports_type": "Football",
+ *			"event_level1": "FA Cup",
+ *			"event_level2": "ARS vs ASV",
+ *			"inplay": "In-play",
+ *			"continent": "Europe",
+ *			"country": "England",
+ *			"recipient": "Senior Trader",
+ *			"id":
+ *		}
+ *
+ *
+*/
+router.post('/add-noticeboard-data', (req, res) => {
+	let newJsonAlerts
+	let option = 'allgood'
+	let dt = new Date()
+	let systemDisTime = moment(dt, 'DD MMMM YYYY HH:mm:ss').format('DD MMMM YYYY HH:mm:ss')
+	let id = 'TEST' + Math.floor(Math.random() * 1000)
+	let value = {
+		"alert_name": "Test Name",
+		"priority": "Critical",
+		"alert_status": "New",
+		"message_category": "Test Information",
+		"system_distribution_time": systemDisTime,
+		"message_detail": "Test Message Detail",
+		"assignee": "Trading Manager",
+		"time_range": "",
+		"sports_type": "Football",
+		"event_level1": "FA Cup",
+		"event_level2": "ARS vs ASV",
+		"inplay": "In-play",
+		"continent": "Europe",
+		"country": "England",
+		"recipient": "Senior Trader",
+		"id": id
+	}
+	jsonAlerts[option].push(value)
+	newJsonAlerts = jsonAlerts[option]
+
+	let status = 200
+	res.status(status)
+	// res.send(newJsonAlerts)
+	res.send(value)
 })
 
 /**
