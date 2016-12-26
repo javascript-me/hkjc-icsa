@@ -76,7 +76,7 @@ class TableHeaderColumn extends Component {
 		}
 
 		if (sortIndicator) {
-			defaultCaret = (!dataSort) ? null : (
+			defaultCaret = (!dataSort) ? <span className='padding-15' /> : (
 				<span className='order'>
 					<span className='dropdown'>
 						<span className='sortCaret' />

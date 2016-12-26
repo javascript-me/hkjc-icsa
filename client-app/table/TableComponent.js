@@ -909,7 +909,7 @@ class TableComponent extends Component {
 
 	_adjustHeaderWidth () {
 		if (!this.refs.header) {
-			return
+			return false
 		}
 		const header = this.refs.header.refs.header
 		const headerContainer = this.refs.header.refs.container

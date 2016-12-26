@@ -189,7 +189,9 @@
       "rewire": false,
       "rewireKeyVal": false,
       "rewireResponse": false,
-      "rewireService": false
+      "rewireReject": false,
+      "rewireService": false,
+      "rewireServiceReject": false
     }
   },
   "browserify": {

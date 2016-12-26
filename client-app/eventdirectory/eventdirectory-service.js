@@ -29,6 +29,6 @@ export default {
 		return result
 	},
 	async getFootballAutosuggestions () {
-		return await $.get(config.url('api/eventdirectory/autosugestion/football'));
+		return await $.get(config.url('api/eventdirectory/autosugestion/football'))
 	}
 }

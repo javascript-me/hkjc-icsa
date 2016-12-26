@@ -2,17 +2,7 @@ import React, {Component} from 'react'
 import Popup from '../popup'
 import dateTool from '../formatter/date-formatter.js'
 import Data from './data.json'
-const sampleTask = {
-	priority: 'medium',
-	taskType: 'aproveTask',
-	status: 'New',
-	lockStatus: 3,
-	category: 'N/A',
-	taskTitle: 'MUN vs ABC -POSITION 90%',
-	// taskBtnText: 'Odds Adjustment Panel',
-	taskDetail: '<Odds Compilation Task> has been assigned to you due to the odds re-finalisation. Please kindly complete your Odds Compilation Task ASAP.'
 
-}
 class TaskDetailBox extends Component {
 	constructor (props) {
 		super(props)
