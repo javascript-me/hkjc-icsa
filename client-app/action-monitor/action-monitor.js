@@ -2,22 +2,21 @@ import React from 'react'
 import classNames from 'classnames'
 
 import LoginService from '../login/login-service'
-import { AsyncRequest } from '../utility'
+import API from '../api-service'
 import { TableComponent, TableHeaderColumn } from '../table'
 
 export default React.createClass({
 	displayName: 'ActionMonitor',
 	getInitialState () {
 		return {
+			tableData: null,
 			tableOptions: {
 				defaultSortName: 'system_distribution_time',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
 				paginationClassContainer: 'text-center',
 				onRowClick: this.onRowClick
-			},
-			data: null,
-			hasData: false
+			}
 		}
 	},
 	componentDidMount () {
@@ -27,18 +26,31 @@ export default React.createClass({
 			this.userID = profile.userID
 		}
 
-		this.getActionList()
+		this.getData()
 	},
-	getActionList () {
-		AsyncRequest.postData(AsyncRequest.urls.ACTIONS_LIST, {
+	componentWillUnmount () {
+		API.unsubscribeListener('change', this.APIChange)
+	},
+	getData () {
+		API.addListener('change', this.APIChange)
+		API.request('POST', 'api/actions/list', {
 			userID: this.userID
-		}).then((result) => {
-			if (result.data) {
-				this.setState({
-					data: result.data
-				})
-			}
-		})
+		}, 'actionList')
+	},
+	APIChange (error, promise, extra) {
+		if (error) {
+			// TODO: Show Errors?
+		}
+
+		switch (extra) {
+		case 'actionList':
+			promise.done(response => {
+				this.setState({ tableData: response })
+			})
+			break
+		default:
+			break
+		}
 	},
 	onRowClick () {
 	},
@@ -53,7 +65,7 @@ export default React.createClass({
 				<div className='row page-content'>
 					<div className='tableComponent-container'>
 						<TableComponent
-							data={this.state.data}
+							data={this.state.tableData}
 							options={this.state.tableOptions}
 							pagination
 							striped
@@ -73,7 +85,7 @@ export default React.createClass({
 					</div>
 					<div className='vertical-gap'>
 						<div className='pull-right'>
-							<button className={classNames('btn btn-primary pull-right', {disabled: !this.state.hasData})}>Export</button>
+							<button className={classNames('btn btn-primary pull-right', {disabled: !this.state.tableData || 0 === this.state.tableData.length})}>Export</button>
 						</div>
 					</div>
 				</div>
