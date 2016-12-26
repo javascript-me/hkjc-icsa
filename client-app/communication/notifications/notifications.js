@@ -92,7 +92,7 @@ export default React.createClass({
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
 		let noticePromise = getNoticesPromise(userProfile.username)
-		
+
 		let allNotices
 		let unreadNotices
 		let self = this

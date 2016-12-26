@@ -35,15 +35,15 @@ const getTipsCountPromise = async (username) => {
 	return count
 }
 
-const getAllNoticesPromise = async (username) => {
-	let notices = null
+const getAllNoticesCount = async (username) => {
+	let count = null
 
 	try {
-		notices = await NotificationsService.getNotices(username)
+		count = await NotificationsService.getNoticesCount(username)
 	} catch (ex) {
 
 	}
-	return notices
+	return count
 }
 
 class MenuBar extends Component {
@@ -150,8 +150,8 @@ class MenuBar extends Component {
 
 		this.updateNoticeRemindCount(userName, self)
 
-		getAllNoticesPromise(userName).then((notices) => {
-			noticeLength = notices.length
+		getAllNoticesCount(userName).then((count) => {
+			noticeLength = count
 		})
 
 		this.interval = setInterval(() => {
@@ -174,28 +174,28 @@ class MenuBar extends Component {
 		this.interval = setInterval(() => {
 			getNoticeCountPromise(userName).then((noticeRemindCount) => {
 				self.setState({noticeRemindCount: noticeRemindCount})
-				let noticeNewLength
-				getAllNoticesPromise(userName).then((notices) => {
-					noticeNewLength = notices.length
-					let start = 0
+			})
+			let noticeNewLength
+			getAllNoticesCount(userName).then((count) => {
+				noticeNewLength = count
+				let start = 0
 
-					let ringsNum = noticeNewLength - noticeLength
+				let ringsNum = noticeNewLength - noticeLength
 
-					if (noticeNewLength > noticeLength) {
-						noticeLength = noticeNewLength
-						let audioElement = document.createElement('audio')
-						audioElement.setAttribute('src', 'common/sound.mp3')
-						audioElement.setAttribute('autoplay', 'autoplay')
-						audioElement.addEventListener('ended', function () {
-							start ++
-							if (start !== ringsNum) {
-								setTimeout(function () { audioElement.play() }, 100)
-							}
-						})
-					} else {
-						noticeNewLength = noticeLength
-					}
-				})
+				if (noticeNewLength > noticeLength) {
+					noticeLength = noticeNewLength
+					let audioElement = document.createElement('audio')
+					audioElement.setAttribute('src', 'common/sound.mp3')
+					audioElement.setAttribute('autoplay', 'autoplay')
+					audioElement.addEventListener('ended', () => {
+						start++
+						if (start !== ringsNum) {
+							setTimeout(() => { audioElement.play() }, 100)
+						}
+					})
+				} else {
+					noticeNewLength = noticeLength
+				}
 			})
 			PubSub.publish(PubSub['REFRESH_NOTICES'])
 			PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
