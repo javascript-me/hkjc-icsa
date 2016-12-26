@@ -91,15 +91,14 @@ export default React.createClass({
 				hideSizePerPage: true,
 				paginationClassContainer: 'text-center'
 			},
-			auditlogs: []
+			auditlogs: [],
+			loading: false
 		}
 	},
 	componentDidMount: function () {
-		let criteriaOption = this.getSearchCriterias()
-
-		// Get Table Data
-		AuditlogStore.searchAuditlogs(criteriaOption)
 		AuditlogStore.addChangeListener(this.onChange)
+		// Get Table Data
+		this.searchAuditlog()
 
 		token = PubSub.subscribe(PubSub[this.state.tokens.AUDITLOG_SEARCH], () => {
 			this.searchAuditlog()
@@ -243,7 +242,8 @@ export default React.createClass({
 
 	searchAuditlog: async function () {
 		this.setState({
-			selectedKeyword: this.state.keyword
+			selectedKeyword: this.state.keyword,
+			loading: true
 		}, function () {
 			let criteriaOption = this.getSearchCriterias()
 
@@ -327,7 +327,9 @@ export default React.createClass({
 	onChange: function () {
 		const hasData = AuditlogStore.auditlogs.length > 0
 		this.setState({
-			auditlogs: AuditlogStore.auditlogs, hasData: hasData
+			auditlogs: AuditlogStore.auditlogs,
+			hasData: hasData,
+			loading: false
 		})
 	},
 
@@ -415,7 +417,8 @@ export default React.createClass({
 			activeContent =
 				<div>
 					<div className='tableComponent-container'>
-						<TableComponent data={AuditlogStore.auditlogs} pagination options={this.state.tableOptions} striped keyField='id'
+						<TableComponent data={AuditlogStore.auditlogs}
+							loading={this.state.loading} pagination options={this.state.tableOptions} striped keyField='id'
 							tableHeaderClass='table-header' tableContainerClass='base-table' >
 							<TableHeaderColumn dataField='id' autoValue hidden>ID</TableHeaderColumn>
 							<TableHeaderColumn dataField='date_time' dataSort>Date/Time</TableHeaderColumn>
