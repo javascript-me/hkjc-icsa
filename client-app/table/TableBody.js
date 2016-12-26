@@ -152,14 +152,17 @@ class TableBody extends Component {
 					<td data-toggle='collapse'
 						colSpan={this.props.columns.length + (isSelectRowDefined ? 1 : 0)}
 						className='react-bs-table-no-data'>
-						{ this.props.noDataText || Const.NO_DATA_TEXT }
+						{ this.props.loading ? '' : (this.props.noDataText || Const.NO_DATA_TEXT) }
 					</td>
 				</TableRow>
 			)
 		}
 
 		return (
-			<div ref='container' className={classSet('react-bs-container-body', this.props.bodyContainerClass)} style={this.props.style}>
+			<div ref='container' className={classSet('react-bs-container-body',
+				this.props.bodyContainerClass,
+				{'loading': this.props.loading})}
+				style={this.props.style}>
 				<table className={tableClasses}>
 					{ tableHeader }
 					<tbody ref='tbody'>
@@ -318,6 +321,7 @@ class TableBody extends Component {
 }
 TableBody.propTypes = {
 	data: PropTypes.array,
+	loading: PropTypes.bool,
 	columns: PropTypes.array,
 	striped: PropTypes.bool,
 	bordered: PropTypes.bool,
@@ -344,6 +348,7 @@ TableBody.propTypes = {
 	nullValue: PropTypes.string
 }
 TableBody.defaultProps = {
+	loading: false,
 	nullValue: 'N/A'
 }
 

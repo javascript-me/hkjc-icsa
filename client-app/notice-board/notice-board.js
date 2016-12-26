@@ -82,6 +82,7 @@ export default React.createClass({
 				onRowClick: this.onRowClick
 			},
 			noticesList: [],
+			loading: true,
 			categoriesList: [],
 			competitionsList: [],
 			continentsList: [],
@@ -102,9 +103,8 @@ export default React.createClass({
 		}
 	},
 	componentDidMount: function async () {
-		let criteriaOption = this.getSearchCriterias()
-		NoticeboardService.filterNoticeBoardTableData(criteriaOption)
-		NoticeboardService.addChangeListener(this.onChange)
+		this.searchNoticeboard()
+
 		/* All dropdownas data */
 		NoticeboardService.getAllCategories()
 		NoticeboardService.getAllCompetitions()
@@ -126,7 +126,8 @@ export default React.createClass({
 	},
 	searchNoticeboard: async function () {
 		this.setState({
-			selectedKeyword: this.state.keyword
+			selectedKeyword: this.state.keyword,
+			loading: true
 		}, function () {
 			let criteriaOption = this.getSearchCriterias()
 			// Get Table Data
@@ -196,8 +197,11 @@ export default React.createClass({
 	},
 	onChange () {
 		const hasData = NoticeboardService.noticesList.length > 0
+
 		this.setState({
-			noticesList: NoticeboardService.noticesList, hasData: hasData
+			noticesList: NoticeboardService.noticesList,
+			hasData: hasData,
+			loading: false
 		})
 	},
 	openPopup () {
@@ -468,6 +472,10 @@ export default React.createClass({
 		let userProfile = LoginService.getProfile()
 		let criteriaOption = this.getSearchCriterias()
 
+		this.setState({
+			loading: true
+		})
+
 		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
 		PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 	},
@@ -564,6 +572,7 @@ export default React.createClass({
 				<div>
 					<div className='tableComponent-container'>
 						<TableComponent data={NoticeboardService.noticesList} pagination
+							loading={this.state.loading}
 							options={this.state.tableOptions}
 							striped keyField='id' tableHeaderClass='table-header'
 							tableContainerClass='base-table'>
