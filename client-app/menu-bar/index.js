@@ -35,6 +35,17 @@ const getTipsCountPromise = async (username) => {
 	return count
 }
 
+const getAllNoticesCount = async (username) => {
+	let count = null
+
+	try {
+		count = await NotificationsService.getNoticesCount(username)
+	} catch (ex) {
+
+	}
+	return count
+}
+
 class MenuBar extends Component {
 	constructor (props) {
 		super(props)
@@ -135,8 +146,13 @@ class MenuBar extends Component {
 		let self = this
 		let userProfile = LoginService.getProfile()
 		let userName = userProfile.username
+		let noticeLength
 
 		this.updateNoticeRemindCount(userName, self)
+
+		getAllNoticesCount(userName).then((count) => {
+			noticeLength = count
+		})
 
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
@@ -154,6 +170,36 @@ class MenuBar extends Component {
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_TABLENOTICES, () => {
 			this.updateNoticeRemindCount(userName, self)
 		})
+
+		this.interval = setInterval(() => {
+			getNoticeCountPromise(userName).then((noticeRemindCount) => {
+				self.setState({noticeRemindCount: noticeRemindCount})
+			})
+			let noticeNewLength
+			getAllNoticesCount(userName).then((count) => {
+				noticeNewLength = count
+				let start = 0
+
+				let ringsNum = noticeNewLength - noticeLength
+
+				if (noticeNewLength > noticeLength) {
+					noticeLength = noticeNewLength
+					let audioElement = document.createElement('audio')
+					audioElement.setAttribute('src', 'common/sound.mp3')
+					audioElement.setAttribute('autoplay', 'autoplay')
+					audioElement.addEventListener('ended', () => {
+						start++
+						if (start !== ringsNum) {
+							setTimeout(() => { audioElement.play() }, 100)
+						}
+					})
+				} else {
+					noticeNewLength = noticeLength
+				}
+			})
+			PubSub.publish(PubSub['REFRESH_NOTICES'])
+			PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
+		}, 3000)
 	}
 
 	updateNoticeRemindCount (userName, self) {
