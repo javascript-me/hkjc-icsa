@@ -123,7 +123,8 @@
 
 	.popup-actions {
 		text-align: center !important;
-		width: 340px;
+		width: 415px;
+		margin-top: 240px;
 
 		a {
 			line-height: 26px;
@@ -135,6 +136,15 @@
 	.popup-wrapper .popup-dialog .panel-heading {
 		display: none;
 	}
+
+	.popup-wrapper .popup-dialog {
+		width: 574px;
+		height: 317px;
+	}
+
+	.popup-wrapper .popup-dialog .panel-body {
+		padding: 10px;
+	}
 }
 
 .contigency-mask-container {
@@ -144,4 +154,22 @@
 	bottom: 0;
 	opacity: 0.8;
 	background: #E42A25;
+}
+
+.blink {
+	animation-duration: 0.7s;
+	animation-name: opacity-blink;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: linear;
+}
+
+@keyframes opacity-blink {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0.1;
+	}
 }
