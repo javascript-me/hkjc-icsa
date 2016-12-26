@@ -14,11 +14,4 @@ describe('EventdirectoryService', () => {
 			expect(result).to.be.deep.equal(response)
 		})
 	})
-
-	describe('#getEventDirectoryFilter', () => {
-		it('returns search filter', async () => {
-			const result = await EventdirectoryService.getEventDirectoryFilter()
-			expect(result).to.be.an('object')
-		})
-	})
 })
