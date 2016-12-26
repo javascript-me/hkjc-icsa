@@ -10,6 +10,7 @@ export default class AutoComplete extends React.Component {
 		this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this)
 		this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
 		this.getValue = this.getValue.bind(this)
+		this.onKeyDown = this.onKeyDown.bind(this)
 
 		this.lastResult = {value: '', items: []}
 		this.state = {
@@ -25,6 +26,12 @@ export default class AutoComplete extends React.Component {
 			selectedItem: null,
 			value: newValue
 		})
+	}
+
+	onKeyDown (event) {
+		if (event.keyCode === 13) {
+			this.props.onEnter(event.target.value)
+		}
 	}
 
 	onSuggestionSelected (event, {suggestion}) {
@@ -66,6 +73,8 @@ export default class AutoComplete extends React.Component {
 			className: this.state.inputClassName
 		}
 
+		if (this.props.onEnter) inputProps.onKeyDown = this.onKeyDown
+
 		return (
 			<div>
 				<Autosuggest
@@ -100,6 +109,10 @@ AutoComplete.propTypes = {
 		 * Expects an array of objects {value,text} as the result
 		 */
 	onItemsRequested: PropTypes.func.isRequired,
+	/**
+	 * Will be called whenever Enter in the input is hit
+	 */
+	onEnter: PropTypes.func,
 		/**
 		 * Text to display in the input field
 		 */
