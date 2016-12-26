@@ -79,7 +79,6 @@ export default React.createClass({
 	},
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
-		let noticePromise = getAllNoticesPromise(userProfile.username)
 		let allNotices
 		let unreadNotices
 		let self = this
@@ -88,6 +87,7 @@ export default React.createClass({
 			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
 		})
 
+		let noticePromise = getAllNoticesPromise(userProfile.username)
 		noticePromise.then((notices) => {
 			allNotices = notices || []
 
@@ -133,6 +133,7 @@ export default React.createClass({
 	},
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(refreshNoticesToken)
+		this.interval = clearInterval(this.interval)
 	},
 
 	openPopup () {
