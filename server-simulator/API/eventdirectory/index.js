@@ -21,6 +21,7 @@ const router = express.Router()
  * 		{
  * 			"keyword": "England",
  * 			"eventType": "Assigned,In-Play,Pre-Event",
+ * 			"competition": "Assigned,In-Play,Pre-Event",
  * 			"from": "16/09/2016 10:00",
  * 			"to": "26/09/2016 10:00"
  * 		}

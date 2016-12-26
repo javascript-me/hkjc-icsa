@@ -24,7 +24,7 @@ import EventDirectoryService from './eventdirectory-service'
 export default React.createClass({
 	displayName: 'SearchFilter',
 	propTypes: {
-		filter: PropTypes.object
+		onSearch: PropTypes.func
 	},
 	onSearchItemSelected (item) {
 		this.selectedItem = item
@@ -73,23 +73,32 @@ export default React.createClass({
 	},
 
 	getSearchEnquiry () {
-		let resultEnquiry = {}
+		let resultEnquiry = {
+			eventType: '',
+			competition: ''
+		}
 		let searchEnquiry = this.state.searchEnquiry
 		searchEnquiry.dateFrom && (resultEnquiry.dateFrom = searchEnquiry.dateFrom.format('DD MMM YYYY HH:mm'))
 		searchEnquiry.dateTo && (resultEnquiry.dateFrom = searchEnquiry.dateTo.format('DD MMM YYYY HH:mm'))
 		if (searchEnquiry.eventType && searchEnquiry.eventType.length) {
-			resultEnquiry.eventType = searchEnquiry.eventType.map(item => item.value)
+			resultEnquiry.eventType = searchEnquiry.eventType.map(item => item.value).join(',')
 		}
 		if (searchEnquiry.competition && searchEnquiry.competition.length) {
-			resultEnquiry.competition = searchEnquiry.competition.map(item => item.value)
+			resultEnquiry.competition = searchEnquiry.competition.map(item => item.value).join(',')
 		}
 		resultEnquiry.keyword = this.refs.autoSuggestion.getValue()
 		return resultEnquiry
 	},
 
 	onSearch () {
-		// const resultEnquiry = this.getSearchEnquiry()
-		// console.log(resultEnquiry)
+		const resultEnquiry = this.getSearchEnquiry()
+		this.props.onSearch({
+			keyword: resultEnquiry.keyword,
+			eventType: resultEnquiry.eventType,
+			competition: resultEnquiry.competition,
+			from: resultEnquiry.dateFrom,
+			to: resultEnquiry.dateTo
+		})
 	},
 
 	setToday () {

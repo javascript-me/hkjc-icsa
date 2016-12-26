@@ -85,7 +85,7 @@ export default React.createClass({
 					</div>
 					<div className='vertical-gap'>
 						<div className='pull-right'>
-							<button className={classNames('btn btn-primary pull-right', {disabled: !this.state.tableData || 0 === this.state.tableData.length})}>Export</button>
+							<button className={classNames('btn btn-primary pull-right', {disabled: !this.state.tableData || this.state.tableData.length === 0})}>Export</button>
 						</div>
 					</div>
 				</div>
