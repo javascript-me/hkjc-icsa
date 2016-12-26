@@ -939,9 +939,7 @@ class TableComponent extends Component {
 						const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''))
 						const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''))
 						width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth
-					}
-
-					if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
+					} else if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
 						const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
 						width = bestWith > 480 ? 480 : bestWith
 					} else {

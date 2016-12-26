@@ -48,8 +48,8 @@ function doFilter (broadcast, params) {
 
 	if (inPlay !== 'All') {
 		result = result.filter((al) => {
-			const convert = inPlay.join(' , ').indexOf('In Play') > 0
-			return (al.in_play === convert)
+			const convert = inPlay.map(e => { return e.label }).join(' , ').indexOf('Non') >= 0
+			return (al.in_play === !convert)
 		})
 	}
 
