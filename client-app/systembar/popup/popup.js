@@ -106,3 +106,4 @@ const Popup = React.createClass({
 })
 
 export default Popup
+export { Draggable }

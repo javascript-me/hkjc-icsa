@@ -2,8 +2,8 @@ import React from 'react'
 import Moment from 'moment'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
-import BetType from './betType'
-import FilterBlock from '../filter-block'
+import BetType from '../bet-type'
+import FilterBlocksContainer from '../filter-block/filter-blocks-container'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
@@ -25,7 +25,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setMinutes(0)
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
-	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeFrom)
 }
 
 const getOrginDateTimeTo = function () {
@@ -35,7 +35,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setMinutes(59)
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
-	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeTo)
 }
 
 const getDefaultSelectedFilters = () => {
@@ -125,10 +125,26 @@ export default React.createClass({
 	},
 
 	getSearchCriterias: function () {
+		let returnFilters = []
+		let filterValue
+
+		this.state.selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo' || filter.name === 'dateTimeGameStart') {
+				filterValue = filter.value.format('DD MMM YYYY HH:mm')
+			} else {
+				filterValue = filter.value
+			}
+
+			returnFilters.push({
+				name: filter.name,
+				value: filterValue
+			})
+		})
+
 		return {
 			betType: this.state.betType,
 			keyword: this.state.selectedKeyword,
-			filters: this.state.selectedFilters
+			filters: returnFilters
 		}
 	},
 
@@ -275,8 +291,7 @@ export default React.createClass({
 		})
 	},
 
-	checkIsDateRangeNotChanged: function () {
-		let filters = this.state.selectedFilters
+	checkIsDateRangeNotChanged: function (filters) {
 		let originDateRange = this.state.originDateRange
 		let dateTimeFrom
 		let dateTimeTo
@@ -289,7 +304,8 @@ export default React.createClass({
 			}
 		}
 
-		return dateTimeFrom === originDateRange.dateTimeFrom && dateTimeTo === originDateRange.dateTimeTo
+		return (!dateTimeFrom || dateTimeFrom.isSame(originDateRange.dateTimeFrom)) &&
+			(!dateTimeTo || dateTimeTo.isSame(originDateRange.dateTimeTo))
 	},
 
 	openPopup: function () {
@@ -323,27 +339,39 @@ export default React.createClass({
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
-	generateFilterBlockesJsx: function (filters) {
+	getFormattedFilters: function (filters) {
 		const filterDisplayFormatting = (filter) => {
-			return filter.name === 'keyword'
-				? `${filter.name}: ${filter.value}`
-				: filter.value
+			let filterDisplayName = filter.value
+
+			switch (filter.name) {
+			case 'keyword':
+				filterDisplayName = `${filter.name}: ${filter.value}`
+				break
+			case 'dateTimeGameStart':
+				filterDisplayName = `${filter.value.format('DD MMM YYYY HH:mm')}`
+				break
+			}
+
+			return filterDisplayName
 		}
 
-		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged()
+		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged(filters)
 		let keywordFilter = {
 			name: 'keyword',
 			value: this.state.selectedKeyword
 		}
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
-		})[0] || {}
+		})[0] || null
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
-		})[0] || {}
+		})[0] || null
+
+		let formattedDateFrom = dateFromFilter ? dateFromFilter.value.format('DD MMM YYYY HH:mm') : ''
+		let formattedDateTo = dateToFilter ? dateToFilter.value.format('DD MMM YYYY HH:mm') : ''
 		let dateRangeFilter = {
 			name: 'dateTimeFrom,dateTimeTo',
-			value: `${dateFromFilter.value} - ${dateToFilter.value}`
+			value: `${formattedDateFrom} - ${formattedDateTo}`
 		}
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
@@ -356,16 +384,14 @@ export default React.createClass({
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
 			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
 			.concat(filtersArrayWithoutDateRange)
+		let formattedFilters = filtersArray.map((f, index) => {
+			return {
+				text: filterDisplayFormatting(f),
+				value: f
+			}
+		})
 
-		let filterBlockes = filtersArray.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				dataText={filterDisplayFormatting(f)}
-				dataValue={f}
-				removeEvent={this.removeSearchCriteriaFilter} />
-		}) || []
-
-		return filterBlockes
+		return formattedFilters
 	},
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
@@ -379,7 +405,7 @@ export default React.createClass({
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 		})
-		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
+		let formattedFilters = this.getFormattedFilters(this.state.selectedFilters)
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
 		})
@@ -448,9 +474,7 @@ export default React.createClass({
 										onKeyPress={this.handleKeywordPress}
 										ref='keyword' />
 								</div>
-								<div className='filter-block-container'>
-									{filterBlockes}
-								</div>
+								<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<FilterPanel

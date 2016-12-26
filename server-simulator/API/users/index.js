@@ -90,20 +90,37 @@ router.post('/login', (req, res) => {
 	res.status(status)
 	res.send(result)
 })
-router.post('/updateNoticeBoardDisplaySettings', (req, res) => {
-	if (req.body.display !== '') {
-		const display = req.body.display
+
+router.post('/updateNoticeboardAndBroadcastSetting', (req, res) => {
+	if (req.body.position !== '') {
+		const position = req.body.position
 		const username = req.body.username
 		var user = users[username]
 		let status = 200
 		var userProfile = user.profile
-		if (userProfile.noticeboardSettings.display !== display) {
-			userProfile.noticeboardSettings.display = display
+		if (userProfile.noticeboardSettings.position !== position) {
+			userProfile.noticeboardSettings.position = position
 		}
 		res.status(status)
 		res.send(userProfile)
 	}
 })
+
+router.post('/updateTaskSetting', (req, res) => {
+	if (req.body.position !== '') {
+		const position = req.body.position
+		const username = req.body.username
+		var user = users[username]
+		let status = 200
+		var userProfile = user.profile
+		if (userProfile.taskSettings.position !== position) {
+			userProfile.taskSettings.position = position
+		}
+		res.status(status)
+		res.send(userProfile)
+	}
+})
+
 router.post('/getNoticeBoardDisplaySettings', (req, res) => {
 	const username = req.body.username
 	var user = users[username]

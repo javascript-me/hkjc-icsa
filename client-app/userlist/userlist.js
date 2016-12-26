@@ -1,12 +1,10 @@
 import React from 'react'
-// import classnames from 'classnames'
-import FilterBlock from '../filter-block'
+import FilterBlocksContainer from '../filter-block/filter-blocks-container'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
 import { TableComponent, TableHeaderColumn } from '../table'
 import UserStore from './user-store'
-// import AddingUserCmp from '../add-account'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
@@ -26,7 +24,7 @@ const getOrginDateTimeFrom = function () {
 	dateTimeFrom.setSeconds(0)
 	dateTimeFrom.setMilliseconds(0)
 	dateTimeFrom.setFullYear(2015)
-	return Moment(dateTimeFrom).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeFrom)
 }
 
 const getOrginDateTimeTo = function () {
@@ -37,7 +35,7 @@ const getOrginDateTimeTo = function () {
 	dateTimeTo.setSeconds(59)
 	dateTimeTo.setMilliseconds(0)
 	dateTimeTo.setFullYear(2018)
-	return Moment(dateTimeTo).format('DD MMM YYYY HH:mm')
+	return Moment(dateTimeTo)
 }
 
 const defaultDateFrom = getOrginDateTimeFrom()
@@ -60,6 +58,7 @@ export default React.createClass({
 				USERPROFILE_SEARCH_BY_REMOVE_FILTER: 'USERPROFILE_SEARCH_BY_REMOVE_FILTER'
 			},
 			keyword: '',
+			isSearching: false,
 			selectedKeyword: '',
 			selectedFilters: [{
 				name: 'dateTimeFrom',
@@ -89,6 +88,7 @@ export default React.createClass({
 		searchToken = PubSub.subscribe(PubSub[this.state.tokens.USERPROFILE_SEARCH], () => {
 			this.searchUserProfileList()
 		})
+		document.addEventListener('click', this.pageClick, false)
 	},
 
 	componentWillUnmount: function () {
@@ -110,9 +110,27 @@ export default React.createClass({
 			userprofiles: UserStore.userProfiles, hasData: hasData
 		})
 	},
+	pageClick: function (event) {
+		if (!this.state.isShowingMoreFilter || this.state.isClickForSearching) {
+			this.setState({isClickForSearching: false})
+			return
+		}
+
+		this.hideMoreFilter()
+	},
+
+	clickForSearching: function () {
+		this.setState({
+			isClickForSearching: true
+		})
+	},
 
 	showMoreFilter () {
-		this.setState({isShowingMoreFilter: !this.state.isShowingMoreFilter})
+		this.clickForSearching()
+
+		this.setState({
+			isShowingMoreFilter: true
+		})
 	},
 
 	handleKeywordChange: function (event) {
@@ -205,13 +223,29 @@ export default React.createClass({
 	},
 
 	getSearchCriterias: function () {
+		let returnFilters = []
+		let filterValue
+
+		this.state.selectedFilters.forEach((filter) => {
+			if (filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo') {
+				filterValue = filter.value.format('DD MMM YYYY HH:mm')
+			} else {
+				filterValue = filter.value
+			}
+
+			returnFilters.push({
+				name: filter.name,
+				value: filterValue
+			})
+		})
+
 		return {
 			keyword: this.state.selectedKeyword,
-			filters: this.state.selectedFilters
+			filters: returnFilters
 		}
 	},
 
-	generateFilterBlockesJsx: function (filters) {
+	getFormattedFilters: function (filters) {
 		const filterDisplayFormatting = (filter) => {
 			let filterDisplayName = filter.value
 
@@ -220,10 +254,10 @@ export default React.createClass({
 				filterDisplayName = `${filter.name}: ${filter.value}`
 				break
 			case 'dateTimeFrom':
-				filterDisplayName = `From: ${filter.value}`
+				filterDisplayName = `From: ${filter.value.format('DD MMM YYYY HH:mm')}`
 				break
 			case 'dateTimeTo':
-				filterDisplayName = `To: ${filter.value}`
+				filterDisplayName = `To: ${filter.value.format('DD MMM YYYY HH:mm')}`
 				break
 			}
 
@@ -239,10 +273,10 @@ export default React.createClass({
 		}
 		let dateFromFilter = filters.filter((f) => {
 			return f.name === 'dateTimeFrom'
-		})[0] || {}
+		})[0] || null
 		let dateToFilter = filters.filter((f) => {
 			return f.name === 'dateTimeTo'
-		})[0] || {}
+		})[0] || null
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === 'dateTimeFrom' || f.name === 'dateTimeTo') {
 				return false
@@ -252,19 +286,17 @@ export default React.createClass({
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
-			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
-			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
+			.concat((!dateFromFilter || dateFromFilter.value.isSame(defaultDateTimeFrom)) ? [] : [dateFromFilter])
+			.concat((!dateToFilter || dateToFilter.value.isSame(defaultDateTimeTo)) ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
+		let formattedFilters = filtersArray.map((f, index) => {
+			return {
+				text: filterDisplayFormatting(f),
+				value: f
+			}
+		})
 
-		let filterBlockes = filtersArray.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				dataText={filterDisplayFormatting(f)}
-				dataValue={f}
-				removeEvent={this.removeSearchCriteriaFilter} />
-		}) || []
-
-		return filterBlockes
+		return formattedFilters
 	},
 
 	setFilters: function (filters) {
@@ -297,13 +329,7 @@ export default React.createClass({
 	},
 
 	render () {
-		// let moreFilterContianerClassName = classnames('more-filter-popup', {
-		// 	'active': this.state.isShowingMoreFilter
-		// })
-
-		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
-
-		// {this.state.filterReflashFlag && <AddingUserCmp step={this.state.addingUserStep} setStep={this.setAddStep} />}
+		let formattedFilters = this.getFormattedFilters(this.state.selectedFilters)
 
 		return <div className='row userlist-page'>
 			<div className='page-header'>
@@ -315,15 +341,13 @@ export default React.createClass({
 					<div className='content-header-left'>
 						<div className='keyword-search'>
 							<i className='icon icon-search' />
-							<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords & filters' value={this.state.keyword}
+							<input className='input-search' onClick={this.showMoreFilter} type='text' placeholder='Search with keywords' value={this.state.keyword}
 								onChange={this.handleKeywordChange}
 								onKeyPress={this.handleKeywordPress}
 								ref='keyword' />
 						</div>
-						<div className='filter-block-container'>
-							{filterBlockes}
-						</div>
-						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel'>
+						<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
+						<div style={{display: this.state.isShowingMoreFilter ? 'block' : 'none'}} onClick={this.clickForSearching} className='user-list-serch-pannel' ref='searchPannel'>
 							<FilterPanel
 								triggerSearchTopic={this.state.tokens.USERPROFILE_SEARCH_BY_KEY_PRESS}
 								removeOneFilterTopic={this.state.tokens.USERPROFILE_SEARCH_BY_REMOVE_FILTER}
@@ -352,7 +376,7 @@ export default React.createClass({
 				</div>
 				<div className='content-table tableComponent-container'>
 					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='userID'
-						tableHeaderClass='table-header' tableContainerClass='base-table' selectRow={{ mode: 'checkbox' }}>
+						tableHeaderClass='table-header' tableContainerClass='base-table' >
 						<TableHeaderColumn dataField='displayName' dataSort>User Display Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='firstName' dataSort>User Name</TableHeaderColumn>

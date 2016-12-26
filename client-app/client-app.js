@@ -9,11 +9,13 @@ import LoginService from './login/login-service'
 import Dashboard from './dashboard/dashboard'
 import Popup, { PopupService } from './popup'
 import Audit from './auditlog/auditlog'
+import ActionMonitor from './action-monitor/action-monitor'
 import UserList from './userlist/userlist'
 import UserProfile from './userprofile/userprofile'
 import MyProfile from './myprofile/myprofile'
-
+import Broadcast from './broadcast'
 import Noticeboard from './notice-board/notice-board'
+import ContigencyControl from './contigency-control/contigency-control'
 
 const hasAuth = (nextState, replace) => {
 	if (!LoginService.hasProfile()) {
@@ -38,10 +40,13 @@ const AppContainer = React.createClass({
 					<Route path='/page' component={PageBase} onEnter={hasAuth}>
 						<IndexRoute component={Dashboard} />
 						<Route path='audit' component={Audit} />
+						<Route path='actionmonitor' component={ActionMonitor} />
 						<Route path='userlist' component={UserList} />
 						<Route path='userprofile/:userId' component={UserProfile} />
 						<Route path='myprofile' component={MyProfile} />
 						<Route path='noticeboard' component={Noticeboard} />
+						<Route path='broadcast' component={Broadcast} />
+						<Route path='contigency' component={ContigencyControl} />
 					</Route>
 				</Router>
 

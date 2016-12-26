@@ -106,6 +106,7 @@
     "rc-collapse": "1.6.9",
     "react": "15.3.2",
     "react-addons-test-utils": "15.3.2",
+    "react-autosuggest": "^7.0.0",
     "react-dom": "15.3.2",
     "react-router": "2.8.1",
     "shelljs": "0.7.4",
@@ -188,7 +189,9 @@
       "rewire": false,
       "rewireKeyVal": false,
       "rewireResponse": false,
-      "rewireService": false
+      "rewireReject": false,
+      "rewireService": false,
+      "rewireServiceReject": false
     }
   },
   "browserify": {

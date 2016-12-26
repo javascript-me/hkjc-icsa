@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import classnames from 'classnames'
 import LoginService from '../login/login-service'
 import PubSub from '../pubsub'
 import menuData from './menuBarData.js'
 import EventDirectory from '../eventdirectory/eventdirectory'
 import Notifications from '../communication/notifications/notifications'
 import NotificationsService from '../communication/notifications/notifications-service'
+import ClassNames from 'classnames'
 
 let loginChangeToken = null
 let refreshNoticesToken = null
@@ -50,30 +50,40 @@ class MenuBar extends Component {
 	constructor (props) {
 		super(props)
 		this.displayName = 'Menu-Bar'
-		this.showHideNotifications = this.showHideNotifications.bind(this)
+		this.updateNoticeboardVisible = this.updateNoticeboardVisible.bind(this)
+		this.updateBroadcastVisible = this.updateBroadcastVisible.bind(this)
+		this.updateTaskVisible = this.updateTaskVisible.bind(this)
 		this.state = {
 			slimMode: false,
 			showNotifications: false,
 			menuBarShouldShow: LoginService.hasProfile(),
 			userProfile: LoginService.getProfile(),
 			noticeRemindCount: 0,
-			tipsNum: 0
+			tipsNum: 0,
+
+			noticeboardVisible: false,
+			broadcastVisible: false,
+			taskVisible: false
 		}
 	}
 
-	showHideNotifications () {
-		if (this.state.showHideNotifications) {
-			this.setState({ showHideNotifications: false })
-		} else {
-			this.setState({ showHideNotifications: true })
-		}
+	updateNoticeboardVisible () {
+		this.setState({noticeboardVisible: !this.state.noticeboardVisible})
+	}
+
+	updateBroadcastVisible () {
+		this.setState({broadcastVisible: !this.state.broadcastVisible})
+	}
+
+	updateTaskVisible () {
+		this.setState({taskVisible: !this.state.taskVisible})
 	}
 
 	render () {
 		let menuBarData = (this.state.userProfile && this.state.userProfile.username === 'allgood') ? menuData.menuList1 : menuData.menuList2
 		return (
 			<div className='menu-bar-wrap row' style={{display: this.state.menuBarShouldShow ? 'block' : 'none'}}>
-				<div className={classnames('menu-container', {slimMode: this.state.slimMode})}>
+				<div className={ClassNames('menu-container', {slimMode: this.state.slimMode})}>
 					<EventDirectory slimMode={this.state.slimMode} />
 					<div className='menu-box'>
 						{menuBarData.length > 0 && menuBarData.map((item, idx) => (
@@ -95,26 +105,36 @@ class MenuBar extends Component {
 					</div>
 					<div className='toggle-btn' onClick={() => this.modeChange()}>c</div>
 					<div className='message'>
-						<i className='icon-notification ' onClick={this.showHideNotifications}>
-							<img src='icon/notification.svg' />
+						<i className={this.getNotificationIconClassName()} onClick={this.updateNoticeboardVisible}>
 							{
 								this.state.noticeRemindCount > 0
-								? <span className='message-count'>{this.state.noticeRemindCount}</span>
-								: ''
+									? <span className='message-count'>{this.state.noticeRemindCount}</span>
+									: ''
 							}
-
 						</i>
-						<i className='icon-notification tips'>
-							<img src='icon/icon-action.svg' />
+
+						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible}>
+							{
+								this.state.noticeRemindCount > 0
+									? <span className='message-count'>{this.state.noticeRemindCount}</span>
+									: ''
+							}
+						</i>
+
+						<i className={this.getTaskIconClassName()} onClick={this.updateTaskVisible}>
 							{
 								this.state.tipsNum > 0
-								? <span className='message-count'>{this.state.tipsNum}</span>
-								: ''
+									? <span className='message-count'>{this.state.tipsNum}</span>
+									: ''
 							}
 						</i>
 					</div>
 				</div>
-				{ this.state.showHideNotifications ? <Notifications isSlim={this.state.slimMode} /> : null }
+				<Notifications isSlim={this.state.slimMode}
+					noticeboardVisible={this.state.noticeboardVisible}
+					broadcastVisible={this.state.broadcastVisible}
+					taskVisible={this.state.taskVisible}
+				/>
 			</div>)
 	}
 
@@ -194,6 +214,23 @@ class MenuBar extends Component {
 		this.interval = clearInterval(this.interval)
 	}
 
+	getNotificationIconClassName () {
+		return ClassNames('message-icon',
+			this.state.noticeboardVisible ? 'notification-on' : 'notification-off'
+		)
+	}
+
+	getBroadcastIconClassName () {
+		return ClassNames('message-icon',
+			this.state.broadcastVisible ? 'broadcast-on' : 'broadcast-off'
+		)
+	}
+
+	getTaskIconClassName () {
+		return ClassNames('message-icon',
+			this.state.taskVisible ? 'task-on' : 'task-off'
+		)
+	}
 }
 
 export const ThirdLevelMenu = (props) => {
@@ -255,7 +292,7 @@ const SecondLevelMenu = (props) => {
 	return (
 		<div className='second-level'>
 			<div className='second-level-container'>
-				{dataList && dataList.map((item, idx) => (<div key={idx} className={classnames('second-level-item', {noSub: !item.subMenu})}>
+				{dataList && dataList.map((item, idx) => (<div key={idx} className={ClassNames('second-level-item', {noSub: !item.subMenu})}>
 					<div className='second-level-text'>
 						<Link to={item.link}>{item.text}</Link>
 						<ThirdLevelOnly data={item.subMenu} />

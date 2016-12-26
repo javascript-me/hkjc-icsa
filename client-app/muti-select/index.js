@@ -10,8 +10,11 @@ class MutiSelect extends Component {
 		this.state = {
 			isFocus: false,
 			isAll: false,
-			selectText: (this.props.selectedOptions && this.props.selectedOptions.length) ? this.getSelectText(this.props.selectedOptions) : (this.props.placeHolder || defaultSelectText),
-			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions)
+			selectedOptionIndex: this.getInputSelectedOptionIndex(this.props.selectedOptions),
+			selectText: (this.props.selectedOptions && this.props.selectedOptions.length)
+			? this.getSelectText(this.getInputSelectedOptionIndex(this.props.selectedOptions))
+			: (this.props.placeHolder || defaultSelectText)
+
 		}
 		this.onchange = this.onchange.bind(this)
 		this.pageClick = this.pageClick.bind(this)
@@ -23,14 +26,14 @@ class MutiSelect extends Component {
 				<div className='show-box' onClick={() => { this.toggleFocus() }}>{this.state.selectText}</div>
 				<div className='muti-select-content' style={{display: this.state.isFocus ? 'block' : 'none'}}>
 					<div onClick={() => { this.toggleAll() }} className='option'>
-						<input type='checkbox' checked={this.state.isAll} />
+						<div className={classnames('input-check', {checked: this.state.isAll})} />
 						All
 					</div>
 					{options && options.map((item, idx) => (
 						<div key={item.label}
 							className={classnames('option', {selected: this.state.selectedOptionIndex[idx]})}
 							onClick={() => { this.handleOptionselect(idx) }}>
-							<input type='checkbox' checked={this.state.selectedOptionIndex[idx]} />
+							<div className={classnames('input-check', {checked: this.state.selectedOptionIndex[idx]})} />
 							{item.label}
 						</div>))
 					}
@@ -57,7 +60,7 @@ class MutiSelect extends Component {
 
 		this.setState({
 			selectedOptionIndex: selectedOptionsIndex,
-			selectText: this.getSelectText(selectedOptions),
+			selectText: this.getSelectText(selectedOptionsIndex),
 			isAll: this.isAllSelected(selectedOptionsIndex, nextProps.options)
 		})
 	}
@@ -108,7 +111,8 @@ class MutiSelect extends Component {
 		}, this.onchange)
 	}
 	getSelectText (selectedOptions) {
-		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null)).join(' ')
+		let selectText = selectedOptions.map((item, index) => (item ? this.props.options[index].label : null))
+		.filter(item => item).join(', ')
 		selectText = selectText.trim() === '' ? (this.props.placeHolder || defaultSelectText) : selectText
 
 		return selectText
@@ -135,7 +139,7 @@ class MutiSelect extends Component {
 
 MutiSelect.propTypes = {
 	options: React.PropTypes.array.isRequired, // like [{label:'aaa',value:1},{label:'bbb',value:2}]
-	selectedOptions: React.PropTypes.array, // like [true, false, true, false], each 'true' element means the corresponding option is selected
+	selectedOptions: React.PropTypes.array, // like [{op1},{op2},{op3}]
 	placeHolder: React.PropTypes.string,
 	onChange: React.PropTypes.func, // like (result) => {dosth(result)} ,result is array of selected option's value [val1,val2...]
 	style: React.PropTypes.object // object custom the width and height...

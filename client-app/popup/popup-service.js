@@ -16,10 +16,18 @@ let globalPopupCmp = null
 */
 
 export default {
+	cancelMesg: 'Are you sure you want to cancel the current operation?',
+	updateMesg: 'Are you sure you want to proceed the operation?',
+	resetMesg: 'Are you sure you want to discard your inputted information?',
+	deleteMesg: 'Are you sure you want to delete the information?',
+
 	init (popupCmp) {
 		globalPopupCmp = popupCmp
 	},
 	showCustom (options) {
+		if (!globalPopupCmp) {
+			return
+		}
 		globalPopupCmp.setCustom(options)
 		globalPopupCmp.show()
 	},
@@ -45,9 +53,15 @@ export default {
 			onCancel
 		})
 	},
-	showErrorBox (msg, onConfirm) {
+	showSuggestBox (type, msg, onConfirm) {
+		let isSelectOption = {}
+		switch (type) {
+		case ('warnning') : { isSelectOption = {title: 'Warnning', textClass: 'msg msgErr'} } break
+		case ('error') : { isSelectOption = {title: 'Error', textClass: 'msg msgErr'} } break
+		case ('success') : { isSelectOption = {title: 'Success', textClass: 'msg'} } break
+		}
 		const children = (
-			<div className='msg msgErr'>
+			<div className={isSelectOption.textClass}>
 				<p>{msg}</p>
 			</div>
 		)
@@ -57,7 +71,8 @@ export default {
 		}
 
 		this.showCustom({
-			title: 'Error',
+			title: isSelectOption.title,
+			confirmBtn: 'Close',
 			children,
 			showCancel: false,
 			onConfirm

@@ -7,52 +7,63 @@ import TabBar from '../../tab-bar/tab-bar'
 import NotificationService from './notifications-service'
 import NoticeDetail from '../../notice-detail/notice-detail'
 import PubSub from '../../pubsub'
+import ClassNames from 'classnames'
+import PanelPosition from './panel-position'
 
-const getAllNoticesPromise = async (username) => {
+const getNoticesPromise = async (username) => {
 	let notices = null
-
 	try {
 		notices = await NotificationService.getNotices(username)
 	} catch (ex) {
-
 	}
-
 	return notices
 }
-const updateUserNoticeBoardSettingsPromise = async (username, display) => {
+const updateNoticeboardAndBroadcastSettingPromise = async (username, position) => {
 	let userProfile = null
-
 	try {
-		userProfile = await LoginService.updateNoticeBoardSettings(username, display)
+		userProfile = await LoginService.updateNoticeboardAndBroadcastSetting(username, position)
 	} catch (ex) {
-
 	}
+	return userProfile
+}
 
+const updateTaskSettingPromise = async (username, position) => {
+	let userProfile = null
+	try {
+		userProfile = await LoginService.updateTaskSetting(username, position)
+	} catch (ex) {
+	}
 	return userProfile
 }
 
 const updateAcknowledgeStatusById = async (username, id, command) => {
 	let notices = null
-
 	try {
 		notices = await NotificationService.getNoticesAndUpdateAcknowledgeStatusById(username, id, command)
 	} catch (ex) {
-
 	}
-
 	return notices
 }
 
 let refreshNoticesToken = null
+
 export default React.createClass({
 	propTypes: {
-		isSlim: React.PropTypes.bool
+		isSlim: React.PropTypes.bool,
+		noticeboardVisible: React.PropTypes.bool,
+		broadcastVisible: React.PropTypes.bool,
+		taskVisible: React.PropTypes.bool
 	},
 
 	getInitialState () {
+		let noticeboardAndBroadcastPanelPosition = LoginService.getNoticeboardAndBroadcastSetting().position || PanelPosition.BOTTOM
+		let taskPanelPosition = LoginService.getTaskSetting().position || PanelPosition.BOTTOM
+
 		return {
-			displaySettings: 'bottom',
-			selectedSettings: '',
+			noticeboardAndBroadcastPanelPosition: noticeboardAndBroadcastPanelPosition,
+			taskPanelPosition: taskPanelPosition,
+			selectedNoticeboardAndBroadcastPanelPosition: noticeboardAndBroadcastPanelPosition,
+			selectedTaskPanelPosition: taskPanelPosition,
 
 			allNoticesVisible: true,
 			unreadNoticesVisible: false,
@@ -77,17 +88,15 @@ export default React.createClass({
 			}
 		}
 	},
+
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
+		let noticePromise = getNoticesPromise(userProfile.username)
+		
 		let allNotices
 		let unreadNotices
 		let self = this
 
-		self.setState({
-			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
-		})
-
-		let noticePromise = getAllNoticesPromise(userProfile.username)
 		noticePromise.then((notices) => {
 			allNotices = notices || []
 
@@ -105,15 +114,11 @@ export default React.createClass({
 
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_TABLENOTICES, () => {
 			let userProfileData = LoginService.getProfile()
-			let noticePromiseSub = getAllNoticesPromise(userProfileData.username)
+			let noticePromiseSub = getNoticesPromise(userProfileData.username)
 
 			let allNoticesSub
 			let unreadNoticesSub
 			let _self = this
-
-			_self.setState({
-				displaySettings: userProfileData.noticeboardSettings.display || 'bottom'
-			})
 
 			noticePromiseSub.then((notices) => {
 				allNoticesSub = notices || []
@@ -131,6 +136,7 @@ export default React.createClass({
 			})
 		})
 	},
+
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(refreshNoticesToken)
 		this.interval = clearInterval(this.interval)
@@ -139,43 +145,95 @@ export default React.createClass({
 	openPopup () {
 		this.refs.notificationsPopup.show()
 	},
-	applySettings () {
-		let self = this
-		let userProfile = LoginService.getProfile()
-		let settingPromise = updateUserNoticeBoardSettingsPromise(userProfile.username, this.state.selectedSettings)
-		let userNoticeboardSettings = null
-		settingPromise.then((userProfile) => {
-			userNoticeboardSettings = LoginService.getNoticeBoardSettings(userProfile)
-			self.updateSet(userNoticeboardSettings.display)
-		})
-	},
-	updateSet (setting) {
-		this.setState({displaySettings: setting})
-	},
-	onChangeSetting (setting) {
-		this.setState({selectedSettings: setting})
+
+	openTaskPopup () {
+		this.refs.taskPopup.show()
 	},
 
-	getClassName () {
-		if (this.state.displaySettings === 'right') {
-			return this.props.isSlim ? 'right-noticeboard-container top-gap' : 'right-noticeboard-container'
-		} else {
-			return 'bottom-noticeboard-container'
+	applySettings () {
+		let self = this
+		let settingPromise = updateNoticeboardAndBroadcastSettingPromise(LoginService.getProfile().username, this.state.selectedNoticeboardAndBroadcastPanelPosition)
+		settingPromise.then((userProfile) => {
+			let userNoticeboardSettings = LoginService.getNoticeboardAndBroadcastSetting(userProfile)
+			self.setState({noticeboardAndBroadcastPanelPosition: userNoticeboardSettings.position})
+		})
+	},
+
+	applySettingsForTaskPanel () {
+		let self = this
+		let settingPromise = updateTaskSettingPromise(LoginService.getProfile().username, this.state.selectedTaskPanelPosition)
+		settingPromise.then((userProfile) => {
+			let userTaskSettings = LoginService.getTaskSetting(userProfile)
+			self.setState({taskPanelPosition: userTaskSettings.position})
+		})
+	},
+
+	onChangeSetting (setting) {
+		this.setState({selectedNoticeboardAndBroadcastPanelPosition: setting})
+	},
+
+	onChangeSettingForTaskPanel (setting) {
+		this.setState({selectedTaskPanelPosition: setting})
+	},
+
+	getVerticalTwoPanelsClassName () {
+		return ClassNames(
+			'vertical-two-panels',
+			this.props.isSlim ? 'slim-gap' : '',
+			this.props.taskVisible && this.state.taskPanelPosition === PanelPosition.BOTTOM ? 'bottom-single-panel-gap' : 'bottom-no-gap'
+		)
+	},
+
+	getNoticeboardClassName () {
+		if (this.state.noticeboardAndBroadcastPanelPosition === PanelPosition.RIGHT) {
+			return ClassNames(
+				'right-noticeboard-container',
+				this.props.noticeboardVisible ? '' : 'hidden',
+				this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-height' : 'full-height',
+				this.props.taskVisible && this.state.taskPanelPosition === PanelPosition.RIGHT ? 'right-task-panel-gap' : ''
+			)
 		}
+		return ClassNames(
+			'bottom-noticeboard-container',
+			this.props.noticeboardVisible ? '' : 'hidden',
+			this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-width' : 'full-width',
+			this.props.taskVisible && this.state.taskPanelPosition === PanelPosition.BOTTOM ? 'bottom-single-panel-gap' : ''
+		)
 	},
 
 	getBroadcastClassName () {
-		if (this.state.displaySettings === 'right') {
-			return 'right-broadcast-container'
+		if (this.state.noticeboardAndBroadcastPanelPosition === PanelPosition.RIGHT) {
+			return ClassNames(
+				'right-broadcast-container',
+				this.props.broadcastVisible ? '' : 'hidden',
+				this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-height' : 'full-height',
+				this.props.taskVisible && this.state.taskPanelPosition === PanelPosition.RIGHT ? 'right-task-panel-gap' : ''
+			)
 		}
-		return 'bottom-broadcast-container'
+		return ClassNames(
+			'bottom-broadcast-container',
+			this.props.broadcastVisible ? '' : 'hidden',
+			this.props.noticeboardVisible && this.props.broadcastVisible ? 'half-width' : 'full-width',
+			this.props.noticeboardVisible && this.props.broadcastVisible ? 'left-50-percent-gap' : '',
+			this.props.taskVisible && this.state.taskPanelPosition === PanelPosition.BOTTOM ? 'bottom-single-panel-gap' : ''
+		)
 	},
 
-	getNoticeAndBroadcastClassName () {
-		if (this.state.displaySettings === 'right') {
-			return 'right-notice-and-broadcast'
+	getTaskClassName () {
+		if (this.state.taskPanelPosition === PanelPosition.RIGHT) {
+			return ClassNames(
+				'right-task-container',
+				this.props.taskVisible ? '' : 'hidden',
+				this.props.isSlim ? 'slim-gap' : '',
+				this.state.noticeboardAndBroadcastPanelPosition === PanelPosition.BOTTOM && (this.props.noticeboardVisible || this.props.broadcastVisible)
+					? 'bottom-single-panel-gap' : 'bottom-no-gap'
+			)
 		}
-		return 'bottom-notice-and-broadcast'
+		return ClassNames(
+			'bottom-task-container',
+			this.props.taskVisible ? '' : 'hidden',
+			'full-width'
+		)
 	},
 
 	changeTab (key) {
@@ -200,9 +258,15 @@ export default React.createClass({
 			}
 		})
 	},
-	clearselectedSettings () {
-		this.setState({selectedSettings: ''})
+
+	syncNoticeboardAndBroadcastPanelPosition () {
+		this.setState({selectedNoticeboardAndBroadcastPanelPosition: this.state.noticeboardAndBroadcastPanelPosition})
 	},
+
+	syncTaskPanelPosition () {
+		this.setState({selectedTaskPanelPosition: this.state.taskPanelPosition})
+	},
+
 	getHeadTitle () {
 		var criticalOrHighNotices = this.state.noticeBoxData.unreadNotices.filter((e) => {
 			return e.priority === 'Critical' || e.priority === 'High'
@@ -250,10 +314,6 @@ export default React.createClass({
 		let unreadNotices
 		let self = this
 
-		self.setState({
-			displaySettings: userProfile.noticeboardSettings.display || 'bottom'
-		})
-
 		noticePromise.then((notices) => {
 			allNotices = notices || []
 
@@ -273,10 +333,84 @@ export default React.createClass({
 	},
 
 	render () {
+		let noticeboardPanel = <div className={this.getNoticeboardClassName()}>
+			<div className='header-container'>
+				<div className='pull-right'>
+					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+				</div>
+				<div className='container-title'>
+					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+					<span className='header-title'>{this.getHeadTitle()}</span>
+				</div>
+			</div>
+			<div className='messages-container'>
+				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
+				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+			</div>
+		</div>
+
+		let broadcastPanel = <div className={this.getBroadcastClassName()}>
+			<div className='header-container'>
+				<div className='pull-right'>
+					<span className='noticeboard-list-container'><a href={'/#/page/broadcast'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+				</div>
+				<div className='container-title'>
+					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+					<span className='header-title'>{'Broadcast'}</span>
+				</div>
+			</div>
+			<div className='messages-container'>
+				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
+				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+			</div>
+		</div>
+
+		let taskPanel = <div className={this.getTaskClassName()}>
+			<div className='header-container'>
+				<div className='pull-right'>
+					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openTaskPopup} /></span>
+				</div>
+				<div className='container-title'>
+					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+					<span className='header-title'>{'Task'}</span>
+				</div>
+			</div>
+			<div className='messages-container colour-container'>
+				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.taskPanelPosition} />
+				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.taskPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.taskPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+			</div>
+		</div>
+
+		let complexBox =
+			<div>
+				<div className={this.getVerticalTwoPanelsClassName()}>
+					{noticeboardPanel}
+					{broadcastPanel}
+				</div>
+				{taskPanel}
+			</div>
+
+		let simpleBox =
+			<div>
+				{noticeboardPanel}
+				{broadcastPanel}
+				{taskPanel}
+			</div>
+
 		return (
-			<div className='noticeboard-popup-spestyle'>
-				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard Panel Setting' onConfirm={this.applySettings} onOverlayClicked={this.clearselectedSettings} onCancel={this.clearselectedSettings}>
-					<NotificationsPopup onChange={this.onChangeSetting} />
+			<div className='noticeboard-popup-style'>
+				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard And Broadcast Setting' onConfirm={this.applySettings} onOverlayClicked={this.syncNoticeboardAndBroadcastPanelPosition} onCancel={this.syncNoticeboardAndBroadcastPanelPosition}>
+					<NotificationsPopup setting={this.state.selectedNoticeboardAndBroadcastPanelPosition} onChangePosition={this.onChangeSetting} />
+				</Popup>
+
+				<Popup hideOnOverlayClicked ref='taskPopup' title='Task Setting' onConfirm={this.applySettingsForTaskPanel} onOverlayClicked={this.syncTaskPanelPosition} onCancel={this.syncTaskPanelPosition}>
+					<NotificationsPopup setting={this.state.selectedTaskPanelPosition} onChangePosition={this.onChangeSettingForTaskPanel} />
 				</Popup>
 
 				<Popup hideOnOverlayClicked ref='detailPopup'
@@ -292,40 +426,7 @@ export default React.createClass({
 						system_distribution_time={this.state.detail.system_distribution_time}
 						message_detail={this.state.detail.message_detail} />
 				</Popup>
-
-				<div className={this.getNoticeAndBroadcastClassName()}>
-					<div className={this.getClassName()}>
-						<div className='header-container'>
-							<div className='pull-right'>
-								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
-							</div>
-							<div className='container-title'>
-								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-								<span className='header-title'>{this.getHeadTitle()}</span>
-							</div>
-						</div>
-						<div className='messages-container'>
-							<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.displaySettings} />
-							<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-							<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.displaySettings} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-						</div>
-					</div>
-
-					<div className={this.getBroadcastClassName()}>
-						<div className='header-container'>
-							<div className='pull-right'>
-								<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-								<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
-							</div>
-							<div className='container-title'>
-								<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-								<span className='header-title'>{'Broadcast'}</span>
-							</div>
-						</div>
-						<div className='messages-container' />
-					</div>
-				</div>
+				{this.state.noticeboardAndBroadcastPanelPosition === PanelPosition.RIGHT ? complexBox : simpleBox}
 			</div>
 		)
 	}

@@ -1,7 +1,8 @@
 import _ from 'underscore'
 import PubSub from '../pubsub'
+import Session from '../session'
 
-let profile = null
+let profile = Session.getProfile()
 
 const postLogin = (data) => {
 	return $.post('api/users/login', data)
@@ -19,8 +20,12 @@ const getTasksNum = (data) => {
 	return $.get('api/users/getTasks', data)
 }
 
-const postUpdateNoticeBoardSettings = (data) => {
-	return $.post('api/users/updateNoticeBoardDisplaySettings', data)
+const postUpdateNoticeboardAndBroadcastSetting = (data) => {
+	return $.post('api/users/updateNoticeboardAndBroadcastSetting', data)
+}
+
+const postUpdateTaskSetting = (data) => {
+	return $.post('api/users/updateTaskSetting', data)
 }
 
 export default {
@@ -32,6 +37,7 @@ export default {
 		try {
 			profile = await postLogin({username, password})
 			result = getProfile()
+			Session.setProfile(result)
 			PubSub.publish(PubSub.LOGIN_CHANGE)
 		} catch (failure) {
 			// returns null on failure
@@ -50,23 +56,42 @@ export default {
 		}
 		return result
 	},
-	getNoticeBoardSettings (profile) {
+	getNoticeboardAndBroadcastSetting (profile) {
 		profile = profile || getProfile()
-
 		return (profile && profile.noticeboardSettings) ? profile.noticeboardSettings : {}
 	},
-	async updateNoticeBoardSettings (username, display) {
+	getTaskSetting (profile) {
+		profile = profile || getProfile()
+		return (profile && profile.taskSettings) ? profile.taskSettings : {}
+	},
+
+	async updateNoticeboardAndBroadcastSetting (username, position) {
 		let result = null
 		try {
-			profile = await postUpdateNoticeBoardSettings({username, display})
+			profile = await postUpdateNoticeboardAndBroadcastSetting({username, position})
+			Session.setProfile(profile)
 			result = getProfile()
 		} catch (failure) {
 
 		}
 		return result
 	},
+
+	async updateTaskSetting (username, position) {
+		let result = null
+		try {
+			profile = await postUpdateTaskSetting({username, position})
+			Session.setProfile(profile)
+			result = getProfile()
+		} catch (failure) {
+
+		}
+		return result
+	},
+
 	logout () {
 		profile = null
+		Session.setProfile(null)
 		PubSub.publish(PubSub.LOGIN_CHANGE)
 	},
 	getTasksNum () {
@@ -78,8 +103,5 @@ export default {
 			if (!auth) break // TODO
 		}
 		return result
-	},
-	updateProfile () {
-		getProfile()
 	}
 }

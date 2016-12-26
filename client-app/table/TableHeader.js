@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Const from './Const'
 import classSet from 'classnames'
 import SelectRowHeaderColumn from './SelectRowHeaderColumn'
-import Checkbox from '../checkbox'
+// import Checkbox from '../checkbox'
 
 class TableHeader extends Component {
 
@@ -52,7 +52,7 @@ class TableHeader extends Component {
 		} else if (this.props.rowSelectType === Const.ROW_SELECT_MULTI) {
 			return (
 				<SelectRowHeaderColumn>
-					<Checkbox onChange={this.props.onSelectAllRow} checked={this.props.isSelectAll} />
+					<div onClick={() => { this.props.onSelectAllRow({currentTarget: {checked: !(this.props.isSelectAll === true)}}) }} className={classSet('react-bs-select-all input-check', {checked: this.props.isSelectAll === true})} />
 				</SelectRowHeaderColumn>
 			)
 		} else {

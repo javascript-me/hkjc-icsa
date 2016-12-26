@@ -35,9 +35,13 @@ export default React.createClass({
 			existRequiredColumn: false
 		}
 	},
-	componentDidMount: function () {
+
+	componentWillMount: function () {
 		this.initialFiltersAndLayoutInfo()
 		this.initialComponentSubscription()
+	},
+
+	componentDidMount: function () {
 	},
 
 	componentWillUnmount: function () {
@@ -47,7 +51,8 @@ export default React.createClass({
 		let maxColumnCount = 0
 		let panelOperateFn = row => {
 			this.iterateChilren(row, this.getDefaultFilterInfo)
-			maxColumnCount = Math.max(maxColumnCount, row.props.children.length)
+
+			maxColumnCount = Math.max(maxColumnCount, row.props.children.length || 0)
 		}
 
 		this.iterateChilren(this, panelOperateFn)
@@ -63,37 +68,36 @@ export default React.createClass({
 		}
 
 		if (this.props.removeOneFilterTopic) {
-			tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, publicFilters) => {
-				let filters = this.state.filters
-				let originFilters = this.state.originFilters
-				let filterHandles = this.state.filterHandles
-				let filterNames = publicFilters.name.split(',')
-				let resetHandle
-
-				filterNames.forEach((filterName) => {
-					if (!filters[filterName]) {
-						return false
-					}
-
-					filters[filterName] = originFilters[filterName]
-					resetHandle = filterHandles[filterName] ? filterHandles[filterName].reset : undefined
-
-					if (typeof resetHandle === 'function') {
-						resetHandle()
-					}
-				})
-
-				this.setState({
-					filters: filters
-				})
-			})
+			tokenRemoveFilter = PubSub.subscribe(PubSub[this.props.removeOneFilterTopic], (topic, filters) => this.removeOneFilterTopic(filters))
 		}
 
 		if (this.props.resetFiltersTopic) {
-			tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => {
-				this.handleReset()
-			})
+			tokenResetFilters = PubSub.subscribe(PubSub[this.props.resetFiltersTopic], () => { this.handleReset() })
 		}
+	},
+	removeOneFilterTopic: function (publicFilters) {
+		let filters = this.state.filters
+		let originFilters = this.state.originFilters
+		let filterHandles = this.state.filterHandles
+		let filterNames = publicFilters.name.split(',')
+		let resetHandle
+
+		filterNames.forEach((filterName) => {
+			if (!filters[filterName]) {
+				return false
+			}
+
+			filters[filterName] = originFilters[filterName]
+			resetHandle = filterHandles[filterName] ? filterHandles[filterName].reset : undefined
+
+			if (typeof resetHandle === 'function') {
+				resetHandle()
+			}
+		})
+
+		this.setState({
+			filters: filters
+		})
 	},
 	clearComponentSubscriptionWhenUnmount: function () {
 		tokenTriggerSearch && PubSub.unsubscribe(tokenTriggerSearch)
@@ -290,7 +294,7 @@ export default React.createClass({
 			break
 		}
 
-		if (!isValid && typeof destSetValidHandle === 'function') {
+		if (typeof destSetValidHandle === 'function') {
 			destSetValidHandle(isValid)
 		}
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Moment from 'moment'
 
 import UserList from './userlist'
 
@@ -29,12 +30,13 @@ describe('<UserList /> component', () => {
 			const filter = {
 				name: 'dateTimeFrom', value: '05 Oct 2016 00:00'
 			}
+			const originDateTimeFrom = getOrginDateTimeFrom()
 			let stateDateTimeFrom
 
 			userList.setState({
 				selectedFilters: [{
 					name: 'dateTimeFrom',
-					value: '05 Oct 2016 00:00'
+					value: Moment(filter.value, 'DD MMM YYYY HH:mm')
 				}]
 			})
 			userList.instance().removeSearchCriteriaFilter(filter)
@@ -43,7 +45,7 @@ describe('<UserList /> component', () => {
 				return f.name === 'dateTimeFrom'
 			})[0] || {}
 
-			expect(stateDateTimeFrom.value).to.equal(getOrginDateTimeFrom())
+			expect(stateDateTimeFrom.value.isSame(originDateTimeFrom)).to.be.true
 		})
 
 		it('will reset dateTimeTo of state.selectedFilters when filter.name equals "dateTimeTo"', () => {
@@ -51,12 +53,13 @@ describe('<UserList /> component', () => {
 			const filter = {
 				name: 'dateTimeTo', value: '07 Dec 2016 23:59'
 			}
+			const originDateTimeTo = getOrginDateTimeTo()
 			let stateDateTimeTo
 
 			userList.setState({
 				selectedFilters: [{
 					name: 'dateTimeTo',
-					value: '07 Dec 2016 23:59'
+					value: Moment(filter.value, 'DD MMM YYYY HH:mm')
 				}]
 			})
 			userList.instance().removeSearchCriteriaFilter(filter)
@@ -65,7 +68,7 @@ describe('<UserList /> component', () => {
 				return f.name === 'dateTimeTo'
 			})[0] || {}
 
-			expect(stateDateTimeTo.value).to.equal(getOrginDateTimeTo())
+			expect(stateDateTimeTo.value.isSame(originDateTimeTo)).to.be.true
 		})
 	})
 })

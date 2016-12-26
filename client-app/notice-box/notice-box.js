@@ -63,13 +63,13 @@ export default class NoticeBox extends React.Component {
 					{
 						this.props.notices.map((notice, i) => {
 							return <li key={i} className={this.getNoticeItemClassName(notice)}>
-								<ul className='row'>
+								<ul className={ClassNames('row', notice.priority)}>
 									<li className={this.getNoticeTitle(notice.alert_status)} onClick={() => this.openNoticeDetail(notice)}>
 										<div className='wrap-text'>
 											{this.textEllipsisWhenOverflow(notice.message_detail)}
 										</div>
 									</li>
-									<li><img src={this.getPriorityImageSrc(notice.priority)} title={notice.priority} /></li>
+									<li><i className={ClassNames('priority-icon', notice.priority)} /></li>
 									<li className='notice-date'>{DataFormatter.toDDMMMYYYHHMMSS(notice.system_distribution_time)}</li>
 									<li className='pull-right use-pointer-cursor' onClick={() => this.doAcknowledgement(notice.id, notice.alert_status)}><img src={this.getIsAcknowledgedImageSrc(notice.alert_status)} /></li>
 								</ul>

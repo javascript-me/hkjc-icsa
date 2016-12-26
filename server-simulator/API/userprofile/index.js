@@ -211,6 +211,7 @@ router.get('/getDelegation', (req, res) => {
  * @apiParam {String} [assignedUserRoles.assignedUserRole] some role
  * @apiParam {String} [activationDate] activation date
  * @apiParam {String} [deactivationDate] deactivation date
+ * @apiParam {String} [subscribedCategoryMessages] subscribed Category Messages
  * @apiParamExample {json} Request-Example:
  * 		{
  * 			"userID": "JC10001",

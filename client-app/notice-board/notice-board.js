@@ -79,7 +79,7 @@ export default React.createClass({
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
 				paginationClassContainer: 'text-center',
-				onRowClick: this.onRowClick.bind(this)
+				onRowClick: this.onRowClick
 			},
 			noticesList: [],
 			categoriesList: [],
@@ -189,7 +189,7 @@ export default React.createClass({
 		this.hideMoreFilter()
 	},
 	componentWillUnmount: function () {
-		NoticeboardService.removeChangeListener(this.onChange.bind(this))
+		NoticeboardService.removeChangeListener(this.onChange)
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(token)
 		PubSub.unsubscribe(refreshNoticesToken)

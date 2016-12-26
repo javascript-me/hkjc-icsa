@@ -5,6 +5,10 @@
 
 	ul.list-box-bottom,
 	ul.list-box-right {
+		background: white;
+		list-style-type: none;
+		padding: 0;
+
 		li.blink {
 			animation-duration: 0.7s;
 			animation-name: opacity-blink;
@@ -19,8 +23,6 @@
 	}
 
 	ul.list-box-bottom {
-		list-style-type: none;
-		padding: 0;
 		height: 120px;
 		overflow: auto;
 
@@ -66,18 +68,15 @@
 	}
 
 	ul.list-box-right {
-		list-style-type: none;
-		padding: 0;
-		bottom: 0;
+		margin-bottom: 0;
 		position: absolute;
+		bottom: 0;
 		top: 70px;
 		overflow-y: auto;
 
 		li ul.row {
 			list-style-type: none;
-			margin-left: 10px;
-			margin-right: 10px;
-			margin-top: 10px;
+			margin: 10px;
 			padding: 10px;
 			background: #EEF1F8;
 			border-radius: 6px;
@@ -101,6 +100,7 @@
 				font-family: Roboto-Regular;
 				color: #9D9D9D;
 				cursor: pointer;
+				margin-bottom: 4px;
 
 				&.bold-text {
 					font-family: Roboto-Medium;
@@ -118,5 +118,29 @@
 		to {
 			opacity: 0.5;
 		}
+	}
+}
+
+.priority-icon {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: 4px;
+
+	&.Medium {
+		background: url(notice-board/Medium.svg) center center no-repeat;
+	}
+
+	&.Critical {
+		background: url(notice-board/Critical.svg) center center no-repeat;
+	}
+
+	&.High {
+		background: url(notice-board/High.svg) center center no-repeat;
+	}
+
+	&.Low {
+		background: url(notice-board/Low.svg) center center no-repeat;
 	}
 }

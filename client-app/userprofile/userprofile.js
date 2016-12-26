@@ -45,16 +45,13 @@ export default React.createClass({
 		this.setState({accountUpdate: true})
 	},
 	onResetClick () {
-		PopupService.showMessageBox('Are you sure you want to discard your inputted information?', () => {
+		PopupService.showMessageBox(PopupService.resetMesg, () => {
 			this.refs.accountCmp.resetData()
 		})
 	},
 	onUpdateClick () {
-		if (this.refs.accountCmp.verifyData()) {
-			// console.log(this.refs.accountCmp.getData())
-			// this.setState({accountUpdate: false})
-
-			PopupService.showMessageBox('Are you sure you want to proceed the operation?', () => {
+		if (this.refs.accountCmp && this.refs.accountCmp.verifyData()) {
+			PopupService.showMessageBox(PopupService.updateMesg, () => {
 				const data = this.refs.accountCmp.getData()
 				UserProfileService.updateUserProfile({
 					'userID': data.userID,
@@ -73,7 +70,7 @@ export default React.createClass({
 		}
 	},
 	onCancelClick () {
-		PopupService.showMessageBox('Are you sure you want to cancel the current operation?', () => {
+		PopupService.showMessageBox(PopupService.cancelMesg, () => {
 			this.setState({accountUpdate: false})
 		})
 	},
@@ -89,10 +86,10 @@ export default React.createClass({
 						<UserDelegation userDelegation={this.state.userDelegation} delegationUpdate={false} />
 
 						<ProfileButtons>
-							{this.state.accountUpdate && (<button className='btn btn-danger' onClick={this.onResetClick}>Reset</button>)}
-							{!this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onEditClick}>Edit</button>)}
-							{this.state.accountUpdate && (<button className='btn btn-primary pull-right' onClick={this.onUpdateClick}>Update</button>)}
-							{this.state.accountUpdate && (<button className='btn btn-cancle pull-right' onClick={this.onCancelClick}>Cancel</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-danger profile-btn-reset' onClick={this.onResetClick}>Reset</button>)}
+							{!this.state.accountUpdate && (<button className='btn btn-primary pull-right profile-btn-edit' onClick={this.onEditClick}>Edit</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-primary pull-right profile-btn-update' onClick={this.onUpdateClick}>Update</button>)}
+							{this.state.accountUpdate && (<button className='btn btn-cancle pull-right profile-btn-cancel' onClick={this.onCancelClick}>Cancel</button>)}
 						</ProfileButtons>
 					</ProfileContainer>
 
