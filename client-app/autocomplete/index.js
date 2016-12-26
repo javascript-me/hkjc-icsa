@@ -9,6 +9,7 @@ export default class AutoComplete extends React.Component {
 		this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this)
 		this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this)
 		this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
+		this.getValue = this.getValue.bind(this)
 
 		this.lastResult = {value: '', items: []}
 		this.state = {
@@ -29,6 +30,10 @@ export default class AutoComplete extends React.Component {
 	onSuggestionSelected (event, {suggestion}) {
 		this.setState({selectedItem: suggestion, noSuggestions: false})
 		this.props.onItemSelected(suggestion)
+	}
+
+	getValue () {
+		return this.state.value
 	}
 
 	async onSuggestionsFetchRequested ({ value }) {
