@@ -18,36 +18,24 @@ export default React.createClass({
 	},
 	getInitialState () {
 		return {
-			filter: null,
 			result: null
 		}
-	},
-	componentDidMount () {
-		this.getFilter(EventDirectoryService)
-	},
-	componentWillUnmount () {
 	},
 	onSearch (searchParam) {
 		searchParam.type = this.props.type
 		this.setState({result: null})
-		this.getResult(EventDirectoryService, searchParam)
+		this.getResult(searchParam)
 	},
 	render () {
 		return (
 			<div ref='root' className='ed-container'>
-				<SearchFilter filter={this.state.filter} onSearch={this.onSearch} />
+				<SearchFilter onSearch={this.onSearch} />
 				<SearchTree result={this.state.result} />
 			</div>
 			)
 	},
-	async getFilter (service) {
-		const filter = await service.getEventDirectoryFilter()
-		if (filter) {
-			this.setState({filter})
-		}
-	},
-	async getResult (service, searchParam) {
-		const result = await service.getEventDirectoryResult(searchParam)
+	async getResult (searchParam) {
+		const result = await EventDirectoryService.getEventDirectoryResult(searchParam)
 		if (result) {
 			this.setState({result})
 		}
