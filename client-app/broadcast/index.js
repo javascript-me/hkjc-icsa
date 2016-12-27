@@ -101,7 +101,7 @@ export default React.createClass({
 					<TableHeaderColumn dataField='distribution_date' dataSort dateRange isFilter>Distribution Date & Time</TableHeaderColumn>
 					<TableHeaderColumn dataField='name' dataSort isFilter>Name</TableHeaderColumn>
 					<TableHeaderColumn dataField='category' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.categories}}>Category</TableHeaderColumn>
-					<TableHeaderColumn dataField='details' dataSort width={480}>Detail</TableHeaderColumn>
+					<TableHeaderColumn dataField='message_detail' dataSort width={480}>Detail</TableHeaderColumn>
 					<TableHeaderColumn dataField='in_play' dataSort dataFormat={this.boolFormat} isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.inplay}}>In Play Event</TableHeaderColumn>
 					<TableHeaderColumn dataField='sports_type' isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.sports}} hidden>Sports Type</TableHeaderColumn>
 					<TableHeaderColumn dataField='continent' isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.continents}} hidden>Continent</TableHeaderColumn>
