@@ -7,11 +7,11 @@ import Moment from 'moment'
 describe('Moment', () => {
 	it('startOf() and endOf() should return correct values', () => {
 		var time = Moment('26 Dec 2016 12:30:30', 'DD MMM YYYY HH:mm:ss')
-		assert.equal('2016-12-26T12:30:30+08:00', time.format())
+		assert.equal('2016-12-26T12:30:30', time.format().substring(0, 19))
 		time.startOf('week')
-		assert.equal('2016-12-25T00:00:00+08:00', time.format())
+		assert.equal('2016-12-25T00:00:00', time.format().substring(0, 19))
 		time.endOf('month')
-		assert.equal('2016-12-31T23:59:59+08:00', time.format())
+		assert.equal('2016-12-31T23:59:59', time.format().substring(0, 19))
 	})
 
 	it('get the exact weekday in either Monday, Tuesday...', () => {
@@ -36,7 +36,7 @@ describe('Moment', () => {
 
 	it('set hour minute second, and millisecond to 0', () => {
 		var time = Moment('26 Dec 2016 12:30:30', 'DD MMM YYYY HH:mm:ss')
-		assert.equal('2016-12-26T12:30:30+08:00', time.format())
+		assert.equal('2016-12-26T12:30:30', time.format().substring(0, 19))
 		time.utcOffset(0).set({hour:0,minute:0,second:0,millisecond:0})
 		assert.equal('2016-12-26T00:00:00Z', time.format())
 	})
