@@ -32,7 +32,7 @@
 	{
 		"taskID": "3",
 		"taskName": "Event Template Expired Request",
-		"priority": "High",
+		"priority": "Low",
 		"taskDescription": "Event Template <Event Level 3> has been expired, please update!",
 		"category": "Pre-Event",
 		"assigneeUserID": "",
@@ -42,7 +42,22 @@
 		"distributionDateTime": "24 Sep 2016 08:30:00",
 		"targetCompletionDateTime": "26 Oct 2016 09:30:00",
 		"taskType": "execute",
-		"lockStatus": "2"
+		"lockStatus": "3"
+	},
+	{
+		"taskID": "3",
+		"taskName": "Event Template Expired Request",
+		"priority": "Medium",
+		"taskDescription": "Event Template <Event Level 3> has been expired, please update!",
+		"category": "Pre-Event",
+		"assigneeUserID": "",
+		"assigneeUserRoles": "",
+		"assigneeDepartmentId": "TR",
+		"taskStatus": "Open Task",
+		"distributionDateTime": "24 Sep 2016 08:30:00",
+		"targetCompletionDateTime": "26 Oct 2016 09:30:00",
+		"taskType": "execute",
+		"lockStatus": "0"
 	},
 	{
 		"taskID": "4",

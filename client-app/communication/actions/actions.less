@@ -25,6 +25,7 @@
 
 					&.notice-title {
 						margin: 0;
+						margin-bottom: 10px;
 
 						.wrap-text {
 							white-space: initial;
@@ -50,18 +51,24 @@
 		border-radius: 6px;
 
 		> li {
-			&.notice-date {
-				display: none;
-			}
-
 			i.Critical {
 				background: url(notice-board/actions-critical.svg) center center no-repeat;
 			}
 
-			i.Low,
-			i.Medium,
-			i.High {
-				display: none;
+			&.use-pointer-cursor {
+				i {
+					&.type1 {
+						background: url(notice-board/locker.svg) center center no-repeat;
+					}
+
+					&.type2 {
+						background: url(notice-board/lockeruser.svg) center center no-repeat;
+					}
+
+					&.type3 {
+						background: url(notice-board/user.svg) center center no-repeat;
+					}
+				}
 			}
 		}
 
@@ -69,6 +76,8 @@
 		> li.notice-title {
 			font-family: 'Roboto-Regular';
 			color: #FFFFFF;
+			height: 54px;
+			margin-bottom: 10px;
 		}
 
 		&.Medium {
@@ -86,5 +95,13 @@
 		&.Low {
 			background: #85B612;
 		}
+	}
+}
+
+.bottom-task-container,
+.right-task-container {
+	.noticeboard-icon-container img {
+		width: 16px;
+		opacity: 0.5;
 	}
 }
