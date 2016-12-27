@@ -172,7 +172,6 @@ class MenuBar extends Component {
 			this.updateNoticeRemindCount(userName, self)
 		})
 
-
 		let audioElement = document.createElement('audio')
 		audioElement.setAttribute('src', 'common/sound.mp3')
 		this.interval = setInterval(() => {
