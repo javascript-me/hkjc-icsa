@@ -366,7 +366,7 @@ export default React.createClass({
 				</div>
 			</div>
 			<div className='messages-container broad-cast-container'>
-				<NoticeBox notices={BroadcastsService.broadCastsList} visible={this.state.allNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
+				<NoticeBox notices={BroadcastsService.broadCastsList} visible displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
 			</div>
 		</div>
 
