@@ -47,6 +47,19 @@ export default {
 		return result
 	},
 
+	async getNoticesCount (username) {
+		let result = null
+
+		try {
+			noticeBoardList = await getNoticeBoardList({username: username})
+			result = noticeBoardList.length
+		} catch (failure) {
+			// returns null on failure
+			result = null
+		}
+		return result
+	},
+
 	async getNoticesAndUpdateAcknowledgeStatusById (username, id, command) {
 		let result = null
 
