@@ -1,3 +1,29 @@
+.filter-block-container {
+	align-items: flex-start;
+	display: flex;
+	flex: 1 1 100%;
+	flex-direction: row;
+	flex-wrap: wrap;
+	height: 40px;
+	justify-content: space-between;
+	margin-left: 6px;
+
+	&.loading {
+		opacity: 0;
+	}
+}
+
+.pure-filter-block {
+	display: flex;
+	flex-wrap: wrap;
+	height: 40px;
+	overflow: hidden;
+
+	&.short {
+		flex-basis: calc(~'100% - 90px');
+	}
+}
+
 .filter-block {
 	background-color: rgba(124, 140, 175, 1);
 	background-position: right center;
@@ -8,7 +34,7 @@
 	font-family: Roboto-Medium;
 	font-size: 14px;
 	height: 30px;
-	margin: 10px;
+	margin: 5px 10px;
 	padding: 6px 25px 6px 10px;
 	position: relative;
 
@@ -24,5 +50,93 @@
 		right: 9px;
 		top: 0;
 		width: 9px;
+	}
+}
+
+.show-more-ctrl-panel {
+	align-items: flex-end;
+	display: flex;
+	flex-direction: column;
+	height: 40px;
+	overflow: visible;
+	width: 60px;
+}
+
+.btn-show-more-filter {
+	background-color: transparent;
+	color: rgba(48, 80, 145, 1);
+	cursor: pointer;
+	display: block;
+	height: 25px;
+	font-family: Roboto-Medium;
+	font-size: 14px;
+	margin: 5px 10px;
+	padding: 5px;
+	position: relative;
+
+	&.showing::after {
+		background-image: url(common/arrow_up.svg);
+	}
+
+	&::after {
+		background-image: url(common/arrow_down.svg);
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: 8px 5px;
+		content: "";
+		cursor: pointer;
+		height: 30px;
+		position: absolute;
+		right: -10px;
+		top: 0;
+		width: 9px;
+	}
+}
+
+.more-filters-panel {
+	background: #FFFFFF;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 10px 20px;
+	width: 205px;
+
+	ul {
+		margin: 0;
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			position: relative;
+
+			span {
+				color: #25417A;
+				display: block;
+				font-family: Roboto-Regular;
+				font-size: 14px;
+				letter-spacing: 0;
+				line-height: 26px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				width: 146px;
+			}
+
+			.icon-more-filter-close {
+				background-image: url(common/blue-cross.svg);
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: 9px 9px;
+				content: "";
+				cursor: pointer;
+				height: 26px;
+				position: absolute;
+				right: -10px;
+				top: 0;
+				width: 9px;
+
+				&:hover {
+					background-image: url(common/green-cross.svg);
+				}
+			}
+		}
 	}
 }

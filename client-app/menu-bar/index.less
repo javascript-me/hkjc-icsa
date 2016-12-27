@@ -96,27 +96,52 @@
 		font-size: 20px;
 		line-height: 68px;
 
-		.icon-notification {
+		.notification-off {
+			background-image: url(icon/notification-off.svg);
+		}
+
+		.broadcast-off {
+			background-image: url(icon/broadcast-off.svg);
+		}
+
+		.task-off {
+			background-image: url(icon/task-off.svg);
+		}
+
+		.notification-on {
+			background-image: url(icon/notification-on.svg);
+		}
+
+		.broadcast-on {
+			background-image: url(icon/broadcast-on.svg);
+		}
+
+		.task-on {
+			background-image: url(icon/task-on.svg);
+		}
+
+		.message-icon {
 			cursor: pointer;
+			padding: 12px;
+			margin: auto 15px;
+			background-repeat: no-repeat;
+			background-position: center center;
+			position: relative;
 
 			.message-count {
 				background-color: rgba(244, 54, 76, 1);
 				border-radius: 100px;
 				color: rgba(255, 255, 255, 1);
-				display: inline-block;
 				font-family: Roboto-Medium;
 				font-size: 12px;
 				font-style: normal;
-				height: 18px;
-				line-height: 18px;
-				margin-left: -10px;
-				vertical-align: text-top;
-				width: 21px;
-			}
-
-			&.tips {
 				display: inline-block;
-				margin-left: 28px;
+				height: 22px;
+				width: 22px;
+				line-height: 22px;
+				position: absolute;
+				left: 15px;
+				top: 10px;
 			}
 		}
 	}
@@ -127,7 +152,6 @@
 		display: flex;
 		align-items: center;
 		background-color: #0C2963;
-		//padding-left: 15px;
 	}
 
 	.level-1-unit {
@@ -139,7 +163,6 @@
 			display: block;
 			width: 19px;
 			height: 19px;
-			//margin-left: 15px;
 			position: relative;
 
 			.icon-img {
@@ -244,7 +267,6 @@
 		text-align: center;
 		line-height: 50px;
 		font-size: 14px;
-		//flex: 1;
 
 		&:hover a {
 			color: #B2C3E5;

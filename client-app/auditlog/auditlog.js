@@ -3,7 +3,7 @@ import Moment from 'moment'
 import ClassNames from 'classnames'
 import PubSub from '../pubsub'
 import BetType from '../bet-type'
-import FilterBlock from '../filter-block'
+import FilterBlocksContainer from '../filter-block/filter-blocks-container'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
@@ -129,7 +129,7 @@ export default React.createClass({
 		let filterValue
 
 		this.state.selectedFilters.forEach((filter) => {
-			if (filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo') {
+			if (filter.name === 'dateTimeFrom' || filter.name === 'dateTimeTo' || filter.name === 'dateTimeGameStart') {
 				filterValue = filter.value.format('DD MMM YYYY HH:mm')
 			} else {
 				filterValue = filter.value
@@ -339,11 +339,20 @@ export default React.createClass({
 		AuditlogStore.searchAuditlogs(selectedPageNumber, sortingObject, criteriaOption)
 	},
 
-	generateFilterBlockesJsx: function (filters) {
+	getFormattedFilters: function (filters) {
 		const filterDisplayFormatting = (filter) => {
-			return filter.name === 'keyword'
-				? `${filter.name}: ${filter.value}`
-				: filter.value
+			let filterDisplayName = filter.value
+
+			switch (filter.name) {
+			case 'keyword':
+				filterDisplayName = `${filter.name}: ${filter.value}`
+				break
+			case 'dateTimeGameStart':
+				filterDisplayName = `${filter.value.format('DD MMM YYYY HH:mm')}`
+				break
+			}
+
+			return filterDisplayName
 		}
 
 		let isDateRangeNotChanged = this.checkIsDateRangeNotChanged(filters)
@@ -375,16 +384,14 @@ export default React.createClass({
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
 			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
 			.concat(filtersArrayWithoutDateRange)
+		let formattedFilters = filtersArray.map((f, index) => {
+			return {
+				text: filterDisplayFormatting(f),
+				value: f
+			}
+		})
 
-		let filterBlockes = filtersArray.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				dataText={filterDisplayFormatting(f)}
-				dataValue={f}
-				removeEvent={this.removeSearchCriteriaFilter} />
-		}) || []
-
-		return filterBlockes
+		return formattedFilters
 	},
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
@@ -398,7 +405,7 @@ export default React.createClass({
 				changeBetTypeEvent={this.changeBetType}
 				changeEventTopic={this.state.tokens.AUDITLOG_SEARCH} />
 		})
-		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
+		let formattedFilters = this.getFormattedFilters(this.state.selectedFilters)
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
 		})
@@ -467,9 +474,7 @@ export default React.createClass({
 										onKeyPress={this.handleKeywordPress}
 										ref='keyword' />
 								</div>
-								<div className='filter-block-container'>
-									{filterBlockes}
-								</div>
+								<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<FilterPanel

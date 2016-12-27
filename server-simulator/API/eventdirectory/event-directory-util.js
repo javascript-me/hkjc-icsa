@@ -10,9 +10,9 @@ function footballAllKeyWord (football) {
 		outObj[item.level1Info.name] = true
 	})
 
-	events.forEach((item) => {
-		outObj[item.level2Info.name] = true
-	})
+	// events.forEach((item) => {
+	// 	outObj[item.level2Info.name] = true
+	// })
 
 	events.forEach((item) => {
 		outObj[item.t1] = true
@@ -47,6 +47,7 @@ function footballFilter (football, param) {
 
 	let keyword = param.keyword
 	let eventType = (!param.eventType || param.eventType === 'All') ? '' : param.eventType.split(',')
+	let competition = (!param.competition || param.competition === 'All') ? '' : param.competition.split(',')
 	// let tiemFrom = param.from
 	// let timeTo = param.to
 
@@ -98,8 +99,23 @@ function footballFilter (football, param) {
 		results = results.filter((item) => {
 			return _.indexOf(eventType, item.status) > -1
 		})
+
+		if (match === 'None' && results.length > 0) {
+			match = 'L3'
+		}
 	}
 	// console.log(util.inspect(results, { showHidden: true, depth: 3 }))
+
+	// filter by competition
+	if (competition) {
+		results = results.filter((item) => {
+			return _.indexOf(competition, item.level2Info.name) > -1
+		})
+
+		if (match === 'None' && results.length > 0) {
+			match = 'L2'
+		}
+	}
 
 	// filter by time from
 	// come soon
