@@ -68,9 +68,9 @@ describe('days view', () => {
 	it('setTimeToZero() can set hour, minute, second and millisecond to zero', () => {
 		var moment = Moment('26 Dec 2016 12:30:30', 'DD MMM YYYY HH:mm:ss')
 
-		assert.equal('2016-12-26T12:30:30+08:00', moment.format())
+		assert.equal('2016-12-26T12:30:30', moment.format().substring(0, 19))
 		instance.setTimeToZero(moment)
-		assert.equal('2016-12-26T00:00:00+08:00', moment.format())
+		assert.equal('2016-12-26T00:00:00', moment.format().substring(0, 19))
 	})
 
 	it('toScreenSize() can return value of 7 * n', () => {
