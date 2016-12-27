@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 import MultiSelect from '../muti-select'
 import Calender from '../calendar'
 // import classnames from 'classnames'
+import Session from '../session'
 import _ from 'lodash'
 import moment from 'moment'
 import * as util from '../utility'
@@ -21,14 +22,22 @@ const MultiSelectCompetition = util.FetchServerDataHoc({url: 'api/eventdirectory
 import AutoComplete from '../autocomplete'
 import EventDirectoryService from './eventdirectory-service'
 
+async function doSearch (searchFn, searchEnquiry) {
+	return await searchFn({
+		keyword: searchEnquiry.keyword,
+		eventType: searchEnquiry.eventType,
+		competition: searchEnquiry.competition,
+		from: searchEnquiry.dateFrom,
+		to: searchEnquiry.dateTo
+	})
+}
+
 export default React.createClass({
 	displayName: 'SearchFilter',
 	propTypes: {
 		onSearch: PropTypes.func
 	},
-	onSearchItemSelected (item) {
-		this.selectedItem = item
-	},
+
 	async onSearchItemsRequested (text) {
 		if (!text) return []
 
@@ -58,6 +67,10 @@ export default React.createClass({
 		this.setState({searchEnquiry: nextEnquiry, hasFilter: true})
 	},
 
+	handleKeywordChange (value) {
+		this.handleFilterChange('keyword', value)
+	},
+
 	getChangeHandler (field) {
 		return (value) => {
 			this.handleFilterChange(field, value)
@@ -70,6 +83,7 @@ export default React.createClass({
 
 	resetEnquiry () {
 		this.setState({searchEnquiry: {}, hasFilter: false})
+		Session.setItem(Session.VALUES.ED_SEARCH_FILTER, null)
 	},
 
 	getSearchEnquiry () {
@@ -79,7 +93,7 @@ export default React.createClass({
 		}
 		let searchEnquiry = this.state.searchEnquiry
 		searchEnquiry.dateFrom && (resultEnquiry.dateFrom = searchEnquiry.dateFrom.format('DD MMM YYYY HH:mm'))
-		searchEnquiry.dateTo && (resultEnquiry.dateFrom = searchEnquiry.dateTo.format('DD MMM YYYY HH:mm'))
+		searchEnquiry.dateTo && (resultEnquiry.dateTo = searchEnquiry.dateTo.format('DD MMM YYYY HH:mm'))
 		if (searchEnquiry.eventType && searchEnquiry.eventType.length) {
 			resultEnquiry.eventType = searchEnquiry.eventType.map(item => item.value).join(',')
 		}
@@ -90,14 +104,33 @@ export default React.createClass({
 		return resultEnquiry
 	},
 
-	onSearch () {
+	async componentDidMount () {
+		let sessionState = Session.getItem(Session.VALUES.ED_SEARCH_FILTER)
+		if (!sessionState) return
+
+		let searchEnquiry = _.cloneDeep(sessionState.searchEnquiry)
+		await doSearch(this.props.onSearch, searchEnquiry)
+
+		// restore search state
+		if (searchEnquiry.dateFrom) searchEnquiry.dateFrom = moment(searchEnquiry.dateFrom)
+		if (searchEnquiry.dateTo) searchEnquiry.dateTo = moment(searchEnquiry.dateTo)
+		if (searchEnquiry.competition) searchEnquiry.competition = searchEnquiry.competition.split(',').map(i => ({label: i, value: i}))
+		if (searchEnquiry.eventType) searchEnquiry.eventType = searchEnquiry.eventType.split(',').map(i => ({label: i, value: i}))
+		this.setState({
+			showFilter: sessionState.showFilter,
+			hasFilter: sessionState.hasFilter,
+			searchEnquiry: searchEnquiry
+		})
+	},
+
+	async onSearch () {
 		const resultEnquiry = this.getSearchEnquiry()
-		this.props.onSearch({
-			keyword: resultEnquiry.keyword,
-			eventType: resultEnquiry.eventType,
-			competition: resultEnquiry.competition,
-			from: resultEnquiry.dateFrom,
-			to: resultEnquiry.dateTo
+		await doSearch(this.props.onSearch, resultEnquiry)
+
+		Session.setItem(Session.VALUES.ED_SEARCH_FILTER, {
+			showFilter: this.state.showFilter,
+			hasFilter: this.state.hasFilter,
+			searchEnquiry: resultEnquiry
 		})
 	},
 
@@ -109,8 +142,8 @@ export default React.createClass({
 		todayEnd.setHours(23)
 		todayEnd.setMinutes(59)
 		let nextEnquiry = _.cloneDeep(this.state.searchEnquiry)
-		nextEnquiry.dateFrom = moment(todayStart).format('DD MMM YYYY HH:mm')
-		nextEnquiry.dateTo = moment(todayEnd).format('DD MMM YYYY HH:mm')
+		nextEnquiry.dateFrom = moment(todayStart)
+		nextEnquiry.dateTo = moment(todayEnd)
 		this.setState({searchEnquiry: nextEnquiry, hasFilter: true})
 	},
 
@@ -123,11 +156,12 @@ export default React.createClass({
 						itemClassName='search-autocomplete-item'
 						placeholder='Search'
 						maxResults={6}
+						value={this.state.searchEnquiry.keyword}
 						onEnter={this.onSearch}
 						onChange={this.handleKeywordChange}
 						noSuggestionsText='No Results'
-						onItemSelected={this.onSearchItemSelected}
-						onItemsRequested={this.onSearchItemsRequested} ref='autoSuggestion' />
+						onItemsRequested={this.onSearchItemsRequested}
+						ref='autoSuggestion' />
 				</div>
 
 				<div id='ed-advanced' className='form-group' onClick={this.toggleFilterShowState}>

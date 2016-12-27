@@ -14,11 +14,12 @@ export default class AutoComplete extends React.Component {
 
 		this.lastResult = {value: '', items: []}
 		this.state = {
-			value: '',
-			suggestions: [],
-			inputClassName: props.className,
 			noSuggestions: false
 		}
+	}
+
+	componentWillReceiveProps (nextProps) {
+		if (nextProps.value !== this.state.value) this.setState({value: nextProps.value})
 	}
 
 	onChange (event, {newValue}) {
@@ -26,6 +27,7 @@ export default class AutoComplete extends React.Component {
 			selectedItem: null,
 			value: newValue
 		})
+		if (this.props.onChange) this.props.onChange(newValue)
 	}
 
 	onKeyDown (event) {
@@ -36,7 +38,9 @@ export default class AutoComplete extends React.Component {
 
 	onSuggestionSelected (event, {suggestion}) {
 		this.setState({selectedItem: suggestion, noSuggestions: false})
-		this.props.onItemSelected(suggestion)
+		if (this.props.onItemSelected) {
+			this.props.onItemSelected(suggestion)
+		}
 	}
 
 	getValue () {
@@ -68,9 +72,9 @@ export default class AutoComplete extends React.Component {
 	render () {
 		const inputProps = {
 			placeholder: this.props.placeholder,
-			value: this.state.value,
+			value: this.state.value || '',
 			onChange: this.onChange,
-			className: this.state.inputClassName
+			className: this.props.className
 		}
 
 		if (this.props.onEnter) inputProps.onKeyDown = this.onKeyDown
@@ -78,10 +82,10 @@ export default class AutoComplete extends React.Component {
 		return (
 			<div>
 				<Autosuggest
-					suggestions={this.state.suggestions}
+					suggestions={this.state.suggestions || []}
 					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 					onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-					onSuggestionSelected={this.onSuggestionSelected}
+					onSuggestionSelected={this.onSuggestionSelected || (() => {})}
 					getSuggestionValue={item => item.text}
 					renderSuggestion={s => <span className={this.props.itemClassName}>{s.text}</span>}
 					inputProps={inputProps}
@@ -101,7 +105,7 @@ AutoComplete.propTypes = {
 		/**
 		 * Will be called whenever a item from the autocompletion list is selected either by mouse click or keyboard Enter hit
 		 */
-	onItemSelected: PropTypes.func.isRequired,
+	onItemSelected: PropTypes.func,
 		/**
 		 * NOTE: async!
 		 *
@@ -109,9 +113,9 @@ AutoComplete.propTypes = {
 		 * Expects an array of objects {value,text} as the result
 		 */
 	onItemsRequested: PropTypes.func.isRequired,
-	/**
-	 * Will be called whenever Enter in the input is hit
-	 */
+		/**
+		 * Will be called whenever Enter key in the input is pressed
+		 */
 	onEnter: PropTypes.func,
 		/**
 		 * Text to display in the input field
@@ -121,6 +125,10 @@ AutoComplete.propTypes = {
 		 * Css class for an autocomplete list item
 		 */
 	itemClassName: PropTypes.string,
+		/**
+		 * Will be called whenever input text changes
+		 */
+	onChange: PropTypes.func,
 	className: PropTypes.string,
 		/**
 		 * Text to display when there're no matching autocompletion items found (onItemsRequested returned [])
@@ -129,7 +137,11 @@ AutoComplete.propTypes = {
 		/**
 		 * Maximum number of autocompletion items to display
 		 */
-	maxResults: PropTypes.number
+	maxResults: PropTypes.number,
+		/**
+		 * Initial value
+		 */
+	value: PropTypes.string
 }
 
 AutoComplete.defaultProps = {
