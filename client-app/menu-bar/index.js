@@ -147,11 +147,12 @@ class MenuBar extends Component {
 		let userProfile = LoginService.getProfile()
 		let userName = userProfile.username
 		let noticeLength
+		let noticeNewLength
 
 		this.updateNoticeRemindCount(userName, self)
 
 		getAllNoticesCount(userName).then((count) => {
-			noticeLength = count
+			noticeNewLength = noticeLength = count
 		})
 
 		this.interval = setInterval(() => {
@@ -171,34 +172,27 @@ class MenuBar extends Component {
 			this.updateNoticeRemindCount(userName, self)
 		})
 
+
+		let audioElement = document.createElement('audio')
+		audioElement.setAttribute('src', 'common/sound.mp3')
 		this.interval = setInterval(() => {
-			getNoticeCountPromise(userName).then((noticeRemindCount) => {
-				self.setState({noticeRemindCount: noticeRemindCount})
-			})
-			let noticeNewLength
 			getAllNoticesCount(userName).then((count) => {
 				noticeNewLength = count
-				let start = 0
 
 				let ringsNum = noticeNewLength - noticeLength
-
-				if (noticeNewLength > noticeLength) {
-					noticeLength = noticeNewLength
-					let audioElement = document.createElement('audio')
-					audioElement.setAttribute('src', 'common/sound.mp3')
-					audioElement.setAttribute('autoplay', 'autoplay')
+				noticeLength = noticeNewLength
+				if (ringsNum > 0) {
+					audioElement.play()
 					audioElement.addEventListener('ended', () => {
-						start++
-						if (start !== ringsNum) {
+						ringsNum--
+						if (ringsNum > 0) {
 							setTimeout(() => { audioElement.play() }, 100)
 						}
 					})
-				} else {
-					noticeNewLength = noticeLength
+					PubSub.publish(PubSub['REFRESH_NOTICES'])
+					PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 				}
 			})
-			PubSub.publish(PubSub['REFRESH_NOTICES'])
-			PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 		}, 3000)
 	}
 
