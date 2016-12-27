@@ -28,6 +28,7 @@ describe('<SearchFilter />', () => {
 		expect(autoComplete.node.props.noSuggestionsText).to.be.equal('No Results')
 		expect(autoComplete.node.props.onItemSelected).to.be.equal(searchFilter.onSearchItemSelected)
 		expect(autoComplete.node.props.onItemsRequested).to.be.equal(searchFilter.onSearchItemsRequested)
+		expect(autoComplete.node.props.onEnter).to.be.equal(searchFilter.onSearch)
 
 		// TODO: tests for the rest of functionality
 	})
