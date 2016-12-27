@@ -114,11 +114,6 @@ class MenuBar extends Component {
 						</i>
 
 						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible}>
-							{
-								this.state.noticeRemindCount > 0
-									? <span className='message-count'>{this.state.noticeRemindCount}</span>
-									: ''
-							}
 						</i>
 
 						<i className={this.getTaskIconClassName()} onClick={this.updateTaskVisible}>
