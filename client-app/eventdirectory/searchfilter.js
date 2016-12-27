@@ -123,6 +123,7 @@ export default React.createClass({
 						itemClassName='search-autocomplete-item'
 						placeholder='Search'
 						maxResults={6}
+						onEnter={this.onSearch}
 						onChange={this.handleKeywordChange}
 						noSuggestionsText='No Results'
 						onItemSelected={this.onSearchItemSelected}
