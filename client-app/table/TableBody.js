@@ -113,9 +113,10 @@ class TableBody extends Component {
 			if (isFun(this.props.trClassName)) {
 				trClassName = this.props.trClassName(data, r)
 			}
+			// selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
 			const result = [ <TableRow isSelected={selected} key={key} className={trClassName}
 				index={r}
-				selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
+				selectRow={this.props.selectRow}
 				enableCellEdit={cellEdit.mode !== Const.CELL_EDIT_NONE}
 				onRowClick={this.handleRowClick.bind(this)}
 				onRowDoubleClick={this.handleRowDoubleClick.bind(this)}

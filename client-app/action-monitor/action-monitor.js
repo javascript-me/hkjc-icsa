@@ -4,15 +4,20 @@ import classNames from 'classnames'
 import LoginService from '../login/login-service'
 import API from '../api-service'
 import { TableComponent, TableHeaderColumn } from '../table'
+import Popup from '../popup'
+import ActionReassignment from './action-reassignment'
 
 export default React.createClass({
 	displayName: 'ActionMonitor',
 	getInitialState () {
 		return {
+			reassignTask: null,
 			keyword: '',
+			usersData: null,
+			rolesData: null,
 			tableData: null,
 			tableOptions: {
-				defaultSortName: 'system_distribution_time',  // default sort column name
+				defaultSortName: 'distributionDateTime',  // default sort column name
 				defaultSortOrder: 'desc', // default sort order
 				hideSizePerPage: true,
 				paginationClassContainer: 'text-center',
@@ -21,6 +26,7 @@ export default React.createClass({
 		}
 	},
 	componentDidMount () {
+		API.addListener('change', this.APIChange)
 		this.pageTitle = 'Home \\ Global Tools & Adminstration \\ Communication '
 		let profile = LoginService.getProfile()
 		this.userID = ''
@@ -34,10 +40,17 @@ export default React.createClass({
 		API.unsubscribeListener('change', this.APIChange)
 	},
 	getData () {
-		API.addListener('change', this.APIChange)
 		API.request('POST', 'api/actions/list', {
 			userID: this.userID
 		}, 'actionList')
+
+		API.request('GET', 'api/userprofile/getDelegation', {
+			userID: this.userID
+		}, 'usersList')
+
+		API.request('GET', 'api/roles/list', {
+			userID: this.userID
+		}, 'rolesList')
 	},
 	APIChange (error, promise, extra) {
 		if (error) {
@@ -50,6 +63,16 @@ export default React.createClass({
 				this.setState({ tableData: response })
 			})
 			break
+		case 'usersList':
+			promise.done(response => {
+				this.setState({ usersData: response })
+			})
+			break
+		case 'rolesList':
+			promise.done(response => {
+				this.setState({ rolesData: response })
+			})
+			break
 		default:
 			break
 		}
@@ -59,6 +82,10 @@ export default React.createClass({
 	render () {
 		return (
 			<div ref='root' className='row conatainer-alert action-monitor'>
+				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={() => { }} >
+					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} users={this.state.usersData} roles={this.state.rolesData} />
+				</Popup>
+
 				<div className='row page-header'>
 					<p className='hkjc-breadcrumb'>{this.pageTitle}</p>
 					<h1>Action Monitor</h1>
@@ -115,8 +142,12 @@ export default React.createClass({
 				<span className='assignee'>
 					{assigneeText}
 				</span>
-				{ row.taskStatus === 'new' && <img src='icon/reassign.svg' /> }
+				{ row.taskStatus === 'new' && <img src='icon/reassign.svg' onClick={e => this.clickReassign(row)} /> }
 			</span>
 		)
+	},
+	clickReassign (row) {
+		this.setState({reassignTask: row})
+		this.refs.popupReassignment.show()
 	}
 })

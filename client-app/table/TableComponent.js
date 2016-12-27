@@ -496,7 +496,7 @@ class TableComponent extends Component {
 		}
 
 		if (typeof result === 'undefined' || result !== false) {
-			if (selectRow.mode === Const.ROW_SELECT_SINGLE) {
+			if (selectRow.mode !== Const.ROW_SELECT_MULTI) {
 				currSelected = isSelected ? [ rowKey ] : []
 			} else {
 				if (isSelected) {
