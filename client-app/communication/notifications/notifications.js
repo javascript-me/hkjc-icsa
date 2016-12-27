@@ -57,17 +57,15 @@ export default React.createClass({
 	},
 
 	getInitialState () {
-<<<<<<< HEAD
 		let profile = LoginService.getProfile()
 		this.userID = ''
 		if (profile) {
 			this.userID = profile.userID
 		}
-=======
+
 		let noticeboardAndBroadcastPanelPosition = LoginService.getNoticeboardAndBroadcastSetting().position || PanelPosition.BOTTOM
 		let taskPanelPosition = LoginService.getTaskSetting().position || PanelPosition.BOTTOM
 
->>>>>>> 80a9d0edca4e0b2b01b77e952e43e7d7b96ece73
 		return {
 			noticeboardAndBroadcastPanelPosition: noticeboardAndBroadcastPanelPosition,
 			taskPanelPosition: taskPanelPosition,
@@ -279,7 +277,7 @@ export default React.createClass({
 			}
 		})
 	},
-<<<<<<< HEAD
+
 	changeActionsTab (key) {
 		if (key === 'All Tasks') {
 			this.setState({
@@ -302,13 +300,13 @@ export default React.createClass({
 			}
 		})
 	},
+
 	clearSelectedSettings () {
 		this.setState({selectedSettings: ''})
-=======
+	},
 
 	syncNoticeboardAndBroadcastPanelPosition () {
 		this.setState({selectedNoticeboardAndBroadcastPanelPosition: this.state.noticeboardAndBroadcastPanelPosition})
->>>>>>> 80a9d0edca4e0b2b01b77e952e43e7d7b96ece73
 	},
 
 	syncTaskPanelPosition () {
@@ -436,9 +434,9 @@ export default React.createClass({
 				</div>
 			</div>
 			<div className='messages-container colour-container'>
-				<TabBar onChangeTab={this.changeActionsTab} tabData={this.state.tabDataActions} displayPosition={this.state.displaySettingsForTaskPanel} />
-				<NoticeList data={this.state.actionsBoxData.allTasks} visible={this.state.allTasksVisible} displayPosition={this.state.displaySettingsForTaskPanel} />
-				<NoticeList data={this.state.actionsBoxData.myTasks} visible={this.state.myTasksVisible} displayPosition={this.state.displaySettingsForTaskPanel} />
+				<TabBar onChangeTab={this.changeActionsTab} tabData={this.state.tabDataActions} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList data={this.state.actionsBoxData.allTasks} visible={this.state.allTasksVisible} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList data={this.state.actionsBoxData.myTasks} visible={this.state.myTasksVisible} displayPosition={this.state.taskPanelPosition} />
 			</div>
 		</div>
 

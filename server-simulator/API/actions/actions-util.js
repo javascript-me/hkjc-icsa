@@ -34,13 +34,7 @@ function listFilter (allActions, param) {
 
 	const myTasksData = _.filter(allActions, (item, index) => (userID === item.assigneeUserID))
 	const partTasksData1 = _.filter(allActions, (item, index) => {
-		let isSameDepart = false
-		_.each(accounts, (baseItem, baseIndex) => {
-			if (item.assigneeDepartmentId === baseItem.departmentId) {
-				isSameDepart = true
-			}
-		})
-		return isSameDepart
+		return item.assigneeDepartmentId === account.departmentId
 	})
 	const partTasksData2 = _.filter(allActions, (item, index) => {
 		let isSameUserRole = false
@@ -79,7 +73,7 @@ function listFilter (allActions, param) {
 		let myTasks = myTasksData
 		results = myTasks
 	}
-	
+
 	// generate results
 	results = _.clone(results)
 	results.forEach((item) => {
