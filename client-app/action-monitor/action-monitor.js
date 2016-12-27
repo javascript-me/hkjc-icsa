@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-
+import TaskDetail from '../task-detail'
 import LoginService from '../login/login-service'
 import { AsyncRequest } from '../utility'
 import { TableComponent, TableHeaderColumn } from '../table'
@@ -17,7 +17,8 @@ export default React.createClass({
 				onRowClick: this.onRowClick
 			},
 			data: null,
-			hasData: false
+			hasData: false,
+			currentTask: {}
 		}
 	},
 	componentDidMount () {
@@ -40,7 +41,20 @@ export default React.createClass({
 			}
 		})
 	},
-	onRowClick () {
+	onTaskApprove (data) {
+		AsyncRequest.postData('api/actions/edit', {
+			data: data
+		}).then((result) => {
+			if (result.data.status) {
+				this.getActionList()
+			}
+		})
+	},
+
+	onRowClick (taskData) {
+		this.setState({currentTask: taskData}, () => {
+			this.refs.task.showTask()
+		})
 	},
 	render () {
 		return (
@@ -77,6 +91,7 @@ export default React.createClass({
 						</div>
 					</div>
 				</div>
+				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} />
 			</div>
 		)
 	}
