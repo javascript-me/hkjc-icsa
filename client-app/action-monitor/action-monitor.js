@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-
+import TaskDetail from '../task-detail'
 import LoginService from '../login/login-service'
 import API from '../api-service'
 import { TableComponent, TableHeaderColumn } from '../table'
@@ -17,7 +17,10 @@ export default React.createClass({
 				hideSizePerPage: true,
 				paginationClassContainer: 'text-center',
 				onRowClick: this.onRowClick
-			}
+			},
+			data: null,
+			hasData: false,
+			currentTask: {}
 		}
 	},
 	componentDidMount () {
@@ -54,7 +57,20 @@ export default React.createClass({
 			break
 		}
 	},
-	onRowClick () {
+	onTaskApprove (data) {
+		$.post('api/actions/edit', {
+			data: data
+		}).then((data) => {
+			if (data.status) {
+				this.getData()
+			}
+		})
+	},
+
+	onRowClick (taskData) {
+		this.setState({currentTask: taskData}, () => {
+			this.refs.task.showTask()
+		})
 	},
 	render () {
 		return (
@@ -92,6 +108,7 @@ export default React.createClass({
 						</div>
 					</div>
 				</div>
+				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} />
 			</div>
 		)
 	},

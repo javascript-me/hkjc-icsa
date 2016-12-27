@@ -32,6 +32,20 @@ function listFilter (allActions, param) {
 	if (!account) return []
 	let bAdmin = getAdmin(account)
 
+	const myTasksData = _.filter(allActions, (item, index) => (userID === item.assigneeUserID))
+	const partTasksData1 = _.filter(allActions, (item, index) => {
+		return item.assigneeDepartmentId === account.departmentId
+	})
+	const partTasksData2 = _.filter(allActions, (item, index) => {
+		let isSameUserRole = false
+		_.each(account.assignedUserRoles, (baseItem, baseIndex) => {
+			if (item.assigneeUserRoles === baseItem.assignedUserRole) {
+				isSameUserRole = true
+			}
+		})
+		return isSameUserRole
+	})
+
 	// get param
 	const keyWord = param.keyWord
 
@@ -48,6 +62,16 @@ function listFilter (allActions, param) {
 		results = results.filter((task) => {
 			return task.taskDescription.indexOf(keyWord) > -1
 		})
+	}
+
+	if (param.type === 'allTasks') {
+		let allTasks = [].concat(myTasksData, partTasksData1, partTasksData2)
+		results = allTasks
+	}
+
+	if (param.type === 'myTasks') {
+		let myTasks = myTasksData
+		results = myTasks
 	}
 
 	// generate results
