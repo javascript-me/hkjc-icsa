@@ -361,7 +361,7 @@ export default React.createClass({
 					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
 				</div>
 				<div className='container-title'>
-					<span className='noticeboard-icon-container'><img src='icon/broadcast-off.svg' /></span>
+					<span className='noticeboard-icon-container'><img src='icon/broadcast-off.svg' style={{'width': '16px', 'height': '16px'}} /></span>
 					<span className='header-title'>{'Broadcast'}</span>
 				</div>
 			</div>
