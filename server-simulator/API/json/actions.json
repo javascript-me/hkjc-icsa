@@ -1,5 +1,4 @@
-[
-{
+[{
   "taskID": "TK1",
   "taskName": "Event Template Approval Request",
   "priority": "Critical",
@@ -77,6 +76,4 @@
   "taskType": "advance",
   "buttonName": "Odds Adjustment Panel",
   "lockStatus": 0
-}
-
-]
+}]
