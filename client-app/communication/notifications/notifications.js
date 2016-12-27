@@ -94,6 +94,7 @@ export default React.createClass({
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
 		let noticePromise = getNoticesPromise(userProfile.username)
+
 		let allNotices
 		let unreadNotices
 		let self = this
@@ -141,6 +142,7 @@ export default React.createClass({
 
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(refreshNoticesToken)
+		this.interval = clearInterval(this.interval)
 	},
 
 	openPopup () {
@@ -355,7 +357,7 @@ export default React.createClass({
 		let broadcastPanel = <div className={this.getBroadcastClassName()}>
 			<div className='header-container'>
 				<div className='pull-right'>
-					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-list-container'><a href={'/#/page/broadcast'}><img src='icon/list.svg' /></a></span>
 					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
 				</div>
 				<div className='container-title'>
