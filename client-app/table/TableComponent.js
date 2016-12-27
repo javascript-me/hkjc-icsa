@@ -290,6 +290,7 @@ class TableComponent extends Component {
 						tableBodyClass={this.props.tableBodyClass}
 						style={{ ...style, ...this.props.bodyStyle }}
 						data={this.state.data}
+						loading={this.props.loading}
 						expandComponent={this.props.expandComponent}
 						expandableRow={this.props.expandableRow}
 						expandRowBgColor={this.props.options.expandRowBgColor}
@@ -1022,6 +1023,7 @@ TableComponent.propTypes = {
 	height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
 	maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
 	data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+	loading: PropTypes.bool,
 	remote: PropTypes.bool, // remote data, default is false
 	striped: PropTypes.bool,
 	bordered: PropTypes.bool,
