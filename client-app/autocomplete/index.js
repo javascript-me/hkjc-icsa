@@ -85,7 +85,7 @@ export default class AutoComplete extends React.Component {
 					suggestions={this.state.suggestions || []}
 					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 					onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-					onSuggestionSelected={this.onSuggestionSelected || (() => {})}
+					onSuggestionSelected={this.onSuggestionSelected}
 					getSuggestionValue={item => item.text}
 					renderSuggestion={s => <span className={this.props.itemClassName}>{s.text}</span>}
 					inputProps={inputProps}
