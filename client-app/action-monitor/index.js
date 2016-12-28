@@ -5,6 +5,8 @@ import LoginService from '../login/login-service'
 import TaskDetail from '../task-detail'
 // import config from '../config'
 import API from '../api-service'
+import ActionReassignment, { RADIO_USER } from './action-reassignment'
+import Popup from '../popup'
 
 export default React.createClass({
 	displayName: 'Audit',
@@ -43,6 +45,7 @@ export default React.createClass({
 	},
 
 	componentWillMount () {
+		API.addListener('change', this.APIChange)
 		let profile = LoginService.getProfile()
 		this.userID = ''
 		if (profile) {
@@ -56,13 +59,28 @@ export default React.createClass({
 	},
 
 	getData () {
-		API.addListener('change', this.APIChange)
 		API.request('POST', 'api/actions/list', {
 			userID: this.userID
 		}, 'actionList')
 		API.request('GET', 'api/actions/priorities', {}, 'priorities')
 		API.request('GET', 'api/actions/categories', {}, 'categories')
 		API.request('GET', 'api/actions/status', {}, 'status')
+	},
+
+	reassignmentUser (taskID, assigneeUserID) {
+		API.request('POST', 'api/actions/reassignmentUser', {
+			userID: this.userID,
+			taskID,
+			assigneeUserID
+		}, 'reassignmentUser')
+	},
+
+	reassignmentUserRole (taskID, assigneeUserRoles) {
+		API.request('POST', 'api/actions/reassignmentUserRole', {
+			userID: this.userID,
+			taskID,
+			assigneeUserRoles
+		}, 'reassignmentUserRole')
 	},
 
 	onTaskApprove (data) {
@@ -91,6 +109,16 @@ export default React.createClass({
 		case 'actionList':
 			promise.done(response => {
 				this.setState({ tableData: response })
+			})
+			break
+		case 'reassignmentUser':
+			promise.done(response => {
+				this.getData()
+			})
+			break
+		case 'reassignmentUserRole':
+			promise.done(response => {
+				this.getData()
 			})
 			break
 		default:
@@ -127,19 +155,22 @@ export default React.createClass({
 				<span className='assignee'>
 					{assigneeText}
 				</span>
-				{ row.taskStatus === 'new' && <img src='icon/reassign.svg' /> }
+				{ row.taskStatus === 'New' && <img src='icon/reassign.svg' onClick={e => this.clickReassign(e, row)} /> }
 			</span>
 		)
 	},
 	onSearch (params) {
-		// const filters = API.cleanParams(params)
-		// console.log(params)
-		// API.request(options.table.method, options.table.endpoint, filters, 'table')
+		const filters = API.cleanParams(params)
+		filters.userID = this.userID
+		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},
 
 	render () {
 		return this.state.version > 2 ? (
-			<div>
+			<div className='action-monitor'>
+				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
+					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} />
+				</Popup>
 				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} />
 				<PageComponent key={this.state.version} tableData={this.state.tableData} onSearch={this.onSearch} filtersPerRow={4} options={this.state.options} pageTitle='Actions' pageClassName='auditlog conatainer-alert action-monitor' pageBreadcrum='Home \ Global Tools & Adminstration \ Action(Task)'>
 
@@ -151,10 +182,30 @@ export default React.createClass({
 						<TableHeaderColumn dataField='targetCompletionDateTime' dataSort isFilter filterOptions={{ctrlType: 'calendar'}}>Target completion Time</TableHeaderColumn>
 						<TableHeaderColumn dataField='category' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.categories}} hidden>Category</TableHeaderColumn>
 						<TableHeaderColumn dataField='taskStatus' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.status}}>Status</TableHeaderColumn>
-						<TableHeaderColumn dataField='assigneeUserID' dataFormat={this.assigneeFormatter} isFilter >Assignee</TableHeaderColumn>
+						<TableHeaderColumn dataField='assigneeUserID' width='224' dataFormat={this.assigneeFormatter} isFilter >Assignee</TableHeaderColumn>
 					</PageLayer>
 				</PageComponent>
 			</div>
 		) : null
+	},
+	clickReassign (e, row) {
+		e.stopPropagation()
+		this.setState({reassignTask: row})
+		this.refs.popupReassignment.show()
+	},
+	confirmRessignment () {
+		const reassignment = this.refs.actionReassignment.getSelectData()
+		if (reassignment.data.length === 0) {
+			return
+		}
+
+		const task = reassignment.task
+		if (reassignment.type === RADIO_USER) {
+			let assigneeUserID = reassignment.data[0]
+			this.reassignmentUser(task.taskID, assigneeUserID)
+		} else {
+			let assigneeUserRoles = reassignment.data.join(',')
+			this.reassignmentUserRole(task.taskID, assigneeUserRoles)
+		}
 	}
 })
