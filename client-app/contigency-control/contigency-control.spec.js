@@ -1,9 +1,6 @@
 import React from 'react'
-import {assert} from 'chai'
-import ClassNames from 'classnames'
 import {shallow} from 'enzyme'
 import ContingencyControl from './contigency-control'
-import ContigencyButton from './contigency-button'
 
 describe('<ContingencyControl>', () => {
 	it('.hkjc-breadcrumb has text As "Home \\ Global Tools & Adminstration"', () => {
@@ -23,21 +20,20 @@ describe('<ContingencyControl>', () => {
 		expect(sportsIcons).to.have.length(3)
 	})
 
-	it("Page should have 6 big buttons as <ContigencyButton/>", () => {
+	it('Page should have 6 big buttons as <ContigencyButton/>', () => {
 		const contingency = shallow(<ContingencyControl />)
 		expect(contingency.find('.big-button')).to.have.length(6)
 	})
 
-	it("Page should have 4 columns as col-md-3", () => {
+	it('Page should have 4 columns as col-md-3', () => {
 		const contingency = shallow(<ContingencyControl />)
 		expect(contingency.find('.col-md-3')).to.have.length(4)
 	})
 
-	it("Page should have 6 sub titles", () => {
+	it('Page should have 6 sub titles', () => {
 		const contingency = shallow(<ContingencyControl />)
 		expect(contingency.find('.sub-title')).to.have.length(6)
 	})
-
 })
 describe('Click on big buttons', () => {
 	it('stopSellAllClickHandler()', () => {
@@ -55,7 +51,6 @@ describe('Click on big buttons', () => {
 		expect(contingency.state('fixedOddBasketBallBackground')).to.equal(SELECTED_COLOR)
 		expect(contingency.state('fixedOddHorseRacingBackground')).to.equal(SELECTED_COLOR)
 		expect(contingency.state('stopSelPariMutuelBackground')).to.equal(SELECTED_COLOR)
-
 	})
 	it('stopSellAllFixedOddsClickHandler()', () => {
 		const contingency = shallow(<ContingencyControl />)
@@ -109,7 +104,6 @@ describe('Click on big buttons', () => {
 		expect(contingency.state('showProceedPopup')).to.equal('block')
 		expect(contingency.state('stopSelPariMutuelBackground')).to.equal(SELECTED_COLOR)
 	})
-
 })
 
 describe('Click on confirm button', () => {
@@ -128,8 +122,5 @@ describe('Click on confirm button', () => {
 			expect(contingency.state('showProceedPopup')).to.equal('none')
 			expect(contingency.state('popupShown')).to.equal('none')
 		}
-
 	})
-
-
 })
