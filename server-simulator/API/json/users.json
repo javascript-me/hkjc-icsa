@@ -11,10 +11,10 @@
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
-			"noticeboardSettings": {
+			"noticeboardAndBroadcastSetting": {
 				"position": "bottom"
 			},
-			"taskSettings": {
+			"taskSetting": {
 				"position": "bottom"
 			}
 		}
@@ -31,10 +31,10 @@
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
-			"noticeboardSettings": {
+			"noticeboardAndBroadcastSetting": {
 				"position": "right"
 			},
-			"taskSettings": {
+			"taskSetting": {
 				"position": "right"
 			}
 		}
@@ -51,10 +51,10 @@
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
-			"noticeboardSettings": {
+			"noticeboardAndBroadcastSetting": {
 				"position": "right"
 			},
-			"taskSettings": {
+			"taskSetting": {
 				"position": "right"
 			}
 		}
@@ -72,10 +72,10 @@
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
-			"noticeboardSettings": {
+			"noticeboardAndBroadcastSetting": {
 				"position": "right"
 			},
-			"taskSettings": {
+			"taskSetting": {
 				"position": "right"
 			}
 		}
@@ -93,10 +93,10 @@
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
-			"noticeboardSettings": {
+			"noticeboardAndBroadcastSetting": {
 				"position": "right"
 			},
-			"taskSettings": {
+			"taskSetting": {
 				"position": "right"
 			}
 		}
@@ -115,10 +115,10 @@
 				"dashboard.form1.*": "read",
 				"dashboard.form2.fieldX": "read|write|audit"
 			},
-			"noticeboardSettings": {
+			"noticeboardAndBroadcastSetting": {
 				"position": "right"
 			},
-			"taskSettings": {
+			"taskSetting": {
 				"position": "right"
 			}
 		}
@@ -127,14 +127,26 @@
 		"password": "^maybe$",
 		"status": 423,
 		"profile": {
-			"userID": "JC10008"
+			"userID": "JC10008",
+			"noticeboardAndBroadcastSetting": {
+				"position": "bottom"
+			},
+			"taskSetting": {
+				"position": "bottom"
+			}
 		}
 	},
 	"nogood": {
 		"password": ".*",
 		"status": 500,
 		"profile": {
-			"userID": "JC10008"
+			"userID": "JC10008",
+			"noticeboardAndBroadcastSetting": {
+				"position": "bottom"
+			},
+			"taskSetting": {
+				"position": "bottom"
+			}
 		}
 	}
 }

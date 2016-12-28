@@ -66,7 +66,7 @@ const checkNoticeIsImportant = (notice) => {
  * @apiSuccessExample Success response
  *        HTTP/1.1 200 OK
  *        [
- *            // alerts and critical informations array
+ *            // alerts and critical information array
  *        ]
  *
  */
@@ -161,7 +161,7 @@ router.post('/update-acknowledge-status', (req, res) => {
  * @api {POST} /notice-board/update-table-acknowledge-status/ noticeboard table updating notice status
  * @apiGroup NoticeBoard
 
- * @apiDescription when click 'Acknowledge/Unacknowledge' button, the status willl be update in the noticeboard table.
+ * @apiDescription when click 'Acknowledge/Unacknowledge' button, the status will be update in the noticeboard table.
  *
  * @apiParam {String} username Username of current user.
  * @apiParam {String} id Unique id of notice.
@@ -174,7 +174,7 @@ router.post('/update-acknowledge-status', (req, res) => {
  * @apiSuccessExample Success response
  *        HTTP/1.1 200 OK
  *        [
- *            // alerts and critical informations array
+ *            // alerts and critical information array
  *        ]
  *
  */

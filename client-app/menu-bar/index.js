@@ -113,8 +113,7 @@ class MenuBar extends Component {
 							}
 						</i>
 
-						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible}>
-						</i>
+						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible} />
 
 						<i className={this.getTaskIconClassName()} onClick={this.updateTaskVisible}>
 							{
