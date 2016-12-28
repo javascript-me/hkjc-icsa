@@ -70,7 +70,7 @@ export default React.createClass({
 
 		case 'table':
 			promise.done(response => {
-				this.setState({ 
+				this.setState({
 					tableData: response.data,
 					loading: false
 				})
@@ -97,7 +97,7 @@ export default React.createClass({
 			loading: true
 		})
 
-		const filters = API.cleanParams(params)		
+		const filters = API.cleanParams(params)
 		API.request(options.table.method, options.table.endpoint, filters, 'table')
 	},
 
