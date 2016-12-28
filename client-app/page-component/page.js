@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import moment from 'moment'
 import ClassNames from 'classnames'
 import BetType from '../bet-type'
-import FilterBlock from '../filter-block'
+import FilterBlocksContainer from '../filter-block/filter-blocks-container'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
@@ -319,7 +319,7 @@ export default React.createClass({
 		this.setState({ exportFormat: format })
 	},
 
-	generateFilterBlockesJsx: function (filters) {
+	getFormattedFilters: function (filters) {
 		const filterDisplayFormatting = (filter) => {
 			switch (filter.name) {
 			case 'keyword':
@@ -349,24 +349,23 @@ export default React.createClass({
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === this.props.options.dateRange.fieldFrom || f.name === this.props.options.dateRange.fieldTo) {
 				return false
+			} else if (f.value.length > 0) { // To avoid blank <FilterBlock>
+				return true
 			}
-			return true
 		})
 
 		let filtersArray = []
 			.concat(this.state.selectedKeyword ? keywordFilter : [])
 			.concat(isDateRangeNotChanged ? [] : [dateRangeFilter])
 			.concat(filtersArrayWithoutDateRange)
+		let formattedFilters = filtersArray.map((f, index) => {
+			return {
+				text: filterDisplayFormatting(f),
+				value: f
+			}
+		})
 
-		let filterBlockes = filtersArray.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				dataText={filterDisplayFormatting(f)}
-				dataValue={f}
-				removeEvent={this.removeSearchCriteriaFilter} />
-		}) || []
-
-		return filterBlockes
+		return formattedFilters
 	},
 	render: function () {
 		let betTypesContainerClassName = ClassNames('bet-types', {
@@ -379,7 +378,7 @@ export default React.createClass({
 				betType={betType}
 				changeBetTypeEvent={this.changeBetType} />
 		})
-		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
+		let formattedFilters = this.getFormattedFilters(this.state.selectedFilters)
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
 		})
@@ -391,7 +390,7 @@ export default React.createClass({
 					<div className='row' style={{ width: '100%', paddingLeft: '15px' }}>
 
 						<div className='tableComponent-container'>
-							<TableComponent key='table' data={this.props.tableData} {...this.props.options.table}>
+							<TableComponent key='table' data={this.props.tableData} loading={this.props.tableLoading} {...this.props.options.table}>
 								{
 									this.cols
 								}
@@ -431,9 +430,7 @@ export default React.createClass({
 										onKeyPress={this.handleKeywordPress}
 										ref='keyword' />
 								</div>
-								<div className='filter-block-container'>
-									{filterBlockes}
-								</div>
+								<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<FilterPanel key='filterPanel' ref='filterPanel' onSubmit={this.setFilters}>{ this.filterCols ? this.generateFilterRows() : null }</FilterPanel>
@@ -473,6 +470,7 @@ export default React.createClass({
 		filtersPerRow: PropTypes.number,
 		betType: PropTypes.bool,
 		tableData: PropTypes.array,
+		tableLoading: PropTypes.bool,
 		options: PropTypes.shape({
 			table: PropTypes.object,
 			dateRange: PropTypes.shape({
