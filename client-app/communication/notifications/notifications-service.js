@@ -27,6 +27,11 @@ const getTipsNum = (data) => {
 	data.temp = Math.random()
 	return $.get(url, data)
 }
+const getTasks = (data) => {
+	let url = config.url('api/actions/list/')
+
+	return $.post(url, data)
+}
 
 export default {
 	async getNotices (username) {
@@ -35,6 +40,19 @@ export default {
 		try {
 			noticeBoardList = await getNoticeBoardList({username: username})
 			result = noticeBoardList
+		} catch (failure) {
+			// returns null on failure
+			result = null
+		}
+		return result
+	},
+
+	async getNoticesCount (username) {
+		let result = null
+
+		try {
+			noticeBoardList = await getNoticeBoardList({username: username})
+			result = noticeBoardList.length
 		} catch (failure) {
 			// returns null on failure
 			result = null
@@ -83,5 +101,16 @@ export default {
 			tipsCount = 0
 		}
 		return tipsCount
+	},
+
+	async getTasks (userID, type) {
+		let result = []
+		try {
+			result = await getTasks({userID: userID, type: type})
+		} catch (failure) {
+			// returns null on failure
+			result = null
+		}
+		return result
 	}
 }
