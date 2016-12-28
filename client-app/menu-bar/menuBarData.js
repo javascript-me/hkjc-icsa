@@ -869,15 +869,6 @@ const menuList2 = [
 				]
 			},
 			{
-				text: 'Contingency Control',
-				subMenu: [
-					{
-						text: 'Contingency Stop Sell',
-						link: '/page/contigency'
-					}
-				]
-			},
-			{
 				text: 'Audit Trail',
 				link: '/page/audit'
 			},
