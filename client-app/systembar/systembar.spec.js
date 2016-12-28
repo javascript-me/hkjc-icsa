@@ -12,7 +12,7 @@ const userProfile = {
 		'dashboard.form1.*': 'read',
 		'dashboard.form2.fieldX': 'read|write|audit'
 	},
-	'noticeboardSettings': {
+	'noticeboardAndBroadcastSetting': {
 		'display': 'bottom'
 	}
 }

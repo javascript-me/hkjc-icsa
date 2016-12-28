@@ -49,6 +49,7 @@ const doExport = async(format, filters) => {
 }
 let token = null
 let refreshNoticesToken = null
+let getNewDataNoticesToken = null
 export default React.createClass({
 	propTypes: {
 		someThing: React.PropTypes.bool
@@ -122,12 +123,25 @@ export default React.createClass({
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
 			this.searchNoticeboard()
 		})
+		getNewDataNoticesToken = PubSub.subscribe(PubSub.REFRESH_NEWNOTICES, () => {
+			this.sendDataNoticeboard()
+		})
 		document.addEventListener('click', this.pageClick, false)
 	},
 	searchNoticeboard: async function () {
 		this.setState({
 			selectedKeyword: this.state.keyword,
 			loading: true
+		}, function () {
+			let criteriaOption = this.getSearchCriterias()
+			// Get Table Data
+			NoticeboardService.filterNoticeBoardTableData(criteriaOption)
+		})
+	},
+	sendDataNoticeboard: async function () {
+		this.setState({
+			selectedKeyword: this.state.keyword,
+			loading: false
 		}, function () {
 			let criteriaOption = this.getSearchCriterias()
 			// Get Table Data
@@ -194,6 +208,7 @@ export default React.createClass({
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(token)
 		PubSub.unsubscribe(refreshNoticesToken)
+		PubSub.unsubscribe(getNewDataNoticesToken)
 	},
 	onChange () {
 		const hasData = NoticeboardService.noticesList.length > 0
@@ -456,10 +471,10 @@ export default React.createClass({
 	},
 
 	getPriorityColor (priority) {
-		if (priority === 'Critical') return '#EF0000'
-		if (priority === 'High') return '#FF6320'
-		if (priority === 'Medium') return '#FFA400'
-		if (priority === 'Low') return '#9BC14D'
+		if (priority === 'Critical') return '#D3221B'
+		if (priority === 'High') return '#FF433E'
+		if (priority === 'Medium') return '#FF8F00'
+		if (priority === 'Low') return '#85B612'
 		return ''
 	},
 

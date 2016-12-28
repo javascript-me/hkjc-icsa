@@ -28,7 +28,7 @@ export default React.createClass({
 	},
 	render: function () {
 		return <li>
-			<span>{this.props.dataText}</span>
+			<span>{this.props.dataText || this.props.dataValue.value}</span>
 			<i className='icon-more-filter-close'
 				onClick={this.removeHandler} />
 		</li>

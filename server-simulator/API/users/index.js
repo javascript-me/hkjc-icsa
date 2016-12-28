@@ -91,43 +91,96 @@ router.post('/login', (req, res) => {
 	res.send(result)
 })
 
+/**
+ * @api {POST} /users/updateNoticeboardAndBroadcastSetting Update noticeboard and broadcast panel position setting
+ * @apiGroup Users
+
+ * @apiDescription Mock API for updating noticeboard and broadcast panel position setting.
+ *
+ * @apiParam {String} username User name of current user.
+ * @apiParam {String} position Position to be set, either bottom or right.
+ *
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} position [bottom|right]
+ *
+ * @apiSuccessExample Success response
+ *        HTTP/1.1 200 OK
+ * {
+ * "username": "allgood",
+ * "fullname": "All Good",
+ * "userID": "JC10001",
+ * "authorizations": {
+ *   "login.*": "*",
+ *   "dashboard.form1.*": "read",
+ *   "dashboard.form2.fieldX": "read|write|audit"
+ * },
+ * "noticeboardAndBroadcastSetting": {
+ *   "position": "bottom"
+ * },
+ * "taskSetting": {
+ *   "position": "bottom"
+ * }
+ * }
+ */
 router.post('/updateNoticeboardAndBroadcastSetting', (req, res) => {
 	if (req.body.position !== '') {
-		const position = req.body.position
 		const username = req.body.username
+		const position = req.body.position
 		var user = users[username]
 		let status = 200
 		var userProfile = user.profile
-		if (userProfile.noticeboardSettings.position !== position) {
-			userProfile.noticeboardSettings.position = position
+		if (userProfile.noticeboardAndBroadcastSetting.position !== position) {
+			userProfile.noticeboardAndBroadcastSetting.position = position
 		}
 		res.status(status)
 		res.send(userProfile)
 	}
 })
 
+/**
+ * @api {POST} /users/updateTaskSetting Update task panel position setting
+ * @apiGroup Users
+
+ * @apiDescription Mock API for updating task panel position setting.
+ *
+ * @apiParam {String} username User name of current user.
+ * @apiParam {String} position Position to be set, either bottom or right.
+ *
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} position [bottom|right]
+ *
+ * @apiSuccessExample Success response
+ *        HTTP/1.1 200 OK
+ * {
+ * "username": "allgood",
+ * "fullname": "All Good",
+ * "userID": "JC10001",
+ * "authorizations": {
+ *   "login.*": "*",
+ *   "dashboard.form1.*": "read",
+ *   "dashboard.form2.fieldX": "read|write|audit"
+ * },
+ * "noticeboardAndBroadcastSetting": {
+ *   "position": "bottom"
+ * },
+ * "taskSetting": {
+ *   "position": "bottom"
+ * }
+ * }
+ */
 router.post('/updateTaskSetting', (req, res) => {
 	if (req.body.position !== '') {
-		const position = req.body.position
 		const username = req.body.username
+		const position = req.body.position
 		var user = users[username]
 		let status = 200
 		var userProfile = user.profile
-		if (userProfile.taskSettings.position !== position) {
-			userProfile.taskSettings.position = position
+		if (userProfile.taskSetting.position !== position) {
+			userProfile.taskSetting.position = position
 		}
 		res.status(status)
 		res.send(userProfile)
 	}
-})
-
-router.post('/getNoticeBoardDisplaySettings', (req, res) => {
-	const username = req.body.username
-	var user = users[username]
-	let status = 200
-	var userProfile = user.profile
-	res.status(status)
-	res.send(userProfile)
 })
 
 router.get('/getTasks', (req, res) => {
