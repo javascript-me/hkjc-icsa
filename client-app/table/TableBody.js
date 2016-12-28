@@ -304,7 +304,7 @@ class TableBody extends Component {
 		if (CustomComponent) {
 			inputComp = <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
 		} else if (inputType === 'checkbox') {
-			inputComp = <div className={classSet('input-check', {checked: selected, disabled})} onClick={() => { this.handleSelectRowColumChange({currentTarget: {checked: !selected}}, rowIndex) }} />
+			inputComp = <div className={classSet('input-check', {checked: selected, disabled})} onClick={(e) => { e.stopPropagation(); this.handleSelectRowColumChange({currentTarget: {checked: !selected}}, rowIndex) }} />
 		} else {
 			inputComp = <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
 		}

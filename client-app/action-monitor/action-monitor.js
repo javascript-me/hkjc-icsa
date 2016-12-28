@@ -5,7 +5,7 @@ import LoginService from '../login/login-service'
 import API from '../api-service'
 import { TableComponent, TableHeaderColumn } from '../table'
 import Popup from '../popup'
-import ActionReassignment from './action-reassignment'
+import ActionReassignment, { RADIO_USER } from './action-reassignment'
 
 export default React.createClass({
 	displayName: 'ActionMonitor',
@@ -13,8 +13,6 @@ export default React.createClass({
 		return {
 			reassignTask: null,
 			keyword: '',
-			usersData: null,
-			rolesData: null,
 			tableData: null,
 			tableOptions: {
 				defaultSortName: 'distributionDateTime',  // default sort column name
@@ -46,14 +44,20 @@ export default React.createClass({
 		API.request('POST', 'api/actions/list', {
 			userID: this.userID
 		}, 'actionList')
-
-		API.request('GET', 'api/userprofile/getDelegation', {
-			userID: this.userID
-		}, 'usersList')
-
-		API.request('GET', 'api/roles/list', {
-			userID: this.userID
-		}, 'rolesList')
+	},
+	reassignmentUser (taskID, assigneeUserID) {
+		API.request('POST', 'api/actions/reassignmentUser', {
+			userID: this.userID,
+			taskID,
+			assigneeUserID
+		}, 'reassignmentUser')
+	},
+	reassignmentUserRole (taskID, assigneeUserRoles) {
+		API.request('POST', 'api/actions/reassignmentUserRole', {
+			userID: this.userID,
+			taskID,
+			assigneeUserRoles
+		}, 'reassignmentUserRole')
 	},
 	APIChange (error, promise, extra) {
 		if (error) {
@@ -66,14 +70,14 @@ export default React.createClass({
 				this.setState({ tableData: response })
 			})
 			break
-		case 'usersList':
+		case 'reassignmentUser':
 			promise.done(response => {
-				this.setState({ usersData: response })
+				this.getData()
 			})
 			break
-		case 'rolesList':
+		case 'reassignmentUserRole':
 			promise.done(response => {
-				this.setState({ rolesData: response })
+				this.getData()
 			})
 			break
 		default:
@@ -98,8 +102,8 @@ export default React.createClass({
 	render () {
 		return (
 			<div ref='root' className='row conatainer-alert action-monitor'>
-				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={() => { }} >
-					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} users={this.state.usersData} roles={this.state.rolesData} />
+				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
+					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} />
 				</Popup>
 
 				<div className='row page-header'>
@@ -159,12 +163,28 @@ export default React.createClass({
 				<span className='assignee'>
 					{assigneeText}
 				</span>
-				{ row.taskStatus === 'new' && <img src='icon/reassign.svg' onClick={e => this.clickReassign(row)} /> }
+				{ row.taskStatus === 'New' && <img src='icon/reassign.svg' onClick={e => this.clickReassign(e, row)} /> }
 			</span>
 		)
 	},
-	clickReassign (row) {
+	clickReassign (e, row) {
+		e.stopPropagation()
 		this.setState({reassignTask: row})
 		this.refs.popupReassignment.show()
+	},
+	confirmRessignment () {
+		const reassignment = this.refs.actionReassignment.getSelectData()
+		if (reassignment.data.length === 0) {
+			return
+		}
+
+		const task = reassignment.task
+		if (reassignment.type === RADIO_USER) {
+			let assigneeUserID = reassignment.data[0]
+			this.reassignmentUser(task.taskID, assigneeUserID)
+		} else {
+			let assigneeUserRoles = reassignment.data.join(',')
+			this.reassignmentUserRole(task.taskID, assigneeUserRoles)
+		}
 	}
 })
