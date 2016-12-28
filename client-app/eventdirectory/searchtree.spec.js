@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import sinon from 'sinon'
+import ContextMenuService from '../context-menu/context-menu-service'
 import SearchTree from './searchtree'
 
 describe('<SearchTree />', () => {
@@ -53,5 +55,28 @@ describe('<SearchTree />', () => {
 		}
 		const wrapper = shallow(<SearchTree result={result} />)
 		expect(wrapper.find('div.ed-tree')).to.have.length(1)
+	})
+
+	it('Should show context menu on item click', () => {
+		let contextMenu = {show: sinon.spy()}
+
+		ContextMenuService.init(contextMenu)
+
+		const wrapper = shallow(<SearchTree result={null} />)
+		const rect = {top: 100, left: 50, right: 150, bottom: 130}
+		const currentTarget = { getBoundingClientRect: () => rect }
+		wrapper.instance().onRecordClick({currentTarget: currentTarget})
+
+		let calledArgs = contextMenu.show.args[0][0]
+		expect(calledArgs.className).to.equal('ed-tree-record-context-menu')
+		expect(calledArgs.position).to.deep.equal({left: rect.right + 10, top: rect.top})
+		expect(calledArgs.items).to.deep.equal([
+			{name: 'Select bet type offering', link: 'http://example.com'},
+			{name: 'Review compilers\' odds', link: 'http://example.com'},
+			{name: 'Finalise odds', link: 'http://example.com'},
+			{name: 'Edit Trader\'s Rating Table', link: 'http://example.com'}
+		])
+		expect(calledArgs.element).to.equal(currentTarget)
+		expect(calledArgs.renderItem).to.be.func
 	})
 })
