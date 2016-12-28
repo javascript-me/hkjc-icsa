@@ -121,17 +121,17 @@ export default React.createClass({
 			this.searchNoticeboard()
 		})
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
-			this.searchNoticeboard()
+			this.searchNoticeboard(false)
 		})
 		getNewDataNoticesToken = PubSub.subscribe(PubSub.REFRESH_NEWNOTICES, () => {
 			this.sendDataNoticeboard()
 		})
 		document.addEventListener('click', this.pageClick, false)
 	},
-	searchNoticeboard: async function () {
+	searchNoticeboard: async function (triggerLoading = true) {
 		this.setState({
 			selectedKeyword: this.state.keyword,
-			loading: true
+			loading: triggerLoading
 		}, function () {
 			let criteriaOption = this.getSearchCriterias()
 			// Get Table Data
