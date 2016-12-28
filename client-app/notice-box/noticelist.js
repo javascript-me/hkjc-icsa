@@ -1,12 +1,17 @@
 import React from 'react'
 import ClassNames from 'classnames'
+import TaskDetail from '../task-detail'
 
 export default class NoticeList extends React.Component {
 
 	constructor (props) {
 		super(props)
+		this.state = {
+			currentTask: {}
+		}
 		this.openNoticeDetail = this.openNoticeDetail.bind(this)
-		this.doAcknowledgement = this.doAcknowledgement.bind(this)
+		this.onTaskOpen = this.onTaskOpen.bind(this)
+		this.onTaskApprove = this.onTaskApprove.bind(this)
 	}
 
 	getNoticeBoxClassNames () {
@@ -30,25 +35,32 @@ export default class NoticeList extends React.Component {
 		this.props.onOpenDetail(item)
 	}
 
-	doAcknowledgement (id, alertStatus) {
-		this.props.onDoAcknowledgement(id, alertStatus)
+	onTaskApprove (data) {
+		this.props.onTaskAproved(data)
+	}
+
+	onTaskOpen (taskData) {
+		this.setState({currentTask: taskData}, () => {
+			this.refs.task.showTask()
+		})
 	}
 
 	render () {
 		return (
 			<div className={this.getNoticeBoxClassNames()}>
+				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} />
 				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.data.map((item, index) => {
 							return <li key={index} className={this.getNoticeItemClassName(item)}>
 								<ul className={ClassNames('row', item.priority)}>
-									<li className='notice-title' onClick={() => this.openNoticeDetail(item)}>
+									<li className='notice-title' onClick={() => this.onTaskOpen(item)}>
 										<div className='wrap-text'>
 											{item.taskDescription}
 										</div>
 									</li>
 									<li>{ item.priority === 'Critical' ? <i className={item.priority} /> : null }</li>
-									<li className='pull-right use-pointer-cursor' onClick={() => this.doAcknowledgement(item.taskID, item.priority)}><i className={'type' + item.lockStatus} /></li>
+									<li className='pull-right use-pointer-cursor' ><i className={'type' + item.lockStatus} /></li>
 								</ul>
 							</li>
 						})
@@ -64,5 +76,6 @@ NoticeList.propTypes = {
 	onDoAcknowledgement: React.PropTypes.func,
 	visible: React.PropTypes.bool,
 	data: React.PropTypes.array,
-	displayPosition: React.PropTypes.string
+	displayPosition: React.PropTypes.string,
+	onTaskAproved: React.PropTypes.func
 }
