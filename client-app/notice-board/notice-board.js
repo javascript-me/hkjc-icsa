@@ -10,7 +10,7 @@ import ClassNames from 'classnames'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
-import FilterBlock from '../filter-block'
+import FilterBlocksContainer from '../filter-block/filter-blocks-container'
 import NoticeDetail from '../notice-detail/notice-detail'
 import LoginService from '../login/login-service'
 
@@ -121,10 +121,10 @@ export default React.createClass({
 			this.searchNoticeboard()
 		})
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
-			this.searchNoticeboard(false)
+			this.searchNoticeboard()
 		})
 		getNewDataNoticesToken = PubSub.subscribe(PubSub.REFRESH_NEWNOTICES, () => {
-			this.sendDataNoticeboard()
+			this.searchNoticeboard(false)
 		})
 		document.addEventListener('click', this.pageClick, false)
 	},
@@ -132,16 +132,6 @@ export default React.createClass({
 		this.setState({
 			selectedKeyword: this.state.keyword,
 			loading: triggerLoading
-		}, function () {
-			let criteriaOption = this.getSearchCriterias()
-			// Get Table Data
-			NoticeboardService.filterNoticeBoardTableData(criteriaOption)
-		})
-	},
-	sendDataNoticeboard: async function () {
-		this.setState({
-			selectedKeyword: this.state.keyword,
-			loading: false
 		}, function () {
 			let criteriaOption = this.getSearchCriterias()
 			// Get Table Data
@@ -258,7 +248,7 @@ export default React.createClass({
 			keyword: newKeyword
 		})
 	},
-	generateFilterBlockesJsx: function (filters) {
+	getFormattedFilters: function (filters) {
 		const filterDisplayFormatting = (filter) => {
 			let filterDisplayText
 
@@ -330,15 +320,14 @@ export default React.createClass({
 			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
 			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
-		let filterBlockes = filtersArray.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				dataText={filterDisplayFormatting(f)}
-				dataValue={f}
-				removeEvent={this.removeSearchCriteriaFilter} />
-		}) || []
+		let formattedFilters = filtersArray.map((f, index) => {
+			return {
+				text: filterDisplayFormatting(f),
+				value: f
+			}
+		})
 
-		return filterBlockes
+		return formattedFilters
 	},
 	removeSearchCriteriaFilter: function (filter) {
 		const callback = () => {
@@ -499,7 +488,7 @@ export default React.createClass({
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
 		})
-		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
+		let formattedFilters = this.getFormattedFilters(this.state.selectedFilters)
 		return (
 
 			<div className='conatainer-alert noticeboard-popup-spestyle'>
@@ -528,9 +517,7 @@ export default React.createClass({
 								<div className='keyword-container'>
 									<input type='text' placeholder='Search with keywords & filters' value={this.state.keyword} onClick={this.showMoreFilter} onChange={this.handleKeywordChange} onKeyPress={this.handleKeywordPress} ref='keyword' />
 								</div>
-								<div className='filter-block-container'>
-									{filterBlockes}
-								</div>
+								<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<FilterPanel triggerSearchTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_KEY_PRESS}

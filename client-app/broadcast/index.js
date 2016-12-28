@@ -37,6 +37,7 @@ export default React.createClass({
 			categories: [],
 			inplay: [],
 			tableData: [],
+			loading: true,
 			version: 0
 		}
 	},
@@ -69,7 +70,10 @@ export default React.createClass({
 
 		case 'table':
 			promise.done(response => {
-				this.setState({ tableData: response.data })
+				this.setState({ 
+					tableData: response.data,
+					loading: false
+				})
 			})
 			break
 		default:
@@ -89,13 +93,17 @@ export default React.createClass({
 	},
 
 	onSearch (params) {
-		const filters = API.cleanParams(params)
+		this.setState({
+			loading: true
+		})
+
+		const filters = API.cleanParams(params)		
 		API.request(options.table.method, options.table.endpoint, filters, 'table')
 	},
 
 	render () {
 		return this.state.version > 6 ? (
-			<PageComponent key={this.state.version} tableData={this.state.tableData} onSearch={this.onSearch} filtersPerRow={4} options={options} pageTitle='Broadcast' pageClassName='auditlog' pageBreadcrum='Home \ Global Tools & Adminstration \ Communication'>
+			<PageComponent key={this.state.version} tableData={this.state.tableData} tableLoading={this.state.loading} onSearch={this.onSearch} filtersPerRow={4} options={options} pageTitle='Broadcast' pageClassName='auditlog' pageBreadcrum='Home \ Global Tools & Adminstration \ Communication'>
 				<PageLayer typeLayer='body'>
 					<TableHeaderColumn dataField='id' autoValue isKey hidden>ID</TableHeaderColumn>
 					<TableHeaderColumn dataField='system_distribution_time' dataSort dateRange isFilter>Distribution Date & Time</TableHeaderColumn>
