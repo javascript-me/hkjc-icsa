@@ -325,7 +325,9 @@ export default React.createClass({
 			case 'keyword':
 				return `${filter.name}: ${filter.value}`
 			default:
-				return Array.isArray(filter.value) ? filter.value.map(e => { return e.label }).join(', ') : filter.value
+				return Array.isArray(filter.value)
+				? filter.value.map(e => { return e.label }).join(', ')
+				: ((filter.value instanceof moment) ? filter.value.format('DD MMM YYYY HH:mm:ss') : filter.value) // fix the filter is calendar value
 			}
 		}
 
