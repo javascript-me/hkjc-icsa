@@ -113,8 +113,7 @@ class MenuBar extends Component {
 							}
 						</i>
 
-						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible}>
-						</i>
+						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible} />
 
 						<i className={this.getTaskIconClassName()} onClick={this.updateTaskVisible}>
 							{
@@ -150,9 +149,36 @@ class MenuBar extends Component {
 			noticeNewLength = noticeLength = count
 		})
 
+		let audioElement1 = document.createElement('audio')
+		let audioElement2 = document.createElement('audio')
+		audioElement1.setAttribute('src', 'common/sound1.mp3')
+		audioElement2.setAttribute('src', 'common/sound2.mp3')
+
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
 				self.setState({tipsNum: data})
+				ringsNum = data
+
+				let ringsNum = noticeNewLength - noticeLength
+				noticeLength = noticeNewLength
+				if (ringsNum > 0) {
+					audioElement1.play()
+					audioElement2.play()
+					audioElement1.addEventListener('ended', () => {
+						ringsNum--
+						if (ringsNum > 0) {
+							setTimeout(() => { audioElement1.play() }, 100)
+						}
+					})
+					audioElement2.addEventListener('ended', () => {
+						ringsNum--
+						if (ringsNum > 0) {
+							setTimeout(() => { audioElement2.play() }, 200)
+						}
+					})
+					PubSub.publish(PubSub['REFRESH_NOTICES'])
+					PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
+				}
 			})
 		}, 30000)
 

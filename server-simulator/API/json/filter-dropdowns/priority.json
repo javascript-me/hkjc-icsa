@@ -1,0 +1,18 @@
+[
+	{
+		"id": "Ctritical",
+		"value": "Ctritical"
+	},
+	{
+		"id": "High",
+		"value": "High"
+	},
+	{
+		"id": "Medium",
+		"value": "Medium"
+	},
+	{
+		"id": "Low",
+		"value": "Low"
+	}
+]

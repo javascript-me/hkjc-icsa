@@ -7,9 +7,12 @@ import config from './config'
 import Login from './login/login'
 import LoginService from './login/login-service'
 import Dashboard from './dashboard/dashboard'
+import ContextMenu from './context-menu'
+import ContextMenuService from './context-menu/context-menu-service'
 import Popup, { PopupService } from './popup'
 import Audit from './auditlog/auditlog'
-import ActionMonitor from './action-monitor/action-monitor'
+// import ActionMonitor from './action-monitor/action-monitor'
+import ActionMonitor from './action-monitor'
 import UserList from './userlist/userlist'
 import UserProfile from './userprofile/userprofile'
 import MyProfile from './myprofile/myprofile'
@@ -31,6 +34,7 @@ const AppContainer = React.createClass({
 	displayName: 'AppContainer',
 	componentDidMount () {
 		PopupService.init(this.refs.globalPopup)
+		ContextMenuService.init(this.refs.globalContextMenu)
 	},
 	render () {
 		return (
@@ -51,6 +55,7 @@ const AppContainer = React.createClass({
 				</Router>
 
 				<Popup hideOnOverlayClicked ref='globalPopup' />
+				<ContextMenu ref='globalContextMenu' />
 			</div>
 		)
 	}

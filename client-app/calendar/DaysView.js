@@ -57,7 +57,7 @@ let DateTimePickerDays = React.createClass({
 	},
 
 	setTimeToZero: function (moment) {
-		moment.set({hour:0,minute:0,second:0,millisecond:0})
+		moment.set({hour: 0, minute: 0, second: 0, millisecond: 0})
 	},
 
 	toScreenSize: function (totalItemCount) {

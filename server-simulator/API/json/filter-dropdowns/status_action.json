@@ -1,0 +1,18 @@
+[
+	{
+		"id":"New",
+		"value":"New"
+	},
+	{
+		"id":"Completed",
+		"value":"Completed"
+	},
+	{
+		"id":"Cancelled",
+		"value":"Cancelled"
+	},
+	{
+		"id":"Expired",
+		"value":"Expired"
+	}
+]
