@@ -3,6 +3,8 @@ import express from 'express'
 import EventDirectoryUtil from './event-directory-util'
 const football = require('../json/eventdirectory/football.json').events
 
+const eventType = require('../json/filter-dropdowns/event-type.json')
+const competition = require('../json/filter-dropdowns/competitions.json')
 const router = express.Router()
 
 /**
@@ -19,6 +21,7 @@ const router = express.Router()
  * 		{
  * 			"keyword": "England",
  * 			"eventType": "Assigned,In-Play,Pre-Event",
+ * 			"competition": "Assigned,In-Play,Pre-Event",
  * 			"from": "16/09/2016 10:00",
  * 			"to": "26/09/2016 10:00"
  * 		}
@@ -33,4 +36,16 @@ router.get('/autosugestion/football', (req, res) => {
 	res.send(allKeyWord)
 })
 
+router.get('/eventType', (req, res) => {
+	let status = 200
+	let result = eventType
+	res.status(status)
+	res.send(result)
+})
+router.get('/competition', (req, res) => {
+	let status = 200
+	let result = competition.competitions
+	res.status(status)
+	res.send(result)
+})
 export default router

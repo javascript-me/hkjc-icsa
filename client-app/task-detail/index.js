@@ -1,60 +1,82 @@
 import React, {Component} from 'react'
 import Popup from '../popup'
+import dateTool from '../formatter/date-formatter.js'
 
-const sampleTask = {
-	priority: 'medium',
-	taskType: 'aproveTask',
-	status: 'New',
-	taskSatus: 1,
-	category: 'N/A',
-	taskTitle: 'MUN vs ABC -POSITION 90%',
-	// taskBtnText: 'Odds Adjustment Panel',
-	taskDetail: '<Odds Compilation Task> has been assigned to you due to the odds re-finalisation. Please kindly complete your Odds Compilation Task ASAP.'
-
-}
 class TaskDetailBox extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
 			isAllowApprove: false
 		}
+		this.showTask = this.showTask.bind(this)
+		this.onSimpleTastApprove = this.onSimpleTastApprove.bind(this)
+	}
+	onSimpleTastApprove (type) {
+		const TaskAction = () => {
+			let result = {}
+			result.remark = this.refs.textBox.value
+			result.ApproveType = type
+			result.taskID = this.props.taskInfo.taskID
+			result.taskStatus = 'Completed'
+			this.props.onApprove(result)
+		}
+		return TaskAction
 	}
 
 	render () {
 		let isSuppervicer = true
-		const { priority, taskTitle, taskDetail, status, taskType, taskBtnText, approveFunc, taskExcFunc, category, receivedTime, targetTime, lockStatus } = sampleTask
+		const { priority, taskName, taskDescription, taskStatus, taskType, buttonName, approveFunc, taskExcFunc, category, distributionDateTime, targetCompletionDateTime, lockStatus } = this.props.taskInfo
 		let color = this.getTitleColor(priority)
 		let diffentOptions = {}
-		if (taskType === 'aproveTask') {
-			diffentOptions = {
-				isAproveTask: true,
-				inputArea: true,
-				confirmBtn: taskBtnText
-					? {text: taskBtnText, func: () => {}}
-					: {text: 'Approve', func: approveFunc},
-				secondBtn: taskBtnText
-					? null
-					: {text: 'Reject', func: this.handleReject},
-				otherBtn: null
+		let statusIconClassName = this.getIconClass(lockStatus)
 
-			}
-		} else {
+		switch (taskType) {
+		case ('execute'): {
 			diffentOptions = {
 				isAproveTask: false,
 				inputArea: false,
-				confirmBtn: {text: taskBtnText, func: taskExcFunc},
+				confirmBtn: {text: buttonName, func: taskExcFunc},
 				secondBtn: null,
 				otherBtn: isSuppervicer
-							? {text: 'Reassign', func: this.handleAssign}
-							: null
+								? {text: 'Reassign', func: this.handleAssign}
+								: null
 			}
+		} break
+		case ('simple'): {
+			diffentOptions = {
+				isAproveTask: true,
+				inputArea: true,
+				confirmBtn: {text: 'Approve', func: this.onSimpleTastApprove('approved')},
+				secondBtn: {text: 'Reject', func: this.onSimpleTastApprove('reject')},
+				otherBtn: null
+			}
+		} break
+		case ('advance'): {
+			diffentOptions = {
+				isAproveTask: true,
+				inputArea: false,
+				confirmBtn: {text: buttonName, func: taskExcFunc},
+				secondBtn: null,
+				otherBtn: null
+			}
+		} break
+		default: {
+			diffentOptions = {
+				isAproveTask: true,
+				inputArea: true,
+				confirmBtn: {text: 'Approve', func: approveFunc},
+				secondBtn: {text: 'Reject', func: this.handleReject},
+				otherBtn: null
+			}
+		}
 		}
 
 		return (<div className='task-detail-box'>
 			<Popup ref='detailPop'
 				popupDialogBorderColor={color}
 				headerColor={color}
-				title={taskTitle}
+				title={taskName}
+				showCloseIcon
 				confirmBtn={diffentOptions.confirmBtn.text}
 				cancelBtn={diffentOptions.secondBtn && diffentOptions.secondBtn.text}
 				otherBtn={diffentOptions.otherBtn && diffentOptions.otherBtn.text}
@@ -63,28 +85,40 @@ class TaskDetailBox extends Component {
 				onConfirm={diffentOptions.confirmBtn.func}
 				onCancel={diffentOptions.secondBtn && diffentOptions.secondBtn.func}
 				onOther={diffentOptions.otherBtn && diffentOptions.otherBtn.func}
-				confirmBtnDisabled={diffentOptions.isAproveTask && !this.state.isAllowApprove}
-				cancelBtnDisabled={diffentOptions.isAproveTask && !this.state.isAllowApprove} >
+				confirmBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove}
+				cancelBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove} >
 				<div className='info-part'>
-					{status && <span><span className='field'>Status:</span><span className='value'>{status}</span></span>}
+					{taskStatus && <span><span className='field'>Status:</span><span className='value'>{taskStatus}</span></span>}
 					{category && <span><span className='field'>Category:</span><span className='value'>{category}</span></span>}
-					{receivedTime && <span><span className='field'>Received Time:</span><span className='value'>{receivedTime}</span></span>}
-					{targetTime && <span><span className='field'>Target Time:</span><span className='value'>{category}</span></span>}
-					<div className={this.getIconClass(lockStatus)} />
+					{distributionDateTime && <span><span className='field'>Received Time:</span><span className='value'>{dateTool.toDDMMMYYY(distributionDateTime)}</span></span>}
+					{targetCompletionDateTime && <span><span className='field'>Target Time:</span><span className='value'>{dateTool.toDDMMMYYY(targetCompletionDateTime)}</span></span>}
+					<div className={statusIconClassName} />
 				</div>
-				<div className='detail-text'>{taskDetail}</div>
-				<div className='input-part' style={{display: (diffentOptions.inputArea && diffentOptions.secondBtn) ? 'block' : 'none'}}>
-					<div className='tip'>Remark</div>
-					<textarea placeholder='Please add mark' cols='90' rows='5' onChange={(e) => this.handleInputChange(e)} />
+				<div className='task-content'>
+					<div className='detail-text'>{taskDescription}</div>
+					<div className='input-part' style={{display: (diffentOptions.inputArea && diffentOptions.secondBtn) ? 'block' : 'none'}}>
+						<div className='tip'>Remark</div>
+						<textarea placeholder='Please add mark' cols='90' rows='5' onChange={(e) => this.handleInputChange(e)} ref='textBox' />
+					</div>
 				</div>
+
 			</Popup>
 		</div>
 		)
 	}
 	componentDidMount () {
+
+	}
+	componentWillReceiveProps (nextProps) {
+		this.setState({isAllowApprove: false})
+	}
+
+	showTask () {
 		this.refs.detailPop.show()
 	}
+
 	getTitleColor (priority) {
+		priority = priority ? priority.toLowerCase() : ''
 		let color
 		switch (priority) {
 		case ('low'): color = '#85B612'; break
@@ -107,18 +141,26 @@ class TaskDetailBox extends Component {
 		}
 	}
 
-	getIconClass (taskSatus) {
+	getIconClass (taskStatus) {
 		let iconClass
-		switch (taskSatus) {
+		switch (taskStatus) {
 		case (0) : iconClass = 'none'; break
 		case (1) : iconClass = 'icon lock-by-me'; break
-		case (2) : iconClass = 'icon assing-to-me'; break
+		case (2) : iconClass = 'icon assign-to-me'; break
 		case (3) : iconClass = 'icon lock-by-other'; break
 		default : iconClass = 'none'; break
 		}
+
 		return iconClass
 	}
 
 }
 
+TaskDetailBox.propTypes = {
+	taskInfo: React.PropTypes.object,
+	onApprove: React.PropTypes.func
+}
+TaskDetailBox.defaultProps = {
+	taskInfo: {}
+}
 export default TaskDetailBox
