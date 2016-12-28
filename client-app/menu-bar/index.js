@@ -113,13 +113,7 @@ class MenuBar extends Component {
 							}
 						</i>
 
-						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible}>
-							{
-								this.state.noticeRemindCount > 0
-									? <span className='message-count'>{this.state.noticeRemindCount}</span>
-									: ''
-							}
-						</i>
+						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible} />
 
 						<i className={this.getTaskIconClassName()} onClick={this.updateTaskVisible}>
 							{
@@ -163,7 +157,7 @@ class MenuBar extends Component {
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
 				self.setState({tipsNum: data})
-				noticeNewLength = data
+				ringsNum = data
 
 				let ringsNum = noticeNewLength - noticeLength
 				noticeLength = noticeNewLength
@@ -199,23 +193,25 @@ class MenuBar extends Component {
 			this.updateNoticeRemindCount(userName, self)
 		})
 
+		let start = 0
 		let audioElement = document.createElement('audio')
 		audioElement.setAttribute('src', 'common/sound.mp3')
+		audioElement.addEventListener('ended', () => {
+			start--
+			if (start > 0) {
+				setTimeout(() => { audioElement.play() }, 100)
+			}
+		})
 		this.interval = setInterval(() => {
 			getAllNoticesCount(userName).then((count) => {
 				noticeNewLength = count
-
 				let ringsNum = noticeNewLength - noticeLength
+				start = start + ringsNum
 				noticeLength = noticeNewLength
-				if (ringsNum > 0) {
+				if (ringsNum > 0 && noticeNewLength) {
 					audioElement.play()
-					audioElement.addEventListener('ended', () => {
-						ringsNum--
-						if (ringsNum > 0) {
-							setTimeout(() => { audioElement.play() }, 100)
-						}
-					})
-					PubSub.publish(PubSub['REFRESH_NOTICES'])
+
+					PubSub.publish(PubSub['REFRESH_NEWNOTICES'])
 					PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 				}
 			})
