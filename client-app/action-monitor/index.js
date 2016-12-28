@@ -74,6 +74,9 @@ export default React.createClass({
 			}
 		})
 	},
+	onReAssign (taskItem) {
+		// console.log(taskItem)
+	},
 
 	onRowClick (taskData) {
 		this.setState({currentTask: taskData}, () => {
@@ -140,7 +143,7 @@ export default React.createClass({
 	render () {
 		return this.state.version > 2 ? (
 			<div>
-				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} />
+				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
 				<PageComponent key={this.state.version} tableData={this.state.tableData} onSearch={this.onSearch} filtersPerRow={4} options={this.state.options} pageTitle='Actions' pageClassName='auditlog conatainer-alert action-monitor' pageBreadcrum='Home \ Global Tools & Adminstration \ Action(Task)'>
 
 					<PageLayer typeLayer='body'>
