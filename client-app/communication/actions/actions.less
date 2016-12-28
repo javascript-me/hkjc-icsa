@@ -1,6 +1,12 @@
 .messages-container.colour-container {
 	overflow: hidden;
 
+	.notice-box ul.list-box-bottom li.blink,
+	.notice-box ul.list-box-right li.blink {
+		cursor: pointer;
+		animation: scaleout 2.3s infinite ease-in-out;
+	}
+
 	.notice-box {
 		overflow-x: auto;
 
@@ -111,5 +117,27 @@
 	.noticeboard-icon-container img {
 		width: 16px;
 		opacity: 0.5;
+	}
+}
+
+@-webkit-keyframes scaleout {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(1.01);
+		opacity: 0.8;
+	}
+}
+
+@keyframes scaleout {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(1.01);
+		opacity: 0.8;
 	}
 }
