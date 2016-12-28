@@ -40,7 +40,11 @@ export default React.createClass({
 	stopSellAllClickHandler: function () {
 		if (this.state.stopSellAllBackground !== DISABLED_COLOR) {
 			this.clearAllStyles()
-			this.setState({paragraphOne: 'STOP SELL ALL', paragraphTwo: 'All Fixed Odds Sports, Pari-Mutuel Sports and Fixed Odds Horse Racing Will Be Stopped.', showProceedPopup: 'block'})
+			this.setState({
+				paragraphOne: 'STOP SELL ALL',
+				paragraphTwo: 'All Fixed Odds Sports, Pari-Mutuel Sports and Fixed Odds Horse Racing Will Be Stopped.',
+				showProceedPopup: 'block'
+			})
 			this.changeBGStopSellAll(SELECTED_COLOR)
 			this.changeBGAllFixedOdds(SELECTED_COLOR)
 			this.changeBGFixedFootBall(SELECTED_COLOR)
@@ -53,7 +57,11 @@ export default React.createClass({
 	stopSellAllFixedOddsClickHandler: function () {
 		if (this.state.stopSellFixedODDSBackground !== DISABLED_COLOR) {
 			this.clearAllStyles()
-			this.setState({paragraphOne: 'STOP SELL ALL FIXED ODDS', paragraphTwo: 'All Fixed Odds Sports and Fixed Odds Horse Racing Will Be Stopped.', showProceedPopup: 'block'})
+			this.setState({
+				paragraphOne: 'STOP SELL ALL FIXED ODDS',
+				paragraphTwo: 'All Fixed Odds Sports and Fixed Odds Horse Racing Will Be Stopped.',
+				showProceedPopup: 'block'
+			})
 			this.changeBGAllFixedOdds(SELECTED_COLOR)
 			this.changeBGFixedFootBall(SELECTED_COLOR)
 			this.changeBGFixedBasketBall(SELECTED_COLOR)
@@ -64,7 +72,11 @@ export default React.createClass({
 	fixedOddFootBallClickHandler: function () {
 		if (this.state.fixedOddFootBallBackground !== DISABLED_COLOR) {
 			this.clearAllStyles()
-			this.setState({paragraphOne: 'STOP SELL ALL FIXED ODDS', paragraphTwo: 'All Fixed Odds Football bet types Will Be Stopped.',	showProceedPopup: 'block'})
+			this.setState({
+				paragraphOne: 'STOP SELL ALL FIXED ODDS',
+				paragraphTwo: 'All Fixed Odds Football bet types Will Be Stopped.',
+				showProceedPopup: 'block'
+			})
 			this.changeBGFixedFootBall(SELECTED_COLOR)
 		}
 	},
@@ -72,7 +84,11 @@ export default React.createClass({
 	fixedOddBasketBallClickHandler: function () {
 		if (this.state.fixedOddBasketBallBackground !== DISABLED_COLOR) {
 			this.clearAllStyles()
-			this.setState({paragraphOne: 'STOP SELL ALL FIXED ODDS', paragraphTwo: 'All Fixed Odds Basketball bet types Will Be Stopped.', showProceedPopup: 'block'})
+			this.setState({
+				paragraphOne: 'STOP SELL ALL FIXED ODDS',
+				paragraphTwo: 'All Fixed Odds Basketball bet types Will Be Stopped.',
+				showProceedPopup: 'block'
+			})
 			this.changeBGFixedBasketBall(SELECTED_COLOR)
 		}
 	},
@@ -80,7 +96,11 @@ export default React.createClass({
 	fixedOddHorseClickHandler: function () {
 		if (this.state.fixedOddHorseRacingBackground !== DISABLED_COLOR) {
 			this.clearAllStyles()
-			this.setState({paragraphOne: 'STOP SELL ALL FIXED ODDS', paragraphTwo: 'All Fixed Odds Horse Racing Bet types Will Be Stopped.', showProceedPopup: 'block'})
+			this.setState({
+				paragraphOne: 'STOP SELL ALL FIXED ODDS',
+				paragraphTwo: 'All Fixed Odds Horse Racing Bet types Will Be Stopped.',
+				showProceedPopup: 'block'
+			})
 			this.changeBGFixedHorseRacing(SELECTED_COLOR)
 		}
 	},
@@ -88,7 +108,11 @@ export default React.createClass({
 	pariMutuelClickHandler: function () {
 		if (this.state.stopSelPariMutuelBackground !== DISABLED_COLOR) {
 			this.clearAllStyles()
-			this.setState({paragraphOne: 'STOP SELL ALL Pari-Mutuel', paragraphTwo: 'All Pari-Mutuel Football bet types Will Be Stopped.', showProceedPopup: 'block'})
+			this.setState({
+				paragraphOne: 'STOP SELL ALL Pari-Mutuel',
+				paragraphTwo: 'All Pari-Mutuel Football bet types Will Be Stopped.',
+				showProceedPopup: 'block'
+			})
 			this.changeBGPariMutuel(SELECTED_COLOR)
 		}
 	},
@@ -116,19 +140,34 @@ export default React.createClass({
 			this.changeBGFixedFootBall(DISABLED_COLOR)
 			this.changeBGFixedBasketBall(DISABLED_COLOR)
 			this.changeBGFixedHorseRacing(DISABLED_COLOR)
-			this.setState({showTimeFixedOddsStopAll: 'block', stopAllFixedTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({
+				showTimeFixedOddsStopAll: 'block',
+				stopAllFixedTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')
+			})
 		} else if (this.state.fixedOddFootBallBackground === SELECTED_COLOR) {
 			this.changeBGFixedFootBall(DISABLED_COLOR)
-			this.setState({showTimeFootBall: 'block', stopFixedFootBallTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({
+				showTimeFootBall: 'block',
+				stopFixedFootBallTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')
+			})
 		} else if (this.state.fixedOddBasketBallBackground === SELECTED_COLOR) {
 			this.changeBGFixedBasketBall(DISABLED_COLOR)
-			this.setState({showTimeBasketBall: 'block', stopFixedBasketBallTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({
+				showTimeBasketBall: 'block',
+				stopFixedBasketBallTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')
+			})
 		} else if (this.state.fixedOddHorseRacingBackground === SELECTED_COLOR) {
 			this.changeBGFixedHorseRacing(DISABLED_COLOR)
-			this.setState({showTimeHorseRacing: 'block', stopFixedHorseRacingTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({
+				showTimeHorseRacing: 'block',
+				stopFixedHorseRacingTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')
+			})
 		} else if (this.state.stopSelPariMutuelBackground === SELECTED_COLOR) {
 			this.changeBGPariMutuel(DISABLED_COLOR)
-			this.setState({showTimePariMutuel: 'block', stopPariMutuelTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')})
+			this.setState({
+				showTimePariMutuel: 'block',
+				stopPariMutuelTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss')
+			})
 		}
 		this.setState({
 			showProceedPopup: 'none',
@@ -136,11 +175,25 @@ export default React.createClass({
 		})
 		if (((this.state.fixedOddFootBallBackground === DISABLED_COLOR || this.state.fixedOddFootBallBackground === SELECTED_COLOR) && (this.state.fixedOddBasketBallBackground === DISABLED_COLOR || this.state.fixedOddBasketBallBackground === SELECTED_COLOR) && (this.state.fixedOddHorseRacingBackground === DISABLED_COLOR || this.state.fixedOddHorseRacingBackground === SELECTED_COLOR))) {
 			this.changeBGAllFixedOdds(DISABLED_COLOR)
-			this.setState({showTimeFixedOddsStopAll: 'block', stopAllFixedTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss'), showTimeFootBall: 'none', showTimeBasketBall: 'none', showTimeHorseRacing: 'none'})
+			this.setState({
+				showTimeFixedOddsStopAll: 'block',
+				stopAllFixedTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss'),
+				showTimeFootBall: 'none',
+				showTimeBasketBall: 'none',
+				showTimeHorseRacing: 'none'
+			})
 		}
 		if (((this.state.stopSelPariMutuelBackground === DISABLED_COLOR || this.state.stopSelPariMutuelBackground === SELECTED_COLOR) && (this.state.stopSellFixedODDSBackground === DISABLED_COLOR || this.state.stopSellFixedODDSBackground === SELECTED_COLOR || this.state.stopSellFixedODDSBackground === ENABLED_COLOR) && (this.state.fixedOddFootBallBackground === DISABLED_COLOR || this.state.fixedOddFootBallBackground === SELECTED_COLOR) && (this.state.fixedOddBasketBallBackground === DISABLED_COLOR || this.state.fixedOddBasketBallBackground === SELECTED_COLOR) && (this.state.fixedOddHorseRacingBackground === DISABLED_COLOR || this.state.fixedOddHorseRacingBackground === SELECTED_COLOR))) {
 			this.changeBGStopSellAll(DISABLED_COLOR)
-			this.setState({showTimeStopAll: 'block', stopAllTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss'), showTimeFixedOddsStopAll: 'none', showTimeFootBall: 'none', showTimeBasketBall: 'none', showTimeHorseRacing: 'none', showTimePariMutuel: 'none'})
+			this.setState({
+				showTimeStopAll: 'block',
+				stopAllTime: Moment(new Date()).format('DD MMM YYYY HH:mm:ss'),
+				showTimeFixedOddsStopAll: 'none',
+				showTimeFootBall: 'none',
+				showTimeBasketBall: 'none',
+				showTimeHorseRacing: 'none',
+				showTimePariMutuel: 'none'
+			})
 		}
 	},
 
@@ -222,9 +275,7 @@ export default React.createClass({
 						<span className='sub-title'>
 							All Fixed Odds Sports, Pari-Mutuel Sports and Fixed Odds Horse Racing
 						</span>
-						<span className='stopped-at'
-							style={{'display': this.state.showTimeStopAll}}>Stopped at {this.state.stopAllTime}
-						</span>
+						<span className='stopped-at' style={{'display': this.state.showTimeStopAll}}>Stopped at {this.state.stopAllTime}</span>
 					</div>
 				</div>
 				{/* STOP SELL ALL FIXED ODDS */}
@@ -259,8 +310,7 @@ export default React.createClass({
 						<span className='sub-title'>
 							All Fixed Odds Football bet types
 						</span>
-						<span className='stopped-at'
-							style={{'display': this.state.showTimeFootBall}}>Stopped at {this.state.stopFixedFootBallTime}</span>
+						<span className='stopped-at' style={{'display': this.state.showTimeFootBall}}>Stopped at {this.state.stopFixedFootBallTime}</span>
 						<div onClick={this.pariMutuelClickHandler}>
 							<ContigencyButton className='big-button'
 								background={this.state.stopSelPariMutuelBackground} width='215px'
@@ -272,10 +322,9 @@ export default React.createClass({
 								bottomLabelLineHeight='' />
 						</div>
 						<span className='sub-title'>
-							All Pari-Mutuel Football bet types
+						All Pari-Mutuel Football bet types
 						</span>
-						<span className='stopped-at'
-							style={{'display': this.state.showTimePariMutuel}}>Stopped at {this.state.stopPariMutuelTime}</span>
+						<span className='stopped-at' style={{'display': this.state.showTimePariMutuel}}>Stopped at {this.state.stopPariMutuelTime}</span>
 					</div>
 
 					<div className='col-md-3 container-stop-sell-basketball'>
@@ -293,8 +342,7 @@ export default React.createClass({
 						<span className='sub-title'>
 							All Fixed Odds Basketball bet types
 						</span>
-						<span className='stopped-at'
-							style={{'display': this.state.showTimeBasketBall}}>Stopped at {this.state.stopFixedBasketBallTime}</span>
+						<span className='stopped-at' style={{'display': this.state.showTimeBasketBall}}>Stopped at {this.state.stopFixedBasketBallTime}</span>
 					</div>
 
 					<div className='col-md-3 container-stop-sell-horse-racing'>
@@ -312,12 +360,10 @@ export default React.createClass({
 						<span className='sub-title'>
 							All Fixed Odds Horse Racing Bet types
 						</span>
-						<span className='stopped-at'
-							style={{'display': this.state.showTimeHorseRacing}}>Stopped at {this.state.stopFixedHorseRacingTime}</span>
+						<span className='stopped-at' style={{'display': this.state.showTimeHorseRacing}}>Stopped at {this.state.stopFixedHorseRacingTime}</span>
 					</div>
 				</div>
-				<Popup ref='contigencyPopup' title='Contigency' onCancel={this.closePopUp}
-					onConfirm={this.confirmClickHandler}>
+				<Popup ref='contigencyPopup' title='Contigency' onCancel={this.closePopUp} onConfirm={this.confirmClickHandler}>
 					<ContigencyPopup popupParagraph1={this.state.paragraphOne}
 						popupParagraph2={this.state.paragraphTwo} />
 				</Popup>
@@ -333,6 +379,6 @@ export default React.createClass({
 				</div>
 
 			</div>
-			)
+		)
 	}
 })
