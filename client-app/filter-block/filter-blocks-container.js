@@ -99,7 +99,7 @@ export default React.createClass({
 			return <FilterBlock
 				key={index}
 				dataText={f.text}
-				dataValue={f}
+				dataValue={f.value}
 				removeEvent={onRemoveOneFilter} />
 		}) || []
 	},
@@ -108,7 +108,7 @@ export default React.createClass({
 			return <OverflowFilter
 				key={index}
 				dataText={f.text}
-				dataValue={f}
+				dataValue={f.value}
 				removeEvent={onRemoveOneFilter} />
 		})
 	},

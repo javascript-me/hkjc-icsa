@@ -30,19 +30,7 @@ describe('<FilterBlocksContainer /> component', () => {
 		sinon.spy(FilterBlocksContainer.prototype, 'componentWillUpdate')
 		sinon.spy(FilterBlocksContainer.prototype, 'componentDidUpdate')
 
-		let filters = [{
-			name: 'type',
-			value: 'Event'
-		}, {
-			name: 'address',
-			value: 'Hongkong'
-		}]
-		let filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
-
-		filters.push({
-			name: 'phone',
-			value: '3311256'
-		})
+		let filterBlocksContainer = mount(<FilterBlocksContainer />)
 
 		filterBlocksContainer.instance().componentWillUpdate()
 		expect(FilterBlocksContainer.prototype.componentWillUpdate).to.have.property('called', true)
@@ -80,11 +68,15 @@ describe('<FilterBlocksContainer /> component', () => {
 
 	it('will render filter blocks according to props.filters if no overflow filter', () => {
 		let filters = [{
-			name: 'type',
-			value: 'Event'
+			value: {
+				name: 'type',
+				value: 'Event'
+			}
 		}, {
-			name: 'address',
-			value: 'Hongkong'
+			value: {
+				name: 'address',
+				value: 'Hongkong'
+			}
 		}]
 		const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 		const pureFilterContainer = filterBlocksContainer.find('.pure-filter-block')
@@ -99,11 +91,15 @@ describe('<FilterBlocksContainer /> component', () => {
 
 	it('will render this.refs.pureFilterBlocksContainer as div', () => {
 		let filters = [{
-			name: 'type',
-			value: 'Event'
+			value: {
+				name: 'type',
+				value: 'Event'
+			}
 		}, {
-			name: 'address',
-			value: 'Hongkong'
+			value: {
+				name: 'address',
+				value: 'Hongkong'
+			}
 		}]
 		const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 
@@ -179,11 +175,15 @@ describe('<FilterBlocksContainer /> component', () => {
 	describe('#Overflow filters panel', () => {
 		it('will render overflow filters in more filters panel', () => {
 			let filters = [{
-				name: 'type',
-				value: 'Event'
+				value: {
+					name: 'type',
+					value: 'Event'
+				}
 			}, {
-				name: 'address',
-				value: 'Hongkong'
+				value: {
+					name: 'address',
+					value: 'Hongkong'
+				}
 			}]
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 			let overflowFilters = filterBlocksContainer.state('overflowFilters')
@@ -205,11 +205,15 @@ describe('<FilterBlocksContainer /> component', () => {
 
 		it('will hide when trigger #pageClickedOrResized when state.clickingOnMoreFilterPanel equal false', () => {
 			let filters = [{
-				name: 'type',
-				value: 'Event'
+				value: {
+					name: 'type',
+					value: 'Event'
+				}
 			}, {
-				name: 'address',
-				value: 'Hongkong'
+				value: {
+					name: 'address',
+					value: 'Hongkong'
+				}
 			}]
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 			let overflowFilters = filterBlocksContainer.state('overflowFilters')
@@ -232,11 +236,15 @@ describe('<FilterBlocksContainer /> component', () => {
 
 		it('will not hide when trigger #pageClickedOrResized when state.clickingOnMoreFilterPanel equal true', () => {
 			let filters = [{
-				name: 'type',
-				value: 'Event'
+				value: {
+					name: 'type',
+					value: 'Event'
+				}
 			}, {
-				name: 'address',
-				value: 'Hongkong'
+				value: {
+					name: 'address',
+					value: 'Hongkong'
+				}
 			}]
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 			let overflowFilters = filterBlocksContainer.state('overflowFilters')
@@ -262,11 +270,15 @@ describe('<FilterBlocksContainer /> component', () => {
 	describe('#props.onRemoveOneFilter', () => {
 		it('will trigger by clicked filter block', () => {
 			let filters = [{
-				name: 'type',
-				value: 'Event'
+				value: {
+					name: 'type',
+					value: 'Event'
+				}
 			}, {
-				name: 'address',
-				value: 'Hongkong'
+				value: {
+					name: 'address',
+					value: 'Hongkong'
+				}
 			}]
 			const removeEvent = sinon.spy()
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} onRemoveOneFilter={removeEvent} />)
@@ -279,11 +291,15 @@ describe('<FilterBlocksContainer /> component', () => {
 
 		it('will trigger by clicked the cross icon of overflow filter', () => {
 			let filters = [{
-				name: 'type',
-				value: 'Event'
+				value: {
+					name: 'type',
+					value: 'Event'
+				}
 			}, {
-				name: 'address',
-				value: 'Hongkong'
+				value: {
+					name: 'address',
+					value: 'Hongkong'
+				}
 			}]
 			const removeEvent = sinon.spy()
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} onRemoveOneFilter={removeEvent} />)
