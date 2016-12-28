@@ -347,8 +347,9 @@ export default React.createClass({
 		let filtersArrayWithoutDateRange = filters.filter((f) => {
 			if (f.name === this.props.options.dateRange.fieldFrom || f.name === this.props.options.dateRange.fieldTo) {
 				return false
+			} else if (f.value.length > 0) { // To avoid blank <FilterBlock>
+				return true
 			}
-			return true
 		})
 
 		let filtersArray = []
