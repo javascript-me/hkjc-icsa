@@ -10,6 +10,7 @@ import NoticeDetail from '../../notice-detail/notice-detail'
 import PubSub from '../../pubsub'
 import ClassNames from 'classnames'
 import PanelPosition from './panel-position'
+import BroadcastsService from '../broadcasts/broadcasts-service'
 
 const getNoticesPromise = async (username) => {
 	let notices = null
@@ -104,7 +105,8 @@ export default React.createClass({
 				message_category: '',
 				system_distribution_time: '',
 				priority: ''
-			}
+			},
+			broadCastsList: []
 		}
 	},
 
@@ -115,6 +117,7 @@ export default React.createClass({
 		let allNotices
 		let unreadNotices
 		let self = this
+		BroadcastsService.getBroadcasts(userProfile.username)
 
 		noticePromise.then((notices) => {
 			allNotices = notices || []
@@ -413,21 +416,19 @@ export default React.createClass({
 					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
 				</div>
 				<div className='container-title'>
-					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+					<span className='noticeboard-icon-container'><img src='icon/broadcast-off.svg' style={{'width': '16px', 'height': '16px'}} /></span>
 					<span className='header-title'>{'Broadcast'}</span>
 				</div>
 			</div>
-			<div className='messages-container'>
-				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
-				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+			<div className='messages-container broad-cast-container'>
+				<NoticeBox notices={BroadcastsService.broadCastsList} visible displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
 			</div>
 		</div>
 
 		let taskPanel = <div className={this.getTaskClassName()}>
 			<div className='header-container'>
 				<div className='pull-right'>
-					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-list-container'><a href={'/#/page/actionmonitor'}><img src='icon/list.svg' /></a></span>
 					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openTaskPopup} /></span>
 				</div>
 				<div className='container-title'>

@@ -44,4 +44,29 @@ router.post('/search', (req, res) => {
 	res.send({ data: result, betType: req.body.betType, keyword: req.body.keyword, dateTimeFrom: req.body.dateTimeFrom, dateTimeTo: req.body.dateTimeTo })
 })
 
+/**
+ * @api {GET} /broadcast/all-broadcasts Broadcasts list
+ * @apiGroup Broadcast
+
+ * @apiDescription Get all broadcasts in system
+ *
+ * @apiParam {String} username=allgood Current customer's name
+  * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {Object[]} data
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		{
+ *			"username": "allgood"
+ *		}
+ *
+ */
+router.post('/all-broadcasts', (req, res) => {
+	let status = null
+	let result = {}
+	status = 200
+	result = jsonObject.broadcast.slice()
+
+	res.status(status)
+	res.send(result)
+})
 export default router

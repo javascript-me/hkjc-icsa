@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Collapse, { Panel } from 'rc-collapse'
 import SearchRecord from './searchrecord'
+import ContextMenuService from '../context-menu/context-menu-service'
 
 export default React.createClass({
 	displayName: 'SearchTree',
@@ -14,6 +15,22 @@ export default React.createClass({
 				<span className='badge'>{level2.records.length}</span>
 			</span>
 		)
+	},
+	onRecordClick (event) {
+		let rect = event.currentTarget.getBoundingClientRect()
+
+		ContextMenuService.show({
+			items: [
+				{name: 'Select bet type offering', link: 'http://example.com'},
+				{name: 'Review compilers\' odds', link: 'http://example.com'},
+				{name: 'Finalise odds', link: 'http://example.com'},
+				{name: 'Edit Trader\'s Rating Table', link: 'http://example.com'}
+			],
+			position: { left: rect.right + 10, top: rect.top }, // 10 pixel for a little arrow. See .ed-tree-record-context-menu,
+			className: 'ed-tree-record-context-menu',
+			renderItem: (item) => <a href={item.link}>{item.name}</a>,
+			element: event.currentTarget
+		})
 	},
 	render () {
 		if (this.props.result === null) {
@@ -46,7 +63,7 @@ export default React.createClass({
 							<Collapse accordion={false} defaultActiveKey={beL1 ? [] : ['0']} className='level2'>
 								{level1.children.map((level2, index) => (
 									<Panel key={index} header={this.renderLevel2Header(level2)}>
-										{level2.records.map((competition, index) => (<SearchRecord key={index} record={competition} />))}
+										{level2.records.map((competition, index) => (<SearchRecord key={index} record={competition} onClick={this.onRecordClick} />))}
 									</Panel>
 								))}
 							</Collapse>
