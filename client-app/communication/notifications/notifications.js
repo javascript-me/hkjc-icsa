@@ -178,8 +178,8 @@ export default React.createClass({
 		let self = this
 		let settingPromise = updateNoticeboardAndBroadcastSettingPromise(LoginService.getProfile().username, this.state.selectedNoticeboardAndBroadcastPanelPosition)
 		settingPromise.then((userProfile) => {
-			let userNoticeboardSettings = LoginService.getNoticeboardAndBroadcastSetting(userProfile)
-			self.setState({noticeboardAndBroadcastPanelPosition: userNoticeboardSettings.position})
+			let noticeboardAndBroadcastSetting = LoginService.getNoticeboardAndBroadcastSetting(userProfile)
+			self.setState({noticeboardAndBroadcastPanelPosition: noticeboardAndBroadcastSetting.position})
 		})
 	},
 

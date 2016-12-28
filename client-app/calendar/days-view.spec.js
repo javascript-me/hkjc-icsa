@@ -37,7 +37,7 @@ describe('Moment', () => {
 	it('set hour minute second, and millisecond to 0', () => {
 		var time = Moment('26 Dec 2016 12:30:30', 'DD MMM YYYY HH:mm:ss')
 		assert.equal('2016-12-26T12:30:30', time.format().substring(0, 19))
-		time.utcOffset(0).set({hour:0,minute:0,second:0,millisecond:0})
+		time.utcOffset(0).set({hour: 0, minute: 0, second: 0, millisecond: 0})
 		assert.equal('2016-12-26T00:00:00Z', time.format())
 	})
 })
@@ -45,10 +45,10 @@ describe('Moment', () => {
 describe('days view', () => {
 	let instance
 
-	beforeEach(function() {
+	beforeEach(() => {
 		instance = shallow(<DaysView viewDate={Moment('21 Dec 2016 00:00:00', 'DD MMM YYYY HH:mm:ss')}
-									 subtractTime={() => {}}
-									 addTime={() => {}} />).instance()
+			subtractTime={() => {}}
+			addTime={() => {}} />).instance()
 	})
 
 	it('calculateCalendarScreenSize() should return how many rows can be showed in calendar screen', () => {
