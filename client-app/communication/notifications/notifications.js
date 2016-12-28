@@ -427,7 +427,7 @@ export default React.createClass({
 		let taskPanel = <div className={this.getTaskClassName()}>
 			<div className='header-container'>
 				<div className='pull-right'>
-					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-list-container'><a href={'/#/page/actionmonitor'}><img src='icon/list.svg' /></a></span>
 					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openTaskPopup} /></span>
 				</div>
 				<div className='container-title'>
