@@ -438,8 +438,8 @@ export default React.createClass({
 			</div>
 			<div className='messages-container colour-container'>
 				<TabBar onChangeTab={this.changeActionsTab} tabData={this.state.tabDataActions} displayPosition={this.state.taskPanelPosition} />
-				<NoticeList data={this.state.actionsBoxData.allTasks} visible={this.state.allTasksVisible} displayPosition={this.state.taskPanelPosition} />
-				<NoticeList data={this.state.actionsBoxData.myTasks} visible={this.state.myTasksVisible} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList onTaskAproved={this.onTaskAproved} data={this.state.actionsBoxData.allTasks} visible={this.state.allTasksVisible} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList onTaskAproved={this.onTaskAproved} data={this.state.actionsBoxData.myTasks} visible={this.state.myTasksVisible} displayPosition={this.state.taskPanelPosition} />
 			</div>
 		</div>
 
@@ -495,6 +495,15 @@ export default React.createClass({
 			actionsBoxData: {
 				allTasks: tasks,
 				myTasks: myTasks
+			}
+		})
+	},
+	onTaskAproved (data) {
+		$.post('api/actions/edit', {
+			data: data
+		}).then((data) => {
+			if (data.status) {
+				this.getAllTasks()
 			}
 		})
 	}

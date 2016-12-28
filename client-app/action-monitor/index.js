@@ -5,7 +5,7 @@ import LoginService from '../login/login-service'
 import TaskDetail from '../task-detail'
 // import config from '../config'
 import API from '../api-service'
-import ActionReassignment, { RADIO_USER } from './action-reassignment'
+import ActionReassignment from './action-reassignment'
 import Popup from '../popup'
 
 export default React.createClass({
@@ -67,22 +67,6 @@ export default React.createClass({
 		API.request('GET', 'api/actions/status', {}, 'status')
 	},
 
-	reassignmentUser (taskID, assigneeUserID) {
-		API.request('POST', 'api/actions/reassignmentUser', {
-			userID: this.userID,
-			taskID,
-			assigneeUserID
-		}, 'reassignmentUser')
-	},
-
-	reassignmentUserRole (taskID, assigneeUserRoles) {
-		API.request('POST', 'api/actions/reassignmentUserRole', {
-			userID: this.userID,
-			taskID,
-			assigneeUserRoles
-		}, 'reassignmentUserRole')
-	},
-
 	onTaskApprove (data) {
 		$.post('api/actions/edit', {
 			data: data
@@ -91,6 +75,10 @@ export default React.createClass({
 				this.getData()
 			}
 		})
+	},
+	onReAssign (taskItem) {
+		this.setState({reassignTask: taskItem})
+		this.refs.popupReassignment.show()
 	},
 
 	onRowClick (taskData) {
@@ -105,20 +93,9 @@ export default React.createClass({
 		}
 
 		switch (extra) {
-
 		case 'actionList':
 			promise.done(response => {
 				this.setState({ tableData: response })
-			})
-			break
-		case 'reassignmentUser':
-			promise.done(response => {
-				this.getData()
-			})
-			break
-		case 'reassignmentUserRole':
-			promise.done(response => {
-				this.getData()
 			})
 			break
 		default:
@@ -169,9 +146,9 @@ export default React.createClass({
 		return this.state.version > 2 ? (
 			<div className='action-monitor'>
 				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
-					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} />
+					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} refresh={this.getData} />
 				</Popup>
-				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} />
+				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
 				<PageComponent key={this.state.version} tableData={this.state.tableData} onSearch={this.onSearch} filtersPerRow={4} options={this.state.options} pageTitle='Actions' pageClassName='auditlog conatainer-alert action-monitor' pageBreadcrum='Home \ Global Tools & Adminstration \ Action(Task)'>
 
 					<PageLayer typeLayer='body'>
@@ -194,18 +171,6 @@ export default React.createClass({
 		this.refs.popupReassignment.show()
 	},
 	confirmRessignment () {
-		const reassignment = this.refs.actionReassignment.getSelectData()
-		if (reassignment.data.length === 0) {
-			return
-		}
-
-		const task = reassignment.task
-		if (reassignment.type === RADIO_USER) {
-			let assigneeUserID = reassignment.data[0]
-			this.reassignmentUser(task.taskID, assigneeUserID)
-		} else {
-			let assigneeUserRoles = reassignment.data.join(',')
-			this.reassignmentUserRole(task.taskID, assigneeUserRoles)
-		}
+		this.refs.actionReassignment.confirmRessignment()
 	}
 })

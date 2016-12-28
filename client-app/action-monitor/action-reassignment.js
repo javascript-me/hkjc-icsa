@@ -8,15 +8,11 @@ import LoginService from '../login/login-service'
 const RADIO_USER = 0
 const RADIO_ROLE = 1
 
-export {
-	RADIO_USER,
-	RADIO_ROLE
-}
-
 export default React.createClass({
 	displayName: 'ActionReassignment',
 	propTypes: {
-		task: PropTypes.object
+		task: PropTypes.object,
+		refresh: PropTypes.func
 	},
 	getInitialState () {
 		return {
@@ -55,6 +51,16 @@ export default React.createClass({
 				this.setState({ rolesData: response })
 			})
 			break
+		case 'reassignmentUser':
+			promise.done(response => {
+				this.props.refresh && this.props.refresh()
+			})
+			break
+		case 'reassignmentUserRole':
+			promise.done(response => {
+				this.props.refresh && this.props.refresh()
+			})
+			break
 		default:
 			break
 		}
@@ -67,6 +73,21 @@ export default React.createClass({
 		API.request('GET', 'api/roles/list', {
 			userID: this.userID
 		}, 'rolesList')
+	},
+	reassignmentUser (taskID, assigneeUserID) {
+		API.request('POST', 'api/actions/reassignmentUser', {
+			userID: this.userID,
+			taskID,
+			assigneeUserID
+		}, 'reassignmentUser')
+	},
+
+	reassignmentUserRole (taskID, assigneeUserRoles) {
+		API.request('POST', 'api/actions/reassignmentUserRole', {
+			userID: this.userID,
+			taskID,
+			assigneeUserRoles
+		}, 'reassignmentUserRole')
 	},
 	handleInputChange (e) {
 		let keyword = e.target.value
@@ -93,6 +114,21 @@ export default React.createClass({
 		}
 
 		return retObj
+	},
+	confirmRessignment () {
+		const reassignment = this.getSelectData()
+		if (reassignment.data.length === 0) {
+			return
+		}
+
+		const task = reassignment.task
+		if (reassignment.type === RADIO_USER) {
+			let assigneeUserID = reassignment.data[0]
+			this.reassignmentUser(task.taskID, assigneeUserID)
+		} else {
+			let assigneeUserRoles = reassignment.data.join(',')
+			this.reassignmentUserRole(task.taskID, assigneeUserRoles)
+		}
 	},
 	render () {
 		return (
