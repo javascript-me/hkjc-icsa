@@ -157,27 +157,9 @@ class MenuBar extends Component {
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
 				self.setState({tipsNum: data})
-				ringsNum = data
-
-				let ringsNum = noticeNewLength - noticeLength
-				noticeLength = noticeNewLength
-				if (ringsNum > 0) {
+				if (data > 0) {
 					audioElement1.play()
 					audioElement2.play()
-					audioElement1.addEventListener('ended', () => {
-						ringsNum--
-						if (ringsNum > 0) {
-							setTimeout(() => { audioElement1.play() }, 100)
-						}
-					})
-					audioElement2.addEventListener('ended', () => {
-						ringsNum--
-						if (ringsNum > 0) {
-							setTimeout(() => { audioElement2.play() }, 200)
-						}
-					})
-					PubSub.publish(PubSub['REFRESH_NOTICES'])
-					PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 				}
 			})
 		}, 30000)
