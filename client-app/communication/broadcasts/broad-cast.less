@@ -1,0 +1,53 @@
+.messages-container.broad-cast-container {
+	.notice-box ul li ul.row {
+		> li {
+			&.notice-date {
+				display: inline-block;
+				left: 0;
+			}
+
+			&.use-pointer-cursor {
+				display: none;
+			}
+
+			i.Low,
+			i.Medium,
+			i.High,
+			i.Critical {
+				display: none;
+			}
+		}
+
+		> li.notice-title {
+			color: #808080;
+			font-family: Roboto-Regular;
+
+			.bold-text {
+				color: #808080;
+				font-family: Roboto-Regular;
+			}
+		}
+	}
+
+	.notice-box {
+		ul.list-box-right {
+			top: 40px;
+
+			li.blink {
+				animation-duration: initial;
+				animation-iteration-count: initial;
+				animation-direction: initial;
+				animation-timing-function: initial;
+			}
+		}
+
+		ul.list-box-bottom {
+			li.blink {
+				animation-duration: initial;
+				animation-iteration-count: initial;
+				animation-direction: initial;
+				animation-timing-function: initial;
+			}
+		}
+	}
+}

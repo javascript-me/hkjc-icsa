@@ -56,10 +56,31 @@ let DateTimePickerDays = React.createClass({
 		return dow
 	},
 
+	setTimeToZero: function (moment) {
+		moment.set({hour: 0, minute: 0, second: 0, millisecond: 0})
+	},
+
+	toScreenSize: function (totalItemCount) {
+		if (totalItemCount === 28) return 28
+		if (totalItemCount > 35) return 42
+
+		return 35
+	},
+
+	calculateCalendarScreenSize: function (startTime, endTime) {
+		this.setTimeToZero(startTime)
+		this.setTimeToZero(endTime)
+
+		let totalItemCount = endTime.diff(startTime, 'days') + 1
+
+		return this.toScreenSize(totalItemCount)
+	},
+
 	renderDays: function () {
 		const date = this.props.viewDate
 		const selected = this.props.selectedDate && this.props.selectedDate.clone()
 		const prevMonth = date.clone()
+		const endOfMonth = date.clone()
 		const currentYear = date.year()
 		const currentMonth = date.month()
 		let weeks = []
@@ -73,7 +94,11 @@ let DateTimePickerDays = React.createClass({
 
 		// Go to the last week of the previous month
 		prevMonth.startOf('week')
-		const lastDay = prevMonth.clone().add(35, 'd')
+		endOfMonth.endOf('month')
+
+		let calendarScreenSize = this.calculateCalendarScreenSize(prevMonth, endOfMonth)
+
+		const lastDay = prevMonth.clone().add(calendarScreenSize, 'd')
 
 		while (prevMonth.isBefore(lastDay)) {
 			classes = 'rdtDay'
