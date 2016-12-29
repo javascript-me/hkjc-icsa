@@ -3,6 +3,18 @@ import { mount, shallow } from 'enzyme'
 
 import FilterBlocksContainer from './filter-blocks-container'
 
+const filters = [{
+	value: {
+		name: 'type',
+		value: 'Event'
+	}
+}, {
+	value: {
+		name: 'address',
+		value: 'Hongkong'
+	}
+}]
+
 describe('<FilterBlocksContainer /> component', () => {
 	it('will render a div.filter-block-container tag', () => {
 		const filterBlocksContainer = shallow(<FilterBlocksContainer />)
@@ -67,17 +79,6 @@ describe('<FilterBlocksContainer /> component', () => {
 	})
 
 	it('will render filter blocks according to props.filters if no overflow filter', () => {
-		let filters = [{
-			value: {
-				name: 'type',
-				value: 'Event'
-			}
-		}, {
-			value: {
-				name: 'address',
-				value: 'Hongkong'
-			}
-		}]
 		const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 		const pureFilterContainer = filterBlocksContainer.find('.pure-filter-block')
 		const filterBlocks = pureFilterContainer.find('.filter-block')
@@ -90,17 +91,6 @@ describe('<FilterBlocksContainer /> component', () => {
 	})
 
 	it('will render this.refs.pureFilterBlocksContainer as div', () => {
-		let filters = [{
-			value: {
-				name: 'type',
-				value: 'Event'
-			}
-		}, {
-			value: {
-				name: 'address',
-				value: 'Hongkong'
-			}
-		}]
 		const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 
 		expect(filterBlocksContainer.instance().refs.pureFilterBlocksContainer.tagName).to.be.equal('DIV')
@@ -174,17 +164,6 @@ describe('<FilterBlocksContainer /> component', () => {
 
 	describe('#Overflow filters panel', () => {
 		it('will render overflow filters in more filters panel', () => {
-			let filters = [{
-				value: {
-					name: 'type',
-					value: 'Event'
-				}
-			}, {
-				value: {
-					name: 'address',
-					value: 'Hongkong'
-				}
-			}]
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 			let overflowFilters = filterBlocksContainer.state('overflowFilters')
 			let overflowFiltersPanel
@@ -204,17 +183,6 @@ describe('<FilterBlocksContainer /> component', () => {
 		})
 
 		it('will hide when trigger #pageClickedOrResized when state.clickingOnMoreFilterPanel equal false', () => {
-			let filters = [{
-				value: {
-					name: 'type',
-					value: 'Event'
-				}
-			}, {
-				value: {
-					name: 'address',
-					value: 'Hongkong'
-				}
-			}]
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 			let overflowFilters = filterBlocksContainer.state('overflowFilters')
 
@@ -235,17 +203,6 @@ describe('<FilterBlocksContainer /> component', () => {
 		})
 
 		it('will not hide when trigger #pageClickedOrResized when state.clickingOnMoreFilterPanel equal true', () => {
-			let filters = [{
-				value: {
-					name: 'type',
-					value: 'Event'
-				}
-			}, {
-				value: {
-					name: 'address',
-					value: 'Hongkong'
-				}
-			}]
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} />)
 			let overflowFilters = filterBlocksContainer.state('overflowFilters')
 
@@ -269,17 +226,6 @@ describe('<FilterBlocksContainer /> component', () => {
 
 	describe('#props.onRemoveOneFilter', () => {
 		it('will trigger by clicked filter block', () => {
-			let filters = [{
-				value: {
-					name: 'type',
-					value: 'Event'
-				}
-			}, {
-				value: {
-					name: 'address',
-					value: 'Hongkong'
-				}
-			}]
 			const removeEvent = sinon.spy()
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} onRemoveOneFilter={removeEvent} />)
 			const firstFilterBlocks = filterBlocksContainer.find('.pure-filter-block .filter-block').first()
@@ -290,17 +236,6 @@ describe('<FilterBlocksContainer /> component', () => {
 		})
 
 		it('will trigger by clicked the cross icon of overflow filter', () => {
-			let filters = [{
-				value: {
-					name: 'type',
-					value: 'Event'
-				}
-			}, {
-				value: {
-					name: 'address',
-					value: 'Hongkong'
-				}
-			}]
 			const removeEvent = sinon.spy()
 			const filterBlocksContainer = mount(<FilterBlocksContainer filters={filters} onRemoveOneFilter={removeEvent} />)
 			let overflowFilters = filterBlocksContainer.state('overflowFilters')

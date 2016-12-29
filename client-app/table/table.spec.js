@@ -48,6 +48,45 @@ describe('Table', () => {
 		expect(table.find('.react-bs-table').children()).to.have.length(2)
 	})
 
+	it('Does not trigger loading by default', () => {
+		const table = mount(
+			<TableComponent keyField='user'>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='age'>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-container-body').hasClass('loading')).to.be.false
+	})
+
+	it('Triggers loading without no data text', () => {
+		const table = mount(
+			<TableComponent keyField='user' loading>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='age'>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-container-body').hasClass('loading')).to.be.true
+		expect(table.find('.react-bs-table-no-data').text()).to.be.equals('')
+	})
+
+	it('Finishs loading and display no data text', () => {
+		let noDataText = 'No Result'
+		const table = mount(
+			<TableComponent keyField='user' loading={false} noDataText={noDataText}>
+				<TableHeaderColumn dataField='user'>User</TableHeaderColumn>
+				<TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
+				<TableHeaderColumn dataField='age'>Age</TableHeaderColumn>
+			</TableComponent>
+		)
+
+		expect(table.find('.react-bs-container-body').hasClass('loading')).to.be.false
+		expect(table.find('.react-bs-table-no-data').text()).to.be.equals(noDataText)
+	})
+
 	it('Render Pagination', () => {
 		const onChange = sinon.spy()
 		const options = {
