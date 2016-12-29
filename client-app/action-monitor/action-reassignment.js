@@ -18,8 +18,11 @@ export default React.createClass({
 		return {
 			keyword: '',
 			radioValue: RADIO_USER,
+			loadingUser: true,
+			loadingRole: true,
 			usersData: [],
-			rolesData: []
+			rolesData: [],
+			tableChangeFlag: false
 		}
 	},
 	componentDidMount () {
@@ -43,12 +46,12 @@ export default React.createClass({
 		switch (extra) {
 		case 'usersList':
 			promise.done(response => {
-				this.setState({ usersData: response })
+				this.setState({ usersData: response, loadingUser: false })
 			})
 			break
 		case 'rolesList':
 			promise.done(response => {
-				this.setState({ rolesData: response })
+				this.setState({ rolesData: response, loadingRole: false })
 			})
 			break
 		case 'reassignmentUser':
@@ -91,10 +94,10 @@ export default React.createClass({
 	},
 	handleInputChange (e) {
 		let keyword = e.target.value
-		this.setState({keyword})
+		this.setState({keyword, tableChangeFlag: true})
 	},
 	onRadioChange () {
-		this.setState({radioValue: this.state.radioValue === RADIO_USER ? RADIO_ROLE : RADIO_USER, keyword: ''})
+		this.setState({radioValue: this.state.radioValue === RADIO_USER ? RADIO_ROLE : RADIO_USER, keyword: '', tableChangeFlag: false})
 	},
 	getSelectData () {
 		const retObj = {
@@ -148,6 +151,8 @@ export default React.createClass({
 				<div className='tableComponent-container'>
 					{this.renderTable()}
 				</div>
+
+				{this.state.radioValue === RADIO_ROLE && this.renderRoles()}
 			</div>
 		)
 	},
@@ -168,6 +173,7 @@ export default React.createClass({
 			})
 			retTable = (
 				<TableComponent
+					loading={this.state.loadingUser}
 					ref='tableCmpUser'
 					data={tableData}
 					selectRow={{clickToSelect: true, bgColor: '#FCF6C8', selected}}
@@ -184,17 +190,16 @@ export default React.createClass({
 				</TableComponent>
 			)
 		} else {
-			if (task.assigneeUserRoles) {
-				selected = task.assigneeUserRoles.split(',')
-			}
+			selected = this.getSelectRoles()
 			tableData = this.state.rolesData.filter((item) => {
 				return !keyword || item.roleName.toLowerCase().indexOf(keyword) > -1
 			})
 			retTable = (
 				<TableComponent
+					loading={this.state.loadingRole}
 					ref='tableCmpRole'
 					data={tableData}
-					selectRow={{mode: 'checkbox', clickToSelect: true, bgColor: '#FCF6C8', selected, onSelect: this.onSelectRole}}
+					selectRow={{mode: 'checkbox', clickToSelect: true, bgColor: '#FCF6C8', selected, onSelect: this.onSelectRole, onAfterSelect: this.onAfterSelectRole, onAfterSelectAll: this.onAfterSelectRole}}
 					striped
 					keyField='roleName'
 					tableHeaderClass='table-header'
@@ -209,21 +214,32 @@ export default React.createClass({
 		}
 
 		return retTable
+	},
+	renderRoles () {
+		const selected = this.getSelectRoles()
+		return (
+			<div className='roles'>
+				<div className='header'>Selected User Role</div>
+				<div className='body'>
+					{selected.map((item, index) => {
+						return <span key={index} className='role'>{item}</span>
+					})}
+				</div>
+			</div>
+		)
+	},
+	onAfterSelectRole () {
+		this.setState({tableChangeFlag: true})
+	},
+	getSelectRoles () {
+		const task = this.props.task
+		let tableChangeFlag = this.state.tableChangeFlag
+		let selected = []
+		if (tableChangeFlag) {
+			selected = this.refs.tableCmpRole.store.getSelectedRowKeys()
+		} else if (task.assigneeUserRoles) {
+			selected = task.assigneeUserRoles.split(',')
+		}
+		return selected
 	}
-	// renderRoles () {
-	// 	const rowKeys = this.refs.tableCmpRole ? this.refs.tableCmpRole.store.getSelectedRowKeys() : []
-	// 	return (
-	// 		<div className="roles">
-	// 			<div className="header">Selected User Role</div>
-	// 			<div className="body">
-	// 				{rowKeys.map((item, index) => {
-	// 					return <span key={index} className="role">{item}</span>
-	// 				})}
-	// 			</div>
-	// 		</div>
-	// 	)
-	// },
-	// onSelectRole () {
-	// 	this.setState({})
-	// }
 })

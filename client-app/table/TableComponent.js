@@ -438,7 +438,7 @@ class TableComponent extends Component {
 	handleSelectAllRow (e) {
 		const isSelected = e.currentTarget.checked
 		const keyField = this.store.getKeyField()
-		const { selectRow: { onSelectAll, unselectable, selected } } = this.props
+		const { selectRow: { onSelectAll, onAfterSelectAll, unselectable, selected } } = this.props
 		let selectedRowKeys = []
 		let result = true
 		let rows = isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys)
@@ -470,6 +470,10 @@ class TableComponent extends Component {
 
 			this.store.setSelectedRowKey(selectedRowKeys)
 			this.setState({ selectedRowKeys })
+		}
+
+		if (onAfterSelectAll) {
+			onAfterSelectAll()
 		}
 	}
 
@@ -511,6 +515,10 @@ class TableComponent extends Component {
 			this.setState({
 				selectedRowKeys: currSelected
 			})
+		}
+
+		if (selectRow.onAfterSelect) {
+			selectRow.onAfterSelect()
 		}
 	}
 
@@ -1043,6 +1051,8 @@ TableComponent.propTypes = {
 		selected: PropTypes.array,
 		onSelect: PropTypes.func,
 		onSelectAll: PropTypes.func,
+		onAfterSelect: PropTypes.func,
+		onAfterSelectAll: PropTypes.func,
 		clickToSelect: PropTypes.bool,
 		hideSelectColumn: PropTypes.bool,
 		clickToSelectAndEditCell: PropTypes.bool,
@@ -1150,6 +1160,8 @@ TableComponent.defaultProps = {
 		selected: [],
 		onSelect: undefined,
 		onSelectAll: undefined,
+		onAfterSelect: undefined,
+		onAfterSelectAll: undefined,
 		clickToSelect: false,
 		hideSelectColumn: false,
 		clickToSelectAndEditCell: false,
