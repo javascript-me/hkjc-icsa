@@ -6,25 +6,25 @@ it('listFilter()', () => {
 
 	filteredResult = ActionsUtil.listFilter(allActions, {
 		userID: 'JC10001',
-		keyWord: ''
+		keyword: ''
 	})
 	expect(filteredResult.length > 0).to.be.true
 
 	filteredResult = ActionsUtil.listFilter(allActions, {
 		userID: 'JC10001',
-		keyWord: 'complete'
+		keyword: 'complete'
 	})
 	expect(filteredResult.length > 0).to.be.true
 
 	filteredResult = ActionsUtil.listFilter(allActions, {
 		userID: 'JC10001',
-		keyWord: 'xxxxyyyyyzzzzz'
+		keyword: 'xxxxyyyyyzzzzz'
 	})
 	expect(filteredResult.length === 0).to.be.true
 
 	filteredResult = ActionsUtil.listFilter(allActions, {
 		userID: 'JC10001',
-		keyWord: 'xxxxyyyyyzzzzz',
+		keyword: 'xxxxyyyyyzzzzz',
 		type: 'allTasks'
 	})
 	expect(filteredResult.length > 0).to.be.true

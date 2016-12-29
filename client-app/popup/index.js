@@ -81,6 +81,16 @@ export default class Popup extends React.Component {
 		}
 	}
 
+	onSecondFunc () {
+		this.hide()
+
+		if (this.props.onSecondFunc) {
+			this.props.onSecondFunc()
+		} else if (this.custom.onSecondFunc) {
+			this.custom.onSecondFunc()
+		}
+	}
+
 	onOther () {
 		this.hide()
 
@@ -102,11 +112,12 @@ export default class Popup extends React.Component {
 	}
 
 	render () {
-		let overlay, footer, other, confirm, cancel, closeIcon
+		let overlay, footer, other, confirm, cancel, secondFunc, closeIcon
 
 		let confirmBtn = this.custom.confirmBtn ? this.custom.confirmBtn : this.props.confirmBtn
 		let cancelBtn = this.custom.cancelBtn ? this.custom.cancelBtn : this.props.cancelBtn
 		let showCancel = this.custom.showCancel !== undefined ? this.custom.showCancel : this.props.showCancel
+		let secondFuncBtn = this.custom.secondFuncBtn ? this.custom.secondFuncBtn : this.props.secondFuncBtn
 
 		if (this.props.showOverlay) {
 			overlay = (<div className='popup-overlay' onClick={() => this.onOverlayClicked()} />)
@@ -119,6 +130,9 @@ export default class Popup extends React.Component {
 		}
 		if (this.props.showConfirm) {
 			confirm = (<a role='button' className={classnames('pull-right', 'btn', 'popup-button', 'confirm', {disabled: this.props.confirmBtnDisabled})} onClick={() => !this.props.confirmBtnDisabled && this.onConfirm()}> {confirmBtn} </a>)
+		}
+		if (this.props.showSecondFunc) {
+			secondFunc = (<a role='button' className={classnames('pull-right', 'btn', 'popup-button', 'confirm', {disabled: this.props.secondFuncBtnDisabled})} onClick={() => !this.props.secondFuncBtnDisabled && this.onSecondFunc()}> {secondFuncBtn} </a>)
 		}
 		if (showCancel) {
 			cancel = (<a role='button' className={classnames('pull-right', 'btn', 'popup-button', 'cancel', {disabled: this.props.cancelBtnDisabled})} onClick={() => !this.props.cancelBtnDisabled && this.onCancel()}> {cancelBtn} </a>)
@@ -145,6 +159,7 @@ export default class Popup extends React.Component {
 								<div className='popup-actions'>
 									{other}
 									{confirm}
+									{secondFunc}
 									{cancel}
 								</div>
 							</div>
@@ -163,17 +178,21 @@ Popup.sharedPropTypes = {
 	onCancel: React.PropTypes.func,
 	onConfirm: React.PropTypes.func,
 	onOther: React.PropTypes.func,
+	onSecondFunc: React.PropTypes.func,
 	onOverlayClicked: React.PropTypes.func,
 	showOverlay: React.PropTypes.bool,
 	showConfirm: React.PropTypes.bool,
 	showCancel: React.PropTypes.bool,
+	showsecondFunc: React.PropTypes.bool,
 	otherBtnDisabled: React.PropTypes.bool,
 	cancelBtnDisabled: React.PropTypes.bool,
 	confirmBtnDisabled: React.PropTypes.bool,
+	secondFuncBtnDisabled: React.PropTypes.bool,
 	title: React.PropTypes.string,
 	confirmBtn: React.PropTypes.string,
 	cancelBtn: React.PropTypes.string,
 	otherBtn: React.PropTypes.string,
+	secondFuncBtn: React.PropTypes.string,
 	headerColor: React.PropTypes.string,
 	popupDialogBorderColor: React.PropTypes.string
 }

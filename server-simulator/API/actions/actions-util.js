@@ -60,7 +60,10 @@ function listFilter (allActions, param) {
 	})
 
 	// get param
-	const keyWord = param.keyWord
+	const keyWord = param.keyword
+	const priority = param.priority
+	const taskStatus = param.taskStatus
+	const assigneeUserID = param.assigneeUserID
 
 	// do filter as below
 	let results
@@ -73,7 +76,40 @@ function listFilter (allActions, param) {
 
 	if (keyWord) {
 		results = results.filter((task) => {
-			return task.taskDescription.indexOf(keyWord) > -1
+			return task.taskDescription.toLowerCase().indexOf(keyWord.toLowerCase()) > -1
+		})
+	}
+
+	if (priority) {
+		results = results.filter((task) => {
+			return _.findIndex(priority, (item) => {
+				return item.value === task.priority
+			}) > -1
+		})
+	}
+
+	if (taskStatus) {
+		results = results.filter((task) => {
+			return _.findIndex(taskStatus, (item) => {
+				return item.value === task.taskStatus
+			}) > -1
+		})
+	}
+
+	if (assigneeUserID) {
+		results = results.filter((task) => {
+			let beOk = false
+			if (task.assigneeUserID) {
+				const userAccount = getAccount(task.assigneeUserID)
+				if (userAccount && userAccount.displayName.toLowerCase().indexOf(assigneeUserID.toLowerCase()) > -1) {
+					beOk = true
+				}
+			} else if (task.assigneeUserRoles) {
+				beOk = task.assigneeUserRoles.toLowerCase().indexOf(assigneeUserID.toLowerCase()) > -1
+			} else if (task.assigneeDepartmentId) {
+				beOk = task.assigneeDepartmentId.toLowerCase().indexOf(assigneeUserID.toLowerCase()) > -1
+			}
+			return beOk
 		})
 	}
 
@@ -100,6 +136,40 @@ function listFilter (allActions, param) {
 	return results
 }
 
+function reassignmentUser (allActions, param) {
+	// const userID = param.userID
+	const taskID = param.taskID
+	const assigneeUserID = param.assigneeUserID
+
+	allActions.forEach((task) => {
+		if (task.taskID === taskID) {
+			task.assigneeUserID = assigneeUserID
+			task.assigneeUserRoles = ''
+			task.assigneeDepartmentId = ''
+		}
+	})
+
+	return {msg: 'OK'}
+}
+
+function reassignmentUserRole (allActions, param) {
+	// const userID = param.userID
+	const taskID = param.taskID
+	const assigneeUserRoles = param.assigneeUserRoles
+
+	allActions.forEach((task) => {
+		if (task.taskID === taskID) {
+			task.assigneeUserID = ''
+			task.assigneeUserRoles = assigneeUserRoles
+			task.assigneeDepartmentId = ''
+		}
+	})
+
+	return {msg: 'OK'}
+}
+
 export default {
-	listFilter: listFilter
+	listFilter: listFilter,
+	reassignmentUser: reassignmentUser,
+	reassignmentUserRole: reassignmentUserRole
 }
