@@ -63,8 +63,15 @@ export default React.createClass({
 
 	handleFilterChange (field, value) {
 		let nextEnquiry = _.cloneDeep(this.state.searchEnquiry)
-		nextEnquiry[field] = value
-		this.setState({searchEnquiry: nextEnquiry})
+		if (!value || (Array.isArray(value) && !value.length)) {
+			delete nextEnquiry[field]
+		} else {
+			nextEnquiry[field] = value
+		}
+		this.setState({
+			searchEnquiry: nextEnquiry,
+			hasFilter: Object.keys(nextEnquiry).length > 0
+		})
 	},
 
 	handleKeywordChange (value) {
@@ -124,16 +131,6 @@ export default React.createClass({
 	},
 
 	async onSearch () {
-		let isEmptyObj = true
-
-		for (let value in this.state.searchEnquiry) {
-			if (value) {
-				isEmptyObj = false
-			}
-		}
-
-		(isEmptyObj === this.state.hasFilter) && this.setState({hasFilter: !isEmptyObj})
-
 		const resultEnquiry = this.getSearchEnquiry()
 		await doSearch(this.props.onSearch, resultEnquiry)
 
