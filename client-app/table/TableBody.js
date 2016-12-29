@@ -113,9 +113,10 @@ class TableBody extends Component {
 			if (isFun(this.props.trClassName)) {
 				trClassName = this.props.trClassName(data, r)
 			}
+			// selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
 			const result = [ <TableRow isSelected={selected} key={key} className={trClassName}
 				index={r}
-				selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
+				selectRow={this.props.selectRow}
 				enableCellEdit={cellEdit.mode !== Const.CELL_EDIT_NONE}
 				onRowClick={this.handleRowClick.bind(this)}
 				onRowDoubleClick={this.handleRowDoubleClick.bind(this)}
@@ -152,14 +153,17 @@ class TableBody extends Component {
 					<td data-toggle='collapse'
 						colSpan={this.props.columns.length + (isSelectRowDefined ? 1 : 0)}
 						className='react-bs-table-no-data'>
-						{ this.props.noDataText || Const.NO_DATA_TEXT }
+						{ this.props.loading ? '' : (this.props.noDataText || Const.NO_DATA_TEXT) }
 					</td>
 				</TableRow>
 			)
 		}
 
 		return (
-			<div ref='container' className={classSet('react-bs-container-body', this.props.bodyContainerClass)} style={this.props.style}>
+			<div ref='container' className={classSet('react-bs-container-body',
+				this.props.bodyContainerClass,
+				{'loading': this.props.loading})}
+				style={this.props.style}>
 				<table className={tableClasses}>
 					{ tableHeader }
 					<tbody ref='tbody'>
@@ -300,7 +304,7 @@ class TableBody extends Component {
 		if (CustomComponent) {
 			inputComp = <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
 		} else if (inputType === 'checkbox') {
-			inputComp = <div className={classSet('input-check', {checked: selected, disabled})} onClick={() => { this.handleSelectRowColumChange({currentTarget: {checked: !selected}}, rowIndex) }} />
+			inputComp = <div className={classSet('input-check', {checked: selected, disabled})} onClick={(e) => { e.stopPropagation(); this.handleSelectRowColumChange({currentTarget: {checked: !selected}}, rowIndex) }} />
 		} else {
 			inputComp = <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
 		}
@@ -318,6 +322,7 @@ class TableBody extends Component {
 }
 TableBody.propTypes = {
 	data: PropTypes.array,
+	loading: PropTypes.bool,
 	columns: PropTypes.array,
 	striped: PropTypes.bool,
 	bordered: PropTypes.bool,
@@ -344,6 +349,7 @@ TableBody.propTypes = {
 	nullValue: PropTypes.string
 }
 TableBody.defaultProps = {
+	loading: false,
 	nullValue: 'N/A'
 }
 

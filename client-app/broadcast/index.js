@@ -37,6 +37,7 @@ export default React.createClass({
 			categories: [],
 			inplay: [],
 			tableData: [],
+			loading: true,
 			version: 0
 		}
 	},
@@ -69,7 +70,10 @@ export default React.createClass({
 
 		case 'table':
 			promise.done(response => {
-				this.setState({ tableData: response.data })
+				this.setState({
+					tableData: response.data,
+					loading: false
+				})
 			})
 			break
 		default:
@@ -89,19 +93,30 @@ export default React.createClass({
 	},
 
 	onSearch (params) {
+		this.setState({
+			loading: true
+		})
+
 		const filters = API.cleanParams(params)
 		API.request(options.table.method, options.table.endpoint, filters, 'table')
 	},
 
 	render () {
 		return this.state.version > 6 ? (
-			<PageComponent key={this.state.version} tableData={this.state.tableData} onSearch={this.onSearch} filtersPerRow={4} options={options} pageTitle='Broadcast' pageClassName='auditlog' pageBreadcrum='Home \ Global Tools & Adminstration \ Communication'>
+			<PageComponent key={this.state.version} tableData={this.state.tableData}
+				tableLoading={this.state.loading}
+				onSearch={this.onSearch}
+				filtersPerRow={4}
+				options={options}
+				pageTitle='Broadcast Message'
+				pageClassName='auditlog'
+				pageBreadcrum='Home \ Global Tools & Adminstration \ Communication'>
 				<PageLayer typeLayer='body'>
 					<TableHeaderColumn dataField='id' autoValue isKey hidden>ID</TableHeaderColumn>
-					<TableHeaderColumn dataField='distribution_date' dataSort dateRange isFilter>Distribution Date & Time</TableHeaderColumn>
+					<TableHeaderColumn dataField='system_distribution_time' dataSort dateRange isFilter>Distribution Date & Time</TableHeaderColumn>
 					<TableHeaderColumn dataField='name' dataSort isFilter>Name</TableHeaderColumn>
 					<TableHeaderColumn dataField='category' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.categories}}>Category</TableHeaderColumn>
-					<TableHeaderColumn dataField='details' dataSort width={480}>Detail</TableHeaderColumn>
+					<TableHeaderColumn dataField='message_detail' dataSort width={'480'}>Detail</TableHeaderColumn>
 					<TableHeaderColumn dataField='in_play' dataSort dataFormat={this.boolFormat} isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.inplay}}>In Play Event</TableHeaderColumn>
 					<TableHeaderColumn dataField='sports_type' isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.sports}} hidden>Sports Type</TableHeaderColumn>
 					<TableHeaderColumn dataField='continent' isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.continents}} hidden>Continent</TableHeaderColumn>

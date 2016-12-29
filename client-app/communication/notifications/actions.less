@@ -1,12 +1,18 @@
 .messages-container.colour-container {
 	overflow: hidden;
 
+	.notice-box ul.list-box-bottom li.blink,
+	.notice-box ul.list-box-right li.blink {
+		cursor: pointer;
+		animation: scaleout 2.3s infinite ease-in-out;
+	}
+
 	.notice-box {
 		overflow-x: auto;
 
 		ul.list-box-bottom {
 			display: inline-block;
-			width: auto;
+			width: 100%;
 			white-space: nowrap;
 			margin: 0;
 
@@ -25,6 +31,7 @@
 
 					&.notice-title {
 						margin: 0;
+						margin-bottom: 10px;
 
 						.wrap-text {
 							white-space: initial;
@@ -39,8 +46,8 @@
 	.notice-box ul li ul.row {
 		font-family: 'Roboto-Regular';
 		color: #FFFFFF;
-		width: 264px;
-		height: 104px;
+		width: 258px;
+		height: 98px;
 		list-style-type: none;
 		margin-left: 10px;
 		margin-right: 10px;
@@ -50,18 +57,32 @@
 		border-radius: 6px;
 
 		> li {
-			&.notice-date {
-				display: none;
+			i {
+				display: inline-block;
+				width: 15px;
+				height: 15px;
+				position: relative;
+				top: 4px;
 			}
 
 			i.Critical {
 				background: url(notice-board/actions-critical.svg) center center no-repeat;
 			}
 
-			i.Low,
-			i.Medium,
-			i.High {
-				display: none;
+			&.use-pointer-cursor {
+				i {
+					&.type1 {
+						background: url(notice-board/locker.svg) center center no-repeat;
+					}
+
+					&.type2 {
+						background: url(notice-board/lockeruser.svg) center center no-repeat;
+					}
+
+					&.type3 {
+						background: url(notice-board/user.svg) center center no-repeat;
+					}
+				}
 			}
 		}
 
@@ -69,6 +90,9 @@
 		> li.notice-title {
 			font-family: 'Roboto-Regular';
 			color: #FFFFFF;
+			height: 54px;
+			margin-bottom: 10px;
+			overflow: hidden;
 		}
 
 		&.Medium {
@@ -87,4 +111,38 @@
 			background: #85B612;
 		}
 	}
+}
+
+.bottom-task-container,
+.right-task-container {
+	.noticeboard-icon-container img {
+		width: 16px;
+		opacity: 0.5;
+	}
+}
+
+@-webkit-keyframes scaleout {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(1.01);
+		opacity: 0.8;
+	}
+}
+
+@keyframes scaleout {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(1.01);
+		opacity: 0.8;
+	}
+}
+
+.right-task-container {
+	background: #FFFFFF;
 }

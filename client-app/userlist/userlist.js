@@ -49,6 +49,7 @@ export default React.createClass({
 			pageTitle: 'Home \\ Global Tools & Administration \\ User',
 			editMode: false,
 			userprofiles: [],
+			loading: false,
 			isShowingMoreFilter: false,
 			addingUserStep: 0,
 			filterReflashFlag: true,
@@ -78,9 +79,11 @@ export default React.createClass({
 	},
 
 	componentDidMount () {
-		// Get Table Data
-		UserStore.searchUsers(null)
 		UserStore.addChangeListener(this.onChange)
+
+		// Get Table Data
+		this.searchUserProfileList()
+
 		reFlashToken = PubSub.subscribe(PubSub.FliterRefreshEvent, () => {
 			this.setState({filterReflashFlag: false})
 			setTimeout(() => { this.setState({filterReflashFlag: true}) }, 0)
@@ -107,7 +110,9 @@ export default React.createClass({
 		})
 
 		this.setState({
-			userprofiles: UserStore.userProfiles, hasData: hasData
+			userprofiles: UserStore.userProfiles,
+			hasData: hasData,
+			loading: false
 		})
 	},
 	pageClick: function (event) {
@@ -214,7 +219,8 @@ export default React.createClass({
 
 	searchUserProfileList: async function () {
 		this.setState({
-			selectedKeyword: this.state.keyword
+			selectedKeyword: this.state.keyword,
+			loading: true
 		}, () => {
 			let criteriaOption = this.getSearchCriterias()
 			// Get Table Data
@@ -375,7 +381,8 @@ export default React.createClass({
 					</div>
 				</div>
 				<div className='content-table tableComponent-container'>
-					<TableComponent data={this.state.userprofiles} pagination options={this.state.tableOptions} striped keyField='userID'
+					<TableComponent data={this.state.userprofiles}
+						loading={this.state.loading} pagination options={this.state.tableOptions} striped keyField='userID'
 						tableHeaderClass='table-header' tableContainerClass='base-table' >
 						<TableHeaderColumn dataField='displayName' dataSort>User Display Name</TableHeaderColumn>
 						<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>

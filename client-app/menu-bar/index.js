@@ -35,6 +35,17 @@ const getTipsCountPromise = async (username) => {
 	return count
 }
 
+const getAllNoticesCount = async (username) => {
+	let count = null
+
+	try {
+		count = await NotificationsService.getNoticesCount(username)
+	} catch (ex) {
+
+	}
+	return count
+}
+
 class MenuBar extends Component {
 	constructor (props) {
 		super(props)
@@ -102,13 +113,7 @@ class MenuBar extends Component {
 							}
 						</i>
 
-						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible}>
-							{
-								this.state.noticeRemindCount > 0
-									? <span className='message-count'>{this.state.noticeRemindCount}</span>
-									: ''
-							}
-						</i>
+						<i className={this.getBroadcastIconClassName()} onClick={this.updateBroadcastVisible} />
 
 						<i className={this.getTaskIconClassName()} onClick={this.updateTaskVisible}>
 							{
@@ -135,12 +140,27 @@ class MenuBar extends Component {
 		let self = this
 		let userProfile = LoginService.getProfile()
 		let userName = userProfile.username
+		let noticeLength
+		let noticeNewLength
 
 		this.updateNoticeRemindCount(userName, self)
+
+		getAllNoticesCount(userName).then((count) => {
+			noticeNewLength = noticeLength = count
+		})
+
+		let audioElement1 = document.createElement('audio')
+		let audioElement2 = document.createElement('audio')
+		audioElement1.setAttribute('src', 'common/sound1.mp3')
+		audioElement2.setAttribute('src', 'common/sound2.mp3')
 
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
 				self.setState({tipsNum: data})
+				if (data > 0) {
+					audioElement1.play()
+					audioElement2.play()
+				}
 			})
 		}, 30000)
 
@@ -154,6 +174,30 @@ class MenuBar extends Component {
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_TABLENOTICES, () => {
 			this.updateNoticeRemindCount(userName, self)
 		})
+
+		let start = 0
+		let audioElement = document.createElement('audio')
+		audioElement.setAttribute('src', 'common/sound.mp3')
+		audioElement.addEventListener('ended', () => {
+			start--
+			if (start > 0) {
+				setTimeout(() => { audioElement.play() }, 100)
+			}
+		})
+		this.interval = setInterval(() => {
+			getAllNoticesCount(userName).then((count) => {
+				noticeNewLength = count
+				let ringsNum = noticeNewLength - noticeLength
+				start = start + ringsNum
+				noticeLength = noticeNewLength
+				if (ringsNum > 0 && noticeNewLength) {
+					audioElement.play()
+
+					PubSub.publish(PubSub['REFRESH_NEWNOTICES'])
+					PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
+				}
+			})
+		}, 3000)
 	}
 
 	updateNoticeRemindCount (userName, self) {

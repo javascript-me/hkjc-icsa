@@ -70,3 +70,28 @@
 	line-height: 16px;
 	text-align: center;
 }
+
+.ed-tree-record-context-menu {
+	border: 1px solid #ACB8D1;
+
+	.context-menu-item:first-child::before {
+		content: "";
+		width: 0;
+		height: 0;
+		position: absolute;
+		border-top: 5px solid transparent;
+		border-bottom: 5px solid transparent;
+		border-right: 5px solid #ACB8D1;
+		left: -5px;
+		top: 50%;
+		-webkit-transform: translateY(-50%);
+		-moz-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		-o-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+}
+
+.context-menu-target {
+	background-color: #FCF6C8 !important;
+}

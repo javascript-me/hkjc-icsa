@@ -290,6 +290,7 @@ class TableComponent extends Component {
 						tableBodyClass={this.props.tableBodyClass}
 						style={{ ...style, ...this.props.bodyStyle }}
 						data={this.state.data}
+						loading={this.props.loading}
 						expandComponent={this.props.expandComponent}
 						expandableRow={this.props.expandableRow}
 						expandRowBgColor={this.props.options.expandRowBgColor}
@@ -496,7 +497,7 @@ class TableComponent extends Component {
 		}
 
 		if (typeof result === 'undefined' || result !== false) {
-			if (selectRow.mode === Const.ROW_SELECT_SINGLE) {
+			if (selectRow.mode !== Const.ROW_SELECT_MULTI) {
 				currSelected = isSelected ? [ rowKey ] : []
 			} else {
 				if (isSelected) {
@@ -933,13 +934,8 @@ class TableComponent extends Component {
 					const computedStyle = getComputedStyle(cell)
 					const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 64 // 70 for margin, 4 for borders
 					width = parseFloat(computedStyle.width.replace('px', ''))
-					if (this.isIE) {
-						const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''))
-						const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''))
-						const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''))
-						const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''))
-						width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth
-					} else if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
+
+					if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
 						const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
 						width = bestWith > 480 ? 480 : bestWith
 					} else {
@@ -1022,6 +1018,7 @@ TableComponent.propTypes = {
 	height: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
 	maxHeight: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
 	data: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+	loading: PropTypes.bool,
 	remote: PropTypes.bool, // remote data, default is false
 	striped: PropTypes.bool,
 	bordered: PropTypes.bool,

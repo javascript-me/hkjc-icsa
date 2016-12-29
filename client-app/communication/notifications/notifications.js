@@ -3,12 +3,14 @@ import Popup from '../../popup'
 import NotificationsPopup from '../../notifications-popup'
 import LoginService from '../../login/login-service'
 import NoticeBox from '../../notice-box/notice-box'
+import NoticeList from '../../notice-box/noticelist'
 import TabBar from '../../tab-bar/tab-bar'
 import NotificationService from './notifications-service'
 import NoticeDetail from '../../notice-detail/notice-detail'
 import PubSub from '../../pubsub'
 import ClassNames from 'classnames'
 import PanelPosition from './panel-position'
+import BroadcastsService from '../broadcasts/broadcasts-service'
 
 const getNoticesPromise = async (username) => {
 	let notices = null
@@ -56,6 +58,12 @@ export default React.createClass({
 	},
 
 	getInitialState () {
+		let profile = LoginService.getProfile()
+		this.userID = ''
+		if (profile) {
+			this.userID = profile.userID
+		}
+
 		let noticeboardAndBroadcastPanelPosition = LoginService.getNoticeboardAndBroadcastSetting().position || PanelPosition.BOTTOM
 		let taskPanelPosition = LoginService.getTaskSetting().position || PanelPosition.BOTTOM
 
@@ -67,15 +75,27 @@ export default React.createClass({
 
 			allNoticesVisible: true,
 			unreadNoticesVisible: false,
+			allTasksVisible: true,
+			myTasksVisible: false,
 
 			noticeBoxData: {
 				allNotices: [],
 				unreadNotices: []
 			},
 
+			actionsBoxData: {
+				allTasks: [],
+				myTasks: []
+			},
+
 			tabData: [
 				{label: 'All', isOn: true},
 				{label: 'Unread', isOn: false}
+			],
+
+			tabDataActions: [
+				{label: 'All Tasks', isOn: true},
+				{label: 'My Tasks', isOn: false}
 			],
 
 			detail: {
@@ -85,16 +105,19 @@ export default React.createClass({
 				message_category: '',
 				system_distribution_time: '',
 				priority: ''
-			}
+			},
+			broadCastsList: []
 		}
 	},
 
 	componentDidMount: function async () {
 		let userProfile = LoginService.getProfile()
 		let noticePromise = getNoticesPromise(userProfile.username)
+
 		let allNotices
 		let unreadNotices
 		let self = this
+		BroadcastsService.getBroadcasts(userProfile.username)
 
 		noticePromise.then((notices) => {
 			allNotices = notices || []
@@ -134,10 +157,13 @@ export default React.createClass({
 				})
 			})
 		})
+
+		this.getAllTasks()
 	},
 
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(refreshNoticesToken)
+		this.interval = clearInterval(this.interval)
 	},
 
 	openPopup () {
@@ -152,8 +178,8 @@ export default React.createClass({
 		let self = this
 		let settingPromise = updateNoticeboardAndBroadcastSettingPromise(LoginService.getProfile().username, this.state.selectedNoticeboardAndBroadcastPanelPosition)
 		settingPromise.then((userProfile) => {
-			let userNoticeboardSettings = LoginService.getNoticeboardAndBroadcastSetting(userProfile)
-			self.setState({noticeboardAndBroadcastPanelPosition: userNoticeboardSettings.position})
+			let noticeboardAndBroadcastSetting = LoginService.getNoticeboardAndBroadcastSetting(userProfile)
+			self.setState({noticeboardAndBroadcastPanelPosition: noticeboardAndBroadcastSetting.position})
 		})
 	},
 
@@ -257,6 +283,33 @@ export default React.createClass({
 		})
 	},
 
+	changeActionsTab (key) {
+		if (key === 'All Tasks') {
+			this.setState({
+				allTasksVisible: true,
+				myTasksVisible: false
+			})
+		}
+		if (key === 'My Tasks') {
+			this.setState({
+				allTasksVisible: false,
+				myTasksVisible: true
+			})
+		}
+
+		this.state.tabDataActions.forEach((item) => {
+			if (item.label === key) {
+				item.isOn = true
+			} else {
+				item.isOn = false
+			}
+		})
+	},
+
+	clearSelectedSettings () {
+		this.setState({selectedSettings: ''})
+	},
+
 	syncNoticeboardAndBroadcastPanelPosition () {
 		this.setState({selectedNoticeboardAndBroadcastPanelPosition: this.state.noticeboardAndBroadcastPanelPosition})
 	},
@@ -270,6 +323,13 @@ export default React.createClass({
 			return e.priority === 'Critical' || e.priority === 'High'
 		})
 		return 'Noticeboard ' + this.state.noticeBoxData.unreadNotices.length + '(' + criticalOrHighNotices.length + ')'
+	},
+
+	getActionsHeadTitle () {
+		var criticalOrHighNotices = this.state.actionsBoxData.allTasks.filter((e) => {
+			return e.priority === 'Critical' || e.priority === 'High'
+		})
+		return 'Actions ' + this.state.actionsBoxData.allTasks.length + '(' + criticalOrHighNotices.length + ')'
 	},
 
 	openDetail (notice) {
@@ -293,10 +353,10 @@ export default React.createClass({
 	},
 
 	getPriorityColor (priority) {
-		if (priority === 'Critical') return '#EF0000'
-		if (priority === 'High') return '#FF6320'
-		if (priority === 'Medium') return '#FFA400'
-		if (priority === 'Low') return '#9BC14D'
+		if (priority === 'Critical') return '#D3221B'
+		if (priority === 'High') return '#FF433E'
+		if (priority === 'Medium') return '#FF8F00'
+		if (priority === 'Low') return '#85B612'
 		return ''
 	},
 
@@ -356,32 +416,30 @@ export default React.createClass({
 					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
 				</div>
 				<div className='container-title'>
-					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
+					<span className='noticeboard-icon-container'><img src='icon/broadcast-off.svg' style={{'width': '16px', 'height': '16px'}} /></span>
 					<span className='header-title'>{'Broadcast'}</span>
 				</div>
 			</div>
-			<div className='messages-container'>
-				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
-				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.noticeboardAndBroadcastPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+			<div className='messages-container broad-cast-container'>
+				<NoticeBox notices={BroadcastsService.broadCastsList} visible displayPosition={this.state.noticeboardAndBroadcastPanelPosition} />
 			</div>
 		</div>
 
 		let taskPanel = <div className={this.getTaskClassName()}>
 			<div className='header-container'>
 				<div className='pull-right'>
-					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-list-container'><a href={'/#/page/actionmonitor'}><img src='icon/list.svg' /></a></span>
 					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openTaskPopup} /></span>
 				</div>
 				<div className='container-title'>
-					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
-					<span className='header-title'>{'Task'}</span>
+					<span className='noticeboard-icon-container'><img src='icon/icon-action.svg' /></span>
+					<span className='header-title'>{this.getActionsHeadTitle()}</span>
 				</div>
 			</div>
 			<div className='messages-container colour-container'>
-				<TabBar onChangeTab={this.changeTab} tabData={this.state.tabData} displayPosition={this.state.taskPanelPosition} />
-				<NoticeBox notices={this.state.noticeBoxData.allNotices} visible={this.state.allNoticesVisible} displayPosition={this.state.taskPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
-				<NoticeBox notices={this.state.noticeBoxData.unreadNotices} visible={this.state.unreadNoticesVisible} displayPosition={this.state.taskPanelPosition} onOpenDetail={this.openDetail} onDoAcknowledgement={this.doAcknowledgement} />
+				<TabBar onChangeTab={this.changeActionsTab} tabData={this.state.tabDataActions} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList onTaskAproved={this.onTaskAproved} data={this.state.actionsBoxData.allTasks} visible={this.state.allTasksVisible} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList onTaskAproved={this.onTaskAproved} data={this.state.actionsBoxData.myTasks} visible={this.state.myTasksVisible} displayPosition={this.state.taskPanelPosition} />
 			</div>
 		</div>
 
@@ -427,5 +485,26 @@ export default React.createClass({
 				{this.state.noticeboardAndBroadcastPanelPosition === PanelPosition.RIGHT ? complexBox : simpleBox}
 			</div>
 		)
+	},
+	async getAllTasks () {
+		let tasks = []
+		let myTasks = []
+		tasks = await NotificationService.getTasks(this.userID, 'allTasks')
+		myTasks = await NotificationService.getTasks(this.userID, 'myTasks')
+		this.setState({
+			actionsBoxData: {
+				allTasks: tasks,
+				myTasks: myTasks
+			}
+		})
+	},
+	onTaskAproved (data) {
+		$.post('api/actions/edit', {
+			data: data
+		}).then((data) => {
+			if (data.status) {
+				this.getAllTasks()
+			}
+		})
 	}
 })

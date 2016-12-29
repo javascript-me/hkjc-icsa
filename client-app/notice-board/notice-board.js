@@ -10,7 +10,7 @@ import ClassNames from 'classnames'
 import FilterPanel from '../filter-panel'
 import FilterPanelRow from '../filter-panel/filter-panel-row'
 import FilterPanelColumn from '../filter-panel/filter-panel-column'
-import FilterBlock from '../filter-block'
+import FilterBlocksContainer from '../filter-block/filter-blocks-container'
 import NoticeDetail from '../notice-detail/notice-detail'
 import LoginService from '../login/login-service'
 
@@ -49,6 +49,7 @@ const doExport = async(format, filters) => {
 }
 let token = null
 let refreshNoticesToken = null
+let getNewDataNoticesToken = null
 export default React.createClass({
 	propTypes: {
 		someThing: React.PropTypes.bool
@@ -82,6 +83,7 @@ export default React.createClass({
 				onRowClick: this.onRowClick
 			},
 			noticesList: [],
+			loading: true,
 			categoriesList: [],
 			competitionsList: [],
 			continentsList: [],
@@ -102,9 +104,8 @@ export default React.createClass({
 		}
 	},
 	componentDidMount: function async () {
-		let criteriaOption = this.getSearchCriterias()
-		NoticeboardService.filterNoticeBoardTableData(criteriaOption)
-		NoticeboardService.addChangeListener(this.onChange)
+		this.searchNoticeboard()
+
 		/* All dropdownas data */
 		NoticeboardService.getAllCategories()
 		NoticeboardService.getAllCompetitions()
@@ -122,11 +123,15 @@ export default React.createClass({
 		refreshNoticesToken = PubSub.subscribe(PubSub.REFRESH_NOTICES, () => {
 			this.searchNoticeboard()
 		})
+		getNewDataNoticesToken = PubSub.subscribe(PubSub.REFRESH_NEWNOTICES, () => {
+			this.searchNoticeboard(false)
+		})
 		document.addEventListener('click', this.pageClick, false)
 	},
-	searchNoticeboard: async function () {
+	searchNoticeboard: async function (triggerLoading = true) {
 		this.setState({
-			selectedKeyword: this.state.keyword
+			selectedKeyword: this.state.keyword,
+			loading: triggerLoading
 		}, function () {
 			let criteriaOption = this.getSearchCriterias()
 			// Get Table Data
@@ -193,11 +198,15 @@ export default React.createClass({
 		document.removeEventListener('click', this.pageClick, false)
 		PubSub.unsubscribe(token)
 		PubSub.unsubscribe(refreshNoticesToken)
+		PubSub.unsubscribe(getNewDataNoticesToken)
 	},
 	onChange () {
 		const hasData = NoticeboardService.noticesList.length > 0
+
 		this.setState({
-			noticesList: NoticeboardService.noticesList, hasData: hasData
+			noticesList: NoticeboardService.noticesList,
+			hasData: hasData,
+			loading: false
 		})
 	},
 	openPopup () {
@@ -239,7 +248,7 @@ export default React.createClass({
 			keyword: newKeyword
 		})
 	},
-	generateFilterBlockesJsx: function (filters) {
+	getFormattedFilters: function (filters) {
 		const filterDisplayFormatting = (filter) => {
 			let filterDisplayText
 
@@ -311,15 +320,14 @@ export default React.createClass({
 			.concat(dateFromFilter.value === defaultDateTimeFrom ? [] : [dateFromFilter])
 			.concat(dateToFilter.value === defaultDateTimeTo ? [] : [dateToFilter])
 			.concat(filtersArrayWithoutDateRange)
-		let filterBlockes = filtersArray.map((f, index) => {
-			return <FilterBlock
-				key={index}
-				dataText={filterDisplayFormatting(f)}
-				dataValue={f}
-				removeEvent={this.removeSearchCriteriaFilter} />
-		}) || []
+		let formattedFilters = filtersArray.map((f, index) => {
+			return {
+				text: filterDisplayFormatting(f),
+				value: f
+			}
+		})
 
-		return filterBlockes
+		return formattedFilters
 	},
 	removeSearchCriteriaFilter: function (filter) {
 		const callback = () => {
@@ -452,10 +460,10 @@ export default React.createClass({
 	},
 
 	getPriorityColor (priority) {
-		if (priority === 'Critical') return '#EF0000'
-		if (priority === 'High') return '#FF6320'
-		if (priority === 'Medium') return '#FFA400'
-		if (priority === 'Low') return '#9BC14D'
+		if (priority === 'Critical') return '#D3221B'
+		if (priority === 'High') return '#FF433E'
+		if (priority === 'Medium') return '#FF8F00'
+		if (priority === 'Low') return '#85B612'
 		return ''
 	},
 
@@ -468,6 +476,10 @@ export default React.createClass({
 		let userProfile = LoginService.getProfile()
 		let criteriaOption = this.getSearchCriterias()
 
+		this.setState({
+			loading: true
+		})
+
 		NoticeboardService.getNoticesAndUpdateAcknowledgeStatusById(criteriaOption, userProfile.username, id, this.getCommand(alertStatus))
 		PubSub.publish(PubSub['REFRESH_TABLENOTICES'])
 	},
@@ -476,7 +488,7 @@ export default React.createClass({
 		let moreFilterContianerClassName = ClassNames('more-filter-popup', {
 			'active': this.state.isShowingMoreFilter
 		})
-		let filterBlockes = this.generateFilterBlockesJsx(this.state.selectedFilters)
+		let formattedFilters = this.getFormattedFilters(this.state.selectedFilters)
 		return (
 
 			<div className='conatainer-alert noticeboard-popup-spestyle'>
@@ -505,9 +517,7 @@ export default React.createClass({
 								<div className='keyword-container'>
 									<input type='text' placeholder='Search with keywords & filters' value={this.state.keyword} onClick={this.showMoreFilter} onChange={this.handleKeywordChange} onKeyPress={this.handleKeywordPress} ref='keyword' />
 								</div>
-								<div className='filter-block-container'>
-									{filterBlockes}
-								</div>
+								<FilterBlocksContainer filters={formattedFilters} onRemoveOneFilter={this.removeSearchCriteriaFilter} />
 							</div>
 							<div className={moreFilterContianerClassName} onClick={this.clickForSearching}>
 								<FilterPanel triggerSearchTopic={this.state.tokens.NOTICEBOARD_SEARCH_BY_KEY_PRESS}
@@ -564,6 +574,7 @@ export default React.createClass({
 				<div>
 					<div className='tableComponent-container'>
 						<TableComponent data={NoticeboardService.noticesList} pagination
+							loading={this.state.loading}
 							options={this.state.tableOptions}
 							striped keyField='id' tableHeaderClass='table-header'
 							tableContainerClass='base-table'>
@@ -579,7 +590,7 @@ export default React.createClass({
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
-					<div className='vertical-gap'>
+					<div className='vertical-gap export-button-container'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
