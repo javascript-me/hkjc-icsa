@@ -26,8 +26,8 @@ export default React.createClass({
 				pagination: true,
 
 				options: {
-					defaultSortName: 'system_distribution_time',  // default sort column name
-					defaultSortOrder: 'desc', // default sort order
+					defaultSortName: 'priority',  // default sort column name
+					defaultSortOrder: 'asc', // default sort order
 					hideSizePerPage: true,
 					paginationClassContainer: 'text-center',
 					onRowClick: this.onRowClick
@@ -48,6 +48,7 @@ export default React.createClass({
 		return {
 			categories: [],
 			inplay: [],
+			loading: true,
 			tableData: [],
 			version: 0
 		}
@@ -68,9 +69,6 @@ export default React.createClass({
 	},
 
 	getData () {
-		API.request('POST', 'api/actions/list', {
-			userID: this.userID
-		}, 'actionList')
 		API.request('GET', 'api/actions/priorities', {}, 'priorities')
 		API.request('GET', 'api/actions/categories', {}, 'categories')
 		API.request('GET', 'api/actions/status', {}, 'status')
@@ -110,7 +108,7 @@ export default React.createClass({
 		switch (extra) {
 		case 'actionList':
 			promise.done(response => {
-				this.setState({ tableData: response })
+				this.setState({ tableData: response, loading: false })
 			})
 			break
 		default:
@@ -152,6 +150,10 @@ export default React.createClass({
 		)
 	},
 	onSearch (params) {
+		this.setState({
+			loading: true
+		})
+
 		const filters = API.cleanParams(params)
 		filters.userID = this.userID
 		API.request('POST', 'api/actions/list', filters, 'actionList')
@@ -166,7 +168,16 @@ export default React.createClass({
 				</Popup>
 
 				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
-				<PageComponent key={this.state.version} tableData={this.state.tableData} onSearch={this.onSearch} filtersPerRow={4} options={this.tableOptions} pageTitle='Action Monitor' pageClassName='auditlog conatainer-alert action-monitor' pageBreadcrum='Home \ Global Tools & Adminstration \ Action(Task)'>
+				<PageComponent
+					tableLoading={this.state.loading}
+					key={this.state.version}
+					tableData={this.state.tableData}
+					onSearch={this.onSearch} filtersPerRow={4}
+					options={this.tableOptions}
+					pageTitle='Action Monitor'
+					pageClassName='auditlog conatainer-alert action-monitor'
+					pageBreadcrum='Home \ Global Tools & Adminstration \ Action(Task)'
+					>
 
 					<PageLayer typeLayer='body'>
 						<TableHeaderColumn dataField='taskID' autoValue hidden isKey>ID</TableHeaderColumn>

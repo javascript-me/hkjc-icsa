@@ -12,7 +12,15 @@
 	.tableComponent-container {
 		margin: 0;
 		margin-top: 21px;
-		min-height: initial;
+		min-height: 250px;
+
+		.base-table {
+			border: 1px solid #7C8DAF;
+
+			.react-bs-container-header > table > thead > tr > th {
+				background: #7C8DAF;
+			}
+		}
 
 		.react-bs-table-no-data {
 			height: 212px;
@@ -22,6 +30,7 @@
 	.roles {
 		.header {
 			margin-top: 31px;
+			margin-bottom: 10px;
 			font-family: Roboto-Medium;
 			font-size: 16px;
 			color: #0C2963;
@@ -29,8 +38,13 @@
 		}
 
 		.body {
+			margin-left: -5px;
+			max-height: 130px;
+			overflow-y: auto;
+
 			.role {
 				display: inline-block;
+				margin: 5px;
 				padding: 5px 10px;
 				background: #FFFFFF;
 				border: 1px solid #7A8DAF;

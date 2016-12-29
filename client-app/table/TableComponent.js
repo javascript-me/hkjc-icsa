@@ -438,7 +438,7 @@ class TableComponent extends Component {
 	handleSelectAllRow (e) {
 		const isSelected = e.currentTarget.checked
 		const keyField = this.store.getKeyField()
-		const { selectRow: { onSelectAll, unselectable, selected } } = this.props
+		const { selectRow: { onSelectAll, onAfterSelectAll, unselectable, selected } } = this.props
 		let selectedRowKeys = []
 		let result = true
 		let rows = isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys)
@@ -470,6 +470,10 @@ class TableComponent extends Component {
 
 			this.store.setSelectedRowKey(selectedRowKeys)
 			this.setState({ selectedRowKeys })
+		}
+
+		if (onAfterSelectAll) {
+			onAfterSelectAll()
 		}
 	}
 
@@ -511,6 +515,10 @@ class TableComponent extends Component {
 			this.setState({
 				selectedRowKeys: currSelected
 			})
+		}
+
+		if (selectRow.onAfterSelect) {
+			selectRow.onAfterSelect()
 		}
 	}
 
@@ -934,13 +942,8 @@ class TableComponent extends Component {
 					const computedStyle = getComputedStyle(cell)
 					const headerWidth = Math.ceil(this._getCellWidth(header.childNodes[i])) + 64 // 70 for margin, 4 for borders
 					width = parseFloat(computedStyle.width.replace('px', ''))
-					if (this.isIE) {
-						const paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''))
-						const paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''))
-						const borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''))
-						const borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''))
-						width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth
-					} else if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
+
+					if (width <= 0 || width < realWidth.columns[i] || realWidth.columns[i] < headerWidth) {
 						const bestWith = headerWidth > realWidth.columns[i] ? headerWidth : realWidth.columns[i]
 						width = bestWith > 480 ? 480 : bestWith
 					} else {
@@ -1043,6 +1046,8 @@ TableComponent.propTypes = {
 		selected: PropTypes.array,
 		onSelect: PropTypes.func,
 		onSelectAll: PropTypes.func,
+		onAfterSelect: PropTypes.func,
+		onAfterSelectAll: PropTypes.func,
 		clickToSelect: PropTypes.bool,
 		hideSelectColumn: PropTypes.bool,
 		clickToSelectAndEditCell: PropTypes.bool,
@@ -1150,6 +1155,8 @@ TableComponent.defaultProps = {
 		selected: [],
 		onSelect: undefined,
 		onSelectAll: undefined,
+		onAfterSelect: undefined,
+		onAfterSelectAll: undefined,
 		clickToSelect: false,
 		hideSelectColumn: false,
 		clickToSelectAndEditCell: false,

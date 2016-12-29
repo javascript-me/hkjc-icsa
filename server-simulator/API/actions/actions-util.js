@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 
 const accountProfiles = require('../json/accountprofiles.json')
 
@@ -151,6 +152,7 @@ function reassignmentUser (allActions, param) {
 			task.assigneeUserID = assigneeUserID
 			task.assigneeUserRoles = ''
 			task.assigneeDepartmentId = ''
+			task.distributionDateTime = moment(new Date()).format('DD MMM YYYY HH:mm:ss')
 		}
 	})
 
@@ -167,6 +169,7 @@ function reassignmentUserRole (allActions, param) {
 			task.assigneeUserID = ''
 			task.assigneeUserRoles = assigneeUserRoles
 			task.assigneeDepartmentId = ''
+			task.distributionDateTime = moment(new Date()).format('DD MMM YYYY HH:mm:ss')
 		}
 	})
 

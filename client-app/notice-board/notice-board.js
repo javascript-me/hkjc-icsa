@@ -590,7 +590,7 @@ export default React.createClass({
 							<TableHeaderColumn dataField='message_category' dataSort>Category</TableHeaderColumn>
 						</TableComponent>
 					</div>
-					<div className='vertical-gap'>
+					<div className='vertical-gap export-button-container'>
 						<div className='pull-right'>
 							<button className={this.state.hasData ? 'btn btn-primary pull-right' : 'btn btn-primary disabled pull-right'} onClick={this.openPopup}>Export</button>
 							<Popup hideOnOverlayClicked ref='exportPopup' title='Noticeboard Export' onConfirm={this.export}>
