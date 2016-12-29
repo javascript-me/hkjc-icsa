@@ -311,7 +311,38 @@ router.get('/remind-count', (req, res) => {
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/export Export
+ * @apiGroup NoticeBoard
 
+ * @apiDescription Mock API for export search result of Noticeboard page.
+ *
+ * @apiParam {String} type File type (pdf, csv) ask for export.
+ * @apiParam {String} username=allgood Current customer's name
+ * @apiParam {String} [keyword] Keyword for search criteria
+ * * @apiParam {String} [priority] priority.
+ * @apiParam {DateTime} dateTimeFrom Notice board date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Notice board date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
+ * @apiParam {String} [sportsType] sports type.
+ * @apiParam {String} [competition] competition.
+ * @apiParam {String} [match] match.
+ * @apiParam {String} [inPlay] inPlay.
+ * @apiParam {String} [continent] continent.
+ * @apiParam {String} [country] country.
+ * @apiParam {String} [messageCategory] message Category.
+ * @apiParam {String} [alertStatus] alert Status.
+ * @apiParam {String} [recipient] recipient.
+ *
+ * @apiSuccess (Success) {String} type pdf
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} keyword
+ * @apiSuccess (Success) {DateTime} dateTimeFrom 22 Sep 2016 00:00 ( 60 days before)
+ * @apiSuccess (Success) {DateTime} dateTimeTo 21 Nov 2016 23:59 (Today)
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/export', (req, res) => {
 	const type = req.params.type || req.query.type
 	const json = req.params.json || req.query.json
@@ -340,7 +371,36 @@ router.get('/export', (req, res) => {
 		break
 	}
 })
+/**
+ * @api {GET} /notice-board/filterNoticeBoardTableData Filter Noticeboard Table Data
+ * @apiGroup NoticeBoard
 
+ * @apiDescription Mock API to Filter result of Noticeboard page.
+ * @apiParam {String} username=allgood Current customer's name
+ * @apiParam {String} [keyword] Keyword for search criteria
+ * * @apiParam {String} [priority] priority.
+ * @apiParam {DateTime} dateTimeFrom Notice board date time from, defualt as 60 days before, e.g. 22 Sep 2016 00:00.
+ * @apiParam {DateTime} dateTimeTo Notice board date time to, default as today's midnight, e.g. 21 Nov 2016 23:59.
+ * @apiParam {String} [sportsType] sports type.
+ * @apiParam {String} [competition] competition.
+ * @apiParam {String} [match] match.
+ * @apiParam {String} [inPlay] inPlay.
+ * @apiParam {String} [continent] continent.
+ * @apiParam {String} [country] country.
+ * @apiParam {String} [messageCategory] message Category.
+ * @apiParam {String} [alertStatus] alert Status.
+ * @apiParam {String} [recipient] recipient.
+ *
+ * @apiSuccess (Success) {String} type pdf
+ * @apiSuccess (Success) {String} username allgood
+ * @apiSuccess (Success) {String} keyword
+ * @apiSuccess (Success) {DateTime} dateTimeFrom 22 Sep 2016 00:00 ( 60 days before)
+ * @apiSuccess (Success) {DateTime} dateTimeTo 21 Nov 2016 23:59 (Today)
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.post('/filterNoticeBoardTableData', (req, res) => {
 	const username = req.body.username
 	let alerts = jsonAlerts[username]
@@ -365,55 +425,144 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
 	res.status(status)
 	res.send(NoticeBoardUtil.doSorting(filteredNotices, 'date_time', 'DESCEND'))
 })
+/**
+ * @api {GET} /notice-board/categories Get categories list
+ * @apiGroup NoticeBoard
 
+ * @apiDescription Mock API to get all categories.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/categories', (req, res) => {
 	let status = 200
 	let result = allCategories.categories
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/competitions Get competitions list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all competitions.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/competitions', (req, res) => {
 	let status = 200
 	let result = allCompetitions.competitions
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/continents Get continents list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all continents.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/continents', (req, res) => {
 	let status = 200
 	let result = allContinents.continents
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/countries Get countries list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all countries.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/countries', (req, res) => {
 	let status = 200
 	let result = allCountries.countries
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/inplays Get inplays list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all inplays.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/inplays', (req, res) => {
 	let status = 200
 	let result = allInplays.inplay
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/matches Get matches list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all matches.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/matches', (req, res) => {
 	let status = 200
 	let result = allMatches.matches
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/priorities Get priorities list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all priorities.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/priorities', (req, res) => {
 	let status = 200
 	let result = allPriorities.priorities
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/sports Get sports list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all sports.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/sports', (req, res) => {
 	let status = 200
 	let result = allSports.sports
 	res.status(status)
 	res.send(result)
 })
+/**
+ * @api {GET} /notice-board/statuses Get statuses list
+ * @apiGroup NoticeBoard
+
+ * @apiDescription Mock API to get all statuses.
+ * @apiSuccessExample Success response
+ *		HTTP/1.1 200 OK
+ *		PDF or CVS file
+ *
+ */
 router.get('/statuses', (req, res) => {
 	let status = 200
 	let result = allStatuses.status
