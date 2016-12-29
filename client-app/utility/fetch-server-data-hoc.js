@@ -26,6 +26,9 @@ const FetchServerDataHoc = (FetchApi, mapDataToProps) => (Cmp) => {
 			} else {
 				combineProps = Object.assign({}, this.props, mapDataToProps(this.state.data))
 			}
+			if (!Array.isArray(combineProps.selectedOptions)) {
+				combineProps.selectedOptions = (combineProps.selectedOptions || '').toString().split(',')
+			}
 			return (<Cmp {...combineProps} />)
 		}
 
