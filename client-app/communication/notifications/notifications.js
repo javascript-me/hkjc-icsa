@@ -178,8 +178,8 @@ export default React.createClass({
 		let self = this
 		let settingPromise = updateNoticeboardAndBroadcastSettingPromise(LoginService.getProfile().username, this.state.selectedNoticeboardAndBroadcastPanelPosition)
 		settingPromise.then((userProfile) => {
-			let userNoticeboardSettings = LoginService.getNoticeboardAndBroadcastSetting(userProfile)
-			self.setState({noticeboardAndBroadcastPanelPosition: userNoticeboardSettings.position})
+			let noticeboardAndBroadcastSetting = LoginService.getNoticeboardAndBroadcastSetting(userProfile)
+			self.setState({noticeboardAndBroadcastPanelPosition: noticeboardAndBroadcastSetting.position})
 		})
 	},
 
@@ -353,10 +353,10 @@ export default React.createClass({
 	},
 
 	getPriorityColor (priority) {
-		if (priority === 'Critical') return '#EF0000'
-		if (priority === 'High') return '#FF6320'
-		if (priority === 'Medium') return '#FFA400'
-		if (priority === 'Low') return '#9BC14D'
+		if (priority === 'Critical') return '#D3221B'
+		if (priority === 'High') return '#FF433E'
+		if (priority === 'Medium') return '#FF8F00'
+		if (priority === 'Low') return '#85B612'
 		return ''
 	},
 
