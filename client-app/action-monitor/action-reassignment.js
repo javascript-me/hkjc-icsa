@@ -137,7 +137,7 @@ export default React.createClass({
 		return (
 			<div ref='root' className='action-reassignment'>
 				<div className='serch-header'>
-					<input type='text' maxLength='100' placeholder='keywords' value={this.state.keyword} onChange={this.handleInputChange} />
+					<input type='text' maxLength='100' placeholder='Keywords' value={this.state.keyword} onChange={this.handleInputChange} />
 					<img className='search-icon' src='common/search.svg' />
 
 					<label className='radio-inline'>
@@ -186,7 +186,7 @@ export default React.createClass({
 				>
 					<TableHeaderColumn dataField='displayName' dataSort>Display Name</TableHeaderColumn>
 					<TableHeaderColumn dataField='userID' dataSort>User ID</TableHeaderColumn>
-					<TableHeaderColumn dataField='position' dataSort>Position/Title</TableHeaderColumn>
+					<TableHeaderColumn dataField='position' dataSort>Position / Title</TableHeaderColumn>
 				</TableComponent>
 			)
 		} else {

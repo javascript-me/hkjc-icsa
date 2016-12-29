@@ -12,11 +12,6 @@ describe('<ActionMonitor />', () => {
 		const instance = wrapper.instance()
 		expect(wrapper.find('div.action-monitor')).to.have.length(1)
 
-		sinon.stub(jQuery, 'ajax')
-		instance.getData()
-		expect(jQuery.ajax.calledWithMatch({ url: 'api/actions/list' })).to.be.true
-		jQuery.ajax.restore()
-
 		let result = instance.priorityFormatter('Critical')
 		expect(result).to.not.be.null
 		result = instance.priorityFormatter('High')
