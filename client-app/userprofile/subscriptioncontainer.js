@@ -15,6 +15,7 @@ export default React.createClass({
 	propTypes: {
 		update: PropTypes.bool,
 		userSubscription: PropTypes.array,
+		onChange: PropTypes.func,
 		children: PropTypes.any
 	},
 	getInitialState () {
@@ -25,6 +26,10 @@ export default React.createClass({
 	},
 	onClickCatogory (index) {
 		this.setState({curIndex: index})
+	},
+	onClickMessage (message) {
+		message.checked = !message.checked
+		this.props.onChange ? this.props.onChange() : this.forceUpdate()
 	},
 	cloneData () {
 		let userSubscription = this.userSubscription = _.clone(this.props.userSubscription)
@@ -38,7 +43,7 @@ export default React.createClass({
 		this.cloneData()
 		this.forceUpdate()
 	},
-	getChangedData () {
+	IsChanged () {
 		let userSubscription = this.userSubscription
 
 		let bChanged = false
@@ -48,6 +53,11 @@ export default React.createClass({
 			}
 		})
 
+		return bChanged
+	},
+	getChangedData () {
+		let userSubscription = this.userSubscription
+		let bChanged = this.IsChanged()
 		let results = null
 		if (bChanged) {
 			results = userSubscription.map((category) => {
@@ -88,7 +98,7 @@ export default React.createClass({
 			messages = subscribedMessages.map((item, index) => {
 				return (
 					<div key={index} className={classNames('item', {changed: item.checked !== item.subscribed})}>
-						<div className={classNames('input-check', {checked: item.checked})} onClick={(e) => { item.checked = !item.checked; this.forceUpdate() }} />
+						<div className={classNames('input-check', {checked: item.checked})} onClick={(e) => { this.onClickMessage(item) }} />
 						{item.message}
 					</div>
 				)

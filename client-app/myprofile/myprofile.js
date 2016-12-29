@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import LoginService from '../login/login-service'
 import {PopupService} from '../popup'
 import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
@@ -132,6 +133,7 @@ export default React.createClass({
 	},
 	render () {
 		let showEditBtn = this.state.bAdmin && !this.state.delegationUpdate
+		let scChange = this.isSubscriptionChange()
 		return (
 			<div ref='root' className='my-profile'>
 				<ProfileTabs h1Title={this.h1Title}>
@@ -150,12 +152,12 @@ export default React.createClass({
 						</ProfileButtons>
 					</ProfileContainer>
 
-					<SubscriptionContainer ref='subscriptionCmp' userSubscription={this.state.userSubscription} update={this.state.subscriptionUpdate}>
+					<SubscriptionContainer ref='subscriptionCmp' userSubscription={this.state.userSubscription} update={this.state.subscriptionUpdate} onChange={this.onSubscriptionChange}>
 						<ProfileButtons>
 							{!this.state.subscriptionUpdate && <button className='btn btn-primary pull-right' onClick={this.onSubscriptionEditClick}>Edit</button>}
 
-							{this.state.subscriptionUpdate && <button className='btn btn-danger' onClick={this.onSubscriptionResetClick}>Reset</button>}
-							{this.state.subscriptionUpdate && <button className='btn btn-primary pull-right' onClick={this.onSubscriptionUpdateClick}>Update</button>}
+							{this.state.subscriptionUpdate && <button className={classNames('btn btn-danger', {disabled: !scChange})} onClick={this.onSubscriptionResetClick} disabled={!scChange}>Reset</button>}
+							{this.state.subscriptionUpdate && <button className={classNames('btn btn-primary pull-right', {disabled: !scChange})} onClick={this.onSubscriptionUpdateClick} disabled={!scChange}>Update</button>}
 							{this.state.subscriptionUpdate && <button className='btn btn-cancle pull-right' onClick={this.onSubscriptionCancelClick}>Cancel</button>}
 						</ProfileButtons>
 					</SubscriptionContainer>
@@ -192,6 +194,12 @@ export default React.createClass({
 		PopupService.showMessageBox(PopupService.resetMesg, () => {
 			this.refs.subscriptionCmp.resetData()
 		})
+	},
+	onSubscriptionChange () {
+		this.forceUpdate()
+	},
+	isSubscriptionChange () {
+		return this.refs.subscriptionCmp && this.refs.subscriptionCmp.IsChanged()
 	},
 	onSubscriptionUpdateClick () {
 		let changeData = this.refs.subscriptionCmp.getChangedData()
