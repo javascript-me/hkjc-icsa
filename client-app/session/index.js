@@ -1,5 +1,6 @@
 const VALUES = {
-	PROFILE: 'USER_PROFILE'
+	PROFILE: 'USER_PROFILE',
+	ED_SEARCH_FILTER: 'ED_SEARCH_FILTER'
 }
 
 const setItem = (key, value) => {
@@ -23,5 +24,8 @@ export default {
 	},
 	setProfile (profile) {
 		return setItem(VALUES.PROFILE, profile)
-	}
+	},
+	getItem: getItem,
+	setItem: setItem,
+	VALUES: VALUES
 }
