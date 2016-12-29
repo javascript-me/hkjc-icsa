@@ -55,7 +55,7 @@ export default React.createClass({
 	handleFilterChange (field, value) {
 		let nextEnquiry = _.cloneDeep(this.state.searchEnquiry)
 		nextEnquiry[field] = value
-		this.setState({searchEnquiry: nextEnquiry, hasFilter: true})
+		this.setState({searchEnquiry: nextEnquiry})
 	},
 
 	getChangeHandler (field) {
@@ -92,6 +92,16 @@ export default React.createClass({
 
 	onSearch () {
 		const resultEnquiry = this.getSearchEnquiry()
+		let isEmptyObj = true
+
+		for (let value in this.state.searchEnquiry) {
+			if (value) {
+				isEmptyObj = false
+			}
+		}
+
+		(isEmptyObj === this.state.hasFilter) && this.setState({hasFilter: !isEmptyObj})
+
 		this.props.onSearch({
 			keyword: resultEnquiry.keyword,
 			eventType: resultEnquiry.eventType,
