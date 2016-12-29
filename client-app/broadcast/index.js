@@ -103,7 +103,14 @@ export default React.createClass({
 
 	render () {
 		return this.state.version > 6 ? (
-			<PageComponent key={this.state.version} tableData={this.state.tableData} tableLoading={this.state.loading} onSearch={this.onSearch} filtersPerRow={4} options={options} pageTitle='Broadcast' pageClassName='auditlog' pageBreadcrum='Home \ Global Tools & Adminstration \ Communication'>
+			<PageComponent key={this.state.version} tableData={this.state.tableData}
+				tableLoading={this.state.loading}
+				onSearch={this.onSearch}
+				filtersPerRow={4}
+				options={options}
+				pageTitle='Broadcast Message'
+				pageClassName='auditlog'
+				pageBreadcrum='Home \ Global Tools & Adminstration \ Communication'>
 				<PageLayer typeLayer='body'>
 					<TableHeaderColumn dataField='id' autoValue isKey hidden>ID</TableHeaderColumn>
 					<TableHeaderColumn dataField='system_distribution_time' dataSort dateRange isFilter>Distribution Date & Time</TableHeaderColumn>
