@@ -7,6 +7,12 @@ import TaskDetail from '../task-detail'
 import API from '../api-service'
 import ActionReassignment from './action-reassignment'
 import Popup from '../popup'
+import moment from 'moment'
+
+const initTimeRange = {
+	From: moment().subtract(24, 'months').set({ hour: 0, minute: 0 }).format('DD MMM YYYY HH:mm'),
+	To: moment().set({ hour: 23, minute: 59 }).format('DD MMM YYYY HH:mm')
+}
 
 export default React.createClass({
 	displayName: 'Audit',
@@ -30,9 +36,12 @@ export default React.createClass({
 			},
 			dateRange: {
 				fieldFrom: 'ReceiveFrom',
-				fieldFromTitle: 'Receive Time From',
+				fieldFromDefault: initTimeRange.From,
+				fieldFromTitle: 'Distribution Time From',
 				fieldTo: 'ReceiveTo',
-				fieldToTitle: 'Receive Time To'
+				fieldToTitle: 'Distribution  Time To',
+				fieldToDefault: initTimeRange.To
+
 			}
 		}
 
@@ -183,7 +192,7 @@ export default React.createClass({
 						<TableHeaderColumn dataField='continents' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.continents}} hidden>Continent</TableHeaderColumn>
 						<TableHeaderColumn dataField='countries' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.countries}} hidden>Country</TableHeaderColumn>
 						<TableHeaderColumn dataField='category' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.categories}} >Category</TableHeaderColumn>
-						<TableHeaderColumn dataField='taskStatus' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.status}}>Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='taskStatus' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.status, filterValue: [{label: 'New', value: 'New'}]}}>Status</TableHeaderColumn>
 						<TableHeaderColumn dataField='assigneeUserID' width='224' dataFormat={this.assigneeFormatter} isFilter >Assignee</TableHeaderColumn>
 					</PageLayer>
 				</PageComponent>
