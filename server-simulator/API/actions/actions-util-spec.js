@@ -24,7 +24,8 @@ it('listFilter()', () => {
 
 	filteredResult = ActionsUtil.listFilter(allActions, {
 		userID: 'JC10001',
-		assigneeUserID: 'TR'
+		keyword: 'xxxxyyyyyzzzzz',
+		type: 'allTasks'
 	})
 	expect(filteredResult.length > 0).to.be.true
 })
