@@ -30,7 +30,7 @@ function doFilter (broadcast, params) {
 	const eventLevel2 = params.event_level2 || 'All'
 	const dateTimeFrom = params.ReceiveFrom || moment().subtract(60, 'days').set({ hour: 0, minute: 0 }).format('DD MMM YYYY HH:mm:ss')
 	const dateTimeTo = params.ReceiveTo || moment().set({ hour: 23, minute: 59 }).format('DD MMM YYYY HH:mm:ss')
-	
+
 	let result = JSON.parse(JSON.stringify(broadcast))
 
 	result = keyword ? result.filter((al) => {
@@ -40,7 +40,7 @@ function doFilter (broadcast, params) {
 		return name.indexOf(keyword.toLowerCase()) >= 0 || details.indexOf(keyword.toLowerCase()) >= 0
 	}) : result
 
-	if(name) {
+	if (name) {
 		result = result.filter((al) => {
 			return al.name === name
 		})
