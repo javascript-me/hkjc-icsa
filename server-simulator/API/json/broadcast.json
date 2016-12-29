@@ -3,7 +3,7 @@
       {
          "name": "User Account Deletion",
          "category": "Event Information",
-         "message_detail": "A new Event Template has been created and activated. Please click the link to navigate to it.",
+         "message_detail": "A new Event Template has been created and activated. Please click the link to navigate to it. A new Event Template has been created and activated. Please click the link to navigate to it. A new Event Template has been created and activated. Please click the link to navigate to it. A new Event Template has been created and activated. Please click the link to navigate to it. A new Event Template has been created and activated. Please click the link to navigate to it.",
          "sports_type": "football",
          "event_level1": "FA Cup",
          "event_level2": "ARS vs ASV",
@@ -13,7 +13,7 @@
          "id": "B0",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "01 November 2016 19:10:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -29,7 +29,7 @@
          "id": "B1",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "03 November 2016 17:03:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -45,7 +45,7 @@
          "id": "B2",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "03 November 2016 02:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -61,7 +61,7 @@
          "id": "B3",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "03 November 2016 17:22:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -77,7 +77,7 @@
          "id": "B4",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "03 November 2016 09:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -93,7 +93,7 @@
          "id": "B5",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "03 November 2016 08:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -109,7 +109,7 @@
          "id": "B6",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "03 November 2016 06:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -125,7 +125,7 @@
          "id": "B7",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "03 November 2016 07:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -141,7 +141,7 @@
          "id": "B8",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 00:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -157,7 +157,7 @@
          "id": "B9",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 01:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -173,7 +173,7 @@
          "id": "B10",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 02:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -189,7 +189,7 @@
          "id": "B11",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 03:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -205,7 +205,7 @@
          "id": "B12",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 04:13:30"
       },
       {
          "name": "Legal Approval Status Update",
@@ -221,7 +221,7 @@
          "id": "B13",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 05:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -237,7 +237,7 @@
          "id": "B14",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 06:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -253,7 +253,7 @@
          "id": "B15",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 07:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -269,7 +269,7 @@
          "id": "B16",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 08:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -285,7 +285,7 @@
          "id": "B17",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 09:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -301,7 +301,7 @@
          "id": "B18",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 10:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -317,7 +317,7 @@
          "id": "B19",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 11:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -333,7 +333,7 @@
          "id": "B20",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 12:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -349,7 +349,7 @@
          "id": "B21",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 13:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -365,7 +365,7 @@
          "id": "B22",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 14:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -381,7 +381,7 @@
          "id": "B23",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 15:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -397,7 +397,7 @@
          "id": "B24",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 16:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -413,7 +413,7 @@
          "id": "B25",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 17:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -429,7 +429,7 @@
          "id": "B26",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 18:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -445,7 +445,7 @@
          "id": "B27",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 19:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -461,7 +461,7 @@
          "id": "B28",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 18:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -477,7 +477,7 @@
          "id": "B29",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 19:13:30"
       },
       {
          "name": "Position Limit Alert Handling",
@@ -493,7 +493,7 @@
          "id": "B30",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 20:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -509,7 +509,7 @@
          "id": "A0",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 22:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -525,7 +525,7 @@
          "id": "A1",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "04 November 2016 23:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -541,7 +541,7 @@
          "id": "A2",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 00:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -557,7 +557,7 @@
          "id": "A3",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 01:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -570,7 +570,10 @@
          "in_play": true,
          "continent": "Europe",
          "country": "France",
-         "id": "A4"
+         "id": "A4",
+         "alert_status": "Read",
+         "priority": "Critical",
+         "system_distribution_time": "09 October 2016 02:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -586,7 +589,7 @@
          "id": "A5",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 02:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -602,7 +605,7 @@
          "id": "A6",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 03:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -615,7 +618,10 @@
          "in_play": false,
          "continent": "Europe",
          "country": "France",
-         "id": "A7"
+         "id": "A7",
+         "alert_status": "Read",
+         "priority": "Critical",
+         "system_distribution_time": "09 October 2016 09:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -631,7 +637,7 @@
          "id": "A8",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 04:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -647,7 +653,7 @@
          "id": "A9",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 05:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -663,7 +669,7 @@
          "id": "A10",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 06:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -676,7 +682,10 @@
          "in_play": true,
          "continent": "Europe",
          "country": "France",
-         "id": "A11"
+         "id": "A11",
+         "alert_status": "Read",
+         "priority": "Critical",
+         "system_distribution_time": "09 October 2016 10:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -692,7 +701,7 @@
          "id": "A12",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 07:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -708,7 +717,7 @@
          "id": "A13",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 08:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -724,7 +733,7 @@
          "id": "A14",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 09:13:30"
       },
       {
          "name": "Message Category Maintenance",
@@ -740,7 +749,7 @@
          "id": "A15",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 10:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -756,7 +765,7 @@
          "id": "A16",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 11:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -772,7 +781,7 @@
          "id": "A17",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "05 November 2016 12:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -788,7 +797,7 @@
          "id": "A18",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "10 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -804,7 +813,7 @@
          "id": "A19",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "01 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -820,7 +829,7 @@
          "id": "A20",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "01 November 2016 12:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -836,7 +845,7 @@
          "id": "A21",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "01 November 2016 10:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -852,7 +861,7 @@
          "id": "A22",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "02 November 2016 01:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -868,7 +877,7 @@
          "id": "A23",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "02 November 2016 17:10:30"
       },
       {
          "name": "User Account Deletion",
@@ -884,7 +893,7 @@
          "id": "A24",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "11 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -900,7 +909,7 @@
          "id": "A25",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "12 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -916,7 +925,7 @@
          "id": "A26",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "13 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -932,7 +941,7 @@
          "id": "A27",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "14 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -948,7 +957,7 @@
          "id": "A28",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "15 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -964,7 +973,7 @@
          "id": "A29",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "16 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -980,7 +989,7 @@
          "id": "A30",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "17 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -996,7 +1005,7 @@
          "id": "A31",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "18 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1012,7 +1021,7 @@
          "id": "A32",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "20 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1028,7 +1037,7 @@
          "id": "A33",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "21 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1044,7 +1053,7 @@
          "id": "A34",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "22 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1060,7 +1069,7 @@
          "id": "A35",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "23 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1076,7 +1085,7 @@
          "id": "A36",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "24 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1092,7 +1101,7 @@
          "id": "A37",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "26 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1108,7 +1117,7 @@
          "id": "A38",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "27 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1124,7 +1133,7 @@
          "id": "A39",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "28 November 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1140,7 +1149,7 @@
          "id": "A40",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "01 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1156,7 +1165,7 @@
          "id": "A41",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "13  December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1172,7 +1181,7 @@
          "id": "A42",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "14 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1188,7 +1197,7 @@
          "id": "A43",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "15 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1204,7 +1213,7 @@
          "id": "A44",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "16 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1220,7 +1229,7 @@
          "id": "A45",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "17 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1236,7 +1245,7 @@
          "id": "A46",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "18  December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1268,7 +1277,7 @@
          "id": "A48",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "21 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1284,7 +1293,7 @@
          "id": "A49",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "22 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1300,7 +1309,7 @@
          "id": "A50",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "23 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1316,7 +1325,7 @@
          "id": "A51",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "24 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1332,7 +1341,7 @@
          "id": "A52",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "25 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1348,7 +1357,7 @@
          "id": "A53",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "26 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1364,7 +1373,7 @@
          "id": "A54",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "27 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1380,7 +1389,7 @@
          "id": "A55",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "28 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1396,7 +1405,7 @@
          "id": "A56",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "29 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1412,26 +1421,13 @@
          "id": "A57",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
-      },
-      {
-         "name": "User Account Deletion",
-         "category": "Event Information",
-         "distribution_date": "19 December 2016 17:13:30",
-         "message_detail": "A new Event Template has been created and activated. Please click the link to navigate to it.",
-         "sports_type": "football",
-         "event_level1": "FA Cup",
-         "event_level2": "ARS vs ASV",
-         "in_play": true,
-         "continent": "Europe",
-         "country": "England",
-         "id": "A58"
+         "system_distribution_time": "30 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
          "category": "Selling Controls",
          "distribution_date": "09 November 2016 17:13:30",
-         "message_detail": "HKJC's data attribute value has been updated from previous value to updated valuen",
+         "message_detail": "HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen. HKJC's data attribute value has been updated from previous value to updated valuen",
          "sports_type": "Basketball",
          "event_level1": "FA Cup",
          "event_level2": "ARS vs ASV",
@@ -1441,7 +1437,7 @@
          "id": "A59",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "31 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -1457,7 +1453,7 @@
          "id": "A60",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "02 October 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -2401,7 +2397,7 @@
          "id": "A119",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "10 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -2417,7 +2413,7 @@
          "id": "A120",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "11 December 2016 17:13:30"
       },
       {
          "name": "User Account Deletion",
@@ -2433,7 +2429,7 @@
          "id": "A121",
          "alert_status": "Read",
          "priority": "Critical",
-         "system_distribution_time": "19 November 2016 17:13:30"
+         "system_distribution_time": "12 December 2016 17:13:30"
       }
    ]
 }
