@@ -8,7 +8,7 @@ import ActionMonitor from './index.js'
 describe('<ActionMonitor />', () => {
 	it('test render', () => {
 		const wrapper = shallow(<ActionMonitor />)
-		wrapper.setState({version: 3})
+		wrapper.setState({version: 100})
 		const instance = wrapper.instance()
 		expect(wrapper.find('div.action-monitor')).to.have.length(1)
 

@@ -25,6 +25,19 @@ function getAdmin (account) {
 	return bAdmin
 }
 
+function compare (property) {
+	let priorityMap = {
+		'Critical': 1,
+		'High': 2,
+		'Medium': 3,
+		'Low': 4
+	}
+
+	return function (a, b) {
+		return priorityMap[a['priority']] > priorityMap[b['priority']] ? 1 : -1
+	}
+}
+
 function listFilter (allActions, param) {
 	// parse account infomation
 	const userID = param.userID
@@ -101,13 +114,19 @@ function listFilter (allActions, param) {
 	}
 
 	if (param.type === 'allTasks') {
-		let allTasks = [].concat(myTasksData, partTasksData1, partTasksData2)
-		results = allTasks
+		let allTasks = [].concat(myTasksData, partTasksData1, partTasksData2).filter((item) => {
+			return item.taskStatus === 'New'
+		})
+		let newData = allTasks.sort(compare('priority'))
+		results = newData
 	}
 
 	if (param.type === 'myTasks') {
-		let myTasks = myTasksData
-		results = myTasks
+		let myTasks = myTasksData.filter((item) => {
+			return item.taskStatus === 'New'
+		})
+		let newData = myTasks.sort(compare('priority'))
+		results = newData
 	}
 
 	// generate results

@@ -6,6 +6,12 @@ import ActionsUtil from './actions-util'
 import priorityFilter from '../json/filter-dropdowns/priorities.json'
 import categoriesFilter from '../json/filter-dropdowns/categories_action.json'
 import statusFilter from '../json/filter-dropdowns/status_action.json'
+import competitionsFilter from '../json/filter-dropdowns/competitions.json'
+import matchesFilter from '../json/filter-dropdowns/matches.json'
+import inplayFilter from '../json/filter-dropdowns/inplay.json'
+import continentsFilter from '../json/filter-dropdowns/continents.json'
+import countriesFilter from '../json/filter-dropdowns/countries.json'
+import sportsFilter from '../json/filter-dropdowns/sports.json'
 
 const router = express.Router()
 
@@ -41,6 +47,48 @@ router.get('/priorities', (req, res) => {
 router.get('/categories', (req, res) => {
 	let status = 200
 	let result = categoriesFilter
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/countries', (req, res) => {
+	let status = 200
+	let result = countriesFilter.countries
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/sports', (req, res) => {
+	let status = 200
+	let result = sportsFilter.sports
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/competitions', (req, res) => {
+	let status = 200
+	let result = competitionsFilter.competitions
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/continents', (req, res) => {
+	let status = 200
+	let result = continentsFilter.continents
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/matches', (req, res) => {
+	let status = 200
+	let result = matchesFilter.matches
+	res.status(status)
+	res.send(result)
+})
+
+router.get('/inplay', (req, res) => {
+	let status = 200
+	let result = inplayFilter.inplay
 	res.status(status)
 	res.send(result)
 })
