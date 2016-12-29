@@ -7,40 +7,50 @@ import TaskDetail from '../task-detail'
 import API from '../api-service'
 import ActionReassignment from './action-reassignment'
 import Popup from '../popup'
+import moment from 'moment'
+
+const initTimeRange = {
+	From: moment().subtract(24, 'months').set({ hour: 0, minute: 0 }).format('DD MMM YYYY HH:mm'),
+	To: moment().set({ hour: 23, minute: 59 }).format('DD MMM YYYY HH:mm')
+}
 
 export default React.createClass({
 	displayName: 'Audit',
 
 	getInitialState () {
+		this.tableOptions = {
+			table: {
+				tableHeaderClass: 'table-header',
+				tableContainerClass: 'base-table',
+				striped: true,
+				pagination: true,
+
+				options: {
+					defaultSortName: 'priority',  // default sort column name
+					defaultSortOrder: 'asc', // default sort order
+					hideSizePerPage: true,
+					paginationClassContainer: 'text-center',
+					onRowClick: this.onRowClick
+				}
+
+			},
+			dateRange: {
+				fieldFrom: 'ReceiveFrom',
+				fieldFromDefault: initTimeRange.From,
+				fieldFromTitle: 'Distribution Time From',
+				fieldTo: 'ReceiveTo',
+				fieldToTitle: 'Distribution  Time To',
+				fieldToDefault: initTimeRange.To
+
+			}
+		}
+
 		return {
 			categories: [],
 			inplay: [],
+			loading: true,
 			tableData: [],
-			version: 0,
-			options: {
-				table: {
-					tableHeaderClass: 'table-header',
-					tableContainerClass: 'base-table',
-					striped: true,
-					pagination: true,
-
-					options: {
-						defaultSortName: 'system_distribution_time',  // default sort column name
-						defaultSortOrder: 'desc', // default sort order
-						hideSizePerPage: true,
-						paginationClassContainer: 'text-center',
-						onRowClick: this.onRowClick
-					}
-
-				},
-				dateRange: {
-					fieldFrom: 'ReceiveFrom',
-					fieldFromTitle: 'Receive Time From',
-					fieldTo: 'ReceiveTo',
-					fieldToTitle: 'Receive Time To'
-				}
-			}
-
+			version: 0
 		}
 	},
 
@@ -59,12 +69,15 @@ export default React.createClass({
 	},
 
 	getData () {
-		API.request('POST', 'api/actions/list', {
-			userID: this.userID
-		}, 'actionList')
 		API.request('GET', 'api/actions/priorities', {}, 'priorities')
 		API.request('GET', 'api/actions/categories', {}, 'categories')
 		API.request('GET', 'api/actions/status', {}, 'status')
+		API.request('GET', 'api/actions/matches', {}, 'matches')
+		API.request('GET', 'api/actions/inplay', {}, 'inplay')
+		API.request('GET', 'api/actions/competitions', {}, 'competitions')
+		API.request('GET', 'api/actions/sports', {}, 'sports')
+		API.request('GET', 'api/actions/countries', {}, 'countries')
+		API.request('GET', 'api/actions/continents', {}, 'continents')
 	},
 
 	onTaskApprove (data) {
@@ -95,7 +108,7 @@ export default React.createClass({
 		switch (extra) {
 		case 'actionList':
 			promise.done(response => {
-				this.setState({ tableData: response })
+				this.setState({ tableData: response, loading: false })
 			})
 			break
 		default:
@@ -137,19 +150,34 @@ export default React.createClass({
 		)
 	},
 	onSearch (params) {
+		this.setState({
+			loading: true
+		})
+
 		const filters = API.cleanParams(params)
 		filters.userID = this.userID
 		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},
 
 	render () {
-		return this.state.version > 2 ? (
+		return this.state.version > 8 ? (
+
 			<div className='action-monitor'>
 				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
 					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} refresh={this.getData} />
 				</Popup>
+
 				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
-				<PageComponent key={this.state.version} tableData={this.state.tableData} onSearch={this.onSearch} filtersPerRow={4} options={this.state.options} pageTitle='Actions' pageClassName='auditlog conatainer-alert action-monitor' pageBreadcrum='Home \ Global Tools & Adminstration \ Action(Task)'>
+				<PageComponent
+					tableLoading={this.state.loading}
+					key={this.state.version}
+					tableData={this.state.tableData}
+					onSearch={this.onSearch} filtersPerRow={4}
+					options={this.tableOptions}
+					pageTitle='Action Monitor'
+					pageClassName='auditlog conatainer-alert action-monitor'
+					pageBreadcrum='Home \ Global Tools & Adminstration \ Action(Task)'
+					>
 
 					<PageLayer typeLayer='body'>
 						<TableHeaderColumn dataField='taskID' autoValue hidden isKey>ID</TableHeaderColumn>
@@ -157,8 +185,14 @@ export default React.createClass({
 						<TableHeaderColumn dataField='distributionDateTime' dataSort isFilter dateRange>Distribution Date & Time</TableHeaderColumn>
 						<TableHeaderColumn dataField='taskDescription' dataSort dataFormat={this.detailFormatter}>Task Description</TableHeaderColumn>
 						<TableHeaderColumn dataField='targetCompletionDateTime' dataSort isFilter filterOptions={{ctrlType: 'calendar'}}>Target completion Time</TableHeaderColumn>
-						<TableHeaderColumn dataField='category' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.categories}} hidden>Category</TableHeaderColumn>
-						<TableHeaderColumn dataField='taskStatus' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.status}}>Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='sports' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.sports}} hidden>Sports</TableHeaderColumn>
+						<TableHeaderColumn dataField='competitions' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.competitions}} hidden>Competition</TableHeaderColumn>
+						<TableHeaderColumn dataField='matchs' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.matches}} hidden>Match</TableHeaderColumn>
+						<TableHeaderColumn dataField='inplay' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.inplay}} hidden>In-Play</TableHeaderColumn>
+						<TableHeaderColumn dataField='continents' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.continents}} hidden>Continent</TableHeaderColumn>
+						<TableHeaderColumn dataField='countries' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.countries}} hidden>Country</TableHeaderColumn>
+						<TableHeaderColumn dataField='category' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.categories}} >Category</TableHeaderColumn>
+						<TableHeaderColumn dataField='taskStatus' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.status, filterValue: [{label: 'New', value: 'New'}]}}>Status</TableHeaderColumn>
 						<TableHeaderColumn dataField='assigneeUserID' width='224' dataFormat={this.assigneeFormatter} isFilter >Assignee</TableHeaderColumn>
 					</PageLayer>
 				</PageComponent>

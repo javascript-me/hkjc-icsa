@@ -8,14 +8,9 @@ import ActionMonitor from './index.js'
 describe('<ActionMonitor />', () => {
 	it('test render', () => {
 		const wrapper = shallow(<ActionMonitor />)
-		wrapper.setState({version: 3})
+		wrapper.setState({version: 100})
 		const instance = wrapper.instance()
 		expect(wrapper.find('div.action-monitor')).to.have.length(1)
-
-		sinon.stub(jQuery, 'ajax')
-		instance.getData()
-		expect(jQuery.ajax.calledWithMatch({ url: 'api/actions/list' })).to.be.true
-		jQuery.ajax.restore()
 
 		let result = instance.priorityFormatter('Critical')
 		expect(result).to.not.be.null

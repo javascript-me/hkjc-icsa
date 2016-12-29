@@ -34,6 +34,7 @@ class TaskDetailBox extends Component {
 		let color = this.getTitleColor(priority)
 		let diffentOptions = {}
 		let statusIconClassName = this.getIconClass(lockStatus)
+		let isReadonly = taskStatus !== 'New'
 
 		switch (taskType) {
 		case ('execute'): {
@@ -42,7 +43,7 @@ class TaskDetailBox extends Component {
 				inputArea: false,
 				confirmBtn: {text: buttonName, func: taskExcFunc},
 				secondBtn: null,
-				otherBtn: (taskStatus === 'New') && isSuppervicer
+				otherBtn: !isReadonly && isSuppervicer
 								? {text: 'Reassign', func: this.onReAssign}
 								: null
 			}
@@ -91,8 +92,8 @@ class TaskDetailBox extends Component {
 				onConfirm={diffentOptions.confirmBtn.func}
 				onSecondFunc={diffentOptions.secondBtn && diffentOptions.secondBtn.func}
 				onOther={diffentOptions.otherBtn && diffentOptions.otherBtn.func}
-				confirmBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove}
-				secondFuncBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove} >
+				confirmBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove || isReadonly}
+				secondFuncBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove || isReadonly} >
 				<div className='info-part'>
 					{taskStatus && <span><span className='field'>Status:</span><span className='value'>{taskStatus}</span></span>}
 					{category && <span><span className='field'>Category:</span><span className='value'>{category}</span></span>}
@@ -102,10 +103,10 @@ class TaskDetailBox extends Component {
 				</div>
 				<div className='task-content'>
 					<div className='detail-text'>{taskDescription}</div>
-					<div className='input-part' style={{display: (diffentOptions.inputArea && diffentOptions.secondBtn) ? 'block' : 'none'}}>
+					{!isReadonly && <div className='input-part' style={{display: (diffentOptions.inputArea && diffentOptions.secondBtn) ? 'block' : 'none'}}>
 						<div className='tip'>Remark</div>
 						<textarea placeholder='Please add mark' cols='90' rows='5' onChange={(e) => this.handleInputChange(e)} ref='textBox' />
-					</div>
+					</div>}
 				</div>
 
 			</Popup>
