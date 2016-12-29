@@ -114,14 +114,19 @@ function listFilter (allActions, param) {
 	}
 
 	if (param.type === 'allTasks') {
-		let allTasks = [].concat(myTasksData, partTasksData1, partTasksData2)
+		let allTasks = [].concat(myTasksData, partTasksData1, partTasksData2).filter((item) => {
+			return item.taskStatus === 'New'
+		})
 		let newData = allTasks.sort(compare('priority'))
 		results = newData
 	}
 
 	if (param.type === 'myTasks') {
-		let myTasks = myTasksData.sort(compare('priority'))
-		results = myTasks
+		let myTasks = myTasksData.filter((item) => {
+			return item.taskStatus === 'New'
+		})
+		let newData = myTasks.sort(compare('priority'))
+		results = newData
 	}
 
 	// generate results
