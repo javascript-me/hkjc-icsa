@@ -1,6 +1,6 @@
 import express from 'express'
 import utils from './utils.js'
-
+import moment from 'moment'
 const router = express.Router()
 const jsonObject = require('../json/broadcast.json')
 
@@ -45,19 +45,13 @@ router.post('/search', (req, res) => {
 })
 
 /**
- * @api {GET} /broadcast/all-broadcasts Broadcasts list
+ * @api {GET} /broadcast/all-broadcasts broadcasts list
  * @apiGroup Broadcast
 
- * @apiDescription Get all broadcasts in system
- *
+ * @apiDescription Mock API to get list of broadcasts.
  * @apiParam {String} username=allgood Current customer's name
-  * @apiSuccess (Success) {String} username allgood
- * @apiSuccess (Success) {Object[]} data
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		{
- *			"username": "allgood"
- *		}
  *
  */
 router.post('/all-broadcasts', (req, res) => {
@@ -67,6 +61,9 @@ router.post('/all-broadcasts', (req, res) => {
 	result = jsonObject.broadcast.slice()
 
 	res.status(status)
-	res.send(result)
+	res.send(result.sort(sortBroadCastsBySystemDistributionTimeDESC))
 })
+const sortBroadCastsBySystemDistributionTimeDESC = (a, b) => {
+	return moment(b.system_distribution_time).valueOf() - moment(a.system_distribution_time).valueOf()
+}
 export default router

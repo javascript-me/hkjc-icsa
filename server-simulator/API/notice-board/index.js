@@ -398,7 +398,6 @@ router.get('/export', (req, res) => {
  * @apiSuccess (Success) {DateTime} dateTimeTo 21 Nov 2016 23:59 (Today)
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
  *
  */
 router.post('/filterNoticeBoardTableData', (req, res) => {
@@ -432,7 +431,7 @@ router.post('/filterNoticeBoardTableData', (req, res) => {
  * @apiDescription Mock API to get all categories.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/categories', (req, res) => {
@@ -448,7 +447,7 @@ router.get('/categories', (req, res) => {
  * @apiDescription Mock API to get all competitions.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/competitions', (req, res) => {
@@ -464,7 +463,7 @@ router.get('/competitions', (req, res) => {
  * @apiDescription Mock API to get all continents.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/continents', (req, res) => {
@@ -480,7 +479,7 @@ router.get('/continents', (req, res) => {
  * @apiDescription Mock API to get all countries.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/countries', (req, res) => {
@@ -496,7 +495,7 @@ router.get('/countries', (req, res) => {
  * @apiDescription Mock API to get all inplays.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/inplays', (req, res) => {
@@ -512,7 +511,7 @@ router.get('/inplays', (req, res) => {
  * @apiDescription Mock API to get all matches.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/matches', (req, res) => {
@@ -528,7 +527,7 @@ router.get('/matches', (req, res) => {
  * @apiDescription Mock API to get all priorities.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/priorities', (req, res) => {
@@ -544,7 +543,7 @@ router.get('/priorities', (req, res) => {
  * @apiDescription Mock API to get all sports.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/sports', (req, res) => {
@@ -560,7 +559,7 @@ router.get('/sports', (req, res) => {
  * @apiDescription Mock API to get all statuses.
  * @apiSuccessExample Success response
  *		HTTP/1.1 200 OK
- *		PDF or CVS file
+ *
  *
  */
 router.get('/statuses', (req, res) => {
