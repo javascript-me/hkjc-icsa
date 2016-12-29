@@ -27,6 +27,16 @@ router.post('/list', (req, res) => {
 	res.send(filteredResult)
 })
 
+router.post('/reassignmentUser', (req, res) => {
+	var result = ActionsUtil.reassignmentUser(allActions, req.body)
+	res.send(result)
+})
+
+router.post('/reassignmentUserRole', (req, res) => {
+	var result = ActionsUtil.reassignmentUserRole(allActions, req.body)
+	res.send(result)
+})
+
 router.get('/priorities', (req, res) => {
 	let status = 200
 	let result = priorityFilter

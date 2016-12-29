@@ -1,6 +1,8 @@
 import React from 'react'
 import ClassNames from 'classnames'
 import TaskDetail from '../task-detail'
+import ActionReassignment from '../action-monitor/action-reassignment'
+import Popup from '../popup'
 
 export default class NoticeList extends React.Component {
 
@@ -12,6 +14,8 @@ export default class NoticeList extends React.Component {
 		this.openNoticeDetail = this.openNoticeDetail.bind(this)
 		this.onTaskOpen = this.onTaskOpen.bind(this)
 		this.onTaskApprove = this.onTaskApprove.bind(this)
+		this.onReAssign = this.onReAssign.bind(this)
+		this.confirmRessignment = this.confirmRessignment.bind(this)
 	}
 
 	getNoticeBoxClassNames () {
@@ -45,10 +49,22 @@ export default class NoticeList extends React.Component {
 		})
 	}
 
+	onReAssign (taskItem) {
+		this.setState({reassignTask: taskItem})
+		this.refs.popupReassignment.show()
+	}
+
+	confirmRessignment () {
+		this.refs.actionReassignment.confirmRessignment()
+	}
+
 	render () {
 		return (
 			<div className={this.getNoticeBoxClassNames()}>
-				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} />
+				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
+					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} refresh={() => {}} />
+				</Popup>
+				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
 				<ul className={this.getListBoxClassName()}>
 					{
 						this.props.data.map((item, index) => {

@@ -93,7 +93,7 @@ class TaskDetailBox extends Component {
 				onSecondFunc={diffentOptions.secondBtn && diffentOptions.secondBtn.func}
 				onOther={diffentOptions.otherBtn && diffentOptions.otherBtn.func}
 				confirmBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove || isReadonly}
-				secondFuncBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove  || isReadonly} >
+				secondFuncBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove || isReadonly} >
 				<div className='info-part'>
 					{taskStatus && <span><span className='field'>Status:</span><span className='value'>{taskStatus}</span></span>}
 					{category && <span><span className='field'>Category:</span><span className='value'>{category}</span></span>}

@@ -1,13 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ActionMonitor from './action-monitor'
+import ActionMonitor from './index.js'
 
 // const tableData = []
 
 describe('<ActionMonitor />', () => {
 	it('test render', () => {
 		const wrapper = shallow(<ActionMonitor />)
+		wrapper.setState({version: 100})
 		const instance = wrapper.instance()
 		expect(wrapper.find('div.action-monitor')).to.have.length(1)
 

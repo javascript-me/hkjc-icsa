@@ -58,11 +58,11 @@ export default {
 	},
 	getNoticeboardAndBroadcastSetting (profile) {
 		profile = profile || getProfile()
-		return (profile && profile.noticeboardSettings) ? profile.noticeboardSettings : {}
+		return (profile && profile.noticeboardAndBroadcastSetting) ? profile.noticeboardAndBroadcastSetting : {}
 	},
 	getTaskSetting (profile) {
 		profile = profile || getProfile()
-		return (profile && profile.taskSettings) ? profile.taskSettings : {}
+		return (profile && profile.taskSetting) ? profile.taskSetting : {}
 	},
 
 	async updateNoticeboardAndBroadcastSetting (username, position) {

@@ -113,9 +113,10 @@ class TableBody extends Component {
 			if (isFun(this.props.trClassName)) {
 				trClassName = this.props.trClassName(data, r)
 			}
+			// selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
 			const result = [ <TableRow isSelected={selected} key={key} className={trClassName}
 				index={r}
-				selectRow={isSelectRowDefined ? this.props.selectRow : undefined}
+				selectRow={this.props.selectRow}
 				enableCellEdit={cellEdit.mode !== Const.CELL_EDIT_NONE}
 				onRowClick={this.handleRowClick.bind(this)}
 				onRowDoubleClick={this.handleRowDoubleClick.bind(this)}
@@ -303,7 +304,7 @@ class TableBody extends Component {
 		if (CustomComponent) {
 			inputComp = <CustomComponent type={inputType} checked={selected} disabled={disabled} rowIndex={rowIndex} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
 		} else if (inputType === 'checkbox') {
-			inputComp = <div className={classSet('input-check', {checked: selected, disabled})} onClick={() => { this.handleSelectRowColumChange({currentTarget: {checked: !selected}}, rowIndex) }} />
+			inputComp = <div className={classSet('input-check', {checked: selected, disabled})} onClick={(e) => { e.stopPropagation(); this.handleSelectRowColumChange({currentTarget: {checked: !selected}}, rowIndex) }} />
 		} else {
 			inputComp = <input type={inputType} checked={selected} disabled={disabled} onChange={e => this.handleSelectRowColumChange(e, rowIndex)} />
 		}
