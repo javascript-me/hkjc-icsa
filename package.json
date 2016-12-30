@@ -50,7 +50,7 @@
     "type": "git",
     "url": "git@git.epam.com:hkjc-icsa.git"
   },
-  "author": "Gábor Czigola <gabor_czigola@epam.com>",
+  "author": "EPAM Shenzhen HKJC-ICSA Team",
   "private": true,
   "dependencies": {
     "apidoc": "0.16.1",
