@@ -151,3 +151,39 @@
 .right-task-container {
 	background: #FFFFFF;
 }
+
+.task-panel {
+	.pull-left {
+		float: none !important;
+		display: inline-block;
+	}
+
+	.bordered-div {
+		div.pull-right {
+			display: none;
+		}
+	}
+
+	.noticeboard-content .right-radio-container .style-div .bordered-div {
+		div {
+			height: 100%;
+
+			span {
+				height: 100%;
+			}
+
+			&:first-child {
+				display: none;
+			}
+		}
+
+		.top-gap {
+			margin-top: 0;
+		}
+	}
+
+	.noticeboard-content .bottom-radio-container .style-div .bordered-div div,
+	.noticeboard-content .bottom-radio-container .style-div .bordered-div div {
+		width: 100%;
+	}
+}

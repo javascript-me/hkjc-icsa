@@ -464,11 +464,11 @@ export default React.createClass({
 				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard And Broadcast Setting' onConfirm={this.applySettings} onOverlayClicked={this.syncNoticeboardAndBroadcastPanelPosition} onCancel={this.syncNoticeboardAndBroadcastPanelPosition}>
 					<NotificationsPopup setting={this.state.selectedNoticeboardAndBroadcastPanelPosition} onChangePosition={this.onChangeSetting} />
 				</Popup>
-
-				<Popup hideOnOverlayClicked ref='taskPopup' title='Task Setting' onConfirm={this.applySettingsForTaskPanel} onOverlayClicked={this.syncTaskPanelPosition} onCancel={this.syncTaskPanelPosition}>
-					<NotificationsPopup setting={this.state.selectedTaskPanelPosition} onChangePosition={this.onChangeSettingForTaskPanel} />
-				</Popup>
-
+				<div className='task-panel'>
+					<Popup hideOnOverlayClicked ref='taskPopup' title='Task Setting' onConfirm={this.applySettingsForTaskPanel} onOverlayClicked={this.syncTaskPanelPosition} onCancel={this.syncTaskPanelPosition}>
+						<NotificationsPopup setting={this.state.selectedTaskPanelPosition} onChangePosition={this.onChangeSettingForTaskPanel} />
+					</Popup>
+				</div>
 				<Popup hideOnOverlayClicked ref='detailPopup'
 					title={this.state.detail.alert_name}
 					showCancel={false}
