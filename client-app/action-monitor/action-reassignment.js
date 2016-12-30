@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import PubSub from '../pubsub'
-
+import Popup from '../popup'
 import { TableComponent, TableHeaderColumn } from '../table'
 import API from '../api-service'
 import LoginService from '../login/login-service'
@@ -134,25 +134,27 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<div ref='root' className='action-reassignment'>
-				<div className='serch-header'>
-					<input type='text' maxLength='100' placeholder='Keywords' value={this.state.keyword} onChange={this.handleInputChange} />
-					<img className='search-icon' src='common/search.svg' />
+			<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
+				<div ref='root' className='action-reassignment'>
+					<div className='serch-header'>
+						<input type='text' maxLength='100' placeholder='Keywords' value={this.state.keyword} onChange={this.handleInputChange} />
+						<img className='search-icon' src='common/search.svg' />
 
-					<label className='radio-inline'>
-						<input type='radio' name='reassignment' value={RADIO_USER} checked={this.state.radioValue === RADIO_USER} onChange={this.onRadioChange} /> User
-					</label>
-					<label className='radio-inline'>
-						<input type='radio' name='reassignment' value={RADIO_ROLE} checked={this.state.radioValue === RADIO_ROLE} onChange={this.onRadioChange} /> User Role
-					</label>
+						<label className='radio-inline'>
+							<input type='radio' name='reassignment' value={RADIO_USER} checked={this.state.radioValue === RADIO_USER} onChange={this.onRadioChange} /> User
+						</label>
+						<label className='radio-inline'>
+							<input type='radio' name='reassignment' value={RADIO_ROLE} checked={this.state.radioValue === RADIO_ROLE} onChange={this.onRadioChange} /> User Role
+						</label>
+					</div>
+
+					<div className='tableComponent-container'>
+						{this.props.task && this.renderTable()}
+					</div>
+
+					{this.state.radioValue === RADIO_ROLE && this.renderRoles()}
 				</div>
-
-				<div className='tableComponent-container'>
-					{this.renderTable()}
-				</div>
-
-				{this.state.radioValue === RADIO_ROLE && this.renderRoles()}
-			</div>
+			</Popup>
 		)
 	},
 	renderTable () {
@@ -240,5 +242,8 @@ export default React.createClass({
 			selected = task.assigneeUserRoles.split(',')
 		}
 		return selected
+	},
+	show () {
+		this.refs.popupReassignment.show()
 	}
 })
