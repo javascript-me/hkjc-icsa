@@ -48,6 +48,7 @@ const updateAcknowledgeStatusById = async (username, id, command) => {
 }
 
 let refreshNoticesToken = null
+let refreshActionsToken = null
 
 export default React.createClass({
 	propTypes: {
@@ -159,10 +160,15 @@ export default React.createClass({
 		})
 
 		this.getAllTasks()
+		refreshActionsToken = PubSub.subscribe(PubSub.REFRESH_ACTIONS, () => {
+			location.href = '#/page/actionmonitor'
+			this.getAllTasks()
+		})
 	},
 
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(refreshNoticesToken)
+		PubSub.unsubscribe(refreshActionsToken)
 		this.interval = clearInterval(this.interval)
 	},
 
@@ -395,7 +401,7 @@ export default React.createClass({
 			<div className='header-container'>
 				<div className='pull-right'>
 					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+					<span className='noticeboard-settings-container'><a onClick={this.openPopup}><img src='icon/Setting.svg' /></a></span>
 				</div>
 				<div className='container-title'>
 					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
@@ -413,7 +419,7 @@ export default React.createClass({
 			<div className='header-container'>
 				<div className='pull-right'>
 					<span className='noticeboard-list-container'><a href={'/#/page/broadcast'}><img src='icon/list.svg' /></a></span>
-					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+					<span className='noticeboard-settings-container'><a onClick={this.openPopup}><img src='icon/Setting.svg' /></a></span>
 				</div>
 				<div className='container-title'>
 					<span className='noticeboard-icon-container'><img src='icon/broadcast-off.svg' style={{'width': '16px', 'height': '16px'}} /></span>
@@ -428,8 +434,8 @@ export default React.createClass({
 		let taskPanel = <div className={this.getTaskClassName()}>
 			<div className='header-container'>
 				<div className='pull-right'>
-					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openTaskPopup} /></span>
+					<span className='noticeboard-list-container'><a href={'/#/page/actionmonitor'}><img src='icon/list.svg' /></a></span>
+					<span className='noticeboard-settings-container'><a onClick={this.openTaskPopup}><img src='icon/Setting.svg' /></a></span>
 				</div>
 				<div className='container-title'>
 					<span className='noticeboard-icon-container'><img src='icon/icon-action.svg' /></span>
@@ -438,8 +444,8 @@ export default React.createClass({
 			</div>
 			<div className='messages-container colour-container'>
 				<TabBar onChangeTab={this.changeActionsTab} tabData={this.state.tabDataActions} displayPosition={this.state.taskPanelPosition} />
-				<NoticeList data={this.state.actionsBoxData.allTasks} visible={this.state.allTasksVisible} displayPosition={this.state.taskPanelPosition} />
-				<NoticeList data={this.state.actionsBoxData.myTasks} visible={this.state.myTasksVisible} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList onTaskAproved={this.onTaskAproved} data={this.state.actionsBoxData.allTasks} visible={this.state.allTasksVisible} displayPosition={this.state.taskPanelPosition} />
+				<NoticeList onTaskAproved={this.onTaskAproved} data={this.state.actionsBoxData.myTasks} visible={this.state.myTasksVisible} displayPosition={this.state.taskPanelPosition} />
 			</div>
 		</div>
 
@@ -464,11 +470,11 @@ export default React.createClass({
 				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard And Broadcast Setting' onConfirm={this.applySettings} onOverlayClicked={this.syncNoticeboardAndBroadcastPanelPosition} onCancel={this.syncNoticeboardAndBroadcastPanelPosition}>
 					<NotificationsPopup setting={this.state.selectedNoticeboardAndBroadcastPanelPosition} onChangePosition={this.onChangeSetting} />
 				</Popup>
-
-				<Popup hideOnOverlayClicked ref='taskPopup' title='Task Setting' onConfirm={this.applySettingsForTaskPanel} onOverlayClicked={this.syncTaskPanelPosition} onCancel={this.syncTaskPanelPosition}>
-					<NotificationsPopup setting={this.state.selectedTaskPanelPosition} onChangePosition={this.onChangeSettingForTaskPanel} />
-				</Popup>
-
+				<div className='task-panel'>
+					<Popup hideOnOverlayClicked ref='taskPopup' title='Task Setting' onConfirm={this.applySettingsForTaskPanel} onOverlayClicked={this.syncTaskPanelPosition} onCancel={this.syncTaskPanelPosition}>
+						<NotificationsPopup setting={this.state.selectedTaskPanelPosition} onChangePosition={this.onChangeSettingForTaskPanel} />
+					</Popup>
+				</div>
 				<Popup hideOnOverlayClicked ref='detailPopup'
 					title={this.state.detail.alert_name}
 					showCancel={false}
@@ -495,6 +501,15 @@ export default React.createClass({
 			actionsBoxData: {
 				allTasks: tasks,
 				myTasks: myTasks
+			}
+		})
+	},
+	onTaskAproved (data) {
+		$.post('api/actions/edit', {
+			data: data
+		}).then((data) => {
+			if (data.status) {
+				this.getAllTasks()
 			}
 		})
 	}

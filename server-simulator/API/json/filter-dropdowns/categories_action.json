@@ -1,0 +1,18 @@
+[
+	{
+		"id": "Before Sell",
+		"value": "Before Sell"
+	},
+	{
+		"id": "Start Sell",
+		"value": "Start Sell"
+	},
+	{
+		"id": "Pre-Event",
+		"value": "Pre-Event"
+	},
+	{
+		"id": "In-Play",
+		"value": "In-Play"
+	}
+]

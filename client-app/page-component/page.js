@@ -45,10 +45,10 @@ export default React.createClass({
 	getDefaultSelectedFilters () {
 		return [{
 			name: this.props.options.dateRange.fieldFrom,
-			value: originDateRange.dateTimeFrom
+			value: this.props.options.dateRange.fieldFromDefault || originDateRange.dateTimeFrom // add set default value
 		}, {
 			name: this.props.options.dateRange.fieldTo,
-			value: originDateRange.dateTimeTo
+			value: this.props.options.dateRange.fieldToDefault || originDateRange.dateTimeTo // // add set default value
 		}]
 	},
 
@@ -97,7 +97,7 @@ export default React.createClass({
 			if (column.props.dateRange) {
 				const filters = [ <FilterPanelColumn key='dateRange1' filterName={this.props.options.dateRange.fieldFrom}
 					filterTitle={this.props.options.dateRange.fieldFromTitle}
-					filterValue={originDateRange.dateTimeFrom}
+					filterValue={this.props.options.dateRange.fieldFromDefault || originDateRange.dateTimeFrom}
 					ctrlType='calendar'
 					isRequired={column.props.isRequired}
 					pairingVerify={[{
@@ -106,7 +106,7 @@ export default React.createClass({
 					}]} />,
 					<FilterPanelColumn key='dateRange2' filterName={this.props.options.dateRange.fieldTo}
 						filterTitle={this.props.options.dateRange.fieldToTitle}
-						filterValue={originDateRange.dateTimeTo}
+						filterValue={this.props.options.dateRange.fieldToDefault || originDateRange.dateTimeTo}
 						ctrlType='calendar'
 						isRequired={column.props.isRequired}
 						pairingVerify={[{
@@ -325,7 +325,9 @@ export default React.createClass({
 			case 'keyword':
 				return `${filter.name}: ${filter.value}`
 			default:
-				return Array.isArray(filter.value) ? filter.value.map(e => { return e.label }).join(', ') : filter.value
+				return Array.isArray(filter.value)
+				? filter.value.map(e => { return e.label }).join(', ')
+				: ((filter.value instanceof moment) ? filter.value.format('DD MMM YYYY HH:mm:ss') : filter.value) // fix the filter is calendar value
 			}
 		}
 
@@ -472,7 +474,10 @@ export default React.createClass({
 				fieldTo: PropTypes.string,
 				fieldToTitle: PropTypes.string,
 				fieldFrom: PropTypes.string,
-				fieldFromTitle: PropTypes.string
+				fieldFromTitle: PropTypes.string,
+				fieldFromDefault: PropTypes.string,
+				fieldToDefault: PropTypes.string
+
 			})
 		}),
 		children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),

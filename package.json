@@ -40,6 +40,9 @@
     "dev:run:node":"node dist/simulator/index.min.js",
     "dev:server:stop": "pm2 stop hkjc-ics-server || exit 0",
     "dev:server:start": "pm2 start dist/simulator/index.min.js --name=hkjc-ics-server",
+    "dev:watch": "run-s dev:watch:js dev:watch:css",
+    "dev:watch:js": "watchify client-app/index.js -o dist/thin/index.min.js -v",
+    "dev:watch:css": "onchange client-app/**/*.less -- npm run css",
     "dist": "npm install && run-s lint test && cross-env NODE_ENV=production run-s build",
     "lint": "run-p lint:less lint:js",
     "lint:less": "stylelint \"client-app/**/*.less\" --syntax less",
@@ -50,7 +53,7 @@
     "type": "git",
     "url": "git@git.epam.com:hkjc-icsa.git"
   },
-  "author": "Gábor Czigola <gabor_czigola@epam.com>",
+  "author": "EPAM Shenzhen HKJC-ICSA Team",
   "private": true,
   "dependencies": {
     "apidoc": "0.16.1",
