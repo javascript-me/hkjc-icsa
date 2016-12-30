@@ -54,8 +54,9 @@ it('footballFilter', () => {
 	expect(result.data.length === 0).to.be.true
 
 	result = EventDirectoryUtil.footballFilter(football, {
-		keyword: '',
-		eventType: 'In-Play,Assigned',
+		// keyword: '',
+		eventType: 'Assigned,In-Play,Pre-Event,Prelim,Defined,Major',
+		competition: '',
 		from: '',
 		to: ''
 	})

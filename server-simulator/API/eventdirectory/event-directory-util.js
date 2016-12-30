@@ -35,7 +35,7 @@ function footballFilter (football, param) {
 		record.t2 = item.t2
 		record.t2Tip = item.t2Tip
 		record.active = 0
-		if (match === 'L3') {
+		if (match === 'L3' && keyword) {
 			if (item.t1.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
 				record.active = 1
 			} else {
