@@ -3,10 +3,12 @@ import {TableHeaderColumn} from '../table'
 import { PageComponent, PageLayer } from '../page-component'
 import LoginService from '../login/login-service'
 import TaskDetail from '../task-detail'
-// import config from '../config'
+import PubSub from '../pubsub'
 import API from '../api-service'
 import ActionReassignment from './action-reassignment'
 import Popup from '../popup'
+
+let refreshActionsToken = null
 
 const priorityMap = {
 	'Critical': 1,
@@ -53,6 +55,7 @@ export default React.createClass({
 	},
 
 	componentWillMount () {
+		refreshActionsToken = PubSub.subscribe(PubSub.REFRESH_ACTIONS, this.refreshData)
 		API.addListener('change', this.APIChange)
 		let profile = LoginService.getProfile()
 		this.userID = ''
@@ -64,6 +67,7 @@ export default React.createClass({
 	},
 
 	componentWillUnmount () {
+		PubSub.unsubscribe(refreshActionsToken)
 		API.unsubscribeListener('change', this.APIChange)
 	},
 
@@ -167,17 +171,22 @@ export default React.createClass({
 		filters.userID = this.userID
 		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},
+	refreshData () {
+		let criteriaOption = this.refs.pageRef ? this.refs.pageRef.getSearchCriterias() : null
+		criteriaOption && this.onSearch(criteriaOption)
+	},
 
 	render () {
 		return this.state.version > 8 ? (
 
 			<div className='action-monitor'>
 				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
-					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} refresh={this.getData} />
+					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} />
 				</Popup>
 
 				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
 				<PageComponent
+					ref='pageRef'
 					tableLoading={this.state.loading}
 					key={this.state.version}
 					tableData={this.state.tableData}
