@@ -98,6 +98,15 @@ export default React.createClass({
 	onRadioChange () {
 		this.setState({radioValue: this.state.radioValue === RADIO_USER ? RADIO_ROLE : RADIO_USER, keyword: '', tableChangeFlag: false})
 	},
+	hasNoSelectData () {
+		let selected = []
+		if (this.state.radioValue === RADIO_USER) {
+			selected = this.getSelectUser()
+		} else {
+			selected = this.getSelectRoles()
+		}
+		return selected.length === 0
+	},
 	getSelectData () {
 		const retObj = {
 			type: this.state.radioValue,
@@ -134,7 +143,7 @@ export default React.createClass({
 	},
 	render () {
 		return (
-			<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
+			<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} confirmBtnDisabled={this.hasNoSelectData()} >
 				<div ref='root' className='action-reassignment'>
 					<div className='serch-header'>
 						<input type='text' maxLength='100' placeholder='Keywords' value={this.state.keyword} onChange={this.handleInputChange} />
@@ -158,7 +167,6 @@ export default React.createClass({
 		)
 	},
 	renderTable () {
-		const task = this.props.task
 		let radioValue = this.state.radioValue
 		let keyword = this.state.keyword.toLowerCase()
 		let selected = []
@@ -166,9 +174,7 @@ export default React.createClass({
 		let tableData
 
 		if (radioValue === RADIO_USER) {
-			if (task.assigneeUserID) {
-				selected.push(task.assigneeUserID)
-			}
+			selected = this.getSelectUser()
 			tableData = this.state.usersData.filter((item) => {
 				return !keyword || item.displayName.toLowerCase().indexOf(keyword) > -1
 			})
@@ -177,7 +183,7 @@ export default React.createClass({
 					loading={this.state.loadingUser}
 					ref='tableCmpUser'
 					data={tableData}
-					selectRow={{clickToSelect: true, bgColor: '#FCF6C8', selected}}
+					selectRow={{clickToSelect: true, bgColor: '#FCF6C8', selected, onAfterSelect: this.onAfterSelectRole}}
 					striped
 					keyField='userID'
 					tableHeaderClass='table-header'
@@ -232,12 +238,27 @@ export default React.createClass({
 	onAfterSelectRole () {
 		this.setState({tableChangeFlag: true})
 	},
+	getSelectUser () {
+		const task = this.props.task
+		let tableChangeFlag = this.state.tableChangeFlag
+		let selected = []
+		if (tableChangeFlag) {
+			if (this.refs.tableCmpUser) {
+				selected = this.refs.tableCmpUser.store.getSelectedRowKeys()
+			}
+		} else if (task && task.assigneeUserID) {
+			selected.push(task.assigneeUserID)
+		}
+		return selected
+	},
 	getSelectRoles () {
 		const task = this.props.task
 		let tableChangeFlag = this.state.tableChangeFlag
 		let selected = []
 		if (tableChangeFlag) {
-			selected = this.refs.tableCmpRole.store.getSelectedRowKeys()
+			if (this.refs.tableCmpRole) {
+				selected = this.refs.tableCmpRole.store.getSelectedRowKeys()
+			}
 		} else if (task.assigneeUserRoles) {
 			selected = task.assigneeUserRoles.split(',')
 		}
