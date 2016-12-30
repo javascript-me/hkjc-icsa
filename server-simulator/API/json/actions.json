@@ -29,7 +29,7 @@
 		"targetCompletionDateTime": "26 Dec 2016 09:30:00",
 		"taskType": "execute",
 		"buttonName": "Odds Adjustment Panel",
-		"lockStatus": 0
+		"lockStatus": 1
 	},
 	{
 		"taskID": "TK3",
@@ -77,7 +77,7 @@
 		"targetCompletionDateTime": "24 Apr 2017 18:30:00",
 		"taskType": "advance",
 		"buttonName": "Odds Adjustment Panel",
-		"lockStatus": 1
+		"lockStatus": 0
 	},
 	{
 		"taskID": "TK6",
@@ -125,7 +125,7 @@
 		"targetCompletionDateTime": "11 Dec 2017 18:30:00",
 		"taskType": "execute",
 		"buttonName": "Odds Adjustment Panel",
-		"lockStatus": 0
+		"lockStatus": 3
 	},
 	{
 		"taskID": "TK9",
@@ -141,7 +141,7 @@
 		"targetCompletionDateTime": "11 Dec 2017 18:30:00",
 		"taskType": "execute",
 		"buttonName": "Odds Adjustment Panel",
-		"lockStatus": 0
+		"lockStatus": 3
 	},
 	{
 		"taskID": "TK10",
@@ -157,7 +157,7 @@
 		"targetCompletionDateTime": "11 May 2017 18:30:00",
 		"taskType": "simple",
 		"buttonName": "Odds Adjustment Panel",
-		"lockStatus": 3
+		"lockStatus": 0
 	},
 	{
 		"taskID": "TK11",
@@ -173,7 +173,7 @@
 		"targetCompletionDateTime": "11 Jan 2017 18:30:00",
 		"taskType": "advance",
 		"buttonName": "Odds Adjustment Panel",
-		"lockStatus": 3
+		"lockStatus": 0
 	},
 	{
 		"taskID": "TK12",
@@ -189,7 +189,7 @@
 		"targetCompletionDateTime": "11 Jan 2017 18:30:00",
 		"taskType": "execute",
 		"buttonName": "Odds Adjustment Panel",
-		"lockStatus": 0
+		"lockStatus": 2
 	},
 	{
 		"taskID": "TK13",
@@ -238,5 +238,21 @@
 		"taskType": "advance",
 		"buttonName": "Odds Adjustment Panel",
 		"lockStatus": 0
+	},
+	{
+		"taskID": "TK16",
+		"taskName": "MUN vs ABC - POSITION 90%",
+		"priority": "Critical",
+		"taskDescription": "<Odds Compilation Task> has been assigned to you due to the odds re-finalisation. Please kindly complete your Odds Compilation Task ASAP.",
+		"category": "Pre-Event",
+		"assigneeUserID": "",
+		"assigneeUserRoles": "Trading Supervisor",
+		"assigneeDepartmentId": "",
+		"taskStatus": "New",
+		"distributionDateTime": "23 Dec 2016 08:30:00",
+		"targetCompletionDateTime": "11 Feb 2017 18:30:00",
+		"taskType": "execute",
+		"buttonName": "Odds Adjustment Panel",
+		"lockStatus": 3
 	}
 ]
