@@ -8,6 +8,13 @@ import API from '../api-service'
 import ActionReassignment from './action-reassignment'
 import Popup from '../popup'
 
+const priorityMap = {
+	'Critical': 1,
+	'High': 2,
+	'Medium': 3,
+	'Low': 4
+}
+
 export default React.createClass({
 	displayName: 'Audit',
 
@@ -51,6 +58,7 @@ export default React.createClass({
 		this.userID = ''
 		if (profile) {
 			this.userID = profile.userID
+			this.admin = profile.admin
 		}
 		this.getData()
 	},
@@ -116,6 +124,10 @@ export default React.createClass({
 	boolFormat (cell, row) {
 		return cell ? 'Yes' : 'No'
 	},
+	sortByPriority (a, b, order, sortField, sortFuncExtraData) {
+		let compareVal = priorityMap[a[sortField]] - priorityMap[b[sortField]]
+		return order === 'asc' ? compareVal : -compareVal
+	},
 	priorityFormatter (cell, row) {
 		if (cell === 'Critical') return <span><img src='notice-board/Critical.svg' title='Critical' /></span>
 		if (cell === 'High') return <span><img src='notice-board/High.svg' title='High' /></span>
@@ -136,9 +148,15 @@ export default React.createClass({
 				<span className='assignee'>
 					{assigneeText}
 				</span>
-				{ row.taskStatus === 'New' && <img src='icon/reassign.svg' onClick={e => this.clickReassign(e, row)} /> }
+				{ this.canReassign(row) && <img src='icon/reassign.svg' onClick={e => this.clickReassign(e, row)} /> }
 			</span>
 		)
+	},
+	canReassign (task) {
+		const isSuppervicer = this.admin
+		const isReadonly = task.taskStatus !== 'New'
+		const isExecute = task.taskType === 'execute'
+		return isSuppervicer && isReadonly && isExecute
 	},
 	onSearch (params) {
 		this.setState({
@@ -172,10 +190,10 @@ export default React.createClass({
 
 					<PageLayer typeLayer='body'>
 						<TableHeaderColumn dataField='taskID' autoValue hidden isKey>ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='priority' dataSort dataFormat={this.priorityFormatter} isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.priorities}}>Priority</TableHeaderColumn>
+						<TableHeaderColumn dataField='priority' dataSort dataFormat={this.priorityFormatter} sortFunc={this.sortByPriority} isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.priorities}}>Priority</TableHeaderColumn>
 						<TableHeaderColumn dataField='distributionDateTime' dataSort isFilter dateRange>Distribution Date & Time</TableHeaderColumn>
 						<TableHeaderColumn dataField='taskDescription' dataSort dataFormat={this.detailFormatter}>Task Description</TableHeaderColumn>
-						<TableHeaderColumn dataField='targetCompletionDateTime' dataSort isFilter filterOptions={{ctrlType: 'calendar'}}>Target completion Time</TableHeaderColumn>
+						<TableHeaderColumn dataField='targetCompletionDateTime' dataSort isFilter filterOptions={{ctrlType: 'calendar'}}>Target Completion Time</TableHeaderColumn>
 						<TableHeaderColumn dataField='sports' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.sports}} hidden>Sports</TableHeaderColumn>
 						<TableHeaderColumn dataField='competitions' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.competitions}} hidden>Competition</TableHeaderColumn>
 						<TableHeaderColumn dataField='matchs' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.matches}} hidden>Match</TableHeaderColumn>

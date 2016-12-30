@@ -1,6 +1,15 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
+const statusTips = {
+	'Assigned': 'In-Play available',
+	'In-Play': 'In-Play in progress',
+	'Pre-Event': 'In-Play in progress',
+	'Prelim': 'In-Play in progress',
+	'Defined': 'In-Play available, pending for reopen sell',
+	'Major': 'In-Play available, stopped selling'
+}
+
 export default React.createClass({
 	displayName: 'SearchRecord',
 	propTypes: {
@@ -20,7 +29,7 @@ export default React.createClass({
 		})
 		return (
 			<div ref='root' className='ed-record' onClick={this.props.onClick}>
-				<span className={statusClasses} title={record.status} />
+				<span className={statusClasses} title={statusTips[record.status]} />
 				<span className='ed-record-text'>
 					<span className={record.active === 1 ? 'active' : ''} title={record.t1Tip}>{record.t1}</span> vs <span className={record.active === 2 ? 'active' : ''} title={record.t2Tip}>{record.t2}</span>
 				</span>
