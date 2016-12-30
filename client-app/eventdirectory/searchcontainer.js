@@ -21,10 +21,10 @@ export default React.createClass({
 			result: null
 		}
 	},
-	onSearch (searchParam) {
+	async onSearch (searchParam) {
 		searchParam.type = this.props.type
 		this.setState({result: null})
-		this.getResult(searchParam)
+		await this.getResult(searchParam)
 	},
 	render () {
 		return (

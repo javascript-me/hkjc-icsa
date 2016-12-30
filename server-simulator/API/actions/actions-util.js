@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 
 const accountProfiles = require('../json/accountprofiles.json')
 
@@ -25,6 +26,19 @@ function getAdmin (account) {
 	return bAdmin
 }
 
+function compare (property) {
+	let priorityMap = {
+		'Critical': 1,
+		'High': 2,
+		'Medium': 3,
+		'Low': 4
+	}
+
+	return function (a, b) {
+		return priorityMap[a['priority']] > priorityMap[b['priority']] ? 1 : -1
+	}
+}
+
 function listFilter (allActions, param) {
 	// parse account infomation
 	const userID = param.userID
@@ -47,7 +61,10 @@ function listFilter (allActions, param) {
 	})
 
 	// get param
-	const keyWord = param.keyWord
+	const keyWord = param.keyword
+	const priority = param.priority
+	const taskStatus = param.taskStatus
+	const assigneeUserID = param.assigneeUserID
 
 	// do filter as below
 	let results
@@ -60,18 +77,57 @@ function listFilter (allActions, param) {
 
 	if (keyWord) {
 		results = results.filter((task) => {
-			return task.taskDescription.indexOf(keyWord) > -1
+			return task.taskDescription.toLowerCase().indexOf(keyWord.toLowerCase()) > -1
+		})
+	}
+
+	if (priority) {
+		results = results.filter((task) => {
+			return _.findIndex(priority, (item) => {
+				return item.value === task.priority
+			}) > -1
+		})
+	}
+
+	if (taskStatus) {
+		results = results.filter((task) => {
+			return _.findIndex(taskStatus, (item) => {
+				return item.value === task.taskStatus
+			}) > -1
+		})
+	}
+
+	if (assigneeUserID) {
+		results = results.filter((task) => {
+			let beOk = false
+			if (task.assigneeUserID) {
+				const userAccount = getAccount(task.assigneeUserID)
+				if (userAccount && userAccount.displayName.toLowerCase().indexOf(assigneeUserID.toLowerCase()) > -1) {
+					beOk = true
+				}
+			} else if (task.assigneeUserRoles) {
+				beOk = task.assigneeUserRoles.toLowerCase().indexOf(assigneeUserID.toLowerCase()) > -1
+			} else if (task.assigneeDepartmentId) {
+				beOk = task.assigneeDepartmentId.toLowerCase().indexOf(assigneeUserID.toLowerCase()) > -1
+			}
+			return beOk
 		})
 	}
 
 	if (param.type === 'allTasks') {
-		let allTasks = [].concat(myTasksData, partTasksData1, partTasksData2)
-		results = allTasks
+		let allTasks = [].concat(myTasksData, partTasksData1, partTasksData2).filter((item) => {
+			return item.taskStatus === 'New'
+		})
+		let newData = allTasks.sort(compare('priority'))
+		results = newData
 	}
 
 	if (param.type === 'myTasks') {
-		let myTasks = myTasksData
-		results = myTasks
+		let myTasks = myTasksData.filter((item) => {
+			return item.taskStatus === 'New'
+		})
+		let newData = myTasks.sort(compare('priority'))
+		results = newData
 	}
 
 	// generate results
@@ -86,6 +142,42 @@ function listFilter (allActions, param) {
 	return results
 }
 
+function reassignmentUser (allActions, param) {
+	// const userID = param.userID
+	const taskID = param.taskID
+	const assigneeUserID = param.assigneeUserID
+
+	allActions.forEach((task) => {
+		if (task.taskID === taskID) {
+			task.assigneeUserID = assigneeUserID
+			task.assigneeUserRoles = ''
+			task.assigneeDepartmentId = ''
+			task.distributionDateTime = moment(new Date()).format('DD MMM YYYY HH:mm:ss')
+		}
+	})
+
+	return {msg: 'OK'}
+}
+
+function reassignmentUserRole (allActions, param) {
+	// const userID = param.userID
+	const taskID = param.taskID
+	const assigneeUserRoles = param.assigneeUserRoles
+
+	allActions.forEach((task) => {
+		if (task.taskID === taskID) {
+			task.assigneeUserID = ''
+			task.assigneeUserRoles = assigneeUserRoles
+			task.assigneeDepartmentId = ''
+			task.distributionDateTime = moment(new Date()).format('DD MMM YYYY HH:mm:ss')
+		}
+	})
+
+	return {msg: 'OK'}
+}
+
 export default {
-	listFilter: listFilter
+	listFilter: listFilter,
+	reassignmentUser: reassignmentUser,
+	reassignmentUserRole: reassignmentUserRole
 }

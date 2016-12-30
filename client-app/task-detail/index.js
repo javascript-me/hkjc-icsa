@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 import Popup from '../popup'
 import dateTool from '../formatter/date-formatter.js'
+// import LoginService from '../login/login-service.js'
+
+// const userProfile = LoginService.getProfile()
+// console.log(userProfile)
 
 class TaskDetailBox extends Component {
 	constructor (props) {
@@ -9,6 +13,7 @@ class TaskDetailBox extends Component {
 			isAllowApprove: false
 		}
 		this.showTask = this.showTask.bind(this)
+		this.onReAssign = this.onReAssign.bind(this)
 		this.onSimpleTastApprove = this.onSimpleTastApprove.bind(this)
 	}
 	onSimpleTastApprove (type) {
@@ -29,6 +34,7 @@ class TaskDetailBox extends Component {
 		let color = this.getTitleColor(priority)
 		let diffentOptions = {}
 		let statusIconClassName = this.getIconClass(lockStatus)
+		let isReadonly = taskStatus !== 'New'
 
 		switch (taskType) {
 		case ('execute'): {
@@ -37,8 +43,8 @@ class TaskDetailBox extends Component {
 				inputArea: false,
 				confirmBtn: {text: buttonName, func: taskExcFunc},
 				secondBtn: null,
-				otherBtn: isSuppervicer
-								? {text: 'Reassign', func: this.handleAssign}
+				otherBtn: !isReadonly && isSuppervicer
+								? {text: 'Reassign', func: this.onReAssign}
 								: null
 			}
 		} break
@@ -77,29 +83,30 @@ class TaskDetailBox extends Component {
 				headerColor={color}
 				title={taskName}
 				showCloseIcon
+				showCancel={false}
 				confirmBtn={diffentOptions.confirmBtn.text}
-				cancelBtn={diffentOptions.secondBtn && diffentOptions.secondBtn.text}
+				secondFuncBtn={diffentOptions.secondBtn && diffentOptions.secondBtn.text}
 				otherBtn={diffentOptions.otherBtn && diffentOptions.otherBtn.text}
 				showOther={diffentOptions.otherBtn}
-				showCancel={!!diffentOptions.secondBtn}
+				showSecondFunc={!!diffentOptions.secondBtn}
 				onConfirm={diffentOptions.confirmBtn.func}
-				onCancel={diffentOptions.secondBtn && diffentOptions.secondBtn.func}
+				onSecondFunc={diffentOptions.secondBtn && diffentOptions.secondBtn.func}
 				onOther={diffentOptions.otherBtn && diffentOptions.otherBtn.func}
-				confirmBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove}
-				cancelBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove} >
+				confirmBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove || isReadonly}
+				secondFuncBtnDisabled={(taskType === 'simple') && !this.state.isAllowApprove || isReadonly} >
 				<div className='info-part'>
 					{taskStatus && <span><span className='field'>Status:</span><span className='value'>{taskStatus}</span></span>}
 					{category && <span><span className='field'>Category:</span><span className='value'>{category}</span></span>}
-					{distributionDateTime && <span><span className='field'>Received Time:</span><span className='value'>{dateTool.toDDMMMYYY(distributionDateTime)}</span></span>}
-					{targetCompletionDateTime && <span><span className='field'>Target Time:</span><span className='value'>{dateTool.toDDMMMYYY(targetCompletionDateTime)}</span></span>}
+					{distributionDateTime && <span><span className='field'>Distribution Date & Time:</span><span className='value'>{dateTool.toDDMMMYYY(distributionDateTime)}</span></span>}
+					{targetCompletionDateTime && <span><span className='field'>Target Completion Time:</span><span className='value'>{dateTool.toDDMMMYYY(targetCompletionDateTime)}</span></span>}
 					<div className={statusIconClassName} />
 				</div>
 				<div className='task-content'>
 					<div className='detail-text'>{taskDescription}</div>
-					<div className='input-part' style={{display: (diffentOptions.inputArea && diffentOptions.secondBtn) ? 'block' : 'none'}}>
+					{!isReadonly && <div className='input-part' style={{display: (diffentOptions.inputArea && diffentOptions.secondBtn) ? 'block' : 'none'}}>
 						<div className='tip'>Remark</div>
 						<textarea placeholder='Please add mark' cols='90' rows='5' onChange={(e) => this.handleInputChange(e)} ref='textBox' />
-					</div>
+					</div>}
 				</div>
 
 			</Popup>
@@ -115,6 +122,10 @@ class TaskDetailBox extends Component {
 
 	showTask () {
 		this.refs.detailPop.show()
+	}
+
+	onReAssign () {
+		this.props.onReAssign && this.props.onReAssign(this.props.taskInfo)
 	}
 
 	getTitleColor (priority) {
@@ -158,7 +169,8 @@ class TaskDetailBox extends Component {
 
 TaskDetailBox.propTypes = {
 	taskInfo: React.PropTypes.object,
-	onApprove: React.PropTypes.func
+	onApprove: React.PropTypes.func,
+	onReAssign: React.PropTypes.func
 }
 TaskDetailBox.defaultProps = {
 	taskInfo: {}
