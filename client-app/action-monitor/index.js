@@ -190,7 +190,6 @@ export default React.createClass({
 		if (this.refreshCount === 1) {
 			this.refreshCount = 2
 		} else if (this.refreshCount === 2) {
-			this.refreshCount = 0
 			return
 		}
 
