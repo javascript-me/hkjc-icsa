@@ -6,7 +6,6 @@ import TaskDetail from '../task-detail'
 import PubSub from '../pubsub'
 import API from '../api-service'
 import ActionReassignment from './action-reassignment'
-import Popup from '../popup'
 import moment from 'moment'
 
 const initTimeRange = {
@@ -66,6 +65,7 @@ export default React.createClass({
 	},
 
 	componentWillMount () {
+		this.refreshCount = 0
 		refreshActionsToken = PubSub.subscribe(PubSub.REFRESH_ACTIONS, this.refreshData)
 		API.addListener('change', this.APIChange)
 		let profile = LoginService.getProfile()
@@ -122,16 +122,29 @@ export default React.createClass({
 		switch (extra) {
 		case 'actionList':
 			promise.done(response => {
+				if (this.refreshCount !== 0) {
+					this.refreshCount = 0
+				}
 				this.setState({ tableData: response, loading: false })
 			})
 			break
-		default:
+		case 'priorities':
+		case 'categories':
+		case 'taskStatus':
+		case 'matches':
+		case 'competitions':
+		case 'inplay':
+		case 'sports':
+		case 'countries':
+		case 'continents':
 			promise.done(response => {
 				const version = { version: this.state.version + 1 }
 				let newState = {}
 				newState[extra] = response[extra] ? response[extra] : response
 				this.setState(Object.assign(newState, version))
 			})
+			break
+		default:
 			break
 		}
 	},
@@ -169,11 +182,18 @@ export default React.createClass({
 	},
 	canReassign (task) {
 		const isSuppervicer = this.admin
-		const isReadonly = task.taskStatus !== 'New'
+		const isReadonly = task.taskStatus === 'New'
 		const isExecute = task.taskType === 'execute'
 		return isSuppervicer && isReadonly && isExecute
 	},
 	onSearch (params) {
+		if (this.refreshCount === 1) {
+			this.refreshCount = 2
+		} else if (this.refreshCount === 2) {
+			this.refreshCount = 0
+			return
+		}
+
 		this.setState({
 			loading: true
 		})
@@ -185,6 +205,11 @@ export default React.createClass({
 		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},
 	refreshData () {
+		if (this.refreshCount === 0) {
+			this.refreshCount = 1
+		} else {
+			return
+		}
 		let criteriaOption = this.refs.pageRef ? this.refs.pageRef.getSearchCriterias() : null
 		criteriaOption && this.onSearch(criteriaOption)
 	},
@@ -193,15 +218,11 @@ export default React.createClass({
 		return this.state.version > 8 ? (
 
 			<div className='action-monitor'>
-				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
-					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} />
-				</Popup>
-
+				<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} />
 				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
 				<PageComponent
 					ref='pageRef'
 					tableLoading={this.state.loading}
-					key={this.state.version}
 					tableData={this.state.tableData}
 					onSearch={this.onSearch} filtersPerRow={4}
 					options={this.tableOptions}
@@ -233,9 +254,6 @@ export default React.createClass({
 	clickReassign (e, row) {
 		e.stopPropagation()
 		this.setState({reassignTask: row})
-		this.refs.popupReassignment.show()
-	},
-	confirmRessignment () {
-		this.refs.actionReassignment.confirmRessignment()
+		this.refs.actionReassignment.show()
 	}
 })
