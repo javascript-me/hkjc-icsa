@@ -156,8 +156,8 @@ class MenuBar extends Component {
 
 		this.interval = setInterval(() => {
 			getTipsCountPromise(userName).then((data) => {
-				self.setState({tipsNum: data})
-				if (data > 0) {
+				self.setState({tipsNum: data + 1})
+				if (data > 0 && (data === 5 || data === 3)) {
 					audioElement1.play()
 					audioElement2.play()
 				}
