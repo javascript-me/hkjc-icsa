@@ -25,6 +25,7 @@ const priorityMap = {
 
 export default React.createClass({
 	displayName: 'Audit',
+	isFirstTimeSearch: true,
 
 	getInitialState () {
 		this.tableOptions = {
@@ -60,6 +61,7 @@ export default React.createClass({
 			loading: true,
 			tableData: [],
 			version: 0
+
 		}
 	},
 
@@ -83,7 +85,7 @@ export default React.createClass({
 	getData () {
 		API.request('GET', 'api/actions/priorities', {}, 'priorities')
 		API.request('GET', 'api/actions/categories', {}, 'categories')
-		API.request('GET', 'api/actions/status', {}, 'status')
+		API.request('GET', 'api/actions/status', {}, 'taskStatus')
 		API.request('GET', 'api/actions/matches', {}, 'matches')
 		API.request('GET', 'api/actions/inplay', {}, 'inplay')
 		API.request('GET', 'api/actions/competitions', {}, 'competitions')
@@ -178,6 +180,8 @@ export default React.createClass({
 
 		const filters = API.cleanParams(params)
 		filters.userID = this.userID
+		this.isFirstTimeSearch && !filters.taskStatus && (filters.taskStatus = [{label: 'New', value: 'New'}])
+		this.isFirstTimeSearch = false
 		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},
 	refreshData () {
@@ -219,7 +223,7 @@ export default React.createClass({
 						<TableHeaderColumn dataField='continents' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.continents}} hidden>Continent</TableHeaderColumn>
 						<TableHeaderColumn dataField='countries' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.countries}} hidden>Country</TableHeaderColumn>
 						<TableHeaderColumn dataField='category' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.categories}} >Category</TableHeaderColumn>
-						<TableHeaderColumn dataField='taskStatus' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.status, filterValue: [{label: 'New', value: 'New'}]}}>Status</TableHeaderColumn>
+						<TableHeaderColumn dataField='taskStatus' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.taskStatus, filterValue: [{label: 'New', value: 'New'}]}}>Status</TableHeaderColumn>
 						<TableHeaderColumn dataField='assigneeUserID' width='224' dataFormat={this.assigneeFormatter} isFilter >Assignee</TableHeaderColumn>
 					</PageLayer>
 				</PageComponent>
