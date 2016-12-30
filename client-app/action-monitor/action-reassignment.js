@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-// import classNames from 'classnames'
+import PubSub from '../pubsub'
 
 import { TableComponent, TableHeaderColumn } from '../table'
 import API from '../api-service'
@@ -11,8 +11,7 @@ const RADIO_ROLE = 1
 export default React.createClass({
 	displayName: 'ActionReassignment',
 	propTypes: {
-		task: PropTypes.object,
-		refresh: PropTypes.func
+		task: PropTypes.object
 	},
 	getInitialState () {
 		return {
@@ -56,12 +55,12 @@ export default React.createClass({
 			break
 		case 'reassignmentUser':
 			promise.done(response => {
-				this.props.refresh && this.props.refresh()
+				PubSub.publish(PubSub['REFRESH_ACTIONS'])
 			})
 			break
 		case 'reassignmentUserRole':
 			promise.done(response => {
-				this.props.refresh && this.props.refresh()
+				PubSub.publish(PubSub['REFRESH_ACTIONS'])
 			})
 			break
 		default:

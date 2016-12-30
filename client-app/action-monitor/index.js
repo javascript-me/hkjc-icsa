@@ -3,7 +3,7 @@ import {TableHeaderColumn} from '../table'
 import { PageComponent, PageLayer } from '../page-component'
 import LoginService from '../login/login-service'
 import TaskDetail from '../task-detail'
-// import config from '../config'
+import PubSub from '../pubsub'
 import API from '../api-service'
 import ActionReassignment from './action-reassignment'
 import Popup from '../popup'
@@ -12,6 +12,15 @@ import moment from 'moment'
 const initTimeRange = {
 	From: moment().subtract(24, 'months').set({ hour: 0, minute: 0 }).format('DD MMM YYYY HH:mm'),
 	To: moment().set({ hour: 23, minute: 59 }).format('DD MMM YYYY HH:mm')
+}
+
+let refreshActionsToken = null
+
+const priorityMap = {
+	'Critical': 1,
+	'High': 2,
+	'Medium': 3,
+	'Low': 4
 }
 
 export default React.createClass({
@@ -57,16 +66,19 @@ export default React.createClass({
 	},
 
 	componentWillMount () {
+		refreshActionsToken = PubSub.subscribe(PubSub.REFRESH_ACTIONS, this.refreshData)
 		API.addListener('change', this.APIChange)
 		let profile = LoginService.getProfile()
 		this.userID = ''
 		if (profile) {
 			this.userID = profile.userID
+			this.admin = profile.admin
 		}
 		this.getData()
 	},
 
 	componentWillUnmount () {
+		PubSub.unsubscribe(refreshActionsToken)
 		API.unsubscribeListener('change', this.APIChange)
 	},
 
@@ -127,6 +139,10 @@ export default React.createClass({
 	boolFormat (cell, row) {
 		return cell ? 'Yes' : 'No'
 	},
+	sortByPriority (a, b, order, sortField, sortFuncExtraData) {
+		let compareVal = priorityMap[a[sortField]] - priorityMap[b[sortField]]
+		return order === 'asc' ? compareVal : -compareVal
+	},
 	priorityFormatter (cell, row) {
 		if (cell === 'Critical') return <span><img src='notice-board/Critical.svg' title='Critical' /></span>
 		if (cell === 'High') return <span><img src='notice-board/High.svg' title='High' /></span>
@@ -147,9 +163,15 @@ export default React.createClass({
 				<span className='assignee'>
 					{assigneeText}
 				</span>
-				{ row.taskStatus === 'New' && <img src='icon/reassign.svg' onClick={e => this.clickReassign(e, row)} /> }
+				{ this.canReassign(row) && <img src='icon/reassign.svg' onClick={e => this.clickReassign(e, row)} /> }
 			</span>
 		)
+	},
+	canReassign (task) {
+		const isSuppervicer = this.admin
+		const isReadonly = task.taskStatus !== 'New'
+		const isExecute = task.taskType === 'execute'
+		return isSuppervicer && isReadonly && isExecute
 	},
 	onSearch (params) {
 		this.setState({
@@ -162,17 +184,22 @@ export default React.createClass({
 		this.isFirstTimeSearch = false
 		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},
+	refreshData () {
+		let criteriaOption = this.refs.pageRef ? this.refs.pageRef.getSearchCriterias() : null
+		criteriaOption && this.onSearch(criteriaOption)
+	},
 
 	render () {
 		return this.state.version > 8 ? (
 
 			<div className='action-monitor'>
 				<Popup hideOnOverlayClicked ref='popupReassignment' title='Action Reassignment' onConfirm={this.confirmRessignment} >
-					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} refresh={this.getData} />
+					<ActionReassignment ref='actionReassignment' task={this.state.reassignTask} />
 				</Popup>
 
 				<TaskDetail taskInfo={this.state.currentTask} ref='task' onApprove={this.onTaskApprove} onReAssign={this.onReAssign} />
 				<PageComponent
+					ref='pageRef'
 					tableLoading={this.state.loading}
 					key={this.state.version}
 					tableData={this.state.tableData}
@@ -185,7 +212,7 @@ export default React.createClass({
 
 					<PageLayer typeLayer='body'>
 						<TableHeaderColumn dataField='taskID' autoValue hidden isKey>ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='priority' dataSort dataFormat={this.priorityFormatter} isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.priorities}}>Priority</TableHeaderColumn>
+						<TableHeaderColumn dataField='priority' dataSort dataFormat={this.priorityFormatter} sortFunc={this.sortByPriority} isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.priorities}}>Priority</TableHeaderColumn>
 						<TableHeaderColumn dataField='distributionDateTime' dataSort isFilter dateRange>Distribution Date & Time</TableHeaderColumn>
 						<TableHeaderColumn dataField='taskDescription' dataSort dataFormat={this.detailFormatter}>Task Description</TableHeaderColumn>
 						<TableHeaderColumn dataField='targetCompletionDateTime' dataSort isFilter filterOptions={{ctrlType: 'calendar'}}>Target Completion Time</TableHeaderColumn>

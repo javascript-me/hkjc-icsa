@@ -5,6 +5,7 @@
 		"profile": {
 			"username": "allgood",
 			"fullname": "All Good",
+			"admin": true,
 			"userID": "JC10001",
 			"authorizations": {
 				"login.*": "*", 
@@ -25,6 +26,7 @@
 		"profile": {
 			"username": "somegood",
 			"fullname": "All Good",
+			"admin": false,
 			"userID": "JC10003",
 			"authorizations": {
 				"login.*": "*", 
@@ -45,6 +47,7 @@
 		"profile": {
 			"username": "other",
 			"fullname": "All Good",
+			"admin": false,
 			"userID": "JC10009",
 			"authorizations": {
 				"login.*": "*",
@@ -66,6 +69,7 @@
 		"profile": {
 			"username": "expiredAccount",
 			"fullname": "expired Account",
+			"admin": false,
 			"userID": "JC10010",
 			"authorizations": {
 				"login.*": "*",
@@ -87,6 +91,7 @@
 		"profile": {
 			"username": "lockedAccount",
 			"fullname": "locked Account",
+			"admin": false,
 			"userID": "JC10008",
 			"authorizations": {
 				"login.*": "*",
@@ -109,6 +114,7 @@
 		"profile": {
 			"username": "testlocked",
 			"fullname": "test locked",
+			"admin": false,
 			"userID": "JC10008",
 			"authorizations": {
 				"login.*": "*",
@@ -127,6 +133,7 @@
 		"password": "^maybe$",
 		"status": 423,
 		"profile": {
+			"admin": false,
 			"userID": "JC10008",
 			"noticeboardAndBroadcastSetting": {
 				"position": "bottom"
@@ -140,6 +147,7 @@
 		"password": ".*",
 		"status": 500,
 		"profile": {
+			"admin": false,
 			"userID": "JC10008",
 			"noticeboardAndBroadcastSetting": {
 				"position": "bottom"
