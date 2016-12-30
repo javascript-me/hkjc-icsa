@@ -56,7 +56,8 @@ export default React.createClass({
 			{
 				showFilter: false,
 				hasFilter: false,
-				searchEnquiry: {}
+				searchEnquiry: {},
+				searchValidationFalse:[]
 			}
 		)
 	},
@@ -88,8 +89,20 @@ export default React.createClass({
 		this.setState({showFilter: !this.state.showFilter})
 	},
 
+	searchValidation () {
+		let { dateFrom, dateTo } = this.state.searchEnquiry
+		if ((!dateFrom && !dateTo) || (dateFrom && dateTo && moment.max(dateFrom,dateTo) === dateTo )) {
+			this.setState({searchValidationFalse:[]})
+			return true
+		} else {
+			this.setState({searchValidationFalse:['dateTo','dateFrom']})
+			return false
+		}
+
+	},
+
 	resetEnquiry () {
-		this.setState({searchEnquiry: {}, hasFilter: false})
+		this.setState({searchEnquiry: {}, hasFilter: false, searchValidationFalse: []})
 		Session.setItem(Session.VALUES.ED_SEARCH_FILTER, null)
 	},
 
@@ -132,13 +145,15 @@ export default React.createClass({
 
 	async onSearch () {
 		const resultEnquiry = this.getSearchEnquiry()
-		await doSearch(this.props.onSearch, resultEnquiry)
-
-		Session.setItem(Session.VALUES.ED_SEARCH_FILTER, {
-			showFilter: this.state.showFilter,
-			hasFilter: this.state.hasFilter,
-			searchEnquiry: resultEnquiry
-		})
+		if (this.searchValidation()) {
+			await doSearch(this.props.onSearch, resultEnquiry)
+			Session.setItem(Session.VALUES.ED_SEARCH_FILTER, {
+				showFilter: this.state.showFilter,
+				hasFilter: this.state.hasFilter,
+				searchEnquiry: resultEnquiry
+			})
+		}
+		
 	},
 
 	setToday () {
@@ -157,7 +172,7 @@ export default React.createClass({
 	render () {
 		return (
 			<div rel='root' className='ed-filter'>
-				<div id='ed-search' className='form-group'>
+				<div id='ed-search' className='form-group' onClick={() => {this.setState({showFilter:true})}}>
 					<AutoComplete displayName='AutoComplete'
 						className='form-control search-input'
 						itemClassName='search-autocomplete-item'
@@ -168,7 +183,9 @@ export default React.createClass({
 						onChange={this.handleKeywordChange}
 						noSuggestionsText='No Results'
 						onItemsRequested={this.onSearchItemsRequested}
+						
 						ref='autoSuggestion' />
+						
 				</div>
 
 				<div id='ed-advanced' className='form-group' onClick={this.toggleFilterShowState}>
@@ -197,6 +214,7 @@ export default React.createClass({
 					<div className='form-group'>
 						<label>Kick Off Time From</label>
 						<Calender onChange={this.getChangeHandler('dateFrom')}
+							warning={this.state.searchValidationFalse.indexOf('dateFrom') > -1}
 							value={this.state.searchEnquiry.dateFrom}
 						/>
 					</div>
@@ -204,6 +222,7 @@ export default React.createClass({
 					<div className='form-group'>
 						<label>Kick Off Time To</label>
 						<Calender onChange={this.getChangeHandler('dateTo')}
+							warning={this.state.searchValidationFalse.indexOf('dateFrom') > -1}
 							value={this.state.searchEnquiry.dateTo}
 						/>
 					</div>

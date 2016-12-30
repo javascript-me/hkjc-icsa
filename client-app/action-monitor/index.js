@@ -16,6 +16,7 @@ const initTimeRange = {
 
 export default React.createClass({
 	displayName: 'Audit',
+	isFirstTimeSearch: true,
 
 	getInitialState () {
 		this.tableOptions = {
@@ -50,7 +51,8 @@ export default React.createClass({
 			inplay: [],
 			loading: true,
 			tableData: [],
-			version: 0
+			version: 0,
+			
 		}
 	},
 
@@ -156,7 +158,8 @@ export default React.createClass({
 
 		const filters = API.cleanParams(params)
 		filters.userID = this.userID
-		!filters.taskStatus && (filters.taskStatus = [{label:'New',value:'New'}])
+		this.isFirstTimeSearch && !filters.taskStatus && (filters.taskStatus = [{label:'New',value:'New'}])
+		this.isFirstTimeSearch = false
 		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},
 
@@ -185,7 +188,7 @@ export default React.createClass({
 						<TableHeaderColumn dataField='priority' dataSort dataFormat={this.priorityFormatter} isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.priorities}}>Priority</TableHeaderColumn>
 						<TableHeaderColumn dataField='distributionDateTime' dataSort isFilter dateRange>Distribution Date & Time</TableHeaderColumn>
 						<TableHeaderColumn dataField='taskDescription' dataSort dataFormat={this.detailFormatter}>Task Description</TableHeaderColumn>
-						<TableHeaderColumn dataField='targetCompletionDateTime' dataSort isFilter filterOptions={{ctrlType: 'calendar'}}>Target completion Time</TableHeaderColumn>
+						<TableHeaderColumn dataField='targetCompletionDateTime' dataSort isFilter filterOptions={{ctrlType: 'calendar'}}>Target Completion Time</TableHeaderColumn>
 						<TableHeaderColumn dataField='sports' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.sports}} hidden>Sports</TableHeaderColumn>
 						<TableHeaderColumn dataField='competitions' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.competitions}} hidden>Competition</TableHeaderColumn>
 						<TableHeaderColumn dataField='matchs' dataSort isFilter filterOptions={{ctrlType: 'multi-select', dataSource: this.state.matches}} hidden>Match</TableHeaderColumn>
