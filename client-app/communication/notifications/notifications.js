@@ -48,6 +48,7 @@ const updateAcknowledgeStatusById = async (username, id, command) => {
 }
 
 let refreshNoticesToken = null
+let refreshActionsToken = null
 
 export default React.createClass({
 	propTypes: {
@@ -159,10 +160,15 @@ export default React.createClass({
 		})
 
 		this.getAllTasks()
+		refreshActionsToken = PubSub.subscribe(PubSub.REFRESH_ACTIONS, () => {
+			location.href = '#/page/actionmonitor'
+			this.getAllTasks()
+		})
 	},
 
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(refreshNoticesToken)
+		PubSub.unsubscribe(refreshActionsToken)
 		this.interval = clearInterval(this.interval)
 	},
 

@@ -91,7 +91,7 @@ export default {
 
 	logout () {
 		profile = null
-		Session.setProfile(null)
+		Session.clear()
 		PubSub.publish(PubSub.LOGIN_CHANGE)
 	},
 	getTasksNum () {
