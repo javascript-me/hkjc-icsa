@@ -57,38 +57,50 @@ const exacuteTask = {
 
 describe('<TaskDetail />', () => {
 	it('task detail component should mount', () => {
+		rewireKeyVal(TaskDetail, 'userProfile', {admin: true})
 		let wrapper = shallow(<TaskDetail />)
 		expect(wrapper.find('.task-detail-box')).to.have.length(1)
+		rewire()
 	})
 	it('task detail popup should be hide', () => {
+		rewireKeyVal(TaskDetail, 'userProfile', {admin: true})
 		let wrapper = shallow(<TaskDetail />)
 		expect(wrapper.find(Popup)).to.have.length(1)
+		rewire()
 	})
 	it('task detail popup should be open', () => {
+		rewireKeyVal(TaskDetail, 'userProfile', {admin: true})
 		let wrapper = mount(<TaskDetail />)
 		let instance = wrapper.instance()
 		instance.showTask()
 		expect(wrapper.find('.info-part')).to.have.length(1)
+		rewire()
 	})
 
 	it('rander a simpleTask', () => {
+		rewireKeyVal(TaskDetail, 'userProfile', {admin: true})
 		let wrapper = mount(<TaskDetail taskInfo={simpleTask} />)
 		let instance = wrapper.instance()
 		instance.showTask()
 		expect(instance.getTitleColor()).to.equal('#85B612')
 		expect(wrapper.find('.value').first().text()).to.equal('New')
+		rewire()
 	})
 	it('rander a advanceTask', () => {
+		rewireKeyVal(TaskDetail, 'userProfile', {admin: true})
 		let wrapper = mount(<TaskDetail taskInfo={advanceTask} />)
 		let instance = wrapper.instance()
 		instance.showTask()
 		expect(wrapper.find('.btn.confirm')).to.have.length(1)
+		rewire()
 	})
 	it('rander a exacuteTask', () => {
+		rewireKeyVal(TaskDetail, 'userProfile', {admin: true})
 		let wrapper = mount(<TaskDetail taskInfo={exacuteTask} />)
 		let instance = wrapper.instance()
 		instance.showTask()
 		expect(wrapper.find('.btn.confirm').text().trim()).to.equal(exacuteTask.buttonName.trim())
 		expect(wrapper.find('.icon.assign-to-me')).to.have.length(1)
+		rewire()
 	})
 })
