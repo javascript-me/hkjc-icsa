@@ -51,8 +51,8 @@ export default React.createClass({
 			inplay: [],
 			loading: true,
 			tableData: [],
-			version: 0,
-			
+			version: 0
+
 		}
 	},
 
@@ -158,7 +158,7 @@ export default React.createClass({
 
 		const filters = API.cleanParams(params)
 		filters.userID = this.userID
-		this.isFirstTimeSearch && !filters.taskStatus && (filters.taskStatus = [{label:'New',value:'New'}])
+		this.isFirstTimeSearch && !filters.taskStatus && (filters.taskStatus = [{label: 'New', value: 'New'}])
 		this.isFirstTimeSearch = false
 		API.request('POST', 'api/actions/list', filters, 'actionList')
 	},

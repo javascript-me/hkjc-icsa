@@ -57,7 +57,7 @@ export default React.createClass({
 				showFilter: false,
 				hasFilter: false,
 				searchEnquiry: {},
-				searchValidationFalse:[]
+				searchValidationFalse: []
 			}
 		)
 	},
@@ -91,14 +91,13 @@ export default React.createClass({
 
 	searchValidation () {
 		let { dateFrom, dateTo } = this.state.searchEnquiry
-		if ((!dateFrom && !dateTo) || (dateFrom && dateTo && moment.max(dateFrom,dateTo) === dateTo )) {
-			this.setState({searchValidationFalse:[]})
+		if ((!dateFrom && !dateTo) || (dateFrom && dateTo && moment.max(dateFrom, dateTo) === dateTo)) {
+			this.setState({searchValidationFalse: []})
 			return true
 		} else {
-			this.setState({searchValidationFalse:['dateTo','dateFrom']})
+			this.setState({searchValidationFalse: ['dateTo', 'dateFrom']})
 			return false
 		}
-
 	},
 
 	resetEnquiry () {
@@ -153,7 +152,6 @@ export default React.createClass({
 				searchEnquiry: resultEnquiry
 			})
 		}
-		
 	},
 
 	setToday () {
@@ -172,7 +170,7 @@ export default React.createClass({
 	render () {
 		return (
 			<div rel='root' className='ed-filter'>
-				<div id='ed-search' className='form-group' onClick={() => {this.setState({showFilter:true})}}>
+				<div id='ed-search' className='form-group' onClick={() => { this.setState({showFilter: true}) }}>
 					<AutoComplete displayName='AutoComplete'
 						className='form-control search-input'
 						itemClassName='search-autocomplete-item'
@@ -183,9 +181,9 @@ export default React.createClass({
 						onChange={this.handleKeywordChange}
 						noSuggestionsText='No Results'
 						onItemsRequested={this.onSearchItemsRequested}
-						
+
 						ref='autoSuggestion' />
-						
+
 				</div>
 
 				<div id='ed-advanced' className='form-group' onClick={this.toggleFilterShowState}>

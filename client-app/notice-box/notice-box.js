@@ -45,8 +45,8 @@ export default class NoticeBox extends React.Component {
 	}
 
 	textEllipsisWhenOverflow (text) {
-		return (this.props.displayPosition === 'right' && text.length > 140 )
-			? (text.substring(0, 140) + '...') 
+		return (this.props.displayPosition === 'right' && text.length > 140)
+			? (text.substring(0, 140) + '...')
 			: text
 	}
 
