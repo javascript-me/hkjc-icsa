@@ -27,5 +27,9 @@ export default {
 	},
 	getItem: getItem,
 	setItem: setItem,
+	clear () {
+		if (!window.sessionStorage) return
+		window.sessionStorage.clear()
+	},
 	VALUES: VALUES
 }

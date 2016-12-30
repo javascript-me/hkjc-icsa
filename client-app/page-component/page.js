@@ -387,15 +387,12 @@ export default React.createClass({
 		if (this.state.betType === 'football') {
 			activeContent =
 				<div>
-					<div className='row' style={{ width: '100%', paddingLeft: '15px' }}>
-
-						<div className='tableComponent-container'>
-							<TableComponent key='table' data={this.props.tableData} loading={this.props.tableLoading} {...this.props.options.table}>
-								{
-									this.cols
-								}
-							</TableComponent>
-						</div>
+					<div className='tableComponent-container'>
+						<TableComponent key='table' data={this.props.tableData} loading={this.props.tableLoading} {...this.props.options.table}>
+							{
+								this.cols
+							}
+						</TableComponent>
 					</div>
 					<div className='row'>
 						{ this.bottom }
