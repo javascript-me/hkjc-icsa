@@ -30,7 +30,7 @@ describe('<Noticelist>', () => {
 		assert.equal(1, noticeBoxItem.length)
 		let notices = wrapper.find('.list-box-right')
 		assert.equal(1, notices.length)
-		assert.equal(11, notices.node.props.children.length)
+		assert.equal(allTasks.length, notices.node.props.children.length)
 
 		instance.getNoticeBoxClassNames()
 		instance.getListBoxClassName()
@@ -55,7 +55,7 @@ describe('<Noticelist>', () => {
 		assert.equal('blink', child.props.className)
 
 		let rows = wrapper.find('.row')
-		assert.equal(11, rows.length)
+		assert.equal(allTasks.length, rows.length)
 
 		let row = rows.nodes[0].props.children
 		assert.equal(3, row.length)
