@@ -83,7 +83,7 @@ describe('LoginService', () => {
 
 			rewire()
 
-			expect(Session.getProfile()).to.be.null
+			expect(!!Session.getProfile()).to.be.false
 			expect(result).to.be.null
 		})
 

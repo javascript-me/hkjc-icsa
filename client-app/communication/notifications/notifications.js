@@ -48,6 +48,7 @@ const updateAcknowledgeStatusById = async (username, id, command) => {
 }
 
 let refreshNoticesToken = null
+let refreshActionsToken = null
 
 export default React.createClass({
 	propTypes: {
@@ -159,10 +160,15 @@ export default React.createClass({
 		})
 
 		this.getAllTasks()
+		refreshActionsToken = PubSub.subscribe(PubSub.REFRESH_ACTIONS, () => {
+			location.href = '#/page/actionmonitor'
+			this.getAllTasks()
+		})
 	},
 
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(refreshNoticesToken)
+		PubSub.unsubscribe(refreshActionsToken)
 		this.interval = clearInterval(this.interval)
 	},
 
@@ -464,11 +470,11 @@ export default React.createClass({
 				<Popup hideOnOverlayClicked ref='notificationsPopup' title='Noticeboard And Broadcast Setting' onConfirm={this.applySettings} onOverlayClicked={this.syncNoticeboardAndBroadcastPanelPosition} onCancel={this.syncNoticeboardAndBroadcastPanelPosition}>
 					<NotificationsPopup setting={this.state.selectedNoticeboardAndBroadcastPanelPosition} onChangePosition={this.onChangeSetting} />
 				</Popup>
-
-				<Popup hideOnOverlayClicked ref='taskPopup' title='Task Setting' onConfirm={this.applySettingsForTaskPanel} onOverlayClicked={this.syncTaskPanelPosition} onCancel={this.syncTaskPanelPosition}>
-					<NotificationsPopup setting={this.state.selectedTaskPanelPosition} onChangePosition={this.onChangeSettingForTaskPanel} />
-				</Popup>
-
+				<div className='task-panel'>
+					<Popup hideOnOverlayClicked ref='taskPopup' title='Task Setting' onConfirm={this.applySettingsForTaskPanel} onOverlayClicked={this.syncTaskPanelPosition} onCancel={this.syncTaskPanelPosition}>
+						<NotificationsPopup setting={this.state.selectedTaskPanelPosition} onChangePosition={this.onChangeSettingForTaskPanel} />
+					</Popup>
+				</div>
 				<Popup hideOnOverlayClicked ref='detailPopup'
 					title={this.state.detail.alert_name}
 					showCancel={false}

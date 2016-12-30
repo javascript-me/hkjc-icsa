@@ -97,8 +97,8 @@ class TaskDetailBox extends Component {
 				<div className='info-part'>
 					{taskStatus && <span><span className='field'>Status:</span><span className='value'>{taskStatus}</span></span>}
 					{category && <span><span className='field'>Category:</span><span className='value'>{category}</span></span>}
-					{distributionDateTime && <span><span className='field'>Received Time:</span><span className='value'>{dateTool.toDDMMMYYY(distributionDateTime)}</span></span>}
-					{targetCompletionDateTime && <span><span className='field'>Target Time:</span><span className='value'>{dateTool.toDDMMMYYY(targetCompletionDateTime)}</span></span>}
+					{distributionDateTime && <span><span className='field'>Distribution Date & Time:</span><span className='value'>{dateTool.toDDMMMYYY(distributionDateTime)}</span></span>}
+					{targetCompletionDateTime && <span><span className='field'>Target Completion Time:</span><span className='value'>{dateTool.toDDMMMYYY(targetCompletionDateTime)}</span></span>}
 					<div className={statusIconClassName} />
 				</div>
 				<div className='task-content'>
