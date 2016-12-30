@@ -105,7 +105,7 @@ export default React.createClass({
 	},
 	onReAssign (taskItem) {
 		this.setState({reassignTask: taskItem})
-		this.refs.popupReassignment.show()
+		this.refs.actionReassignment.show()
 	},
 
 	onRowClick (taskData) {
