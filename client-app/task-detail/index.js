@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import Popup from '../popup'
 import dateTool from '../formatter/date-formatter.js'
-// import LoginService from '../login/login-service.js'
+import LoginService from '../login/login-service.js'
 
-// const userProfile = LoginService.getProfile()
-// console.log(userProfile)
+const userProfile = LoginService.getProfile()
 
 class TaskDetailBox extends Component {
 	constructor (props) {
@@ -29,7 +28,7 @@ class TaskDetailBox extends Component {
 	}
 
 	render () {
-		let isSuppervicer = true
+		let isSuppervicer = userProfile.admin
 		const { priority, taskName, taskDescription, taskStatus, taskType, buttonName, approveFunc, taskExcFunc, category, distributionDateTime, targetCompletionDateTime, lockStatus } = this.props.taskInfo
 		let color = this.getTitleColor(priority)
 		let diffentOptions = {}
