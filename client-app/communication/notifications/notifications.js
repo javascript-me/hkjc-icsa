@@ -401,7 +401,7 @@ export default React.createClass({
 			<div className='header-container'>
 				<div className='pull-right'>
 					<span className='noticeboard-list-container'><a href={'/#/page/noticeboard'}><img src='icon/list.svg' /></a></span>
-					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+					<span className='noticeboard-settings-container'><a onClick={this.openPopup}><img src='icon/Setting.svg' /></a></span>
 				</div>
 				<div className='container-title'>
 					<span className='noticeboard-icon-container'><img src='icon/noticeboard.svg' /></span>
@@ -419,7 +419,7 @@ export default React.createClass({
 			<div className='header-container'>
 				<div className='pull-right'>
 					<span className='noticeboard-list-container'><a href={'/#/page/broadcast'}><img src='icon/list.svg' /></a></span>
-					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openPopup} /></span>
+					<span className='noticeboard-settings-container'><a onClick={this.openPopup}><img src='icon/Setting.svg' /></a></span>
 				</div>
 				<div className='container-title'>
 					<span className='noticeboard-icon-container'><img src='icon/broadcast-off.svg' style={{'width': '16px', 'height': '16px'}} /></span>
@@ -435,7 +435,7 @@ export default React.createClass({
 			<div className='header-container'>
 				<div className='pull-right'>
 					<span className='noticeboard-list-container'><a href={'/#/page/actionmonitor'}><img src='icon/list.svg' /></a></span>
-					<span className='noticeboard-settings-container'><img src='icon/Setting.svg' onClick={this.openTaskPopup} /></span>
+					<span className='noticeboard-settings-container'><a onClick={this.openTaskPopup}><img src='icon/Setting.svg' /></a></span>
 				</div>
 				<div className='container-title'>
 					<span className='noticeboard-icon-container'><img src='icon/icon-action.svg' /></span>
