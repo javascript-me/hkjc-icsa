@@ -87,34 +87,22 @@ describe('<SearchFilter />', () => {
 			expect(sessionState.searchEnquiry.competition).to.equal('Comp 1')
 		})
 
-		it('dateFrom should be saved when search is made', async () => {
+		it('dateFrom/dateTo should be saved when search is made', async () => {
 			const onSearch = sinon.spy()
 			const wrapper = mount(<SearchFilter filter={filter} onSearch={onSearch} />)
 
-			let date = moment()
-			wrapper.instance().handleFilterChange('dateFrom', date)
+			let from = moment()
+			let to = moment().add(7, 'd')
+			wrapper.instance().handleFilterChange('dateFrom', from)
+			wrapper.instance().handleFilterChange('dateTo', to)
 			await wrapper.instance().onSearch()
 
 			let sessionState = Session.getItem(Session.VALUES.ED_SEARCH_FILTER)
 			expect(sessionState).to.be.object
 			expect(sessionState.hasFilter).to.be.true
 			expect(sessionState.searchEnquiry).to.be.object
-			expect(sessionState.searchEnquiry.dateFrom).to.equal(date.format('DD MMM YYYY HH:mm'))
-		})
-
-		it('dateTo should be saved when search is made', async () => {
-			const onSearch = sinon.spy()
-			const wrapper = mount(<SearchFilter filter={filter} onSearch={onSearch} />)
-
-			let date = moment().add(7, 'd')
-			wrapper.instance().handleFilterChange('dateTo', date)
-			await wrapper.instance().onSearch()
-
-			let sessionState = Session.getItem(Session.VALUES.ED_SEARCH_FILTER)
-			expect(sessionState).to.be.object
-			expect(sessionState.hasFilter).to.be.true
-			expect(sessionState.searchEnquiry).to.be.object
-			expect(sessionState.searchEnquiry.dateTo).to.equal(date.format('DD MMM YYYY HH:mm'))
+			expect(sessionState.searchEnquiry.dateFrom).to.equal(from.format('DD MMM YYYY HH:mm'))
+			expect(sessionState.searchEnquiry.dateTo).to.equal(to.format('DD MMM YYYY HH:mm'))
 		})
 
 		it('all props should be saved when search is made', async () => {
