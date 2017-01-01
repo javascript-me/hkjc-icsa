@@ -232,7 +232,9 @@ class PaginationList extends Component {
 		}
 
 		if (endPage < this.lastPage) {
-			pages.push('...')
+			if(endPage < this.lastPage - 1) {
+				pages.push('...')	
+			}			
 			pages.push(this.lastPage)
 			pages.push(this.props.nextPage)
 		} else if (endPage === this.lastPage && endPage > startPage) {
