@@ -7,11 +7,11 @@ import MultiSelect from '../muti-select'
 import FilterPanelColumn from './filter-panel-column'
 
 const selectDataSource = [{
-	id: 1,
-	value: 'one'
+	value: 1,
+	label: 'one'
 }, {
-	id: 2,
-	value: 'two'
+	value: 2,
+	label: 'two'
 }]
 
 describe('<FilterPanelColumn /> component', () => {

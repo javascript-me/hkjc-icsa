@@ -8,9 +8,9 @@ import moment from 'moment'
   ReceiveTo: '22 Dec 2016 23:59',
   name: 'asda',
   category:
-   [ { label: 'Message name', value: '0' },
-     { label: 'Sports Type', value: '1' } ],
-  in_play: [ { label: 'Not In-Play', value: '0' } ],
+   [ { label: 'Message name', value: 'Message name' },
+     { label: 'Sports Type', value: 'Sports Type' } ],
+  in_play: [ { label: 'Not In-Play', value: 'Not In-Play' } ],
   sports_type: [ { label: 'Football', value: 'Football' } ],
   continent: [ { label: 'Europe', value: 'Europe' } ],
   country: [ { label: 'England', value: 'England' } ],
@@ -48,49 +48,51 @@ function doFilter (broadcast, params) {
 
 	if (category !== 'All') {
 		result = result.filter((al) => {
-			var item = category.find(e => { return e.label === al.category })
+			var item = category.find(e => { return e.value === al.category })
 			return (item && al.category === item.label)
 		})
 	}
 
 	if (inPlay !== 'All') {
 		result = result.filter((al) => {
-			const convert = inPlay.map(e => { return e.label }).join(' , ').indexOf('Non') >= 0
-			return (al.in_play === !convert)
+			var item = inPlay.find(e => {
+				return e.value === 'In-play' && al.in_play || e.value === 'Non In-play' && !al.in_play
+			})
+			return !!item
 		})
 	}
 
 	if (sports !== 'All') {
 		result = result.filter((al) => {
-			var item = sports.find(e => { return e.label === al.sports_type })
+			var item = sports.find(e => { return e.value === al.sports_type })
 			return (item && al.sports_type === item.label)
 		})
 	}
 
 	if (continent !== 'All') {
 		result = result.filter((al) => {
-			var item = continent.find(e => { return e.label === al.continent })
+			var item = continent.find(e => { return e.value === al.continent })
 			return (item && al.continent === item.label)
 		})
 	}
 
 	if (country !== 'All') {
 		result = result.filter((al) => {
-			var item = country.find(e => { return e.label === al.country })
+			var item = country.find(e => { return e.value === al.country })
 			return (item && al.country === item.label)
 		})
 	}
 
 	if (eventLevel1 !== 'All') {
 		result = result.filter((al) => {
-			var item = eventLevel1.find(e => { return e.label === al.event_level1 })
+			var item = eventLevel1.find(e => { return e.value === al.event_level1 })
 			return (item && al.event_level1 === item.label)
 		})
 	}
 
 	if (eventLevel2 !== 'All') {
 		result = result.filter((al) => {
-			var item = eventLevel2.find(e => { return e.label === al.event_level2 })
+			var item = eventLevel2.find(e => { return e.value === al.event_level2 })
 			return (item && al.event_level2 === item.label)
 		})
 	}
