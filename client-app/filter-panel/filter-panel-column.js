@@ -224,8 +224,6 @@ export default React.createClass({
 			height: '30px'
 		}
 
-		console.log(this.props.dataSource)
-
 		return <MultiSelect
 			ref='ctrl'
 			options={this.props.dataSource}
