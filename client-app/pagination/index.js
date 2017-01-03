@@ -219,7 +219,7 @@ class PaginationList extends Component {
 		actualEndPage = Math.min(this.lastPage, probableEndPage)
 
 		for (let i = actualStartPage; i <= actualEndPage; i++) {
-			if(i > p.pageStartIndex && i < this.lastPage) {
+			if (i > p.pageStartIndex && i < this.lastPage) {
 				probabelMiddlePages.push(i)
 			}
 		}
