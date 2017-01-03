@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import SearchRecord from './searchrecord'
+import SearchRecord from './search-record'
 
 describe('<SearchRecord />', () => {
 	it('renders a SearchRecord div', () => {

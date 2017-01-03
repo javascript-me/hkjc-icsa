@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import moment from 'moment'
 import Session from '../session'
-import SearchFilter from './searchfilter'
+import SearchFilter from './search-filter'
 
 describe('<SearchFilter />', () => {
 	const filter = {

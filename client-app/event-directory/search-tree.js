@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import Collapse, { Panel } from 'rc-collapse'
-import SearchRecord from './searchrecord'
+import SearchRecord from './search-record'
 import ContextMenuService from '../context-menu/context-menu-service'
 
 export default React.createClass({

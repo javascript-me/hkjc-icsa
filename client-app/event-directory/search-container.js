@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
-import SearchFilter from './searchfilter'
-import SearchTree from './searchtree'
+import SearchFilter from './search-filter'
+import SearchTree from './search-tree'
 
-import EventDirectoryService from './eventdirectory-service'
+import EventDirectoryService from './event-directory-service'
 
 export const EDTYPES = {
 	FOOTBAL: 0,

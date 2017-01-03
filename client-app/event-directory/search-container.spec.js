@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import SearchContainer from './searchcontainer'
+import SearchContainer from './search-container'
 
 const edResult = []
 

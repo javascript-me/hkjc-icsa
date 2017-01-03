@@ -20,7 +20,7 @@ const mapDataToOption = (data) => {
 const MultiSelectCompetition = util.FetchServerDataHoc({url: 'api/eventdirectory/competition'}, mapDataToOption)(MultiSelect)
 
 import AutoComplete from '../autocomplete'
-import EventDirectoryService from './eventdirectory-service'
+import EventDirectoryService from './event-directory-service'
 
 async function doSearch (searchFn, searchEnquiry) {
 	return await searchFn({

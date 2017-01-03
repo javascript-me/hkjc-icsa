@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
-import SearchContainer, {EDTYPES} from './searchcontainer'
+import SearchContainer, {EDTYPES} from './search-container'
 
 const WHICHTAB = {
 	football: 0,

@@ -1,4 +1,4 @@
-import EventdirectoryService from './eventdirectory-service'
+import EventdirectoryService from './event-directory-service'
 
 describe('EventdirectoryService', () => {
 	describe('#getEventDirectoryResult', () => {

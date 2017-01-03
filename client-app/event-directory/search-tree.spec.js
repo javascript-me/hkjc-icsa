@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import sinon from 'sinon'
 import ContextMenuService from '../context-menu/context-menu-service'
-import SearchTree from './searchtree'
+import SearchTree from './search-tree'
 
 describe('<SearchTree />', () => {
 	it('SearchTree render null', () => {

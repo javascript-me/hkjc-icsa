@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import EventDirectory from './eventdirectory'
+import EventDirectory from './index'
 
 describe('<EventDirectory />', () => {
 	it('renders a EventDirectory div', () => {
