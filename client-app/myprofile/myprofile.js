@@ -193,6 +193,7 @@ export default React.createClass({
 	onSubscriptionResetClick () {
 		PopupService.showMessageBox(PopupService.resetMesg, () => {
 			this.refs.subscriptionCmp.resetData()
+			this.forceUpdate()
 		})
 	},
 	onSubscriptionChange () {
