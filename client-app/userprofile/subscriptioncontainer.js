@@ -41,7 +41,6 @@ export default React.createClass({
 	},
 	resetData () {
 		this.cloneData()
-		this.forceUpdate()
 	},
 	IsChanged () {
 		let userSubscription = this.userSubscription
