@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AccountInformation from './accountinformation'
+import AccountInformation from './account-information'
 
 const userAccount = {
 	'id': '0001',

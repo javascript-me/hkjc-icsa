@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import _ from 'underscore'
 
-import UserProfileService from './userprofile-service'
+import UserProfileService from '../user-profile-service'
 
 const TableHeader = (props) => (<thead className='table-header'>
 	<tr>

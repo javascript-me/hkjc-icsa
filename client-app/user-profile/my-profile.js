@@ -2,8 +2,18 @@ import React from 'react'
 import classNames from 'classnames'
 import LoginService from '../login/login-service'
 import {PopupService} from '../popup'
-import {UserProfileService, ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from '../userprofile/userprofile'
-import {campareTime} from '../userprofile/userdelegation.js'
+import UserProfileService from './user-profile-service'
+import {ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from './components'
+
+function campareTime (v1, v2) {
+	let s1 = v1.split('/')
+	let s2 = v2.split('/')
+	let t1 = new Date()
+	let t2 = new Date()
+	t1.setFullYear(s1[2], +s1[1] - 1, s1[0])
+	t2.setFullYear(s2[2], +s2[1] - 1, s2[0])
+	return (t1.getTime() - t2.getTime())
+}
 
 export default React.createClass({
 	displayName: 'MyProfile',

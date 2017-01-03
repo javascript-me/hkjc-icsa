@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import _ from 'underscore'
 import Moment from 'moment'
-import Calendar from '../calendar'
-import Popup from '../popup'
-import RolesContainer from './rolescontainer'
-import RolesPermission from './rolespermission'
+import Calendar from '../../calendar'
+import Popup from '../../popup'
+import RolesContainer from './roles-container'
+import RolesPermission from './roles-permission'
 
 // function isValidDateTime (str) {
 // 	let bRet = Moment(str, 'DD MMM YYYY HH:mm', true).isValid()

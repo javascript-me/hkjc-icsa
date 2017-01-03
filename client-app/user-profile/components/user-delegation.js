@@ -1,14 +1,13 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
-import MutiSelect from '../muti-select'
-import Calendar from '../calendar'
+import MutiSelect from '../../muti-select'
+import Calendar from '../../calendar'
 import _ from 'lodash'
 import moment from 'moment'
 
-import Popup from '../popup'
-import {TableComponent, TableHeaderColumn} from '../table'
-// import UserProfileService from '../userprofile/userprofile-service'
-import AddDelegation from './adddelegation'
+import Popup from '../../popup'
+import {TableComponent, TableHeaderColumn} from '../../table'
+import AddDelegation from './add-delegation'
 
 const roleVeiw = (cell, row, enumObject, index) => {
 	let text = cell && cell.map((item) => (item.delegatedRole)).join(', ')

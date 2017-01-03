@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ProfileButtons from './profilebuttons'
+import ProfileButtons from './profile-buttons'
 
 describe('<ProfileButtons />', () => {
 	it('renders a ProfileButtons div', () => {

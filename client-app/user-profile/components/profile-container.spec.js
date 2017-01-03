@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ProfileContainer from './profilecontainer'
+import ProfileContainer from './profile-container'
 
 describe('<ProfileContainer />', () => {
 	it('renders a ProfileContainer div', () => {

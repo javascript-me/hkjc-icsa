@@ -1,4 +1,4 @@
-import UserProfileService from './userprofile-service'
+import UserProfileService from './user-profile-service'
 
 describe('UserProfileService', () => {
 	describe('#getUserProfile', () => {

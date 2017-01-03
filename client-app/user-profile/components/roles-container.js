@@ -2,12 +2,13 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import _ from 'underscore'
 
-import UserProfileService from './userprofile-service.js'
-import LoginService from '../login/login-service'
+import UserProfileService from '../user-profile-service'
 
 const TableHeader = (props) => (<thead className='table-header'>
 	<tr>
-		<th className='th-header' />
+		<th className='th-header'>
+			<div className={classNames('my-checkbox', { checked: props.checkedAll })} onClick={() => { props.handleCheckAll() }} />
+		</th>
 		{props.header && props.header.map((item, idx) => (
 			<th key={item.label} onClick={(e) => { props.handleSort(idx) }}
 				className={classNames('sort-icon', {
@@ -21,16 +22,15 @@ const TableHeader = (props) => (<thead className='table-header'>
 TableHeader.propTypes = {
 	header: React.PropTypes.array,
 	handleSort: React.PropTypes.func,
-	sortInfo: React.PropTypes.object
+	sortInfo: React.PropTypes.object,
+	checkedAll: React.PropTypes.bool,
+	handleCheckAll: React.PropTypes.func
 }
 
 const TableRow = (props) => {
 	return (<tbody>
-		{props.data.length === 0 ? <tr><td className='no-result' colSpan='4'>No result found.</td></tr> : props.data && props.data.map((item, idx) => (<tr key={idx + 'row'} className={classNames({ activeLine: item.checked })}>
-			<td className='tr-header first-child'>
-				<input id={'radio' + idx} type='radio' name='checkbox' onClick={() => { props.handleItemClick(item) }} defaultChecked={item.checked} />
-				<label htmlFor={'radio' + idx} className={classNames({ checked: item.checked })} />
-			</td>
+		{props.data && props.data.map((item, idx) => (<tr key={idx + 'row'}>
+			<td className='tr-header'><div className={classNames('my-checkbox', { checked: item.checked })} onClick={() => { props.handleItemClick(item) }} /></td>
 			{props.fields.map((rol, idx) => (<td key={rol}>{item[rol]}</td>))}
 		</tr>))}
 
@@ -46,13 +46,11 @@ TableRow.propTypes = {
 export { TableHeader, TableRow }
 
 const header = [
-	{label: 'User Name', field: 'displayName'},
-	{label: 'User ID', field: 'userID'},
-	{label: 'Position / Title', field: 'position'}
+	{label: 'User Role', field: 'roleName'}
 ]
 
 export default React.createClass({
-	displayName: 'UsersContainer',
+	displayName: 'RolesContainer',
 	propTypes: {
 		header: PropTypes.array,
 		inputSelected: PropTypes.array
@@ -63,27 +61,23 @@ export default React.createClass({
 		}
 	},
 	getInitialState () {
+		this.checkedAll = false
 		this.tableData = []
 		this.currentSortInfo = { index: 0, sortType: 'up' }
 		this.fields = _.map(this.props.header, item => item.field)
-		let profile = LoginService.getProfile()
-		this.userID = ''
-		if (profile) {
-			this.userID = profile.userID
-		}
 		return {
-			showItems: [],
-			showTempItems: []
+			showItems: []
 		}
 	},
 	componentDidMount () {
-		this.getUsers()
+		this.getRoles()
 	},
-	getDelegation () {
-		let result = this.tableData.find((item) => {
+	getUpdateRoles () {
+		return this.tableData.filter((item) => {
 			return item.checked
+		}).map((item) => {
+			return item.roleName
 		})
-		return result
 	},
 	sortItemsByCheck (showItems) {
 		let checkedArray = []
@@ -110,11 +104,8 @@ export default React.createClass({
 			index,
 			sortType: this.currentSortInfo.sortType === 'down' ? 'up' : 'down'
 		}
-		if (this.state.showTempItems.length !== 0) {
-			let showItems = this.doSort(index, this.state.showItems)
-			this.setState({ showItems: this.sortItemsByCheck(showItems) })
-			this.setState({ showTempItems: this.sortItemsByCheck(showItems) })
-		}
+		let showItems = this.doSort(index, this.state.showItems)
+		this.setState({ showItems: this.sortItemsByCheck(showItems) })
 	},
 	filterItem (keyword, fields, items) {
 		let showItems = _.filter(items, (item, idx) => {
@@ -151,35 +142,38 @@ export default React.createClass({
 		let showItems = this.filterItem(keyword, this.fields, this.tableData)
 		this.initCheckedAll(showItems)
 		this.setState({showItems})
-
-		if (keyword) {
-			this.setState({showTempItems: showItems})
+	},
+	handleCheckAll () {
+		this.checkedAll = !this.checkedAll
+		if (this.checkedAll) {
+			this.state.showItems.forEach((item) => {
+				item.checked = true
+			})
+			this.setState({ showItems: this.state.showItems })
 		} else {
-			this.setState({showTempItems: ''})
+			this.state.showItems.forEach((item) => {
+				item.checked = false
+			})
+			this.setState({ showItems: this.state.showItems })
 		}
 	},
 	handleItemClick (item) {
-		this.tableData.forEach((baseitem) => {
-			if (item !== baseitem) {
-				baseitem.checked = false
-			}
-		})
 		item.checked = !item.checked
 		this.forceUpdate()
 	},
 	render () {
 		return (
-			<div ref='root' className='users-container filter-cmp-container'>
-				<div className=''>
+			<div ref='root' className='roles-container'>
+				<div className='filter-cmp-container'>
 					<div className='body'>
 						<div className='serch-header'>
 							<input type='text' maxLength='100' placeholder='Search with keywords & filters' onChange={this.handleInputChange} />
 							<img className='search-icon' src='common/search.svg' />
 						</div>
 						<div className='content'>
-							<table className='table sm-table'>
-								<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} checkedAll={this.checkedAll} />
-								<TableRow data={this.state.showTempItems} fields={this.fields} handleItemClick={this.handleItemClick} />
+							<table className='table'>
+								<TableHeader header={this.props.header} handleSort={this.handleSort} sortInfo={this.currentSortInfo} checkedAll={this.checkedAll} handleCheckAll={this.handleCheckAll} />
+								<TableRow data={this.state.showItems} fields={this.fields} handleItemClick={this.handleItemClick} />
 							</table>
 						</div>
 					</div>
@@ -187,10 +181,10 @@ export default React.createClass({
 			</div>
 		)
 	},
-	async getUsers () {
-		let users = []
-		users = await UserProfileService.getDelegations(this.userID)
-		this.tableData = users
+	async getRoles () {
+		let roles = []
+		roles = await UserProfileService.getRoles()
+		this.tableData = roles
 		this.tableData.forEach((item) => {
 			let obj = _.find(this.props.inputSelected, (selected) => {
 				return selected.assignedUserRole === item.roleName

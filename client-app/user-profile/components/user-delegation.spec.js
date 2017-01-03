@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import UserDelegation from './userdelegation'
+import UserDelegation from './user-delegation'
 
 const myAccountProfile = {
 	'assignedUserRoles': [

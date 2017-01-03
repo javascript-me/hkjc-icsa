@@ -1,26 +1,8 @@
 import React, { PropTypes } from 'react'
 
 import { PopupService } from '../popup'
-import UserProfileService from './userprofile-service'
-
-import ProfileTabs from './profiletabs'
-import ProfileContainer from './profilecontainer'
-import SubscriptionContainer from './subscriptioncontainer'
-import ProfileButtons from './profilebuttons'
-import BasicInformation from './basicinformation'
-import AccountInformation from './accountinformation'
-import UserDelegation from './userdelegation'
-
-export {
-	UserProfileService,
-	ProfileTabs,
-	ProfileContainer,
-	SubscriptionContainer,
-	ProfileButtons,
-	BasicInformation,
-	AccountInformation,
-	UserDelegation
-}
+import UserProfileService from './user-profile-service'
+import {ProfileTabs, ProfileContainer, SubscriptionContainer, ProfileButtons, BasicInformation, AccountInformation, UserDelegation} from './components'
 
 export default React.createClass({
 	displayName: 'UserProfile',

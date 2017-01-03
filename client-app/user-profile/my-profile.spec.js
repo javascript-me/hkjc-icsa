@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import MyProfile from './myprofile'
+import MyProfile from './my-profile'
 
 const userProfile = {
 	user: {

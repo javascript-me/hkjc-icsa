@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Adddelegation, {TableHeader, TableRow} from './adddelegation'
+import Adddelegation, {TableHeader, TableRow} from './add-delegation'
 
 describe('<Adddelegation />', () => {
 	it('test TableHeader', () => {
