@@ -28,7 +28,7 @@ class TaskDetailBox extends Component {
 	}
 
 	render () {
-		let isSuppervicer = userProfile.admin
+		let isSuppervicer = userProfile && userProfile.admin
 		const { priority, taskName, taskDescription, taskStatus, taskType, buttonName, approveFunc, taskExcFunc, category, distributionDateTime, targetCompletionDateTime, lockStatus } = this.props.taskInfo
 		let color = this.getTitleColor(priority)
 		let diffentOptions = {}
