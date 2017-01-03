@@ -1,18 +1,18 @@
 [
 	{
-		"id": "Ctritical",
-		"value": "Ctritical"
+		"value": "Ctritical",
+		"label": "Ctritical"
 	},
 	{
-		"id": "High",
-		"value": "High"
+		"value": "High",
+		"label": "High"
 	},
 	{
-		"id": "Medium",
-		"value": "Medium"
+		"value": "Medium",
+		"label": "Medium"
 	},
 	{
-		"id": "Low",
-		"value": "Low"
+		"value": "Low",
+		"label": "Low"
 	}
 ]
