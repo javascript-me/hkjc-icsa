@@ -223,18 +223,12 @@ export default React.createClass({
 			width: '200px',
 			height: '30px'
 		}
-		let options = []
 
-		this.props.dataSource.forEach((elem) => {
-			options.push({
-				label: elem.value,
-				value: elem.id
-			})
-		})
+		console.log(this.props.dataSource)
 
 		return <MultiSelect
 			ref='ctrl'
-			options={options}
+			options={this.props.dataSource}
 			style={style}
 			selectedOptions={this.state.filterValue}
 			onChange={this.handleMultiSelectChange} />

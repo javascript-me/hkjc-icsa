@@ -1,18 +1,18 @@
 [
 	{
-		"id":"New",
-		"value":"New"
+		"value":"New",
+		"label":"New"
 	},
 	{
-		"id":"Completed",
-		"value":"Completed"
+		"value":"Completed",
+		"label":"Completed"
 	},
 	{
-		"id":"Cancelled",
-		"value":"Cancelled"
+		"value":"Cancelled",
+		"label":"Cancelled"
 	},
 	{
-		"id":"Expired",
-		"value":"Expired"
+		"value":"Expired",
+		"label":"Expired"
 	}
 ]

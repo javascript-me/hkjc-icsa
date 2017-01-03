@@ -1,8 +1,8 @@
 {
   "priorities" : [
-    {"id": "Critical", "value": "Critical"},
-    {"id": "High", "value": "High"},
-    {"id": "Medium", "value": "Medium"},
-    {"id": "Low", "value": "Low"}
+    {"value": "Critical", "label": "Critical"},
+    {"value": "High", "label": "High"},
+    {"value": "Medium", "label": "Medium"},
+    {"value": "Low", "label": "Low"}
   ]
 }
