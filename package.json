@@ -34,10 +34,10 @@
     "dev:test:inspector": "node-inspector",
     "dev:test:debug": "mocha client-app/**/*.spec.js --debug-brk",
     "dev:server": "run-s dev:server:stop dev:server:start",
-    "dev:node":"run-s build && node dist/simulator/index.min.js",
-    "dev:client:node":"run-s build:client && node dist/simulator/index.min.js",
-    "dev:server:node":"run-s build:server && node dist/simulator/index.min.js",
-    "dev:run:node":"node dist/simulator/index.min.js",
+    "dev:node": "run-s build && node dist/simulator/index.min.js",
+    "dev:client:node": "run-s build:client && node dist/simulator/index.min.js",
+    "dev:server:node": "run-s build:server && node dist/simulator/index.min.js",
+    "dev:run:node": "node dist/simulator/index.min.js",
     "dev:server:stop": "pm2 stop hkjc-ics-server || exit 0",
     "dev:server:start": "pm2 start dist/simulator/index.min.js --name=hkjc-ics-server",
     "dev:watch": "run-s dev:watch:js dev:watch:css",
@@ -163,10 +163,13 @@
         "tab"
       ],
       "no-tabs": "off",
-	  "react/jsx-no-bind": ["off", {
-		"allowArrowFunctions": true,
-		"allowBind": true
-	  }],
+      "react/jsx-no-bind": [
+        "off",
+        {
+          "allowArrowFunctions": true,
+          "allowBind": true
+        }
+      ],
       "prefer-arrow-callback": "error",
       "react/jsx-indent": [
         2,
@@ -220,5 +223,8 @@
     "plugins": [
       "rewire"
     ]
+  },
+  "devDependencies": {
+    "watchify": "^3.8.0"
   }
 }
