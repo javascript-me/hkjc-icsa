@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ActionMonitor from './index.js'
+import ActionMonitor from './action-monitor.js'
 
 // const tableData = []
 
