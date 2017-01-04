@@ -1,0 +1,33 @@
+{
+  "position" : [
+    {"value": 1, "label": "Trading Solutions Analyst"},
+    {"value": 2, "label": "Trading Supervisor"},
+    {"value": 3, "label": "Trading Support"},
+    {"value": 4, "label": "Trading Support Analyst"},
+    {"value": 5, "label": "Trading User Administrator"},
+    {"value": 6, "label": "BOCC Part-Time"},
+    {"value": 7, "label": "Live Betting Algorithm Comprehensive Detail"},
+    {"value": 8, "label": "BOCC Manager"},
+    {"value": 9, "label": "Finance Compliance Officer"},
+    {"value": 10, "label": "Finance Compliance Manager"},
+    {"value": 11, "label": "Finance Compliance Controller"},
+    {"value": 12, "label": "Finance Compliance User Administrator"},
+    {"value": 13, "label": "Marketing Manager"},
+    {"value": 14, "label": "PA Manager"},
+    {"value": 15, "label": "Claim Manager"}
+  ],
+  "userRole" : [
+    {"value": 1, "label": "BOCC Supervisor"},
+    {"value": 2, "label": "Content & Planning Manager"},
+    {"value": 3, "label": "Customer Care Representative"},
+    {"value": 4, "label": "Director of Group Treasury"},
+    {"value": 5, "label": "Finance Controller"},
+    {"value": 6, "label": "System Administrator"},
+    {"value": 7, "label": "Trading Manager"},
+    {"value": 8, "label": "Trading Support Analyst"}
+  ],
+  "accountStatus" : [
+    {"value": 1, "label": "Active"},
+    {"value": 2, "label": "Inactive"}
+  ]
+}

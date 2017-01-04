@@ -1,9 +1,9 @@
 {
   "matches" : [
-    {"id": "ARS vs LIV", "value": "ARS vs LIV"},
-    {"id": "SOU vs LIV", "value": "SOU vs LIV"},
-    {"id": "ARS vs ASV", "value": "ARS vs ASV"},
-    {"id": "MUN vs EVE", "value": "MUN vs EVE"},
-    {"id": "CRY vs CHE", "value": "CRY vs CHE"}
+    {"value": "ARS vs LIV", "label": "ARS vs LIV"},
+    {"value": "SOU vs LIV", "label": "SOU vs LIV"},
+    {"value": "ARS vs ASV", "label": "ARS vs ASV"},
+    {"value": "MUN vs EVE", "label": "MUN vs EVE"},
+    {"value": "CRY vs CHE", "label": "CRY vs CHE"}
   ]
 }

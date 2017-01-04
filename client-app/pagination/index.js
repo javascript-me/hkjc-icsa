@@ -200,44 +200,36 @@ class PaginationList extends Component {
 	}
 
 	getMinimalPages () {
-		let pages
-		let endPage = this.totalPages
-		if (endPage <= 0) return []
+		const p = this.props
+		let pages = []
+		let probabelMiddlePages = []
+		let actualStartPage = -1
+		let actualEndPage = -1
+		let probableStartPage = -1
+		let probableEndPage = -1
 
-		let startPage = this.totalPages <= (this.props.paginationSize + 2) ? 1 : Math.max(this.props.currPage - Math.floor(this.props.paginationSize / 2), this.props.pageStartIndex)
-		endPage = this.totalPages <= (this.props.paginationSize + 2) ? endPage : startPage + this.props.paginationSize - 1
-
-		if (this.props.currPage <= this.props.paginationSize) {
-			startPage = 1
-			endPage = this.props.paginationSize + 1
+		if (this.totalPages <= 0) {
+			return pages
 		}
 
-		if (endPage > this.lastPage) {
-			endPage = this.lastPage
-			startPage = Math.max(endPage - this.props.paginationSize, 1)
-		} else if (endPage === this.lastPage) {
-			startPage = Math.max(endPage - this.props.paginationSize, 1)
+		probableStartPage = Math.min(this.lastPage - p.paginationSize, p.currPage - Math.floor(p.paginationSize / 2))
+		actualStartPage = Math.max(p.pageStartIndex, probableStartPage)
+
+		probableEndPage = Math.max(p.pageStartIndex + p.paginationSize, p.currPage + Math.floor(p.paginationSize / 2))
+		actualEndPage = Math.min(this.lastPage, probableEndPage)
+
+		for (let i = actualStartPage; i <= actualEndPage; i++) {
+			if (i > p.pageStartIndex && i < this.lastPage) {
+				probabelMiddlePages.push(i)
+			}
 		}
 
-		if (this.totalPages > this.props.paginationSize && this.props.currPage > this.props.paginationSize) {
-			pages = startPage > 1 ? [ this.props.prePage, '1', '...' ] : [ this.props.prePage ]
-		} else if (this.totalPages > 1) {
-			pages = [ this.props.prePage ]
-		} else {
-			pages = []
-		}
-
-		for (let i = startPage; i <= endPage; i++) {
-			if (i >= this.props.pageStartIndex) pages.push(i)
-		}
-
-		if (endPage < this.lastPage) {
-			pages.push('...')
-			pages.push(this.lastPage)
-			pages.push(this.props.nextPage)
-		} else if (endPage === this.lastPage && endPage > startPage) {
-			pages.push(this.props.nextPage)
-		}
+		pages = pages.concat(
+			[this.props.prePage, p.pageStartIndex],
+			actualStartPage > p.pageStartIndex + 1 ? ['...'] : [],
+			probabelMiddlePages,
+			actualEndPage < this.lastPage - 1 ? ['...'] : [],
+			[this.lastPage, this.props.nextPage])
 
 		return pages
 	}

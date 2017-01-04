@@ -1,12 +1,12 @@
 {
   "countries" : [
-    {"id": "England", "value": "England"},
-    {"id": "Spain", "value": "Spain"},
-    {"id": "Germany", "value": "Germany"},
-    {"id": "Italy", "value": "Italy"},
-    {"id": "France", "value": "France"},
-    {"id": "Portugal", "value": "Portugal"},
-    {"id": "Netherlands", "value": "Netherlands"},
-    {"id": "Finland", "value": "Finland"}
+    {"value": "England", "label": "England"},
+    {"value": "Spain", "label": "Spain"},
+    {"value": "Germany", "label": "Germany"},
+    {"value": "Italy", "label": "Italy"},
+    {"value": "France", "label": "France"},
+    {"value": "Portugal", "label": "Portugal"},
+    {"value": "Netherlands", "label": "Netherlands"},
+    {"value": "Finland", "label": "Finland"}
   ]
 }

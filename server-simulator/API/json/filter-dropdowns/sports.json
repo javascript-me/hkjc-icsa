@@ -1,7 +1,7 @@
 {
   "sports" : [
-    {"id":  "Football", "value": "Football"},
-    {"id": "Basketball", "value": "Basketball"},
-    {"id": "Horse Racing", "value": "Horse Racing"}
+    {"value":  "Football", "label": "Football"},
+    {"value": "Basketball", "label": "Basketball"},
+    {"value": "Horse Racing", "label": "Horse Racing"}
   ]
 }

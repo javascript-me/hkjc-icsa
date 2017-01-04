@@ -1,21 +1,21 @@
 {
   "categories" : [
-    {"id": "Event Information", "value": "Event Information"},
-    {"id": "Selling Controls", "value": "Selling Controls"},
-    {"id": "Odds Generation and Update (before the first Start Sell)", "value": "Odds Generation and Update (before the first Start Sell)"},
-    {"id": "Odds Generation and Update (since the first Start Sell)", "value": "Odds Generation and Update (since the first Start Sell)"},
-    {"id": "Result - including Event and Bet Type (Non-In-Play)", "value": "Result - including Event and Bet Type (Non-In-Play)"},
-    {"id": "Result - including Event and Bet Type (In-Play)", "value": "Result - including Event and Bet Type (In-Play)"},
-    {"id": "Result Rectification", "value": "Result Rectification"},
-    {"id": "Payout", "value": "Payout"},
-    {"id": "Refund", "value": "Refund"},
-    {"id": "Transaction Adjustment (including Stop Pay)", "value": "Transaction Adjustment (including Stop Pay)"},
-    {"id": "Position Limit", "value": "Position Limit"},
-    {"id": "MNL (Maximum Net Loss Limit) of Specific Bet Type", "value": "MNL (Maximum Net Loss Limit) of Specific Bet Type"},
-    {"id": "Specific Event Exposure", "value": "Specific Event Exposure"},
-    {"id": "Specific All-up Combination Exposure", "value": "Specific All-up Combination Exposure"},
-    {"id": "Risk Limit Alerts", "value": "Risk Limit Alerts"},
-    {"id": "Parameters", "value": "Parameters"},
-    {"id": "Critical Information", "value": "Critical Information"}
+    {"value": "Event Information", "label": "Event Information"},
+    {"value": "Selling Controls", "label": "Selling Controls"},
+    {"value": "Odds Generation and Update (before the first Start Sell)", "label": "Odds Generation and Update (before the first Start Sell)"},
+    {"value": "Odds Generation and Update (since the first Start Sell)", "label": "Odds Generation and Update (since the first Start Sell)"},
+    {"value": "Result - including Event and Bet Type (Non-In-Play)", "label": "Result - including Event and Bet Type (Non-In-Play)"},
+    {"value": "Result - including Event and Bet Type (In-Play)", "label": "Result - including Event and Bet Type (In-Play)"},
+    {"value": "Result Rectification", "label": "Result Rectification"},
+    {"value": "Payout", "label": "Payout"},
+    {"value": "Refund", "label": "Refund"},
+    {"value": "Transaction Adjustment (including Stop Pay)", "label": "Transaction Adjustment (including Stop Pay)"},
+    {"value": "Position Limit", "label": "Position Limit"},
+    {"value": "MNL (Maximum Net Loss Limit) of Specific Bet Type", "label": "MNL (Maximum Net Loss Limit) of Specific Bet Type"},
+    {"value": "Specific Event Exposure", "label": "Specific Event Exposure"},
+    {"value": "Specific All-up Combination Exposure", "label": "Specific All-up Combination Exposure"},
+    {"value": "Risk Limit Alerts", "label": "Risk Limit Alerts"},
+    {"value": "Parameters", "label": "Parameters"},
+    {"value": "Critical Information", "label": "Critical Information"}
   ]
 }
