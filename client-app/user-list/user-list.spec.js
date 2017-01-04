@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Moment from 'moment'
 
-import UserList from './userlist'
+import UserList from './user-list'
 
 const getOrginDateTimeFrom = UserList.__get__('getOrginDateTimeFrom')
 const getOrginDateTimeTo = UserList.__get__('getOrginDateTimeTo')

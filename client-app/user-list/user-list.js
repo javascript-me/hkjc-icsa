@@ -8,7 +8,7 @@ import UserStore from './user-store'
 import PubSub from '../pubsub'
 import Moment from 'moment'
 
-import UserListService from './userlist-service'
+import UserListService from './user-list-service'
 
 const selectdata = UserListService.getSelectDataSources()
 
