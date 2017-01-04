@@ -1,7 +1,7 @@
 import React from 'react'
 import ClassNames from 'classnames'
 import TaskDetail from '../task-detail'
-import ActionReassignment from '../action-monitor/action-reassignment'
+import {ActionReassignment} from '../action-monitor'
 
 export default class NoticeList extends React.Component {
 
