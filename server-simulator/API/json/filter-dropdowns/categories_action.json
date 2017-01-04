@@ -1,18 +1,18 @@
 [
 	{
-		"id": "Before Sell",
-		"value": "Before Sell"
+		"value": "Before Sell",
+		"label": "Before Sell"
 	},
 	{
-		"id": "Start Sell",
-		"value": "Start Sell"
+		"value": "Start Sell",
+		"label": "Start Sell"
 	},
 	{
-		"id": "Pre-Event",
-		"value": "Pre-Event"
+		"value": "Pre-Event",
+		"label": "Pre-Event"
 	},
 	{
-		"id": "In-Play",
-		"value": "In-Play"
+		"value": "In-Play",
+		"label": "In-Play"
 	}
 ]
