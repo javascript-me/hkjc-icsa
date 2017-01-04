@@ -11,13 +11,8 @@ import * as util from '../utility'
 const MultiSelectEvent = util.FetchServerDataHoc({url: 'api/eventdirectory/eventType'},
 (data) => ({options: (data || [])}))(MultiSelect)
 
-const mapDataToOption = (data) => {
-	data = data || []
-	let options = data.map((item) => ({label: item.value, value: item.id}))
-	return { options }
-}
-
-const MultiSelectCompetition = util.FetchServerDataHoc({url: 'api/eventdirectory/competition'}, mapDataToOption)(MultiSelect)
+const MultiSelectCompetition = util.FetchServerDataHoc({url: 'api/eventdirectory/competition'},
+		(data) => ({options: (data || [])}))(MultiSelect)
 
 import AutoComplete from '../autocomplete'
 import EventDirectoryService from './event-directory-service'
