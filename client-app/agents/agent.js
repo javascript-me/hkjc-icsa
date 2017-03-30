@@ -6,21 +6,58 @@ export default class Agent extends React.Component {
 
     constructor (props) {
         super(props)
+
+        this.openResourceAddingPanel = this.openResourceAddingPanel.bind(this)
+        this.closeResourceAddingPanel = this.closeResourceAddingPanel.bind(this)
         this.addResources = this.addResources.bind(this)
+        this.deleteResource = this.deleteResource.bind(this)
+
+        this.state = {
+            resources: this.props.resources,
+            visibleResourceAddingPanel: false
+        }
     }
 
-    addResources () {
-        console.log('add.... ')
+    openResourceAddingPanel () {
+        this.setState({
+            visibleResourceAddingPanel: true
+        })
+    }
+
+    closeResourceAddingPanel () {
+        this.setState({
+            visibleResourceAddingPanel: false
+        })
+    }
+
+    addResources (string) {
+        let trimmedString = string.trim()
+
+        if (!trimmedString) return
+
+        let newResources = trimmedString.split(',')
+
+        this.setState({
+            resources: this.state.resources.concat(newResources),
+            visibleResourceAddingPanel: false
+        })
+    }
+
+    deleteResource (item) {
+        console.log('delete: ' + item)
+        let resources = this.state.resources
+        let newResources = resources.filter((element) => {
+            return element !== item
+        })
+        this.setState({
+            resources: newResources
+        })
     }
 
     render () {
-        console.log(this.props.resources)
-
         return <div>
-
             <div>
                 <span className='host-server'>{this.props.hostServer}</span>
-
                 <div>
                     <span className='status-label'>{this.props.buildingStatus}</span>
                     <span className='status-label'>{this.props.ip}</span>
@@ -29,16 +66,14 @@ export default class Agent extends React.Component {
             </div>
 
             <div>
-                +<span className='underline' onClick={this.addResources}>Specify Resources</span>
+                +<span className='underline' onClick={this.openResourceAddingPanel}>Specify Resources</span>
                 <span className='status-label'>Resources: </span>
-                <ResourceList resources={this.props.resources} />
-
+                <ResourceList resources={this.state.resources}
+                              onDelete={this.deleteResource} />
             </div>
-
-            <ResourceAddingPanel />
-
-
-
+            {
+                this.state.visibleResourceAddingPanel ? <ResourceAddingPanel onAddedResources={this.addResources} onClose={this.closeResourceAddingPanel} /> : null
+            }
         </div>
     }
 }
