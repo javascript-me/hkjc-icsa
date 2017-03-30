@@ -11,6 +11,7 @@ import ContextMenu from './context-menu'
 import ContextMenuService from './context-menu/context-menu-service'
 import Popup, { PopupService } from './popup'
 import Audit from './auditlog/auditlog'
+import Agents from './agents/agents'
 import { ActionMonitor } from './action-monitor'
 import UserList from './user-list/user-list'
 import {UserProfile, MyProfile} from './user-profile'
@@ -42,6 +43,7 @@ const AppContainer = React.createClass({
 					<Route path='/page' component={PageBase} onEnter={hasAuth}>
 						<IndexRoute component={Dashboard} />
 						<Route path='audit' component={Audit} />
+						<Route path='agents' component={Agents} />
 						<Route path='actionmonitor' component={ActionMonitor} />
 						<Route path='userlist' component={UserList} />
 						<Route path='userprofile/:userId' component={UserProfile} />
