@@ -44,7 +44,6 @@ export default class Agent extends React.Component {
     }
 
     deleteResource (item) {
-        console.log('delete: ' + item)
         let resources = this.state.resources
         let newResources = resources.filter((element) => {
             return element !== item

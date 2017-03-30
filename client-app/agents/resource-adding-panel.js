@@ -28,7 +28,7 @@ export default class ResourceAddingPanel extends React.Component {
             <div>(Separate multiple resources name with commas)</div>
             <input type='text' value={this.state.value} onChange={this.changeText}></input>
             <div onClick={this.addResources}>Add resources</div>
-            <div>Close</div>
+            <div onClick={this.props.onClose}>Close</div>
         </div>
     }
 
