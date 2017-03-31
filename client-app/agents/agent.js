@@ -65,7 +65,7 @@ export default class Agent extends React.Component {
         return <div className={this.getAgentItemClassName()}>
             <div>
                 <span className='host-server'>{this.props.hostServer}</span>
-                <div>
+                <div className='statuses'>
                     <span className='status-label'>{this.props.buildingStatus}</span>
                     <span className='status-label'>{this.props.ip}</span>
                     <span className='status-label'>{this.props.path}</span>
