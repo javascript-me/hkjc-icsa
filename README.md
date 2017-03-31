@@ -66,3 +66,11 @@ Restart local server:
 
 - Cache and field authorization use case (generate data)
 - SDD
+
+
+======
+
+npm install watchify -g
+npm install onchange -g
+watchify client-app/index.js -o dist/thin/index.min.js -v
+onchange "client-app/**/*.less" -- npm run css

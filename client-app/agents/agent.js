@@ -1,6 +1,7 @@
 import React from 'react'
 import ResourceList from './resource-list'
 import ResourceAddingPanel from './resource-adding-panel'
+import ClassNames from 'classnames'
 
 export default class Agent extends React.Component {
 
@@ -53,8 +54,15 @@ export default class Agent extends React.Component {
         })
     }
 
+    getAgentItemClassName () {
+        return ClassNames(
+            'agent-item',
+            this.props.buildingStatus
+        )
+    }
+
     render () {
-        return <div>
+        return <div className={this.getAgentItemClassName()}>
             <div>
                 <span className='host-server'>{this.props.hostServer}</span>
                 <div>

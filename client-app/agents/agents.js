@@ -5,8 +5,6 @@ export default class Agents extends React.Component {
 
     constructor (props) {
         super(props)
-
-
     }
 
     render () {
