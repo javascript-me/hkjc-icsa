@@ -9,12 +9,75 @@
 
     .statuses {
       display: inline-block;
-      padding-left: 30px;
+      float: right;
+      padding: 0 30px;
+    }
+
+    .underline {
+      margin-right: 20px;
+      text-decoration: underline;
+      cursor: pointer;
     }
 
     .status-label {
       border-left: 1px solid #92A3A5;
       padding: 0 5px;
+    }
+
+    .resource-list {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      display: inline-block;
+
+      li {
+        display: inline-block;
+
+        .delete-icon {
+          border: 1px solid #949D8C;
+          display: inline-block;
+          cursor: pointer;
+          padding-left: 4px;
+          width: 20px;
+          padding-top: 2px;
+          font-size: 16px;
+          margin: 0 10px;
+        }
+      }
+    }
+
+    .resource-creator {
+      border: 2px solid #553D00;
+      position: absolute;
+      background: #E0EDD4;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 20px;
+      margin-left: 40px;
+
+      .input-field {
+        width: 400px;
+        margin: 10px 0;
+      }
+
+      .icon-triangle {
+        border-style: dashed dashed solid;
+        border-width: 10px;
+        border-color: transparent transparent #553D00;
+        position: absolute;
+        top: -20px;
+        left: 20px;
+      }
+
+      .round-button {
+        border-radius: 10px;
+        border: 2px solid black;
+        display: inline-block;
+        background-color: #D6D6D6;
+        padding: 5px;
+        margin: 0 10px;
+        cursor: pointer;
+      }
     }
 
     &.idle {

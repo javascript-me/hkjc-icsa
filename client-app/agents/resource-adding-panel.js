@@ -24,11 +24,14 @@ export default class ResourceAddingPanel extends React.Component {
     }
 
     render () {
-        return <div>
+        return <div className='resource-creator'>
+            <span className="icon-triangle"></span>
             <div>(Separate multiple resources name with commas)</div>
-            <input type='text' value={this.state.value} onChange={this.changeText}></input>
-            <div onClick={this.addResources}>Add resources</div>
-            <div onClick={this.props.onClose}>Close</div>
+            <input className='input-field' type='text' value={this.state.value} onChange={this.changeText}></input>
+            <div>
+                <div className='round-button' onClick={this.addResources}>Add resources</div>
+                <div className='round-button' onClick={this.props.onClose}>Close</div>
+            </div>
         </div>
     }
 
